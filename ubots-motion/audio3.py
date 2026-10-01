@@ -282,7 +282,7 @@ def limit(x, ceil):
 meter = pyln.Meter(SR)
 for _ in range(3):
     lufs = meter.integrated_loudness(mix.T); mix *= 10 ** ((-14.0 - lufs) / 20)
-    mix = limit(mix, 10 ** (-1.2 / 20))
+    mix = limit(mix, 10 ** (-2.0 / 20))
 tp = 20 * np.log10(np.abs(resample_poly(mix, 4, 1, axis=1)).max())
 print(f"LUFS {meter.integrated_loudness(mix.T):.2f}  true-peak {tp:.2f} dBTP")
 wavfile.write('audio3.wav', SR, (np.clip(mix, -1, 1).T * 32767).astype(np.int16))

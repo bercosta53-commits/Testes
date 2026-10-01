@@ -276,7 +276,7 @@ function frame(t){
   dots.forEach((m,i)=>{ const ph=((t*1.45-i*0.16)%1+1)%1; const b=ph<.36?Math.sin(ph/.36*Math.PI):0; m.position.y=shiftY+b*0.075; m.scale.set(1+b*.08,1+b*.08,.45); });
   const lu=intro; key.intensity=1.55*lu; rim.intensity=2.6*lu; top.intensity=.45*lu; amb.intensity=.12*lu; goldM.envMapIntensity=0.85*lu; dotM.envMapIntensity=.7*lu;
   key.position.x=lerp(-9,-4,E.io(map(t,0,3.2)));
-  st($('gl'),{filter:bl>0.3?`blur(${bl.toFixed(1)}px)`:'none',opacity:bo});
+  st($('gl'),{filter:bl>0.3?`blur(${bl.toFixed(1)}px)`:'none',opacity:bo*E.std(map(t,0.05,0.7))});
   // halo + shadow follow the bubble
   const hs=bh*2.3; const hop=(t<4?.85*intro*(1-map(t,3.5,4.4)):0)+(t>7.8&&t<12.4?map(t,8,8.7)*(1-map(t,11.5,12.2)):0);
   st($('halo'),{width:px(hs),height:px(hs),transform:`translate(${bx-hs/2}px,${by-hs/2}px)`,opacity:hop});
