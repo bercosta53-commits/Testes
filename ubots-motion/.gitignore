@@ -1,0 +1,5 @@
+node_modules/
+frames2/
+prev_*.jpg
+render_full.log
+audio2.wav
