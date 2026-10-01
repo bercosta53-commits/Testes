@@ -1,5 +1,9 @@
 node_modules/
 frames2/
+frames3_*/
 prev_*.jpg
+prev3_*.jpg
 render_full.log
+render3_*.log
 audio2.wav
+audio3.wav
