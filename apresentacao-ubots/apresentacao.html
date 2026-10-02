@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Série de Vídeos Ubots — Recuperação de Crédito</title>
+<style>
+  @font-face { font-family: 'Poppins'; font-weight: 500; src: url('fonts/Poppins-Medium.ttf') format('truetype'); }
+  @font-face { font-family: 'Poppins'; font-weight: 600; src: url('fonts/Poppins-SemiBold.ttf') format('truetype'); }
+  @font-face { font-family: 'Poppins'; font-weight: 700; src: url('fonts/Poppins-Bold.ttf') format('truetype'); }
+  @font-face { font-family: 'Poppins'; font-weight: 800; src: url('fonts/Poppins-ExtraBold.ttf') format('truetype'); }
+  @font-face { font-family: 'Nunito'; font-weight: 500; src: url('fonts/Nunito-Medium.ttf') format('truetype'); }
+  @font-face { font-family: 'Nunito'; font-weight: 600; src: url('fonts/Nunito-SemiBold.ttf') format('truetype'); }
+  @font-face { font-family: 'Nunito'; font-weight: 700; src: url('fonts/Nunito-Bold.ttf') format('truetype'); }
+
+  /* Paleta extraída do site ubots.com.br */
+  :root {
+    --cream: #FFFCF2;
+    --white: #FFFFFF;
+    --ink: #0B0602;
+    --ink-2: #2B241D;
+    --gray: #6F6A62;
+    --gray-2: #9A948A;
+    --line: #EFE8D7;
+    --yellow: #FFDD1E;
+    --gold: #FCC347;
+    --yellow-ink: #E2A900;
+    --tint: #FFF5CC;
+    --tint-2: #FDF7DE;
+    --night: #080401;
+    --night-2: #17110D;
+    --night-line: #2A211A;
+    --grad: linear-gradient(100deg, #FFD936 0%, #FBC532 55%, #F3B02C 100%);
+    --shadow: 0 1px 2px rgba(70, 45, 0, .04), 0 18px 40px -18px rgba(70, 45, 0, .16);
+  }
+
+  @page { size: 1920px 1080px; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; color: var(--ink); font: 500 24px/1.5 'Nunito', sans-serif; }
+  h1, h2, h3, p, ul { margin: 0; padding: 0; }
+  p, li, td { text-wrap: pretty; }
+  ul { list-style: none; }
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  .slide {
+    position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    background: var(--cream); break-after: page;
+  }
+  .slide:last-child { break-after: auto; }
+  .slide::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(1000px 640px at 100% 0%, rgba(255, 221, 30, .16), transparent 70%),
+      radial-gradient(800px 560px at 0% 100%, rgba(252, 195, 71, .10), transparent 70%);
+  }
+
+  /* ---------- Cabeçalho (como a navbar do site) ---------- */
+  .top {
+    position: absolute; top: 56px; left: 120px; right: 120px; height: 48px; z-index: 5;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { font: 600 40px/1 'Poppins'; letter-spacing: -.02em; color: var(--ink); white-space: nowrap; }
+  .logo .mark { display: inline-block; width: .62em; height: .8em; vertical-align: baseline; margin-right: .06em; overflow: visible; }
+  .logo .bubble { fill: #FBC531; stroke: #FBC531; stroke-width: 3; stroke-linejoin: round; }
+  .logo .dot { fill: currentColor; }
+  .count { font: 500 18px/1 'Poppins'; letter-spacing: .06em; color: var(--gray-2); }
+  .count b { font-weight: 600; color: var(--ink); }
+
+  /* ---------- Componentes ---------- */
+  .tag {
+    display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 22px;
+    border-radius: 999px; background: var(--tint); color: #C48F00; font: 500 18px/1 'Poppins';
+  }
+  .tag--hero {
+    background: rgba(255, 255, 255, .75); color: var(--ink-2); border: 1px solid #F1E3B5;
+    box-shadow: 0 6px 18px -8px rgba(120, 90, 0, .18);
+  }
+  .tag--hero::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--yellow); }
+
+  .head { position: absolute; top: 150px; left: 120px; right: 120px; }
+  .title { margin-top: 22px; font: 700 72px/1.08 'Poppins'; letter-spacing: -.028em; color: var(--ink); }
+
+  /* Texto em degradê, como os destaques do site (o script no fim troca por SVG para o PDF) */
+  .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .grad-layer { position: absolute; z-index: 1; line-height: 0; pointer-events: none; }
+  .grad-layer svg { display: block; overflow: visible; }
+
+  .h3 { display: flex; align-items: center; gap: 16px; font: 700 30px/1.2 'Poppins'; letter-spacing: -.015em; color: var(--ink); }
+  .ico-tile {
+    flex: none; width: 52px; height: 52px; border-radius: 15px; background: var(--tint);
+    display: grid; place-items: center; color: var(--yellow-ink);
+  }
+  .ico-tile--dark { background: #3A3008; color: var(--yellow); border-radius: 50%; }
+  .ico { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .p { font: 500 24px/1.55 'Nunito'; color: var(--gray); }
+  .p strong { font-weight: 700; color: var(--ink); }
+
+  .card { background: var(--white); border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow); }
+
+  .checks li { display: flex; align-items: flex-start; gap: 14px; font: 500 22px/1.35 'Poppins'; color: var(--ink-2); }
+  .checks .ico { flex: none; width: 28px; height: 28px; color: var(--yellow-ink); margin-top: 1px; }
+
+  /* Faixa escura, como a seção "Governança e inteligência" do site */
+  .band {
+    position: absolute; left: 120px; right: 120px; display: flex; align-items: center; gap: 30px; padding: 0 48px;
+    border-radius: 28px; background: var(--night); box-shadow: 0 30px 60px -34px rgba(8, 4, 1, .75); overflow: hidden;
+  }
+  .band .ico-tile--dark { width: 64px; height: 64px; }
+  .band .ico-tile--dark .ico { width: 30px; height: 30px; }
+  .band-label { display: block; font: 600 18px/1 'Poppins'; letter-spacing: .02em; color: var(--yellow); }
+  .band p { margin-top: 14px; font: 600 34px/1.3 'Poppins'; letter-spacing: -.02em; color: #fff; }
+  .band .y { color: var(--yellow); }
+  .waves path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .band .waves { position: absolute; right: 48px; top: 50%; width: 112px; height: 66px; margin-top: -33px; }
+  .band .waves path { stroke: var(--yellow); stroke-width: 5; }
+
+  /* ---------- 01 · Capa ---------- */
+  .s1-copy { position: absolute; left: 120px; top: 0; bottom: 0; width: 1060px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+  .s1-title { margin-top: 34px; font: 700 84px/1.07 'Poppins'; letter-spacing: -.03em; }
+  .s1-lead { margin-top: 30px; max-width: 860px; font: 600 30px/1.42 'Poppins'; letter-spacing: -.01em; color: var(--ink-2); }
+  .s1-meta { margin-top: 52px; display: flex; gap: 18px; }
+  .meta { display: flex; align-items: center; gap: 16px; padding: 20px 28px 20px 20px; border-radius: 22px; }
+  .meta-k { display: block; font: 500 16px/1.2 'Nunito'; color: var(--gray); letter-spacing: .01em; }
+  .meta-v { display: block; margin-top: 3px; font: 600 22px/1.2 'Poppins'; color: var(--ink); letter-spacing: -.01em; }
+
+  .s1-card {
+    position: absolute; left: 1230px; top: 168px; width: 570px; height: 790px; border-radius: 40px; overflow: hidden;
+    background: linear-gradient(165deg, #FFD54A 0%, #FCC347 55%, #F8B83A 100%);
+    box-shadow: 0 40px 80px -36px rgba(170, 110, 0, .55);
+  }
+  .s1-card .waves { position: absolute; right: 34px; bottom: 30px; width: 170px; height: 100px; }
+  .s1-card .waves path { stroke: #fff; stroke-width: 7; }
+  .s1-card .ring { position: absolute; left: -98px; top: -98px; width: 232px; height: 232px; border-radius: 50%; border: 22px solid rgba(255, 255, 255, .6); }
+
+  .phone { position: absolute; padding: 9px; border-radius: 36px; background: var(--night); box-shadow: 0 34px 60px -22px rgba(70, 35, 0, .55); }
+  .phone .screen { position: relative; width: 100%; height: 100%; border-radius: 28px; overflow: hidden; }
+  .phone--c { left: 146px; top: 132px; width: 278px; height: 494px; z-index: 3; }
+  .phone--c .screen { background: radial-gradient(260px 300px at 50% 32%, #4A3B2C 0%, #241A12 60%, #0E0904 100%); }
+  .phone--l { left: 33px; top: 222px; width: 214px; height: 380px; transform: rotate(-9deg); z-index: 1; background: #fff; }
+  .phone--r { left: 323px; top: 200px; width: 214px; height: 380px; transform: rotate(8deg); z-index: 2; background: #fff; }
+  .phone--l .screen, .phone--r .screen { background: linear-gradient(180deg, #FFFDF6 0%, #FFF1C2 100%); }
+
+  .person { position: absolute; left: 50%; top: 92px; width: 196px; height: 260px; margin-left: -98px; }
+  .person .head { position: absolute; left: 50%; top: 0; width: 92px; height: 92px; margin-left: -46px; border-radius: 50%; background: rgba(255, 255, 255, .16); }
+  .person .body { position: absolute; left: 50%; top: 104px; width: 196px; height: 150px; margin-left: -98px; border-radius: 98px 98px 24px 24px; background: rgba(255, 255, 255, .12); }
+  .cap { position: absolute; left: 22px; right: 60px; top: 318px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .cap i { display: block; height: 16px; border-radius: 8px; background: rgba(255, 255, 255, .92); }
+  .cap i.y { background: var(--yellow); }
+  .rail { position: absolute; right: 14px; bottom: 58px; display: flex; flex-direction: column; gap: 16px; color: #fff; }
+  .rail .ico { width: 24px; height: 24px; }
+  .who { position: absolute; left: 20px; top: 22px; display: flex; align-items: center; gap: 10px; }
+  .who i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--yellow); }
+  .who b { display: block; width: 84px; height: 10px; border-radius: 5px; background: rgba(255, 255, 255, .55); }
+  .progress { position: absolute; left: 18px; right: 18px; bottom: 22px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .22); }
+  .progress::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 46%; border-radius: 3px; background: var(--yellow); }
+
+  .mini-chart { position: absolute; left: 22px; right: 22px; top: 58px; height: 140px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 10px 24px -14px rgba(120, 80, 0, .35); display: flex; align-items: flex-end; gap: 11px; }
+  .mini-chart i { flex: 1; border-radius: 7px 7px 3px 3px; background: var(--tint); }
+  .mini-chart i:nth-child(2) { background: #FFE98A; }
+  .mini-chart i:nth-child(3) { background: #FFDD1E; }
+  .mini-chart i:nth-child(4) { background: #F6B82C; }
+  .soft-cap { position: absolute; left: 22px; right: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .soft-cap i { display: block; height: 14px; border-radius: 7px; background: #EADFC2; }
+  .soft-cap i.y { background: var(--yellow); }
+  .emoji { position: absolute; left: 50%; top: 64px; width: 112px; height: 112px; margin-left: -56px; border-radius: 50%; background: var(--yellow); display: grid; place-items: center; color: var(--ink); box-shadow: 0 14px 28px -14px rgba(160, 110, 0, .6); }
+  .emoji .ico { width: 60px; height: 60px; stroke-width: 1.75; }
+
+  .float { position: absolute; z-index: 4; width: 68px; height: 68px; border-radius: 50%; background: #fff; display: grid; place-items: center; color: var(--yellow-ink); box-shadow: 0 16px 30px -14px rgba(90, 55, 0, .45); }
+  .float .ico { width: 30px; height: 30px; }
+  .float.f1 { left: 92px; top: 112px; }
+  .float.f2 { left: 452px; top: 96px; }
+  .float.f3 { left: 404px; top: 584px; }
+
+  /* ---------- 02 · Overview ---------- */
+  .s2-left { position: absolute; left: 120px; top: 356px; width: 556px; display: flex; flex-direction: column; gap: 26px; }
+  .s2-left .p { margin-top: 16px; font-size: 23px; }
+  .callout { display: flex; gap: 18px; padding: 26px 28px; border-radius: 0 22px 22px 0; border-left: 6px solid var(--yellow); background: var(--tint-2); }
+  .callout .ico { flex: none; width: 30px; height: 30px; color: var(--yellow-ink); margin-top: 1px; }
+  .callout p { font: 500 21px/1.5 'Poppins'; letter-spacing: -.005em; color: var(--ink-2); }
+  .callout strong { font-weight: 700; color: var(--ink); }
+  .s2-right { position: absolute; left: 724px; right: 120px; top: 356px; }
+  .fmt-grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr 1.18fr; gap: 14px 16px; }
+  .fmt { display: flex; align-items: center; gap: 14px; min-height: 92px; padding: 18px 20px 18px 18px; border-radius: 20px; }
+  .fmt .ico-tile { width: 44px; height: 44px; border-radius: 13px; }
+  .fmt .ico-tile .ico { width: 22px; height: 22px; }
+  .fmt span:last-child { font: 600 20px/1.3 'Poppins'; letter-spacing: -.01em; color: var(--ink); }
+  .s2-dir { top: 786px; height: 164px; }
+  .s2-dir p { font-size: 30px; }
+
+  /* ---------- 03 · Conteúdo da série ---------- */
+  .tbl-wrap { position: absolute; left: 120px; right: 120px; top: 346px; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); background: var(--white); box-shadow: var(--shadow); }
+  .tbl { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .tbl th { padding: 20px 28px; text-align: left; font: 700 18px/1 'Poppins'; color: var(--ink); background: var(--tint-2); }
+  .tbl td { padding: 0 28px; height: 98px; vertical-align: middle; border-top: 1px solid #F2ECDD; }
+  .tbl tbody tr:nth-child(even) td { background: #FCF9F1; }
+  .tbl .num { font: 700 38px/1 'Poppins'; letter-spacing: -.02em; }
+  .tbl .tema { font: 600 22px/1.35 'Poppins'; letter-spacing: -.01em; color: var(--ink); padding-right: 40px; }
+  .tbl .obj { font: 500 21px/1.45 'Nunito'; color: var(--gray); }
+  .funnel { display: inline-flex; align-items: center; height: 38px; padding: 0 18px; border-radius: 999px; font: 600 17px/1 'Poppins'; white-space: nowrap; }
+  .f-topo { background: var(--tint); color: #A97C00; box-shadow: inset 0 0 0 1px #F5E39C; }
+  .f-topomeio { background: linear-gradient(90deg, #FFF3BF 0%, #FFE25A 100%); color: #6E5200; }
+  .f-meio { background: var(--yellow); color: var(--ink); }
+  .f-meiofim { background: var(--night); color: var(--yellow); }
+
+  /* ---------- 04 · Linguagem e execução ---------- */
+  .s4-lang { position: absolute; left: 120px; top: 356px; width: 700px; height: 404px; padding: 38px 42px; }
+  .s4-edit { position: absolute; left: 850px; right: 120px; top: 356px; height: 404px; padding: 38px 42px; }
+  .statement { margin-top: 30px; font: 700 48px/1.14 'Poppins'; letter-spacing: -.026em; color: var(--ink); }
+  .s4-lang .p { margin-top: 22px; max-width: 600px; }
+  .s4-lang .qmark { position: absolute; right: 38px; top: 30px; width: 96px; height: 96px; fill: #FFE68A; }
+  .s4-edit .checks { margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .s4-edit .tl { position: absolute; right: 42px; top: 128px; width: 320px; height: 232px; }
+  .s4-result { top: 790px; height: 176px; }
+
+  /* ---------- 05 · Entregáveis ---------- */
+  .s5-card { position: absolute; left: 120px; right: 120px; top: 350px; height: 360px; display: flex; overflow: hidden; }
+  .s5-count { flex: none; width: 470px; padding: 40px 44px; background: linear-gradient(160deg, #FFF8DB 0%, #FFF1C0 100%); border-right: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; }
+  .s5-count .big { display: block; font: 800 168px/.9 'Poppins'; letter-spacing: -.04em; }
+  .s5-count h3 { margin-top: 8px; font: 700 40px/1.1 'Poppins'; letter-spacing: -.025em; color: var(--ink); }
+  .s5-count p { margin-top: 16px; font: 600 22px/1.3 'Nunito'; color: var(--gray); }
+  .s5-list { flex: 1; padding: 44px 50px; display: grid; grid-template-rows: repeat(5, auto); grid-auto-flow: column; column-gap: 40px; row-gap: 22px; align-content: center; }
+  .s5-line { position: absolute; left: 120px; right: 120px; top: 740px; height: 226px; padding: 34px 44px; border-radius: 28px; border: 1px solid #F6E7B0; background: linear-gradient(100deg, #FFF8DD 0%, #FFFDF5 50%, #FFF4CC 100%); }
+  .s5-line .row { display: flex; align-items: baseline; gap: 18px; }
+  .s5-line .p { font-size: 22px; }
+  .flow { margin-top: 28px; display: flex; align-items: center; justify-content: space-between; }
+  .step { display: inline-flex; align-items: center; height: 60px; padding: 0 26px; border-radius: 999px; font: 600 21px/1 'Poppins'; letter-spacing: -.01em; white-space: nowrap; color: var(--ink); }
+  .st1 { background: #fff; box-shadow: inset 0 0 0 1.5px #EADFC2; }
+  .st2 { background: #FFF5CC; box-shadow: inset 0 0 0 1.5px #F6E3A0; }
+  .st3 { background: #FFEB8C; }
+  .st4 { background: var(--yellow); }
+  .st5 { background: var(--gold); }
+  .st6 { background: var(--night); color: var(--yellow); }
+  .flow .arrow { flex: none; width: 26px; height: 26px; color: #C9B98F; }
+
+  /* ---------- 06 · Investimento ---------- */
+  .dark { background: var(--night); }
+  .dark::before {
+    background:
+      radial-gradient(760px 420px at 50% 40%, rgba(255, 221, 30, .16), transparent 70%),
+      radial-gradient(900px 500px at 100% 0%, rgba(252, 195, 71, .08), transparent 70%);
+  }
+  .logo--light { color: #fff; }
+  .dark .count { color: #7E766B; }
+  .dark .count b { color: #fff; }
+  .s6-center { position: absolute; left: 120px; right: 120px; top: 176px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .tag--dark { background: rgba(255, 221, 30, .12); color: var(--yellow); }
+  .s6-title { margin-top: 26px; font: 700 64px/1.1 'Poppins'; letter-spacing: -.028em; color: #fff; }
+  .price { margin-top: 6px; font: 800 196px/1.05 'Poppins'; letter-spacing: -.045em; }
+  .s6-cards { position: absolute; left: 50%; top: 648px; width: 1340px; margin-left: -670px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .dcard { padding: 36px 40px 38px; border-radius: 28px; background: var(--night-2); border: 1px solid var(--night-line); }
+  .dcard .ico-tile--dark { width: 60px; height: 60px; }
+  .dcard h3 { margin-top: 24px; font: 700 32px/1.15 'Poppins'; letter-spacing: -.02em; color: #fff; }
+  .dcard .dprice { margin-top: 10px; font: 700 30px/1.2 'Poppins'; letter-spacing: -.015em; color: var(--yellow); }
+  .dcard .dp { margin-top: 12px; font: 500 22px/1.5 'Nunito'; color: #BDB5AA; }
+</style>
+</head>
+<body>
+<!-- Ícones: Lucide (ISC) -->
+<svg class="sprite" aria-hidden="true">
+  <symbol id="i-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></symbol>
+  <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></symbol>
+  <symbol id="i-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" /><circle cx="12" cy="13" r="3" /></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 19v3" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><rect x="9" y="2" width="6" height="13" rx="3" /></symbol>
+  <symbol id="i-captions" viewBox="0 0 24 24"><rect width="18" height="14" x="3" y="5" rx="2" ry="2" /><path d="M7 15h4M15 15h2M7 11h2M13 11h4" /></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /><path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" /></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></symbol>
+  <symbol id="i-clapperboard" viewBox="0 0 24 24"><path d="m12.296 3.464 3.02 3.956" /><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z" /><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="m6.18 5.276 3.1 3.899" /></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></symbol>
+  <symbol id="i-messages-square" viewBox="0 0 24 24"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" /></symbol>
+  <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3" /><path d="M8.12 8.12 12 12" /><path d="M20 4 8.12 15.88" /><circle cx="6" cy="18" r="3" /><path d="M14.8 14.8 20 20" /></symbol>
+  <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m16 9-5.5 5.5L8 12" /></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" /></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M7 3v18" /><path d="M3 7.5h4" /><path d="M3 12h18" /><path d="M3 16.5h4" /><path d="M17 3v18" /><path d="M17 7.5h4" /><path d="M17 16.5h4" /></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" /></symbol>
+  <symbol id="i-message-circle" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /></symbol>
+  <symbol id="i-chart-no-axes-column-increasing" viewBox="0 0 24 24"><path d="M5 21v-6" /><path d="M12 21V9" /><path d="M19 21V3" /></symbol>
+  <symbol id="i-package-check" viewBox="0 0 24 24"><path d="M12 22V12" /><path d="m16 17 2 2 4-4" /><path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753" /><path d="M3.29 7 12 12l8.71-5" /><path d="m7.5 4.27 8.997 5.148" /></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24"><path d="M15 10V9" /><path d="M16.472 15a6 6 0 01-8.943 0" /><path d="M9 10V9" /><circle cx="12" cy="12" r="10" /></symbol>
+  <symbol id="i-list-checks" viewBox="0 0 24 24"><path d="M13 5h8" /><path d="M13 12h8" /><path d="M13 19h8" /><path d="m3 17 2 2 4-4" /><path d="m3 7 2 2 4-4" /></symbol>
+</svg>
+
+<!-- ============ 01 · CAPA ============ -->
+<section class="slide s1">
+  <header class="top">
+    <span class="logo"><svg class="mark" viewBox="0 0 62 80"><path class="bubble" d="M4 61A30 30 0 1 1 22.2 75L3 80Z"/><circle class="dot" cx="48" cy="14" r="10"/></svg>ubots</span>
+  </header>
+
+  <div class="s1-copy">
+    <span class="tag tag--hero">Apresentação Executiva</span>
+    <h1 class="s1-title">Série de Vídeos Ubots<br><span class="grad">Recuperação de Crédito</span></h1>
+    <p class="s1-lead">6 filmes para redes sociais com foco em awareness, educação e geração de demanda</p>
+    <div class="s1-meta">
+      <div class="meta card"><span class="ico-tile"><svg class="ico"><use href="#i-smartphone"/></svg></span><div><span class="meta-k">Formato</span><span class="meta-v">Reels / Shorts</span></div></div>
+      <div class="meta card"><span class="ico-tile"><svg class="ico"><use href="#i-map-pin"/></svg></span><div><span class="meta-k">Locação</span><span class="meta-v">Instituto Caldeira</span></div></div>
+      <div class="meta card"><span class="ico-tile"><svg class="ico"><use href="#i-user-round"/></svg></span><div><span class="meta-k">Hostess</span><span class="meta-v">Ste</span></div></div>
+    </div>
+  </div>
+
+  <!-- Ilustração: vídeos verticais (Reels / Shorts) no cartão amarelo do site -->
+  <div class="s1-card" aria-hidden="true">
+    <span class="ring"></span>
+    <div class="phone phone--l"><div class="screen">
+      <div class="mini-chart"><i style="height:34%"></i><i style="height:52%"></i><i style="height:74%"></i><i style="height:100%"></i></div>
+      <div class="soft-cap" style="top:232px"><i style="width:58px"></i><i style="width:82px"></i><i style="width:38px"></i><i class="y" style="width:72px"></i><i style="width:50px"></i></div>
+    </div></div>
+    <div class="phone phone--r"><div class="screen">
+      <span class="emoji"><svg class="ico"><use href="#i-smile"/></svg></span>
+      <div class="soft-cap" style="top:220px"><i style="width:66px"></i><i class="y" style="width:80px"></i><i style="width:44px"></i><i style="width:86px"></i></div>
+    </div></div>
+    <div class="phone phone--c"><div class="screen">
+      <div class="who"><i></i><b></b></div>
+      <div class="person"><span class="head"></span><span class="body"></span></div>
+      <div class="cap"><i style="width:54px"></i><i style="width:78px"></i><i style="width:40px"></i><i class="y" style="width:96px"></i><i style="width:58px"></i></div>
+      <div class="rail"><svg class="ico"><use href="#i-heart"/></svg><svg class="ico"><use href="#i-message-circle"/></svg><svg class="ico"><use href="#i-send"/></svg></div>
+      <div class="progress"></div>
+    </div></div>
+    <span class="float f1"><svg class="ico"><use href="#i-mic"/></svg></span>
+    <span class="float f2"><svg class="ico"><use href="#i-captions"/></svg></span>
+    <span class="float f3"><svg class="ico"><use href="#i-sparkles"/></svg></span>
+    <svg class="waves" viewBox="0 0 170 100"><path d="M8 18q16-14 32 0t32 0t32 0t32 0t26-4"/><path d="M8 50q16-14 32 0t32 0t32 0t32 0t26-4"/><path d="M8 82q16-14 32 0t32 0t32 0t32 0t26-4"/></svg>
+  </div>
+</section>
+
+<!-- ============ 02 · OVERVIEW DA PRODUÇÃO ============ -->
+<section class="slide s2">
+  <header class="top">
+    <span class="logo"><svg class="mark" viewBox="0 0 62 80"><path class="bubble" d="M4 61A30 30 0 1 1 22.2 75L3 80Z"/><circle class="dot" cx="48" cy="14" r="10"/></svg>ubots</span>
+    <span class="count"><b>02</b> / 06</span>
+  </header>
+  <div class="head">
+    <span class="tag">Recuperação de Crédito</span>
+    <h2 class="title">Overview da <span class="grad">produção</span></h2>
+  </div>
+
+  <div class="s2-left">
+    <div>
+      <h3 class="h3"><span class="ico-tile"><svg class="ico"><use href="#i-clapperboard"/></svg></span>Proposta</h3>
+      <p class="p">Produção de uma série de <strong>6 vídeos verticais</strong>, com linguagem dinâmica de redes sociais e acabamento corporativo.</p>
+    </div>
+    <div class="callout">
+      <svg class="ico"><use href="#i-target"/></svg>
+      <p><strong>Objetivo:</strong> aumentar o conhecimento do mercado sobre recuperação de crédito e reforçar o posicionamento da Ubots no tema.</p>
+    </div>
+  </div>
+
+  <div class="s2-right">
+    <h3 class="h3"><span class="ico-tile"><svg class="ico"><use href="#i-list-checks"/></svg></span>Formato</h3>
+    <div class="fmt-grid">
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-timer"/></svg></span><span>45” a 75” por vídeo</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-smartphone"/></svg></span><span>Vertical 9:16</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-camera"/></svg></span><span>Captação com iPhone 16</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-mic"/></svg></span><span>Microfone dedicado</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-map-pin"/></svg></span><span>Gravação no Instituto Caldeira</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-user-round"/></svg></span><span>Hostess: Ste</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-captions"/></svg></span><span>Legendas dinâmicas</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-sparkles"/></svg></span><span>2 a 3 intervenções gráficas por vídeo</span></div>
+      <div class="fmt card"><span class="ico-tile"><svg class="ico"><use href="#i-music"/></svg></span><span>Trilha com ritmo e linguagem contemporânea</span></div>
+    </div>
+  </div>
+
+  <div class="band s2-dir">
+    <span class="ico-tile ico-tile--dark"><svg class="ico"><use href="#i-compass"/></svg></span>
+    <div>
+      <span class="band-label">Direção</span>
+      <p>Conteúdo leve, direto e nativo de social, sem perder consistência e credibilidade B2B.</p>
+    </div>
+    <svg class="waves" viewBox="0 0 112 66" aria-hidden="true"><path d="M6 12q11-10 22 0t22 0t22 0t22 0t16-3"/><path d="M6 33q11-10 22 0t22 0t22 0t22 0t16-3"/><path d="M6 54q11-10 22 0t22 0t22 0t22 0t16-3"/></svg>
+  </div>
+</section>
+
+<!-- ============ 03 · CONTEÚDO DA SÉRIE ============ -->
+<section class="slide s3">
+  <header class="top">
+    <span class="logo"><svg class="mark" viewBox="0 0 62 80"><path class="bubble" d="M4 61A30 30 0 1 1 22.2 75L3 80Z"/><circle class="dot" cx="48" cy="14" r="10"/></svg>ubots</span>
+    <span class="count"><b>03</b> / 06</span>
+  </header>
+  <div class="head">
+    <span class="tag">Recuperação de Crédito</span>
+    <h2 class="title">Conteúdo da <span class="grad">série</span></h2>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <colgroup><col style="width:150px"><col style="width:236px"><col style="width:660px"><col></colgroup>
+      <thead><tr><th>Filme</th><th>Funil</th><th>Tema</th><th>Objetivo</th></tr></thead>
+      <tbody>
+        <tr><td class="num"><span class="grad">01</span></td><td><span class="funnel f-topo">Topo</span></td><td class="tema">O consumidor mudou. A forma de cobrar também precisa mudar.</td><td class="obj">Gerar awareness e atualizar a percepção sobre cobrança</td></tr>
+        <tr><td class="num"><span class="grad">02</span></td><td><span class="funnel f-topo">Topo</span></td><td class="tema">Cobrança não precisa ser sinônimo de pressão.</td><td class="obj">Trabalhar relacionamento, experiência e redução de atrito</td></tr>
+        <tr><td class="num"><span class="grad">03</span></td><td><span class="funnel f-topomeio">Topo–Meio</span></td><td class="tema">Automatizar uma régua ruim só faz você errar mais rápido.</td><td class="obj">Mostrar que automação sem inteligência escala ineficiência</td></tr>
+        <tr><td class="num"><span class="grad">04</span></td><td><span class="funnel f-meio">Meio</span></td><td class="tema">Nem todo inadimplente deve receber a mesma cobrança.</td><td class="obj">Introduzir segmentação, contexto, propensão e timing</td></tr>
+        <tr><td class="num"><span class="grad">05</span></td><td><span class="funnel f-meiofim">Meio–Fim</span></td><td class="tema">Crediauc: IA em negociações que exigem contexto.</td><td class="obj">Gerar prova e aprofundar o novo case</td></tr>
+        <tr><td class="num"><span class="grad">06</span></td><td><span class="funnel f-meiofim">Meio–Fim</span></td><td class="tema">Sua operação está pronta para uma nova recuperação de crédito?</td><td class="obj">Direcionar para o diagnóstico online</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 04 · LINGUAGEM E EXECUÇÃO ============ -->
+<section class="slide s4">
+  <header class="top">
+    <span class="logo"><svg class="mark" viewBox="0 0 62 80"><path class="bubble" d="M4 61A30 30 0 1 1 22.2 75L3 80Z"/><circle class="dot" cx="48" cy="14" r="10"/></svg>ubots</span>
+    <span class="count"><b>04</b> / 06</span>
+  </header>
+  <div class="head">
+    <span class="tag">Recuperação de Crédito</span>
+    <h2 class="title">Linguagem e <span class="grad">execução</span></h2>
+  </div>
+
+  <div class="card s4-lang">
+    <svg class="qmark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 17.5c-1-1.1-1.6-2.3-1.6-4.3 0-3.5 2.5-6.6 6.1-8.2l.9 1.4c-3.4 1.8-4 4.2-4.3 5.7.6-.3 1.5-.4 2.3-.3 2.1.2 3.7 1.9 3.7 4 0 2.2-1.8 4-4 4-1.2 0-2.4-.6-3.1-1.3zm10 0c-1-1.1-1.6-2.3-1.6-4.3 0-3.5 2.5-6.6 6.1-8.2l.9 1.4c-3.4 1.8-4 4.2-4.3 5.7.6-.3 1.5-.4 2.3-.3 2.1.2 3.7 1.9 3.7 4 0 2.2-1.8 4-4 4-1.2 0-2.4-.6-3.1-1.3z"/></svg>
+    <h3 class="h3"><span class="ico-tile"><svg class="ico"><use href="#i-messages-square"/></svg></span>Linguagem</h3>
+    <p class="statement">Especialista falando com especialista.</p>
+    <p class="p">A Ste conduz os conteúdos diretamente para a câmera, com fala natural, segura e objetiva.</p>
+  </div>
+
+  <div class="card s4-edit">
+    <h3 class="h3"><span class="ico-tile"><svg class="ico"><use href="#i-scissors"/></svg></span>Edição</h3>
+    <ul class="checks">
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>cortes ágeis;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>alternância de enquadramento;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>legendas acompanhando a narrativa;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>destaques de palavras e números;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>ilustrações, emojis ou pequenos gráficos;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>trilha discreta, mas com ritmo.</li>
+    </ul>
+    <!-- Ilustração: linha do tempo de edição (cortes, legendas, trilha) -->
+    <svg class="tl" viewBox="0 0 320 232" aria-hidden="true">
+      <rect x=".5" y=".5" width="319" height="231" rx="22" fill="#FFFBEA" stroke="#F6E7B0"/>
+      <path d="M24 16V28M41 21V28M58 21V28M75 21V28M92 16V28M109 21V28M126 21V28M143 21V28M160 16V28M177 21V28M194 21V28M211 21V28M228 16V28M245 21V28M262 21V28M279 21V28M296 16V28" stroke="#E6D6A8" stroke-width="2" stroke-linecap="round"/>
+      <rect x="24" y="42" width="70" height="44" rx="10" fill="#FFDD1E"/>
+      <rect x="100" y="42" width="54" height="44" rx="10" fill="#FCC347"/>
+      <rect x="160" y="42" width="78" height="44" rx="10" fill="#FFE98A"/>
+      <rect x="244" y="42" width="52" height="44" rx="10" fill="#FFDD1E"/>
+      <g fill="#fff" stroke="#F2D46B" stroke-width="2">
+        <rect x="44" y="98" width="66" height="30" rx="9"/><rect x="128" y="98" width="48" height="30" rx="9"/><rect x="200" y="98" width="76" height="30" rx="9"/>
+      </g>
+      <g fill="#F3B02C" transform="translate(0 -26)"><rect x="24" y="188.4" width="4" height="19.2" rx="2"/><rect x="32" y="177.8" width="4" height="40.3" rx="2"/><rect x="40" y="178.8" width="4" height="38.5" rx="2"/><rect x="48" y="181.6" width="4" height="32.8" rx="2"/><rect x="56" y="190.6" width="4" height="14.8" rx="2"/><rect x="64" y="189.7" width="4" height="16.7" rx="2"/><rect x="72" y="188.6" width="4" height="18.8" rx="2"/><rect x="80" y="191.4" width="4" height="13.1" rx="2"/><rect x="88" y="190.9" width="4" height="14.1" rx="2"/><rect x="96" y="192.2" width="4" height="11.6" rx="2"/><rect x="104" y="189.4" width="4" height="17.1" rx="2"/><rect x="112" y="185.3" width="4" height="25.3" rx="2"/><rect x="120" y="178.2" width="4" height="39.6" rx="2"/><rect x="128" y="181.8" width="4" height="32.3" rx="2"/><rect x="136" y="186.4" width="4" height="23.1" rx="2"/><rect x="144" y="189.3" width="4" height="17.4" rx="2"/><rect x="152" y="179.4" width="4" height="37.2" rx="2"/><rect x="160" y="177.8" width="4" height="40.4" rx="2"/><rect x="168" y="181.3" width="4" height="33.4" rx="2"/><rect x="176" y="188.4" width="4" height="19.1" rx="2"/><rect x="184" y="191.5" width="4" height="13.0" rx="2"/><rect x="192" y="188.4" width="4" height="19.1" rx="2"/><rect x="200" y="192.6" width="4" height="10.9" rx="2"/><rect x="208" y="190.3" width="4" height="15.4" rx="2"/><rect x="216" y="192.6" width="4" height="10.8" rx="2"/><rect x="224" y="190.3" width="4" height="15.3" rx="2"/><rect x="232" y="185.9" width="4" height="24.1" rx="2"/><rect x="240" y="178.4" width="4" height="39.2" rx="2"/><rect x="248" y="179.8" width="4" height="36.5" rx="2"/><rect x="256" y="185.0" width="4" height="26.0" rx="2"/><rect x="264" y="190.4" width="4" height="15.1" rx="2"/><rect x="272" y="181.5" width="4" height="33.0" rx="2"/><rect x="280" y="177.3" width="4" height="41.3" rx="2"/><rect x="288" y="181.4" width="4" height="33.2" rx="2"/></g>
+      <line x1="170" y1="30" x2="170" y2="212" stroke="#0B0602" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="170" cy="30" r="9" fill="#0B0602"/><circle cx="170" cy="30" r="3.5" fill="#FFDD1E"/>
+    </svg>
+  </div>
+
+  <div class="band s4-result">
+    <span class="ico-tile ico-tile--dark"><svg class="ico"><use href="#i-eye"/></svg></span>
+    <div>
+      <span class="band-label">Resultado visual</span>
+      <p>Um conteúdo que parece <span class="y">feito para redes sociais</span> —<br>e não um filme institucional adaptado para Reels.</p>
+    </div>
+    <svg class="waves" viewBox="0 0 112 66" aria-hidden="true"><path d="M6 12q11-10 22 0t22 0t22 0t22 0t16-3"/><path d="M6 33q11-10 22 0t22 0t22 0t22 0t16-3"/><path d="M6 54q11-10 22 0t22 0t22 0t22 0t16-3"/></svg>
+  </div>
+</section>
+
+<!-- ============ 05 · O QUE SERÁ ENTREGUE ============ -->
+<section class="slide s5">
+  <header class="top">
+    <span class="logo"><svg class="mark" viewBox="0 0 62 80"><path class="bubble" d="M4 61A30 30 0 1 1 22.2 75L3 80Z"/><circle class="dot" cx="48" cy="14" r="10"/></svg>ubots</span>
+    <span class="count"><b>05</b> / 06</span>
+  </header>
+  <div class="head">
+    <span class="tag">Recuperação de Crédito</span>
+    <h2 class="title">O que será <span class="grad">entregue</span></h2>
+  </div>
+
+  <div class="card s5-card">
+    <div class="s5-count">
+      <h3><span class="big"><span class="grad">6</span></span> vídeos finalizados</h3>
+      <p>Cada filme inclui:</p>
+    </div>
+    <ul class="checks s5-list">
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>planejamento de pauta;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>roteiro-base;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>direção de conteúdo;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>captação;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>edição;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>tratamento de áudio e imagem;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>legendas;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>trilha;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>2 a 3 intervenções gráficas;</li>
+      <li><svg class="ico"><use href="#i-circle-check"/></svg>arquivo final pronto para publicação em redes sociais.</li>
+    </ul>
+  </div>
+
+  <div class="s5-line">
+    <div class="row">
+      <h3 class="h3"><span class="ico-tile"><svg class="ico"><use href="#i-route"/></svg></span>Linha editorial</h3>
+      <p class="p">A série evolui de:</p>
+    </div>
+    <div class="flow">
+      <span class="step st1">mudança de comportamento</span><svg class="ico arrow"><use href="#i-arrow-right"/></svg>
+      <span class="step st2">relacionamento</span><svg class="ico arrow"><use href="#i-arrow-right"/></svg>
+      <span class="step st3">inteligência</span><svg class="ico arrow"><use href="#i-arrow-right"/></svg>
+      <span class="step st4">automação</span><svg class="ico arrow"><use href="#i-arrow-right"/></svg>
+      <span class="step st5">prova</span><svg class="ico arrow"><use href="#i-arrow-right"/></svg>
+      <span class="step st6">conversão</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 · INVESTIMENTO ============ -->
+<section class="slide s6 dark">
+  <header class="top">
+    <span class="logo logo--light"><svg class="mark" viewBox="0 0 62 80"><path class="bubble" d="M4 61A30 30 0 1 1 22.2 75L3 80Z"/><circle class="dot" cx="48" cy="14" r="10"/></svg>ubots</span>
+    <span class="count"><b>06</b> / 06</span>
+  </header>
+
+  <div class="s6-center">
+    <span class="tag tag--dark">Recuperação de Crédito</span>
+    <h2 class="s6-title">Investimento total</h2>
+    <p class="price"><span class="grad" data-grad="bright">R$ 4.579</span></p>
+  </div>
+
+  <div class="s6-cards">
+    <div class="dcard">
+      <span class="ico-tile ico-tile--dark"><svg class="ico"><use href="#i-clapperboard"/></svg></span>
+      <h3>6 vídeos</h3>
+      <p class="dprice">R$ 763 por vídeo</p>
+      <p class="dp">Incluindo planejamento, captação e pós-produção.</p>
+    </div>
+    <div class="dcard">
+      <span class="ico-tile ico-tile--dark"><svg class="ico"><use href="#i-send"/></svg></span>
+      <h3>Entrega</h3>
+      <p class="dp">Série completa de conteúdos pronta para utilização nas redes sociais da Ubots.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Os destaques em degradê do site usam background-clip:text, que no PDF do Chromium
+  // deixa filetes nas bordas do texto. Aqui cada .grad ganha uma camada SVG por cima,
+  // com o mesmo texto preenchido por um degradê vetorial; o original só reserva o espaço.
+  const GRADS = {
+    gold: [[0, '#FFD936'], [.55, '#FBC532'], [1, '#F3B02C']],
+    bright: [[0, '#FFE24A'], [.45, '#FFD21E'], [1, '#F6B52C']],
+  };
+  window.gradReady = document.fonts.ready.then(() => {
+    document.querySelectorAll('.grad').forEach((el, i) => {
+      const r = el.getBoundingClientRect();
+      const probe = document.createElement('span');
+      probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+      el.appendChild(probe);
+      const baseline = probe.getBoundingClientRect().top - r.top;
+      probe.remove();
+
+      const layer = document.createElement('span');
+      layer.className = 'grad-layer';
+      el.after(layer);
+      const cb = layer.offsetParent, cr = cb.getBoundingClientRect();
+      layer.style.left = `${r.left - cr.left - cb.clientLeft}px`;
+      layer.style.top = `${r.top - cr.top - cb.clientTop}px`;
+
+      const cs = getComputedStyle(el);
+      const stops = GRADS[el.dataset.grad || 'gold']
+        .map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('');
+      layer.innerHTML =
+        `<svg width="${r.width}" height="${r.height}" viewBox="0 0 ${r.width} ${r.height}">` +
+        `<defs><linearGradient id="grad-${i}" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${r.width}" y2="${r.height * .36}">${stops}</linearGradient></defs>` +
+        `<text x="0" y="${baseline}" fill="url(#grad-${i})"></text></svg>`;
+      const t = layer.querySelector('text');
+      t.textContent = el.textContent;
+      Object.assign(t.style, {
+        fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight,
+        letterSpacing: cs.letterSpacing,
+      });
+      el.style.visibility = 'hidden';
+    });
+  });
+</script>
+</body>
+</html>
