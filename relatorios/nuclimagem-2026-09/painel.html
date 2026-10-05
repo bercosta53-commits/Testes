@@ -22,10 +22,10 @@
     --brand-4: #f8eff1;
 
     /* Google Ads */
-    --ads: #24395e;
-    --ads-2: #6b7fa3;
-    --ads-3: #bcc6d9;
-    --ads-4: #edf0f6;
+    --ads: #46386b;
+    --ads-2: #8d7fb4;
+    --ads-3: #cdc4e2;
+    --ads-4: #f1eef7;
 
     /* Google Meu Negócio */
     --gmn: #17696a;
@@ -220,7 +220,7 @@
   .heat .rl { display: flex; align-items: center; }
   .heat .c { border-radius: 1.5pt; }
   .heat .xl { grid-column: span 3; padding-top: 3pt; }
-  .l0 { background: #f2f3f6; } .l1 { background: var(--ads-4); } .l2 { background: var(--ads-3); } .l3 { background: var(--ads-2); } .l4 { background: var(--ads); }
+  .l0 { background: #f4f3f7; } .l1 { background: var(--ads-4); } .l2 { background: var(--ads-3); } .l3 { background: var(--ads-2); } .l4 { background: var(--ads); }
   .scale { display: flex; align-items: center; gap: 2pt; font-size: 7.5pt; color: var(--muted); margin-top: 9pt; }
   .scale i { width: 10pt; height: 8pt; border-radius: 1.5pt; display: block; }
   .scale span { margin: 0 4pt; }
@@ -237,7 +237,7 @@
   .age .c { border-radius: 2pt; }
   .age .xl { text-align: center; padding-top: 3pt; }
   .age .xl.on { color: var(--ink); font-weight: 600; }
-  .a0 { background: #f2f3f6; } .a1 { background: var(--ads-4); } .a2 { background: #d6dce8; } .a3 { background: var(--ads-3); } .a4 { background: var(--ads-2); } .a5 { background: var(--ads); }
+  .a0 { background: #f4f3f7; } .a1 { background: var(--ads-4); } .a2 { background: #ddd6eb; } .a3 { background: var(--ads-3); } .a4 { background: var(--ads-2); } .a5 { background: var(--ads); }
 
   /* ---------- Unidades GMN ---------- */
   .unit-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10pt; }
@@ -375,13 +375,13 @@
             <div class="v">12.285</div>
             <div class="c"><em>Custo por mil exibições</em>R$ 68<span class="chip pos"><i class="dn"></i>2,6%</span></div>
           </div>
-          <div class="arrow"><b>6,5%</b><svg viewBox="0 0 26 8"><path d="M0 4h23M20 1l3 3-3 3" fill="none" stroke="#24395e" stroke-width="1.2"/></svg><span class="chip pos"><i class="up"></i>0,1 p.p.</span></div>
+          <div class="arrow"><b>6,5%</b><svg viewBox="0 0 26 8"><path d="M0 4h23M20 1l3 3-3 3" fill="none" stroke="#46386b" stroke-width="1.2"/></svg><span class="chip pos"><i class="up"></i>0,1 p.p.</span></div>
           <div class="step">
             <div class="k">Clicou e foi ao site</div>
             <div class="v">802</div>
             <div class="c"><em>Custo por clique</em>R$ 1,04<span class="chip pos"><i class="dn"></i>4,6%</span></div>
           </div>
-          <div class="arrow"><b>27,1%</b><svg viewBox="0 0 26 8"><path d="M0 4h23M20 1l3 3-3 3" fill="none" stroke="#24395e" stroke-width="1.2"/></svg><span class="chip neg"><i class="dn"></i>2,1 p.p.</span></div>
+          <div class="arrow"><b>27,1%</b><svg viewBox="0 0 26 8"><path d="M0 4h23M20 1l3 3-3 3" fill="none" stroke="#46386b" stroke-width="1.2"/></svg><span class="chip neg"><i class="dn"></i>2,1 p.p.</span></div>
           <div class="step final">
             <div class="k">Pediu contato</div>
             <div class="v">218</div>
@@ -688,7 +688,7 @@
 
 <script>
 const NS = "http://www.w3.org/2000/svg";
-const C = { ads: "#24395e", ads3: "#bcc6d9", ads4: "#edf0f6", ink: "#1f1d22", muted: "#7c7882", line: "#e6e3e9" };
+const C = { ads: "#46386b", ads3: "#cdc4e2", ads4: "#f1eef7", ink: "#1f1d22", muted: "#7c7882", line: "#e6e3e9" };
 function el(tag, attrs, parent, text) {
   const e = document.createElementNS(NS, tag);
   for (const k in attrs) e.setAttribute(k, attrs[k]);
