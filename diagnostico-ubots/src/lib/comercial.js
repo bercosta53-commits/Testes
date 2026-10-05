@@ -1,9 +1,11 @@
 /* Textos e regras do painel comercial (COPY.md, seção 5). */
-import { QUESTIONS, calcular } from "../DiagnosticoRecuperacaoIA.jsx";
+import { QUESTIONS } from "../diagnostico/modelo.js";
+import { aprofundar, faixa, rotuloResposta as rotuloPorId } from "../diagnostico/leitura.js";
+import { minusculas, perfil } from "../diagnostico/perfil.js";
 
 export const fmtNum = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(Math.round(n));
 export const fmtBRL = (n) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", maximumFractionDigits: 1 }).format(n);
+  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(n);
 export const fmtData = (iso) => {
   try {
     return new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(iso));
@@ -34,46 +36,64 @@ export const SUGESTOES = {
 };
 
 /* Rótulo legível de uma resposta (o texto da opção, não o valor numérico). */
-export const rotuloResposta = (q, valor) => q.opcoes.find((o) => o.value === valor)?.label ?? "Sem resposta";
-export const rotuloTipo = (valor) => rotuloResposta(QUESTIONS[0], valor);
+export const rotuloResposta = (q, valor) => rotuloPorId(q.id, valor);
+export const rotuloTipo = (valor) => rotuloPorId("tipo", valor);
+
+/* A leitura é sempre recalculada a partir das respostas: leads da primeira versão continuam funcionando. */
+const cache = new WeakMap();
+export const leituraDoLead = (lead) => {
+  if (!cache.has(lead)) cache.set(lead, aprofundar(lead.respostas));
+  return cache.get(lead);
+};
 
 export const capacidadeTexto = (r) =>
   `${fmtNum(r.capacidade_atual_mes)} hoje, estimativa de ${fmtNum(r.capacidade_ia_mes[0])} a ${fmtNum(r.capacidade_ia_mes[1])} com IA`;
 
+/* O valor a mais é o saldo renegociado no primeiro mês: depois disso a fila já é menor. */
 export const potencialTexto = (r) =>
   r.valor_adicional_mes[1] > 0
-    ? `${fmtBRL(r.valor_adicional_mes[0])} a ${fmtBRL(r.valor_adicional_mes[1])} por mês`
+    ? `${faixa(r.valor_adicional_mes[0], r.valor_adicional_mes[1], fmtBRL)} no primeiro mês`
     : "Sem fila represada";
 
-export const dimensoes = (respostas) => calcular(respostas)?.dims ?? [];
-
-/* Minúsculas para o meio da frase, preservando siglas como LGPD. */
-const minusculas = (s) => s.split(" ").map((p) => (p.length > 1 && p === p.toUpperCase() ? p : p.toLowerCase())).join(" ");
+export const dimensoes = (respostas) => aprofundar(respostas)?.dims ?? [];
 
 export function linhaSDR(lead) {
-  const dims = dimensoes(lead.respostas);
-  const menor = dims.reduce((m, d) => (m === null || d.pontos < m.pontos ? d : m), null);
-  const foco = menor && menor.pontos < 2 ? minusculas(menor.nome) : "capacidade de renegociação";
+  const a = leituraDoLead(lead);
+  const foco = a?.pontoCritico ? minusculas(a.pontoCritico.nome) : "capacidade de renegociação";
   const nome = lead.lead.nome.trim().split(/\s+/)[0];
-  return `Oi, ${nome}. Vi o diagnóstico da ${lead.lead.instituicao} e achei interessante o cenário que apareceu em ${foco}. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
+  const prep = perfil(lead.respostas.tipo).preposicao;
+  if (lead.interesse) {
+    return `Oi, ${nome}. Recebi seu pedido de conversa sobre o diagnóstico ${prep} ${lead.lead.instituicao}. O cenário de ${foco} chamou atenção. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
+  }
+  return `Oi, ${nome}. Vi o diagnóstico ${prep} ${lead.lead.instituicao} e achei interessante o cenário que apareceu em ${foco}. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
 }
 
-/* Exportação CSV (separador ";" e BOM para abrir direto no Excel em português). */
+export const fmtMesesCurto = (m) => (m === null || m === undefined ? "" : new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 }).format(m));
+
+/* Exportação CSV (separador ";" e BOM para abrir direto no Excel em português).
+   As colunas da primeira versão ficam na mesma ordem; as novas entram no fim. */
 export function gerarCSV(leads) {
   const cabecalho = [
     "Data", "Nome", "E-mail", "WhatsApp", "Instituição", "Tipo", "Nível", "Pontos",
     "Renegociações por mês hoje", "Com IA (mínimo)", "Com IA (máximo)",
-    "Potencial adicional por mês (mínimo)", "Potencial adicional por mês (máximo)", "Origem",
+    "Potencial adicional no primeiro mês (mínimo)", "Potencial adicional no primeiro mês (máximo)", "Origem",
     ...QUESTIONS.map((q) => q.titulo),
+    "Pediu conversa", "Data do pedido", "Ponto crítico", "Saldo em atraso estimado",
+    "Meses para percorrer a carteira hoje", "Meses com IA (mínimo)", "Meses com IA (máximo)",
   ];
   const linhas = leads.map((l) => {
     const r = l.resultado;
+    const a = leituraDoLead(l);
+    const res = a?.res;
     return [
       fmtData(l.enviado_em), l.lead.nome, l.lead.email, fmtWhatsApp(l.lead.whatsapp), l.lead.instituicao,
       rotuloTipo(l.respostas.tipo), r.nivel, `${r.pontos} de ${r.pontos_max}`,
       r.capacidade_atual_mes, r.capacidade_ia_mes[0], r.capacidade_ia_mes[1],
       r.valor_adicional_mes[0], r.valor_adicional_mes[1], rotuloOrigem(l.utm_content),
       ...QUESTIONS.map((q) => rotuloResposta(q, l.respostas[q.id])),
+      l.interesse ? "Sim" : "Não", l.interesse ? fmtData(l.interesse.em) : "",
+      a?.pontoCritico?.nome ?? "Nenhum", l.respostas.contratos * l.respostas.ticket,
+      res && !res.filaCoberta ? fmtMesesCurto(res.mesesHoje) : "", res ? fmtMesesCurto(res.mesesIA[0]) : "", res ? fmtMesesCurto(res.mesesIA[1]) : "",
     ];
   });
   const celula = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;

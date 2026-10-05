@@ -28,6 +28,20 @@ export function salvarLead(payload, utmContent) {
   return lead;
 }
 
+export function atualizarLead(id, mudancas) {
+  if (!id) return null;
+  const leads = lerLeads();
+  const i = leads.findIndex((l) => l.id === id);
+  if (i < 0) return null;
+  leads[i] = { ...leads[i], ...mudancas };
+  try {
+    localStorage.setItem(CHAVE_LEADS, JSON.stringify(leads));
+  } catch {
+    /* armazenamento indisponível */
+  }
+  return leads[i];
+}
+
 export function limparLeads() {
   try { localStorage.removeItem(CHAVE_LEADS); } catch { /* sem armazenamento */ }
 }

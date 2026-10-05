@@ -1,4 +1,19 @@
 /* Cenários do modo demonstração (CLAUDE_prototipo_diagnostico.md). */
+export const FORM_DEMO = {
+  nome: "Ana Souza",
+  email: "ana@cooperativa-exemplo.com.br",
+  fone: "(51) 99999-0000",
+  instituicao: "Cooperativa Exemplo",
+  aceite: true,
+};
+
+/* Para o banco, o formulário usa um banco fictício: assim o texto "o seu banco" combina com o nome. */
+export const FORM_DEMO_POR_TIPO = {
+  banco: { ...FORM_DEMO, email: "ana@banco-exemplo.com.br", instituicao: "Banco Exemplo" },
+  financeira: { ...FORM_DEMO, email: "ana@financeira-exemplo.com.br", instituicao: "Financeira Exemplo" },
+};
+export const formDemo = (tipo) => FORM_DEMO_POR_TIPO[tipo] || FORM_DEMO;
+
 export const CENARIOS = [
   {
     nome: "Cooperativa média",
@@ -13,11 +28,3 @@ export const CENARIOS = [
     respostas: { tipo: "cooperativa", pessoas: 12, contratos: 1200, ticket: 1500, ritmo: 0.5, regua: 0, canal: 0, politica: 0, integracao: 0, consentimento: 0 },
   },
 ];
-
-export const FORM_DEMO = {
-  nome: "Ana Souza",
-  email: "ana@cooperativa-exemplo.com.br",
-  fone: "(51) 99999-0000",
-  instituicao: "Cooperativa Exemplo",
-  aceite: true,
-};

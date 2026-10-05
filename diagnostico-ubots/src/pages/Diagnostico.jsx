@@ -3,11 +3,9 @@ import { useSearchParams } from "react-router-dom";
 import DiagnosticoRecuperacaoIA from "../DiagnosticoRecuperacaoIA.jsx";
 import useTitulo from "../components/useTitulo.js";
 import PainelDemo from "../components/PainelDemo.jsx";
-import { salvarLead } from "../lib/leads.js";
+import { atualizarLead, salvarLead } from "../lib/leads.js";
 import { movimentoReduzido } from "../lib/movimento.js";
-import { CENARIOS, FORM_DEMO } from "../lib/demo.js";
-
-const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+import { CENARIOS, formDemo } from "../lib/demo.js";
 
 export default function Diagnostico() {
   useTitulo("Diagnóstico de recuperação com IA | Ubots");
@@ -17,23 +15,28 @@ export default function Diagnostico() {
 
   const area = useRef(null);
   const [instancia, setInstancia] = useState({ chave: 0, cenario: null });
-  const [formDemo, setFormDemo] = useState(null);
+  const [formPreenchido, setFormPreenchido] = useState(null);
 
-  const onLead = useCallback(async (payload) => {
-    salvarLead(payload, utmContent);
-    await espera(500);
-  }, [utmContent]);
+  const onLead = useCallback((payload) => salvarLead(payload, utmContent), [utmContent]);
+  const onInteresse = useCallback((id) => {
+    atualizarLead(id, { interesse: { em: new Date().toISOString() } });
+  }, []);
 
-  const escolherCenario = (i) => setInstancia((v) => ({ chave: v.chave + 1, cenario: i }));
+  /* Cada cenário abre na captação; depois do primeiro "Preencher formulário", já vem preenchido. */
+  const escolherCenario = (i) => {
+    if (formPreenchido) setFormPreenchido({ ...formDemo(CENARIOS[i].respostas.tipo) });
+    setInstancia((v) => ({ chave: v.chave + 1, cenario: i }));
+  };
 
   const preencherFormulario = () => {
-    const form = area.current?.querySelector("form");
-    setFormDemo({ ...FORM_DEMO });
+    const form = area.current?.querySelector('form[data-form="lead"]');
     if (!form) {
-      // Fora da prévia: abre o cenário atual (ou o primeiro) já com o formulário preenchido.
-      setInstancia((v) => ({ chave: v.chave + 1, cenario: v.cenario ?? 0 }));
+      const i = instancia.cenario ?? 0;
+      setFormPreenchido({ ...formDemo(CENARIOS[i].respostas.tipo) });
+      setInstancia((v) => ({ chave: v.chave + 1, cenario: i }));
       return;
     }
+    setFormPreenchido({ ...formDemo(form.dataset.tipo) });
     const enviar = form.querySelector('button[type="submit"]');
     requestAnimationFrame(() => {
       enviar?.scrollIntoView({ behavior: movimentoReduzido() ? "auto" : "smooth", block: "center" });
@@ -48,9 +51,11 @@ export default function Diagnostico() {
       <DiagnosticoRecuperacaoIA
         key={instancia.chave}
         onLead={onLead}
+        onInteresse={onInteresse}
         respostasIniciais={cenario?.respostas}
-        etapaInicial={cenario ? "previa" : undefined}
-        formInicial={formDemo}
+        etapaInicial={cenario ? "captura" : undefined}
+        formInicial={formPreenchido}
+        persistir={!demo}
       />
       {demo && (
         <PainelDemo

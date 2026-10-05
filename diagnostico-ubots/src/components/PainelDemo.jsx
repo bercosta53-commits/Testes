@@ -17,7 +17,7 @@ export default function PainelDemo({ cenarios, ativo, onCenario, onPreencher }) 
       <button
         type="button"
         onClick={() => setAberto(true)}
-        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full bg-tinta px-4 py-3 text-sm font-semibold text-white shadow-lg foco-claro"
+        className="sem-impressao fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full bg-tinta px-4 py-3 text-sm font-semibold text-white shadow-lg foco-claro"
       >
         <FlaskConical size={16} aria-hidden="true" className="text-amarelo" /> Modo demonstração
       </button>
@@ -27,7 +27,7 @@ export default function PainelDemo({ cenarios, ativo, onCenario, onPreencher }) 
   return (
     <aside
       aria-labelledby="demo-titulo"
-      className="fixed inset-x-3 bottom-3 z-40 rounded-2xl border border-linha bg-white p-4 shadow-[0_18px_48px_-16px_rgba(20,20,20,0.45)] sm:inset-x-auto sm:bottom-4 sm:right-4 sm:w-[300px]"
+      className="sem-impressao fixed inset-x-3 bottom-3 z-40 rounded-2xl border border-linha bg-white p-4 shadow-[0_18px_48px_-16px_rgba(20,20,20,0.45)] sm:inset-x-auto sm:bottom-4 sm:right-4 sm:w-[300px]"
     >
       <div className="mb-3 flex items-center justify-between gap-2">
         <h2 id="demo-titulo" className="flex items-center gap-2 text-sm font-bold">

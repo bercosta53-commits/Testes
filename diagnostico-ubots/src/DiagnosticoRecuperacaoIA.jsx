@@ -1,224 +1,32 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import { ArrowLeft, Check, Lock, ShieldCheck, RotateCcw } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, Info, ListChecks, Loader2, ShieldCheck } from "lucide-react";
+import { C, CONFIG, FONT, MAX_PONTOS, QUESTIONS, calcular, fmtNum } from "./diagnostico/modelo.js";
+import { aprofundar } from "./diagnostico/leitura.js";
+import { ajudaPara, motivoPara, perfil, tituloPara } from "./diagnostico/perfil.js";
+import { BotaoPrimario, BotaoTexto, Campo, Marca, Opcao } from "./diagnostico/ui.jsx";
+import Resultado from "./diagnostico/Resultado.jsx";
+
+/* O painel e o modo demonstração importam estes dois daqui. */
+export { QUESTIONS, calcular };
+
+const CHAVE_PROGRESSO = "ubots_diag_progresso";
+const FORM_VAZIO = { nome: "", email: "", fone: "", instituicao: "", aceite: false };
+const WEBMAIL = /@(gmail|googlemail|hotmail|outlook|live|msn|yahoo|icloud|me|bol|uol|terra|ig|protonmail)\.[a-z.]+$/i;
+const ANALISE = (p) => [`Calculando a capacidade atual ${p.daInst}`, "Aplicando a faixa do nível de prontidão", "Montando o plano de piloto"];
 
 /* =========================================================
-   CONFIGURAÇÃO — ajuste aqui no Lovable
-   ========================================================= */
-const CONFIG = {
-  // Webhook que recebe o lead (Make, Zapier, n8n, HubSpot via proxy, Supabase Edge Function).
-  // Vazio = modo de teste: o lead só aparece no console e o fluxo segue normalmente.
-  webhookUrl: "",
-  // Página de contato/agenda do time comercial da Ubots.
-  ctaUrl: "https://ubots.com.br/contato",
-  diasUteisMes: 21,
-};
-
-/* Identidade Ubots */
-const C = {
-  bg: "#FFFBEF",
-  card: "#FFFFFF",
-  ink: "#141414",
-  muted: "#6B6558",
-  line: "#ECE4CF",
-  yellow: "#FFC800",
-  yellowSoft: "#FFF4C7",
-  error: "#B42318",
-};
-const FONT = "'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif";
-
-/* =========================================================
-   PERGUNTAS
-   ========================================================= */
-const OPERACAO = "Sua operação";
-const PRONTIDAO = "Sua prontidão";
-
-export const QUESTIONS = [
-  {
-    id: "tipo", fase: OPERACAO,
-    titulo: "Que tipo de instituição você representa?",
-    opcoes: [
-      { label: "Cooperativa de crédito", value: "cooperativa" },
-      { label: "Banco", value: "banco" },
-      { label: "Financeira ou fintech", value: "financeira" },
-      { label: "Outro tipo de instituição", value: "outro" },
-    ],
-  },
-  {
-    id: "pessoas", fase: OPERACAO,
-    titulo: "Quantas pessoas negociam dívidas hoje?",
-    ajuda: "Conte todo mundo que negocia, mesmo sem dedicação exclusiva.",
-    opcoes: [
-      { label: "1 a 5", value: 3 },
-      { label: "6 a 20", value: 12 },
-      { label: "21 a 50", value: 35 },
-      { label: "51 a 150", value: 100 },
-      { label: "Mais de 150", value: 200 },
-    ],
-  },
-  {
-    id: "contratos", fase: OPERACAO,
-    titulo: "Quantos contratos estão em atraso na carteira?",
-    opcoes: [
-      { label: "Até 500", value: 300 },
-      { label: "500 a 2 mil", value: 1200 },
-      { label: "2 mil a 10 mil", value: 6000 },
-      { label: "10 mil a 50 mil", value: 25000 },
-      { label: "Mais de 50 mil", value: 70000 },
-    ],
-  },
-  {
-    id: "ticket", fase: OPERACAO,
-    titulo: "Qual o valor médio de uma dívida em atraso?",
-    opcoes: [
-      { label: "Até R$ 2 mil", value: 1500 },
-      { label: "R$ 2 mil a R$ 10 mil", value: 5000 },
-      { label: "R$ 10 mil a R$ 50 mil", value: 20000 },
-      { label: "Mais de R$ 50 mil", value: 75000 },
-    ],
-  },
-  {
-    id: "ritmo", fase: OPERACAO,
-    titulo: "Quantas renegociações cada pessoa fecha por dia, em média?",
-    opcoes: [
-      { label: "Menos de 1", value: 0.5 },
-      { label: "1 a 3", value: 2 },
-      { label: "4 a 8", value: 6 },
-      { label: "Mais de 8", value: 10 },
-    ],
-  },
-  {
-    id: "regua", fase: PRONTIDAO, dim: "Régua de cobrança",
-    titulo: "Como o cliente em atraso recebe a proposta hoje?",
-    opcoes: [
-      { label: "A mesma mensagem para todos", value: 0 },
-      { label: "Mensagens por faixa de atraso", value: 1 },
-      { label: "Propostas por perfil de cliente", value: 2 },
-      { label: "Proposta ajustada caso a caso", value: 3 },
-    ],
-  },
-  {
-    id: "canal", fase: PRONTIDAO, dim: "Canal de negociação",
-    titulo: "Por onde acontece a maior parte das negociações?",
-    opcoes: [
-      { label: "Ligação telefônica", value: 0 },
-      { label: "SMS ou e-mail", value: 1 },
-      { label: "WhatsApp com atendente", value: 2 },
-      { label: "WhatsApp com alguma automação", value: 3 },
-    ],
-  },
-  {
-    id: "politica", fase: PRONTIDAO, dim: "Política de negociação",
-    titulo: "Como são definidos desconto, prazo e parcela?",
-    opcoes: [
-      { label: "Cada caso depende de aprovação", value: 0 },
-      { label: "Existem faixas, mas não estão escritas", value: 1 },
-      { label: "Regras documentadas por faixa", value: 2 },
-      { label: "Regras parametrizadas no sistema", value: 3 },
-    ],
-  },
-  {
-    id: "integracao", fase: PRONTIDAO, dim: "Acesso aos dados",
-    titulo: "Como a equipe consulta a dívida e as condições do cliente?",
-    opcoes: [
-      { label: "Planilhas e relatórios exportados", value: 0 },
-      { label: "Sistema central, sem API disponível", value: 1 },
-      { label: "Sistema com API que a TI pode liberar", value: 2 },
-      { label: "API já usada em outros canais digitais", value: 3 },
-    ],
-  },
-  {
-    id: "consentimento", fase: PRONTIDAO, dim: "Consentimento e LGPD",
-    titulo: "Os clientes autorizaram contato por WhatsApp?",
-    opcoes: [
-      { label: "Não sabemos", value: 0 },
-      { label: "Só uma parte da base", value: 1 },
-      { label: "A maioria, com registro", value: 3 },
-    ],
-  },
-];
-
-const DIMS = QUESTIONS.filter((q) => q.dim);
-const MAX_PONTOS = DIMS.reduce((s, q) => s + Math.max(...q.opcoes.map((o) => o.value)), 0);
-
-/* Multiplicadores conservadores por nível — o teste Crediauc ficou em ~15x */
-const NIVEIS = [
-  { max: 5, nome: "Preparar a base", mult: [2, 3],
-    resumo: "O ganho existe, mas antes do agente vale organizar regras e dados." },
-  { max: 10, nome: "Pronta para piloto", mult: [3, 5],
-    resumo: "Sua operação já tem o essencial para testar um agente numa campanha." },
-  { max: MAX_PONTOS, nome: "Pronta para escalar", mult: [4, 7],
-    resumo: "Regras, canal e dados estão maduros. O agente pode entrar na operação contínua." },
-];
-
-const RECOMENDACOES = {
-  regua: "Segmente a carteira pela capacidade de pagamento, não só pelos dias de atraso. É essa leitura que permite propor uma parcela que cabe no bolso.",
-  canal: "Leve a negociação para o WhatsApp. O cliente responde no tempo dele, sem a pressão de uma ligação no meio do expediente.",
-  politica: "Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação. O agente só negocia sozinho dentro de regras escritas.",
-  integracao: "Liste com a TI os dados que o agente precisa consultar (saldo, atraso, condições) e por onde eles saem. Uma integração simples já viabiliza o piloto.",
-  consentimento: "Revise a autorização de contato por WhatsApp da base em atraso. Contato com registro protege a instituição perante o CDC e a LGPD.",
-};
-const PASSOS_GERAIS = [
-  "Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola, e compare contratos renegociados e valor quitado com a operação atual.",
-  "Defina o transbordo: quais exceções vão para um analista, sempre com o histórico da conversa junto.",
-  "Acompanhe a reincidência dos acordos fechados pelo agente. Parcela que cabe no orçamento tende a ser cumprida até o fim.",
-];
-
-/* =========================================================
-   CÁLCULO
-   ========================================================= */
-export function calcular(r) {
-  const req = ["pessoas", "contratos", "ticket", "ritmo", ...DIMS.map((d) => d.id)];
-  if (req.some((k) => r[k] === undefined)) return null;
-
-  const pontos = DIMS.reduce((s, q) => s + r[q.id], 0);
-  const nivel = NIVEIS.find((n) => pontos <= n.max) || NIVEIS[NIVEIS.length - 1];
-
-  const atual = r.pessoas * r.ritmo * CONFIG.diasUteisMes;
-  const ia = [atual * nivel.mult[0], atual * nivel.mult[1]];
-  const limitar = (x) => Math.min(x, r.contratos);
-
-  const passos = DIMS
-    .map((q) => ({ id: q.id, pontos: r[q.id] }))
-    .filter((d) => d.pontos <= 1)
-    .sort((a, b) => a.pontos - b.pontos)
-    .map((d) => RECOMENDACOES[d.id]);
-  for (const p of PASSOS_GERAIS) if (passos.length < 3) passos.push(p);
-
-  return {
-    pontos, nivel, atual, ia,
-    filaCoberta: atual >= r.contratos,
-    mesesHoje: r.contratos / atual,
-    mesesIA: [r.contratos / ia[1], r.contratos / ia[0]],
-    extra: [(limitar(ia[0]) - limitar(atual)) * r.ticket, (limitar(ia[1]) - limitar(atual)) * r.ticket],
-    dims: DIMS.map((q) => ({ nome: q.dim, pontos: r[q.id], max: Math.max(...q.opcoes.map((o) => o.value)) })),
-    passos: passos.slice(0, 3),
-  };
-}
-
-const fmtNum = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(Math.round(n));
-const fmtBRL = (n) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", maximumFractionDigits: 1 }).format(n);
-const fmtMeses = (m) => {
-  if (m < 1) return "menos de 1 mês";
-  const v = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 }).format(m);
-  return `${v} ${m < 2 ? "mês" : "meses"}`;
-};
-
-const fmtMesesInteiro = (m) => {
-  const v = Math.max(1, Math.round(m));
-  return `${fmtNum(v)} ${v === 1 ? "mês" : "meses"}`;
-};
-
-/* =========================================================
-   UTILITÁRIOS DE FORMULÁRIO
+   FORMULÁRIO
    ========================================================= */
 const mascaraFone = (v) => {
-  const d = v.replace(/\D/g, "").slice(0, 11);
+  let d = v.replace(/\D/g, "");
+  if (d.length >= 12 && d.startsWith("55")) d = d.slice(2); // colado com o código do país
+  d = d.slice(0, 11);
   if (d.length <= 2) return d.length ? `(${d}` : "";
   if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
   if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
 };
+
 function validar(f) {
   const e = {};
   if (f.nome.trim().length < 2) e.nome = "Informe seu nome.";
@@ -229,6 +37,14 @@ function validar(f) {
   if (!f.aceite) e.aceite = "Marque a autorização para ver o diagnóstico.";
   return e;
 }
+
+/* Sugere o nome da instituição a partir do domínio do e-mail (ana@banco-exemplo.com.br → Banco Exemplo). */
+const sugerirInstituicao = (email) => {
+  const m = email.trim().toLowerCase().match(/^[^\s@]+@([a-z0-9-]+)\.[a-z.]{2,}$/);
+  if (!m || WEBMAIL.test(email.trim())) return null;
+  return m[1].split("-").filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+};
+
 const lerUTMs = () => {
   try {
     const p = new URLSearchParams(window.location.search);
@@ -238,114 +54,287 @@ const lerUTMs = () => {
   } catch { return {}; }
 };
 
+const lerProgresso = () => {
+  try { return JSON.parse(sessionStorage.getItem(CHAVE_PROGRESSO)) || null; } catch { return null; }
+};
+const gravarProgresso = (v) => {
+  try { v ? sessionStorage.setItem(CHAVE_PROGRESSO, JSON.stringify(v)) : sessionStorage.removeItem(CHAVE_PROGRESSO); } catch { /* sem armazenamento */ }
+};
+
+const movimentoReduzido = () => {
+  try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch { return false; }
+};
+
 /* =========================================================
-   COMPONENTES
+   ETAPAS
    ========================================================= */
-function Marca() {
+function Abertura({ q, resposta, onEscolher, tituloRef }) {
   return (
-    <div className="flex items-center gap-2" aria-label="Ubots">
-      <span style={{ width: 12, height: 12, borderRadius: "50% 50% 50% 0", background: C.yellow, display: "inline-block" }} />
-      <span className="font-bold text-lg" style={{ color: C.ink, letterSpacing: "-0.02em" }}>ubots</span>
-    </div>
-  );
-}
-
-function BotaoPrimario({ children, onClick, type = "button", disabled }) {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className="w-full sm:w-auto px-7 py-4 rounded-full font-semibold text-base focus:outline-none focus:ring-4 focus:ring-yellow-200"
-      style={{ background: C.yellow, color: C.ink, opacity: disabled ? 0.6 : 1, minHeight: 52 }}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Opcao({ label, selecionada, onClick }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={selecionada}
-      className="w-full text-left px-5 py-4 rounded-xl flex items-center justify-between gap-3 focus:outline-none focus:ring-4 focus:ring-yellow-200"
-      style={{
-        border: `2px solid ${selecionada ? C.ink : C.line}`,
-        background: selecionada ? C.yellowSoft : C.card,
-        color: C.ink,
-        transition: "border-color .15s ease, background .15s ease",
-        minHeight: 56,
-      }}
-    >
-      <span className="text-base">{label}</span>
-      <span
-        className="flex items-center justify-center rounded-full flex-shrink-0"
-        style={{ width: 24, height: 24, border: `2px solid ${selecionada ? C.ink : C.line}`, background: selecionada ? C.ink : "transparent" }}
-      >
-        {selecionada && <Check size={14} color={C.yellow} strokeWidth={3} />}
-      </span>
-    </button>
-  );
-}
-
-function Campo({ id, label, erro, ...props }) {
-  return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-semibold mb-1" style={{ color: C.ink }}>{label}</label>
-      <input
-        id={id}
-        {...props}
-        aria-invalid={!!erro}
-        aria-describedby={erro ? `${id}-erro` : undefined}
-        className="w-full px-4 py-3 rounded-lg text-base focus:outline-none focus:ring-4 focus:ring-yellow-200"
-        style={{ border: `1.5px solid ${erro ? C.error : C.line}`, background: C.card, color: C.ink, minHeight: 48 }}
-      />
-      {erro && <p id={`${id}-erro`} className="text-sm mt-1" style={{ color: C.error }}>{erro}</p>}
-    </div>
-  );
-}
-
-function Barra({ rotulo, valor, largura, larguraFaixa, destaque, animar }) {
-  return (
-    <div>
-      <div className="flex justify-between items-baseline gap-3 mb-2">
-        <span className="text-sm" style={{ color: C.muted }}>{rotulo}</span>
-        <span className="font-bold text-lg" style={{ color: C.ink }}>{valor}</span>
+    <main className="entra grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:items-start">
+      <div>
+        <h1 ref={tituloRef} tabIndex={-1} className="font-bold mb-4 outline-none" style={{ fontSize: "clamp(1.9rem, 6vw, 2.6rem)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
+          Qual seria o potencial da IA na sua operação de recuperação?
+        </h1>
+        <p className="text-lg" style={{ color: C.muted, lineHeight: 1.55 }}>
+          Responda 10 perguntas sobre a sua operação de cobrança. Ao final, você informa seus dados e recebe o diagnóstico completo na hora.
+        </p>
+        <figure className="hidden lg:block rounded-2xl p-5 mt-8" style={{ background: C.card, border: `1px solid ${C.line}` }}>
+          <Destaque />
+        </figure>
       </div>
-      <div className="relative w-full rounded-full overflow-hidden" style={{ height: 14, background: C.line }}>
-        {larguraFaixa !== undefined && (
-          <div className="absolute top-0 left-0 h-full rounded-full"
-            style={{ width: animar ? `${larguraFaixa}%` : "0%", background: C.yellowSoft, transition: "width 1s cubic-bezier(.2,.8,.2,1) .15s" }} />
+
+      <section aria-labelledby="pergunta-tipo" className="rounded-2xl p-5 sm:p-6" style={{ background: C.card, border: `1px solid ${C.line}` }}>
+        <h2 id="pergunta-tipo" className="font-bold text-lg mb-4" style={{ letterSpacing: "-0.01em" }}>
+          Para começar, que tipo de instituição você representa?
+        </h2>
+        <div className="flex flex-col gap-3" role="group" aria-labelledby="pergunta-tipo">
+          {q.opcoes.map((o, i) => (
+            <Opcao key={o.value} numero={i + 1} label={o.label} selecionada={resposta === o.value} onClick={() => onEscolher(o.value)} />
+          ))}
+        </div>
+        <p className="text-sm mt-4" style={{ color: C.muted }}>10 perguntas · cerca de 2 minutos · sem custo</p>
+      </section>
+
+      <figure className="lg:hidden rounded-2xl p-5" style={{ background: C.card, border: `1px solid ${C.line}` }}>
+        <Destaque />
+      </figure>
+    </main>
+  );
+}
+
+function Destaque() {
+  return (
+    <>
+      <p className="text-base font-semibold mb-2" style={{ color: C.ink, lineHeight: 1.5 }}>
+        No case Sicoob Crediauc, um colaborador acompanhado de um agente de IA renegociou, em 5 dias, cerca de metade do valor alcançado por 135 gerentes nos 75 dias anteriores.
+      </p>
+      <figcaption className="text-sm" style={{ color: C.muted, lineHeight: 1.55 }}>
+        Considerando o período analisado, a experiência mostra um ganho relevante de capacidade operacional.
+      </figcaption>
+    </>
+  );
+}
+
+function Pergunta({ q, idx, resp, revisando, onEscolher, onVoltar, onAvancar, onVoltarFormulario, tituloRef }) {
+  const fase = q.fase;
+  const daFase = QUESTIONS.filter((x) => x.fase === fase);
+  const pos = daFase.findIndex((x) => x.id === q.id) + 1;
+  const parte = fase === QUESTIONS[0].fase ? 1 : 2;
+  const p = perfil(resp.tipo);
+  const ajuda = ajudaPara(q, resp.tipo);
+  const motivo = motivoPara(q, resp.tipo);
+  const respondida = resp[q.id] !== undefined;
+  const primeiraProntidao = q.id === QUESTIONS.find((x) => x.dim).id;
+  const atual = resp.pessoas !== undefined && resp.ritmo !== undefined ? resp.pessoas * resp.ritmo * CONFIG.diasUteisMes : null;
+
+  return (
+    <main>
+      <div className="flex gap-1.5 mb-6" aria-hidden="true">
+        {QUESTIONS.map((x, i) => (
+          <span key={x.id} className="h-1.5 flex-1 rounded-full"
+            style={{ background: i <= idx ? C.yellow : C.line, transition: "background .3s ease", marginRight: i === 4 ? 6 : 0 }} />
+        ))}
+      </div>
+
+      {primeiraProntidao && !revisando && atual !== null && (
+        <div className="entra flex gap-3 rounded-xl p-4 mb-6 text-sm" style={{ background: C.yellowSoft, border: `1px solid ${C.yellow}`, lineHeight: 1.5 }}>
+          <Check size={18} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+          <p>
+            <span className="font-semibold">Parte 1 concluída.</span>{" "}
+            {`Pelas suas respostas, a equipe ${p.daInst} fecha hoje cerca de ${fmtNum(atual)} renegociações por mês. Agora, 5 perguntas sobre a prontidão para um agente de IA.`}
+          </p>
+        </div>
+      )}
+
+      <div key={q.id} className="entra">
+        <p className="text-sm font-semibold mb-2" style={{ color: C.muted }}>
+          {`Parte ${parte} de 2 · ${fase}, ${pos} de ${daFase.length}`}
+        </p>
+        <h1 ref={tituloRef} tabIndex={-1} className="font-bold mb-2 outline-none" style={{ fontSize: "clamp(1.4rem, 4.5vw, 1.75rem)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+          {tituloPara(q, resp.tipo)}
+        </h1>
+        {ajuda && <p className="text-sm mb-1" style={{ color: C.muted }}>{ajuda}</p>}
+        {motivo && (
+          <p className="flex items-start gap-1.5 text-sm" style={{ color: C.muted }}>
+            <Info size={14} className="mt-0.5 flex-shrink-0" aria-hidden="true" /> {motivo}
+          </p>
         )}
-        <div className="absolute top-0 left-0 h-full rounded-full"
-          style={{ width: animar ? `${largura}%` : "0%", background: destaque ? C.yellow : C.ink, transition: "width .9s cubic-bezier(.2,.8,.2,1)" }} />
+
+        <div className="flex flex-col gap-3 mt-6" role="group" aria-label={tituloPara(q, resp.tipo)}>
+          {q.opcoes.map((o, i) => (
+            <Opcao key={String(o.value)} numero={i + 1} label={o.label} selecionada={resp[q.id] === o.value} onClick={() => onEscolher(o.value)} />
+          ))}
+        </div>
+        <p className="hidden sm:block text-xs mt-3" style={{ color: C.muted }}>{`Atalho: teclas 1 a ${q.opcoes.length}.`}</p>
       </div>
-    </div>
+
+      <div className="mt-8 flex items-center justify-between gap-3">
+        {revisando ? (
+          <BotaoTexto onClick={onVoltarFormulario}><ArrowLeft size={16} aria-hidden="true" /> Voltar ao formulário</BotaoTexto>
+        ) : (
+          <BotaoTexto onClick={onVoltar}><ArrowLeft size={16} aria-hidden="true" /> Voltar</BotaoTexto>
+        )}
+        {respondida && !revisando && (
+          <BotaoTexto onClick={onAvancar} className="!text-tinta">Avançar <ArrowRight size={16} aria-hidden="true" /></BotaoTexto>
+        )}
+      </div>
+    </main>
+  );
+}
+
+function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloRef, camposRef }) {
+  const p = perfil(resp.tipo);
+  const sugestao = !form.instituicao.trim() ? sugerirInstituicao(form.email) : null;
+  const webmail = WEBMAIL.test(form.email.trim());
+  const itens = [
+    "Renegociações por mês, hoje e com um agente de IA",
+    "Tempo para percorrer a carteira em atraso e o saldo envolvido",
+    "A leitura de cada uma das 5 dimensões de prontidão",
+    "O que falta para o próximo nível",
+    `Um plano de piloto para ${p.inst}, com base no case Sicoob Crediauc`,
+  ];
+
+  return (
+    <main className="entra grid gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:items-start">
+      <div>
+        <p className="text-sm font-semibold mb-2" style={{ color: C.muted }}>Diagnóstico concluído</p>
+        <h1 ref={tituloRef} tabIndex={-1} className="font-bold outline-none" style={{ fontSize: "clamp(1.7rem, 5.5vw, 2.3rem)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
+          {`O diagnóstico ${p.daInst} está pronto.`}
+        </h1>
+        <p className="text-lg mt-3 mb-5" style={{ color: C.muted, lineHeight: 1.55 }}>Informe seus dados para ver o resultado completo nesta tela:</p>
+        <ul className="flex flex-col gap-3 mb-6">
+          {itens.map((t) => (
+            <li key={t} className="flex gap-3 text-base" style={{ lineHeight: 1.45 }}>
+              <span className="flex-shrink-0 flex items-center justify-center rounded-full mt-0.5" style={{ width: 22, height: 22, background: C.yellow }}>
+                <Check size={13} strokeWidth={3} aria-hidden="true" />
+              </span>
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <details className="rounded-2xl px-5 py-4" style={{ background: C.card, border: `1px solid ${C.line}` }}>
+          <summary className="flex cursor-pointer items-center gap-2 font-semibold text-sm rounded-md focus:outline-none focus:ring-4 focus:ring-yellow-200">
+            <ListChecks size={16} aria-hidden="true" /> Suas respostas (10)
+          </summary>
+          <dl className="mt-3 flex flex-col">
+            {QUESTIONS.map((q, i) => (
+              <div key={q.id} className="flex items-start justify-between gap-3 py-2.5" style={{ borderTop: `1px solid ${C.line}` }}>
+                <div className="min-w-0">
+                  <dt className="text-xs" style={{ color: C.muted }}>{q.curto}</dt>
+                  <dd className="text-sm font-semibold">{q.opcoes.find((o) => o.value === resp[q.id])?.label}</dd>
+                </div>
+                <button type="button" onClick={() => onAlterar(i)} aria-label={`Alterar: ${q.curto}`}
+                  className="flex-shrink-0 rounded-md px-2 py-1 text-xs font-semibold underline underline-offset-2 focus:outline-none focus:ring-4 focus:ring-yellow-200">
+                  Alterar
+                </button>
+              </div>
+            ))}
+          </dl>
+        </details>
+      </div>
+
+      <section aria-label="Seus dados" className="rounded-2xl p-5 sm:p-6" style={{ background: C.ink }}>
+        <form onSubmit={enviar} noValidate data-form="lead" data-tipo={resp.tipo}
+          className="flex flex-col gap-4 rounded-xl p-4 sm:p-5" style={{ background: C.bg, color: C.ink }}>
+          <Campo id="nome" label="Nome" autoComplete="name" placeholder="Ana Souza" ref={(el) => { camposRef.current.nome = el; }}
+            value={form.nome} erro={erros.nome} onBlur={() => tocar("nome")} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
+          <Campo id="email" label="E-mail de trabalho" type="email" autoComplete="email" inputMode="email" placeholder={p.exemploEmail}
+            ref={(el) => { camposRef.current.email = el; }}
+            value={form.email} erro={erros.email} onBlur={() => tocar("email")} onChange={(e) => setForm({ ...form, email: e.target.value })}
+            dica={!erros.email && webmail ? `Se puder, use o e-mail ${p.daInst}. Assim o especialista identifica a sua operação.` : undefined} />
+          <Campo id="fone" label="WhatsApp" type="tel" autoComplete="tel" inputMode="tel" placeholder="(51) 99999-9999"
+            ref={(el) => { camposRef.current.fone = el; }}
+            value={form.fone} erro={erros.fone} onBlur={() => tocar("fone")} onChange={(e) => setForm({ ...form, fone: mascaraFone(e.target.value) })} />
+          <Campo id="instituicao" label={p.campoNome} autoComplete="organization" ref={(el) => { camposRef.current.instituicao = el; }}
+            value={form.instituicao} erro={erros.instituicao} onBlur={() => tocar("instituicao")} onChange={(e) => setForm({ ...form, instituicao: e.target.value })}>
+            {sugestao && (
+              <button type="button" onClick={() => setForm({ ...form, instituicao: sugestao })}
+                className="mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-yellow-200"
+                style={{ background: C.yellowSoft, border: `1px solid ${C.yellow}` }}>
+                {`Usar “${sugestao}”`}
+              </button>
+            )}
+          </Campo>
+
+          <div>
+            <label className="flex items-start gap-3 text-sm cursor-pointer" style={{ lineHeight: 1.45 }}>
+              <input type="checkbox" checked={form.aceite} ref={(el) => { camposRef.current.aceite = el; }}
+                onChange={(e) => setForm({ ...form, aceite: e.target.checked })}
+                aria-invalid={!!erros.aceite} aria-describedby={erros.aceite ? "aceite-erro" : undefined}
+                className="mt-1 flex-shrink-0" style={{ width: 18, height: 18, accentColor: C.ink }} />
+              <span>Autorizo a Ubots a usar estes dados para dar continuidade ao diagnóstico e entrar em contato sobre ele.</span>
+            </label>
+            {erros.aceite && <p id="aceite-erro" className="text-sm mt-1" style={{ color: C.error }}>{erros.aceite}</p>}
+          </div>
+
+          <BotaoPrimario type="submit">Ver meu diagnóstico <ArrowRight size={18} aria-hidden="true" /></BotaoPrimario>
+          <p className="flex items-center gap-2 text-xs" style={{ color: C.muted }}>
+            <ShieldCheck size={14} className="flex-shrink-0" aria-hidden="true" /> Seus dados serão utilizados pelo time da Ubots para dar continuidade ao diagnóstico.
+          </p>
+        </form>
+      </section>
+    </main>
+  );
+}
+
+function Analise({ resp, tituloRef }) {
+  const linhas = ANALISE(perfil(resp.tipo));
+  const [feitas, setFeitas] = useState(() => (movimentoReduzido() ? linhas.length : 0));
+  useEffect(() => {
+    if (feitas >= linhas.length) return;
+    const t = setTimeout(() => setFeitas((n) => n + 1), 380);
+    return () => clearTimeout(t);
+  }, [feitas, linhas.length]);
+
+  return (
+    <main className="entra max-w-md">
+      <h1 ref={tituloRef} tabIndex={-1} className="font-bold text-2xl mb-6 outline-none" style={{ letterSpacing: "-0.02em" }}>
+        Preparando seu diagnóstico...
+      </h1>
+      <ul className="flex flex-col gap-4" aria-live="polite">
+        {linhas.map((l, i) => (
+          <li key={l} className="flex items-center gap-3 text-base" style={{ color: i < feitas ? C.ink : C.muted }}>
+            <span className="flex-shrink-0 flex items-center justify-center rounded-full" style={{ width: 24, height: 24, background: i < feitas ? C.yellow : C.line }}>
+              {i < feitas ? <Check size={14} strokeWidth={3} aria-hidden="true" /> : i === feitas ? <Loader2 size={14} className="animate-spin" aria-hidden="true" /> : null}
+            </span>
+            {l}
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }
 
 /* =========================================================
    APP
+   Props opcionais para integração:
+   onLead(payload) substitui o webhook e pode devolver { id };
+   onInteresse(id) registra o pedido de conversa;
+   respostasIniciais, etapaInicial e formInicial abrem o diagnóstico já respondido (modo demonstração);
+   persistir guarda o progresso na sessão do navegador.
    ========================================================= */
-/* Props opcionais para integração:
-   onLead(payload) substitui o webhook; respostasIniciais e etapaInicial abrem o
-   diagnóstico já respondido; formInicial preenche o formulário (modo demonstração). */
-export default function DiagnosticoRecuperacaoIA({ onLead, respostasIniciais, etapaInicial, formInicial } = {}) {
-  const [etapa, setEtapa] = useState(etapaInicial || "intro"); // intro | quiz | previa | completo
-  const [idx, setIdx] = useState(0);
-  const [resp, setResp] = useState(respostasIniciais || {});
-  const [form, setForm] = useState({ nome: "", email: "", fone: "", instituicao: "", aceite: false });
-  const [erros, setErros] = useState({});
-  const [enviando, setEnviando] = useState(false);
-  const [animar, setAnimar] = useState(false);
-  const timer = useRef(null);
-  const topo = useRef(null);
+export default function DiagnosticoRecuperacaoIA({
+  onLead, onInteresse, respostasIniciais, etapaInicial, formInicial, persistir = true,
+} = {}) {
+  const salvo = useMemo(() => (persistir && !respostasIniciais && !etapaInicial ? lerProgresso() : null), [persistir, respostasIniciais, etapaInicial]);
 
-  const reduzido = useMemo(() => {
-    try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch { return false; }
-  }, []);
+  const [etapa, setEtapa] = useState(salvo?.etapa || etapaInicial || "intro"); // intro | quiz | captura | analise | resultado
+  const [idx, setIdx] = useState(salvo?.idx ?? 1);
+  const [resp, setResp] = useState(salvo?.resp || respostasIniciais || {});
+  const [form, setForm] = useState(FORM_VAZIO);
+  const [erros, setErros] = useState({});
+  const [tocados, setTocados] = useState({});
+  const [revisando, setRevisando] = useState(false);
+  const [lead, setLead] = useState(salvo?.lead || null);
+  const [interesse, setInteresse] = useState(!!salvo?.interesse);
+  const timer = useRef(null);
+  const tituloRef = useRef(null);
+  const camposRef = useRef({});
+  const primeiraVez = useRef(true);
+  const reduzido = useMemo(movimentoReduzido, []);
+
+  const a = useMemo(() => (calcular(resp) ? aprofundar(resp) : null), [resp]);
 
   useEffect(() => {
     if (!document.getElementById("font-sora")) {
@@ -361,284 +350,191 @@ export default function DiagnosticoRecuperacaoIA({ onLead, respostasIniciais, et
     if (formInicial) { setForm((f) => ({ ...f, ...formInicial })); setErros({}); }
   }, [formInicial]);
 
+  /* Guarda o progresso na sessão: um recarregamento não perde as respostas nem o resultado. */
   useEffect(() => {
-    if (topo.current) topo.current.scrollIntoView({ behavior: reduzido ? "auto" : "smooth", block: "start" });
-    if (etapa === "previa" || etapa === "completo") {
-      setAnimar(false);
-      const t = setTimeout(() => setAnimar(true), reduzido ? 0 : 60);
-      return () => clearTimeout(t);
-    }
-  }, [etapa, reduzido]);
+    if (!persistir || respostasIniciais || etapaInicial) return;
+    if (etapa === "intro" && !Object.keys(resp).length) { gravarProgresso(null); return; }
+    gravarProgresso({ etapa: etapa === "analise" ? "captura" : etapa, idx, resp, lead, interesse });
+  }, [persistir, respostasIniciais, etapaInicial, etapa, idx, resp, lead, interesse]);
 
-  const res = useMemo(() => calcular(resp), [resp]);
-  const q = QUESTIONS[idx];
+  /* A cada troca de pergunta ou etapa: volta ao topo e leva o foco ao título. */
+  useEffect(() => {
+    if (primeiraVez.current) { primeiraVez.current = false; return; }
+    if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: reduzido ? "instant" : "smooth" });
+    tituloRef.current?.focus({ preventScroll: true });
+  }, [etapa, idx, reduzido]);
+
+  /* Se a etapa salva exigir um resultado que não pode ser calculado, recomeça. */
+  useEffect(() => {
+    if ((etapa === "captura" || etapa === "resultado") && !a) setEtapa("intro");
+    if (etapa === "resultado" && !lead) setEtapa("captura");
+  }, [etapa, a, lead]);
+
+  const avancarPara = useCallback((proximo) => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(proximo, reduzido ? 0 : 240);
+  }, [reduzido]);
+
+  const escolherTipo = (valor) => {
+    setResp((r) => ({ ...r, tipo: valor }));
+    if (revisando) { avancarPara(() => { setRevisando(false); setEtapa("captura"); }); return; }
+    avancarPara(() => { setIdx(1); setEtapa("quiz"); });
+  };
 
   const escolher = (valor) => {
+    const q = QUESTIONS[idx];
     setResp((r) => ({ ...r, [q.id]: valor }));
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      if (idx < QUESTIONS.length - 1) setIdx(idx + 1);
-      else setEtapa("previa");
-    }, reduzido ? 0 : 240);
+    if (revisando) { avancarPara(() => { setRevisando(false); setEtapa("captura"); }); return; }
+    avancarPara(() => { if (idx < QUESTIONS.length - 1) setIdx(idx + 1); else setEtapa("captura"); });
   };
 
   const voltar = () => {
     clearTimeout(timer.current);
-    if (idx === 0) setEtapa("intro");
+    if (idx <= 1) setEtapa("intro");
     else setIdx(idx - 1);
   };
 
-  const reiniciar = () => {
-    setResp({}); setIdx(0); setErros({}); setEtapa("intro");
+  const avancar = () => {
+    if (idx < QUESTIONS.length - 1) setIdx(idx + 1);
+    else setEtapa("captura");
   };
+
+  const alterar = (i) => {
+    if (i === 0) { setRevisando(true); setEtapa("intro"); return; }
+    setRevisando(true); setIdx(i); setEtapa("quiz");
+  };
+
+  /* Atalhos: teclas 1 a 5 escolhem a opção (fora de campos de texto). */
+  useEffect(() => {
+    if (etapa !== "intro" && etapa !== "quiz") return;
+    const aoTeclar = (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+      const n = Number(e.key);
+      const q = etapa === "intro" ? QUESTIONS[0] : QUESTIONS[idx];
+      if (!Number.isInteger(n) || n < 1 || n > q.opcoes.length) return;
+      e.preventDefault();
+      const valor = q.opcoes[n - 1].value;
+      if (etapa === "intro") escolherTipo(valor); else escolher(valor);
+    };
+    window.addEventListener("keydown", aoTeclar);
+    return () => window.removeEventListener("keydown", aoTeclar);
+  });
+
+  const tocar = (campo) => {
+    setTocados((t) => ({ ...t, [campo]: true }));
+    const e = validar(form);
+    setErros((atual) => ({ ...atual, [campo]: e[campo] }));
+  };
+
+  /* Depois de tocado, o erro some assim que o dado é corrigido. */
+  useEffect(() => {
+    const e = validar(form);
+    setErros((atual) => {
+      const novo = {};
+      for (const k of Object.keys(atual)) if (atual[k] && e[k] && (tocados[k] || k === "aceite")) novo[k] = e[k];
+      return novo;
+    });
+  }, [form, tocados]);
 
   const enviar = async (ev) => {
     ev.preventDefault();
     const e = validar(form);
     setErros(e);
-    if (Object.keys(e).length) return;
-    setEnviando(true);
+    setTocados({ nome: true, email: true, fone: true, instituicao: true, aceite: true });
+    const primeiro = ["nome", "email", "fone", "instituicao", "aceite"].find((k) => e[k]);
+    if (primeiro) { camposRef.current[primeiro]?.focus(); return; }
+
+    const res = a.res;
+    const dados = { nome: form.nome.trim(), email: form.email.trim(), whatsapp: form.fone.replace(/\D/g, "").replace(/^55(?=\d{10,11}$)/, ""), instituicao: form.instituicao.trim() };
     const payload = {
-      lead: { nome: form.nome.trim(), email: form.email.trim(), whatsapp: form.fone.replace(/\D/g, ""), instituicao: form.instituicao.trim() },
+      versao: 2,
+      lead: dados,
       respostas: resp,
-      resultado: res && {
+      resultado: {
         nivel: res.nivel.nome, pontos: res.pontos, pontos_max: MAX_PONTOS,
         capacidade_atual_mes: Math.round(res.atual),
         capacidade_ia_mes: res.ia.map(Math.round),
         valor_adicional_mes: res.extra.map(Math.round),
+        saldo_atraso: resp.contratos * resp.ticket,
+        meses_fila_hoje: res.filaCoberta ? null : Math.round(res.mesesHoje * 10) / 10,
+        meses_fila_ia: res.mesesIA.map((m) => Math.round(m * 10) / 10),
+        ponto_critico: a.pontoCritico?.nome ?? null,
+        leituras: a.leituras,
       },
       origem: { pagina: typeof window !== "undefined" ? window.location.href : "", ...lerUTMs() },
       enviado_em: new Date().toISOString(),
     };
+
+    setEtapa("analise");
+    const minimo = new Promise((r) => setTimeout(r, reduzido ? 0 : 1300));
+    let id = null;
     try {
       if (onLead) {
-        await onLead(payload);
+        id = (await onLead(payload))?.id ?? null;
       } else if (CONFIG.webhookUrl) {
-        await fetch(CONFIG.webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        await fetch(CONFIG.webhookUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       } else {
         console.info("[Diagnóstico] modo de teste, lead não enviado:", payload);
       }
     } catch (err) {
       console.error("[Diagnóstico] falha ao enviar lead:", err);
-    } finally {
-      setEnviando(false);
-      setEtapa("completo"); // o usuário nunca fica travado por falha de rede
     }
+    await minimo;
+    setLead({ ...dados, id, enviado_em: payload.enviado_em }); // o usuário nunca fica travado por falha de rede
+    setInteresse(false);
+    setEtapa("resultado");
   };
 
-  const fase = q?.fase;
-  const pergNaFase = QUESTIONS.filter((x) => x.fase === fase);
-  const posNaFase = pergNaFase.findIndex((x) => x.id === q?.id) + 1;
+  const pedirConversa = async () => {
+    try {
+      if (onInteresse) await onInteresse(lead?.id ?? null);
+      else window.open(CONFIG.ctaUrl, "_blank", "noopener");
+    } catch (err) {
+      console.error("[Diagnóstico] falha ao registrar o pedido de conversa:", err);
+    }
+    setInteresse(true);
+  };
+
+  const reiniciar = () => {
+    clearTimeout(timer.current);
+    gravarProgresso(null);
+    setResp({}); setIdx(1); setErros({}); setTocados({}); setLead(null); setInteresse(false); setRevisando(false);
+    setEtapa("intro");
+  };
+
+  const largura = etapa === "quiz" || etapa === "analise" ? "max-w-xl" : etapa === "resultado" ? "max-w-3xl" : "max-w-5xl";
 
   return (
     <div className="min-h-screen w-full" style={{ background: C.bg, fontFamily: FONT, color: C.ink }}>
-      <div ref={topo} className="max-w-xl mx-auto px-5 py-6 sm:py-10">
+      <div className={`${largura} mx-auto px-5 py-6 sm:py-10`}>
         <header className="flex items-center justify-between mb-8">
           <Marca />
           {etapa === "quiz" && (
-            <span className="text-sm" style={{ color: C.muted }}>{idx + 1} de {QUESTIONS.length}</span>
+            <span className="text-sm" style={{ color: C.muted }} aria-live="polite">{`Pergunta ${idx + 1} de ${QUESTIONS.length}`}</span>
           )}
         </header>
 
-        {/* INTRO */}
         {etapa === "intro" && (
-          <main>
-            <h1 className="font-bold mb-4" style={{ fontSize: "clamp(1.9rem, 6vw, 2.6rem)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
-              Qual seria o potencial da IA na sua operação de recuperação?
-            </h1>
-            <p className="text-lg mb-8" style={{ color: C.muted, lineHeight: 1.55 }}>
-              Responda 10 perguntas sobre a sua operação de cobrança. A partir das respostas, você recebe uma estimativa e uma leitura dos principais pontos de preparação para um piloto.
-            </p>
-
-            <figure className="rounded-2xl p-5 mb-8" style={{ background: C.card, border: `1px solid ${C.line}` }}>
-              <p className="text-base font-semibold mb-2" style={{ color: C.ink, lineHeight: 1.5 }}>
-                No case Sicoob Crediauc, um colaborador acompanhado de um agente de IA renegociou, em 5 dias, cerca de metade do valor alcançado por 135 gerentes nos 75 dias anteriores.
-              </p>
-              <figcaption className="text-sm" style={{ color: C.muted, lineHeight: 1.55 }}>
-                Considerando o período analisado, a experiência mostra um ganho relevante de capacidade operacional.
-              </figcaption>
-            </figure>
-
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <BotaoPrimario onClick={() => { setIdx(0); setEtapa("quiz"); }}>Começar diagnóstico</BotaoPrimario>
-              <span className="text-sm text-center sm:text-left" style={{ color: C.muted }}>Cerca de 2 minutos</span>
-            </div>
-          </main>
+          <Abertura q={QUESTIONS[0]} resposta={resp.tipo} onEscolher={escolherTipo} tituloRef={tituloRef} />
         )}
 
-        {/* QUIZ */}
-        {etapa === "quiz" && q && (
-          <main>
-            <div className="w-full rounded-full mb-6 overflow-hidden" style={{ height: 6, background: C.line }}
-              role="progressbar" aria-valuemin={0} aria-valuemax={QUESTIONS.length} aria-valuenow={idx + 1}>
-              <div className="h-full rounded-full"
-                style={{ width: `${((idx + 1) / QUESTIONS.length) * 100}%`, background: C.yellow, transition: reduzido ? "none" : "width .3s ease" }} />
-            </div>
-
-            <p className="text-sm font-semibold mb-2" style={{ color: C.muted }}>
-              {fase}, {posNaFase} de {pergNaFase.length}
-            </p>
-            <h2 key={q.id} className="font-bold mb-2" style={{ fontSize: "clamp(1.4rem, 4.5vw, 1.75rem)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-              {q.titulo}
-            </h2>
-            {q.ajuda && <p className="text-sm mb-2" style={{ color: C.muted }}>{q.ajuda}</p>}
-
-            <div className="flex flex-col gap-3 mt-6" role="group" aria-label={q.titulo}>
-              {q.opcoes.map((o) => (
-                <Opcao key={String(o.value)} label={o.label} selecionada={resp[q.id] === o.value} onClick={() => escolher(o.value)} />
-              ))}
-            </div>
-
-            <button type="button" onClick={voltar}
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold px-2 py-2 rounded-md focus:outline-none focus:ring-4 focus:ring-yellow-200"
-              style={{ color: C.muted }}>
-              <ArrowLeft size={16} /> Voltar
-            </button>
-          </main>
+        {etapa === "quiz" && QUESTIONS[idx] && (
+          <Pergunta q={QUESTIONS[idx]} idx={idx} resp={resp} revisando={revisando} tituloRef={tituloRef}
+            onEscolher={escolher} onVoltar={voltar} onAvancar={avancar}
+            onVoltarFormulario={() => { setRevisando(false); setEtapa("captura"); }} />
         )}
 
-        {/* PRÉVIA + FORMULÁRIO */}
-        {etapa === "previa" && res && (
-          <main>
-            <p className="text-sm font-semibold mb-2" style={{ color: C.muted }}>Sua estimativa</p>
-            <h2 className="font-bold mb-6" style={{ fontSize: "clamp(1.5rem, 5vw, 2rem)", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
-              {res.filaCoberta
-                ? "Sua equipe já consegue acompanhar a fila atual. Nesse cenário, a oportunidade está em ganhar capacidade para negociações mais complexas."
-                : `No ritmo atual, sua equipe levaria cerca de ${fmtMesesInteiro(res.mesesHoje)} para percorrer toda a carteira em atraso.`}
-            </h2>
-
-            <section className="rounded-2xl p-5 sm:p-6 mb-4" style={{ background: C.card, border: `1px solid ${C.line}` }}>
-              <p className="text-sm mb-5" style={{ color: C.muted }}>Renegociações por mês</p>
-              <div className="flex flex-col gap-5">
-                <Barra rotulo="Hoje" valor={fmtNum(res.atual)} largura={(res.atual / res.ia[1]) * 100} animar={animar} />
-                <Barra rotulo="Com agente de IA" valor={`${fmtNum(res.ia[0])} a ${fmtNum(res.ia[1])}`}
-                  largura={(res.ia[0] / res.ia[1]) * 100} larguraFaixa={100} destaque animar={animar} />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 mt-6 pt-5" style={{ borderTop: `1px solid ${C.line}` }}>
-                <div>
-                  <p className="text-sm mb-1" style={{ color: C.muted }}>Tempo para negociar a fila com IA</p>
-                  <p className="font-bold text-lg">
-                    {res.mesesIA[1] < 1 ? "menos de 1 mês" : `${fmtMeses(res.mesesIA[0])} a ${fmtMeses(res.mesesIA[1])}`}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm mb-1" style={{ color: C.muted }}>Dívida renegociada a mais por mês</p>
-                  <p className="font-bold text-lg">
-                    {res.extra[1] > 0 ? `${fmtBRL(res.extra[0])} a ${fmtBRL(res.extra[1])}` : "Sem fila represada"}
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <p className="text-xs mb-8" style={{ color: C.muted, lineHeight: 1.5 }}>
-              Faixa conservadora, entre {res.nivel.mult[0]} e {res.nivel.mult[1]} vezes a capacidade atual, calibrada pela prontidão da sua operação. Valores se referem ao saldo das dívidas renegociadas, não ao valor recebido.
-            </p>
-
-            <section className="rounded-2xl p-5 sm:p-6" style={{ background: C.ink, color: "#FFFFFF" }}>
-              <div className="flex items-center gap-2 mb-2">
-                <Lock size={16} color={C.yellow} />
-                <span className="text-sm font-semibold" style={{ color: C.yellow }}>Nível de prontidão: {res.nivel.nome}</span>
-              </div>
-              <p className="text-base mb-6" style={{ color: "#FFFFFF", lineHeight: 1.55 }}>
-                Acesse o diagnóstico completo para ver sua avaliação nas 5 dimensões e os próximos passos sugeridos para estruturar um agente de IA na operação.
-              </p>
-
-              <form onSubmit={enviar} noValidate className="flex flex-col gap-4 rounded-xl p-4 sm:p-5" style={{ background: C.bg, color: C.ink }}>
-                <Campo id="nome" label="Nome" autoComplete="name" placeholder="Ana Souza"
-                  value={form.nome} erro={erros.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
-                <Campo id="email" label="E-mail de trabalho" type="email" autoComplete="email" inputMode="email" placeholder="ana@cooperativa.com.br"
-                  value={form.email} erro={erros.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-                <Campo id="fone" label="WhatsApp" type="tel" autoComplete="tel" inputMode="tel" placeholder="(51) 99999-9999"
-                  value={form.fone} erro={erros.fone} onChange={(e) => setForm({ ...form, fone: mascaraFone(e.target.value) })} />
-                <Campo id="instituicao" label="Instituição" autoComplete="organization" placeholder="Nome da cooperativa ou banco"
-                  value={form.instituicao} erro={erros.instituicao} onChange={(e) => setForm({ ...form, instituicao: e.target.value })} />
-
-                <div>
-                  <label className="flex items-start gap-3 text-sm cursor-pointer" style={{ lineHeight: 1.45 }}>
-                    <input type="checkbox" checked={form.aceite} onChange={(e) => setForm({ ...form, aceite: e.target.checked })}
-                      className="mt-1 flex-shrink-0" style={{ width: 18, height: 18, accentColor: C.ink }} />
-                    <span>Autorizo a Ubots a usar estes dados para enviar o diagnóstico e entrar em contato sobre ele.</span>
-                  </label>
-                  {erros.aceite && <p className="text-sm mt-1" style={{ color: C.error }}>{erros.aceite}</p>}
-                </div>
-
-                <BotaoPrimario type="submit" disabled={enviando}>
-                  {enviando ? "Preparando seu diagnóstico..." : "Ver diagnóstico completo"}
-                </BotaoPrimario>
-                <p className="flex items-center gap-2 text-xs" style={{ color: C.muted }}>
-                  <ShieldCheck size={14} /> Seus dados serão utilizados pelo time da Ubots para dar continuidade ao diagnóstico.
-                </p>
-              </form>
-            </section>
-
-            <button type="button" onClick={() => { setIdx(QUESTIONS.length - 1); setEtapa("quiz"); }}
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold px-2 py-2 rounded-md focus:outline-none focus:ring-4 focus:ring-yellow-200"
-              style={{ color: C.muted }}>
-              <ArrowLeft size={16} /> Revisar respostas
-            </button>
-          </main>
+        {etapa === "captura" && a && (
+          <Captura resp={resp} form={form} setForm={setForm} erros={erros} tocar={tocar} enviar={enviar}
+            onAlterar={alterar} tituloRef={tituloRef} camposRef={camposRef} />
         )}
 
-        {/* DIAGNÓSTICO COMPLETO */}
-        {etapa === "completo" && res && (
-          <main>
-            <p className="text-sm font-semibold mb-2" style={{ color: C.muted }}>
-              Diagnóstico de {form.instituicao.trim() || "sua instituição"}
-            </p>
-            <h2 className="font-bold mb-3" style={{ fontSize: "clamp(1.7rem, 5.5vw, 2.3rem)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
-              {res.nivel.nome}
-            </h2>
-            <p className="text-lg mb-8" style={{ color: C.muted, lineHeight: 1.55 }}>{res.nivel.resumo}</p>
+        {etapa === "analise" && <Analise resp={resp} tituloRef={tituloRef} />}
 
-            <section className="rounded-2xl p-5 sm:p-6 mb-6" style={{ background: C.card, border: `1px solid ${C.line}` }}>
-              <div className="flex justify-between items-baseline mb-5">
-                <p className="text-sm" style={{ color: C.muted }}>Prontidão por dimensão</p>
-                <p className="font-bold">{res.pontos} de {MAX_PONTOS}</p>
-              </div>
-              <div className="flex flex-col gap-5">
-                {res.dims.map((d) => (
-                  <Barra key={d.nome} rotulo={d.nome} valor={`${d.pontos}/${d.max}`}
-                    largura={Math.max((d.pontos / d.max) * 100, 3)} destaque={d.pontos >= 2} animar={animar} />
-                ))}
-              </div>
-            </section>
-
-            <section className="mb-8">
-              <h3 className="font-bold text-xl mb-4" style={{ letterSpacing: "-0.01em" }}>Próximos passos</h3>
-              <ol className="flex flex-col gap-4">
-                {res.passos.map((p, i) => (
-                  <li key={i} className="flex gap-4">
-                    <span className="flex-shrink-0 flex items-center justify-center rounded-full font-bold text-sm"
-                      style={{ width: 32, height: 32, background: C.yellow, color: C.ink }}>{i + 1}</span>
-                    <p className="text-base pt-1" style={{ lineHeight: 1.55 }}>{p}</p>
-                  </li>
-                ))}
-              </ol>
-            </section>
-
-            <section className="rounded-2xl p-5 sm:p-6" style={{ background: C.yellowSoft, border: `1px solid ${C.yellow}` }}>
-              <h3 className="font-bold text-lg mb-2">Quer aprofundar essa análise com os dados da sua carteira?</h3>
-              <p className="text-sm mb-5" style={{ lineHeight: 1.55 }}>
-                O time da Ubots pode revisar o diagnóstico com você e avaliar um formato de piloto adequado à sua operação.
-              </p>
-              <a href={CONFIG.ctaUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-block px-7 py-4 rounded-full font-semibold text-base focus:outline-none focus:ring-4 focus:ring-yellow-200"
-                style={{ background: C.ink, color: "#FFFFFF" }}>
-                Conversar com um especialista
-              </a>
-            </section>
-
-            <button type="button" onClick={reiniciar}
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold px-2 py-2 rounded-md focus:outline-none focus:ring-4 focus:ring-yellow-200"
-              style={{ color: C.muted }}>
-              <RotateCcw size={16} /> Refazer diagnóstico
-            </button>
-          </main>
+        {etapa === "resultado" && a && lead && (
+          <Resultado a={a} resp={resp} lead={lead} enviadoEm={lead.enviado_em} interesse={interesse}
+            onPedirConversa={pedirConversa} onRefazer={reiniciar} />
         )}
       </div>
     </div>

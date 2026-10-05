@@ -40,6 +40,27 @@
   --tw-ring-color: #e0a800;
 }
 
+/* Entrada suave de cada etapa e pergunta do diagnóstico */
+.entra {
+  animation: entra 0.22s ease-out;
+}
+@keyframes entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media print {
+  .sem-impressao {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  section, li, dl > div {
+    break-inside: avoid;
+  }
+}
+
 @keyframes gaveta-entra {
   from { transform: translateX(32px); opacity: 0; }
   to { transform: none; opacity: 1; }
