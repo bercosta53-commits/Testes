@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-creme font-sans text-tinta antialiased;
+  }
+  /* Foco sempre visível na navegação por teclado */
+  :focus-visible {
+    outline: 3px solid #141414;
+    outline-offset: 2px;
+  }
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+  dialog::backdrop {
+    background: rgb(20 20 20 / 0.45);
+  }
+}
+
+@layer components {
+  .foco-claro:focus-visible {
+    outline-color: #ffc800;
+  }
+  .gaveta[open] {
+    animation: gaveta-entra 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .modal[open] {
+    animation: modal-entra 0.2s ease-out;
+  }
+}
+
+/* Reforça, na navegação por teclado, o anel de foco do componente do diagnóstico
+   (o amarelo-200 original quase desaparece sobre o fundo creme). */
+.focus\:ring-yellow-200:focus-visible {
+  --tw-ring-color: #e0a800;
+}
+
+@keyframes gaveta-entra {
+  from { transform: translateX(32px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes modal-entra {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes sobe {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+/* Movimento reduzido: sem animações, transições nem rolagem suave
+   (vale também para as barras do componente do diagnóstico). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
