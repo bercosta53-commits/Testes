@@ -134,7 +134,12 @@ function DetalheLead({ lead, onFechar }) {
           <p className="text-[0.95rem] leading-relaxed">{a.resumo}</p>
           <p className="mb-2 mt-4 text-sm font-bold">Por onde começar</p>
           <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-[0.95rem] leading-relaxed">
-            {a.passos.map((s) => <li key={s.rotulo}><span className="font-semibold">{s.rotulo}:</span> {s.texto}</li>)}
+            {a.passos.map((s) => (
+              <li key={s.rotulo}>
+                <span className="font-semibold">{s.rotulo}:</span> {s.texto}
+                <span className="block text-apagado">Pronto quando: {s.pronto}</span>
+              </li>
+            ))}
           </ol>
         </Secao>
       )}

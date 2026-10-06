@@ -1,5 +1,5 @@
 /* Textos e regras do painel comercial (COPY.md, seção 5). */
-import { QUESTIONS, analisar, faixa, rotulo as rotuloPorId } from "../DiagnosticoRecuperacaoIA.jsx";
+import { QUESTIONS, analisar, faixa, faixaReais, fmtQtd, fmtReais, rotulo as rotuloPorId } from "../DiagnosticoRecuperacaoIA.jsx";
 
 /* Nome de cada dimensão no meio da frase da linha do SDR. */
 const DIM_FRASE = {
@@ -20,9 +20,8 @@ export const PERGUNTAS_LIGACAO = {
   nenhum: ["Qual carteira faria sentido para um piloto de 5 a 15 dias?", "Quais indicadores a diretoria usaria para avaliar o piloto?"],
 };
 
-export const fmtNum = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(Math.round(n));
-export const fmtBRL = (n) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(n);
+/* Mesmo arredondamento do resultado: sem casas decimais. */
+export const fmtBRL = fmtReais;
 export const fmtData = (iso) => {
   try {
     return new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(iso));
@@ -64,12 +63,12 @@ export const leituraDoLead = (lead) => {
 };
 
 export const capacidadeTexto = (r) =>
-  `${fmtNum(r.capacidade_atual_mes)} hoje, estimativa de ${fmtNum(r.capacidade_ia_mes[0])} a ${fmtNum(r.capacidade_ia_mes[1])} com IA`;
+  `${fmtQtd(r.capacidade_atual_mes)} hoje, estimativa de ${faixa(r.capacidade_ia_mes[0], r.capacidade_ia_mes[1], fmtQtd)} com IA`;
 
 /* O valor a mais é o saldo renegociado no primeiro mês: depois disso a fila já é menor. */
 export const potencialTexto = (r) =>
   r.valor_adicional_mes[1] > 0
-    ? `${faixa(r.valor_adicional_mes[0], r.valor_adicional_mes[1], fmtBRL)} no primeiro mês`
+    ? `${faixaReais(r.valor_adicional_mes)} no primeiro mês`
     : "Sem fila represada";
 
 export const dimensoes = (respostas) => analisar(respostas)?.dims ?? [];

@@ -17,14 +17,14 @@ export const formDemo = (tipo) => FORM_DEMO_POR_TIPO[tipo] || FORM_DEMO;
 export const CENARIOS = [
   {
     nome: "Cooperativa média",
-    respostas: { tipo: "cooperativa", pessoas: 35, contratos: 6000, ticket: 5000, ritmo: 2, regua: 1, canal: 2, politica: 1, integracao: 2, consentimento: 1 },
+    respostas: { tipo: "cooperativa", pessoas: 35, contratos: 15000, ticket: 7500, ritmo: 1, regua: 1, canal: 2, politica: 1, integracao: 2, consentimento: 1 },
   },
   {
     nome: "Banco regional maduro",
-    respostas: { tipo: "banco", pessoas: 100, contratos: 25000, ticket: 20000, ritmo: 6, regua: 2, canal: 3, politica: 3, integracao: 3, consentimento: 3 },
+    respostas: { tipo: "banco", pessoas: 75, contratos: 35000, ticket: 15000, ritmo: 4, regua: 2, canal: 3, politica: 3, integracao: 3, consentimento: 3 },
   },
   {
     nome: "Cooperativa no início",
-    respostas: { tipo: "cooperativa", pessoas: 12, contratos: 1200, ticket: 1500, ritmo: 0.5, regua: 0, canal: 0, politica: 0, integracao: 0, consentimento: 0 },
+    respostas: { tipo: "cooperativa", pessoas: 8, contratos: 3000, ticket: 3000, ritmo: 1, regua: 0, canal: 0, politica: 0, integracao: 0, consentimento: 0 },
   },
 ];

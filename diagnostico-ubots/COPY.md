@@ -151,7 +151,15 @@ O tipo muda o texto, nunca os números. Nos textos, os marcadores abaixo são tr
 
 ### Perguntas
 
-As opções e os valores não mudam ("Propostas por perfil de cliente" virou "Propostas por perfil"). A redação se adapta ao tipo e cada pergunta diz por que é feita:
+As perguntas numéricas têm 5 faixas fechadas (nenhuma "mais de"); o cálculo usa o valor de referência entre parênteses. As de prontidão não mudam ("Propostas por perfil de cliente" virou "Propostas por perfil"). A redação se adapta ao tipo e cada pergunta diz por que é feita.
+
+| Pergunta | Opções (valor de referência) |
+|---|---|
+| Pessoas | 1 a 5 (3) · 6 a 10 (8) · 11 a 20 (15) · 21 a 50 (35) · 51 a 100 (75) |
+| Contratos em atraso | Até 1 mil (500) · 1 mil a 5 mil (3.000) · 5 mil a 10 mil (7.500) · 10 mil a 20 mil (15.000) · 20 mil a 50 mil (35.000) |
+| Dívida média | Até R$ 1 mil (500) · R$ 1 mil a R$ 5 mil (3.000) · R$ 5 mil a R$ 10 mil (7.500) · R$ 10 mil a R$ 20 mil (15.000) · R$ 20 mil a R$ 50 mil (35.000) |
+| Renegociações por pessoa por dia | Até 2 (1) · 3 a 5 (4) · 6 a 10 (8) · 11 a 15 (13) · 16 a 20 (18) |
+
 
 | Pergunta | Redação por tipo | Por que perguntamos |
 |---|---|---|
@@ -185,7 +193,13 @@ As opções e os valores não mudam ("Propostas por perfil de cliente" virou "Pr
    - **Preparar a base:** Antes do agente, vale organizar [até duas dimensões mais fracas].
    - **Pronta para piloto:** {Inst} já tem o essencial para testar um agente numa campanha. (Com política, autorização ou dados em 0: "{Inst} pode testar um agente numa campanha depois de resolver [essas dimensões].")
    - **Pronta para escalar:** Regras, canal e dados {daInst} estão maduros. O agente pode entrar na operação contínua. (Com alguma dimensão abaixo de 2: "{Inst} tem quase toda a base pronta. Antes da operação contínua, resolva [dimensão].")
-2. **O potencial com um agente de IA** / Capacidade de renegociação por mês: Com agente de IA [faixa] · Hoje [X] · Tempo para percorrer a carteira ([com IA], hoje: [X]; ou "Fila em dia", a equipe já cobre a carteira no mês) · Dívida renegociada a mais no 1º mês ([valor] ou "Sem fila represada"; saldo em atraso: [valor]) · nota: "Faixa conservadora: [a] a [b] vezes a capacidade atual, conforme a prontidão. Valores sobre o saldo renegociado, não sobre o valor recebido."
+2. **O potencial com um agente de IA** (comparativo):
+   - **Apoio:** Carteira em atraso: [contratos] contratos, cerca de [saldo].
+   - **Colunas:** Hoje / Com agente de IA (coluna em destaque)
+   - **Linhas:** Renegociações por mês · Prazo para negociar toda a carteira · Valor renegociado no 1º mês
+   - **Fechamento:** Diferença estimada no 1º mês: +[valor] renegociados. (Quando a equipe já cobre a carteira no mês: "A equipe já negocia a carteira inteira em [prazo hoje]. Com o agente, a estimativa é de [prazo com IA].")
+   - **Nota:** Estimativa conservadora: [a] a [b] vezes a capacidade de hoje, conforme a prontidão. Valores arredondados. Renegociado não é o mesmo que recebido.
+   - **Arredondamento (novo):** nenhum número com casa decimal. Quantidades com dois algarismos significativos (1.512 vira 1.500). Reais em mil até R$ 1 mi e em milhões inteiros a partir daí (R$ 450 mil, R$ 2 mi, R$ 30 mi). Prazos em semanas abaixo de 2 meses, em meses até 2 anos, em anos até 5 e "mais de 5 anos" depois.
 3. **Prontidão por dimensão:** [n]/15 no título; nota de cada dimensão, selo "Prioridade" na mais fraca e uma linha de leitura por resposta:
 
 | Dimensão | Respostas 0 · 1 · 2 · 3 |
@@ -196,22 +210,23 @@ As opções e os valores não mudam ("Propostas por perfil de cliente" virou "Pr
 | Dados | Dados em planilhas, sem consulta direta para o agente. · Sistema sem API: falta um caminho de consulta para o agente. · API que a TI pode liberar: uma integração simples resolve. · API já usada em canais digitais: a integração segue o mesmo caminho. |
 | Consentimento | Não se sabe quem autorizou o contato por WhatsApp. · Só parte da base autorizou: o agente começa por esse grupo. · (sem opção 2) · Base autorizada, com registro: o agente pode iniciar o contato. |
 
-4. **Por onde começar:** 3 passos lado a lado no desktop. Primeiro a ação de cada dimensão com nota até 1, na ordem de prioridade (política, autorização, dados, régua, canal); depois os passos gerais. No nível "Pronta para escalar", o passo "Piloto" sai.
-   - **Régua:** Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso.
-   - **Canal:** Leve a negociação para o WhatsApp, onde o {cliente} responde no tempo dele.
-   - **Política:** Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação.
-   - **Dados:** Liste com a TI os dados que o agente vai consultar (saldo, atraso, condições) e por onde eles saem.
-   - **Consentimento:** Revise quem autorizou contato por WhatsApp e registre a autorização.
-   - **Piloto:** Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola.
-   - **Transbordo:** Defina quais exceções vão para um analista, sempre com o histórico da conversa.
-   - **Acompanhamento:** Acompanhe a reincidência dos acordos: parcela que cabe no orçamento é cumprida até o fim.
+4. **Por onde começar:** 3 passos lado a lado no desktop. Primeiro a ação de cada dimensão com nota até 1, na ordem de prioridade (política, autorização, dados, régua, canal); depois os passos gerais. No nível "Pronta para escalar", o passo "Piloto" dá lugar a "Integração". Cada passo tem a ação e, abaixo, "Pronto quando:" com o critério de conclusão (novo):
+   - **Régua:** Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso. / Pronto quando: cada faixa de atraso tem 2 ou 3 propostas por perfil de renda ou de risco.
+   - **Canal:** Leve a negociação para o WhatsApp, onde o {cliente} responde no tempo dele. / Pronto quando: há um número oficial e um modelo de mensagem aprovado para abrir a conversa.
+   - **Política:** Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação. / Pronto quando: uma tabela por faixa de atraso, aprovada pela diretoria, diz o que o agente pode oferecer.
+   - **Dados:** Liste com a TI os dados que o agente vai consultar (saldo, atraso, condições) e por onde eles saem. / Pronto quando: a TI indica um caminho de consulta, mesmo que seja um arquivo atualizado todo dia.
+   - **Consentimento:** Revise quem autorizou contato por WhatsApp e registre a autorização. / Pronto quando: você sabe quantos {clientes} em atraso autorizaram, e esse grupo abre o piloto.
+   - **Piloto:** Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola. / Pronto quando: carteira, prazo de 5 a 15 dias e meta de valor renegociado estão definidos.
+   - **Integração (só em "Pronta para escalar"):** Conecte o agente por API, para consultar a dívida e registrar o acordo sem etapa manual. / Pronto quando: o acordo fechado na conversa aparece no sistema sem ninguém digitar.
+   - **Transbordo:** Defina quais exceções vão para um analista, sempre com o histórico da conversa. / Pronto quando: cada exceção tem um responsável e um prazo de resposta.
+   - **Acompanhamento:** Acompanhe a reincidência dos acordos: parcela que cabe no orçamento é cumprida até o fim. / Pronto quando: um relatório semanal mostra acordos fechados, valor renegociado e parcelas pagas.
 5. **Conversa com especialista** (faixa escura no fim da página; no desktop, o mesmo botão também fica no topo até o pedido):
    - **Preparar a base:** Quer organizar esses pontos com a Ubots? / O time da Ubots pode revisar o diagnóstico com você e indicar por onde começar antes de um piloto.
    - **Pronta para piloto:** Quer desenhar o piloto {daInst}? / O time da Ubots pode revisar o diagnóstico com você e definir carteira, prazo e indicadores para um piloto de 5 a 15 dias.
    - **Pronta para escalar:** Quer levar o agente para a operação contínua? / O time da Ubots pode avaliar com você a integração e os critérios de transbordo para a equipe.
    - **Botão:** Conversar com um especialista
    - **Confirmação:** Pedido registrado. O time da Ubots vai falar com você pelo WhatsApp, com este diagnóstico em mãos. (Quando o componente roda sem o registro do pedido, o botão abre `CONFIG.ctaUrl` numa nova aba, sem mensagem de confirmação. O endereço precisa ser confirmado com a Ubots.)
-6. **Rodapé:** Como calculamos: pessoas × renegociações por dia × 21 dias úteis, multiplicado pela faixa do nível. Cada resposta usa o valor de referência da faixa escolhida. / Refazer diagnóstico
+6. **Rodapé:** Como calculamos: pessoas × renegociações por dia × 21 dias úteis, multiplicado pela faixa do nível. Cada resposta usa um valor de referência dentro da faixa escolhida, e os resultados são arredondados. / Refazer diagnóstico
 
 ### Seletor do modo demonstração (`?demo=1`)
 

@@ -54,6 +54,8 @@ const txt = (texto, tipo) => {
    PERGUNTAS
    titulo: redação neutra (painel e CSV) · tituloTipo: redação por tipo
    porque: por que a pergunta é feita · leituras: leitura de cada resposta
+   Perguntas numéricas: 5 faixas fechadas (nenhuma "mais de"); o cálculo usa
+   um valor de referência redondo dentro de cada faixa.
    ========================================================= */
 const OPERACAO = "Sua operação";
 const PRONTIDAO = "Sua prontidão";
@@ -77,10 +79,10 @@ export const QUESTIONS = [
     porque: "Usamos para calcular a capacidade atual da equipe.",
     opcoes: [
       { label: "1 a 5", value: 3 },
-      { label: "6 a 20", value: 12 },
+      { label: "6 a 10", value: 8 },
+      { label: "11 a 20", value: 15 },
       { label: "21 a 50", value: 35 },
-      { label: "51 a 150", value: 100 },
-      { label: "Mais de 150", value: 200 },
+      { label: "51 a 100", value: 75 },
     ],
   },
   {
@@ -89,11 +91,11 @@ export const QUESTIONS = [
     tituloTipo: "Quantos contratos estão em atraso na carteira {daInst}?",
     porque: "Define o tamanho da fila a percorrer.",
     opcoes: [
-      { label: "Até 500", value: 300 },
-      { label: "500 a 2 mil", value: 1200 },
-      { label: "2 mil a 10 mil", value: 6000 },
-      { label: "10 mil a 50 mil", value: 25000 },
-      { label: "Mais de 50 mil", value: 70000 },
+      { label: "Até 1 mil", value: 500 },
+      { label: "1 mil a 5 mil", value: 3000 },
+      { label: "5 mil a 10 mil", value: 7500 },
+      { label: "10 mil a 20 mil", value: 15000 },
+      { label: "20 mil a 50 mil", value: 35000 },
     ],
   },
   {
@@ -101,10 +103,11 @@ export const QUESTIONS = [
     titulo: "Qual o valor médio de uma dívida em atraso?",
     porque: "Usamos para estimar o saldo em atraso.",
     opcoes: [
-      { label: "Até R$ 2 mil", value: 1500 },
-      { label: "R$ 2 mil a R$ 10 mil", value: 5000 },
-      { label: "R$ 10 mil a R$ 50 mil", value: 20000 },
-      { label: "Mais de R$ 50 mil", value: 75000 },
+      { label: "Até R$ 1 mil", value: 500 },
+      { label: "R$ 1 mil a R$ 5 mil", value: 3000 },
+      { label: "R$ 5 mil a R$ 10 mil", value: 7500 },
+      { label: "R$ 10 mil a R$ 20 mil", value: 15000 },
+      { label: "R$ 20 mil a R$ 50 mil", value: 35000 },
     ],
   },
   {
@@ -112,10 +115,11 @@ export const QUESTIONS = [
     titulo: "Quantas renegociações cada pessoa fecha por dia, em média?",
     porque: "Com esse número, calculamos o tempo para percorrer a fila.",
     opcoes: [
-      { label: "Menos de 1", value: 0.5 },
-      { label: "1 a 3", value: 2 },
-      { label: "4 a 8", value: 6 },
-      { label: "Mais de 8", value: 10 },
+      { label: "Até 2", value: 1 },
+      { label: "3 a 5", value: 4 },
+      { label: "6 a 10", value: 8 },
+      { label: "11 a 15", value: 13 },
+      { label: "16 a 20", value: 18 },
     ],
   },
   {
@@ -217,19 +221,49 @@ const NIVEIS = [
   { max: MAX_PONTOS, nome: "Pronta para escalar", mult: [4, 7] },
 ];
 
-/* Por onde começar: a ação para cada dimensão fraca e, depois, os passos gerais. */
+/* Por onde começar: a ação para cada dimensão fraca e, depois, os passos gerais.
+   "pronto" diz como saber que o passo foi concluído. */
 const RECOMENDACOES = {
-  regua: "Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso.",
-  canal: "Leve a negociação para o WhatsApp, onde o {cliente} responde no tempo dele.",
-  politica: "Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação.",
-  integracao: "Liste com a TI os dados que o agente vai consultar (saldo, atraso, condições) e por onde eles saem.",
-  consentimento: "Revise quem autorizou contato por WhatsApp e registre a autorização.",
+  regua: {
+    texto: "Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso.",
+    pronto: "cada faixa de atraso tem 2 ou 3 propostas por perfil de renda ou de risco.",
+  },
+  canal: {
+    texto: "Leve a negociação para o WhatsApp, onde o {cliente} responde no tempo dele.",
+    pronto: "há um número oficial e um modelo de mensagem aprovado para abrir a conversa.",
+  },
+  politica: {
+    texto: "Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação.",
+    pronto: "uma tabela por faixa de atraso, aprovada pela diretoria, diz o que o agente pode oferecer.",
+  },
+  integracao: {
+    texto: "Liste com a TI os dados que o agente vai consultar (saldo, atraso, condições) e por onde eles saem.",
+    pronto: "a TI indica um caminho de consulta, mesmo que seja um arquivo atualizado todo dia.",
+  },
+  consentimento: {
+    texto: "Revise quem autorizou contato por WhatsApp e registre a autorização.",
+    pronto: "você sabe quantos {clientes} em atraso autorizaram, e esse grupo abre o piloto.",
+  },
 };
 const PASSOS_GERAIS = [
-  { rotulo: "Piloto", texto: "Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola." },
-  { rotulo: "Transbordo", texto: "Defina quais exceções vão para um analista, sempre com o histórico da conversa." },
-  { rotulo: "Acompanhamento", texto: "Acompanhe a reincidência dos acordos: parcela que cabe no orçamento é cumprida até o fim." },
+  {
+    rotulo: "Piloto", texto: "Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola.",
+    pronto: "carteira, prazo de 5 a 15 dias e meta de valor renegociado estão definidos.",
+  },
+  {
+    rotulo: "Transbordo", texto: "Defina quais exceções vão para um analista, sempre com o histórico da conversa.",
+    pronto: "cada exceção tem um responsável e um prazo de resposta.",
+  },
+  {
+    rotulo: "Acompanhamento", texto: "Acompanhe a reincidência dos acordos: parcela que cabe no orçamento é cumprida até o fim.",
+    pronto: "um relatório semanal mostra acordos fechados, valor renegociado e parcelas pagas.",
+  },
 ];
+/* No nível mais alto, o piloto dá lugar à integração contínua. */
+const PASSO_INTEGRACAO = {
+  rotulo: "Integração", texto: "Conecte o agente por API, para consultar a dívida e registrar o acordo sem etapa manual.",
+  pronto: "o acordo fechado na conversa aparece no sistema sem ninguém digitar.",
+};
 
 /* =========================================================
    CÁLCULO (original)
@@ -244,13 +278,16 @@ export function calcular(r) {
   const atual = r.pessoas * r.ritmo * CONFIG.diasUteisMes;
   const ia = [atual * nivel.mult[0], atual * nivel.mult[1]];
   const limitar = (x) => Math.min(x, r.contratos);
+  const valorHoje = limitar(atual) * r.ticket;
+  const valorIA = [limitar(ia[0]) * r.ticket, limitar(ia[1]) * r.ticket];
 
   return {
     pontos, nivel, atual, ia,
     filaCoberta: atual >= r.contratos,
     mesesHoje: r.contratos / atual,
     mesesIA: [r.contratos / ia[1], r.contratos / ia[0]],
-    extra: [(limitar(ia[0]) - limitar(atual)) * r.ticket, (limitar(ia[1]) - limitar(atual)) * r.ticket],
+    valorHoje, valorIA,
+    extra: [valorIA[0] - valorHoje, valorIA[1] - valorHoje],
   };
 }
 
@@ -258,26 +295,52 @@ export function calcular(r) {
    LEITURA DO RESULTADO — usada na tela e no painel do comercial
    ========================================================= */
 const fmtNum = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(Math.round(n));
-const fmtDec = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 }).format(n);
-const fmtBRL = (n) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(n);
 export const faixa = (a, b, fmt = fmtNum) => (fmt(a) === fmt(b) ? fmt(a) : `${fmt(a)} a ${fmt(b)}`);
-/* Prazo: uma casa decimal até 10 meses, meses inteiros até 2 anos, anos até 5 e "mais de 5 anos" depois. */
-const prazo = (m) => {
-  if (m < 1) return "menos de 1 mês";
+
+/* Números arredondados, sem casas decimais: dois algarismos significativos (1.512 -> 1.500). */
+const arred = (n) => {
+  if (!(n > 0)) return 0;
+  const p = 10 ** Math.max(0, Math.floor(Math.log10(n)) - 1);
+  return Math.round(n / p) * p;
+};
+export const fmtQtd = (n) => fmtNum(arred(n));
+
+/* Reais sem casas decimais: R$ 45 mil, R$ 450 mil, R$ 2 mi, R$ 30 mi, R$ 1.200 mi.
+   Entre R$ 1 mi e R$ 10 mi, o milhão é inteiro. */
+const partesReais = (v) => {
+  const n = arred(v);
+  if (n < 1e4) return [fmtNum(n), ""];
+  if (n < 1e6) return [fmtNum(n / 1e3), " mil"];
+  return [fmtNum(n / 1e6), " mi"];
+};
+const NBSP = "\u00a0"; // o valor não quebra no meio ("R$ 530 mi")
+export const fmtReais = (v) => { const [n, u] = partesReais(v); return `R$${NBSP}${n}${u.replace(" ", NBSP)}`; };
+export const faixaReais = ([a, b]) => {
+  const [na, ua] = partesReais(a), [nb, ub] = partesReais(b);
+  if (na === nb && ua === ub) return fmtReais(a);
+  return ua === ub ? `R$${NBSP}${na} a ${nb}${ub.replace(" ", NBSP)}` : `${fmtReais(a)} a ${fmtReais(b)}`;
+};
+
+/* Prazo: semanas abaixo de 2 meses, meses inteiros até 2 anos, anos até 5 e "mais de 5 anos" depois. */
+const SEMANAS_POR_MES = 52 / 12;
+export const prazo = (m) => {
   if (m > 60) return "mais de 5 anos";
-  if (m > 24) return `${Math.round(m / 12)} anos`;
-  const v = m < 10 ? fmtDec(m) : fmtNum(m);
-  return `${v} ${parseFloat(v.replace(",", ".")) < 2 ? "mês" : "meses"}`;
+  if (Math.round(m) >= 24) return `${Math.round(m / 12)} anos`;
+  if (m >= 2) return `${Math.round(m)} meses`;
+  const s = Math.round(m * SEMANAS_POR_MES);
+  return s < 1 ? "menos de 1 semana" : `${s} ${s === 1 ? "semana" : "semanas"}`;
 };
-const prazoIA = ([min, max]) => {
-  if (max < 1) return "menos de 1 mês";
-  if (max > 60) return min > 60 ? "mais de 5 anos" : `${prazo(min)} ou mais`;
-  if (min < 1) return `até ${prazo(max)}`;
+export const prazoFaixa = ([min, max]) => {
   const [a, b] = [prazo(min), prazo(max)];
-  return a === b ? a : `${a.replace(/ (mês|meses|anos)$/, (m, u) => (b.endsWith(u) ? "" : m))} a ${b}`;
+  if (a === b) return a;
+  if (b === "mais de 5 anos") return `${a} ou mais`;
+  if (a === "menos de 1 semana") return `até ${b}`;
+  const unidade = (t) => t.replace(/^\d+ /, "").replace(/^semana$/, "semanas");
+  return unidade(a) === unidade(b) ? `${a.split(" ")[0]} a ${b}` : `${a} a ${b}`;
 };
-export const rotulo = (id, valor) => QUESTIONS.find((q) => q.id === id)?.opcoes.find((o) => o.value === valor)?.label ?? "";
+/* Respostas de versões anteriores (com outras faixas) aparecem como o número de referência. */
+export const rotulo = (id, valor) =>
+  QUESTIONS.find((q) => q.id === id)?.opcoes.find((o) => o.value === valor)?.label ?? (typeof valor === "number" ? fmtNum(valor) : "");
 
 /* Em empate de nota, a dimensão que mais trava um agente vem primeiro. */
 const PRIORIDADE = ["politica", "consentimento", "integracao", "regua", "canal"];
@@ -312,10 +375,10 @@ export function analisar(r) {
   }[n], r.tipo);
 
   /* Por onde começar: as dimensões mais fracas (na ordem de prioridade) e, depois, os passos gerais.
-     No nível mais alto, o passo "Piloto" sai: a conversa já é de operação contínua. */
-  const gerais = n === "Pronta para escalar" ? PASSOS_GERAIS.slice(1) : PASSOS_GERAIS;
+     No nível mais alto, o "Piloto" dá lugar à "Integração": a conversa já é de operação contínua. */
+  const gerais = n === "Pronta para escalar" ? [PASSO_INTEGRACAO, ...PASSOS_GERAIS.slice(1)] : PASSOS_GERAIS;
   const passos = [
-    ...fracas.map((d) => ({ rotulo: d.nome, texto: txt(RECOMENDACOES[d.id], r.tipo) })),
+    ...fracas.map((d) => ({ rotulo: d.nome, texto: txt(RECOMENDACOES[d.id].texto, r.tipo), pronto: txt(RECOMENDACOES[d.id].pronto, r.tipo) })),
     ...gerais,
   ].slice(0, 3);
 
@@ -327,12 +390,15 @@ export function analisar(r) {
 
   return {
     res, nivel: n, pontos: res.pontos, pontosMax: MAX_PONTOS, resumo, dims, critico, passos, cta,
-    capacidadeHoje: fmtNum(res.atual),
-    capacidadeIA: faixa(res.ia[0], res.ia[1]),
+    capacidadeHoje: fmtQtd(res.atual),
+    capacidadeIA: faixa(res.ia[0], res.ia[1], fmtQtd),
     tempoHoje: prazo(res.mesesHoje),
-    tempoIA: prazoIA(res.mesesIA),
-    extra: res.extra[1] > 0 ? faixa(res.extra[0], res.extra[1], fmtBRL) : null,
-    saldo: fmtBRL(r.contratos * r.ticket),
+    tempoIA: prazoFaixa(res.mesesIA),
+    valorHoje: fmtReais(res.valorHoje),
+    valorIA: faixaReais(res.valorIA),
+    extra: res.extra[1] > 0 ? faixaReais(res.extra) : null,
+    saldo: fmtReais(r.contratos * r.ticket),
+    contratos: fmtQtd(r.contratos),
   };
 }
 
@@ -442,29 +508,17 @@ function Campo({ id, label, erro, campoRef, ...props }) {
   );
 }
 
-function Barra({ largura, larguraFaixa, destaque, animar, reduzido, altura = 10 }) {
-  const t = (s) => (reduzido ? "none" : s);
+function Barra({ largura, animar, reduzido, altura = 6 }) {
   return (
     <div className="relative w-full rounded-full overflow-hidden" style={{ height: altura, background: C.line }}>
-      {larguraFaixa !== undefined && (
-        <div className="absolute top-0 left-0 h-full rounded-full"
-          style={{ width: animar ? `${larguraFaixa}%` : "0%", background: C.yellowSoft, transition: t("width 1s cubic-bezier(.2,.8,.2,1) .15s") }} />
-      )}
       <div className="absolute top-0 left-0 h-full rounded-full"
-        style={{ width: animar ? `${largura}%` : "0%", background: destaque ? C.yellow : C.ink, transition: t("width .9s cubic-bezier(.2,.8,.2,1)") }} />
+        style={{ width: animar ? `${largura}%` : "0%", background: C.ink, transition: reduzido ? "none" : "width .9s cubic-bezier(.2,.8,.2,1)" }} />
     </div>
   );
 }
 
-function Numero({ rotulo: r, valor, apoio }) {
-  return (
-    <div>
-      <p className="text-xs" style={{ color: C.muted }}>{r}</p>
-      <p className="font-bold text-lg leading-tight mt-1 tabular-nums">{valor}</p>
-      {apoio && <p className="text-xs mt-0.5" style={{ color: C.muted }}>{apoio}</p>}
-    </div>
-  );
-}
+/* Comparativo do potencial: 3 colunas a partir de 640px; no celular, o rótulo ocupa a linha de cima. */
+const LINHA_POTENCIAL = "grid grid-cols-2 gap-x-3 sm:grid-cols-[minmax(0,1.45fr)_minmax(0,0.85fr)_minmax(0,1.2fr)]";
 
 /* Resultado em uma página: nível, potencial, prontidão, por onde começar e conversa. */
 function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, tituloRef }) {
@@ -493,29 +547,38 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        {/* Potencial */}
-        <section aria-labelledby="potencial" className="rounded-2xl p-5 sm:p-6" style={{ background: C.card, border: `1px solid ${C.line}` }}>
+        {/* Potencial: comparativo direto entre hoje e com o agente, sobre a carteira informada */}
+        <section aria-labelledby="potencial" className="rounded-2xl p-5 sm:p-6 flex flex-col" style={{ background: C.card, border: `1px solid ${C.line}` }}>
           <h2 id="potencial" className="font-bold text-lg [text-wrap:balance]">O potencial com um agente de IA</h2>
-          <p className="text-xs mt-1 mb-4" style={{ color: C.muted }}>Capacidade de renegociação por mês</p>
-          <div className="flex flex-col gap-3">
-            <div>
-              <div className="flex flex-wrap justify-between items-baseline gap-x-3 mb-1.5">
-                <span className="text-sm font-semibold">Com agente de IA</span>
-                <span className="font-bold text-[1.75rem] sm:text-3xl leading-none tabular-nums" style={{ letterSpacing: "-0.02em" }}>{a.capacidadeIA}</span>
+          <p className="text-sm mt-1" style={{ color: C.muted, lineHeight: 1.5 }}>
+            Carteira em atraso: {a.contratos} contratos, cerca de {a.saldo}.
+          </p>
+          <div role="table" aria-label="Hoje e com um agente de IA" className="mt-4">
+            <div role="row" className={LINHA_POTENCIAL}>
+              <span role="columnheader" className="hidden sm:block"><span className="sr-only">Indicador</span></span>
+              <span role="columnheader" className="text-xs font-semibold pt-2.5 pb-2" style={{ color: C.muted }}>Hoje</span>
+              <span role="columnheader" className="text-xs font-semibold pt-2.5 pb-2 px-3 rounded-t-lg" style={{ background: C.yellowSoft }}>Com agente de IA</span>
+            </div>
+            {[
+              ["Renegociações por mês", a.capacidadeHoje, a.capacidadeIA],
+              ["Prazo para negociar toda a carteira", a.tempoHoje, a.tempoIA],
+              ["Valor renegociado no 1º mês", a.valorHoje, a.valorIA],
+            ].map(([rot, hoje, ia], i, todas) => (
+              <div role="row" key={rot} className={LINHA_POTENCIAL} style={{ borderTop: `1px solid ${C.line}` }}>
+                <span role="rowheader" className="col-span-2 sm:col-span-1 text-sm pt-2.5 sm:pb-2.5 [text-wrap:balance]" style={{ color: C.muted, lineHeight: 1.35 }}>{rot}</span>
+                <span role="cell" className="text-[15px] font-semibold tabular-nums py-2 sm:py-2.5" style={{ lineHeight: 1.35 }}>{hoje}</span>
+                <span role="cell" className={`text-[15px] font-bold tabular-nums py-2 sm:py-2.5 px-3 ${i === todas.length - 1 ? "rounded-b-lg" : ""}`}
+                  style={{ background: C.yellowSoft, lineHeight: 1.35 }}>{ia}</span>
               </div>
-              <Barra largura={(res.ia[0] / res.ia[1]) * 100} larguraFaixa={100} destaque animar={animar} reduzido={reduzido} />
-            </div>
-            <div>
-              <div className="flex justify-between items-baseline text-sm mb-1.5"><span style={{ color: C.muted }}>Hoje</span><span className="font-semibold tabular-nums">{a.capacidadeHoje}</span></div>
-              <Barra largura={(res.atual / res.ia[1]) * 100} animar={animar} reduzido={reduzido} />
-            </div>
+            ))}
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-5 pt-4" style={{ borderTop: `1px solid ${C.line}` }}>
-            <Numero rotulo="Tempo para percorrer a carteira" valor={res.filaCoberta ? "Fila em dia" : a.tempoIA} apoio={res.filaCoberta ? "a equipe já cobre a carteira no mês" : `hoje: ${a.tempoHoje}`} />
-            <Numero rotulo="Dívida renegociada a mais no 1º mês" valor={a.extra ?? "Sem fila represada"} apoio={`saldo em atraso: ${a.saldo}`} />
-          </div>
-          <p className="text-xs mt-4" style={{ color: C.muted, lineHeight: 1.5 }}>
-            {`Faixa conservadora: ${res.nivel.mult[0]} a ${res.nivel.mult[1]} vezes a capacidade atual, conforme a prontidão. Valores sobre o saldo renegociado, não sobre o valor recebido.`}
+          <p className="text-sm mt-4" style={{ lineHeight: 1.5 }}>
+            {a.extra
+              ? <>Diferença estimada no 1º mês: <strong className="tabular-nums">+{a.extra}</strong> renegociados.</>
+              : <>A equipe já negocia a carteira inteira em {a.tempoHoje}. Com o agente, a estimativa é de <strong>{a.tempoIA}</strong>.</>}
+          </p>
+          <p className="text-xs mt-auto pt-3" style={{ color: C.muted, lineHeight: 1.5 }}>
+            {`Estimativa conservadora: ${res.nivel.mult[0]} a ${res.nivel.mult[1]} vezes a capacidade de hoje, conforme a prontidão. Valores arredondados. Renegociado não é o mesmo que recebido.`}
           </p>
         </section>
 
@@ -537,7 +600,7 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
                   </span>
                   <span className="font-bold shrink-0 tabular-nums">{d.pontos}/{d.max}</span>
                 </div>
-                <Barra largura={Math.max((d.pontos / d.max) * 100, 4)} animar={animar} reduzido={reduzido} altura={6} />
+                <Barra largura={Math.max((d.pontos / d.max) * 100, 4)} animar={animar} reduzido={reduzido} />
                 <p className="text-xs mt-1" style={{ color: C.muted, lineHeight: 1.45 }}>{d.leitura}</p>
               </li>
             ))}
@@ -556,6 +619,9 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
               <div>
                 <p className="text-xs font-semibold uppercase" style={{ color: C.muted, letterSpacing: "0.06em" }}>{s.rotulo}</p>
                 <p className="text-sm mt-1" style={{ lineHeight: 1.5 }}>{s.texto}</p>
+                <p className="text-xs mt-1.5" style={{ color: C.muted, lineHeight: 1.5 }}>
+                  <span className="font-semibold" style={{ color: C.ink }}>Pronto quando:</span> {s.pronto}
+                </p>
               </div>
             </li>
           ))}
@@ -585,7 +651,7 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
 
       <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs" style={{ color: C.muted }}>
-          {`Como calculamos: pessoas × renegociações por dia × ${CONFIG.diasUteisMes} dias úteis, multiplicado pela faixa do nível. Cada resposta usa o valor de referência da faixa escolhida.`}
+          {`Como calculamos: pessoas × renegociações por dia × ${CONFIG.diasUteisMes} dias úteis, multiplicado pela faixa do nível. Cada resposta usa um valor de referência dentro da faixa escolhida, e os resultados são arredondados.`}
         </p>
         <BotaoTexto onClick={onRefazer}><RotateCcw size={16} aria-hidden="true" /> Refazer diagnóstico</BotaoTexto>
       </div>
@@ -794,7 +860,7 @@ export default function DiagnosticoRecuperacaoIA({ onLead, onInteresse, onReinic
                   </span>
                   <span>
                     <span className="font-semibold">Parte 1 concluída.</span>{" "}
-                    {txt(`A equipe {daInst} tem capacidade para cerca de ${fmtNum(resp.pessoas * resp.ritmo * CONFIG.diasUteisMes)} renegociações por mês. Agora, a prontidão para um agente de IA.`, resp.tipo)}
+                    {txt(`A equipe {daInst} tem capacidade para cerca de ${fmtQtd(resp.pessoas * resp.ritmo * CONFIG.diasUteisMes)} renegociações por mês. Agora, a prontidão para um agente de IA.`, resp.tipo)}
                   </span>
                 </p>
               )}
