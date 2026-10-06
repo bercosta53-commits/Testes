@@ -127,8 +127,8 @@ export const QUESTIONS = [
       { label: "Proposta ajustada caso a caso", value: 3 },
     ],
     leituras: {
-      0: "A proposta é igual para todos. Falta considerar a capacidade de pagamento.",
-      1: "Já segmenta por atraso. Falta considerar a capacidade de pagamento.",
+      0: "Mesma proposta para todos, sem olhar a capacidade de pagamento.",
+      1: "Segmenta só por atraso, sem olhar a capacidade de pagamento.",
       2: "Propostas por perfil já podem orientar o agente.",
       3: "Proposta caso a caso: o agente leva esse ajuste para mais conversas.",
     },
@@ -144,8 +144,8 @@ export const QUESTIONS = [
       { label: "WhatsApp com alguma automação", value: 3 },
     ],
     leituras: {
-      0: "Negociação por ligação. O agente atua no WhatsApp.",
-      1: "SMS ou e-mail. Para o agente entrar, a conversa precisa ir para o WhatsApp.",
+      0: "Negociação por ligação, fora do canal do agente.",
+      1: "SMS ou e-mail, fora do canal do agente.",
       2: "WhatsApp com atendente: o agente assume as etapas operacionais.",
       3: "WhatsApp com automação: o agente entra no canal que os {clientes} já usam.",
     },
@@ -162,8 +162,8 @@ export const QUESTIONS = [
       { label: "Regras parametrizadas no sistema", value: 3 },
     ],
     leituras: {
-      0: "Cada caso depende de aprovação. Sem alçadas escritas, o agente não fecha acordos.",
-      1: "As faixas existem, mas não estão escritas.",
+      0: "Cada caso depende de aprovação: o agente não fecha acordos sozinho.",
+      1: "Faixas não escritas: o agente ainda não tem alçadas para seguir.",
       2: "Regras documentadas: base para as alçadas do agente.",
       3: "Regras parametrizadas: o agente propõe dentro das alçadas.",
     },
@@ -180,9 +180,9 @@ export const QUESTIONS = [
       { label: "API já usada em outros canais digitais", value: 3 },
     ],
     leituras: {
-      0: "Dados em planilhas. O agente precisa de um jeito de consultar saldo e condições.",
-      1: "Sem API. É preciso um caminho simples para o agente consultar os dados.",
-      2: "API que a TI pode liberar: uma integração simples viabiliza o piloto.",
+      0: "Dados em planilhas, sem consulta direta para o agente.",
+      1: "Sistema sem API: falta um caminho de consulta para o agente.",
+      2: "API que a TI pode liberar: uma integração simples resolve.",
       3: "API já usada em canais digitais: a integração segue o mesmo caminho.",
     },
   },
@@ -197,9 +197,9 @@ export const QUESTIONS = [
       { label: "A maioria, com registro", value: 3 },
     ],
     leituras: {
-      0: "Não se sabe quem autorizou o contato. Confirme antes do piloto.",
-      1: "Só parte da base autorizou. O piloto começa por esse grupo.",
-      3: "A maioria autorizou o contato, com registro.",
+      0: "Não se sabe quem autorizou o contato por WhatsApp.",
+      1: "Só parte da base autorizou: o agente começa por esse grupo.",
+      3: "Base autorizada, com registro: o agente pode iniciar o contato.",
     },
   },
 ];
@@ -217,17 +217,18 @@ const NIVEIS = [
     resumo: "Regras, canal e dados estão maduros. O agente pode entrar na operação contínua." },
 ];
 
+/* Por onde começar: a ação para cada dimensão fraca e, depois, os passos gerais. */
 const RECOMENDACOES = {
-  regua: "Segmente a carteira pela capacidade de pagamento, não só pelos dias de atraso. É essa leitura que permite propor uma parcela que cabe no bolso.",
-  canal: "Leve a negociação para o WhatsApp. O cliente responde no tempo dele, sem a pressão de uma ligação no meio do expediente.",
-  politica: "Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação. O agente só negocia sozinho dentro de regras escritas.",
-  integracao: "Liste com a TI os dados que o agente precisa consultar (saldo, atraso, condições) e por onde eles saem. Uma integração simples já viabiliza o piloto.",
-  consentimento: "Revise a autorização de contato por WhatsApp da base em atraso. Contato com registro protege a instituição perante o CDC e a LGPD.",
+  regua: "Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso.",
+  canal: "Leve a negociação para o WhatsApp, onde o {cliente} responde no tempo dele.",
+  politica: "Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação.",
+  integracao: "Liste com a TI os dados que o agente vai consultar (saldo, atraso, condições) e por onde eles saem.",
+  consentimento: "Revise quem autorizou contato por WhatsApp e registre a autorização.",
 };
 const PASSOS_GERAIS = [
-  "Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola, e compare contratos renegociados e valor quitado com a operação atual.",
-  "Defina o transbordo: quais exceções vão para um analista, sempre com o histórico da conversa junto.",
-  "Acompanhe a reincidência dos acordos fechados pelo agente. Parcela que cabe no orçamento tende a ser cumprida até o fim.",
+  { rotulo: "Piloto", texto: "Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola." },
+  { rotulo: "Transbordo", texto: "Defina quais exceções vão para um analista, sempre com o histórico da conversa." },
+  { rotulo: "Acompanhamento", texto: "Acompanhe a reincidência dos acordos: parcela que cabe no orçamento é cumprida até o fim." },
 ];
 
 /* =========================================================
@@ -244,13 +245,6 @@ export function calcular(r) {
   const ia = [atual * nivel.mult[0], atual * nivel.mult[1]];
   const limitar = (x) => Math.min(x, r.contratos);
 
-  const passos = DIMS
-    .map((q) => ({ id: q.id, pontos: r[q.id] }))
-    .filter((d) => d.pontos <= 1)
-    .sort((a, b) => a.pontos - b.pontos)
-    .map((d) => RECOMENDACOES[d.id]);
-  for (const p of PASSOS_GERAIS) if (passos.length < 3) passos.push(p);
-
   return {
     pontos, nivel, atual, ia,
     filaCoberta: atual >= r.contratos,
@@ -258,7 +252,6 @@ export function calcular(r) {
     mesesIA: [r.contratos / ia[1], r.contratos / ia[0]],
     extra: [(limitar(ia[0]) - limitar(atual)) * r.ticket, (limitar(ia[1]) - limitar(atual)) * r.ticket],
     dims: DIMS.map((q) => ({ nome: q.dim, pontos: r[q.id], max: Math.max(...q.opcoes.map((o) => o.value)) })),
-    passos: passos.slice(0, 3),
   };
 }
 
@@ -270,13 +263,19 @@ const fmtDec = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 
 const fmtBRL = (n) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(n);
 export const faixa = (a, b, fmt = fmtNum) => (fmt(a) === fmt(b) ? fmt(a) : `${fmt(a)} a ${fmt(b)}`);
-const mesesHoje = (m) => (m > 60 ? "mais de 5 anos" : `cerca de ${fmtNum(Math.max(1, Math.round(m)))} ${Math.round(m) <= 1 ? "mês" : "meses"}`);
-const mesesIA = ([min, max]) => {
-  const un = (m) => (m < 2 ? "mês" : "meses");
+/* Prazo: uma casa decimal até 10 meses, meses inteiros até 2 anos, anos até 5 e "mais de 5 anos" depois. */
+const prazo = (m) => {
+  if (m < 1) return "menos de 1 mês";
+  if (m > 60) return "mais de 5 anos";
+  if (m > 24) return `${Math.round(m / 12)} anos`;
+  const v = m < 10 ? fmtDec(m) : fmtNum(m);
+  return `${v} ${parseFloat(v.replace(",", ".")) < 2 ? "mês" : "meses"}`;
+};
+const prazoIA = ([min, max]) => {
   if (max < 1) return "menos de 1 mês";
-  if (min > 60) return "mais de 5 anos";
-  if (min < 1) return `até ${fmtDec(max)} ${un(max)}`;
-  return fmtDec(min) === fmtDec(max) ? `${fmtDec(max)} ${un(max)}` : `${fmtDec(min)} a ${fmtDec(max)} ${un(max)}`;
+  if (min < 1) return `até ${prazo(max)}`;
+  const [a, b] = [prazo(min), prazo(max)];
+  return a === b ? a : `${a.replace(/ (mês|meses|anos)$/, (m, u) => (b.endsWith(u) ? "" : m))} a ${b}`;
 };
 export const rotulo = (id, valor) => QUESTIONS.find((q) => q.id === id)?.opcoes.find((o) => o.value === valor)?.label ?? "";
 
@@ -285,10 +284,6 @@ const PRIORIDADE = ["politica", "consentimento", "integracao", "regua", "canal"]
 const NOME_NA_FRASE = {
   regua: "a régua de cobrança", canal: "o canal de negociação", politica: "a política de negociação",
   integracao: "o acesso aos dados", consentimento: "a autorização de contato",
-};
-const ADAPTA = {
-  canal: (t) => t.replace("O cliente", "{Cliente}"),
-  consentimento: (t) => t.replace("a instituição", "{instCurta}"),
 };
 
 export function analisar(r) {
@@ -303,22 +298,25 @@ export function analisar(r) {
   const fracas = dims.filter((d) => d.pontos < 2)
     .sort((a, b) => a.pontos - b.pontos || PRIORIDADE.indexOf(a.id) - PRIORIDADE.indexOf(b.id));
   const critico = fracas[0] || null;
-  const lista = fracas.slice(0, 2).map((d) => NOME_NA_FRASE[d.id]).join(" e ") + (fracas.length > 2 ? " e outros pontos" : "");
-  const imaturo = r.politica <= 1 || r.canal <= 1 || r.integracao <= 1 || r.consentimento === 0;
-  const bloqueio = fracas.find((d) => d.pontos === 0 && ["politica", "consentimento", "integracao"].includes(d.id));
+  const nomes = (lista) => lista.slice(0, 2).map((d) => NOME_NA_FRASE[d.id]).join(" e ");
+  const bloqueios = fracas.filter((d) => d.pontos === 0 && ["politica", "consentimento", "integracao"].includes(d.id));
 
   const resumo = txt({
-    "Preparar a base": `O ganho existe {naInst}, mas antes do agente vale organizar ${lista}.`,
-    "Pronta para piloto": `{Inst} já tem o essencial para testar um agente numa campanha.${bloqueio ? ` Antes, resolva ${NOME_NA_FRASE[bloqueio.id]}.` : ""}`,
-    "Pronta para escalar": imaturo && critico
+    "Preparar a base": `Antes do agente, vale organizar ${nomes(fracas)}.`,
+    "Pronta para piloto": bloqueios.length
+      ? `{Inst} pode testar um agente numa campanha depois de resolver ${nomes(bloqueios)}.`
+      : "{Inst} já tem o essencial para testar um agente numa campanha.",
+    "Pronta para escalar": critico
       ? `{Inst} tem quase toda a base pronta. Antes da operação contínua, resolva ${NOME_NA_FRASE[critico.id]}.`
       : "Regras, canal e dados {daInst} estão maduros. O agente pode entrar na operação contínua.",
   }[n], r.tipo);
 
-  /* Por onde começar: as dimensões mais fracas (na ordem de prioridade) e, depois, os passos gerais. */
+  /* Por onde começar: as dimensões mais fracas (na ordem de prioridade) e, depois, os passos gerais.
+     No nível mais alto, o passo "Piloto" sai: a conversa já é de operação contínua. */
+  const gerais = n === "Pronta para escalar" ? PASSOS_GERAIS.slice(1) : PASSOS_GERAIS;
   const passos = [
-    ...fracas.map((d) => ({ rotulo: d.nome, texto: txt((ADAPTA[d.id] || ((t) => t))(RECOMENDACOES[d.id]), r.tipo) })),
-    ...PASSOS_GERAIS.map((t, i) => ({ rotulo: ["Piloto", "Transbordo", "Acompanhamento"][i], texto: t })),
+    ...fracas.map((d) => ({ rotulo: d.nome, texto: txt(RECOMENDACOES[d.id], r.tipo) })),
+    ...gerais,
   ].slice(0, 3);
 
   const cta = {
@@ -331,13 +329,12 @@ export function analisar(r) {
     res, nivel: n, pontos: res.pontos, pontosMax: MAX_PONTOS, resumo, dims, critico, passos, cta,
     capacidadeHoje: fmtNum(res.atual),
     capacidadeIA: faixa(res.ia[0], res.ia[1]),
-    tempoHoje: res.filaCoberta ? "menos de 1 mês" : mesesHoje(res.mesesHoje),
-    tempoIA: mesesIA(res.mesesIA),
+    tempoHoje: prazo(res.mesesHoje),
+    tempoIA: prazoIA(res.mesesIA),
     extra: res.extra[1] > 0 ? faixa(res.extra[0], res.extra[1], fmtBRL) : null,
     saldo: fmtBRL(r.contratos * r.ticket),
-    caso: r.tipo === "cooperativa"
-      ? "No case Sicoob Crediauc, também uma cooperativa, 1 colaborador com o agente renegociou em 5 dias cerca de metade do valor que 135 gerentes renegociaram em 75 dias."
-      : "No case Sicoob Crediauc, 1 colaborador com o agente renegociou em 5 dias cerca de metade do valor que 135 gerentes renegociaram em 75 dias.",
+    contratos: fmtNum(r.contratos),
+    passaCarteira: res.ia[1] > r.contratos,
   };
 }
 
@@ -511,7 +508,7 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
         {/* Potencial */}
         <section aria-labelledby="potencial" className="rounded-2xl p-5 sm:p-6" style={{ background: C.card, border: `1px solid ${C.line}` }}>
           <h2 id="potencial" className="font-bold text-lg mb-4">O potencial com um agente de IA</h2>
-          <p className="text-xs mb-2" style={{ color: C.muted }}>Renegociações por mês</p>
+          <p className="text-xs mb-2" style={{ color: C.muted }}>Capacidade de renegociação por mês</p>
           <div className="flex flex-col gap-3">
             <div>
               <div className="flex justify-between text-sm mb-1"><span style={{ color: C.muted }}>Hoje</span><span className="font-bold">{a.capacidadeHoje}</span></div>
@@ -522,6 +519,9 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
               <Barra largura={(res.ia[0] / res.ia[1]) * 100} larguraFaixa={100} destaque animar={animar} reduzido={reduzido} />
             </div>
           </div>
+          {a.passaCarteira && (
+            <p className="text-xs mt-2" style={{ color: C.muted }}>{`Acima dos cerca de ${a.contratos} contratos em atraso: o agente cobre a carteira no mês.`}</p>
+          )}
           <div className="grid grid-cols-2 gap-4 mt-5 pt-4" style={{ borderTop: `1px solid ${C.line}` }}>
             <Numero rotulo="Tempo para percorrer a carteira" valor={res.filaCoberta ? "Fila em dia" : a.tempoIA} apoio={res.filaCoberta ? "a equipe já cobre a carteira no mês" : `hoje: ${a.tempoHoje}`} />
             <Numero rotulo="Dívida renegociada a mais no 1º mês" valor={a.extra ?? "Sem fila represada"} apoio={`saldo em atraso: ${a.saldo}`} />
@@ -529,7 +529,6 @@ function Resultado({ a, lead, animar, reduzido, pedido, onPedir, onRefazer, titu
           <p className="text-xs mt-4" style={{ color: C.muted, lineHeight: 1.5 }}>
             {`Faixa conservadora, de ${res.nivel.mult[0]} a ${res.nivel.mult[1]} vezes a capacidade atual, conforme a prontidão. Valores sobre o saldo renegociado, não sobre o valor recebido.`}
           </p>
-          <p className="text-sm mt-4 rounded-xl p-3" style={{ background: C.bg, lineHeight: 1.5 }}>{a.caso}</p>
         </section>
 
         {/* Prontidão */}

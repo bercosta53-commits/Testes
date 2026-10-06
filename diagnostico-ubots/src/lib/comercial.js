@@ -45,11 +45,11 @@ export const rotuloOrigem = (utm) => (utm ? ORIGENS[utm] || utm : "Acesso direto
 
 export const SUGESTOES = {
   "Preparar a base":
-    "A operação ainda tem alguns pontos importantes para estruturar, principalmente em regras de negociação e acesso aos dados. Uma boa primeira conversa pode ser um workshop para organizar esses critérios e avaliar, na sequência, a viabilidade de um piloto.",
+    "A operação ainda tem pontos importantes para estruturar antes de um piloto. Uma boa primeira conversa pode ser um workshop para organizar esses critérios e avaliar, na sequência, a viabilidade de um piloto.",
   "Pronta para piloto":
     "Os principais fundamentos já estão presentes. A oportunidade é desenhar um piloto curto, entre 5 e 15 dias, com uma carteira bem definida, prazo claro e indicadores de contratos e valor renegociado.",
   "Pronta para escalar":
-    "A operação já apresenta boa maturidade em regras, canais e acesso aos dados. A conversa pode avançar para um modelo contínuo, considerando integração via API e critérios de transbordo para a equipe.",
+    "A operação já apresenta boa maturidade. A conversa pode avançar para um modelo contínuo, considerando integração via API e critérios de transbordo para a equipe.",
 };
 
 /* Rótulo legível de uma resposta (o texto da opção, não o valor numérico). */
