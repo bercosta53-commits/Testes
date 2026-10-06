@@ -1,6 +1,24 @@
 /* Textos e regras do painel comercial (COPY.md, seção 5). */
-import { QUESTIONS } from "../diagnostico/modelo.js";
-import { DIM_FRASE, aprofundar, faixa, rotuloResposta as rotuloPorId } from "../diagnostico/leitura.js";
+import { QUESTIONS, analisar, faixa, rotulo as rotuloPorId } from "../DiagnosticoRecuperacaoIA.jsx";
+
+/* Nome de cada dimensão no meio da frase da linha do SDR. */
+const DIM_FRASE = {
+  regua: { em: "na régua de cobrança", de: "da régua de cobrança" },
+  canal: { em: "no canal de negociação", de: "do canal de negociação" },
+  politica: { em: "na política de negociação", de: "da política de negociação" },
+  integracao: { em: "no acesso aos dados", de: "do acesso aos dados" },
+  consentimento: { em: "na autorização de contato", de: "da autorização de contato" },
+};
+
+/* Primeira ligação do SDR, conforme o ponto que mais trava o agente. */
+export const PERGUNTAS_LIGACAO = {
+  politica: ["Até onde vão desconto, prazo e carência sem aprovação?", "Quem aprova as exceções e em quanto tempo?"],
+  consentimento: ["Como a autorização de contato é registrada hoje?", "Que parte da base em atraso já autorizou o WhatsApp?"],
+  integracao: ["Quais dados a equipe consulta para montar a proposta?", "A TI tem uma janela para liberar uma consulta simples?"],
+  regua: ["Como a capacidade de pagamento entra na proposta hoje?", "Quais faixas de atraso concentram mais contratos?"],
+  canal: ["Que parte das negociações já passa pelo WhatsApp?", "O que impede levar o restante para lá?"],
+  nenhum: ["Qual carteira faria sentido para um piloto de 5 a 15 dias?", "Quais indicadores a diretoria usaria para avaliar o piloto?"],
+};
 
 export const fmtNum = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(Math.round(n));
 export const fmtBRL = (n) =>
@@ -41,7 +59,7 @@ export const rotuloTipo = (valor) => rotuloPorId("tipo", valor);
 /* A leitura é sempre recalculada a partir das respostas: leads da primeira versão continuam funcionando. */
 const cache = new WeakMap();
 export const leituraDoLead = (lead) => {
-  if (!cache.has(lead)) cache.set(lead, aprofundar(lead.respostas));
+  if (!cache.has(lead)) cache.set(lead, analisar(lead.respostas));
   return cache.get(lead);
 };
 
@@ -54,7 +72,7 @@ export const potencialTexto = (r) =>
     ? `${faixa(r.valor_adicional_mes[0], r.valor_adicional_mes[1], fmtBRL)} no primeiro mês`
     : "Sem fila represada";
 
-export const dimensoes = (respostas) => aprofundar(respostas)?.dims ?? [];
+export const dimensoes = (respostas) => analisar(respostas)?.dims ?? [];
 
 /* Preposição antes do nome digitado: só contrai quando a primeira palavra indica o gênero
    ("do Banco Sul", "da Cooperativa Vale", "do Sicoob Centro"); nos demais casos, "de". */
@@ -67,7 +85,7 @@ export const preposicaoDoNome = (nome) => {
 
 export function linhaSDR(lead) {
   const a = leituraDoLead(lead);
-  const dim = a?.pontoCritico ? DIM_FRASE[a.pontoCritico.id] : { em: "na capacidade de renegociação", de: "da capacidade de renegociação" };
+  const dim = a?.critico ? DIM_FRASE[a.critico.id] : { em: "na capacidade de renegociação", de: "da capacidade de renegociação" };
   const nome = lead.lead.nome.trim().split(/\s+/)[0];
   const inst = `${preposicaoDoNome(lead.lead.instituicao)} ${lead.lead.instituicao.trim()}`;
   if (lead.interesse) {
@@ -100,7 +118,7 @@ export function gerarCSV(leads) {
       r.valor_adicional_mes[0], r.valor_adicional_mes[1], rotuloOrigem(l.utm_content),
       ...QUESTIONS.map((q) => rotuloResposta(q, l.respostas[q.id])),
       l.interesse ? "Sim" : "Não", l.interesse ? fmtData(l.interesse.em) : "",
-      a?.pontoCritico?.nome ?? "Nenhum", l.respostas.contratos * l.respostas.ticket,
+      a?.critico?.nome ?? "Nenhum", l.respostas.contratos * l.respostas.ticket,
       ...(res && !res.filaCoberta ? [res.mesesHoje, res.mesesIA[0], res.mesesIA[1]].map(fmtMesesCurto) : ["", "", ""]),
     ];
   });

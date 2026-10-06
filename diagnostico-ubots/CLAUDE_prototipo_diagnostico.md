@@ -91,13 +91,15 @@ Deploy na Vercel (`npx vercel --prod`) para gerar um link compartilhável. Confi
 
 1. `/artigo`: ligar "Mostrar pontos de entrada" e rolar até a barra fixa aparecer.
 2. Clicar no ponto 1, escolher "Cooperativa de crédito" na própria abertura e responder o quiz ao vivo, como uma cooperativa média. Mostrar as perguntas na linguagem da cooperativa e a transição antes da parte de prontidão.
-3. Na captação, mostrar que nenhum número aparece antes dos dados. Preencher o formulário, passar pela análise e percorrer o resultado: resumo, carteira, potencial, prontidão por dimensão, próximo nível, plano de piloto e case. Clicar em "Conversar com um especialista".
-4. `/diagnostico?demo=1`: abrir o seletor, alternar entre os cenários (cada um abre na captação, já preenchido depois do primeiro "Preencher formulário") e mostrar como o resultado e o texto mudam com a prontidão e com o tipo (o banco fala em "o seu banco").
-5. `/painel`: abrir o lead recém-criado com o selo "Pediu conversa" e mostrar o que o lead viu, o ponto crítico, as perguntas para a primeira ligação e a linha do SDR.
+3. Na captação, mostrar que nenhum número aparece antes dos dados. Preencher o formulário e mostrar o resultado em uma página: nível, potencial, prontidão por dimensão e por onde começar. Clicar em "Conversar com um especialista".
+4. `/diagnostico?demo=1`: abrir o seletor e alternar entre os cenários (cada um abre na captação, já preenchido depois do primeiro "Preencher formulário") para mostrar como o resultado e o texto mudam com a prontidão e com o tipo.
+5. `/painel`: abrir o lead recém-criado com o selo "Pediu conversa" e mostrar a leitura do diagnóstico, o ponto crítico, as perguntas para a primeira ligação e a linha do SDR.
 
-## Versão 2 (retorno da On Nest)
+## Versões 2 e 3 (retornos da On Nest)
 
-- O resultado ficou mais profundo, e a captação passou a vir antes dele: nenhum número aparece antes do formulário.
+- A captação vem antes do resultado: nenhum número aparece antes do formulário.
+- O resultado cabe em uma página no desktop (no máximo uma rolagem): nível, potencial, prontidão por dimensão com uma linha de leitura, por onde começar e conversa com especialista.
+- Todo o diagnóstico fica num arquivo só (`src/DiagnosticoRecuperacaoIA.jsx`), que depende apenas de React, Tailwind e lucide-react, para rodar em ferramentas de vibe code.
 - O tipo de instituição muda a redação das perguntas, da captação e do resultado. Os números não mudam.
 - `calcular`, as perguntas, os valores e os multiplicadores continuam os mesmos. Só o rótulo "Propostas por perfil de cliente" virou "Propostas por perfil".
 - Os textos novos estão na seção 4 do `COPY.md`, para aprovação.

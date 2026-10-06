@@ -23,19 +23,15 @@ Os leads ficam no `localStorage` (chave `ubots_diag_leads`), com o `utm_content`
 
 ## Estrutura
 
-- `src/DiagnosticoRecuperacaoIA.jsx`: fluxo do diagnóstico (abertura com a pergunta 1, quiz, captação, análise e resultado).
-  Props opcionais: `onLead`, `onInteresse`, `onReiniciar`, `respostasIniciais`, `etapaInicial`, `formInicial` e `persistir`.
-- `src/diagnostico/modelo.js`: perguntas, níveis, `calcular` (do componente original, sem alteração) e formatação.
-- `src/diagnostico/perfil.js`: vocabulário por tipo de instituição e redação adaptada das perguntas.
-- `src/diagnostico/leitura.js`: leitura aprofundada, a mesma que o lead vê e que o painel mostra.
-- `src/diagnostico/Resultado.jsx` e `ui.jsx`: tela de resultado e peças visuais.
-- `src/pages/`: hub, artigo, diagnóstico e painel.
+- `src/DiagnosticoRecuperacaoIA.jsx`: o diagnóstico inteiro num arquivo só (configuração, perguntas, cálculo,
+  vocabulário por tipo, leitura do resultado e telas). Depende só de React, Tailwind e lucide-react, para colar
+  numa ferramenta de vibe code. Props opcionais: `onLead`, `onInteresse`, `onReiniciar`, `respostasIniciais`,
+  `etapaInicial` e `formInicial`. Sem props, o lead vai para `CONFIG.webhookUrl` (ou para o console, se vazio).
+- `src/pages/`: hub, artigo, diagnóstico (com o modo `?demo=1`) e painel.
 - `src/lib/comercial.js`: rótulos de origem, sugestões por nível, linha do SDR e CSV.
 - `src/lib/demo.js`: cenários e dados fictícios do modo demonstração.
 
 ## Notas
 
-- Tailwind CSS 3: o componente usa `flex-shrink-0`, que não existe no Tailwind 4.
-- O progresso do diagnóstico fica em `sessionStorage` (`ubots_diag_progresso`); os leads, em `localStorage` (`ubots_diag_leads`).
-- O CSS global reforça o anel de foco na navegação por teclado, desliga transições com
-  `prefers-reduced-motion` e mantém fundos e barras ao salvar o resultado em PDF.
+- O resultado cabe em uma página no desktop (no máximo uma rolagem).
+- Os leads ficam em `localStorage` (`ubots_diag_leads`).

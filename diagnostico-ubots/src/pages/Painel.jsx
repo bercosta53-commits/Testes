@@ -8,10 +8,14 @@ import Dialogo from "../components/Dialogo.jsx";
 import useTitulo from "../components/useTitulo.js";
 import { CHAVE_LEADS, lerLeads, limparLeads, lerUltimaVisita, registrarVisita } from "../lib/leads.js";
 import {
-  SUGESTOES, capacidadeTexto, fmtBRL, fmtData, fmtWhatsApp, gerarCSV, leituraDoLead, linhaSDR,
+  PERGUNTAS_LIGACAO, SUGESTOES, capacidadeTexto, fmtBRL, fmtData, fmtWhatsApp, gerarCSV, leituraDoLead, linhaSDR,
   potencialTexto, rotuloOrigem, rotuloResposta, rotuloTipo,
 } from "../lib/comercial.js";
-import { SeloStatus } from "../diagnostico/ui.jsx";
+
+function SeloNota({ pontos }) {
+  const [fundo, texto, rotulo] = pontos >= 2 ? ["#DDF2E3", "#17603A", "Pronto"] : pontos === 1 ? ["#FFF4C7", "#6A4D00", "Ajustar"] : ["#FDE7DF", "#8A2E12", "Resolver"];
+  return <span className="whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold" style={{ background: fundo, color: texto }}>{rotulo}</span>;
+}
 
 function SeloConversa() {
   return (
@@ -121,23 +125,17 @@ function DetalheLead({ lead, onFechar }) {
         </div>
         <div className="bg-creme p-4">
           <dt className="text-xs text-apagado">Ponto crítico</dt>
-          <dd className="mt-1 text-sm font-semibold leading-snug">{a?.pontoCritico?.nome ?? "Nenhum: todas as dimensões com 2 pontos ou mais"}</dd>
+          <dd className="mt-1 text-sm font-semibold leading-snug">{a?.critico?.nome ?? "Nenhum: todas as dimensões com 2 pontos ou mais"}</dd>
         </div>
       </dl>
 
       {a && (
-        <Secao titulo={lead.versao >= 2 ? "O que o lead viu" : "Leitura do diagnóstico"}>
-          {!(lead.versao >= 2) && (
-            <p className="mb-3 text-sm text-apagado">Este lead viu a versão anterior do resultado, sem a prioridade e as leituras cruzadas.</p>
-          )}
-          <ul className="flex flex-col gap-3">
-            {a.emResumo.map((t) => <li key={t} className="text-[0.95rem] leading-relaxed">{t}</li>)}
-          </ul>
-          {a.leituras.length > 0 && (
-            <ul className="mt-4 flex flex-col gap-2 rounded-xl bg-amarelo-suave p-4 ring-1 ring-amarelo">
-              {a.leituras.map((t) => <li key={t} className="text-sm leading-relaxed">{t}</li>)}
-            </ul>
-          )}
+        <Secao titulo="Leitura do diagnóstico">
+          <p className="text-[0.95rem] leading-relaxed">{a.resumo}</p>
+          <p className="mb-2 mt-4 text-sm font-bold">Por onde começar</p>
+          <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-[0.95rem] leading-relaxed">
+            {a.passos.map((s) => <li key={s.rotulo}><span className="font-semibold">{s.rotulo}:</span> {s.texto}</li>)}
+          </ol>
         </Secao>
       )}
 
@@ -166,7 +164,7 @@ function DetalheLead({ lead, onFechar }) {
             <li key={d.nome}>
               <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2 text-sm">
                 <span>{d.nome}</span>
-                <span className="flex items-center gap-2"><SeloStatus status={d.status} /><span className="font-bold tabular-nums">{d.pontos}/{d.max}</span></span>
+                <span className="flex items-center gap-2"><SeloNota pontos={d.pontos} /><span className="font-bold tabular-nums">{d.pontos}/{d.max}</span></span>
               </div>
               <div className="h-2.5 overflow-hidden rounded-full bg-linha" aria-hidden="true">
                 <div className="h-full rounded-full" style={{ width: `${Math.max((d.pontos / d.max) * 100, 3)}%`, background: d.pontos >= 2 ? "#FFC800" : "#141414" }} />
@@ -182,7 +180,7 @@ function DetalheLead({ lead, onFechar }) {
           <div className="mt-5">
             <p className="mb-2 text-sm font-bold">Perguntas para a primeira ligação</p>
             <ul className="flex list-disc flex-col gap-1.5 pl-5 text-[0.95rem] leading-relaxed">
-              {a.perguntasLigacao.map((t) => <li key={t}>{t}</li>)}
+              {PERGUNTAS_LIGACAO[a.critico?.id ?? "nenhum"].map((t) => <li key={t}>{t}</li>)}
             </ul>
           </div>
         )}
@@ -329,8 +327,8 @@ export default function Painel() {
                       </td>
                       <td className="px-4 py-4">
                         <SeloNivel nivel={l.resultado.nivel} />
-                        {leituraDoLead(l)?.pontoCritico && (
-                          <p className="mt-2 max-w-[170px] text-xs leading-snug text-apagado">{`Ponto crítico: ${leituraDoLead(l).pontoCritico.nome.replace(/^./, (c) => c.toLowerCase())}`}</p>
+                        {leituraDoLead(l)?.critico && (
+                          <p className="mt-2 max-w-[170px] text-xs leading-snug text-apagado">{`Ponto crítico: ${leituraDoLead(l).critico.nome.replace(/^./, (c) => c.toLowerCase())}`}</p>
                         )}
                       </td>
                       <td className="max-w-[220px] px-4 py-4 leading-snug">{capacidadeTexto(l.resultado)}</td>
@@ -351,8 +349,8 @@ export default function Painel() {
                     <span className="block font-bold">{l.lead.nome}</span>
                     <span className="mt-0.5 block text-sm text-apagado">{l.lead.instituicao} · {rotuloTipo(l.respostas.tipo)}</span>
                     <span className="mt-3 flex flex-wrap gap-2"><SeloNivel nivel={l.resultado.nivel} />{l.interesse && <SeloConversa />}</span>
-                    {leituraDoLead(l)?.pontoCritico && (
-                      <span className="mt-2 block text-xs text-apagado">{`Ponto crítico: ${leituraDoLead(l).pontoCritico.nome.replace(/^./, (c) => c.toLowerCase())}`}</span>
+                    {leituraDoLead(l)?.critico && (
+                      <span className="mt-2 block text-xs text-apagado">{`Ponto crítico: ${leituraDoLead(l).critico.nome.replace(/^./, (c) => c.toLowerCase())}`}</span>
                     )}
                     <span className="mt-4 grid w-full gap-3 border-t border-linha pt-4 text-sm">
                       <span>
