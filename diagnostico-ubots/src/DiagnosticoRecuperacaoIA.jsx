@@ -896,7 +896,7 @@ export default function DiagnosticoRecuperacaoIA({ onLead, onInteresse, onReinic
               </h1>
               <p className="text-base sm:text-lg mt-3 mb-4 sm:mb-5" style={{ color: C.muted, lineHeight: 1.55 }}>Informe seus dados para ver, nesta tela:</p>
               <ul className="flex flex-col gap-2.5 sm:gap-3">
-                {["O potencial com um agente de IA: renegociações por mês e tempo para percorrer a carteira",
+                {["O potencial com um agente de IA: renegociações por mês, prazo para negociar a carteira e valor renegociado",
                   "A prontidão nas 5 dimensões, com a leitura de cada resposta",
                   txt("Por onde começar {naInst}", resp.tipo)].map((t) => (
                   <li key={t} className="flex gap-3 text-sm sm:text-base" style={{ lineHeight: 1.45 }}>

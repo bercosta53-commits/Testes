@@ -180,7 +180,7 @@ As perguntas numéricas têm 5 faixas fechadas (nenhuma "mais de"); o cálculo u
 - **Rótulo:** Diagnóstico concluído
 - **Título:** O diagnóstico {daInst} está pronto.
 - **Texto:** Informe seus dados para ver, nesta tela:
-- **Lista:** O potencial com um agente de IA: renegociações por mês e tempo para percorrer a carteira / A prontidão nas 5 dimensões, com a leitura de cada resposta / Por onde começar {naInst}
+- **Lista:** O potencial com um agente de IA: renegociações por mês, prazo para negociar a carteira e valor renegociado / A prontidão nas 5 dimensões, com a leitura de cada resposta / Por onde começar {naInst}
 - **Campos:** Nome / E-mail de trabalho / WhatsApp / {Nome da cooperativa}
 - **Autorização (novo, ponto em aberto):** Autorizo a Ubots a entrar em contato sobre este diagnóstico.
 - **Botão:** Ver diagnóstico completo (durante o envio: Preparando o diagnóstico)
