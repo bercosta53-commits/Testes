@@ -5,7 +5,7 @@ import MarcaUbots from "../components/MarcaUbots.jsx";
 import useTitulo from "../components/useTitulo.js";
 import { movimentoReduzido } from "../lib/movimento.js";
 
-const CONTATO_URL = "https://ubots.com.br/contato";
+const CONTATO_URL = "https://ubots.com.br/";
 const LIMIAR_BARRA = 0.4;
 
 const SECOES = [

@@ -35,3 +35,7 @@ Os leads ficam no `localStorage` (chave `ubots_diag_leads`), com o `utm_content`
 
 - O resultado cabe em uma página no desktop (no máximo uma rolagem).
 - Os leads ficam em `localStorage` (`ubots_diag_leads`).
+- Para usar o componente numa ferramenta de vibe code (Lovable, Bolt, v0), cole o arquivo
+  `src/DiagnosticoRecuperacaoIA.jsx` inteiro. Mantenha a extensão `.jsx`; se o build rodar `tsc`,
+  acrescente `"allowJs": true` em `tsconfig.app.json`. Funciona com Tailwind 3 ou 4 e React 18 ou 19.
+- Antes de publicar, confirme com a Ubots o endereço de `CONFIG.ctaUrl` e defina `CONFIG.webhookUrl`.

@@ -54,7 +54,7 @@ export default function Diagnostico() {
   const cenario = instancia.cenario !== null ? CENARIOS[instancia.cenario] : null;
 
   return (
-    <div ref={area} className={demo ? "pb-24 sm:pb-80 lg:pb-0" : undefined}>
+    <div ref={area} className={demo ? "pb-24 sm:pb-80 lg:pb-20" : undefined}>
       <DiagnosticoRecuperacaoIA
         key={instancia.chave}
         onLead={onLead}
@@ -62,7 +62,6 @@ export default function Diagnostico() {
         respostasIniciais={cenario?.respostas}
         etapaInicial={cenario ? "captura" : undefined}
         formInicial={formPreenchido}
-        persistir={!demo}
         onReiniciar={() => setInstancia((v) => ({ ...v, cenario: null }))}
       />
       {demo && (

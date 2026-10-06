@@ -165,7 +165,7 @@ As opções e os valores não mudam ("Propostas por perfil de cliente" virou "Pr
 | Dados | Como a equipe consulta a dívida e as condições do {cliente}? | O agente precisa consultar saldo, atraso e condições durante a conversa. |
 | Consentimento | Os {clientes} autorizaram contato por WhatsApp? | Contato com registro protege {a cooperativa / o banco / ...} perante o CDC e a LGPD. |
 
-**Transição antes da pergunta 6 (novo):** Parte 1 concluída. Pelas suas respostas, a equipe {daInst} tem capacidade para cerca de [X] renegociações por mês. Agora, 5 perguntas sobre a prontidão para um agente de IA.
+**Transição antes da pergunta 6 (novo):** Parte 1 concluída. A equipe {daInst} tem capacidade para cerca de [X] renegociações por mês. Agora, a prontidão para um agente de IA.
 
 ### Captação (substitui a prévia; nenhum número aparece antes do envio)
 
@@ -175,34 +175,42 @@ As opções e os valores não mudam ("Propostas por perfil de cliente" virou "Pr
 - **Lista:** O potencial com um agente de IA: renegociações por mês e tempo para percorrer a carteira / A prontidão nas 5 dimensões, com a leitura de cada resposta / Por onde começar {naInst}
 - **Campos:** Nome / E-mail de trabalho / WhatsApp / {Nome da cooperativa}
 - **Autorização (novo, ponto em aberto):** Autorizo a Ubots a entrar em contato sobre este diagnóstico.
-- **Botão:** Ver diagnóstico completo
+- **Botão:** Ver diagnóstico completo (durante o envio: Preparando o diagnóstico)
 - **Microcopy:** Seus dados serão utilizados pelo time da Ubots para dar continuidade ao diagnóstico.
 - **Link:** Revisar respostas
 
 ### Resultado (uma página)
 
-1. **Cabeçalho:** Diagnóstico · [instituição] / [nível] / Nível de prontidão · [n] de 15 pontos / resumo do nível:
-   - **Preparar a base:** O ganho existe {naInst}, mas antes do agente vale organizar [até duas dimensões mais fracas, "e outros pontos"].
-   - **Pronta para piloto:** {inst} já tem o essencial para testar um agente numa campanha. (Com política, autorização ou dados em 0: "Antes, resolva [dimensão].")
-   - **Pronta para escalar:** Regras, canal e dados {daInst} estão maduros. O agente pode entrar na operação contínua. (Com regras, canal ou dados em até 1, ou autorização em 0: "{inst} tem quase toda a base pronta. Antes da operação contínua, resolva [dimensão].")
-2. **O potencial com um agente de IA:** Renegociações por mês (Hoje / Com agente de IA) · Tempo para percorrer a carteira ([com IA], hoje: [X]) · Dívida renegociada a mais no 1º mês ([valor], saldo em atraso: [valor]) · nota da faixa conservadora · referência ao case: "No case Sicoob Crediauc, [também uma cooperativa,] 1 colaborador com o agente renegociou em 5 dias cerca de metade do valor que 135 gerentes renegociaram em 75 dias."
-3. **Prontidão por dimensão:** nota de cada dimensão, selo "Prioridade" na mais fraca e uma linha de leitura por resposta:
+1. **Cabeçalho:** Diagnóstico · [instituição] / [nível] / resumo do nível. À direita (abaixo, no celular), a escala dos 3 níveis com o atual em amarelo: Preparar a base · Pronta para piloto · Pronta para escalar.
+   - **Preparar a base:** Antes do agente, vale organizar [até duas dimensões mais fracas].
+   - **Pronta para piloto:** {Inst} já tem o essencial para testar um agente numa campanha. (Com política, autorização ou dados em 0: "{Inst} pode testar um agente numa campanha depois de resolver [essas dimensões].")
+   - **Pronta para escalar:** Regras, canal e dados {daInst} estão maduros. O agente pode entrar na operação contínua. (Com alguma dimensão abaixo de 2: "{Inst} tem quase toda a base pronta. Antes da operação contínua, resolva [dimensão].")
+2. **O potencial com um agente de IA** / Capacidade de renegociação por mês: Com agente de IA [faixa] · Hoje [X] · Tempo para percorrer a carteira ([com IA], hoje: [X]; ou "Fila em dia", a equipe já cobre a carteira no mês) · Dívida renegociada a mais no 1º mês ([valor] ou "Sem fila represada"; saldo em atraso: [valor]) · nota: "Faixa conservadora: [a] a [b] vezes a capacidade atual, conforme a prontidão. Valores sobre o saldo renegociado, não sobre o valor recebido."
+3. **Prontidão por dimensão:** [n]/15 no título; nota de cada dimensão, selo "Prioridade" na mais fraca e uma linha de leitura por resposta:
 
 | Dimensão | Respostas 0 · 1 · 2 · 3 |
 |---|---|
-| Régua | A proposta é igual para todos. Falta considerar a capacidade de pagamento. · Já segmenta por atraso. Falta considerar a capacidade de pagamento. · Propostas por perfil já podem orientar o agente. · Proposta caso a caso: o agente leva esse ajuste para mais conversas. |
-| Canal | Negociação por ligação. O agente atua no WhatsApp. · SMS ou e-mail. Para o agente entrar, a conversa precisa ir para o WhatsApp. · WhatsApp com atendente: o agente assume as etapas operacionais. · WhatsApp com automação: o agente entra no canal que os {clientes} já usam. |
-| Política | Cada caso depende de aprovação. Sem alçadas escritas, o agente não fecha acordos. · As faixas existem, mas não estão escritas. · Regras documentadas: base para as alçadas do agente. · Regras parametrizadas: o agente propõe dentro das alçadas. |
-| Dados | Dados em planilhas. O agente precisa de um jeito de consultar saldo e condições. · Sem API. É preciso um caminho simples para o agente consultar os dados. · API que a TI pode liberar: uma integração simples viabiliza o piloto. · API já usada em canais digitais: a integração segue o mesmo caminho. |
-| Consentimento | Não se sabe quem autorizou o contato. Confirme antes do piloto. · Só parte da base autorizou. O piloto começa por esse grupo. · (sem opção 2) · A maioria autorizou o contato, com registro. |
+| Régua | Mesma proposta para todos, sem olhar a capacidade de pagamento. · Segmenta só por atraso, sem olhar a capacidade de pagamento. · Propostas por perfil já podem orientar o agente. · Proposta caso a caso: o agente leva esse ajuste para mais conversas. |
+| Canal | Negociação por ligação, fora do canal do agente. · SMS ou e-mail, fora do canal do agente. · WhatsApp com atendente: o agente assume as etapas operacionais. · WhatsApp com automação: o agente entra no canal que os {clientes} já usam. |
+| Política | Cada caso depende de aprovação: o agente não fecha acordos sozinho. · Faixas não escritas: o agente ainda não tem alçadas para seguir. · Regras documentadas: base para as alçadas do agente. · Regras parametrizadas: o agente propõe dentro das alçadas. |
+| Dados | Dados em planilhas, sem consulta direta para o agente. · Sistema sem API: falta um caminho de consulta para o agente. · API que a TI pode liberar: uma integração simples resolve. · API já usada em canais digitais: a integração segue o mesmo caminho. |
+| Consentimento | Não se sabe quem autorizou o contato por WhatsApp. · Só parte da base autorizou: o agente começa por esse grupo. · (sem opção 2) · Base autorizada, com registro: o agente pode iniciar o contato. |
 
-4. **Por onde começar:** 3 passos. Primeiro as recomendações originais das dimensões com nota até 1, na ordem de prioridade (política, autorização, dados, régua, canal), depois os passos gerais originais ("Piloto", "Transbordo", "Acompanhamento").
-5. **Conversa com especialista:**
+4. **Por onde começar:** 3 passos lado a lado no desktop. Primeiro a ação de cada dimensão com nota até 1, na ordem de prioridade (política, autorização, dados, régua, canal); depois os passos gerais. No nível "Pronta para escalar", o passo "Piloto" sai.
+   - **Régua:** Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso.
+   - **Canal:** Leve a negociação para o WhatsApp, onde o {cliente} responde no tempo dele.
+   - **Política:** Escreva as alçadas: até onde vão desconto, prazo e carência sem aprovação.
+   - **Dados:** Liste com a TI os dados que o agente vai consultar (saldo, atraso, condições) e por onde eles saem.
+   - **Consentimento:** Revise quem autorizou contato por WhatsApp e registre a autorização.
+   - **Piloto:** Comece com uma campanha com data para acabar, como a Crediauc fez no Desenrola.
+   - **Transbordo:** Defina quais exceções vão para um analista, sempre com o histórico da conversa.
+   - **Acompanhamento:** Acompanhe a reincidência dos acordos: parcela que cabe no orçamento é cumprida até o fim.
+5. **Conversa com especialista** (faixa escura no fim da página; no desktop, o mesmo botão também fica no topo até o pedido):
    - **Preparar a base:** Quer organizar esses pontos com a Ubots? / O time da Ubots pode revisar o diagnóstico com você e indicar por onde começar antes de um piloto.
    - **Pronta para piloto:** Quer desenhar o piloto {daInst}? / O time da Ubots pode revisar o diagnóstico com você e definir carteira, prazo e indicadores para um piloto de 5 a 15 dias.
    - **Pronta para escalar:** Quer levar o agente para a operação contínua? / O time da Ubots pode avaliar com você a integração e os critérios de transbordo para a equipe.
    - **Botão:** Conversar com um especialista
-   - **Confirmação:** Pedido registrado. O time da Ubots vai falar com você pelo WhatsApp, com este diagnóstico em mãos. (Sem registro possível: Abrimos a página de contato da Ubots em uma nova aba.)
+   - **Confirmação:** Pedido registrado. O time da Ubots vai falar com você pelo WhatsApp, com este diagnóstico em mãos. (Quando o componente roda sem o registro do pedido, o botão abre `CONFIG.ctaUrl` numa nova aba, sem mensagem de confirmação. O endereço precisa ser confirmado com a Ubots.)
 6. **Rodapé:** Como calculamos: pessoas × renegociações por dia × 21 dias úteis, multiplicado pela faixa do nível. Cada resposta usa o valor de referência da faixa escolhida. / Refazer diagnóstico
 
 ### Seletor do modo demonstração (`?demo=1`)
@@ -256,5 +264,5 @@ A preposição vem da primeira palavra do nome digitado ("do Banco Sul", "da Coo
 - **Selo:** Pediu conversa (lista e detalhe), com "Pediu conversa em [data]".
 - **Lista:** "Ponto crítico: [dimensão]" abaixo do nível.
 - **Coluna "Potencial adicional":** [valor] no primeiro mês (um valor só quando os extremos coincidem). Depois do primeiro mês, a fila já é menor.
-- **Detalhe:** Saldo em atraso estimado / Ponto crítico / Leitura do diagnóstico (o resumo e o "Por onde começar" que o lead viu) / Perguntas para a primeira ligação, conforme o ponto crítico.
+- **Detalhe:** Saldo em atraso estimado / Ponto crítico / O que o lead viu no resultado (o resumo e o "Por onde começar") / Perguntas para a primeira ligação, conforme o ponto crítico.
 - **CSV:** colunas novas no fim: Pediu conversa, Data do pedido, Ponto crítico, Saldo em atraso estimado, Meses para percorrer a carteira hoje, Meses com IA (mínimo e máximo).

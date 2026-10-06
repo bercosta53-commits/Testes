@@ -130,7 +130,7 @@ function DetalheLead({ lead, onFechar }) {
       </dl>
 
       {a && (
-        <Secao titulo="Leitura do diagnóstico">
+        <Secao titulo="O que o lead viu no resultado">
           <p className="text-[0.95rem] leading-relaxed">{a.resumo}</p>
           <p className="mb-2 mt-4 text-sm font-bold">Por onde começar</p>
           <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-[0.95rem] leading-relaxed">
@@ -211,6 +211,7 @@ export default function Painel() {
   const [confirmar, setConfirmar] = useState(false);
   const [aviso, setAviso] = useState(null);
   const visitaAnterior = useRef(lerUltimaVisita());
+  const titulo = useRef(null);
   /* Com um diálogo aberto, o aviso espera: ele ficaria escondido atrás da camada do diálogo. */
   const avisoVisivel = aviso && !selecionado && !confirmar;
 
@@ -261,6 +262,8 @@ export default function Painel() {
     limparLeads();
     setLeads([]);
     setConfirmar(false);
+    // O botão que abriu a confirmação fica desativado: o foco volta para o título da página.
+    requestAnimationFrame(() => titulo.current?.focus());
   };
 
   return (
@@ -274,7 +277,7 @@ export default function Painel() {
       <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <h1 className="text-3xl font-bold tracking-[-0.03em] sm:text-4xl">Leads do diagnóstico</h1>
+            <h1 ref={titulo} tabIndex={-1} className="text-3xl font-bold tracking-[-0.03em] focus:outline-none sm:text-4xl">Leads do diagnóstico</h1>
             <p className="mt-3 text-base leading-relaxed text-apagado">
               Uma visão das informações que chegam ao time comercial após cada diagnóstico. Dados de demonstração.
             </p>
