@@ -34,10 +34,19 @@
   }
 }
 
-/* Reforça, na navegação por teclado, o anel de foco do componente do diagnóstico
-   (o amarelo-200 original quase desaparece sobre o fundo creme). */
-.focus\:ring-yellow-200:focus-visible {
-  --tw-ring-color: #e0a800;
+/* Reforça, na navegação por teclado, o anel de foco do diagnóstico: o amarelo-200 original
+   quase desaparece sobre o creme. ":root" garante prioridade sobre a variante do Tailwind,
+   que vem depois na folha. #8A6A00 passa de 3:1 sobre creme, branco e amarelo. */
+:root .focus\:ring-yellow-200:focus-visible {
+  --tw-ring-color: #8a6a00;
+}
+
+/* Seta dos blocos que abrem e fecham */
+details[open] > summary svg:last-child {
+  transform: rotate(180deg);
+}
+summary::-webkit-details-marker {
+  display: none;
 }
 
 /* Entrada suave de cada etapa e pergunta do diagnóstico */
@@ -50,6 +59,11 @@
 }
 
 @media print {
+  /* Mantém fundos e barras no PDF (o Chrome imprime sem fundos por padrão). */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   .sem-impressao {
     display: none !important;
   }

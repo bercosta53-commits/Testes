@@ -121,12 +121,15 @@ function DetalheLead({ lead, onFechar }) {
         </div>
         <div className="bg-creme p-4">
           <dt className="text-xs text-apagado">Ponto crítico</dt>
-          <dd className="mt-1 text-sm font-semibold leading-snug">{a?.pontoCritico?.nome ?? "Nenhum: todas as dimensões com 2 ou mais"}</dd>
+          <dd className="mt-1 text-sm font-semibold leading-snug">{a?.pontoCritico?.nome ?? "Nenhum: todas as dimensões com 2 pontos ou mais"}</dd>
         </div>
       </dl>
 
       {a && (
-        <Secao titulo="O que o lead viu">
+        <Secao titulo={lead.versao >= 2 ? "O que o lead viu" : "Leitura do diagnóstico"}>
+          {!(lead.versao >= 2) && (
+            <p className="mb-3 text-sm text-apagado">Este lead viu a versão anterior do resultado, sem a prioridade e as leituras cruzadas.</p>
+          )}
           <ul className="flex flex-col gap-3">
             {a.emResumo.map((t) => <li key={t} className="text-[0.95rem] leading-relaxed">{t}</li>)}
           </ul>
@@ -157,7 +160,7 @@ function DetalheLead({ lead, onFechar }) {
       </Secao>
 
       <Secao titulo="Prontidão por dimensão">
-        <p className="mb-4 text-sm"><span className="font-bold">{r.pontos} de {r.pontos_max}</span></p>
+        <p className="mb-4 text-sm"><span className="font-bold">{r.pontos} de {r.pontos_max} pontos</span></p>
         <ul className="flex flex-col gap-4">
           {dims.map((d) => (
             <li key={d.nome}>
@@ -204,25 +207,31 @@ function DetalheLead({ lead, onFechar }) {
 export default function Painel() {
   useTitulo("Leads do diagnóstico | Ubots");
   const [leads, setLeads] = useState(lerLeads);
-  const [selecionado, setSelecionado] = useState(null);
+  /* O detalhe guarda o id: assim acompanha mudanças vindas de outra aba (pedido de conversa, limpeza). */
+  const [selecionadoId, setSelecionadoId] = useState(null);
+  const selecionado = leads.find((l) => l.id === selecionadoId) ?? null;
   const [confirmar, setConfirmar] = useState(false);
   const [aviso, setAviso] = useState(null);
   const visitaAnterior = useRef(lerUltimaVisita());
+  /* Com um diálogo aberto, o aviso espera: ele ficaria escondido atrás da camada do diálogo. */
+  const avisoVisivel = aviso && !selecionado && !confirmar;
 
   /* Aviso de novo lead ao voltar para o painel. */
   useEffect(() => {
     const novo = lerLeads()[0];
     if (novo && String(novo.enviado_em) > visitaAnterior.current) {
       setAviso(`Novo diagnóstico recebido: ${novo.lead.instituicao}, ${novo.resultado.nivel}.`);
+    } else {
+      registrarVisita();
     }
-    registrarVisita();
   }, []);
 
   useEffect(() => {
-    if (!aviso) return;
+    if (!avisoVisivel) return;
+    registrarVisita();
     const t = setTimeout(() => setAviso(null), 6000);
     return () => clearTimeout(t);
-  }, [aviso]);
+  }, [avisoVisivel]);
 
   /* Atualiza a lista quando um lead chega por outra aba. */
   useEffect(() => {
@@ -231,7 +240,6 @@ export default function Painel() {
       const lista = lerLeads();
       if (lista.length && lista[0].id !== leads[0]?.id && String(lista[0].enviado_em) > String(leads[0]?.enviado_em ?? "")) {
         setAviso(`Novo diagnóstico recebido: ${lista[0].lead.instituicao}, ${lista[0].resultado.nivel}.`);
-        registrarVisita();
       }
       setLeads(lista);
     };
@@ -244,7 +252,7 @@ export default function Painel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `leads-diagnostico-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `leads-diagnostico-${new Intl.DateTimeFormat("sv-SE").format(new Date())}.csv`; // data local, AAAA-MM-DD
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -308,7 +316,7 @@ export default function Painel() {
                 </thead>
                 <tbody>
                   {leads.map((l) => (
-                    <tr key={l.id} onClick={() => setSelecionado(l)}
+                    <tr key={l.id} onClick={() => setSelecionadoId(l.id)}
                       className="cursor-pointer border-t border-linha align-top transition-colors hover:bg-amarelo-suave/50">
                       <td className="px-4 py-4">
                         <button type="button" className="text-left font-semibold underline-offset-4 hover:underline">{l.lead.nome}</button>
@@ -338,7 +346,7 @@ export default function Painel() {
             <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:hidden">
               {leads.map((l) => (
                 <li key={l.id} className="flex">
-                  <button type="button" onClick={() => setSelecionado(l)}
+                  <button type="button" onClick={() => setSelecionadoId(l.id)}
                     className="flex w-full flex-col rounded-2xl border border-linha bg-white p-5 text-left transition-colors hover:border-tinta">
                     <span className="block font-bold">{l.lead.nome}</span>
                     <span className="mt-0.5 block text-sm text-apagado">{l.lead.instituicao} · {rotuloTipo(l.respostas.tipo)}</span>
@@ -370,11 +378,11 @@ export default function Painel() {
 
       <Dialogo
         aberto={!!selecionado}
-        onFechar={() => setSelecionado(null)}
+        onFechar={() => setSelecionadoId(null)}
         aria-labelledby="detalhe-titulo"
         className="gaveta m-0 ml-auto h-[100dvh] max-h-none w-full max-w-full overflow-y-auto bg-white p-0 text-tinta sm:max-w-xl"
       >
-        {selecionado && <DetalheLead lead={selecionado} onFechar={() => setSelecionado(null)} />}
+        {selecionado && <DetalheLead lead={selecionado} onFechar={() => setSelecionadoId(null)} />}
       </Dialogo>
 
       <Dialogo
@@ -398,7 +406,7 @@ export default function Painel() {
       </Dialogo>
 
       <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 sm:bottom-auto sm:top-5 sm:justify-end sm:px-6" role="status" aria-live="polite">
-        {aviso && (
+        {avisoVisivel && (
           <p className="pointer-events-auto flex max-w-sm items-start gap-3 rounded-2xl bg-tinta px-4 py-3 text-sm text-white shadow-xl motion-safe:animate-[modal-entra_.25s_ease-out]">
             <span aria-hidden="true" className="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-amarelo" />
             {aviso}

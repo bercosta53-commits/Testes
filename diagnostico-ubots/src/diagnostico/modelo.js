@@ -87,7 +87,7 @@ export const QUESTIONS = [
     opcoes: [
       { label: "A mesma mensagem para todos", value: 0 },
       { label: "Mensagens por faixa de atraso", value: 1 },
-      { label: "Propostas por perfil de cliente", value: 2 },
+      { label: "Propostas por perfil", value: 2 },
       { label: "Proposta ajustada caso a caso", value: 3 },
     ],
   },

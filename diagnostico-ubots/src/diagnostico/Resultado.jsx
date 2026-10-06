@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowRight, CalendarClock, Check, ChevronDown, Gauge, Lightbulb, MessageCircle, Printer, RotateCcw, Target,
+  ArrowRight, CalendarClock, Check, ChevronDown, ExternalLink, Gauge, Lightbulb, MessageCircle, Printer, RotateCcw, Star, Target,
 } from "lucide-react";
-import { C, fmtBRL, fmtNum } from "./modelo.js";
-import { faixa, pct, rotuloResposta } from "./leitura.js";
-import { minusculas } from "./perfil.js";
+import { C, CONFIG, fmtBRL, fmtNum } from "./modelo.js";
+import { DIM_FRASE, faixa, faixaPct, pct, rotuloResposta } from "./leitura.js";
 import { Barra, BotaoTexto, Cartao, Indicador, SeloStatus, Secao } from "./ui.jsx";
+import { movimentoReduzido } from "../lib/movimento.js";
 
 const fmtWhatsApp = (d = "") =>
   d.length === 11 ? `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
@@ -45,14 +45,12 @@ function Navegacao({ secoes }) {
     const el = document.getElementById(id);
     if (!el) return;
     e.preventDefault();
-    let reduzido = false;
-    try { reduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch { /* sem suporte */ }
-    el.scrollIntoView({ behavior: reduzido ? "auto" : "smooth", block: "start" });
-    el.querySelector("h2")?.focus({ preventScroll: true });
+    el.scrollIntoView({ behavior: movimentoReduzido() ? "auto" : "smooth", block: "start" });
+    el.querySelector("h1, h2")?.focus({ preventScroll: true });
   };
 
   return (
-    <nav aria-label="Seções do diagnóstico" className="sem-impressao sticky top-0 z-20 -mx-5 px-5 py-3 mb-8"
+    <nav aria-label="Seções do diagnóstico" className="sem-impressao sticky top-0 z-20 -mx-5 px-5 py-3 mt-10 mb-8"
       style={{ background: "rgba(255,251,239,0.94)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${C.line}` }}>
       <ol className="flex gap-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
         {secoes.map((s) => (
@@ -69,16 +67,29 @@ function Navegacao({ secoes }) {
   );
 }
 
-function PedidoConversa({ a, lead, interesse, onPedir, enviando }) {
+/* estado: null (ainda não pediu) | "registrado" | "pagina" (abriu a página de contato) | "falhou" */
+function PedidoConversa({ a, lead, estado, registra, onPedir, enviando }) {
+  const aviso = useRef(null);
+  useEffect(() => { if (estado) aviso.current?.focus({ preventScroll: true }); }, [estado]);
+  const mensagens = {
+    registrado: `Pedido registrado. O time da Ubots vai falar com você pelo WhatsApp ${fmtWhatsApp(lead.whatsapp)}, com este diagnóstico em mãos.`,
+    pagina: "Abrimos a página de contato da Ubots em uma nova aba.",
+    falhou: "Não conseguimos registrar o pedido agora. Abrimos a página de contato da Ubots em uma nova aba.",
+  };
   return (
     <section id="conversa" aria-labelledby="conversa-titulo" className="scroll-mt-20 rounded-2xl p-5 sm:p-7"
       style={{ background: C.yellowSoft, border: `1px solid ${C.yellow}` }}>
       <h2 id="conversa-titulo" tabIndex={-1} className="font-bold text-xl outline-none" style={{ letterSpacing: "-0.01em" }}>{a.cta.titulo}</h2>
       <p className="text-base mt-2 mb-5" style={{ lineHeight: 1.55 }}>{a.cta.texto}</p>
-      {interesse ? (
-        <p role="status" className="flex items-start gap-3 rounded-xl p-4 text-sm font-semibold" style={{ background: C.card, lineHeight: 1.5 }}>
-          <Check size={18} className="mt-0.5 flex-shrink-0" aria-hidden="true" />
-          {`Pedido registrado. O time da Ubots vai falar com você pelo WhatsApp ${fmtWhatsApp(lead.whatsapp)}, com este diagnóstico em mãos.`}
+      {estado ? (
+        <p ref={aviso} tabIndex={-1} className="flex items-start gap-3 rounded-xl p-4 text-sm font-semibold outline-none" style={{ background: C.card, lineHeight: 1.5 }}>
+          {estado === "registrado" ? <Check size={18} className="mt-0.5 flex-shrink-0" aria-hidden="true" /> : <ExternalLink size={18} className="mt-0.5 flex-shrink-0" aria-hidden="true" />}
+          <span>
+            {mensagens[estado]}
+            {estado !== "registrado" && (
+              <> <a href={CONFIG.ctaUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Abrir de novo</a></>
+            )}
+          </span>
         </p>
       ) : (
         <>
@@ -87,14 +98,14 @@ function PedidoConversa({ a, lead, interesse, onPedir, enviando }) {
             style={{ background: C.ink, color: "#FFFFFF", minHeight: 52, opacity: enviando ? 0.7 : 1 }}>
             <MessageCircle size={18} aria-hidden="true" /> Conversar com um especialista
           </button>
-          <p className="sem-impressao text-sm mt-3" style={{ color: C.muted }}>Sem novo formulário. O especialista recebe este diagnóstico.</p>
+          {registra && <p className="sem-impressao text-sm mt-3" style={{ color: C.muted }}>Sem novo formulário. O especialista recebe este diagnóstico.</p>}
         </>
       )}
     </section>
   );
 }
 
-export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedirConversa, onRefazer }) {
+export default function Resultado({ a, resp, lead, enviadoEm, pedido, registraPedido, onPedirConversa, onRefazer }) {
   const titulo = useRef(null);
   const [animar, setAnimar] = useState(false);
   const [pedindo, setPedindo] = useState(false);
@@ -103,18 +114,21 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
   useEffect(() => {
     titulo.current?.focus({ preventScroll: true });
     const t = setTimeout(() => setAnimar(true), 60);
-    return () => clearTimeout(t);
+    /* Com a navegação de seções presa no topo, o foco por Tab não pode ficar escondido sob ela. */
+    document.documentElement.style.scrollPaddingTop = "5rem";
+    return () => { clearTimeout(t); document.documentElement.style.scrollPaddingTop = ""; };
   }, []);
 
-  const secoes = [
+  const temProximo = !!a.proximo;
+  const secoes = useMemo(() => [
     { id: "resumo", rotulo: "Resumo" },
     { id: "carteira", rotulo: "Carteira" },
     { id: "potencial", rotulo: "Potencial" },
     { id: "prontidao", rotulo: "Prontidão" },
-    { id: "nivel", rotulo: a.proximo ? "Próximo nível" : "Nível" },
+    { id: "nivel", rotulo: temProximo ? "Próximo nível" : "Nível" },
     { id: "piloto", rotulo: "Piloto" },
     { id: "case", rotulo: "Case" },
-  ];
+  ], [temProximo]);
 
   const pedir = async () => {
     setPedindo(true);
@@ -130,7 +144,7 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
 
   const irParaConversa = () => {
     const el = document.getElementById("conversa");
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    el?.scrollIntoView({ behavior: movimentoReduzido() ? "auto" : "smooth", block: "center" });
     el?.querySelector("h2")?.focus({ preventScroll: true });
   };
 
@@ -184,9 +198,7 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
         </div>
       </section>
 
-      <div className="mt-10">
-        <Navegacao secoes={secoes} />
-      </div>
+      <Navegacao secoes={secoes} />
 
       <div className="flex flex-col gap-14">
         {/* Carteira hoje */}
@@ -195,18 +207,18 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <Indicador rotulo="Contratos em atraso" valor={`cerca de ${fmtNum(resp.contratos)}`} apoio={`Faixa: ${contratosLabel}`} />
             <Indicador rotulo="Saldo em atraso estimado" valor={fmtBRL(a.carteira.saldo)} apoio={`Dívida média: ${ticketLabel}`} />
-            <Indicador rotulo="Renegociações por mês" valor={fmtNum(res.atual)} apoio={`${fmtNum(resp.pessoas)} pessoas × ${fmtDecimal(resp.ritmo)} por dia × 21 dias úteis`} />
+            <Indicador rotulo="Capacidade de renegociação por mês" valor={fmtNum(res.atual)} apoio={`${fmtNum(resp.pessoas)} pessoas × ${fmtDecimal(resp.ritmo)} por dia × 21 dias úteis`} />
             <Indicador rotulo="Carteira negociada por mês" valor={pct(a.carteira.coberturaHoje)} apoio="no ritmo atual" />
           </div>
           <p className="text-xs mt-3" style={{ color: C.muted, lineHeight: 1.5 }}>
-            {`Cada resposta usa um valor de referência da faixa escolhida: ${fmtNum(resp.pessoas)} pessoas para "${rotuloResposta("pessoas", resp.pessoas)}" e ${fmtDecimal(resp.ritmo)} renegociações por dia para "${rotuloResposta("ritmo", resp.ritmo)}".`}
+            {`Cada resposta usa um valor de referência da faixa escolhida: ${fmtNum(resp.pessoas)} pessoas para “${rotuloResposta("pessoas", resp.pessoas)}” e ${fmtDecimal(resp.ritmo)} ${resp.ritmo < 2 ? "renegociação" : "renegociações"} por dia para “${rotuloResposta("ritmo", resp.ritmo)}”.`}
           </p>
         </Secao>
 
         {/* Potencial com IA */}
         <Secao id="potencial" titulo="O potencial com um agente de IA">
           <Cartao>
-            <p className="text-sm mb-5" style={{ color: C.muted }}>Renegociações por mês</p>
+            <p className="text-sm mb-5" style={{ color: C.muted }}>Capacidade de renegociação por mês</p>
             <div className="flex flex-col gap-5">
               <Barra rotulo="Hoje" valor={fmtNum(res.atual)} largura={(res.atual / res.ia[1]) * 100} animar={animar} marcador={marcador} />
               <Barra rotulo="Com agente de IA" valor={faixa(res.ia[0], res.ia[1])}
@@ -233,11 +245,11 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
 
           <div className="grid sm:grid-cols-3 gap-3 mt-3">
             <Indicador rotulo="Dívida renegociada a mais no primeiro mês" valor={a.potencial.extraTexto ?? "Sem fila represada"} />
-            <Indicador rotulo="Carteira negociada por mês com IA" valor={faixa(a.potencial.coberturaIA[0], a.potencial.coberturaIA[1], pct)} />
-            <Indicador rotulo="Capacidade equivalente" valor={`${a.potencial.equipeEquivalente} pessoas`} apoio="no ritmo atual da equipe" />
+            <Indicador rotulo="Carteira negociada por mês com IA" valor={faixaPct(a.potencial.coberturaIA)} />
+            <Indicador rotulo="Capacidade equivalente estimada" valor={`${a.potencial.equipeEquivalente} pessoas`} apoio="no ritmo atual da equipe" />
           </div>
           <p className="text-sm mt-4" style={{ lineHeight: 1.55 }}>
-            {`Com o agente, a capacidade ${p.daInst} equivale à de ${a.potencial.equipeEquivalente} pessoas no ritmo atual. A equipe segue com os casos que exigem análise, decisão ou negociação personalizada.`}
+            A equipe segue com os casos que exigem análise, decisão ou negociação personalizada.
           </p>
           <p className="text-xs mt-3" style={{ color: C.muted, lineHeight: 1.5 }}>
             {`Faixa conservadora, entre ${res.nivel.mult[0]} e ${res.nivel.mult[1]} vezes a capacidade atual, calibrada pela prontidão ${p.daInst}. Valores se referem ao saldo das dívidas renegociadas, não ao valor recebido.`}
@@ -249,7 +261,7 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
           <p className="text-base mb-5" style={{ lineHeight: 1.55 }}>
             <span className="font-bold">{a.pontos} de {a.pontosMax} pontos.</span>{" "}
             {a.pontoCritico
-              ? `O ponto que mais limita um agente hoje é ${minusculas(a.pontoCritico.nome)}.`
+              ? `O ponto que mais limita um agente hoje é ${DIM_FRASE[a.pontoCritico.id].o}.`
               : "As 5 dimensões já têm base para um piloto."}
           </p>
 
@@ -286,7 +298,7 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
           {a.proximo ? (
             <Cartao>
               <p className="text-base mb-4" style={{ lineHeight: 1.55 }}>
-                {`${p.Inst} está a ${a.proximo.faltam} ${a.proximo.faltam === 1 ? "ponto" : "pontos"} do nível “${a.proximo.nome}”. O caminho mais curto:`}
+                {`${p.Inst} está a ${a.proximo.faltam} ${a.proximo.faltam === 1 ? "ponto" : "pontos"} do nível “${a.proximo.nome}”. ${a.pontoCritico ? "O caminho recomendado, começando pelo ponto que mais limita o agente:" : "O caminho recomendado:"}`}
               </p>
               <ol className="flex flex-col gap-3">
                 {a.proximo.caminho.map((c, i) => (
@@ -308,7 +320,7 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
           ) : (
             <Cartao>
               <p className="text-base" style={{ lineHeight: 1.55 }}>
-                {`${p.Inst} já está no nível mais alto do diagnóstico. O ganho agora depende de levar o agente para a operação contínua, com integração via API e critérios de transbordo para a equipe.`}
+                {a.topo}
               </p>
             </Cartao>
           )}
@@ -320,28 +332,38 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
           <dl className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${C.line}`, background: C.card }}>
             {a.plano.itens.map((it, i) => (
               <div key={it.rotulo} className="grid gap-1 px-5 py-4 sm:grid-cols-[150px_1fr] sm:gap-6"
-                style={i ? { borderTop: `1px solid ${C.line}` } : undefined}>
+                style={{ ...(i ? { borderTop: `1px solid ${C.line}` } : {}), ...(it.prioridade ? { background: C.yellowSoft } : {}) }}>
                 <dt className="text-sm font-bold">{it.rotulo}</dt>
-                <dd className="text-sm" style={{ lineHeight: 1.55 }}>{it.texto}</dd>
+                <dd className="text-sm" style={{ lineHeight: 1.55 }}>
+                  {it.prioridade && (
+                    <span className="mr-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold align-middle" style={{ background: C.ink, color: "#fff" }}>
+                      <Star size={11} aria-hidden="true" style={{ color: C.yellow }} /> Prioridade
+                    </span>
+                  )}
+                  {it.texto}
+                </dd>
               </div>
             ))}
           </dl>
-
-          <h3 className="font-bold text-lg mt-8 mb-4">Próximos passos</h3>
-          <ol className="flex flex-col gap-4">
-            {a.passos.map((s, i) => (
-              <li key={s} className="flex gap-4">
-                <span className="flex-shrink-0 flex items-center justify-center rounded-full font-bold text-sm"
-                  style={{ width: 32, height: 32, background: C.yellow, color: C.ink }}>{i + 1}</span>
-                <p className="text-base pt-1" style={{ lineHeight: 1.55 }}>{s}</p>
-              </li>
-            ))}
-          </ol>
         </Secao>
 
         {/* Case */}
         <Secao id="case" titulo={`${p.Inst} e o case Sicoob Crediauc`}>
-          <div className="overflow-x-auto rounded-2xl" style={{ border: `1px solid ${C.line}`, background: C.card }}>
+          <dl className="sm:hidden rounded-2xl overflow-hidden" style={{ border: `1px solid ${C.line}`, background: C.card }}>
+            {CASE.map(([ind, h, ia], i) => (
+              <div key={ind} className="px-4 py-3" style={i ? { borderTop: `1px solid ${C.line}` } : undefined}>
+                <dt className="text-sm font-semibold">{ind}</dt>
+                <dd className="mt-1 grid grid-cols-2 gap-3 text-sm">
+                  <span><span className="block text-xs" style={{ color: C.muted }}>Operação humana</span>{h}</span>
+                  <span className="rounded-md px-2 py-1 -my-1" style={{ background: C.yellowSoft }}>
+                    <span className="block text-xs" style={{ color: C.muted }}>Agente de IA + 1 colaborador</span>
+                    <span className="font-semibold">{ia}</span>
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <div className="hidden sm:block overflow-x-auto rounded-2xl" style={{ border: `1px solid ${C.line}`, background: C.card }}>
             <table className="w-full text-left text-sm">
               <thead>
                 <tr style={{ borderBottom: `1px solid ${C.line}` }}>
@@ -372,7 +394,7 @@ export default function Resultado({ a, resp, lead, enviadoEm, interesse, onPedir
           </Link>
         </Secao>
 
-        <PedidoConversa a={a} lead={lead} interesse={interesse} onPedir={pedir} enviando={pedindo} />
+        <PedidoConversa a={a} lead={lead} estado={pedido} registra={registraPedido} onPedir={pedir} enviando={pedindo} />
 
         <details className="rounded-2xl px-5 py-4" style={{ background: C.card, border: `1px solid ${C.line}` }}>
           <summary className="flex cursor-pointer items-center justify-between gap-3 font-bold rounded-md focus:outline-none focus:ring-4 focus:ring-yellow-200">

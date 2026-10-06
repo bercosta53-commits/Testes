@@ -5,12 +5,13 @@ import SeloNivel from "./SeloNivel.jsx";
 
 /* Seletor flutuante do modo demonstração (?demo=1). Só aparece na apresentação. */
 export default function PainelDemo({ cenarios, ativo, onCenario, onPreencher }) {
-  // No celular o seletor fica recolhido (e se recolhe após cada ação) para não cobrir o diagnóstico.
-  const telaLarga = () => {
-    try { return window.matchMedia("(min-width: 640px)").matches; } catch { return true; }
+  // Abaixo de 1536px começa recolhido e se recolhe após cada ação; "Preencher formulário"
+  // recolhe em qualquer largura. Assim o seletor não cobre o formulário nem as opções.
+  const larguraMin = (px) => {
+    try { return window.matchMedia(`(min-width: ${px}px)`).matches; } catch { return true; }
   };
-  const [aberto, setAberto] = useState(telaLarga);
-  const agir = (acao) => { acao(); if (!telaLarga()) setAberto(false); };
+  const [aberto, setAberto] = useState(() => larguraMin(1536));
+  const agir = (acao, recolher = false) => { acao(); if (recolher || !larguraMin(1536)) setAberto(false); };
 
   if (!aberto) {
     return (
@@ -60,7 +61,7 @@ export default function PainelDemo({ cenarios, ativo, onCenario, onPreencher }) 
 
       <button
         type="button"
-        onClick={() => agir(onPreencher)}
+        onClick={() => agir(onPreencher, true)}
         className="mt-3 w-full rounded-full bg-tinta px-4 py-3 text-sm font-semibold text-white foco-claro hover:bg-black"
       >
         Preencher formulário

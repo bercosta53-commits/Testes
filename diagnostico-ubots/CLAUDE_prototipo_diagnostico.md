@@ -90,10 +90,17 @@ Deploy na Vercel (`npx vercel --prod`) para gerar um link compartilhável. Confi
 ## Roteiro da demonstração (5 minutos)
 
 1. `/artigo`: ligar "Mostrar pontos de entrada" e rolar até a barra fixa aparecer.
-2. Clicar no ponto 1 e responder o quiz ao vivo, como uma cooperativa média.
-3. Mostrar a prévia, preencher o formulário e abrir o diagnóstico completo.
-4. `/diagnostico?demo=1`: alternar entre os cenários para mostrar como o resultado muda com a prontidão.
-5. `/painel`: abrir o lead recém-criado e mostrar a sugestão de abordagem para o comercial.
+2. Clicar no ponto 1, escolher "Cooperativa de crédito" na própria abertura e responder o quiz ao vivo, como uma cooperativa média. Mostrar as perguntas na linguagem da cooperativa e a transição antes da parte de prontidão.
+3. Na captação, mostrar que nenhum número aparece antes dos dados. Preencher o formulário, passar pela análise e percorrer o resultado: resumo, carteira, potencial, prontidão por dimensão, próximo nível, plano de piloto e case. Clicar em "Conversar com um especialista".
+4. `/diagnostico?demo=1`: abrir o seletor, alternar entre os cenários (cada um abre na captação, já preenchido depois do primeiro "Preencher formulário") e mostrar como o resultado e o texto mudam com a prontidão e com o tipo (o banco fala em "o seu banco").
+5. `/painel`: abrir o lead recém-criado com o selo "Pediu conversa" e mostrar o que o lead viu, o ponto crítico, as perguntas para a primeira ligação e a linha do SDR.
+
+## Versão 2 (retorno da On Nest)
+
+- O resultado ficou mais profundo, e a captação passou a vir antes dele: nenhum número aparece antes do formulário.
+- O tipo de instituição muda a redação das perguntas, da captação e do resultado. Os números não mudam.
+- `calcular`, as perguntas, os valores e os multiplicadores continuam os mesmos. Só o rótulo "Propostas por perfil de cliente" virou "Propostas por perfil".
+- Os textos novos estão na seção 4 do `COPY.md`, para aprovação.
 
 ## Pontos em aberto para validar com a Ubots
 
@@ -101,3 +108,5 @@ Deploy na Vercel (`npx vercel --prod`) para gerar um link compartilhável. Confi
 - Uso do "15x" do case Crediauc em material de captação.
 - Texto de consentimento e link para a política de privacidade.
 - Destino real do lead (HubSpot, RD ou outro CRM).
+- Texto novo da autorização: "Autorizo a Ubots a entrar em contato sobre este diagnóstico."
+- Pedido de conversa em um clique, sem novo formulário, e o prazo de retorno (o protótipo não promete prazo).

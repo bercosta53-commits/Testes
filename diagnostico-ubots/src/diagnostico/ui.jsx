@@ -1,6 +1,6 @@
 /* Peças visuais do diagnóstico (identidade Ubots do componente original). */
 import { forwardRef } from "react";
-import { AlertTriangle, Check, CircleDot } from "lucide-react";
+import { AlertCircle, AlertTriangle, Check, CircleDot } from "lucide-react";
 import { C } from "./modelo.js";
 import { STATUS } from "./leitura.js";
 
@@ -128,6 +128,7 @@ export function Indicador({ rotulo, valor, apoio }) {
 const ESTILO_STATUS = {
   pronto: { fundo: "#DDF2E3", texto: "#17603A", Icone: Check },
   ajustar: { fundo: "#FFF4C7", texto: "#6A4D00", Icone: CircleDot },
+  foco: { fundo: "#FDEEDC", texto: "#7A3E00", Icone: AlertCircle },
   atencao: { fundo: "#FDE7DF", texto: "#8A2E12", Icone: AlertTriangle },
 };
 
@@ -145,7 +146,7 @@ export function SeloStatus({ status }) {
 export function Secao({ id, titulo, children, className = "" }) {
   return (
     <section id={id} aria-labelledby={`${id}-titulo`} className={`scroll-mt-20 ${className}`}>
-      <h2 id={`${id}-titulo`} className="font-bold text-xl sm:text-2xl mb-4" style={{ letterSpacing: "-0.02em" }}>{titulo}</h2>
+      <h2 id={`${id}-titulo`} tabIndex={-1} className="font-bold text-xl sm:text-2xl mb-4 outline-none" style={{ letterSpacing: "-0.02em" }}>{titulo}</h2>
       {children}
     </section>
   );

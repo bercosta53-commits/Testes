@@ -9,11 +9,12 @@ import Painel from "./pages/Painel.jsx";
 function AoNavegar() {
   const { pathname } = useLocation();
   const inicio = useRef(null);
-  const primeira = useRef(true);
+  const anterior = useRef(pathname);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    if (primeira.current) { primeira.current = false; return; }
+    if (anterior.current === pathname) return; // carregamento inicial (e a segunda execução do StrictMode)
+    anterior.current = pathname;
     inicio.current?.focus({ preventScroll: true });
   }, [pathname]);
 

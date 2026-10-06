@@ -23,9 +23,12 @@ Os leads ficam no `localStorage` (chave `ubots_diag_leads`), com o `utm_content`
 
 ## Estrutura
 
-- `src/DiagnosticoRecuperacaoIA.jsx`: componente original. Mudanças só de integração:
-  exporta `QUESTIONS` e `calcular`, aceita `onLead`, `respostasIniciais`, `etapaInicial`
-  e `formInicial` (usado pelo "Preencher formulário"), e chama `onLead(payload)` no lugar do webhook.
+- `src/DiagnosticoRecuperacaoIA.jsx`: fluxo do diagnóstico (abertura com a pergunta 1, quiz, captação, análise e resultado).
+  Props opcionais: `onLead`, `onInteresse`, `onReiniciar`, `respostasIniciais`, `etapaInicial`, `formInicial` e `persistir`.
+- `src/diagnostico/modelo.js`: perguntas, níveis, `calcular` (do componente original, sem alteração) e formatação.
+- `src/diagnostico/perfil.js`: vocabulário por tipo de instituição e redação adaptada das perguntas.
+- `src/diagnostico/leitura.js`: leitura aprofundada, a mesma que o lead vê e que o painel mostra.
+- `src/diagnostico/Resultado.jsx` e `ui.jsx`: tela de resultado e peças visuais.
 - `src/pages/`: hub, artigo, diagnóstico e painel.
 - `src/lib/comercial.js`: rótulos de origem, sugestões por nível, linha do SDR e CSV.
 - `src/lib/demo.js`: cenários e dados fictícios do modo demonstração.
@@ -33,5 +36,6 @@ Os leads ficam no `localStorage` (chave `ubots_diag_leads`), com o `utm_content`
 ## Notas
 
 - Tailwind CSS 3: o componente usa `flex-shrink-0`, que não existe no Tailwind 4.
-- O CSS global reforça o anel de foco do componente na navegação por teclado e
-  desliga transições com `prefers-reduced-motion`, sem alterar o arquivo do componente.
+- O progresso do diagnóstico fica em `sessionStorage` (`ubots_diag_progresso`); os leads, em `localStorage` (`ubots_diag_leads`).
+- O CSS global reforça o anel de foco na navegação por teclado, desliga transições com
+  `prefers-reduced-motion` e mantém fundos e barras ao salvar o resultado em PDF.

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import DiagnosticoRecuperacaoIA from "../DiagnosticoRecuperacaoIA.jsx";
 import useTitulo from "../components/useTitulo.js";
@@ -18,9 +18,16 @@ export default function Diagnostico() {
   const [formPreenchido, setFormPreenchido] = useState(null);
 
   const onLead = useCallback((payload) => salvarLead(payload, utmContent), [utmContent]);
-  const onInteresse = useCallback((id) => {
-    atualizarLead(id, { interesse: { em: new Date().toISOString() } });
-  }, []);
+  /* Devolve false quando o pedido não pôde ser gravado: a tela então abre a página de contato. */
+  const onInteresse = useCallback((id) => !!atualizarLead(id, { interesse: { em: new Date().toISOString() } }), []);
+
+  /* No modo demonstração, o seletor fixo não pode cobrir o campo focado pelo teclado. */
+  useEffect(() => {
+    if (!demo) return undefined;
+    const html = document.documentElement;
+    html.style.scrollPaddingBottom = "88px";
+    return () => { html.style.scrollPaddingBottom = ""; };
+  }, [demo]);
 
   /* Cada cenário abre na captação; depois do primeiro "Preencher formulário", já vem preenchido. */
   const escolherCenario = (i) => {
@@ -56,6 +63,7 @@ export default function Diagnostico() {
         etapaInicial={cenario ? "captura" : undefined}
         formInicial={formPreenchido}
         persistir={!demo}
+        onReiniciar={() => setInstancia((v) => ({ ...v, cenario: null }))}
       />
       {demo && (
         <PainelDemo

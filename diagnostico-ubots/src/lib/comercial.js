@@ -1,7 +1,6 @@
 /* Textos e regras do painel comercial (COPY.md, seção 5). */
 import { QUESTIONS } from "../diagnostico/modelo.js";
-import { aprofundar, faixa, rotuloResposta as rotuloPorId } from "../diagnostico/leitura.js";
-import { minusculas, perfil } from "../diagnostico/perfil.js";
+import { DIM_FRASE, aprofundar, faixa, rotuloResposta as rotuloPorId } from "../diagnostico/leitura.js";
 
 export const fmtNum = (n) => new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(Math.round(n));
 export const fmtBRL = (n) =>
@@ -57,15 +56,24 @@ export const potencialTexto = (r) =>
 
 export const dimensoes = (respostas) => aprofundar(respostas)?.dims ?? [];
 
+/* Preposição antes do nome digitado: só contrai quando a primeira palavra indica o gênero
+   ("do Banco Sul", "da Cooperativa Vale", "do Sicoob Centro"); nos demais casos, "de". */
+const MASCULINOS = ["banco", "sicoob", "sicredi", "bradesco", "itaú", "itau", "santander", "nubank", "inter", "btg", "safra", "banrisul"];
+const FEMININOS = ["cooperativa", "caixa", "financeira", "fintech", "cresol", "unicred"];
+export const preposicaoDoNome = (nome) => {
+  const w = nome.trim().split(/\s+/)[0].toLowerCase();
+  return MASCULINOS.includes(w) ? "do" : FEMININOS.includes(w) ? "da" : "de";
+};
+
 export function linhaSDR(lead) {
   const a = leituraDoLead(lead);
-  const foco = a?.pontoCritico ? minusculas(a.pontoCritico.nome) : "capacidade de renegociação";
+  const dim = a?.pontoCritico ? DIM_FRASE[a.pontoCritico.id] : { em: "na capacidade de renegociação", de: "da capacidade de renegociação" };
   const nome = lead.lead.nome.trim().split(/\s+/)[0];
-  const prep = perfil(lead.respostas.tipo).preposicao;
+  const inst = `${preposicaoDoNome(lead.lead.instituicao)} ${lead.lead.instituicao.trim()}`;
   if (lead.interesse) {
-    return `Oi, ${nome}. Recebi seu pedido de conversa sobre o diagnóstico ${prep} ${lead.lead.instituicao}. O cenário de ${foco} chamou atenção. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
+    return `Oi, ${nome}. Recebi seu pedido de conversa sobre o diagnóstico ${inst}. O cenário ${dim.de} chamou atenção. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
   }
-  return `Oi, ${nome}. Vi o diagnóstico ${prep} ${lead.lead.instituicao} e achei interessante o cenário que apareceu em ${foco}. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
+  return `Oi, ${nome}. Vi o diagnóstico ${inst} e achei interessante o cenário que apareceu ${dim.em}. Posso compartilhar como a Crediauc estruturou o piloto e comparar com a realidade de vocês?`;
 }
 
 export const fmtMesesCurto = (m) => (m === null || m === undefined ? "" : new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 }).format(m));
@@ -93,7 +101,7 @@ export function gerarCSV(leads) {
       ...QUESTIONS.map((q) => rotuloResposta(q, l.respostas[q.id])),
       l.interesse ? "Sim" : "Não", l.interesse ? fmtData(l.interesse.em) : "",
       a?.pontoCritico?.nome ?? "Nenhum", l.respostas.contratos * l.respostas.ticket,
-      res && !res.filaCoberta ? fmtMesesCurto(res.mesesHoje) : "", res ? fmtMesesCurto(res.mesesIA[0]) : "", res ? fmtMesesCurto(res.mesesIA[1]) : "",
+      ...(res && !res.filaCoberta ? [res.mesesHoje, res.mesesIA[0], res.mesesIA[1]].map(fmtMesesCurto) : ["", "", ""]),
     ];
   });
   const celula = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;

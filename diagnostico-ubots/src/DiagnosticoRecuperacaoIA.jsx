@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Info, ListChecks, Loader2, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, Info, ListChecks, Loader2, ShieldCheck } from "lucide-react";
 import { C, CONFIG, FONT, MAX_PONTOS, QUESTIONS, calcular, fmtNum } from "./diagnostico/modelo.js";
 import { aprofundar } from "./diagnostico/leitura.js";
 import { ajudaPara, motivoPara, perfil, tituloPara } from "./diagnostico/perfil.js";
@@ -27,13 +27,14 @@ const mascaraFone = (v) => {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
 };
 
-function validar(f) {
+function validar(f, tipo) {
   const e = {};
+  const campo = perfil(tipo).campoNome;
   if (f.nome.trim().length < 2) e.nome = "Informe seu nome.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = "Informe um e-mail válido, como nome@instituicao.com.br.";
   const dig = f.fone.replace(/\D/g, "");
   if (dig.length < 10 || dig.length > 11) e.fone = "Informe o WhatsApp com DDD.";
-  if (f.instituicao.trim().length < 2) e.instituicao = "Informe o nome da instituição.";
+  if (f.instituicao.trim().length < 2) e.instituicao = `Informe o ${campo.charAt(0).toLowerCase()}${campo.slice(1)}.`;
   if (!f.aceite) e.aceite = "Marque a autorização para ver o diagnóstico.";
   return e;
 }
@@ -68,7 +69,7 @@ const movimentoReduzido = () => {
 /* =========================================================
    ETAPAS
    ========================================================= */
-function Abertura({ q, resposta, onEscolher, tituloRef }) {
+function Abertura({ q, resposta, onEscolher, tituloRef, revisando, onVoltarFormulario }) {
   return (
     <main className="entra grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:items-start">
       <div>
@@ -92,7 +93,11 @@ function Abertura({ q, resposta, onEscolher, tituloRef }) {
             <Opcao key={o.value} numero={i + 1} label={o.label} selecionada={resposta === o.value} onClick={() => onEscolher(o.value)} />
           ))}
         </div>
-        <p className="text-sm mt-4" style={{ color: C.muted }}>10 perguntas · cerca de 2 minutos · sem custo</p>
+        {revisando ? (
+          <BotaoTexto onClick={onVoltarFormulario} className="mt-4"><ArrowLeft size={16} aria-hidden="true" /> Voltar ao formulário</BotaoTexto>
+        ) : (
+          <p className="text-sm mt-4" style={{ color: C.muted }}>10 perguntas · cerca de 2 minutos · sem custo</p>
+        )}
       </section>
 
       <figure className="lg:hidden rounded-2xl p-5" style={{ background: C.card, border: `1px solid ${C.line}` }}>
@@ -139,18 +144,19 @@ function Pergunta({ q, idx, resp, revisando, onEscolher, onVoltar, onAvancar, on
       {primeiraProntidao && !revisando && atual !== null && (
         <div className="entra flex gap-3 rounded-xl p-4 mb-6 text-sm" style={{ background: C.yellowSoft, border: `1px solid ${C.yellow}`, lineHeight: 1.5 }}>
           <Check size={18} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-          <p>
+          <p id="parte1-resumo">
             <span className="font-semibold">Parte 1 concluída.</span>{" "}
-            {`Pelas suas respostas, a equipe ${p.daInst} fecha hoje cerca de ${fmtNum(atual)} renegociações por mês. Agora, 5 perguntas sobre a prontidão para um agente de IA.`}
+            {`Pelas suas respostas, a equipe ${p.daInst} tem capacidade para cerca de ${fmtNum(atual)} renegociações por mês. Agora, 5 perguntas sobre a prontidão para um agente de IA.`}
           </p>
         </div>
       )}
 
       <div key={q.id} className="entra">
-        <p className="text-sm font-semibold mb-2" style={{ color: C.muted }}>
+        <p id="parte-rotulo" className="text-sm font-semibold mb-2" style={{ color: C.muted }}>
           {`Parte ${parte} de 2 · ${fase}, ${pos} de ${daFase.length}`}
         </p>
-        <h1 ref={tituloRef} tabIndex={-1} className="font-bold mb-2 outline-none" style={{ fontSize: "clamp(1.4rem, 4.5vw, 1.75rem)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+        <h1 ref={tituloRef} tabIndex={-1} className="font-bold mb-2 outline-none"
+          aria-describedby={primeiraProntidao && !revisando && atual !== null ? "parte-rotulo parte1-resumo" : "parte-rotulo"} style={{ fontSize: "clamp(1.4rem, 4.5vw, 1.75rem)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
           {tituloPara(q, resp.tipo)}
         </h1>
         {ajuda && <p className="text-sm mb-1" style={{ color: C.muted }}>{ajuda}</p>}
@@ -182,7 +188,7 @@ function Pergunta({ q, idx, resp, revisando, onEscolher, onVoltar, onAvancar, on
   );
 }
 
-function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloRef, camposRef }) {
+function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloRef, camposRef, respostasAbertas, setRespostasAbertas }) {
   const p = perfil(resp.tipo);
   const sugestao = !form.instituicao.trim() ? sugerirInstituicao(form.email) : null;
   const webmail = WEBMAIL.test(form.email.trim());
@@ -213,9 +219,11 @@ function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloR
           ))}
         </ul>
 
-        <details className="rounded-2xl px-5 py-4" style={{ background: C.card, border: `1px solid ${C.line}` }}>
+        <details open={respostasAbertas} onToggle={(e) => setRespostasAbertas(e.currentTarget.open)}
+          className="rounded-2xl px-5 py-4" style={{ background: C.card, border: `1px solid ${C.line}` }}>
           <summary className="flex cursor-pointer items-center gap-2 font-semibold text-sm rounded-md focus:outline-none focus:ring-4 focus:ring-yellow-200">
             <ListChecks size={16} aria-hidden="true" /> Suas respostas (10)
+            <ChevronDown size={16} aria-hidden="true" className="ml-auto transition-transform" />
           </summary>
           <dl className="mt-3 flex flex-col">
             {QUESTIONS.map((q, i) => (
@@ -224,7 +232,7 @@ function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloR
                   <dt className="text-xs" style={{ color: C.muted }}>{q.curto}</dt>
                   <dd className="text-sm font-semibold">{q.opcoes.find((o) => o.value === resp[q.id])?.label}</dd>
                 </div>
-                <button type="button" onClick={() => onAlterar(i)} aria-label={`Alterar: ${q.curto}`}
+                <button type="button" onClick={() => onAlterar(i)} aria-label={`Alterar: ${q.curto}`} data-alterar={i}
                   className="flex-shrink-0 rounded-md px-2 py-1 text-xs font-semibold underline underline-offset-2 focus:outline-none focus:ring-4 focus:ring-yellow-200">
                   Alterar
                 </button>
@@ -234,7 +242,8 @@ function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloR
         </details>
       </div>
 
-      <section aria-label="Seus dados" className="rounded-2xl p-5 sm:p-6" style={{ background: C.ink }}>
+      <section aria-labelledby="dados-titulo" className="rounded-2xl p-5 sm:p-6" style={{ background: C.ink }}>
+        <h2 id="dados-titulo" className="sr-only">Seus dados</h2>
         <form onSubmit={enviar} noValidate data-form="lead" data-tipo={resp.tipo}
           className="flex flex-col gap-4 rounded-xl p-4 sm:p-5" style={{ background: C.bg, color: C.ink }}>
           <Campo id="nome" label="Nome" autoComplete="name" placeholder="Ana Souza" ref={(el) => { camposRef.current.nome = el; }}
@@ -249,7 +258,7 @@ function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloR
           <Campo id="instituicao" label={p.campoNome} autoComplete="organization" ref={(el) => { camposRef.current.instituicao = el; }}
             value={form.instituicao} erro={erros.instituicao} onBlur={() => tocar("instituicao")} onChange={(e) => setForm({ ...form, instituicao: e.target.value })}>
             {sugestao && (
-              <button type="button" onClick={() => setForm({ ...form, instituicao: sugestao })}
+              <button type="button" onClick={() => { setForm({ ...form, instituicao: sugestao }); camposRef.current.instituicao?.focus(); }}
                 className="mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-yellow-200"
                 style={{ background: C.yellowSoft, border: `1px solid ${C.yellow}` }}>
                 {`Usar “${sugestao}”`}
@@ -263,12 +272,12 @@ function Captura({ resp, form, setForm, erros, tocar, enviar, onAlterar, tituloR
                 onChange={(e) => setForm({ ...form, aceite: e.target.checked })}
                 aria-invalid={!!erros.aceite} aria-describedby={erros.aceite ? "aceite-erro" : undefined}
                 className="mt-1 flex-shrink-0" style={{ width: 18, height: 18, accentColor: C.ink }} />
-              <span>Autorizo a Ubots a usar estes dados para dar continuidade ao diagnóstico e entrar em contato sobre ele.</span>
+              <span>Autorizo a Ubots a entrar em contato sobre este diagnóstico.</span>
             </label>
             {erros.aceite && <p id="aceite-erro" className="text-sm mt-1" style={{ color: C.error }}>{erros.aceite}</p>}
           </div>
 
-          <BotaoPrimario type="submit">Ver meu diagnóstico <ArrowRight size={18} aria-hidden="true" /></BotaoPrimario>
+          <BotaoPrimario type="submit">Ver diagnóstico completo <ArrowRight size={18} aria-hidden="true" /></BotaoPrimario>
           <p className="flex items-center gap-2 text-xs" style={{ color: C.muted }}>
             <ShieldCheck size={14} className="flex-shrink-0" aria-hidden="true" /> Seus dados serão utilizados pelo time da Ubots para dar continuidade ao diagnóstico.
           </p>
@@ -315,23 +324,25 @@ function Analise({ resp, tituloRef }) {
    persistir guarda o progresso na sessão do navegador.
    ========================================================= */
 export default function DiagnosticoRecuperacaoIA({
-  onLead, onInteresse, respostasIniciais, etapaInicial, formInicial, persistir = true,
+  onLead, onInteresse, onReiniciar, respostasIniciais, etapaInicial, formInicial, persistir = true,
 } = {}) {
   const salvo = useMemo(() => (persistir && !respostasIniciais && !etapaInicial ? lerProgresso() : null), [persistir, respostasIniciais, etapaInicial]);
 
   const [etapa, setEtapa] = useState(salvo?.etapa || etapaInicial || "intro"); // intro | quiz | captura | analise | resultado
   const [idx, setIdx] = useState(salvo?.idx ?? 1);
   const [resp, setResp] = useState(salvo?.resp || respostasIniciais || {});
-  const [form, setForm] = useState(FORM_VAZIO);
+  const [form, setForm] = useState(salvo?.form ? { ...FORM_VAZIO, ...salvo.form, aceite: false } : FORM_VAZIO);
   const [erros, setErros] = useState({});
   const [tocados, setTocados] = useState({});
-  const [revisando, setRevisando] = useState(false);
+  const [revisando, setRevisando] = useState(!!salvo?.revisando);
   const [lead, setLead] = useState(salvo?.lead || null);
-  const [interesse, setInteresse] = useState(!!salvo?.interesse);
+  const [pedido, setPedido] = useState(salvo?.pedido || null); // null | registrado | pagina | falhou
+  const [respostasAbertas, setRespostasAbertas] = useState(false);
+  const [voltarPara, setVoltarPara] = useState(null); // índice do "Alterar" de origem
   const timer = useRef(null);
   const tituloRef = useRef(null);
   const camposRef = useRef({});
-  const primeiraVez = useRef(true);
+  const anterior = useRef({ etapa, idx });
   const reduzido = useMemo(movimentoReduzido, []);
 
   const a = useMemo(() => (calcular(resp) ? aprofundar(resp) : null), [resp]);
@@ -354,21 +365,38 @@ export default function DiagnosticoRecuperacaoIA({
   useEffect(() => {
     if (!persistir || respostasIniciais || etapaInicial) return;
     if (etapa === "intro" && !Object.keys(resp).length) { gravarProgresso(null); return; }
-    gravarProgresso({ etapa: etapa === "analise" ? "captura" : etapa, idx, resp, lead, interesse });
-  }, [persistir, respostasIniciais, etapaInicial, etapa, idx, resp, lead, interesse]);
+    const { aceite, ...dadosForm } = form; // a autorização é marcada de novo
+    gravarProgresso({
+      etapa: etapa === "analise" ? (lead ? "resultado" : "captura") : etapa,
+      idx, resp, lead, pedido, revisando, form: etapa === "resultado" ? null : dadosForm,
+    });
+  }, [persistir, respostasIniciais, etapaInicial, etapa, idx, resp, lead, pedido, revisando, form]);
 
-  /* A cada troca de pergunta ou etapa: volta ao topo e leva o foco ao título. */
+  /* A cada troca de pergunta ou etapa: volta ao topo e leva o foco ao título.
+     Ao voltar de uma revisão, devolve o foco ao "Alterar" de origem. */
   useEffect(() => {
-    if (primeiraVez.current) { primeiraVez.current = false; return; }
+    if (anterior.current.etapa === etapa && anterior.current.idx === idx) return;
+    anterior.current = { etapa, idx };
+    if (etapa === "captura" && voltarPara !== null) {
+      const botao = document.querySelector(`[data-alterar="${voltarPara}"]`);
+      setVoltarPara(null);
+      if (botao) {
+        botao.scrollIntoView({ behavior: reduzido ? "instant" : "smooth", block: "center" });
+        botao.focus({ preventScroll: true });
+        return;
+      }
+    }
     if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: reduzido ? "instant" : "smooth" });
     tituloRef.current?.focus({ preventScroll: true });
-  }, [etapa, idx, reduzido]);
+  }, [etapa, idx, reduzido, voltarPara]);
 
   /* Se a etapa salva exigir um resultado que não pode ser calculado, recomeça. */
   useEffect(() => {
     if ((etapa === "captura" || etapa === "resultado") && !a) setEtapa("intro");
     if (etapa === "resultado" && !lead) setEtapa("captura");
   }, [etapa, a, lead]);
+
+  const voltarAoFormulario = () => { setRevisando(false); setRespostasAbertas(true); setEtapa("captura"); };
 
   const avancarPara = useCallback((proximo) => {
     clearTimeout(timer.current);
@@ -377,14 +405,14 @@ export default function DiagnosticoRecuperacaoIA({
 
   const escolherTipo = (valor) => {
     setResp((r) => ({ ...r, tipo: valor }));
-    if (revisando) { avancarPara(() => { setRevisando(false); setEtapa("captura"); }); return; }
+    if (revisando) { avancarPara(voltarAoFormulario); return; }
     avancarPara(() => { setIdx(1); setEtapa("quiz"); });
   };
 
   const escolher = (valor) => {
     const q = QUESTIONS[idx];
     setResp((r) => ({ ...r, [q.id]: valor }));
-    if (revisando) { avancarPara(() => { setRevisando(false); setEtapa("captura"); }); return; }
+    if (revisando) { avancarPara(voltarAoFormulario); return; }
     avancarPara(() => { if (idx < QUESTIONS.length - 1) setIdx(idx + 1); else setEtapa("captura"); });
   };
 
@@ -400,15 +428,17 @@ export default function DiagnosticoRecuperacaoIA({
   };
 
   const alterar = (i) => {
-    if (i === 0) { setRevisando(true); setEtapa("intro"); return; }
-    setRevisando(true); setIdx(i); setEtapa("quiz");
+    setVoltarPara(i);
+    setRevisando(true);
+    if (i === 0) { setEtapa("intro"); return; }
+    setIdx(i); setEtapa("quiz");
   };
 
   /* Atalhos: teclas 1 a 5 escolhem a opção (fora de campos de texto). */
   useEffect(() => {
     if (etapa !== "intro" && etapa !== "quiz") return;
     const aoTeclar = (e) => {
-      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.repeat || e.altKey || e.ctrlKey || e.metaKey) return;
       if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
       const n = Number(e.key);
       const q = etapa === "intro" ? QUESTIONS[0] : QUESTIONS[idx];
@@ -423,23 +453,23 @@ export default function DiagnosticoRecuperacaoIA({
 
   const tocar = (campo) => {
     setTocados((t) => ({ ...t, [campo]: true }));
-    const e = validar(form);
+    const e = validar(form, resp.tipo);
     setErros((atual) => ({ ...atual, [campo]: e[campo] }));
   };
 
   /* Depois de tocado, o erro some assim que o dado é corrigido. */
   useEffect(() => {
-    const e = validar(form);
+    const e = validar(form, resp.tipo);
     setErros((atual) => {
       const novo = {};
       for (const k of Object.keys(atual)) if (atual[k] && e[k] && (tocados[k] || k === "aceite")) novo[k] = e[k];
       return novo;
     });
-  }, [form, tocados]);
+  }, [form, tocados, resp.tipo]);
 
   const enviar = async (ev) => {
     ev.preventDefault();
-    const e = validar(form);
+    const e = validar(form, resp.tipo);
     setErros(e);
     setTocados({ nome: true, email: true, fone: true, instituicao: true, aceite: true });
     const primeiro = ["nome", "email", "fone", "instituicao", "aceite"].find((k) => e[k]);
@@ -480,27 +510,40 @@ export default function DiagnosticoRecuperacaoIA({
     } catch (err) {
       console.error("[Diagnóstico] falha ao enviar lead:", err);
     }
-    await minimo;
     setLead({ ...dados, id, enviado_em: payload.enviado_em }); // o usuário nunca fica travado por falha de rede
-    setInteresse(false);
+    setPedido(null);
+    await minimo;
     setEtapa("resultado");
   };
 
+  /* O pedido só aparece como registrado quando foi de fato gravado ou enviado. */
+  const registraPedido = !!onInteresse || !!CONFIG.webhookUrl;
   const pedirConversa = async () => {
+    let ok = false;
     try {
-      if (onInteresse) await onInteresse(lead?.id ?? null);
-      else window.open(CONFIG.ctaUrl, "_blank", "noopener");
+      if (onInteresse) {
+        ok = (await onInteresse(lead?.id ?? null)) !== false;
+      } else if (CONFIG.webhookUrl) {
+        const r = await fetch(CONFIG.webhookUrl, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tipo: "interesse", lead, enviado_em: new Date().toISOString() }),
+        });
+        ok = r.ok;
+      }
     } catch (err) {
       console.error("[Diagnóstico] falha ao registrar o pedido de conversa:", err);
     }
-    setInteresse(true);
+    if (ok) { setPedido("registrado"); return; }
+    window.open(CONFIG.ctaUrl, "_blank", "noopener");
+    setPedido(registraPedido ? "falhou" : "pagina");
   };
 
   const reiniciar = () => {
     clearTimeout(timer.current);
-    gravarProgresso(null);
-    setResp({}); setIdx(1); setErros({}); setTocados({}); setLead(null); setInteresse(false); setRevisando(false);
+    if (persistir) gravarProgresso(null);
+    setResp({}); setIdx(1); setErros({}); setTocados({}); setLead(null); setPedido(null); setRevisando(false);
     setEtapa("intro");
+    onReiniciar?.();
   };
 
   const largura = etapa === "quiz" || etapa === "analise" ? "max-w-xl" : etapa === "resultado" ? "max-w-3xl" : "max-w-5xl";
@@ -516,24 +559,26 @@ export default function DiagnosticoRecuperacaoIA({
         </header>
 
         {etapa === "intro" && (
-          <Abertura q={QUESTIONS[0]} resposta={resp.tipo} onEscolher={escolherTipo} tituloRef={tituloRef} />
+          <Abertura q={QUESTIONS[0]} resposta={resp.tipo} onEscolher={escolherTipo} tituloRef={tituloRef}
+            revisando={revisando} onVoltarFormulario={voltarAoFormulario} />
         )}
 
         {etapa === "quiz" && QUESTIONS[idx] && (
           <Pergunta q={QUESTIONS[idx]} idx={idx} resp={resp} revisando={revisando} tituloRef={tituloRef}
             onEscolher={escolher} onVoltar={voltar} onAvancar={avancar}
-            onVoltarFormulario={() => { setRevisando(false); setEtapa("captura"); }} />
+            onVoltarFormulario={voltarAoFormulario} />
         )}
 
         {etapa === "captura" && a && (
           <Captura resp={resp} form={form} setForm={setForm} erros={erros} tocar={tocar} enviar={enviar}
-            onAlterar={alterar} tituloRef={tituloRef} camposRef={camposRef} />
+            onAlterar={alterar} tituloRef={tituloRef} camposRef={camposRef}
+            respostasAbertas={respostasAbertas} setRespostasAbertas={setRespostasAbertas} />
         )}
 
         {etapa === "analise" && <Analise resp={resp} tituloRef={tituloRef} />}
 
         {etapa === "resultado" && a && lead && (
-          <Resultado a={a} resp={resp} lead={lead} enviadoEm={lead.enviado_em} interesse={interesse}
+          <Resultado a={a} resp={resp} lead={lead} enviadoEm={lead.enviado_em} pedido={pedido} registraPedido={registraPedido}
             onPedirConversa={pedirConversa} onRefazer={reiniciar} />
         )}
       </div>

@@ -37,7 +37,7 @@ export function atualizarLead(id, mudancas) {
   try {
     localStorage.setItem(CHAVE_LEADS, JSON.stringify(leads));
   } catch {
-    /* armazenamento indisponível */
+    return null; // armazenamento indisponível: nada foi gravado
   }
   return leads[i];
 }
