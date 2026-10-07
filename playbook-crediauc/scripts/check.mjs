@@ -128,7 +128,7 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
     '.numero',                                                                // números e legendas
     '.topo',                                                                  // cabeçalho
     '.campo', '.check', '.passo', '.no', '.ramo',                             // microcopy de componente
-    '.no-cadeia', '.derivacao', '.entrega', '.diagrama',
+    '.no-cadeia', '.derivacao', '.entrega', '.diagrama', '.capitulo',
   ].join(',');
   const contar = t => t.replace(/R\$\s*[\d.]+(,\d+)?|\d+º|[\d.,]+/g, ' ').split(/\s+/).filter(w => /\p{L}/u.test(w)).length;
   for (const { n, el } of textos) {
@@ -198,6 +198,7 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
   // 3. Números (por bloco, para juntar "R$" e valor) e área útil
   const blocos = [...new Set(textos.map(t => t.bloco))];
   const DINHEIRO = ['R$ 23.402,22', 'R$ 3.546,30', 'R$ 5.700,00'];
+  const totalSlides = document.querySelectorAll('.slide').length;
   // texto do próprio bloco: entra o conteúdo em linha (inline, inline-block…); filhos em bloco são varridos à parte
   const proprio = el => [...el.childNodes].map(n => n.nodeType === 3 ? n.textContent
     : n.nodeType === 1 && (n instanceof SVGElement || getComputedStyle(n).display.startsWith('inline')) ? proprio(n) : ' ').join('');
@@ -211,7 +212,8 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
       else if (s.endsWith('º')) ok = s === '13º';
       else if (s.startsWith('×')) ok = /^×\s*100$/.test(s);
       else if (b.closest('.marco')) ok = ['1', '2', '3'].includes(s);
-      else if (/slides?\s+(\d\s+e\s+)?$/i.test(antes)) ok = /^[1-8]$/.test(s);
+      else if (b.closest('.indice-num')) ok = /^0[1-9]$/.test(s) && Number(s) <= totalSlides; // sumário da introdução
+      else if (/slides?\s+(\d\s+e\s+)?$/i.test(antes)) ok = /^[1-9]$/.test(s) && Number(s) <= totalSlides;
       else ok = s === '5' || s === '6';
       if (!ok) r.numeros.push(`"${s}" em ${resumo(b, txt)}`);
     }
@@ -262,7 +264,7 @@ const facesComErro = await page.evaluate(() => [...document.fonts].filter(f => f
 facesComErro.forEach(x => falhas.push(`face com erro de carregamento: ${x}`));
 errosJs.forEach(x => falhas.push(`erro de JavaScript: ${x}`));
 
-// PDF: 8 páginas de 1920×1080 (1440×810 pt).
+// PDF: uma página por slide, de 1920×1080 (1440×810 pt).
 await page.pdf({ path: pdfPath, printBackground: true, preferCSSPageSize: true });
 const info = execFileSync('pdfinfo', [pdfPath], { encoding: 'utf8' });
 const paginas = Number(info.match(/^Pages:\s+(\d+)/m)?.[1]);
