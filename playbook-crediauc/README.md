@@ -9,7 +9,7 @@ Deck 16:9 de 8 slides (1920×1080) em um único HTML, com PDF e PNGs exportados.
 | [`out/slides/`](out/slides) | `slide-01.png` … `slide-08.png`. |
 | [`scripts/check.mjs`](scripts/check.mjs) | Verificação da seção 8 do brief + exportação de PNG e PDF. |
 | [`scripts/embed-fonts.mjs`](scripts/embed-fonts.mjs) | Embute Poppins e Nunito (`@fontsource`) em base64 no HTML. |
-| [`refs/`](refs) | Brief, PDF original, revisão editorial, apresentação de referência, print do site e logos recebidos. |
+| [`refs/`](refs) | Brief, PDF original, revisão editorial, apresentação de referência, print do site e logos recebidos (Ubots e Sicoob Crediauc nas versões clara, escura e avatar). |
 
 ## Apresentar
 
@@ -53,7 +53,10 @@ Medida direto do PDF de referência: fontes, tamanhos, cores, raios e posições
   - cards brancos com borda `#EFE8D7` e sombra quente;
   - tiles de ícone `#FFF5CC` com ícone âmbar;
   - cards escuros `#080401` com ícone em círculo e as ondas amarelas da marca;
-  - campos no estilo do formulário do site: rótulo acima e caixa arredondada com a dica dentro.
+  - campos no estilo do formulário do site: rótulo acima e caixa arredondada com a dica dentro;
+  - fluxos como trilhos (slides 5, 6 e 7): texto livre sobre o fundo, linha contínua com nós ou estações e cantos arredondados. Nada de caixas dentro de caixas, setinhas entre cards ou losango.
+- **Hierarquia de cor:** o amarelo marca só o agente e a palavra-chave do título. O petróleo do logo Sicoob Crediauc (`#003641`) marca o humano, o time da cooperativa. Estrutura e texto ficam em neutros, e a faixa escura fecha o slide quando há uma conclusão (decisão no slide 7). Os traços que carregam sentido têm 3:1 sobre o creme: agente `#A97C00`, neutro `#8C8273`.
+- **Assinatura dupla** na capa e no case: logo Ubots | logo Sicoob Crediauc.
 - **Fundos:** creme `#FFFCF2` com brilhos quentes suaves. Os slides 2 e 8 são escuros, com brilho atrás do conteúdo principal, como o slide de investimento da referência.
 - **Palavra-chave em degradê** amarelo → âmbar (`#FFD836` → `#F3B12C`), também nos números do case. O script da página troca esse texto por `<text>` SVG preenchido com o degradê. Assim o PDF sai com texto preenchido por padrão de sombreamento, igual à referência. Com `background-clip: text`, o Chromium gera um grupo de transparência que alguns leitores (poppler) desenham com um fio na borda. Sem JavaScript, vale o degradê em CSS.
 
@@ -68,6 +71,7 @@ O brief veio antes da referência de marca. Onde os dois divergem, valeu a refer
 - Capa clara com painel ilustrado, no lugar de capa escura.
 - Ondas, brilhos suaves e sombras como grafismos, no lugar de só a estrela.
 - A ilustração da capa é vetorial e abstrata: conversa do agente, transbordo para o humano e checklist. Não há mockup de celular nem foto.
+- No fluxo do slide 6, a pergunta é um nó com ícone de ramificação, no lugar do losango. "Sim" e "Não" viram rótulos nos ramos. Na revisão de layout, losango e caixinhas com setas foram apontados como visual datado.
 
 Os demais desvios:
 
@@ -78,6 +82,7 @@ Os demais desvios:
   
   Se a decisão for cumprir o brief à risca, basta trocar `--grad-marca` por uma cor sólida de 3:1, como `#B78400`.
 - **Logo Ubots.** Vetorização do PNG recebido (`refs/logo-ubots.png`), com 0,13% de pixels divergentes. A tinta troca de cor por variável: escura em fundo claro e branca em fundo escuro.
+- **Logo Sicoob Crediauc.** São os arquivos enviados pelo time (`refs/logo-sicoob-crediauc*.png`), embutidos como PNG e sem redesenho. Fundo claro: o PNG transparente, recortado. Fundo escuro: o mesmo PNG com "SICOOB" em branco, igual ao arquivo escuro oficial, que tem resolução menor e fundo preto opaco.
 - **Forma do copy.** O texto é o da seção 5. Só a forma muda em quatro pontos:
   - as dicas dos campos começam com maiúscula;
   - as perguntas do slide 6 ganharam "?";
@@ -88,7 +93,7 @@ Os demais desvios:
 ## TODO-ASSET (marcados no código)
 
 - Logo Ubots oficial em SVG, versões clara e escura. Hoje o deck usa a vetorização do PNG.
-- Logo Sicoob Crediauc e autorização de uso. O arquivo está em `refs/logo-sicoob-crediauc.png`, mas o deck mostra só o nome em texto.
+- Autorização de uso do logo Sicoob Crediauc. O logo já está aplicado na capa e no case.
 - URL do botão "Falar com um especialista". Hoje é `href="#"`.
 - Path oficial da estrela do v1.0 (`ubots-estudos-layout.html` não veio). Hoje o ícone do agente usa um asterisco de 4 pontas provisório.
 - Brand book. Os grafismos seguem a apresentação de referência: ondas, brilhos e o painel da capa.

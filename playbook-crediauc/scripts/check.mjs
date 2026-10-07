@@ -127,7 +127,7 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
     '.eyebrow', '.rotulo', '.chip', '.botao', '.trilho', '.raia-cab', '.ref', // rótulos
     '.numero',                                                                // números e legendas
     '.topo',                                                                  // cabeçalho
-    '.campo', '.check', '.passo', '.no', '.losango-txt', '.ramo',             // microcopy de componente
+    '.campo', '.check', '.passo', '.no', '.ramo',                             // microcopy de componente
     '.no-cadeia', '.derivacao', '.entrega', '.diagrama',
   ].join(',');
   const contar = t => t.replace(/R\$\s*[\d.]+(,\d+)?|\d+º|[\d.,]+/g, ' ').split(/\s+/).filter(w => /\p{L}/u.test(w)).length;
