@@ -8,12 +8,15 @@
 //   · texto visível com fonte abaixo de 18 px;
 //   · número fora da lista permitida (seção 6 do brief);
 //   · contraste abaixo de 4,5:1 (3:1 para texto grande);
-//   · texto fora da área útil (margens de 112 px nas laterais e 88 px no topo e na base);
+//   · texto fora da área útil (120 px nas laterais, 48 px no topo e 100 px na base);
 //   · peso de fonte usado sem a face embutida correspondente.
+// A palavra-chave dos títulos usa o degradê amarelo da marca (como na apresentação de referência):
+// o contraste dela é medido e sai como AVISO, não como falha. Os brilhos do fundo do slide são decoração
+// e não entram na conta; o contraste é medido contra a cor de base do slide.
 // Depois exporta out/slides/slide-NN.png e out/playbook-crediauc.pdf e confere o PDF com pdfinfo.
 //
 // "Texto corrido" segue o orçamento da seção 5: contam parágrafos, leads, faixas, perguntas, notas
-// e avisos. Não contam títulos, rótulos mono, números com legendas, rodapé, notas do apresentador
+// e avisos. Não contam títulos, rótulos, números com legendas, cabeçalho, notas do apresentador
 // e a microcopy dos componentes (campos, checklists, passos das raias, nós do fluxograma e da cadeia,
 // card de entrega, rótulos de diagrama). Os totais de palavras visíveis saem no relatório.
 import { chromium } from 'playwright';
@@ -30,7 +33,7 @@ fs.mkdirSync(pastaSlides, { recursive: true });
 
 const LIMITE_PALAVRAS = 60;
 const FONTE_MINIMA = 18;
-const FACES_EMBUTIDAS = { 'Poppins': [400, 500, 600, 700, 800], 'Inter': [400, 500, 600], 'JetBrains Mono': [500, 700] };
+const FACES_EMBUTIDAS = { 'Poppins': [500, 600, 700, 800], 'Nunito': [500, 600, 700] };
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
@@ -47,6 +50,7 @@ page.on('pageerror', e => errosJs.push(e.message));
 
 await page.goto(`${pathToFileURL(htmlPath).href}?export#1`);
 await page.evaluate(() => document.fonts.ready);
+await page.waitForFunction(() => document.documentElement.dataset.pronto === 'sim'); // degradês já viraram SVG
 const total = await page.evaluate(() => document.querySelectorAll('.slide').length);
 
 // Roda dentro da página: mede um slide e devolve as violações encontradas.
@@ -59,7 +63,7 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
     const t = (txt ?? el.textContent).replace(/\s+/g, ' ').trim().slice(0, 48);
     return `<${el.tagName.toLowerCase()}${cls}>${t ? ` "${t}"` : ''}`;
   };
-  const r = { nome: slide.dataset.nome, overflow: [], internos: [], corrido: 0, visiveis: 0, pequenos: [], numeros: [], contraste: [], foraDaArea: [], fontes: [] };
+  const r = { nome: slide.dataset.nome, overflow: [], internos: [], corrido: 0, visiveis: 0, pequenos: [], numeros: [], contraste: [], avisos: [], foraDaArea: [], fontes: [] };
 
   const cor = s => { const m = s.match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(/[\s,/]+/).filter(Boolean).map(Number); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
 
@@ -75,7 +79,8 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
     const el = n.parentElement;
     if (!n.textContent.trim() || el.closest('.notes') || !visivel(el)) continue;
     let bloco = el;
-    while (bloco !== slide && getComputedStyle(bloco).display === 'inline') bloco = bloco.parentElement;
+    // SVG de texto (degradê) conta como conteúdo em linha do bloco HTML que o contém
+    while (bloco !== slide && (bloco instanceof SVGElement || getComputedStyle(bloco).display === 'inline')) bloco = bloco.parentElement;
     range.selectNodeContents(n);
     const rects = [...range.getClientRects()].filter(q => q.width > 1 && q.height > 1);
     textos.push({ n, el, bloco, rects });
@@ -90,6 +95,12 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
     return (bg && bg.a > 0) || ['Top', 'Right', 'Bottom', 'Left'].some(l => parseFloat(cs[`border${l}Width`]) > 0 && cs[`border${l}Style`] !== 'none');
   };
   const caixas = [...slide.querySelectorAll('*')].filter(el => !(el instanceof SVGElement) && !el.closest('.notes, [data-recorte]') && visivel(el) && temCaixa(el));
+  for (const c of caixas) {
+    const q = c.getBoundingClientRect();
+    const [x0, y0, x1, y1] = [q.left - caixa.left, q.top - caixa.top, q.right - caixa.left, q.bottom - caixa.top];
+    if (x0 < 119.5 || y0 < 47.5 || x1 > 1800.5 || y1 > 980.5)
+      r.foraDaArea.push(`caixa ${resumo(c, '')} [${Math.round(x0)}, ${Math.round(y0)} → ${Math.round(x1)}, ${Math.round(y1)}]`);
+  }
   const relatados = new Set();
   const relatar = (chave, msg) => { if (!relatados.has(chave)) { relatados.add(chave); r.internos.push(msg); } };
   for (const t of textos) for (const q of t.rects) {
@@ -112,11 +123,11 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
 
   // 2a. Palavras de texto corrido
   const FORA_DO_ORCAMENTO = [
-    'h1', 'h2', 'h3',                                                // títulos
-    '.eyebrow', '.rotulo', '.chip', '.botao', '.trilho', '.raia-cab', // rótulos
-    '.numero',                                                       // números e legendas
-    '.rodape',                                                       // rodapé
-    '.campo', '.check', '.passo', '.no', '.losango-txt',             // microcopy de componente
+    'h1', 'h2', 'h3',                                                         // títulos
+    '.eyebrow', '.rotulo', '.chip', '.botao', '.trilho', '.raia-cab', '.ref', // rótulos
+    '.numero',                                                                // números e legendas
+    '.topo',                                                                  // cabeçalho
+    '.campo', '.check', '.passo', '.no', '.losango-txt', '.ramo',             // microcopy de componente
     '.no-cadeia', '.derivacao', '.entrega', '.diagrama',
   ].join(',');
   const contar = t => t.replace(/R\$\s*[\d.]+(,\d+)?|\d+º|[\d.,]+/g, ' ').split(/\s+/).filter(w => /\p{L}/u.test(w)).length;
@@ -130,18 +141,35 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
   const sobre = (c, base) => ({ r: c.r * c.a + base.r * (1 - c.a), g: c.g * c.a + base.g * (1 - c.a), b: c.b * c.a + base.b * (1 - c.a), a: 1 });
   const lum = c => { const f = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b); };
   const razao = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  const clipTexto = cs => cs.backgroundClip === 'text' || cs.webkitBackgroundClip === 'text';
   const fundo = el => {
     const cadeia = [];
     for (let a = el; a; a = a.parentElement) { cadeia.push(a); if (a === slide) break; }
     let base = { r: 255, g: 255, b: 255, a: 1 }, opacidade = 1;
     for (const a of cadeia.reverse()) {
       const cs = getComputedStyle(a);
-      if (cs.backgroundImage !== 'none') return null;
-      const c = cor(cs.backgroundColor);
+      const gradienteDeTexto = clipTexto(cs);
+      // brilhos do slide são decoração; fundo em degradê em outro elemento: contraste não medido
+      if (cs.backgroundImage !== 'none' && a !== slide && !gradienteDeTexto) return null;
+      const c = gradienteDeTexto ? null : cor(cs.backgroundColor);
       if (c && c.a > 0) base = sobre(c, base);
       opacidade *= parseFloat(cs.opacity);
     }
     return { base, opacidade };
+  };
+  // texto pintado com degradê (background-clip: text): devolve as cores das paradas do degradê
+  const coresDoDegrade = el => {
+    if (el instanceof SVGElement) { // SVG <text> com fill="url(#…)"
+      const id = getComputedStyle(el).fill.match(/url\("?#([^")]+)"?\)/)?.[1];
+      const g = id && document.getElementById(id);
+      return g ? [...g.querySelectorAll('stop')].map(s => cor(getComputedStyle(s).stopColor)) : null;
+    }
+    for (let a = el; a && a !== slide; a = a.parentElement) {
+      const cs = getComputedStyle(a);
+      if (clipTexto(cs) && cs.backgroundImage !== 'none') return [...cs.backgroundImage.matchAll(/rgba?\([^)]+\)/g)].map(m => cor(m[0]));
+      if (cs.display !== 'inline' && a !== el) break;
+    }
+    return null;
   };
   const vistos = new Set();
   for (const { el } of textos) {
@@ -152,10 +180,17 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
     if (tamanho < fonteMinima) r.pequenos.push(`${resumo(el)} ${tamanho}px`);
     r.fontes.push(`${cs.fontFamily.split(',')[0].replace(/["']/g, '').trim()}|${peso}`);
     const f = fundo(el), c = cor(cs.color);
-    if (!f || !c) continue;
-    const frente = sobre({ ...c, a: c.a * f.opacidade }, f.base);
+    if (!f) continue;
     const grande = tamanho >= 24 || (tamanho >= 18.66 && peso >= 700);
     const minimo = grande ? 3 : 4.5;
+    const degrade = coresDoDegrade(el);
+    if (degrade?.length) {
+      const pior = Math.min(...degrade.map(g => razao(sobre({ ...g, a: g.a * f.opacidade }, f.base), f.base)));
+      if (pior < minimo) r.avisos.push(`degradê da marca em ${resumo(el)}: ${pior.toFixed(2)}:1 (mínimo ${minimo}:1)`);
+      continue;
+    }
+    if (!c) continue;
+    const frente = sobre({ ...c, a: c.a * f.opacidade }, f.base);
     const valor = razao(frente, f.base);
     if (valor < minimo) r.contraste.push(`${resumo(el)} ${valor.toFixed(2)}:1 < ${minimo}:1`);
   }
@@ -163,8 +198,11 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
   // 3. Números (por bloco, para juntar "R$" e valor) e área útil
   const blocos = [...new Set(textos.map(t => t.bloco))];
   const DINHEIRO = ['R$ 23.402,22', 'R$ 3.546,30', 'R$ 5.700,00'];
+  // texto do próprio bloco: entra o conteúdo em linha (inline, inline-block…); filhos em bloco são varridos à parte
+  const proprio = el => [...el.childNodes].map(n => n.nodeType === 3 ? n.textContent
+    : n.nodeType === 1 && (n instanceof SVGElement || getComputedStyle(n).display.startsWith('inline')) ? proprio(n) : ' ').join('');
   for (const b of blocos) {
-    const txt = b.innerText.replace(/\s+/g, ' ').trim();
+    const txt = proprio(b).replace(/\s+/g, ' ').trim();
     if (b.closest('.pagina')) { if (!/^0[1-9] \/ 0[1-9]$/.test(txt)) r.numeros.push(`paginação "${txt}"`); continue; }
     for (const m of txt.matchAll(/R\$\s*\d[\d.]*,\d{2}|\d+º|×\s*\d+|\d+(?:[.,]\d+)*/g)) {
       const s = m[0], antes = txt.slice(0, m.index);
@@ -177,18 +215,17 @@ function analisar({ indice, limitePalavras, fonteMinima }) {
       else ok = s === '5' || s === '6';
       if (!ok) r.numeros.push(`"${s}" em ${resumo(b, txt)}`);
     }
-    if (!b.closest('.rodape')) {
-      const q = b.getBoundingClientRect();
-      const [x0, y0, x1, y1] = [q.left - caixa.left, q.top - caixa.top, q.right - caixa.left, q.bottom - caixa.top];
-      if (x0 < 111.5 || y0 < 87.5 || x1 > 1808.5 || y1 > 992.5)
-        r.foraDaArea.push(`${resumo(b, txt)} [${Math.round(x0)}, ${Math.round(y0)} → ${Math.round(x1)}, ${Math.round(y1)}]`);
-    }
+    const q = b.getBoundingClientRect();
+    const [x0, y0, x1, y1] = [q.left - caixa.left, q.top - caixa.top, q.right - caixa.left, q.bottom - caixa.top];
+    if (x0 < 119.5 || y0 < 47.5 || x1 > 1800.5 || y1 > 980.5)
+      r.foraDaArea.push(`${resumo(b, txt)} [${Math.round(x0)}, ${Math.round(y0)} → ${Math.round(x1)}, ${Math.round(y1)}]`);
   }
   r.fontes = [...new Set(r.fontes)];
   return r;
 }
 
 const falhas = [];
+const avisos = [];
 const linhas = [];
 const fontesUsadas = new Set();
 for (let i = 0; i < total; i++) {
@@ -208,6 +245,7 @@ for (let i = 0; i < total; i++) {
   r.contraste.forEach(x => f.push(`contraste: ${x}`));
   r.foraDaArea.forEach(x => f.push(`fora da área útil: ${x}`));
   r.fontes.forEach(x => fontesUsadas.add(x));
+  r.avisos.forEach(x => avisos.push(`slide ${nn} · ${x}`));
   falhas.push(...f.map(x => `slide ${nn} · ${x}`));
   linhas.push({ slide: nn, nome: r.nome, corrido: r.corrido, visiveis: r.visiveis, falhas: f.length });
   await page.locator('.slide').nth(i).screenshot({ path: path.join(pastaSlides, `slide-${nn}.png`) });
@@ -239,6 +277,10 @@ console.log(`\nfontes usadas: ${[...fontesUsadas].sort().join(', ')}`);
 console.log(`requisições externas bloqueadas: ${bloqueadas.length}${bloqueadas.length ? ` (${[...new Set(bloqueadas.map(u => new URL(u).host))].join(', ')})` : ''}`);
 console.log(`PDF: ${paginas} páginas · ${formato} → ${path.relative(raiz, pdfPath)}`);
 console.log(`PNGs: ${path.relative(raiz, pastaSlides)}/slide-01.png … slide-${String(total).padStart(2, '0')}.png`);
+if (avisos.length) {
+  console.log(`\n! ${avisos.length} aviso(s) — exceção de marca, não reprovam:`);
+  avisos.forEach(x => console.log(`  - ${x}`));
+}
 if (falhas.length) {
   console.log(`\n✗ ${falhas.length} falha(s):`);
   falhas.forEach(x => console.log(`  - ${x}`));

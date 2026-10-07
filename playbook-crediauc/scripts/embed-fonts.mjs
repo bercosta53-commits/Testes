@@ -10,10 +10,10 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const htmlPath = path.join(root, 'src/index.html');
 
+// Poppins nos títulos e rótulos, Nunito no texto (tipografia da apresentação de referência da marca).
 const familias = [
-  ['Poppins', 'poppins', [400, 500, 600, 700, 800]],
-  ['Inter', 'inter', [400, 500, 600]],
-  ['JetBrains Mono', 'jetbrains-mono', [500, 700]],
+  ['Poppins', 'poppins', [500, 600, 700, 800]],
+  ['Nunito', 'nunito', [500, 600, 700]],
 ];
 
 const regras = familias.flatMap(([familia, pacote, pesos]) => pesos.map(peso => {
