@@ -10,7 +10,7 @@ Design system das redes sociais da **Sonata Aparelhos Auditivos**: cores, tipogr
 |---|---|
 | Entender a marca e as regras | [`MARCA.md`](MARCA.md) — o manual (essência, voz, cor, tipo, grid, hierarquia, elementos, fotografia, logo) |
 | Pedir posts a uma IA | [`ia/GUIA-IA.md`](ia/GUIA-IA.md) — instrução de sistema pronta, com regras, medidas e prompt |
-| Apresentar o estudo | [`apresentacao/Sonata-Social-Ondas-estudo.pdf`](apresentacao/Sonata-Social-Ondas-estudo.pdf) — 27 páginas, gerado de `apresentacao/estudo.html` |
+| Aprovar o estudo | [`apresentacao/Sonata-Social-Ondas-aprovacao-v1.pdf`](apresentacao/Sonata-Social-Ondas-aprovacao-v1.pdf) — versão 1 para aprovação, 29 páginas, gerada de `apresentacao/estudo.html` |
 | Ver todos os modelos | [`modelos/index.html`](modelos/index.html) no navegador, ou as imagens em [`previews/`](previews) |
 | Valores exatos | [`tokens/tokens.json`](tokens/tokens.json) (fonte única) e [`tokens/tokens.css`](tokens/tokens.css) |
 
