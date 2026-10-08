@@ -378,7 +378,7 @@
       var lado = s.veu || (F.h === 1920 ? 'base' : 'esquerda'), escuro = s.tema === 'marinho';
       return foto(p.foto) +
         veu(lado, s.tema, lado === 'base' ? { plato: 0.24, alcance: 0.72, forca: 0.96 } : { plato: 0.3, alcance: 0.82, forca: 0.97 }) +
-        (escuro ? '' : '') +
+        veu('topo', escuro ? 'marinho' : s.tema, { plato: 0, alcance: 0.22, forca: escuro ? 0.55 : 0.85 }) +
         '<div class="sn-safe">' + topo(s) +
           pilha(lado === 'base' ? 'sn-fim' : 'sn-centro', aspas(84) +
             '<blockquote class="titulo-compacto sn-titulo sn-citacao" data-fit="44">' + rich(s.titulo) + '</blockquote>' +
@@ -410,7 +410,7 @@
           '<div class="sn-preco">' + (p.prefixo ? '<span class="apoio">' + esc(p.prefixo) + '</span>' : '') +
             '<span class="sn-preco-linha"><b class="numeral">' + esc(p.valor || '') + '</b>' + (p.sufixo ? '<span class="apoio">' + esc(p.sufixo) + '</span>' : '') + '</span></div>' +
           '<div class="sn-acao">' + cta(s.cta) + '</div>' +
-          (s.legenda ? '<div class="legenda sn-legal">' + esc(s.legenda) + '</div>' : ''), comFoto && F.h !== 1920 ? Math.round(W * 0.62) : null) +
+          (s.legenda ? '<div class="legenda sn-legal">' + esc(s.legenda) + '</div>' : ''), comFoto && F.h !== 1920 ? Math.round(W * 0.74) : null) +
       '</div>';
   };
 

@@ -82,7 +82,7 @@
 .sn-selo .chamada { font-size: 28px; font-weight: 500; }
 .sn-preco { display: flex; flex-direction: column; gap: var(--esp-8); color: var(--titulo); }
 .sn-preco .apoio { color: var(--apoio); }
-.sn-preco-linha { display: flex; align-items: baseline; gap: var(--esp-24); }
+.sn-preco-linha { display: flex; align-items: baseline; gap: var(--esp-24); white-space: nowrap; }
 .sn-preco .numeral { color: var(--titulo); white-space: nowrap; }
 
 /* carrossel */
