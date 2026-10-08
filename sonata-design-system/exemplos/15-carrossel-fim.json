@@ -1,0 +1,20 @@
+{
+  "modelo": "carrossel-fim",
+  "tema": "marinho",
+  "titulo": "Vamos ouvir *juntos*?",
+  "apoio": "Agende sua avaliação com a nossa equipe.",
+  "cta": "Agende sua avaliação",
+  "pessoa": {
+    "nome": "Daiana Cardoso Kuse",
+    "detalhe": "Fonoaudióloga · sócia",
+    "foto": {
+      "src": "daiana",
+      "assunto": "Daiana de jaleco no consultório mostrando um aparelho",
+      "rosto": "41% 28%"
+    }
+  },
+  "pagina": {
+    "atual": 6,
+    "total": 6
+  }
+}

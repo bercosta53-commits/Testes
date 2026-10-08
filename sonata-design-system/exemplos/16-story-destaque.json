@@ -1,0 +1,16 @@
+{
+  "modelo": "destaque",
+  "formato": "story",
+  "tema": "marinho",
+  "aba": "Afeto",
+  "rotulo": "Ouvir é estar perto",
+  "titulo": "Cantar junto *não tem idade*.",
+  "apoio": "Ouvir a própria voz e a de quem está ao lado.",
+  "cta": "Agende sua avaliação",
+  "icone": "som",
+  "foto": {
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto, rindo, luz quente",
+    "rosto": "55% 30%"
+  }
+}

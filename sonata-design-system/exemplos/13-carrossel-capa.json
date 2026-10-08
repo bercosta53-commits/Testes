@@ -1,0 +1,18 @@
+{
+  "modelo": "carrossel-capa",
+  "tema": "marinho",
+  "aba": "Guia rápido",
+  "rotulo": "Passo a passo",
+  "titulo": "Como voltar a *escutar* com a Sonata",
+  "apoio": "Do primeiro teste ao acompanhamento.",
+  "icone": "ondas",
+  "foto": {
+    "src": "ajuste-aparelho",
+    "assunto": "Fono ajustando o aparelho de uma senhora, mãos cuidadosas, luz suave",
+    "rosto": "76% 40%"
+  },
+  "pagina": {
+    "atual": 1,
+    "total": 6
+  }
+}

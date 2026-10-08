@@ -1,26 +1,26 @@
 {
-  "versao": "2.0.0",
+  "versao": "3.0.0",
   "formatos": {
     "feed": {
       "w": 1080,
       "h": 1350,
-      "m": 96,
-      "mt": 96,
-      "mb": 96
+      "m": 56,
+      "mt": 56,
+      "mb": 48
     },
     "quadrado": {
       "w": 1080,
       "h": 1080,
-      "m": 88,
-      "mt": 88,
-      "mb": 88
+      "m": 56,
+      "mt": 56,
+      "mb": 48
     },
     "story": {
       "w": 1080,
       "h": 1920,
-      "m": 96,
-      "mt": 250,
-      "mb": 320
+      "m": 64,
+      "mt": 220,
+      "mb": 300
     }
   },
   "vocabularioEvitado": [
@@ -41,13 +41,13 @@
     "barato"
   ],
   "modelos": {
-    "frase-foto": {
-      "nome": "Frase com foto",
+    "destaque": {
+      "nome": "Destaque",
       "pilar": "Afeto",
-      "quando": "Vida, convivência, emoção. A foto de pessoas juntas ocupa o alto do post e uma faixa de cor sobe em onda com o texto. Para frases curtas, o arco que nasce do canto.",
+      "quando": "A foto ocupa o post inteiro; um cartão flutuante segura título, subtítulo e chamada. Aba vertical e selo de ícone opcionais. Abertura de campanha, frase com pessoas, datas.",
       "temas": [
         "marinho",
-        "mar",
+        "agua",
         "claro"
       ],
       "temaPadrao": "marinho",
@@ -58,201 +58,152 @@
       "opcional": [
         "rotulo",
         "apoio",
-        "corpo",
-        "mascara"
-      ],
-      "elementos": [
-        "arcos"
+        "cta",
+        "aba",
+        "icone"
       ],
       "limites": {
-        "titulo": 14,
+        "titulo": 10,
         "apoio": 18
       },
-      "mascara": "onda",
       "teto": 35
     },
-    "frase": {
-      "nome": "Frase com respiro",
-      "pilar": "Afeto",
-      "quando": "Reflexão, frase de impacto, abertura de campanha. Sem foto: o espaço vazio é o protagonista.",
+    "bento": {
+      "nome": "Bento",
+      "pilar": "Cuidado",
+      "quando": "Composição modular de fotos em módulos de mesmo raio e cartões de cor. Educativo, institucional, bastidores. layout a (manchete no topo + mosaico com foto alta, foto e cartão de chamada), b (cartão de texto + foto alta + foto) ou c (foto larga + cartão largo).",
       "temas": [
-        "claro",
-        "bruma",
-        "agua",
         "marinho",
-        "mar"
+        "nevoa",
+        "agua"
       ],
-      "temaPadrao": "bruma",
+      "temaPadrao": "nevoa",
+      "obrigatorio": [
+        "titulo",
+        "fotos"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio",
+        "corpo",
+        "cta",
+        "layout",
+        "chips",
+        "legenda",
+        "icone"
+      ],
+      "limites": {
+        "titulo": 10,
+        "apoio": 18,
+        "corpo": 20
+      },
+      "teto": 40
+    },
+    "lista": {
+      "nome": "Lista",
+      "pilar": "Sonata",
+      "quando": "Serviços, diferenciais ou passos curtos: até 4 cartões em pílula, cada um com título, linha de texto e ícone.",
+      "temas": [
+        "nevoa",
+        "marinho",
+        "claro"
+      ],
+      "temaPadrao": "claro",
+      "obrigatorio": [
+        "titulo",
+        "itens"
+      ],
+      "opcional": [
+        "rotulo",
+        "cta"
+      ],
+      "limites": {
+        "titulo": 10
+      },
+      "teto": 60
+    },
+    "retrato": {
+      "nome": "Retrato",
+      "pilar": "Sonata",
+      "quando": "Uma pessoa em destaque (sócia ou paciente autorizado) num módulo alto, ao lado de um cartão com título, chips de serviço e chamada.",
+      "temas": [
+        "nevoa",
+        "marinho",
+        "agua"
+      ],
+      "temaPadrao": "nevoa",
+      "obrigatorio": [
+        "titulo",
+        "pessoa"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio",
+        "chips",
+        "cta"
+      ],
+      "limites": {
+        "titulo": 10,
+        "apoio": 16
+      },
+      "teto": 40
+    },
+    "frase": {
+      "nome": "Frase",
+      "pilar": "Afeto",
+      "quando": "Frase sem foto, centralizada, com muito respiro e um elemento de interface: controle de volume, linha de som ou botão.",
+      "temas": [
+        "marinho",
+        "nevoa",
+        "agua",
+        "claro"
+      ],
+      "temaPadrao": "marinho",
       "obrigatorio": [
         "titulo"
       ],
       "opcional": [
         "rotulo",
         "apoio",
-        "corpo"
-      ],
-      "elementos": [
-        "arcos",
-        "linha"
+        "cta",
+        "elemento"
       ],
       "limites": {
         "titulo": 10,
-        "apoio": 18
-      }
-    },
-    "educativo": {
-      "nome": "Educativo",
-      "pilar": "Cuidado",
-      "quando": "Saúde auditiva explicada: um fato, um porquê. Foto estourada à direita, painel de cor com borda ondulada à esquerda, assinado por uma fono.",
-      "temas": [
-        "claro",
-        "bruma"
-      ],
-      "temaPadrao": "claro",
-      "obrigatorio": [
-        "titulo",
-        "foto"
-      ],
-      "opcional": [
-        "rotulo",
-        "apoio",
-        "corpo",
-        "legenda",
-        "mascara"
-      ],
-      "elementos": [
-        "arcos"
-      ],
-      "limites": {
-        "titulo": 12,
-        "apoio": 22
-      },
-      "mascara": "lateral",
-      "teto": 45
-    },
-    "tecnologia": {
-      "nome": "Tecnologia",
-      "pilar": "Tecnologia",
-      "quando": "Aparelho, recurso, novidade. O aparelho recortado flutua no centro das ondas, ou uma foto de uso real sob véu marinho.",
-      "temas": [
-        "marinho",
-        "mar"
-      ],
-      "temaPadrao": "marinho",
-      "obrigatorio": [
-        "titulo",
-        "foto"
-      ],
-      "opcional": [
-        "rotulo",
-        "apoio",
-        "corpo",
-        "chips",
-        "legenda",
-        "mascara"
-      ],
-      "elementos": [
-        "arcos"
-      ],
-      "limites": {
-        "titulo": 10,
-        "chips": 3
-      },
-      "mascara": "onda",
-      "teto": 40
-    },
-    "data": {
-      "nome": "Data comemorativa",
-      "pilar": "Afeto",
-      "quando": "Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. A foto ocupa o post e uma faixa de cor sobe da base em onda, com o manuscrito.",
-      "temas": [
-        "agua",
-        "bruma",
-        "mar"
-      ],
-      "temaPadrao": "agua",
-      "obrigatorio": [
-        "rotulo",
-        "manuscrito",
-        "foto"
-      ],
-      "opcional": [
-        "apoio"
-      ],
-      "elementos": [
-        "onda"
-      ],
-      "limites": {
-        "manuscrito": 4,
         "apoio": 16
       },
-      "mascara": "onda",
       "teto": 30
     },
     "depoimento": {
       "nome": "Depoimento",
       "pilar": "Sonata",
-      "quando": "A voz de quem voltou a ouvir. Com foto autorizada, a pessoa ocupa o post; sem foto, a frase ocupa o espaço. Sempre com nome real e detalhe.",
+      "quando": "A fala real de um paciente num cartão grande, com aspas, nome e detalhe. Com foto autorizada, a pessoa entra num módulo.",
       "temas": [
-        "bruma",
-        "claro",
-        "marinho"
+        "marinho",
+        "nevoa",
+        "agua"
       ],
-      "temaPadrao": "bruma",
+      "temaPadrao": "marinho",
       "obrigatorio": [
         "titulo",
         "pessoa"
       ],
-      "opcional": [
-        "mascara"
-      ],
-      "elementos": [
-        "arcos"
-      ],
+      "opcional": [],
       "limites": {
         "titulo": 32
       },
-      "mascara": "lateral",
       "teto": 40
-    },
-    "fono": {
-      "nome": "Com a fono",
-      "pilar": "Sonata",
-      "quando": "As sócias falando de perto: dica, bastidor, opinião profissional. A foto da fono ocupa o post; o texto pousa numa faixa de cor que sobe da base.",
-      "temas": [
-        "claro",
-        "bruma"
-      ],
-      "temaPadrao": "claro",
-      "obrigatorio": [
-        "titulo",
-        "pessoa"
-      ],
-      "opcional": [
-        "rotulo",
-        "apoio",
-        "corpo",
-        "mascara"
-      ],
-      "elementos": [
-        "arcos"
-      ],
-      "limites": {
-        "titulo": 12,
-        "apoio": 20
-      },
-      "mascara": "onda",
-      "teto": 45
     },
     "oferta": {
       "nome": "Oferta",
       "pilar": "Sonata",
-      "quando": "Condição comercial real (parcelamento, preço de entrada, teste sem custo). Com foto de pessoas sob véu marinho, ou só cor. No máximo 1 em cada 5 posts.",
+      "quando": "Condição comercial real: preço de entrada, parcelamento e chamada num cartão escuro, ao lado de uma foto alta de pessoas. No máximo 1 em cada 5 posts.",
       "temas": [
+        "nevoa",
         "marinho",
-        "mar"
+        "agua"
       ],
-      "temaPadrao": "marinho",
+      "temaPadrao": "nevoa",
       "obrigatorio": [
         "preco",
         "cta"
@@ -263,57 +214,122 @@
         "selo",
         "legenda",
         "foto",
-        "mascara"
-      ],
-      "elementos": [
-        "arcos"
+        "itens"
       ],
       "limites": {
-        "titulo": 10
+        "titulo": 8
       },
-      "mascara": "onda",
-      "teto": 35
+      "teto": 40
     },
-    "carrossel-capa": {
-      "nome": "Carrossel · capa",
-      "pilar": "Cuidado",
-      "quando": "Primeira lâmina: promete o que o carrossel entrega. Com foto sangrada sob véu, ou só cor.",
+    "tecnologia": {
+      "nome": "Tecnologia",
+      "pilar": "Tecnologia",
+      "quando": "Aparelho recortado num módulo de cor com anéis de escuta, cartão com o benefício e chips com ícone; uma foto de uso real ao lado.",
       "temas": [
-        "mar",
-        "marinho",
-        "bruma"
+        "nevoa",
+        "marinho"
       ],
-      "temaPadrao": "mar",
+      "temaPadrao": "nevoa",
       "obrigatorio": [
         "titulo",
-        "pagina"
+        "foto"
       ],
       "opcional": [
         "rotulo",
         "apoio",
-        "corpo",
-        "foto",
-        "mascara"
+        "chips",
+        "legenda",
+        "fotos"
       ],
-      "elementos": [
-        "arcos"
+      "limites": {
+        "titulo": 10,
+        "chips": 3
+      },
+      "teto": 40
+    },
+    "data": {
+      "nome": "Data comemorativa",
+      "pilar": "Afeto",
+      "quando": "Foto estourada com um cartão claro que traz a data, o nome da data em manuscrito e uma frase.",
+      "temas": [
+        "marinho",
+        "agua",
+        "claro"
+      ],
+      "temaPadrao": "agua",
+      "obrigatorio": [
+        "rotulo",
+        "manuscrito",
+        "foto"
+      ],
+      "opcional": [
+        "apoio"
+      ],
+      "limites": {
+        "manuscrito": 4,
+        "apoio": 16
+      },
+      "teto": 30
+    },
+    "equipe": {
+      "nome": "Equipe",
+      "pilar": "Sonata",
+      "quando": "As sócias lado a lado em módulos, com um cartão largo que apresenta a equipe.",
+      "temas": [
+        "marinho",
+        "nevoa"
+      ],
+      "temaPadrao": "marinho",
+      "obrigatorio": [
+        "titulo",
+        "pessoas"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio",
+        "cta"
+      ],
+      "limites": {
+        "titulo": 10,
+        "apoio": 18
+      },
+      "teto": 40
+    },
+    "carrossel-capa": {
+      "nome": "Carrossel · capa",
+      "pilar": "Cuidado",
+      "quando": "Primeira lâmina: foto estourada, cartão com a promessa e o indicador de páginas.",
+      "temas": [
+        "marinho",
+        "agua",
+        "claro"
+      ],
+      "temaPadrao": "marinho",
+      "obrigatorio": [
+        "titulo",
+        "pagina",
+        "foto"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio"
       ],
       "limites": {
         "titulo": 10,
         "apoio": 14
       },
-      "mascara": "onda",
-      "teto": 45
+      "teto": 30
     },
     "carrossel-passo": {
       "nome": "Carrossel · passo",
       "pilar": "Cuidado",
-      "quando": "Miolo: um passo ou ideia por lâmina, numerado só quando a ordem importa. A foto, se houver, sobe da base numa onda.",
+      "quando": "Miolo: um passo por lâmina, com número em pílula, cartão de texto e foto em módulo.",
       "temas": [
+        "nevoa",
         "claro",
-        "bruma"
+        "marinho"
       ],
-      "temaPadrao": "claro",
+      "temaPadrao": "nevoa",
       "obrigatorio": [
         "titulo",
         "pagina"
@@ -323,9 +339,8 @@
         "corpo",
         "foto"
       ],
-      "elementos": [],
       "limites": {
-        "titulo": 10,
+        "titulo": 8,
         "corpo": 30
       },
       "teto": 45
@@ -333,13 +348,13 @@
     "carrossel-fim": {
       "nome": "Carrossel · fechamento",
       "pilar": "Sonata",
-      "quando": "Última lâmina: um convite claro, com a fono como rosto do atendimento.",
+      "quando": "Última lâmina: convite com a fono em módulo, contato e chamada.",
       "temas": [
-        "agua",
-        "bruma",
-        "marinho"
+        "marinho",
+        "nevoa",
+        "agua"
       ],
-      "temaPadrao": "agua",
+      "temaPadrao": "marinho",
       "obrigatorio": [
         "titulo",
         "cta",
@@ -347,18 +362,13 @@
       ],
       "opcional": [
         "apoio",
-        "pessoa",
-        "mascara"
-      ],
-      "elementos": [
-        "onda"
+        "pessoa"
       ],
       "limites": {
         "titulo": 8,
         "apoio": 14
       },
-      "mascara": "onda",
-      "teto": 45
+      "teto": 35
     }
   }
 }

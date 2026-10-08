@@ -1,0 +1,25 @@
+{
+  "modelo": "lista",
+  "formato": "story",
+  "tema": "marinho",
+  "rotulo": "Sinais de alerta",
+  "titulo": "Quando procurar *uma fono*?",
+  "itens": [
+    {
+      "titulo": "Pede para repetir",
+      "texto": "Em conversas do dia a dia",
+      "icone": "conversa"
+    },
+    {
+      "titulo": "Aumenta a TV",
+      "texto": "E a família reclama do volume",
+      "icone": "som"
+    },
+    {
+      "titulo": "Evita encontros",
+      "texto": "Porque cansa acompanhar",
+      "icone": "pessoas"
+    }
+  ],
+  "cta": "Agende sua avaliação"
+}

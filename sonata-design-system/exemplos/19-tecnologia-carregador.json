@@ -1,0 +1,29 @@
+{
+  "modelo": "tecnologia",
+  "tema": "marinho",
+  "rotulo": "Recarregável",
+  "titulo": "Carregue à noite. Converse o *dia inteiro*.",
+  "chips": [
+    {
+      "texto": "Sem pilhas",
+      "icone": "bateria"
+    },
+    {
+      "texto": "Estojo de carga",
+      "icone": "check"
+    }
+  ],
+  "legenda": "Imagem ilustrativa ampliada.",
+  "foto": {
+    "src": "carregador-recorte",
+    "assunto": "Estojo carregador com os dois aparelhos",
+    "recorte": true
+  },
+  "fotos": [
+    {
+      "src": "casal-karaoke",
+      "assunto": "Casal 60+ cantando junto, rindo, luz quente",
+      "rosto": "55% 30%"
+    }
+  ]
+}

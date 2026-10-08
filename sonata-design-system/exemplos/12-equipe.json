@@ -1,0 +1,28 @@
+{
+  "modelo": "equipe",
+  "tema": "marinho",
+  "rotulo": "Nossa equipe",
+  "titulo": "Duas fonos, *um só cuidado*.",
+  "apoio": "Daiana e Fernanda conduzem cada atendimento, do teste ao acompanhamento.",
+  "cta": "Converse com a gente",
+  "pessoas": [
+    {
+      "nome": "Daiana Cardoso Kuse",
+      "detalhe": "Fonoaudióloga",
+      "foto": {
+        "src": "daiana",
+        "assunto": "Daiana de jaleco no consultório mostrando um aparelho",
+        "rosto": "41% 28%"
+      }
+    },
+    {
+      "nome": "Fernanda Brugiolo",
+      "detalhe": "Fonoaudióloga",
+      "foto": {
+        "src": "fernanda",
+        "assunto": "Fernanda de jaleco no consultório, sorrindo para a câmera",
+        "rosto": "57% 30%"
+      }
+    }
+  ]
+}

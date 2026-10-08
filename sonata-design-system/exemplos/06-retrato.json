@@ -1,0 +1,31 @@
+{
+  "modelo": "retrato",
+  "tema": "nevoa",
+  "rotulo": "Quem cuida de você",
+  "titulo": "Cuidado que começa na *escuta*.",
+  "apoio": "Atendimento humanizado, do primeiro teste ao acompanhamento.",
+  "chips": [
+    {
+      "texto": "Avaliação",
+      "icone": "ondas"
+    },
+    {
+      "texto": "Adaptação",
+      "icone": "ajuste"
+    },
+    {
+      "texto": "Manutenção",
+      "icone": "escudo"
+    }
+  ],
+  "pessoa": {
+    "nome": "Daiana Cardoso Kuse",
+    "detalhe": "Fonoaudióloga · sócia",
+    "foto": {
+      "src": "daiana",
+      "assunto": "Daiana de jaleco no consultório mostrando um aparelho",
+      "rosto": "41% 28%"
+    }
+  },
+  "cta": "Agende com a Daiana"
+}

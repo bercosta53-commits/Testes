@@ -1,0 +1,23 @@
+{
+  "modelo": "bento",
+  "layout": "a",
+  "tema": "nevoa",
+  "rotulo": "Saúde auditiva",
+  "titulo": "A adaptação é feita *com calma*, no seu tempo.",
+  "apoio": "Ajustamos o aparelho com você, em mais de uma visita, até a escuta ficar natural.",
+  "cta": "Agende sua avaliação",
+  "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
+  "icone": "ajuste",
+  "fotos": [
+    {
+      "src": "ajuste-aparelho",
+      "assunto": "Fono ajustando o aparelho de uma senhora, mãos cuidadosas, luz suave",
+      "rosto": "76% 40%"
+    },
+    {
+      "src": "escuta-sorriso",
+      "assunto": "Homem 60+ sorrindo com a mão no ouvido, atento",
+      "rosto": "72% 40%"
+    }
+  ]
+}

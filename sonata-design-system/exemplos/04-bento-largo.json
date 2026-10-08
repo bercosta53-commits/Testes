@@ -1,0 +1,30 @@
+{
+  "modelo": "bento",
+  "layout": "c",
+  "tema": "agua",
+  "rotulo": "Afeto",
+  "titulo": "Cantar junto *não tem idade*.",
+  "apoio": "Ouvir a própria voz e a de quem está ao lado.",
+  "chips": [
+    {
+      "texto": "Música",
+      "icone": "som"
+    },
+    {
+      "texto": "Conversa",
+      "icone": "conversa"
+    },
+    {
+      "texto": "Família",
+      "icone": "pessoas"
+    }
+  ],
+  "icone": "coracao",
+  "fotos": [
+    {
+      "src": "casal-karaoke",
+      "assunto": "Casal 60+ cantando junto, rindo, luz quente",
+      "rosto": "55% 30%"
+    }
+  ]
+}

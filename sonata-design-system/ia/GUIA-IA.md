@@ -10,37 +10,46 @@ Público: mulheres de 60+ aposentadas da classe AB, que decidem e compram també
 
 ## Modo 1 (preferido): devolver fichas JSON
 
-Para cada post ou lâmina, devolva **um objeto JSON válido** contra `ia/ficha-post.schema.json`. O motor `Sonata.render(ficha)` faz o layout, escolhe cores, logo e grafismos, ajusta o tamanho do título e roda `Sonata.validar(ficha)`.
+Para cada post ou lâmina, devolva **um objeto JSON válido** contra `ia/ficha-post.schema.json`. O motor `Sonata.render(ficha)` faz o layout (grid modular, cartões, módulos de foto, barra de assinatura), escolhe as cores de cada cartão, ajusta o tamanho do título, enquadra os rostos e roda `Sonata.validar(ficha)`.
 
 Passo a passo:
 
 1. **Pilar** da pauta: Afeto, Cuidado, Tecnologia ou Sonata.
 2. **Modelo** (consulte `quando` em `ia/modelos.json`):
-   - emoção com foto de pessoas → `frase-foto`
-   - frase sem foto → `frase`
-   - explicar algo de saúde auditiva → `educativo` (ou carrossel, se forem 3+ ideias)
+   - emoção, frase com pessoas, abertura de campanha → `destaque` (foto estourada + cartão flutuante)
+   - explicar algo de saúde auditiva, bastidores → `bento` (`layout` a, b ou c)
+   - serviços, diferenciais, sinais de alerta → `lista` (até 4 itens com ícone)
+   - uma sócia ou paciente em destaque → `retrato`
+   - frase sem foto → `frase` (`elemento`: volume ou linha)
+   - fala de paciente → `depoimento`
+   - preço ou condição comercial real → `oferta`
    - aparelho ou recurso → `tecnologia`
    - data comemorativa → `data`
-   - fala de paciente → `depoimento`
-   - fala de uma das fonos → `fono`
-   - preço ou condição comercial real → `oferta`
+   - apresentar as sócias → `equipe`
    - guia em lâminas → `carrossel-capa` + `carrossel-passo` (uma por ideia) + `carrossel-fim`
-3. **Tema** permitido pelo modelo. Alterne claro e escuro em sequência de posts.
-4. **Formato**: `feed` por padrão; `story` para chamadas rápidas; `quadrado` para anúncio.
-5. **Texto** dentro dos limites do modelo; marque a ênfase do título com `*asteriscos*`.
-6. **Foto**: use `src` quando houver arquivo; senão, escreva em `assunto` o briefing da foto (quem, fazendo o quê, luz) e deixe `src` vazio. Informe `rosto` (onde está o rosto na imagem, em %, ex.: "57% 30%") para o motor manter a pessoa na área livre; `ondas: true` desenha as ondas finas ao redor dela; `recorte: true` para PNG de produto. `mascara` troca a máscara padrão do modelo (onda, lateral, arco ou veu).
+3. **Tema** permitido pelo modelo. Alterne no feed: foto estourada, fundo `nevoa`, fundo `marinho`.
+4. **Formato**: `feed` por padrão; `story` para chamadas rápidas; `quadrado` para anúncio (o bento mostra uma foto só).
+5. **Texto** dentro dos limites do modelo; marque a ênfase do título com `*asteriscos*` (1 a 3 palavras).
+6. **Ícones**: escolha da lista fechada — som, ondas, calendario, telefone, local, coracao, seta, mais, check, bateria, bluetooth, conversa, pessoas, escudo, cartao, ajuste. Use o que diz o serviço (calendário para agendar, escudo para garantia, ajuste para adaptação).
+7. **Foto**: use `src` quando houver arquivo; senão, escreva em `assunto` o briefing (quem, fazendo o quê, luz) e deixe `src` vazio. Informe `rosto` (onde está o rosto na imagem, em %, ex.: "57% 30%"). No bento, oferta e tecnologia, as fotos dos módulos vão em `fotos`; na tecnologia, `foto` é o recorte do aparelho (`recorte: true`).
 
 Exemplo de saída:
 
 ```json
 {
-  "modelo": "educativo",
-  "tema": "claro",
+  "modelo": "bento",
+  "layout": "a",
+  "tema": "nevoa",
   "rotulo": "Saúde auditiva",
-  "titulo": "Ouvir bem também é *se equilibrar*.",
-  "apoio": "A audição ajuda o cérebro a perceber o espaço. Cuidar dos ouvidos protege você de quedas.",
+  "titulo": "A adaptação é feita *com calma*, no seu tempo.",
+  "apoio": "Ajustamos o aparelho com você, em mais de uma visita, até a escuta ficar natural.",
+  "cta": "Agende sua avaliação",
   "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
-  "foto": { "assunto": "Homem 60+ se alongando em casa, em equilíbrio, luz da manhã", "rosto": "70% 30%" }
+  "icone": "ajuste",
+  "fotos": [
+    { "src": "ajuste-aparelho", "assunto": "Fono ajustando o aparelho de uma senhora", "rosto": "76% 40%" },
+    { "src": "escuta-sorriso", "assunto": "Homem 60+ sorrindo, atento", "rosto": "72% 40%" }
+  ]
 }
 ```
 
@@ -50,7 +59,7 @@ Para um carrossel, devolva uma lista de fichas na ordem, com `pagina` preenchida
 
 Quando a ferramenta não usa o motor, siga estas medidas no canvas de 1080 px de largura.
 
-**Formatos e margens**: feed 1080×1350 (margem 96 em volta) · quadrado 1080×1080 (88) · story 1080×1920 (laterais 96, topo livre 250, base livre 320). Grid de 6 colunas de 128 px com calha de 24.
+**Formatos e grid**: feed 1080×1350 · quadrado 1080×1080 · story 1080×1920. Margem de 56 px em volta (story: 64 nas laterais e 220 no topo). Barra de assinatura de 96 px, a 48 px da base (story: a 300 px da base). Área útil do feed: 968×1126. Grid de 2 colunas com calha única de 24 px; todo módulo ocupa 1 ou 2 colunas e 1 ou 2 linhas. Raio de 40 px em todo cartão e módulo de foto; pílula em botões, chips, itens e barra.
 
 **Cores (hex) — use só estas**:
 
@@ -69,48 +78,46 @@ Quando a ferramenta não usa o motor, siga estas medidas no canvas de 1080 px de
 
 Branco #FFFFFF. Só para texto: cinza-700 #3E4A57 e cinza-500 #5F6B78. Nenhuma outra cor.
 
-**Fundos e textos**:
+**Fundos, cartões e textos** (vale para o post e para cada cartão):
 
-| Tema | Fundo | Título | Ênfase | Apoio | Rótulo |
-|---|---|---|---|---|---|
-| claro | #FFFFFF | #143D66 | #0C9591 | #3E4A57 | #007776 |
-| bruma | #F1FDFC | #143D66 | #007776 | #3E4A57 | #007776 |
-| agua | #66D2CD | #07233A | #143D66 | #0B2F50 | #143D66 |
-| marinho | #0B2F50 | #FFFFFF | #66D2CD | #C9DBF0 | #9BE5E0 |
-| mar | gradiente 160° #005B5B → #07233A | #FFFFFF | #9BE5E0 | #E5F8F6 | #9BE5E0 |
-| foto escura | foto + véu de rgba(7,35,58,.94) a transparente, da base até ~72% | #FFFFFF | #66D2CD | #C9DBF0 | #9BE5E0 |
-| foto clara | foto + véu de branco a transparente, da esquerda até ~80% | #143D66 | #0C9591 | #3E4A57 | #007776 |
+| Tema | Fundo | Título | Ênfase | Apoio | Rótulo | Botão (fundo / ícone) |
+|---|---|---|---|---|---|---|
+| nevoa | #E4EEFA | #143D66 | #007776 | #3E4A57 | #007776 | #143D66 / #FFFFFF |
+| claro | #FFFFFF | #143D66 | #0C9591 | #3E4A57 | #007776 | #143D66 / #FFFFFF |
+| agua | #66D2CD | #07233A | #2F5986 | #0B2F50 | #143D66 | #0B2F50 / #FFFFFF |
+| marinho | #0B2F50 | #FFFFFF | #66D2CD | #C9DBF0 | #9BE5E0 | #66D2CD / #07233A |
 
-**Tipografia**: Poppins. Título Light 300 (112 px na frase, 84 px no título comum, 64 px no carrossel), ênfase em ExtraBold 800 itálico no mesmo tamanho, apoio Regular 42 px, rótulo SemiBold 28 px em caixa alta com espaçamento 0,16em, legenda 28 px. Manuscrito (Ms Madi, 150 px) só em datas comemorativas. Tudo alinhado à esquerda.
+Cartão por fundo: névoa → cartão marinho; marinho → cartão claro; água → cartão claro; claro → cartão marinho; sobre foto → cartão claro. Cartão de acento: água. Barra de assinatura: branca.
 
-**Fotos e máscaras**: a foto é sempre estourada (sem moldura) e o texto nunca fica solto sobre ela. O texto pousa numa máscara de cor sólida do tema: uma faixa que sobe da base com borda ondulada (padrão), um painel lateral de 60% com borda ondulada (educativo, depoimento) ou um quarto de disco no canto inferior esquerdo (frases curtas). A borda leva duas linhas finas de eco em verde-água. A foto ocupa a área que sobra, com o rosto no centro dela.
+**Tipografia**: Poppins. Títulos em Medium 500: 88 px na frase e no destaque (64 a 76 dentro de cartões), 64 px no título de cartão (56 em cartão estreito), 52 px no compacto. A ênfase usa o mesmo peso e muda só a cor. Apoio Regular 38 px, corpo 34 px, rótulo SemiBold 28 px em caixa alta com 0,14em, chamada SemiBold 32 px, legenda 28 px. Manuscrito (Ms Madi, 132 px) só em datas. Alinhado à esquerda (centralizado só na frase).
 
-**Posições**: nos posts com foto, o logo fica dentro da máscara, ao pé do texto (56 px); nos posts de cor, no canto superior esquerdo (64 px). Marinho em fundos claros e água; branco em marinho e mar. Títulos começam na margem esquerda de 96 px. Arcos de escuta no canto superior direito, cortados pela borda; sobre foto, finos e brancos ao redor da cabeça de quem escuta.
+**Fotos**: estourada com cartão flutuante (destaque, data, capa) ou em módulos de raio 40 (bento, retrato, equipe, oferta, tecnologia). Nunca recorte de pessoa em círculo ou forma. Véu marinho curto só na base da foto estourada.
+
+**Barra de assinatura**: pílula branca de 96 px de altura na largura útil: logo (40 px de altura), ícone de local + "Av. Dr. Nilo Peçanha, 2564", ícone de telefone + "(51) 3022.2100", botão redondo de seta à direita. Em todo post, menos no miolo do carrossel.
 
 ## Regras que nunca se quebram
 
 1. Só as cores da tabela. Fora dela, só o que aparece dentro de fotos.
 2. Nunca texto branco sobre água (#66D2CD). Texto sobre água é marinho.
-3. Uma ênfase por título, de 1 a 3 palavras. Ênfase colorida só no título.
-4. Nenhum texto abaixo de 28 px no canvas; corpo e apoio a partir de 38 px.
-5. No máximo 35 palavras na arte (45 por lâmina de carrossel). O resto vai para a legenda do post.
-6. Uma ideia, um título, um CTA e um logo por post.
-7. No máximo dois grafismos (arcos, onda, linha de som), nunca atrás de texto.
-8. Pelo menos 40% do canvas sem texto.
+3. Uma ênfase por título, de 1 a 3 palavras, só de cor. Ênfase só no título.
+4. Nenhum texto abaixo de 28 px no canvas; corpo a partir de 34 px; apoio a partir de 38 px.
+5. No máximo 35 a 40 palavras na arte (lista: 60; lâmina de carrossel: 45). O resto vai para a legenda do post.
+6. Uma ideia, um título e um CTA por post. O logo fica só na barra de assinatura.
+7. Raio único (40 px) e calha única (24 px). Nada de cartões com raios ou distâncias diferentes.
+8. Ícones só da lista fechada, sempre dentro de botão, chip ou pílula.
 9. Vocabulário evitado: surdo, surda, surdez, deficiente, deficiência, velho, velhinho, vovozinha, imperdível, não perca, compre já, barato. Diga "perda auditiva", "ouvir melhor", "voltar a escutar".
 10. Sem emoji na arte, no máximo uma exclamação.
 11. Nunca invente preço, prazo, número, nome de paciente ou depoimento. Se a pauta não trouxer o dado, deixe o campo de fora e avise.
-12. Educativo sempre assinado por uma fono; foto ampliada de aparelho sempre com "Imagem ilustrativa ampliada.".
-13. Foto sempre estourada, nunca recortada em formas; texto sempre sobre uma máscara de cor (onda, lateral ou arco), nunca solto sobre a imagem.
+12. Educativo sempre assinado por uma fono (`legenda`); foto ampliada de aparelho sempre com "Imagem ilustrativa ampliada.".
+13. Texto nunca solto sobre foto: sempre num cartão. Pessoa nunca recortada em forma.
 
 ## Antes de entregar, confira
 
 - [ ] O modelo combina com a pauta e o tema é permitido para ele.
-- [ ] O título tem até 12 palavras e uma única ênfase.
-- [ ] Todo texto está acima do mínimo e com contraste da tabela.
-- [ ] A foto mostra pessoas de 60+ acompanhadas, ou o briefing diz isso.
+- [ ] O título tem até 10 palavras e uma única ênfase.
+- [ ] Ícones escolhidos da lista e coerentes com o texto.
+- [ ] A foto mostra pessoas de 60+ acompanhadas, ou o briefing diz isso; `rosto` informado.
 - [ ] Nenhum dado inventado.
-- [ ] Logo na posição do modelo, uma vez só.
 - [ ] Rodou `Sonata.validar(ficha)` sem avisos (Modo 1).
 
 ## Prompt pronto para a equipe

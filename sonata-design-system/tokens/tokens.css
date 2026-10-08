@@ -37,14 +37,15 @@
   --grafismo-medio: var(--agua-200);
   --grafismo-suave: var(--agua-100);
   --linha: var(--marinho-100);
-  --chip-fundo: var(--agua-50);
+  --chip-fundo: var(--marinho-50);
   --cta-fundo: var(--marinho-700);
   --cta-texto: var(--branco);
-  --sombra-flutuante: 0 24px 64px rgba(7, 35, 58, 0.18);
+  --sombra-cartao: 0 24px 56px rgba(7, 35, 58, 0.22);
+  --sombra-flutuante: 0 32px 48px rgba(7, 35, 58, 0.30);
 }
-[data-theme="bruma"] {
-  --fundo: var(--agua-50);
-  --fundo-2: var(--agua-200);
+[data-theme="nevoa"] {
+  --fundo: var(--marinho-100);
+  --fundo-2: var(--marinho-200);
   --titulo: var(--marinho-700);
   --enfase: var(--agua-700);
   --apoio: var(--cinza-700);
@@ -52,9 +53,9 @@
   --legenda: var(--cinza-500);
   --manuscrito-cor: var(--agua-700);
   --grafismo-forte: var(--agua-400);
-  --grafismo-medio: var(--agua-300);
-  --grafismo-suave: var(--agua-200);
-  --linha: var(--agua-200);
+  --grafismo-medio: var(--marinho-200);
+  --grafismo-suave: var(--marinho-50);
+  --linha: var(--marinho-200);
   --chip-fundo: var(--branco);
   --cta-fundo: var(--marinho-700);
   --cta-texto: var(--branco);
@@ -63,16 +64,16 @@
   --fundo: var(--agua-400);
   --fundo-2: var(--agua-300);
   --titulo: var(--marinho-900);
-  --enfase: var(--marinho-700);
+  --enfase: var(--marinho-600);
   --apoio: var(--marinho-800);
   --rotulo: var(--marinho-700);
   --legenda: var(--marinho-800);
   --manuscrito-cor: var(--marinho-800);
   --grafismo-forte: var(--branco);
-  --grafismo-medio: var(--agua-200);
-  --grafismo-suave: var(--agua-300);
+  --grafismo-medio: var(--agua-300);
+  --grafismo-suave: var(--agua-200);
   --linha: var(--agua-300);
-  --chip-fundo: var(--agua-300);
+  --chip-fundo: var(--agua-200);
   --cta-fundo: var(--marinho-800);
   --cta-texto: var(--branco);
 }
@@ -93,55 +94,39 @@
   --cta-fundo: var(--agua-400);
   --cta-texto: var(--marinho-900);
 }
-[data-theme="mar"] {
-  --fundo: var(--agua-800);
-  --fundo-2: var(--marinho-900);
-  --titulo: var(--branco);
-  --enfase: var(--agua-300);
-  --apoio: var(--agua-100);
-  --rotulo: var(--agua-300);
-  --legenda: var(--agua-200);
-  --manuscrito-cor: var(--branco);
-  --grafismo-forte: var(--agua-400);
-  --grafismo-medio: var(--agua-600);
-  --grafismo-suave: var(--agua-700);
-  --linha: var(--agua-700);
-  --chip-fundo: var(--agua-900);
-  --cta-fundo: var(--branco);
-  --cta-texto: var(--agua-800);
-}
 :root {
   --esp-8: 8px;
   --esp-16: 16px;
   --esp-24: 24px;
   --esp-32: 32px;
   --esp-48: 48px;
+  --esp-56: 56px;
   --esp-64: 64px;
   --esp-96: 96px;
-  --esp-128: 128px;
-  --story-topo: 250px;
-  --story-base: 320px;
-  --raio-24: 24px;
-  --raio-48: 48px;
+  --story-topo: 220px;
+  --story-base: 300px;
+  --raio-16: 16px;
+  --raio-40: 40px;
   --raio-pilula: 999px;
   --formato-feed: 1080px 1350px;
   --formato-quadrado: 1080px 1080px;
   --formato-story: 1080px 1920px;
-  --grid-colunas: 6;
-  --grid-coluna: 128px;
+  --grid-colunas: 2;
+  --grid-calha: 24px;
+  --grid-area-feed: 968px 1126px;
   --grid-linha-base: 8px;
   --font-sans: "Poppins", "Helvetica Neue", Arial, sans-serif;
   --font-manuscrito: "Ms Madi", "Brush Script MT", cursive;
 }
-.display { font-family: var(--font-sans); font-size: 112px; line-height: 1.04; font-weight: 300; letter-spacing: -0.02em; }
-.titulo { font-family: var(--font-sans); font-size: 84px; line-height: 1.08; font-weight: 300; letter-spacing: -0.015em; }
-.titulo-compacto { font-family: var(--font-sans); font-size: 64px; line-height: 1.12; font-weight: 300; letter-spacing: -0.01em; }
-.enfase { font-family: var(--font-sans); font-size: 84px; line-height: 1.08; font-weight: 800; font-style: italic; letter-spacing: -0.03em; }
-.apoio { font-family: var(--font-sans); font-size: 42px; line-height: 1.35; font-weight: 400; }
-.corpo { font-family: var(--font-sans); font-size: 38px; line-height: 1.45; font-weight: 400; }
-.rotulo { font-family: var(--font-sans); font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: 0.16em; }
+.display { font-family: var(--font-sans); font-size: 88px; line-height: 1.04; font-weight: 500; letter-spacing: -0.03em; }
+.titulo { font-family: var(--font-sans); font-size: 64px; line-height: 1.08; font-weight: 500; letter-spacing: -0.025em; }
+.titulo-compacto { font-family: var(--font-sans); font-size: 52px; line-height: 1.12; font-weight: 500; letter-spacing: -0.02em; }
+.enfase { font-family: var(--font-sans); font-size: 64px; line-height: 1.08; font-weight: 500; letter-spacing: -0.025em; }
+.apoio { font-family: var(--font-sans); font-size: 38px; line-height: 1.36; font-weight: 400; }
+.corpo { font-family: var(--font-sans); font-size: 34px; line-height: 1.42; font-weight: 400; }
+.rotulo { font-family: var(--font-sans); font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: 0.14em; }
 .legenda { font-family: var(--font-sans); font-size: 28px; line-height: 1.4; font-weight: 400; }
 .nome { font-family: var(--font-sans); font-size: 34px; line-height: 1.2; font-weight: 600; }
-.chamada { font-family: var(--font-sans); font-size: 34px; line-height: 1; font-weight: 600; }
-.numeral { font-family: var(--font-sans); font-size: 220px; line-height: 0.9; font-weight: 800; font-style: italic; letter-spacing: -0.04em; }
-.manuscrito { font-family: var(--font-manuscrito); font-size: 150px; line-height: 1; font-weight: 400; }
+.chamada { font-family: var(--font-sans); font-size: 32px; line-height: 1; font-weight: 600; }
+.numeral { font-family: var(--font-sans); font-size: 150px; line-height: 0.92; font-weight: 600; letter-spacing: -0.04em; }
+.manuscrito { font-family: var(--font-manuscrito); font-size: 132px; line-height: 1; font-weight: 400; }

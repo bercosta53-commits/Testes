@@ -1,8 +1,8 @@
 {
   "modelo": "oferta",
-  "tema": "marinho",
-  "rotulo": "Seu aparelho auditivo novo",
-  "titulo": "Teste sem compromisso antes de *decidir*.",
+  "tema": "nevoa",
+  "rotulo": "Aparelho novo",
+  "titulo": "Teste antes de *decidir*.",
   "preco": {
     "prefixo": "a partir de",
     "valor": "R$ 125",
@@ -14,5 +14,22 @@
     "base": "no cartão"
   },
   "cta": "Agende sua avaliação",
-  "legenda": "Teste sem compromisso. Consulte as condições."
+  "legenda": "Consulte as condições.",
+  "itens": [
+    {
+      "titulo": "Teste sem compromisso",
+      "icone": "check"
+    },
+    {
+      "titulo": "Revisões gratuitas",
+      "icone": "escudo"
+    }
+  ],
+  "fotos": [
+    {
+      "src": "casal-karaoke",
+      "assunto": "Casal 60+ cantando junto, rindo, luz quente",
+      "rosto": "55% 30%"
+    }
+  ]
 }

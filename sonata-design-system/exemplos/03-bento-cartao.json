@@ -1,0 +1,22 @@
+{
+  "modelo": "bento",
+  "layout": "b",
+  "tema": "marinho",
+  "rotulo": "Você sabia?",
+  "titulo": "A perda auditiva chega *devagar*.",
+  "apoio": "Pedir para repetir e aumentar a TV são os primeiros sinais.",
+  "cta": "Faça uma avaliação",
+  "legenda": "Por Fernanda Brugiolo, fonoaudióloga",
+  "fotos": [
+    {
+      "src": "escuta-sorriso",
+      "assunto": "Homem 60+ sorrindo com a mão no ouvido, atento",
+      "rosto": "72% 40%"
+    },
+    {
+      "src": "ouvido-aparelho",
+      "assunto": "Aparelho discreto atrás da orelha, luz natural",
+      "rosto": "40% 50%"
+    }
+  ]
+}

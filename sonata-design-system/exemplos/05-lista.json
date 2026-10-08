@@ -1,0 +1,29 @@
+{
+  "modelo": "lista",
+  "tema": "nevoa",
+  "rotulo": "Na Sonata",
+  "titulo": "Do primeiro teste ao *acompanhamento*.",
+  "itens": [
+    {
+      "titulo": "Avaliação auditiva",
+      "texto": "Exame completo com a fono",
+      "icone": "ondas"
+    },
+    {
+      "titulo": "Teste em casa",
+      "texto": "Uma semana, sem custo",
+      "icone": "calendario"
+    },
+    {
+      "titulo": "Adaptação",
+      "texto": "Ajustes no seu tempo",
+      "icone": "ajuste"
+    },
+    {
+      "titulo": "Revisões",
+      "texto": "Gratuitas e ilimitadas",
+      "icone": "escudo"
+    }
+  ],
+  "cta": "Agende sua avaliação"
+}

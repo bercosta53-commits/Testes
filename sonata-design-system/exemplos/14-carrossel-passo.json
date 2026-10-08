@@ -1,0 +1,17 @@
+{
+  "modelo": "carrossel-passo",
+  "tema": "nevoa",
+  "passo": "04",
+  "icone": "calendario",
+  "titulo": "Teste *sem custo*",
+  "corpo": "Leve o aparelho para casa e use por até uma semana, sem custo, nos lugares onde você mais quer ouvir.",
+  "foto": {
+    "src": "escuta-sorriso",
+    "assunto": "Homem 60+ sorrindo com a mão no ouvido, atento",
+    "rosto": "72% 40%"
+  },
+  "pagina": {
+    "atual": 5,
+    "total": 6
+  }
+}

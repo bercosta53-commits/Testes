@@ -8,10 +8,10 @@
 <link rel="stylesheet" href="../bundle/fontes-locais.css">
 <link rel="stylesheet" href="../bundle/sonata.css">
 <style>
-  body { margin: 0; background: var(--marinho-50); color: var(--marinho-800); font-family: var(--font-sans); }
+  body { margin: 0; background: var(--marinho-100); color: var(--marinho-800); font-family: var(--font-sans); }
   header { padding: 40px 32px 8px; max-width: 1400px; margin: 0 auto; }
-  h1 { font-weight: 300; font-size: 40px; margin: 0 0 8px; color: var(--marinho-700); }
-  h1 b { font-weight: 800; font-style: italic; color: var(--agua-700); }
+  h1 { font-weight: 500; font-size: 40px; margin: 0 0 8px; color: var(--marinho-700); letter-spacing: -0.02em; }
+  h1 b { font-weight: 500; color: var(--agua-700); }
   p { margin: 0; max-width: 70ch; color: var(--cinza-700); line-height: 1.5; }
   main { max-width: 1400px; margin: 0 auto; padding: 24px 32px 64px; }
   .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 32px 24px; }
@@ -53,7 +53,7 @@
     grade.appendChild(fig);
   });
   var campo = document.getElementById('ficha'), saida = document.getElementById('saida');
-  campo.value = JSON.stringify(EXEMPLOS[3].ficha, null, 2);
+  campo.value = JSON.stringify(EXEMPLOS[1].ficha, null, 2);
   function atualizar() {
     saida.innerHTML = '';
     try {

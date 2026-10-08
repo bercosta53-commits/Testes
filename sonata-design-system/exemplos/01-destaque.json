@@ -1,0 +1,15 @@
+{
+  "modelo": "destaque",
+  "tema": "marinho",
+  "aba": "Dia a dia",
+  "rotulo": "Ouvir é viver",
+  "titulo": "Voltar a ouvir é voltar a *sair de casa*.",
+  "apoio": "A cidade, o parque, a conversa no caminho.",
+  "cta": "Agende sua avaliação",
+  "icone": "ondas",
+  "foto": {
+    "src": "mulher-parque",
+    "assunto": "Mulher 60+ sorrindo num parque de Porto Alegre, luz de fim de tarde",
+    "rosto": "48% 40%"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "modelo": "tecnologia",
+  "tema": "nevoa",
+  "rotulo": "Tecnologia",
+  "titulo": "Pequeno no ouvido. *Enorme* na conversa.",
+  "chips": [
+    {
+      "texto": "Recarregável",
+      "icone": "bateria"
+    },
+    {
+      "texto": "Bluetooth",
+      "icone": "bluetooth"
+    },
+    {
+      "texto": "Discreto",
+      "icone": "check"
+    }
+  ],
+  "legenda": "Imagem ilustrativa ampliada.",
+  "foto": {
+    "src": "aparelho-recorte",
+    "assunto": "Recorte do aparelho retroauricular",
+    "recorte": true
+  },
+  "fotos": [
+    {
+      "src": "ouvido-aparelho",
+      "assunto": "Aparelho discreto atrás da orelha, luz natural",
+      "rosto": "40% 50%"
+    }
+  ]
+}

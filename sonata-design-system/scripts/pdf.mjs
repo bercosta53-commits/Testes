@@ -24,7 +24,7 @@ if (process.argv.includes('--previas')) {
   const slides = await page.locator('.slide').all();
   for (let i = 0; i < slides.length; i++) await slides[i].screenshot({ path: join(dir, String(i + 1).padStart(2, '0') + '.png') });
 }
-const saida = join(root, process.env.PDF_SAIDA || 'apresentacao/Sonata-Social-Ondas-aprovacao-v2.pdf');
+const saida = join(root, process.env.PDF_SAIDA || 'apresentacao/Sonata-Social-Ondas-aprovacao-v3.pdf');
 await page.pdf({ path: saida, width: '1920px', height: '1080px', printBackground: true, preferCSSPageSize: true });
 await browser.close();
 console.log(erros.length ? 'Erros na página:\n' + erros.join('\n') : 'ok', '→', saida);

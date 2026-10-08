@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "sonata-social/ficha-post.schema.json",
-  "title": "Ficha de post — Sonata Social",
-  "description": "Descreve UM post (ou uma lâmina de carrossel). A IA preenche a ficha; o motor Sonata.render() faz o layout com as regras do design system. Texto com *asteriscos* marca a ênfase (Poppins 800 itálico) e só vale no campo titulo.",
+  "title": "Ficha de post — Sonata Social (v3)",
+  "description": "Descreve UM post (ou uma lâmina de carrossel). A IA preenche a ficha; o motor Sonata.render() faz o layout com as regras do design system: grid modular, cartões, módulos de foto, barra de assinatura. Texto com *asteriscos* marca a ênfase (mesmo peso, só muda a cor) e só vale no campo titulo.",
   "type": "object",
   "required": [
     "modelo"
@@ -12,14 +12,16 @@
     "modelo": {
       "description": "Qual modelo de layout usar. Veja ia/modelos.json para quando usar cada um.",
       "enum": [
-        "frase-foto",
+        "destaque",
+        "bento",
+        "lista",
+        "retrato",
         "frase",
-        "educativo",
+        "depoimento",
+        "oferta",
         "tecnologia",
         "data",
-        "depoimento",
-        "fono",
-        "oferta",
+        "equipe",
         "carrossel-capa",
         "carrossel-passo",
         "carrossel-fim"
@@ -35,39 +37,56 @@
       "default": "feed"
     },
     "tema": {
-      "description": "Fundo do post. Cada modelo aceita só alguns temas; fora da lista, o motor usa o tema padrão do modelo.",
+      "description": "Fundo do post. Cada modelo aceita só alguns temas; fora da lista, o motor usa o tema padrão do modelo. Os cartões escolhem a própria cor pelo contraste.",
       "enum": [
         "claro",
-        "bruma",
+        "nevoa",
         "agua",
-        "marinho",
-        "mar"
+        "marinho"
       ]
+    },
+    "cartao": {
+      "description": "Força a cor do cartão principal. Use só se a pauta pedir; o padrão já é o de melhor contraste.",
+      "enum": [
+        "claro",
+        "nevoa",
+        "agua",
+        "marinho"
+      ]
+    },
+    "layout": {
+      "description": "Só no bento: a = manchete no topo + mosaico (foto alta, foto e cartão de chamada); b = cartão de texto + foto alta + foto; c = foto larga + cartão largo com selo.",
+      "enum": [
+        "a",
+        "b",
+        "c"
+      ],
+      "default": "a"
     },
     "rotulo": {
       "type": "string",
-      "maxLength": 32,
-      "description": "Sobretítulo curto em caixa alta: editoria ou data. Ex.: 'Saúde auditiva', '26 de julho'."
+      "maxLength": 28,
+      "description": "Sobretítulo curto em caixa alta: editoria ou data. Ex.: 'Saúde auditiva'."
     },
     "titulo": {
       "type": "string",
       "maxLength": 160,
-      "description": "A frase principal. Um trecho de 1 a 3 palavras entre *asteriscos* vira ênfase. No depoimento, é a citação."
+      "description": "A frase principal. Um trecho de 1 a 3 palavras entre *asteriscos* vira ênfase de cor. No depoimento, é a citação."
     },
     "apoio": {
       "type": "string",
-      "maxLength": 140,
+      "maxLength": 130,
       "description": "Uma ou duas frases que completam o título. Sem asteriscos."
     },
     "corpo": {
       "type": "string",
       "maxLength": 200,
-      "description": "Texto corrido de até 28 palavras, abaixo do subtítulo (apoio)."
+      "description": "Texto corrido curto (bento, passo do carrossel)."
     },
     "manuscrito": {
       "type": "string",
       "maxLength": 32,
-      "description": "1 a 4 palavras em letra manuscrita, só no modelo data. Ex.: 'Feliz Dia dos Avós'."
+      "description": "1 a 4 palavras em letra manuscrita, só no modelo data. Ex.: 'Dia dos Avós'."
     },
     "legenda": {
       "type": "string",
@@ -77,43 +96,169 @@
     "cta": {
       "type": "string",
       "maxLength": 28,
-      "description": "Texto da pílula de chamada. Verbo + objeto. Ex.: 'Agende sua avaliação'."
+      "description": "Chamada: verbo + objeto. Ex.: 'Agende sua avaliação'."
+    },
+    "aba": {
+      "type": "string",
+      "maxLength": 20,
+      "description": "Texto da aba vertical (destaque e capa de carrossel). 1 a 3 palavras."
+    },
+    "icone": {
+      "description": "Ícone do selo (destaque, bento c, depoimento, data) ou do cartão de chamada (bento a). false tira o selo.",
+      "anyOf": [
+        {
+          "enum": [
+            "som",
+            "ondas",
+            "calendario",
+            "telefone",
+            "local",
+            "coracao",
+            "seta",
+            "mais",
+            "check",
+            "bateria",
+            "bluetooth",
+            "conversa",
+            "pessoas",
+            "escudo",
+            "cartao",
+            "ajuste"
+          ]
+        },
+        {
+          "const": false
+        }
+      ]
+    },
+    "elemento": {
+      "description": "Só na frase: elemento de interface sob o texto.",
+      "enum": [
+        "volume",
+        "linha",
+        "nenhum"
+      ],
+      "default": "volume"
     },
     "foto": {
       "$ref": "#/$defs/foto"
     },
-    "pessoa": {
-      "type": "object",
-      "description": "Quem fala: paciente (depoimento) ou fono (fono, carrossel-fim).",
-      "additionalProperties": false,
-      "properties": {
-        "nome": {
-          "type": "string"
-        },
-        "detalhe": {
-          "type": "string",
-          "description": "Idade, cidade ou cargo. Ex.: '71 anos · Porto Alegre', 'Fonoaudióloga · sócia da Sonata'."
-        },
-        "foto": {
-          "$ref": "#/$defs/foto"
-        }
+    "fotos": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/foto"
       },
-      "required": [
-        "nome"
-      ]
+      "description": "Fotos dos módulos (bento: 2; oferta e tecnologia: 1)."
+    },
+    "pessoa": {
+      "$ref": "#/$defs/pessoa"
+    },
+    "pessoas": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/pessoa"
+      },
+      "description": "Só no modelo equipe."
+    },
+    "itens": {
+      "type": "array",
+      "maxItems": 4,
+      "description": "Lista (até 4) ou mini-cartão da oferta (até 2).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "titulo"
+        ],
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "maxLength": 24,
+            "description": "Até 4 palavras."
+          },
+          "texto": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Até 7 palavras."
+          },
+          "icone": {
+            "enum": [
+              "som",
+              "ondas",
+              "calendario",
+              "telefone",
+              "local",
+              "coracao",
+              "seta",
+              "mais",
+              "check",
+              "bateria",
+              "bluetooth",
+              "conversa",
+              "pessoas",
+              "escudo",
+              "cartao",
+              "ajuste"
+            ]
+          }
+        }
+      }
     },
     "chips": {
       "type": "array",
       "maxItems": 3,
+      "description": "Até 3 benefícios curtos, cada um com ícone.",
       "items": {
-        "type": "string",
-        "maxLength": 16
-      },
-      "description": "Até 3 benefícios curtos (tecnologia)."
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 16
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "texto"
+            ],
+            "properties": {
+              "texto": {
+                "type": "string",
+                "maxLength": 16
+              },
+              "icone": {
+                "enum": [
+                  "som",
+                  "ondas",
+                  "calendario",
+                  "telefone",
+                  "local",
+                  "coracao",
+                  "seta",
+                  "mais",
+                  "check",
+                  "bateria",
+                  "bluetooth",
+                  "conversa",
+                  "pessoas",
+                  "escudo",
+                  "cartao",
+                  "ajuste"
+                ]
+              }
+            }
+          }
+        ]
+      }
     },
     "preco": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "valor"
+      ],
       "properties": {
         "prefixo": {
           "type": "string",
@@ -121,20 +266,20 @@
         },
         "valor": {
           "type": "string",
-          "description": "Ex.: 'R$ 125'."
+          "description": "Ex.: 'R$ 125'. O R$ sai menor, automaticamente."
         },
         "sufixo": {
           "type": "string",
           "description": "Ex.: 'por mês'."
         }
-      },
-      "required": [
-        "valor"
-      ]
+      }
     },
     "selo": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "destaque"
+      ],
       "properties": {
         "topo": {
           "type": "string"
@@ -148,18 +293,20 @@
           "type": "string"
         }
       },
-      "required": [
-        "destaque"
-      ]
+      "description": "Condição de pagamento; vira uma pílula com ícone de cartão."
     },
     "passo": {
       "type": "string",
       "pattern": "^[0-9]{2}$",
-      "description": "Número do passo com dois dígitos ('01'). Só quando a ordem importa."
+      "description": "Número do passo com dois dígitos ('01')."
     },
     "pagina": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "atual",
+        "total"
+      ],
       "properties": {
         "atual": {
           "type": "integer",
@@ -170,57 +317,11 @@
           "minimum": 2,
           "maximum": 10
         }
-      },
-      "required": [
-        "atual",
-        "total"
-      ]
+      }
     },
-    "elementos": {
-      "type": "array",
-      "maxItems": 2,
-      "uniqueItems": true,
-      "items": {
-        "enum": [
-          "arcos",
-          "onda",
-          "linha"
-        ]
-      },
-      "description": "Troca os grafismos padrão do modelo. No máximo dois."
-    },
-    "logo": {
-      "description": "auto escolhe pela cor do fundo. false tira o logo (miolo de carrossel).",
-      "anyOf": [
-        {
-          "enum": [
-            "auto",
-            "marinho",
-            "agua",
-            "branco"
-          ]
-        },
-        {
-          "const": false
-        }
-      ]
-    },
-    "veu": {
-      "description": "De onde sai o véu (degradê) sobre a foto. Cada modelo tem um padrão.",
-      "enum": [
-        "base",
-        "esquerda",
-        "topo"
-      ]
-    },
-    "mascara": {
-      "description": "Máscara de cor que segura o texto sobre a foto. Cada modelo tem um padrão (onda na maioria; lateral no educativo e no depoimento com foto). arco só para frases curtas; veu só como exceção.",
-      "enum": [
-        "onda",
-        "lateral",
-        "arco",
-        "veu"
-      ]
+    "barra": {
+      "type": "boolean",
+      "description": "false tira a barra de assinatura (já é o padrão no carrossel-passo). Em todo o resto, a barra fica."
     }
   },
   "$defs": {
@@ -236,28 +337,36 @@
           "type": "string",
           "description": "Briefing da foto (também vira texto alternativo). Ex.: 'Avó e neto conversando de perto, luz natural'."
         },
+        "rosto": {
+          "type": "string",
+          "description": "Onde está o rosto (ou o assunto) na imagem, em % da largura e da altura da própria foto. Ex.: '57% 30%'. O motor enquadra a pessoa acima do cartão ou no centro do módulo."
+        },
         "foco": {
           "type": "string",
           "description": "Alternativa a rosto: CSS object-position aplicado direto à foto."
         },
-        "ondas": {
-          "description": "true desenha ondas finas ao redor do rosto; ou um ponto em % do post (ex.: '46% 27%').",
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "string"
-            }
-          ]
-        },
         "recorte": {
           "type": "boolean",
-          "description": "true para PNG transparente de produto, que flutua sem caixa (tecnologia)."
+          "description": "true para PNG transparente de produto (tecnologia)."
+        }
+      }
+    },
+    "pessoa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nome"
+      ],
+      "properties": {
+        "nome": {
+          "type": "string"
         },
-        "rosto": {
+        "detalhe": {
           "type": "string",
-          "description": "Onde está o rosto (ou o assunto) na imagem, em % da largura e da altura da própria foto. Ex.: '57% 30%'. O motor reenquadra a foto para esse ponto cair no centro da área livre."
+          "description": "Idade, cidade ou cargo. Ex.: 'Fonoaudióloga · sócia'."
+        },
+        "foto": {
+          "$ref": "#/$defs/foto"
         }
       }
     }
