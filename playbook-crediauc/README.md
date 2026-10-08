@@ -68,6 +68,15 @@ Medida direto do PDF de referência: fontes, tamanhos, cores, raios e posições
   - fluxos como trilhos (slides 6, 7 e 8): texto livre sobre o fundo, linha contínua com nós ou estações e cantos arredondados. Nada de caixas dentro de caixas, setinhas entre cards ou losango.
 - **Hierarquia de cor:** o amarelo marca só o agente e a palavra-chave do título. O petróleo do logo Sicoob Crediauc (`#003641`) marca o humano, o time da cooperativa. Estrutura e texto ficam em neutros, e a faixa escura fecha o slide quando há uma conclusão (decisão no slide 8). Os traços que carregam sentido têm 3:1 sobre o creme: agente `#A97C00`, neutro `#8C8273`.
 - **Assinatura dupla** na capa, na introdução e no case: logo Ubots | logo Sicoob Crediauc.
+- **Capa:** a ilustração mostra o agente de IA conversando pelo WhatsApp:
+  - símbolo de IA (conjunto de faíscas) no círculo do alto e no avatar da conversa;
+  - cabeçalho "Agente de IA" com status online;
+  - dois ícones do WhatsApp em verde `#25D366`.
+  
+  O glifo é o oficial (simple-icons 16.34.0, CC0). Como é marca da Meta, use só em verde ou branco e sem alterar a forma.
+- **Ritmo:** o conteúdo começa 44 px depois do lead, ou 52 px depois do título quando não há lead. Todo slide termina na linha de 980 px.
+  - Tiles de ícone têm 48 px e títulos de seção, 24 px.
+  - Leads de duas linhas quebram equilibrados; dicas de campo e itens de checklist não deixam palavra sozinha na última linha.
 - **Fundos:** creme `#FFFCF2` com brilhos quentes suaves. Os slides 3 e 9 são escuros, com brilho atrás do conteúdo principal, como o slide de investimento da referência.
 - **Palavra-chave em degradê** amarelo → âmbar (`#FFD836` → `#F3B12C`), também nos números do case. O script da página troca esse texto por `<text>` SVG preenchido com o degradê. Assim o PDF sai com texto preenchido por padrão de sombreamento, igual à referência. Com `background-clip: text`, o Chromium gera um grupo de transparência que alguns leitores (poppler) desenham com um fio na borda. Sem JavaScript, vale o degradê em CSS.
 

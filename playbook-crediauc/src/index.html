@@ -107,7 +107,7 @@ svg{display:block}
 [data-degrade]{background:var(--grad-marca); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent}
 [data-degrade].degrade-svg{background:none; -webkit-text-fill-color:currentColor}
 .degrade-svg svg{display:inline; overflow:visible}
-.lead{margin-top:18px; max-width:1180px; font:500 24px/1.5 var(--ff-texto); color:var(--corpo); text-wrap:pretty}
+.lead{margin-top:18px; max-width:1180px; font:500 24px/1.5 var(--ff-texto); color:var(--corpo); text-wrap:balance}
 .escuro .lead{color:var(--escuro-texto)}
 .texto{font:500 22px/1.45 var(--ff-texto); color:var(--corpo); text-wrap:pretty}
 .rotulo{font:600 18px/1.3 var(--ff-titulo); color:var(--tinta)}
@@ -115,10 +115,8 @@ svg{display:block}
 /* ===== Componentes ===== */
 .card{background:var(--papel); border:1px solid var(--borda); border-radius:var(--r-lg); box-shadow:var(--sombra)}
 .card-escuro{background:var(--escuro); border-radius:var(--r-xl); box-shadow:var(--sombra-escura); color:#fff}
-.tile{flex:none; width:52px; height:52px; border-radius:14px; display:grid; place-items:center; background:var(--palido); color:var(--ouro)}
-.tile svg{width:26px; height:26px}
-.tile.p{width:44px; height:44px; border-radius:12px}
-.tile.p svg{width:22px; height:22px}
+.tile{flex:none; width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:var(--palido); color:var(--ouro)}
+.tile svg{width:24px; height:24px}
 .tile.agente{background:var(--agent-bg); color:var(--agent)}
 .circulo{flex:none; width:60px; height:60px; border-radius:50%; display:grid; place-items:center; background:var(--escuro-icone); color:var(--amarelo)}
 .circulo svg{width:26px; height:26px}
@@ -127,13 +125,13 @@ svg{display:block}
 /* campo a preencher: rótulo + caixa com a dica dentro, como o formulário do site */
 .campo{display:flex; flex-direction:column; gap:8px; min-width:0}
 .campo .caixa{flex:1; min-height:56px; padding:14px 18px; border:1.5px solid var(--borda-campo); border-radius:var(--r-sm); background:#FFFDF8;
-  font:500 19px/1.35 var(--ff-texto); color:var(--dica)}
+  font:500 19px/1.35 var(--ff-texto); color:var(--dica); text-wrap:pretty}
 .campo.duplo,.campo.triplo{display:grid; gap:14px}
 .campo.duplo{grid-template-columns:1fr 1.45fr}
 .campo.triplo{grid-template-columns:1fr 1fr 1.3fr}
 .campo.duplo > div,.campo.triplo > div{display:flex; flex-direction:column; gap:8px; min-width:0}
 
-.check{display:flex; align-items:flex-start; gap:16px}
+.check{display:flex; align-items:flex-start; gap:16px; text-wrap:balance}
 .check::before{content:""; flex:none; width:26px; height:26px; margin-top:1px; border:2px solid var(--ouro-linha); border-radius:8px; background:var(--papel)}
 .card-escuro .check::before,.escuro .check::before{border-color:var(--amarelo); background:transparent}
 
@@ -161,14 +159,14 @@ svg{display:block}
    O CTA fecha na faixa escura, e o botão é o único amarelo cheio da página. */
 .intro .lead{max-width:1600px}
 /* linhas compartilhadas (subgrid): Formato alinha com a 1ª fileira de capítulos e Abordagem com a 2ª */
-.intro-grid{display:grid; grid-template-columns:544px 1fr; grid-template-rows:auto auto auto; column-gap:24px; row-gap:16px; margin-top:36px}
+.intro-grid{display:grid; grid-template-columns:544px 1fr; grid-template-rows:auto auto auto; column-gap:24px; row-gap:16px; margin-top:44px}
 .intro-sobre,.indice{display:contents}
 .sobre-item{grid-column:1; padding-right:56px}
 .sobre-item:first-child{grid-row:2}
 .sobre-item:last-child{grid-row:3}
-.sobre-cab{display:flex; align-items:center; gap:16px; font:700 26px/1.2 var(--ff-titulo); color:var(--tinta)}
+.sobre-cab{display:flex; align-items:center; gap:16px; font:700 24px/1.2 var(--ff-titulo); color:var(--tinta)}
 .sobre-item .texto{margin-top:16px; font-size:22px}
-.indice-cab{grid-column:2; grid-row:1; font:700 26px/1.2 var(--ff-titulo); color:var(--tinta)}
+.indice-cab{grid-column:2; grid-row:1; font:700 24px/1.2 var(--ff-titulo); color:var(--tinta)}
 .capitulos{grid-column:2; grid-row:2 / span 2; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:subgrid; column-gap:24px}
 .capitulo{display:flex; flex-direction:column; padding:16px 18px 18px}
 .picto{display:block; width:100%; height:auto; aspect-ratio:314 / 60}
@@ -181,12 +179,12 @@ svg{display:block}
 
 /* ===== 3 · Case (escuro) ===== */
 .case{--brilho:1200px 520px at 50% 58%}
-.resultados{margin-top:40px; padding:14px 48px 0; border-radius:var(--r-xl); background:var(--escuro-card); border:1px solid var(--escuro-borda)}
+.resultados{margin-top:44px; padding:14px 48px 0; border-radius:var(--r-xl); background:var(--escuro-card); border:1px solid var(--escuro-borda)}
 .numeros{display:flex; justify-content:space-between}
 .numero + .numero{padding-left:48px; border-left:1px solid var(--escuro-borda)}
 .numero .valor{font:800 96px/1.4 var(--ff-titulo); letter-spacing:-.03em; white-space:nowrap}
 .numero .moeda{display:inline-block; font-size:36px; letter-spacing:0; vertical-align:top; margin:34px 6px 0 0}
-.numero .legenda{max-width:200px; padding-bottom:28px; font:500 22px/1.35 var(--ff-texto); color:var(--escuro-texto)}
+.numero .legenda{width:min-content; padding-bottom:28px; font:500 22px/1.35 var(--ff-texto); color:var(--escuro-texto)}
 .resultados-rodape{display:flex; justify-content:space-between; align-items:center; gap:40px; padding:20px 0 22px; border-top:1px solid var(--escuro-borda)}
 .faixa-sec{font:500 22px/1.4 var(--ff-titulo); color:var(--escuro-texto)}
 .faixa-sec strong{font-weight:700; color:#fff}
@@ -195,6 +193,7 @@ svg{display:block}
 .diagrama{position:relative; height:224px; margin-top:auto}
 .diagrama-linhas{position:absolute; inset:0; overflow:visible}
 .diagrama-linhas .eixo{stroke:#3B2F23; stroke-width:2}
+.diagrama-linhas .periodo{stroke:var(--amarelo); stroke-width:4; stroke-linecap:round}
 .diagrama-linhas .passo,.diagrama-linhas .ciclo{stroke:var(--amarelo); stroke-width:3; fill:none; stroke-linecap:round}
 .janela{position:absolute; left:0; top:22px; width:600px; height:184px; padding:0 32px; border:2px solid rgba(255,221,30,.55); border-radius:var(--r-md); background:rgba(255,221,30,.05);
   display:flex; align-items:center; gap:22px}
@@ -206,11 +205,11 @@ svg{display:block}
 .permanente{position:absolute; left:1222px; top:62px; width:458px}
 
 /* ===== 4 · Escopo ===== */
-.escopo-grid{display:grid; grid-template-columns:repeat(12,1fr); column-gap:24px; margin-top:40px; flex:1; min-height:0}
+.escopo-grid{display:grid; grid-template-columns:repeat(12,1fr); column-gap:24px; margin-top:44px; flex:1; min-height:0}
 .ficha{grid-column:1 / span 8; padding:6px 32px; display:flex; flex-direction:column}
 .grupo{flex:1; display:grid; grid-template-columns:184px 1fr; column-gap:24px; align-items:start; padding:22px 0; border-top:1px solid var(--borda)}
 .grupo:first-child{border-top:0}
-.cab-grupo{display:flex; align-items:center; gap:14px; padding-top:28px; font:700 24px/1.2 var(--ff-titulo); color:var(--tinta)}
+.cab-grupo{align-self:stretch; display:flex; align-items:center; gap:14px; padding-top:31px; font:700 24px/1.2 var(--ff-titulo); color:var(--tinta)}
 .campos{display:grid; column-gap:20px; height:100%}
 .campos.c3{grid-template-columns:repeat(3,1fr)}
 .campos.c2{grid-template-columns:repeat(2,1fr)}
@@ -221,11 +220,12 @@ svg{display:block}
 .limites .ondas{position:absolute; right:36px; bottom:32px}
 
 /* ===== 5 · Etapas ===== */
-.etapas-grid{position:relative; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto auto auto auto 1fr; column-gap:24px; margin-top:64px}
+.etapas-grid{position:relative; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto auto auto auto 1fr; column-gap:24px; margin-top:52px; flex:1}
+.etapa-card > .campo{align-self:end}
 .etapas-eixo{position:absolute; left:0; top:0; width:1680px; height:72px; overflow:visible; pointer-events:none}
 .etapas-eixo line{stroke:#D9C79A; stroke-width:2; stroke-dasharray:2 10; stroke-linecap:round}
 .etapa{display:grid; grid-row:span 5; grid-template-rows:subgrid}
-.etapa > .marco{width:72px; height:72px; margin:0 0 28px 40px; position:relative; z-index:1; box-shadow:0 0 0 8px var(--creme)}
+.etapa > .marco{width:72px; height:72px; margin:0 0 28px 41px; position:relative; z-index:1; box-shadow:0 0 0 8px var(--creme)}
 .etapa-card{grid-row:2 / span 4; display:grid; grid-template-rows:subgrid; row-gap:26px; padding:38px 40px 42px}
 .etapa-nome{font:700 30px/1.2 var(--ff-titulo); color:var(--tinta)}
 .ref-slide{display:flex; align-items:center; gap:10px; margin-top:14px; font:600 18px/1.3 var(--ff-titulo); color:var(--ouro-texto)}
@@ -273,7 +273,7 @@ svg{display:block}
 .transbordo .lead{max-width:1600px}
 /* Fluxo sem moldura: nós brancos sobre o creme e linhas com cantos arredondados. O traço é neutro até
    a pergunta; o ramo "Não" segue no traço do agente e o ramo "Sim" no petróleo do humano. */
-.fluxo{position:relative; height:248px; margin-top:48px}
+.fluxo{position:relative; height:248px; margin-top:44px}
 .fluxo-linhas{position:absolute; inset:0; overflow:visible}
 .fluxo-linhas path{fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
 .fluxo-linhas .neutro{stroke:var(--linha)}
@@ -286,7 +286,7 @@ svg{display:block}
 .no.agente .ic{background:var(--palido); color:var(--ouro)}
 .no.pergunta{padding:0 28px 0 18px; border-color:#E4D8BA}
 .no.pergunta .ic{border-radius:14px; background:var(--tinta); color:#fff}
-.no.humano{border:2px solid var(--human); color:var(--human)}
+.no.humano{border:2px solid var(--human); padding-left:15px; color:var(--human)} /* borda 1 px mais grossa: o ícone alinha com o do nó do agente */
 .no.humano .ic{background:var(--human-bg); color:var(--human)}
 .no.humano-solido{border-color:var(--human); background:var(--human); color:#fff; box-shadow:0 26px 48px -28px rgba(0,54,65,.6)}
 .no.humano-solido .ic{background:rgba(255,255,255,.14); color:#fff}
@@ -305,7 +305,7 @@ svg{display:block}
 /* Os 6 indicadores formam uma linha com estações: o texto fica em cima e o trilho neutro embaixo, com o ícone
    de cada indicador. Da estação 3 (Negociação) desce o ramal "Participação humana", no petróleo do humano.
    A decisão fecha o slide numa faixa escura, como as faixas da referência. Colunas: (1680 − 5 × 32) / 6. */
-.cadeia-area{margin-top:48px}
+.cadeia-area{margin-top:52px}
 .cadeia{position:relative; display:grid; grid-template-columns:repeat(6,1fr); column-gap:32px}
 .cadeia::before{content:""; position:absolute; left:26px; right:calc((100% - 160px) / 6 - 26px); bottom:25px; border-top:2px solid var(--linha)}
 .no-cadeia{position:relative; display:flex; flex-direction:column; gap:8px; padding-bottom:84px}
@@ -449,6 +449,14 @@ html.export .slide{transition:none}
     <symbol id="i-decisao" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M16 3h5v5M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.17-2.87L3 3M15 9l6-6"/>
     </symbol>
+    <!-- IA: conjunto de faíscas preenchido (estrela grande, média e pequena), nas proporções da faísca do agente -->
+    <symbol id="i-ia" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M10 4C10.9 10.1 13.4 12.6 19.5 13.5C13.4 14.4 10.9 16.9 10 23C9.1 16.9 6.6 14.4 0.5 13.5C6.6 12.6 9.1 10.1 10 4Z"/>
+      <path d="M19.5 0.8C19.9 3.5 21 4.6 23.7 5C21 5.4 19.9 6.5 19.5 9.2C19.1 6.5 18 5.4 15.3 5C18 4.6 19.1 3.5 19.5 0.8Z"/>
+      <path d="M20 14.9C20.25 16.57 20.93 17.25 22.6 17.5C20.93 17.75 20.25 18.43 20 20.1C19.75 18.43 19.07 17.75 17.4 17.5C19.07 17.25 19.75 16.57 20 14.9Z"/>
+    </symbol>
+    <!-- WhatsApp: glifo oficial (simple-icons 16.34.0, CC0). Marca da Meta: só em verde #25D366 ou branco, sem alterar a forma. -->
+    <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
     <!-- ondas da marca (três linhas), como nas faixas escuras da referência.
          TODO-ASSET: brand book / padrão gráfico oficial. Até lá, os grafismos seguem a apresentação de referência (refs/). -->
     <symbol id="ondas" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
@@ -522,9 +530,11 @@ html.export .slide{transition:none}
       <g transform="rotate(3 362 380)" filter="url(#sombra-arte)">
         <rect x="212" y="138" width="304" height="486" rx="32" fill="#fff"/>
         <circle cx="258" cy="190" r="24" fill="#FFF5CC"/>
-        <svg x="246" y="178" width="24" height="24" color="#E2A900"><use href="#i-agente"/></svg>
-        <rect x="294" y="178" width="112" height="12" rx="6" fill="#2B241D" fill-opacity=".85"/>
-        <rect x="294" y="198" width="70" height="9" rx="4.5" fill="#E9DFC9"/>
+        <svg x="245" y="177" width="26" height="26" color="#E2A900"><use href="#i-ia"/></svg>
+        <text x="294" y="189" font-family="Poppins" font-weight="600" font-size="20" fill="#2B241D">Agente de IA</text>
+        <circle cx="299" cy="206" r="4.5" fill="#25D366"/>
+        <rect x="310" y="202" width="58" height="8" rx="4" fill="#E9DFC9"/>
+        <svg x="458" y="176" width="28" height="28" color="#25D366"><use href="#i-whatsapp"/></svg>
         <rect x="236" y="234" width="256" height="1.5" fill="#F1EADB"/>
         <rect x="236" y="256" width="204" height="70" rx="20" fill="#FFF5CC"/>
         <rect x="256" y="276" width="150" height="11" rx="5.5" fill="#E9C65B"/>
@@ -543,12 +553,12 @@ html.export .slide{transition:none}
       </g>
       <!-- ícones flutuantes -->
       <g filter="url(#sombra-arte)">
-        <circle cx="494" cy="112" r="40" fill="#fff"/>
-        <circle cx="110" cy="246" r="40" fill="#fff"/>
+        <circle cx="490" cy="112" r="48" fill="#fff"/>
+        <circle cx="110" cy="246" r="40" fill="#25D366"/>
         <circle cx="140" cy="712" r="40" fill="#fff"/>
       </g>
-      <svg x="478" y="96" width="32" height="32" color="#E2A900"><use href="#i-agente"/></svg>
-      <svg x="94" y="230" width="32" height="32" color="#003641"><use href="#i-humano"/></svg>
+      <svg x="466" y="88" width="48" height="48" color="#E2A900"><use href="#i-ia"/></svg>
+      <svg x="88" y="224" width="44" height="44" color="#fff"><use href="#i-whatsapp"/></svg>
       <svg x="124" y="696" width="32" height="32" color="#E2A900"><use href="#i-lista"/></svg>
       <svg x="388" y="676" width="128" height="68" color="#fff"><use href="#ondas"/></svg>
     </svg>
@@ -696,7 +706,8 @@ html.export .slide{transition:none}
   </div>
   <figure class="diagrama" aria-label="Campanha e estratégia permanente">
     <svg class="diagrama-linhas" viewBox="0 0 1680 224" aria-hidden="true">
-      <line class="eixo" x1="0" y1="206" x2="1674" y2="206" marker-end="url(#seta-eixo)"/>
+      <line class="eixo" x1="0" y1="218" x2="1674" y2="218" marker-end="url(#seta-eixo)"/>
+      <line class="periodo" x1="2" y1="218" x2="598" y2="218"/>
       <line class="passo" x1="620" y1="114" x2="986" y2="114" marker-end="url(#seta-amarela)"/>
       <path class="ciclo" d="M1144.5 47.2A78 78 0 1 1 1055.5 47.2" marker-end="url(#seta-amarela)"/>
     </svg>
@@ -720,7 +731,7 @@ html.export .slide{transition:none}
   <div class="escopo-grid">
     <div class="card ficha">
       <div class="grupo">
-        <h3 class="cab-grupo"><span class="tile p"><svg aria-hidden="true"><use href="#i-alvo"/></svg></span>Por quê</h3>
+        <h3 class="cab-grupo"><span class="tile"><svg aria-hidden="true"><use href="#i-alvo"/></svg></span>Por quê</h3>
         <div class="campos c3">
           <div class="campo"><p class="rotulo">Objetivo</p><p class="caixa">O desafio que a campanha pretende trabalhar</p></div>
           <div class="campo"><p class="rotulo">Oportunidade</p><p class="caixa">O período ou a condição que justifica a iniciativa</p></div>
@@ -728,14 +739,14 @@ html.export .slide{transition:none}
         </div>
       </div>
       <div class="grupo">
-        <h3 class="cab-grupo"><span class="tile p"><svg aria-hidden="true"><use href="#i-pessoas"/></svg></span>Quem</h3>
+        <h3 class="cab-grupo"><span class="tile"><svg aria-hidden="true"><use href="#i-pessoas"/></svg></span>Quem</h3>
         <div class="campos c2">
           <div class="campo"><p class="rotulo">Carteira</p><p class="caixa">Quais contratos serão incluídos e excluídos</p></div>
           <div class="campo"><p class="rotulo">Identificação</p><p class="caixa">Como vincular cooperado, contrato e resultado</p></div>
         </div>
       </div>
       <div class="grupo">
-        <h3 class="cab-grupo"><span class="tile p"><svg aria-hidden="true"><use href="#i-ajustes"/></svg></span>Como</h3>
+        <h3 class="cab-grupo"><span class="tile"><svg aria-hidden="true"><use href="#i-ajustes"/></svg></span>Como</h3>
         <div class="campos c2">
           <div class="campo"><p class="rotulo">Condições</p><p class="caixa">Descontos, parcelas, vencimentos e demais possibilidades autorizadas</p></div>
           <div class="campo"><p class="rotulo">Exceções</p><p class="caixa">Quais solicitações dependerão de análise humana</p></div>
