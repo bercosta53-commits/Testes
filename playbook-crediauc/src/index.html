@@ -81,7 +81,7 @@ svg{display:block}
 /* ===== Cabeçalho fixo: logo + contador (como na referência) ===== */
 .topo{position:absolute; left:120px; right:120px; top:56px; height:48px; display:flex; align-items:center; justify-content:space-between}
 .topo .logo{height:34px; width:auto}
-/* capa e case: assinatura dupla Ubots | Sicoob Crediauc (logo do cliente nos arquivos enviados pelo time, refs/) */
+/* todas as páginas: assinatura dupla Ubots | Sicoob Crediauc (logo do cliente nos arquivos enviados pelo time, refs/) */
 .marcas{display:flex; align-items:center; gap:28px}
 .marcas-sep{width:1.5px; height:40px; background:#DDD0B2}
 .escuro .marcas-sep{background:#3A2F25}
@@ -186,10 +186,11 @@ svg{display:block}
 .numero .moeda{display:inline-block; font-size:36px; letter-spacing:0; vertical-align:top; margin:34px 6px 0 0}
 .numero .legenda{width:min-content; padding-bottom:28px; font:500 22px/1.35 var(--ff-texto); color:var(--escuro-texto)}
 .resultados-rodape{display:flex; justify-content:space-between; align-items:center; gap:40px; padding:20px 0 22px; border-top:1px solid var(--escuro-borda)}
-.faixa-sec{font:500 22px/1.4 var(--ff-titulo); color:var(--escuro-texto)}
+.faixa-sec{font:500 20px/1.4 var(--ff-titulo); color:var(--escuro-texto); white-space:nowrap}
 .faixa-sec strong{font-weight:700; color:#fff}
 .faixa-sec .mais{font-weight:700; color:var(--amarelo)}
-.disclaimer{font:500 20px/1.4 var(--ff-texto); color:var(--escuro-mudo)}
+.faixa-sec .nota-curta{margin-left:4px} /* o valor fora do escopo não entra no total renegociado */
+.disclaimer{font:500 18px/1.4 var(--ff-texto); color:var(--escuro-mudo); white-space:nowrap}
 .diagrama{position:relative; height:224px; margin-top:auto}
 .diagrama-linhas{position:absolute; inset:0; overflow:visible}
 .diagrama-linhas .eixo{stroke:#3B2F23; stroke-width:2}
@@ -200,7 +201,7 @@ svg{display:block}
 .janela .tile{background:var(--escuro-icone); color:var(--amarelo)}
 .diagrama h3{font:700 24px/1.2 var(--ff-titulo); color:#fff}
 .janela p,.permanente p{margin-top:6px; font:500 21px/1.4 var(--ff-texto); color:var(--escuro-texto); text-wrap:pretty}
-.passo-rotulo{position:absolute; left:624px; top:72px; width:358px; text-align:center; font:600 18px/1.25 var(--ff-titulo); color:var(--amarelo); white-space:nowrap}
+.passo-rotulo{position:absolute; left:624px; top:58px; width:358px; text-align:center; font:600 18px/1.25 var(--ff-titulo); color:var(--amarelo); text-wrap:balance}
 .ciclo-icone{position:absolute; left:1074px; top:88px; width:52px; height:52px; color:var(--amarelo)}
 .permanente{position:absolute; left:1222px; top:62px; width:458px}
 
@@ -256,7 +257,7 @@ svg{display:block}
 .raias-linhas .agente{stroke:var(--agent-linha)}
 .raias-linhas .humano{stroke:var(--human)}
 .raias-linhas circle{fill:var(--papel); stroke:var(--agent-linha); stroke-width:3}
-.passagem{position:absolute; right:202px; top:143px; display:flex; align-items:center; height:36px; padding:0 16px; border-radius:var(--r-pill);
+.passagem{position:absolute; left:1100px; top:175px; transform:translate(-50%,-50%); display:flex; align-items:center; height:36px; padding:0 16px; border-radius:var(--r-pill);
   background:var(--papel); border:1.5px solid var(--human); color:var(--human); white-space:nowrap}
 /* Antes de iniciar: três degraus que sobem da esquerda para a direita (26 px por degrau). O degrau é o próprio card. */
 .degraus{position:relative; margin-top:auto}
@@ -482,6 +483,10 @@ html.export .slide{transition:none}
     <linearGradient id="grad-marca" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#FFD836"/><stop offset="1" stop-color="#F3B12C"/>
     </linearGradient>
+    <!-- selo de IA da capa: degradê de IA (azul → violeta → rosa), com o mesmo peso do disco verde do WhatsApp -->
+    <linearGradient id="grad-ia" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F7CFF"/><stop offset=".55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
     <filter id="sombra-arte" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#8A5A00" flood-opacity=".28"/>
     </filter>
@@ -496,7 +501,7 @@ html.export .slide{transition:none}
        com SICOOB em branco, como no arquivo escuro oficial. TODO-ASSET: confirmar a autorização de uso antes de circular. -->
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div></header>
   <div class="capa-texto">
-    <p class="eyebrow ponto">Playbook · Recuperação de crédito</p>
+    <p class="eyebrow ponto">Playbook · Recuperação de crédito com IA</p>
     <h1 class="capa-titulo">Playbook de recuperação de crédito <em data-degrade>com IA</em></h1>
     <p class="capa-sub">Inspirado no case Sicoob Crediauc. Um guia para planejar campanhas com agentes de inteligência artificial conversacional.</p>
     <ol class="trilho" aria-label="Etapas da campanha">
@@ -553,11 +558,11 @@ html.export .slide{transition:none}
       </g>
       <!-- ícones flutuantes -->
       <g filter="url(#sombra-arte)">
-        <circle cx="490" cy="112" r="48" fill="#fff"/>
+        <circle cx="490" cy="112" r="48" fill="url(#grad-ia)"/>
         <circle cx="110" cy="246" r="40" fill="#25D366"/>
         <circle cx="140" cy="712" r="40" fill="#fff"/>
       </g>
-      <svg x="466" y="88" width="48" height="48" color="#E2A900"><use href="#i-ia"/></svg>
+      <svg x="466" y="88" width="48" height="48" color="#fff"><use href="#i-ia"/></svg>
       <svg x="88" y="224" width="44" height="44" color="#fff"><use href="#i-whatsapp"/></svg>
       <svg x="124" y="696" width="32" height="32" color="#E2A900"><use href="#i-lista"/></svg>
       <svg x="388" y="676" width="128" height="68" color="#fff"><use href="#ondas"/></svg>
@@ -700,7 +705,7 @@ html.export .slide{transition:none}
       <div class="numero"><p class="valor"><span class="moeda" data-degrade>R$</span> <span data-degrade>3.546,30</span></p><p class="legenda">quitados</p></div>
     </div>
     <div class="resultados-rodape">
-      <p class="faixa-sec"><span class="mais">+ 6</span> renegociações fora do escopo inicial · <strong>R$ 5.700,00</strong></p>
+      <p class="faixa-sec"><span class="mais">+ 6</span> renegociações fora do escopo inicial · <strong>R$ 5.700,00</strong> <span class="nota-curta">(não incluídos no total acima)</span></p>
       <p class="disclaimer">Os resultados não constituem uma projeção para outras instituições.</p>
     </div>
   </div>
@@ -715,7 +720,7 @@ html.export .slide{transition:none}
       <span class="tile"><svg aria-hidden="true"><use href="#i-calendario"/></svg></span>
       <div><h3>Campanha</h3><p>Período, carteira e condições delimitadas</p></div>
     </div>
-    <p class="passo-rotulo">Próximo passo indicado no Crediauc</p>
+    <p class="passo-rotulo">Próximo passo recomendado para o Crediauc</p>
     <svg class="ciclo-icone" aria-hidden="true"><use href="#i-ciclo"/></svg>
     <div class="permanente"><h3>Estratégia permanente</h3><p>Acompanhamento contínuo, responsabilidades e revisão de políticas</p></div>
   </figure>
@@ -724,7 +729,7 @@ html.export .slide{transition:none}
 
 <!-- ===================== 4 · Escopo ===================== -->
 <section class="slide escopo" data-nome="Escopo">
-  <header class="topo"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><p class="pagina"><b>04</b> / 09</p></header>
+  <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>04</b> / 09</p></header>
   <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
   <h2 class="titulo">Defina quando atuar e <em data-degrade>quais contratos</em> trabalhar</h2>
   <p class="lead">Conecte uma oportunidade de negociação a uma carteira delimitada. A proximidade do 13º salário, por exemplo, pode entrar no calendário.</p>
@@ -770,7 +775,7 @@ html.export .slide{transition:none}
 
 <!-- ===================== 5 · Etapas ===================== -->
 <section class="slide etapas" data-nome="Etapas">
-  <header class="topo"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><p class="pagina"><b>05</b> / 09</p></header>
+  <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>05</b> / 09</p></header>
   <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
   <h2 class="titulo"><em data-degrade>Planeje antes</em>, acompanhe durante e avalie depois</h2>
   <ol class="etapas-grid">
@@ -779,7 +784,7 @@ html.export .slide{transition:none}
       <span class="marco">1</span>
       <div class="card etapa-card">
         <h3 class="etapa-nome">Preparação</h3>
-        <div><p class="texto">Carteira, condições, responsáveis e regras de transbordo definidos. Fluxo de dados e registro de resultados confirmados.</p></div>
+        <div><p class="texto">Carteira, condições, responsáveis e regras de transbordo definidos. Fluxo de dados e forma de registro dos resultados definidos.</p></div>
         <p class="entrega"><b>Entrega:</b> Escopo documentado, políticas definidas e responsáveis identificados.</p>
         <div class="campo duplo">
           <div><p class="rotulo">Data</p><span class="caixa"></span></div>
@@ -821,7 +826,7 @@ html.export .slide{transition:none}
 
 <!-- ===================== 6 · Agente × humano ===================== -->
 <section class="slide papeis" data-nome="Agente e humano">
-  <header class="topo"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><p class="pagina"><b>06</b> / 09</p></header>
+  <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>06</b> / 09</p></header>
   <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
   <h2 class="titulo">Agente e humano atuam na <em data-degrade>mesma negociação</em></h2>
   <p class="lead">O agente amplia a capacidade de conduzir conversas. O colaborador participa do fechamento e das situações que exigem análise humana.</p>
@@ -835,15 +840,16 @@ html.export .slide{transition:none}
     </ol>
     <p class="raia-cab humano"><span class="tile humano-solido"><svg aria-hidden="true"><use href="#i-humano"/></svg></span>Colaborador humano</p>
     <ul class="passos humano">
-      <li class="passo">Concentra-se no fechamento e no registro dos acordos</li>
+      <li class="passo">Recebe o histórico e conduz a tratativa com contexto</li>
       <li class="passo">Assume negociações que exigem exceções às políticas</li>
       <li class="passo">Dá continuidade quando o cooperado precisa de mais acolhimento</li>
-      <li class="passo">Recebe o histórico e conduz a tratativa com contexto</li>
+      <li class="passo">Concentra-se no fechamento e no registro dos acordos</li>
     </ul>
-    <!-- trilho do agente (passos 1 → 4) e transbordo: do passo 4 do agente ao passo 4 do humano (centro da coluna 4) -->
+    <!-- as duas raias leem da esquerda para a direita: o trilho do agente vai do passo 1 ao 4; do passo 4, o transbordo
+         desce e volta para o começo da faixa do humano, que abre com "Recebe o histórico" (alinhado ao passo 1) -->
     <svg class="raias-linhas" viewBox="0 0 1680 210" aria-hidden="true">
       <path class="agente" d="M268 115H1345"/>
-      <path class="humano" d="M1345 115H1478A18 18 0 0 1 1496 133V203" marker-end="url(#seta-humano)"/>
+      <path class="humano" d="M1345 124V157A18 18 0 0 1 1327 175H286A18 18 0 0 0 268 193V203" marker-end="url(#seta-humano)"/>
       <circle cx="268" cy="115" r="9"/><circle cx="627" cy="115" r="9"/><circle cx="986" cy="115" r="9"/><circle cx="1345" cy="115" r="9"/>
     </svg>
     <p class="rotulo passagem">Transbordo com histórico</p>
@@ -861,7 +867,7 @@ html.export .slide{transition:none}
 
 <!-- ===================== 7 · Transbordo ===================== -->
 <section class="slide transbordo" data-nome="Transbordo">
-  <header class="topo"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><p class="pagina"><b>07</b> / 09</p></header>
+  <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>07</b> / 09</p></header>
   <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
   <h2 class="titulo">Saiba <em data-degrade>quando</em> o humano assume a conversa</h2>
   <p class="lead">No Crediauc, houve duas situações de transferência: negociações que exigem exceções e cooperados que precisam de mais acolhimento.</p>
@@ -874,7 +880,7 @@ html.export .slide{transition:none}
       <path class="humano" d="M1230 212H1306" marker-end="url(#seta-humano)"/>
     </svg>
     <div class="no agente" style="left:0; top:84px; width:300px; height:80px"><span class="ic"><svg aria-hidden="true"><use href="#i-agente"/></svg></span>Conversa com o agente</div>
-    <div class="no pergunta" style="left:380px; top:58px; width:400px; height:132px"><span class="ic"><svg aria-hidden="true"><use href="#i-decisao"/></svg></span>Fora das condições da política, ou cooperado precisa de acolhimento?</div>
+    <div class="no pergunta" style="left:380px; top:58px; width:400px; height:132px"><span class="ic"><svg aria-hidden="true"><use href="#i-decisao"/></svg></span>Pedido fora da política ou cooperado precisa de acolhimento?</div>
     <p class="ramo nao" style="left:836px; top:80px">Não</p>
     <p class="ramo sim" style="left:836px; top:168px">Sim</p>
     <div class="no agente" style="left:900px; top:0; width:330px; height:72px"><span class="ic"><svg aria-hidden="true"><use href="#i-agente"/></svg></span>Agente segue a negociação</div>
@@ -898,15 +904,15 @@ html.export .slide{transition:none}
 
 <!-- ===================== 8 · Métricas ===================== -->
 <section class="slide metricas" data-nome="Métricas">
-  <header class="topo"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><p class="pagina"><b>08</b> / 09</p></header>
+  <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>08</b> / 09</p></header>
   <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
   <h2 class="titulo">Meça <em data-degrade>o que aconteceu</em> na campanha</h2>
   <div class="cadeia-area">
     <ol class="cadeia">
       <li class="no-cadeia"><p class="rotulo">Carteira</p><p class="indicador">Contratos incluídos</p><p class="como">Total de contratos elegíveis no início da campanha.</p><span class="estacao"><svg aria-hidden="true"><use href="#i-caixa-entrada"/></svg></span></li>
-      <li class="no-cadeia"><p class="rotulo">Interação</p><p class="indicador">Contratos com resposta</p><p class="como">Contratos com retorno registrado; mensagens não contam como contratos diferentes.</p><span class="estacao"><svg aria-hidden="true"><use href="#i-mensagem"/></svg></span></li>
+      <li class="no-cadeia"><p class="rotulo">Interação</p><p class="indicador">Contratos com resposta</p><p class="como">Contratos com retorno registrado. Várias mensagens do mesmo contrato contam uma vez.</p><span class="estacao"><svg aria-hidden="true"><use href="#i-mensagem"/></svg></span></li>
       <li class="no-cadeia"><p class="rotulo">Negociação</p><p class="indicador">Conversão em acordo</p><p class="formula">Contratos com acordo ÷&nbsp;contratos com resposta ×&nbsp;100</p><span class="estacao"><svg aria-hidden="true"><use href="#i-percentual"/></svg></span></li>
-      <li class="no-cadeia"><p class="rotulo">Resultado</p><p class="indicador">Valor renegociado</p><p class="como">Soma dos acordos registrados, com critério de valor documentado.</p><span class="estacao"><svg aria-hidden="true"><use href="#i-cedula"/></svg></span></li>
+      <li class="no-cadeia"><p class="rotulo">Resultado</p><p class="indicador">Valor renegociado</p><p class="como">Soma dos acordos registrados. Documente o critério usado (valor original, atualizado ou negociado).</p><span class="estacao"><svg aria-hidden="true"><use href="#i-cedula"/></svg></span></li>
       <li class="no-cadeia"><p class="rotulo">Recebimento</p><p class="indicador">Valor efetivamente recebido</p><p class="como">Pagamentos confirmados no período.</p><span class="estacao"><svg aria-hidden="true"><use href="#i-carteira"/></svg></span></li>
       <li class="no-cadeia"><p class="rotulo">Cumprimento</p><p class="indicador">Pagamentos previstos cumpridos</p><p class="formula">Pagamentos realizados ÷&nbsp;previstos no período ×&nbsp;100</p><span class="estacao"><svg aria-hidden="true"><use href="#i-agenda-ok"/></svg></span></li>
     </ol>
@@ -939,7 +945,7 @@ html.export .slide{transition:none}
 
 <!-- ===================== 9 · Próximo passo (escuro) ===================== -->
 <section class="slide escuro cta" data-nome="Próximo passo">
-  <header class="topo"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><p class="pagina"><b>09</b> / 09</p></header>
+  <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>09</b> / 09</p></header>
   <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
   <h2 class="titulo">Planeje sua <em data-degrade>primeira campanha</em> com IA conversacional</h2>
   <p class="lead">Use este guia para organizar escopo, responsabilidades, cronograma e avaliação de uma campanha inicial.</p>

@@ -67,9 +67,9 @@ Medida direto do PDF de referência: fontes, tamanhos, cores, raios e posições
   - campos no estilo do formulário do site: rótulo acima e caixa arredondada com a dica dentro;
   - fluxos como trilhos (slides 6, 7 e 8): texto livre sobre o fundo, linha contínua com nós ou estações e cantos arredondados. Nada de caixas dentro de caixas, setinhas entre cards ou losango.
 - **Hierarquia de cor:** o amarelo marca só o agente e a palavra-chave do título. O petróleo do logo Sicoob Crediauc (`#003641`) marca o humano, o time da cooperativa. Estrutura e texto ficam em neutros, e a faixa escura fecha o slide quando há uma conclusão (decisão no slide 8). Os traços que carregam sentido têm 3:1 sobre o creme: agente `#A97C00`, neutro `#8C8273`.
-- **Assinatura dupla** na capa, na introdução e no case: logo Ubots | logo Sicoob Crediauc.
+- **Assinatura dupla** em todas as páginas: logo Ubots | logo Sicoob Crediauc.
 - **Capa:** a ilustração mostra o agente de IA conversando pelo WhatsApp:
-  - símbolo de IA (conjunto de faíscas) no círculo do alto e no avatar da conversa;
+  - símbolo de IA (conjunto de faíscas) no avatar da conversa e no selo do alto. O selo usa o degradê de IA (azul → violeta → rosa), com o mesmo peso do disco verde do WhatsApp;
   - cabeçalho "Agente de IA" com status online;
   - dois ícones do WhatsApp em verde `#25D366`.
   
@@ -110,10 +110,26 @@ Os demais desvios:
   - "· slide 3" virou etiqueta à direita. Com a página 2, as referências a slides subiram um número: escopo no slide 4, indicadores no slide 8.
 - **Não renderizado** (aguarda aprovação do Bernardo): o callout âmbar do slide 6 (slide 5 do brief) e o segundo bloco do slide 9 (slide 8 do brief), com a calculadora.
 
+## Ajustes da revisão de aprovação (Ubots)
+
+Aplicados a partir do e-mail "Aprovação de materiais":
+
+- **Capa:** pílula com o mesmo texto das outras páginas, "Playbook · Recuperação de crédito com IA".
+- **Slide 3:** nota "(não incluídos no total acima)" depois de R$ 5.700,00.
+- **Slide 3:** o rótulo da seta virou "Próximo passo recomendado para o Crediauc". Nem o PDF original nem a revisão editorial dizem quem fez a indicação. Se a recomendação veio do Crediauc, troque por "Próximo passo indicado pelo Crediauc".
+- **Slide 5:** Preparação termina em "Fluxo de dados e forma de registro dos resultados definidos."
+- **Slide 6:** as duas raias passam a ler da esquerda para a direita. O transbordo sai do passo 4 do agente e volta ao começo da faixa do humano, que agora abre com "Recebe o histórico e conduz a tratativa com contexto" e termina em "Concentra-se no fechamento e no registro dos acordos".
+- **Slide 7:** a pergunta do fluxo virou "Pedido fora da política ou cooperado precisa de acolhimento?"
+- **Slide 8:**
+  - Interação: "Contratos com retorno registrado. Várias mensagens do mesmo contrato contam uma vez."
+  - Resultado: "Soma dos acordos registrados. Documente o critério usado (valor original, atualizado ou negociado)."
+- **Logo Sicoob Crediauc:** em todas as páginas.
+
 ## TODO-ASSET (marcados no código)
 
 - Logo Ubots oficial em SVG, versões clara e escura. Hoje o deck usa a vetorização do PNG.
-- Autorização de uso do logo Sicoob Crediauc. O logo já está aplicado na capa, na introdução e no case.
+- Autorização de uso do logo Sicoob Crediauc. O logo já está aplicado em todas as páginas.
+- Confirmar quem recomendou o próximo passo do case (slide 3): Ubots ("recomendado para o Crediauc") ou o próprio Crediauc ("indicado pelo Crediauc").
 - URL do botão "Falar com um especialista". Hoje é `href="#"`.
 - Path oficial da estrela do v1.0 (`ubots-estudos-layout.html` não veio). Hoje o ícone do agente usa um asterisco de 4 pontas provisório.
 - Brand book. Os grafismos seguem a apresentação de referência: ondas, brilhos e o painel da capa.
