@@ -142,7 +142,7 @@ svg{display:block}
 .capa{padding:0}
 .capa-texto{position:absolute; left:120px; top:150px; bottom:100px; width:1040px; display:flex; flex-direction:column; justify-content:center}
 .capa-titulo{margin-top:28px; font:700 78px/1.07 var(--ff-titulo); letter-spacing:-.03em; color:var(--tinta)}
-.capa-sub{margin-top:30px; max-width:900px; font:500 28px/1.45 var(--ff-titulo); color:var(--tinta-2); text-wrap:pretty}
+.capa-sub{margin-top:32px; max-width:1000px; font:500 28px/1.45 var(--ff-titulo); color:var(--tinta-2); text-wrap:balance}
 .trilho{display:flex; align-items:center; margin-top:52px}
 .trilho li{display:flex; align-items:center; gap:14px; height:76px; padding:0 28px 0 18px; font:600 22px/1 var(--ff-titulo); color:var(--tinta)}
 .trilho li + li{position:relative; margin-left:58px}
@@ -272,25 +272,26 @@ svg{display:block}
 
 /* ===== 7 · Transbordo ===== */
 .transbordo .lead{max-width:1600px}
-/* Fluxo sem moldura: nós brancos sobre o creme e linhas com cantos arredondados. O traço é neutro até
-   a pergunta; o ramo "Não" segue no traço do agente e o ramo "Sim" no petróleo do humano. */
-.fluxo{position:relative; height:248px; margin-top:44px}
+/* Fluxo em trilhos, na mesma linguagem dos slides 6 e 8. O trilho do agente (dourado) vai da conversa até a pergunta
+   e segue até "Agente segue a negociação" (Não); da pergunta desce o trilho do humano (petróleo) até o transbordo e a
+   conclusão (Sim). A pergunta é a peça central, numa pílula escura; os pontos do caminho são estações com ícone e o
+   rótulo embaixo, alinhado à esquerda da estação. Estações de 56 px; coordenadas em px a partir do canto do .fluxo. */
+.fluxo{position:relative; height:275px; margin-top:44px}
 .fluxo-linhas{position:absolute; inset:0; overflow:visible}
-.fluxo-linhas path{fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
-.fluxo-linhas .neutro{stroke:var(--linha)}
-.fluxo-linhas .agente{stroke:var(--agent-linha)}
-.fluxo-linhas .humano{stroke:var(--human); stroke-width:3}
-.no{position:absolute; display:flex; align-items:center; gap:16px; padding:0 26px 0 16px; border-radius:var(--r-lg); background:var(--papel);
-  border:1px solid var(--borda); box-shadow:var(--sombra); font:600 21px/1.3 var(--ff-titulo); color:var(--tinta); text-wrap:balance}
-.no .ic{flex:none; display:grid; place-items:center; width:44px; height:44px; border-radius:50%}
-.no .ic svg{width:22px; height:22px}
-.no.agente .ic{background:var(--palido); color:var(--ouro)}
-.no.pergunta{padding:0 28px 0 18px; border-color:#E4D8BA}
-.no.pergunta .ic{border-radius:14px; background:var(--tinta); color:#fff}
-.no.humano{border:2px solid var(--human); padding-left:15px; color:var(--human)} /* borda 1 px mais grossa: o ícone alinha com o do nó do agente */
-.no.humano .ic{background:var(--human-bg); color:var(--human)}
-.no.humano-solido{border-color:var(--human); background:var(--human); color:#fff; box-shadow:0 26px 48px -28px rgba(0,54,65,.6)}
-.no.humano-solido .ic{background:rgba(255,255,255,.14); color:#fff}
+.fluxo-linhas path{fill:none; stroke-linecap:round; stroke-linejoin:round}
+.fluxo-linhas .agente{stroke:var(--agent-linha); stroke-width:3}
+.fluxo-linhas .humano{stroke:var(--human); stroke-width:4}
+.estacao-fluxo{position:absolute; display:grid; place-items:center; width:56px; height:56px; border-radius:50%; background:var(--papel)}
+.estacao-fluxo svg{width:24px; height:24px}
+.estacao-fluxo.agente{border:3px solid var(--agent-linha); color:var(--ouro)}
+.estacao-fluxo.humano{border:3px solid var(--human); color:var(--human)}
+.estacao-fluxo.fim{background:var(--human); color:#fff; box-shadow:0 18px 36px -18px rgba(0,54,65,.7)}
+.estacao-nome{position:absolute; font:600 20px/1.3 var(--ff-titulo); color:var(--tinta); white-space:nowrap}
+.estacao-nome.humano{color:var(--human)}
+.pergunta-fluxo{position:absolute; display:flex; align-items:center; gap:18px; padding:0 34px 0 16px; border-radius:var(--r-pill); background:var(--tinta);
+  box-shadow:var(--sombra-escura); font:600 21px/1.3 var(--ff-titulo); color:#fff; text-wrap:balance}
+.pergunta-fluxo .ic{flex:none; display:grid; place-items:center; width:48px; height:48px; border-radius:50%; background:#2A211A; color:var(--amarelo)}
+.pergunta-fluxo .ic svg{width:24px; height:24px}
 .ramo{position:absolute; transform:translate(-50%,-50%); display:flex; align-items:center; height:34px; padding:0 14px; border-radius:var(--r-pill);
   font:600 18px/1 var(--ff-titulo)}
 .ramo.nao{background:var(--papel); border:1.5px solid var(--agent-linha); color:var(--agent-ink)}
@@ -501,7 +502,7 @@ html.export .slide{transition:none}
        com SICOOB em branco, como no arquivo escuro oficial. TODO-ASSET: confirmar a autorização de uso antes de circular. -->
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div></header>
   <div class="capa-texto">
-    <p class="eyebrow ponto">Playbook · Recuperação de crédito com IA</p>
+    <p class="eyebrow ponto">Guia Prático</p>
     <h1 class="capa-titulo">Playbook de Recuperação de Crédito <em data-degrade>com IA</em></h1>
     <p class="capa-sub">Inspirado no case Sicoob Crediauc. Um guia para planejar campanhas com agentes de inteligência artificial conversacional.</p>
     <ol class="trilho" aria-label="Etapas da campanha">
@@ -576,7 +577,7 @@ html.export .slide{transition:none}
      o que vem pela frente e o CTA. Copy nova (fora do PDF original): revisar antes de publicar. -->
 <section class="slide intro" data-nome="Introdução">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>02</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo">Do case real ao <em data-degrade>plano da sua campanha</em></h2>
   <p class="lead">Como planejar uma campanha de recuperação de crédito com agentes de IA conversacional, a partir da experiência do Sicoob Crediauc.</p>
   <div class="intro-grid">
@@ -638,32 +639,29 @@ html.export .slide{transition:none}
         </li>
         <li class="card capitulo">
           <svg class="picto" viewBox="0 0 314 60" aria-hidden="true">
-            <rect y="2" width="20" height="20" rx="6" fill="#FFF5CC"/>
+            <rect y="0" width="20" height="20" rx="6" fill="#FFF5CC"/>
             <rect y="38" width="20" height="20" rx="6" fill="#003641"/>
-            <path d="M40 12H230" stroke="#A97C00" stroke-width="2.5"/>
-            <path d="M230 12H262A8 8 0 0 1 270 20V31" fill="none" stroke="#003641" stroke-width="2.5"/>
-            <path d="M265.5 27.5L270 32L274.5 27.5" fill="none" stroke="#003641" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <g fill="#fff" stroke="#A97C00" stroke-width="2.5"><circle cx="40" cy="12" r="5"/><circle cx="103" cy="12" r="5"/><circle cx="166" cy="12" r="5"/><circle cx="230" cy="12" r="5"/></g>
-            <rect x="30" y="36" width="284" height="24" rx="8" fill="#003641"/>
-            <path d="M101 41V55M172 41V55M243 41V55" stroke="#fff" stroke-opacity=".22"/>
-            <g fill="#fff" fill-opacity=".72"><rect x="40" y="45.5" width="46" height="5" rx="2.5"/><rect x="111" y="45.5" width="50" height="5" rx="2.5"/><rect x="182" y="45.5" width="44" height="5" rx="2.5"/><rect x="253" y="45.5" width="48" height="5" rx="2.5"/></g>
+            <path d="M40 10H230" stroke="#A97C00" stroke-width="2.5"/>
+            <path d="M230 15V20A5 5 0 0 1 225 25H45A5 5 0 0 0 40 30V34" fill="none" stroke="#003641" stroke-width="2.5"/>
+            <path d="M36 31L40 35L44 31" fill="none" stroke="#003641" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <g fill="#fff" stroke="#A97C00" stroke-width="2.5"><circle cx="40" cy="10" r="5"/><circle cx="103" cy="10" r="5"/><circle cx="166" cy="10" r="5"/><circle cx="230" cy="10" r="5"/></g>
+            <rect x="30" y="38" width="284" height="22" rx="8" fill="#003641"/>
+            <path d="M101 42V56M172 42V56M243 42V56" stroke="#fff" stroke-opacity=".22"/>
+            <g fill="#fff" fill-opacity=".72"><rect x="40" y="46.5" width="46" height="5" rx="2.5"/><rect x="111" y="46.5" width="50" height="5" rx="2.5"/><rect x="182" y="46.5" width="44" height="5" rx="2.5"/><rect x="253" y="46.5" width="48" height="5" rx="2.5"/></g>
           </svg>
           <p class="capitulo-nome"><span class="indice-num">06</span>Agente e humano</p>
           <p class="capitulo-txt">O papel de cada um na mesma negociação</p>
         </li>
         <li class="card capitulo">
           <svg class="picto" viewBox="0 0 314 60" aria-hidden="true">
-            <path d="M52 30H68M126 30H136" stroke="#8C8273" stroke-width="2"/>
-            <path d="M136 30A6 6 0 0 0 142 24V16A6 6 0 0 1 148 10H158" fill="none" stroke="#A97C00" stroke-width="2"/>
-            <path d="M136 30A6 6 0 0 1 142 36V44A6 6 0 0 0 148 50H158M222 50H234" fill="none" stroke="#003641" stroke-width="2.5"/>
-            <rect x="0.75" y="20.75" width="50.5" height="18.5" rx="6" fill="#fff" stroke="#E4D8BA" stroke-width="1.5"/>
-            <circle cx="11" cy="30" r="4.5" fill="#FFF5CC"/>
-            <rect x="68.75" y="15.75" width="56.5" height="28.5" rx="7" fill="#fff" stroke="#E4D8BA" stroke-width="1.5"/>
-            <rect x="75" y="23" width="14" height="14" rx="4" fill="#0B0602"/>
-            <rect x="158.75" y="0.75" width="62.5" height="18.5" rx="6" fill="#fff" stroke="#E4D8BA" stroke-width="1.5"/>
-            <circle cx="169" cy="10" r="4.5" fill="#FFF5CC"/>
-            <rect x="159" y="41" width="62" height="18" rx="6" fill="#fff" stroke="#003641" stroke-width="2"/>
-            <rect x="234" y="40" width="80" height="20" rx="6" fill="#003641"/>
+            <path d="M14 16H92M178 16H292" stroke="#A97C00" stroke-width="2.5"/>
+            <path d="M135 26V40A8 8 0 0 0 143 48H211M225 48H284" fill="none" stroke="#003641" stroke-width="3"/>
+            <circle cx="14" cy="16" r="7" fill="#fff" stroke="#A97C00" stroke-width="2.5"/>
+            <rect x="92" y="6" width="86" height="20" rx="10" fill="#0B0602"/>
+            <circle cx="103" cy="16" r="5" fill="#FFDD1E"/>
+            <circle cx="292" cy="16" r="7" fill="#fff" stroke="#A97C00" stroke-width="2.5"/>
+            <circle cx="218" cy="48" r="7" fill="#fff" stroke="#003641" stroke-width="2.5"/>
+            <circle cx="292" cy="48" r="8" fill="#003641"/>
           </svg>
           <p class="capitulo-nome"><span class="indice-num">07</span>Transbordo</p>
           <p class="capitulo-txt">Quando o humano assume a conversa</p>
@@ -694,7 +692,7 @@ html.export .slide{transition:none}
 <!-- ===================== 3 · Case + conceito ===================== -->
 <section class="slide escuro case" id="3" data-nome="Case">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>03</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo"><em data-degrade>Cinco dias</em> de atuação em negociações complexas</h2>
   <p class="lead">Nos últimos cinco dias da campanha, um agente de IA da Ubots apoiou um colaborador do Sicoob Crediauc em dívidas que não avançavam na operação tradicional.</p>
   <div class="resultados">
@@ -730,7 +728,7 @@ html.export .slide{transition:none}
 <!-- ===================== 4 · Escopo ===================== -->
 <section class="slide escopo" data-nome="Escopo">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>04</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo">Defina quando atuar e <em data-degrade>quais contratos</em> trabalhar</h2>
   <p class="lead">Conecte uma oportunidade de negociação a uma carteira delimitada. A proximidade do 13º salário, por exemplo, pode entrar no calendário.</p>
   <div class="escopo-grid">
@@ -776,7 +774,7 @@ html.export .slide{transition:none}
 <!-- ===================== 5 · Etapas ===================== -->
 <section class="slide etapas" data-nome="Etapas">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>05</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo"><em data-degrade>Planeje antes</em>, acompanhe durante e avalie depois</h2>
   <ol class="etapas-grid">
     <svg class="etapas-eixo" viewBox="0 0 1680 72" aria-hidden="true"><line x1="110" y1="36" x2="1660" y2="36"/></svg>
@@ -827,7 +825,7 @@ html.export .slide{transition:none}
 <!-- ===================== 6 · Agente × humano ===================== -->
 <section class="slide papeis" data-nome="Agente e humano">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>06</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo">Agente e humano atuam na <em data-degrade>mesma negociação</em></h2>
   <p class="lead">O agente amplia a capacidade de conduzir conversas. O colaborador participa do fechamento e das situações que exigem análise humana.</p>
   <div class="raias">
@@ -868,24 +866,25 @@ html.export .slide{transition:none}
 <!-- ===================== 7 · Transbordo ===================== -->
 <section class="slide transbordo" data-nome="Transbordo">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>07</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo">Saiba <em data-degrade>quando</em> o humano assume a conversa</h2>
   <p class="lead">No Crediauc, houve duas situações de transferência: negociações que exigem exceções e cooperados que precisam de mais acolhimento.</p>
-  <div class="fluxo" role="img" aria-label="Fluxo de transbordo: a conversa com o agente passa pela pergunta; se não, o agente segue a negociação; se sim, há transbordo para o time humano, que conclui e registra.">
-    <svg class="fluxo-linhas" viewBox="0 0 1680 248" aria-hidden="true">
-      <path class="neutro" d="M300 124H376" marker-end="url(#seta-neutra)"/>
-      <path class="neutro" d="M780 124H818"/>
-      <path class="agente" d="M818 124A18 18 0 0 0 836 106V54A18 18 0 0 1 854 36H896" marker-end="url(#seta-agente)"/>
-      <path class="humano" d="M818 124A18 18 0 0 1 836 142V194A18 18 0 0 0 854 212H896" marker-end="url(#seta-humano)"/>
-      <path class="humano" d="M1230 212H1306" marker-end="url(#seta-humano)"/>
+  <div class="fluxo" role="img" aria-label="Fluxo de transbordo: a conversa com o agente chega à pergunta; se não, o agente segue a negociação; se sim, há transbordo para o time humano, que conclui e registra.">
+    <svg class="fluxo-linhas" viewBox="0 0 1680 275" aria-hidden="true">
+      <path class="agente" d="M56 55H300M840 55H1382"/>
+      <path class="humano" d="M570 95V175A30 30 0 0 0 600 205H972M1028 205H1382"/>
     </svg>
-    <div class="no agente" style="left:0; top:84px; width:300px; height:80px"><span class="ic"><svg aria-hidden="true"><use href="#i-agente"/></svg></span>Conversa com o agente</div>
-    <div class="no pergunta" style="left:380px; top:58px; width:400px; height:132px"><span class="ic"><svg aria-hidden="true"><use href="#i-decisao"/></svg></span>Pedido fora da política ou cooperado precisa de acolhimento?</div>
-    <p class="ramo nao" style="left:836px; top:80px">Não</p>
-    <p class="ramo sim" style="left:836px; top:168px">Sim</p>
-    <div class="no agente" style="left:900px; top:0; width:330px; height:72px"><span class="ic"><svg aria-hidden="true"><use href="#i-agente"/></svg></span>Agente segue a negociação</div>
-    <div class="no humano" style="left:900px; top:176px; width:330px; height:72px"><span class="ic"><svg aria-hidden="true"><use href="#i-humano"/></svg></span>Transbordo para o time humano</div>
-    <div class="no humano-solido" style="left:1310px; top:176px; width:370px; height:72px"><span class="ic"><svg aria-hidden="true"><use href="#i-humano-ok"/></svg></span>Humano conclui e registra</div>
+    <span class="estacao-fluxo agente" style="left:0; top:27px"><svg aria-hidden="true"><use href="#i-agente"/></svg></span>
+    <p class="estacao-nome" style="left:0; top:97px">Conversa com o agente</p>
+    <div class="pergunta-fluxo" style="left:300px; top:15px; width:540px; height:80px"><span class="ic"><svg aria-hidden="true"><use href="#i-decisao"/></svg></span>Pedido fora da política ou cooperado precisa de acolhimento?</div>
+    <p class="ramo nao" style="left:1111px; top:55px">Não</p>
+    <span class="estacao-fluxo agente" style="left:1382px; top:27px"><svg aria-hidden="true"><use href="#i-agente"/></svg></span>
+    <p class="estacao-nome" style="left:1382px; top:97px">Agente segue a negociação</p>
+    <p class="ramo sim" style="left:570px; top:140px">Sim</p>
+    <span class="estacao-fluxo humano" style="left:972px; top:177px"><svg aria-hidden="true"><use href="#i-humano"/></svg></span>
+    <p class="estacao-nome humano" style="left:972px; top:247px">Transbordo para o time humano</p>
+    <span class="estacao-fluxo humano fim" style="left:1382px; top:177px"><svg aria-hidden="true"><use href="#i-humano-ok"/></svg></span>
+    <p class="estacao-nome humano" style="left:1382px; top:247px">Humano conclui e registra</p>
   </div>
   <div class="card registro-card">
     <div class="registro-cab">
@@ -905,7 +904,7 @@ html.export .slide{transition:none}
 <!-- ===================== 8 · Métricas ===================== -->
 <section class="slide metricas" data-nome="Métricas">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>08</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo">Meça <em data-degrade>o que aconteceu</em> na campanha</h2>
   <div class="cadeia-area">
     <ol class="cadeia">
@@ -946,7 +945,7 @@ html.export .slide{transition:none}
 <!-- ===================== 9 · Próximo passo (escuro) ===================== -->
 <section class="slide escuro cta" data-nome="Próximo passo">
   <header class="topo"><div class="marcas"><svg class="logo" viewBox="0 0 1764 382" role="img" aria-label="Ubots"><use href="#logo-ubots"/></svg><span class="marcas-sep" aria-hidden="true"></span><span class="logo-cliente" role="img" aria-label="Sicoob Crediauc"></span></div><p class="pagina"><b>09</b> / 09</p></header>
-  <p class="eyebrow">Playbook · Recuperação de crédito com IA</p>
+  <p class="eyebrow">Playbook · Recuperação de Crédito com IA</p>
   <h2 class="titulo">Planeje sua <em data-degrade>primeira campanha</em> com IA conversacional</h2>
   <p class="lead">Use este guia para organizar escopo, responsabilidades, cronograma e avaliação de uma campanha inicial.</p>
   <div class="cta-cards">
@@ -954,8 +953,7 @@ html.export .slide{transition:none}
       <span class="circulo"><svg aria-hidden="true"><use href="#i-enviar"/></svg></span>
       <h3>Converse com a Ubots sobre a sua operação</h3>
       <p class="texto">Leve o desafio que deseja trabalhar e as definições preenchidas neste playbook.</p>
-      <!-- TODO: URL — TODO-ASSET: link da página do especialista -->
-      <a class="botao" href="#" data-todo="URL">Falar com um especialista<svg aria-hidden="true"><use href="#i-seta"/></svg></a>
+      <a class="botao" href="https://ubots.com.br/" target="_blank" rel="noopener">Falar com um especialista<svg aria-hidden="true"><use href="#i-seta"/></svg></a>
       <svg class="ondas" aria-hidden="true"><use href="#ondas"/></svg>
     </div>
     <div class="cta-card">

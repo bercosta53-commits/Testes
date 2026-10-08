@@ -68,7 +68,9 @@ Medida direto do PDF de referência: fontes, tamanhos, cores, raios e posições
   - fluxos como trilhos (slides 6, 7 e 8): texto livre sobre o fundo, linha contínua com nós ou estações e cantos arredondados. Nada de caixas dentro de caixas, setinhas entre cards ou losango.
 - **Hierarquia de cor:** o amarelo marca só o agente e a palavra-chave do título. O petróleo do logo Sicoob Crediauc (`#003641`) marca o humano, o time da cooperativa. Estrutura e texto ficam em neutros, e a faixa escura fecha o slide quando há uma conclusão (decisão no slide 8). Os traços que carregam sentido têm 3:1 sobre o creme: agente `#A97C00`, neutro `#8C8273`.
 - **Assinatura dupla** em todas as páginas: logo Ubots | logo Sicoob Crediauc.
-- **Capa:** a ilustração mostra o agente de IA conversando pelo WhatsApp:
+- **Tag das páginas internas** com iniciais maiúsculas, como a pílula "Recuperação de Crédito" da referência: "Playbook · Recuperação de Crédito com IA".
+- **CTA final:** "Falar com um especialista" leva a https://ubots.com.br/ e abre em nova aba.
+- **Capa:** a tag é "Guia Prático", para não repetir o título. O subtítulo forma duas linhas equilibradas, com a largura do título. A ilustração mostra o agente de IA conversando pelo WhatsApp:
   - símbolo de IA (conjunto de faíscas) no avatar da conversa e no selo do alto. O selo usa o degradê de IA (azul → violeta → rosa), com o mesmo peso do disco verde do WhatsApp;
   - cabeçalho "Agente de IA" com status online;
   - dois ícones do WhatsApp em verde `#25D366`.
@@ -91,7 +93,7 @@ O brief veio antes da referência de marca. Onde os dois divergem, valeu a refer
 - Capa clara com painel ilustrado, no lugar de capa escura.
 - Ondas, brilhos suaves e sombras como grafismos, no lugar de só a estrela.
 - A ilustração da capa é vetorial e abstrata: conversa do agente, transbordo para o humano e checklist. Não há mockup de celular nem foto.
-- No fluxo do slide 6, a pergunta é um nó com ícone de ramificação, no lugar do losango. "Sim" e "Não" viram rótulos nos ramos. Na revisão de layout, losango e caixinhas com setas foram apontados como visual datado.
+- No fluxo do slide 7 não há losango nem caixas, só trilhos e estações, como nos slides 6 e 8. O trilho do agente passa pela pergunta, que é uma pílula escura com ícone de ramificação, e segue no "Não". O trilho do humano desce da pergunta no "Sim". Na revisão de layout, losango e caixinhas com setas foram apontados como visual datado.
 
 Os demais desvios:
 
@@ -130,7 +132,6 @@ Aplicados a partir do e-mail "Aprovação de materiais":
 - Logo Ubots oficial em SVG, versões clara e escura. Hoje o deck usa a vetorização do PNG.
 - Autorização de uso do logo Sicoob Crediauc. O logo já está aplicado em todas as páginas.
 - Confirmar quem recomendou o próximo passo do case (slide 3): Ubots ("recomendado para o Crediauc") ou o próprio Crediauc ("indicado pelo Crediauc").
-- URL do botão "Falar com um especialista". Hoje é `href="#"`.
 - Path oficial da estrela do v1.0 (`ubots-estudos-layout.html` não veio). Hoje o ícone do agente usa um asterisco de 4 pontas provisório.
 - Brand book. Os grafismos seguem a apresentação de referência: ondas, brilhos e o painel da capa.
 
