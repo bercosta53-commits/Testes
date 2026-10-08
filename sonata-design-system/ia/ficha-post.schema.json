@@ -62,7 +62,7 @@
     "corpo": {
       "type": "string",
       "maxLength": 200,
-      "description": "Texto corrido, só no carrossel-passo."
+      "description": "Texto corrido de até 28 palavras, abaixo do subtítulo (apoio)."
     },
     "manuscrito": {
       "type": "string",
@@ -212,6 +212,15 @@
         "esquerda",
         "topo"
       ]
+    },
+    "mascara": {
+      "description": "Máscara de cor que segura o texto sobre a foto. Cada modelo tem um padrão (onda na maioria; lateral no educativo e no depoimento com foto). arco só para frases curtas; veu só como exceção.",
+      "enum": [
+        "onda",
+        "lateral",
+        "arco",
+        "veu"
+      ]
     }
   },
   "$defs": {
@@ -229,15 +238,26 @@
         },
         "foco": {
           "type": "string",
-          "description": "Ponto de interesse em CSS object-position. Ex.: '50% 20%' mantém o rosto no alto, fora do véu da base."
+          "description": "Alternativa a rosto: CSS object-position aplicado direto à foto."
         },
         "ondas": {
-          "type": "string",
-          "description": "Ponto da cabeça de quem escuta, em % do post (ex.: '46% 27%'). Desenha ondas finas ao redor."
+          "description": "true desenha ondas finas ao redor do rosto; ou um ponto em % do post (ex.: '46% 27%').",
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ]
         },
         "recorte": {
           "type": "boolean",
           "description": "true para PNG transparente de produto, que flutua sem caixa (tecnologia)."
+        },
+        "rosto": {
+          "type": "string",
+          "description": "Onde está o rosto (ou o assunto) na imagem, em % da largura e da altura da própria foto. Ex.: '57% 30%'. O motor reenquadra a foto para esse ponto cair no centro da área livre."
         }
       }
     }

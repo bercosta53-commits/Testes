@@ -2,11 +2,12 @@
   "modelo": "frase-foto",
   "formato": "story",
   "tema": "marinho",
+  "rotulo": "Afeto",
   "titulo": "Cantar junto *não tem idade*.",
   "apoio": "Ouvir a própria voz e a de quem está ao lado.",
   "foto": {
     "src": "casal-karaoke",
     "assunto": "Casal 60+ cantando junto, rindo, luz quente",
-    "foco": "45% 30%"
+    "rosto": "55% 30%"
   }
 }

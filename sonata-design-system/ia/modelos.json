@@ -44,7 +44,7 @@
     "frase-foto": {
       "nome": "Frase com foto",
       "pilar": "Afeto",
-      "quando": "Vida, convivência, emoção. A foto de pessoas juntas ocupa o post inteiro; a frase pousa no véu.",
+      "quando": "Vida, convivência, emoção. A foto de pessoas juntas ocupa o alto do post e uma faixa de cor sobe em onda com o texto. Para frases curtas, o arco que nasce do canto.",
       "temas": [
         "marinho",
         "mar",
@@ -58,7 +58,8 @@
       "opcional": [
         "rotulo",
         "apoio",
-        "veu"
+        "corpo",
+        "mascara"
       ],
       "elementos": [
         "arcos"
@@ -66,7 +67,9 @@
       "limites": {
         "titulo": 14,
         "apoio": 18
-      }
+      },
+      "mascara": "onda",
+      "teto": 35
     },
     "frase": {
       "nome": "Frase com respiro",
@@ -85,7 +88,8 @@
       ],
       "opcional": [
         "rotulo",
-        "apoio"
+        "apoio",
+        "corpo"
       ],
       "elementos": [
         "arcos",
@@ -99,7 +103,7 @@
     "educativo": {
       "nome": "Educativo",
       "pilar": "Cuidado",
-      "quando": "Saúde auditiva explicada com clareza: um fato, um conselho, um porquê. Foto sangrada, texto no véu claro, assinado por uma fono.",
+      "quando": "Saúde auditiva explicada: um fato, um porquê. Foto estourada à direita, painel de cor com borda ondulada à esquerda, assinado por uma fono.",
       "temas": [
         "claro",
         "bruma"
@@ -112,8 +116,9 @@
       "opcional": [
         "rotulo",
         "apoio",
+        "corpo",
         "legenda",
-        "veu"
+        "mascara"
       ],
       "elementos": [
         "arcos"
@@ -121,7 +126,9 @@
       "limites": {
         "titulo": 12,
         "apoio": 22
-      }
+      },
+      "mascara": "lateral",
+      "teto": 45
     },
     "tecnologia": {
       "nome": "Tecnologia",
@@ -138,8 +145,11 @@
       ],
       "opcional": [
         "rotulo",
+        "apoio",
+        "corpo",
         "chips",
-        "legenda"
+        "legenda",
+        "mascara"
       ],
       "elementos": [
         "arcos"
@@ -147,12 +157,14 @@
       "limites": {
         "titulo": 10,
         "chips": 3
-      }
+      },
+      "mascara": "onda",
+      "teto": 40
     },
     "data": {
       "nome": "Data comemorativa",
       "pilar": "Afeto",
-      "quando": "Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. A foto ocupa o post e uma onda de cor sobe da base com o manuscrito.",
+      "quando": "Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. A foto ocupa o post e uma faixa de cor sobe da base em onda, com o manuscrito.",
       "temas": [
         "agua",
         "bruma",
@@ -173,7 +185,9 @@
       "limites": {
         "manuscrito": 4,
         "apoio": 16
-      }
+      },
+      "mascara": "onda",
+      "teto": 30
     },
     "depoimento": {
       "nome": "Depoimento",
@@ -190,19 +204,21 @@
         "pessoa"
       ],
       "opcional": [
-        "veu"
+        "mascara"
       ],
       "elementos": [
         "arcos"
       ],
       "limites": {
         "titulo": 32
-      }
+      },
+      "mascara": "lateral",
+      "teto": 40
     },
     "fono": {
       "nome": "Com a fono",
       "pilar": "Sonata",
-      "quando": "As sócias falando de perto: dica, bastidor, opinião profissional. A foto da fono ocupa o post; o texto pousa no véu claro.",
+      "quando": "As sócias falando de perto: dica, bastidor, opinião profissional. A foto da fono ocupa o post; o texto pousa numa faixa de cor que sobe da base.",
       "temas": [
         "claro",
         "bruma"
@@ -215,7 +231,8 @@
       "opcional": [
         "rotulo",
         "apoio",
-        "veu"
+        "corpo",
+        "mascara"
       ],
       "elementos": [
         "arcos"
@@ -223,7 +240,9 @@
       "limites": {
         "titulo": 12,
         "apoio": 20
-      }
+      },
+      "mascara": "onda",
+      "teto": 45
     },
     "oferta": {
       "nome": "Oferta",
@@ -243,14 +262,17 @@
         "titulo",
         "selo",
         "legenda",
-        "foto"
+        "foto",
+        "mascara"
       ],
       "elementos": [
         "arcos"
       ],
       "limites": {
         "titulo": 10
-      }
+      },
+      "mascara": "onda",
+      "teto": 35
     },
     "carrossel-capa": {
       "nome": "Carrossel · capa",
@@ -269,7 +291,9 @@
       "opcional": [
         "rotulo",
         "apoio",
-        "foto"
+        "corpo",
+        "foto",
+        "mascara"
       ],
       "elementos": [
         "arcos"
@@ -277,7 +301,9 @@
       "limites": {
         "titulo": 10,
         "apoio": 14
-      }
+      },
+      "mascara": "onda",
+      "teto": 45
     },
     "carrossel-passo": {
       "nome": "Carrossel · passo",
@@ -301,7 +327,8 @@
       "limites": {
         "titulo": 10,
         "corpo": 30
-      }
+      },
+      "teto": 45
     },
     "carrossel-fim": {
       "nome": "Carrossel · fechamento",
@@ -320,7 +347,8 @@
       ],
       "opcional": [
         "apoio",
-        "pessoa"
+        "pessoa",
+        "mascara"
       ],
       "elementos": [
         "onda"
@@ -328,7 +356,9 @@
       "limites": {
         "titulo": 8,
         "apoio": 14
-      }
+      },
+      "mascara": "onda",
+      "teto": 45
     }
   }
 }

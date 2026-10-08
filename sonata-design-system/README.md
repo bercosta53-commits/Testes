@@ -10,7 +10,7 @@ Design system das redes sociais da **Sonata Aparelhos Auditivos**: cores, tipogr
 |---|---|
 | Entender a marca e as regras | [`MARCA.md`](MARCA.md) — o manual (essência, voz, cor, tipo, grid, hierarquia, elementos, fotografia, logo) |
 | Pedir posts a uma IA | [`ia/GUIA-IA.md`](ia/GUIA-IA.md) — instrução de sistema pronta, com regras, medidas e prompt |
-| Aprovar o estudo | [`apresentacao/Sonata-Social-Ondas-aprovacao-v1.pdf`](apresentacao/Sonata-Social-Ondas-aprovacao-v1.pdf) — versão 1 para aprovação, 29 páginas, gerada de `apresentacao/estudo.html` |
+| Aprovar o estudo | [`apresentacao/Sonata-Social-Ondas-aprovacao-v2.pdf`](apresentacao/Sonata-Social-Ondas-aprovacao-v2.pdf) — versão 2 para aprovação, 29 páginas, gerada de `apresentacao/estudo.html` |
 | Ver todos os modelos | [`modelos/index.html`](modelos/index.html) no navegador, ou as imagens em [`previews/`](previews) |
 | Valores exatos | [`tokens/tokens.json`](tokens/tokens.json) (fonte única) e [`tokens/tokens.css`](tokens/tokens.css) |
 
@@ -39,7 +39,7 @@ ia/                      guia para IA, schema da ficha, catálogo de modelos
 tokens/                  tokens.json (fonte única) → tokens.css
 bundle/                  motor de layout (sonata.js), estilos, tipos, fontes locais
 modelos/                 galeria e página de render
-exemplos/                17 fichas reais (feed, story, quadrado, carrossel)
+exemplos/                19 fichas reais (feed, story, quadrado, carrossel)
 apresentacao/            o estudo em HTML e PDF
 previews/                os exemplos renderizados
 assets/logos/            marinho, verde-água e branco
@@ -62,6 +62,6 @@ node scripts/pdf.mjs                 # apresentacao/estudo.html → PDF
 ## Observações
 
 - As fotos em `assets/fotos/` vêm do site da Sonata (sonata.med.br). Para publicar, prefira os arquivos originais em alta.
-- Regra de fotografia: foto sempre sangrada, nunca recortada em círculo, caixa ou moldura; a legibilidade vem dos véus em degradê da paleta.
+- Regra de fotografia: foto sempre sangrada, nunca recortada em círculo, caixa ou moldura; o texto pousa sempre numa máscara de cor (faixa em onda, painel lateral ou arco), e o campo `foto.rosto` mantém a pessoa na área livre.
 - O logo verde-água e o branco foram gerados a partir do arquivo marinho enviado. Substitua pelos arquivos oficiais quando possível, mantendo os nomes.
 - Poppins e Ms Madi são distribuídas sob a SIL Open Font License 1.1 (Google Fonts).

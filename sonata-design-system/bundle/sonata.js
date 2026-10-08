@@ -3,7 +3,7 @@
  * Sonata Social — Ondas · motor de layout
  * Uma ficha (objeto JSON) descreve o post; Sonata.render() devolve o post pronto,
  * no tamanho real (1080 px de largura), seguindo as regras do design system.
- * Foto sempre sangrada; a legibilidade vem dos véus em degradê da paleta.
+ * Foto sempre sangrada; o texto pousa numa máscara de cor (onda, arco ou painel lateral) que nasce das ondas do logo.
  * Sem dependências, sem rede. Script clássico: define window.Sonata.
  */
 (function (root) {
@@ -24,80 +24,80 @@
   var MODELOS = {
     'frase-foto': {
       nome: 'Frase com foto', pilar: 'Afeto',
-      quando: 'Vida, convivência, emoção. A foto de pessoas juntas ocupa o post inteiro; a frase pousa no véu.',
+      quando: 'Vida, convivência, emoção. A foto de pessoas juntas ocupa o alto do post e uma faixa de cor sobe em onda com o texto. Para frases curtas, o arco que nasce do canto.',
       temas: ['marinho', 'mar', 'claro'], temaPadrao: 'marinho',
-      obrigatorio: ['titulo', 'foto'], opcional: ['rotulo', 'apoio', 'veu'],
-      elementos: ['arcos'], limites: { titulo: 14, apoio: 18 }
+      obrigatorio: ['titulo', 'foto'], opcional: ['rotulo', 'apoio', 'corpo', 'mascara'],
+      elementos: ['arcos'], limites: { titulo: 14, apoio: 18 }, mascara: 'onda', teto: 35
     },
     frase: {
       nome: 'Frase com respiro', pilar: 'Afeto',
       quando: 'Reflexão, frase de impacto, abertura de campanha. Sem foto: o espaço vazio é o protagonista.',
       temas: ['claro', 'bruma', 'agua', 'marinho', 'mar'], temaPadrao: 'bruma',
-      obrigatorio: ['titulo'], opcional: ['rotulo', 'apoio'],
+      obrigatorio: ['titulo'], opcional: ['rotulo', 'apoio', 'corpo'],
       elementos: ['arcos', 'linha'], limites: { titulo: 10, apoio: 18 }
     },
     educativo: {
       nome: 'Educativo', pilar: 'Cuidado',
-      quando: 'Saúde auditiva explicada com clareza: um fato, um conselho, um porquê. Foto sangrada, texto no véu claro, assinado por uma fono.',
+      quando: 'Saúde auditiva explicada: um fato, um porquê. Foto estourada à direita, painel de cor com borda ondulada à esquerda, assinado por uma fono.',
       temas: ['claro', 'bruma'], temaPadrao: 'claro',
-      obrigatorio: ['titulo', 'foto'], opcional: ['rotulo', 'apoio', 'legenda', 'veu'],
-      elementos: ['arcos'], limites: { titulo: 12, apoio: 22 }
+      obrigatorio: ['titulo', 'foto'], opcional: ['rotulo', 'apoio', 'corpo', 'legenda', 'mascara'],
+      elementos: ['arcos'], limites: { titulo: 12, apoio: 22 }, mascara: 'lateral', teto: 45
     },
     tecnologia: {
       nome: 'Tecnologia', pilar: 'Tecnologia',
       quando: 'Aparelho, recurso, novidade. O aparelho recortado flutua no centro das ondas, ou uma foto de uso real sob véu marinho.',
       temas: ['marinho', 'mar'], temaPadrao: 'marinho',
-      obrigatorio: ['titulo', 'foto'], opcional: ['rotulo', 'chips', 'legenda'],
-      elementos: ['arcos'], limites: { titulo: 10, chips: 3 }
+      obrigatorio: ['titulo', 'foto'], opcional: ['rotulo', 'apoio', 'corpo', 'chips', 'legenda', 'mascara'],
+      elementos: ['arcos'], limites: { titulo: 10, chips: 3 }, mascara: 'onda', teto: 40
     },
     data: {
       nome: 'Data comemorativa', pilar: 'Afeto',
-      quando: 'Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. A foto ocupa o post e uma onda de cor sobe da base com o manuscrito.',
+      quando: 'Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. A foto ocupa o post e uma faixa de cor sobe da base em onda, com o manuscrito.',
       temas: ['agua', 'bruma', 'mar'], temaPadrao: 'agua',
       obrigatorio: ['rotulo', 'manuscrito', 'foto'], opcional: ['apoio'],
-      elementos: ['onda'], limites: { manuscrito: 4, apoio: 16 }
+      elementos: ['onda'], limites: { manuscrito: 4, apoio: 16 }, mascara: 'onda', teto: 30
     },
     depoimento: {
       nome: 'Depoimento', pilar: 'Sonata',
       quando: 'A voz de quem voltou a ouvir. Com foto autorizada, a pessoa ocupa o post; sem foto, a frase ocupa o espaço. Sempre com nome real e detalhe.',
       temas: ['bruma', 'claro', 'marinho'], temaPadrao: 'bruma',
-      obrigatorio: ['titulo', 'pessoa'], opcional: ['veu'],
-      elementos: ['arcos'], limites: { titulo: 32 }
+      obrigatorio: ['titulo', 'pessoa'], opcional: ['mascara'],
+      elementos: ['arcos'], limites: { titulo: 32 }, mascara: 'lateral', teto: 40
     },
     fono: {
       nome: 'Com a fono', pilar: 'Sonata',
-      quando: 'As sócias falando de perto: dica, bastidor, opinião profissional. A foto da fono ocupa o post; o texto pousa no véu claro.',
+      quando: 'As sócias falando de perto: dica, bastidor, opinião profissional. A foto da fono ocupa o post; o texto pousa numa faixa de cor que sobe da base.',
       temas: ['claro', 'bruma'], temaPadrao: 'claro',
-      obrigatorio: ['titulo', 'pessoa'], opcional: ['rotulo', 'apoio', 'veu'],
-      elementos: ['arcos'], limites: { titulo: 12, apoio: 20 }
+      obrigatorio: ['titulo', 'pessoa'], opcional: ['rotulo', 'apoio', 'corpo', 'mascara'],
+      elementos: ['arcos'], limites: { titulo: 12, apoio: 20 }, mascara: 'onda', teto: 45
     },
     oferta: {
       nome: 'Oferta', pilar: 'Sonata',
       quando: 'Condição comercial real (parcelamento, preço de entrada, teste sem custo). Com foto de pessoas sob véu marinho, ou só cor. No máximo 1 em cada 5 posts.',
       temas: ['marinho', 'mar'], temaPadrao: 'marinho',
-      obrigatorio: ['preco', 'cta'], opcional: ['rotulo', 'titulo', 'selo', 'legenda', 'foto'],
-      elementos: ['arcos'], limites: { titulo: 10 }
+      obrigatorio: ['preco', 'cta'], opcional: ['rotulo', 'titulo', 'selo', 'legenda', 'foto', 'mascara'],
+      elementos: ['arcos'], limites: { titulo: 10 }, mascara: 'onda', teto: 35
     },
     'carrossel-capa': {
       nome: 'Carrossel · capa', pilar: 'Cuidado',
       quando: 'Primeira lâmina: promete o que o carrossel entrega. Com foto sangrada sob véu, ou só cor.',
       temas: ['mar', 'marinho', 'bruma'], temaPadrao: 'mar',
-      obrigatorio: ['titulo', 'pagina'], opcional: ['rotulo', 'apoio', 'foto'],
-      elementos: ['arcos'], limites: { titulo: 10, apoio: 14 }
+      obrigatorio: ['titulo', 'pagina'], opcional: ['rotulo', 'apoio', 'corpo', 'foto', 'mascara'],
+      elementos: ['arcos'], limites: { titulo: 10, apoio: 14 }, mascara: 'onda', teto: 45
     },
     'carrossel-passo': {
       nome: 'Carrossel · passo', pilar: 'Cuidado',
       quando: 'Miolo: um passo ou ideia por lâmina, numerado só quando a ordem importa. A foto, se houver, sobe da base numa onda.',
       temas: ['claro', 'bruma'], temaPadrao: 'claro',
       obrigatorio: ['titulo', 'pagina'], opcional: ['passo', 'corpo', 'foto'],
-      elementos: [], limites: { titulo: 10, corpo: 30 }
+      elementos: [], limites: { titulo: 10, corpo: 30 }, teto: 45
     },
     'carrossel-fim': {
       nome: 'Carrossel · fechamento', pilar: 'Sonata',
       quando: 'Última lâmina: um convite claro, com a fono como rosto do atendimento.',
       temas: ['agua', 'bruma', 'marinho'], temaPadrao: 'agua',
-      obrigatorio: ['titulo', 'cta', 'pagina'], opcional: ['apoio', 'pessoa'],
-      elementos: ['onda'], limites: { titulo: 8, apoio: 14 }
+      obrigatorio: ['titulo', 'cta', 'pagina'], opcional: ['apoio', 'pessoa', 'mascara'],
+      elementos: ['onda'], limites: { titulo: 8, apoio: 14 }, mascara: 'onda', teto: 45
     }
   };
 
@@ -225,13 +225,13 @@
   function srcFoto(src) { return src ? (cfg.fotos[src] || src) : ''; }
 
   // Foto sangrada: ocupa toda a área dada, sem moldura. Sem src, um espaço reservado com o briefing.
-  function foto(f, estilo) {
+  function foto(f, estilo, attrs) {
     f = f || {};
     var src = srcFoto(f.src);
     var inner = src
       ? '<img src="' + esc(src) + '" alt="' + esc(f.assunto || '') + '" style="object-position:' + esc(f.foco || '50% 35%') + '">'
       : '<div class="sn-foto-vazia"><span class="rotulo">Foto</span><span class="legenda">' + esc(f.assunto || 'Pessoas 60+ em convívio, luz natural') + '</span></div>';
-    return '<div class="sn-foto" style="' + (estilo || 'position:absolute;inset:0;') + '">' + inner + '</div>';
+    return '<div class="sn-foto"' + (attrs || '') + (f.rosto ? ' data-rosto="' + esc(f.rosto) + '"' : '') + ' style="' + (estilo || 'position:absolute;inset:0;') + '">' + inner + '</div>';
   }
   // Recorte de produto (PNG transparente), flutuando sem caixa.
   function recorte(f, estilo) {
@@ -256,37 +256,112 @@
     for (var i = 1; i <= p.total; i++) out += '<i class="' + (i === p.atual ? 'on' : '') + '"></i>';
     return '<div class="sn-dots" aria-label="Lâmina ' + p.atual + ' de ' + p.total + '">' + out + '</div>';
   }
-  function cta(texto) { return texto ? '<span class="sn-cta chamada">' + esc(texto) + seta() + '</span>' : ''; }
-  function rotulo(t) { return t ? '<div class="rotulo sn-rotulo">' + esc(t) + '</div>' : ''; }
+  // Marca do rótulo: as duas ondas do "S" do logo, em miniatura.
+  function marca() {
+    return '<svg class="sn-marca" aria-hidden="true" viewBox="0 0 30 34" width="26" height="30" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"><path d="M15 3A15 15 0 0 0 15 31"/><path d="M25 9A8.5 8.5 0 0 0 25 25" opacity=".55"/></svg>';
+  }
+  function cta(texto) {
+    return texto ? '<span class="sn-cta"><span class="chamada">' + esc(texto) + '</span><i class="sn-cta-seta">' + seta() + '</i></span>' : '';
+  }
+  function rotulo(t) { return t ? '<div class="rotulo sn-rotulo">' + marca() + '<span>' + esc(t) + '</span></div>' : ''; }
   function apoio(t, cls) { return t ? '<p class="' + (cls || 'apoio') + ' sn-apoio">' + rich(t) + '</p>' : ''; }
+  function corpo(t) { return t ? '<p class="corpo sn-corpo">' + rich(t) + '</p>' : ''; }
   function titulo(t, estilo, min) { return t ? '<h1 class="' + estilo + ' sn-titulo" data-fit="' + (min || 64) + '">' + rich(t) + '</h1>' : ''; }
   function assinatura(nome, detalhe) {
     return nome ? '<div class="sn-quem"><div class="nome">' + esc(nome) + '</div>' + (detalhe ? '<div class="legenda">' + esc(detalhe) + '</div>' : '') + '</div>' : '';
   }
   function topo(s) { return '<div class="sn-topo">' + (s._logo ? logo(s._logo) : '') + '</div>'; }
   function pilha(classe, conteudo, largura) {
-    return '<div class="sn-main" data-fit-box><div class="sn-stack ' + classe + '"' + (largura ? ' style="max-width:' + px(largura) + '"' : '') + '>' + conteudo + '</div></div>';
+    return '<div class="sn-main" data-fit-box><div class="sn-stack ' + classe + '" data-pilha' + (largura ? ' style="max-width:' + px(largura) + '"' : '') + '>' + conteudo + '</div></div>';
   }
-  // Coluna de texto ao lado da foto: ~56% do canvas no feed, largura total no story.
-  function colunaTexto(F) { return F.h === 1920 ? null : Math.round(F.w * 0.56); }
+  // Conteúdo padrão sobre a máscara: rótulo, título, subtítulo (apoio) e texto (corpo).
+  function textoPadrao(s, estilo, min) {
+    return rotulo(s.rotulo) + titulo(s.titulo, estilo || 'titulo', min || 60) + apoio(s.apoio) + corpo(s.corpo);
+  }
+
+  /* ---------- máscaras: seguram o texto sobre a foto estourada ---------- */
+  var ONDA_ALT = 170, ONDA_AMP = 30;
+
+  // Faixa de cor que sobe da base com borda ondulada e duas linhas de eco.
+  function mascaraOnda(F, rgb) {
+    var W = F.w, Hs = ONDA_ALT, yb = Hs - ONDA_AMP - 6, comp = W * 1.3;
+    function linha(dy) {
+      var d = '';
+      for (var x = 0; x <= W; x += 12) d += (x ? 'L' : 'M') + x + ' ' + (yb - dy + ONDA_AMP * Math.sin((x / comp) * Math.PI * 2 + 0.9)).toFixed(1);
+      return d;
+    }
+    return '<div class="sn-mascara sn-m-onda" data-mascara="onda" style="height:' + px(F.h * 0.46) + '">' +
+      '<div class="sn-m-blend" style="bottom:100%;height:420px;background:linear-gradient(to bottom, rgba(' + rgb + ',0), rgba(' + rgb + ',0.5))"></div>' +
+      '<svg class="sn-m-borda" aria-hidden="true" width="' + W + '" height="' + Hs + '" viewBox="0 0 ' + W + ' ' + Hs + '" style="top:' + px(-Hs + 1) + '">' +
+        '<path d="' + linha(70) + '" fill="none" stroke="var(--grafismo-forte)" stroke-width="3" stroke-opacity="0.5" stroke-linecap="round"/>' +
+        '<path d="' + linha(36) + '" fill="none" stroke="var(--grafismo-forte)" stroke-width="5" stroke-opacity="0.95" stroke-linecap="round"/>' +
+        '<path d="' + linha(0) + 'L' + W + ' ' + Hs + 'L0 ' + Hs + 'Z" fill="var(--fundo)"/>' +
+      '</svg></div>';
+  }
+
+  // Painel lateral com borda vertical ondulada.
+  function mascaraLateral(F, rgb, largura) {
+    var H = F.h, Ws = ONDA_ALT, xb = ONDA_AMP + 6, comp = H * 1.25;
+    function linha(dx) {
+      var d = '';
+      for (var y = 0; y <= H; y += 12) d += (y ? 'L' : 'M') + (xb + dx + ONDA_AMP * Math.sin((y / comp) * Math.PI * 2 + 2.1)).toFixed(1) + ' ' + y;
+      return d;
+    }
+    return '<div class="sn-mascara sn-m-lateral" style="width:' + px(largura) + '">' +
+      '<div class="sn-m-blend" style="left:100%;width:360px;top:0;bottom:0;background:linear-gradient(to left, rgba(' + rgb + ',0), rgba(' + rgb + ',0.45))"></div>' +
+      '<svg class="sn-m-borda" aria-hidden="true" width="' + Ws + '" height="' + H + '" viewBox="0 0 ' + Ws + ' ' + H + '" style="left:' + px(largura - 1) + ';top:0">' +
+        '<path d="' + linha(70) + '" fill="none" stroke="var(--grafismo-forte)" stroke-width="3" stroke-opacity="0.5" stroke-linecap="round"/>' +
+        '<path d="' + linha(36) + '" fill="none" stroke="var(--grafismo-forte)" stroke-width="5" stroke-opacity="0.95" stroke-linecap="round"/>' +
+        '<path d="M0 0' + linha(0).replace(/^M/, 'L') + 'L0 ' + H + 'Z" fill="var(--fundo)"/>' +
+      '</svg></div>';
+  }
+
+  // Arco de escuta: um quarto de disco nasce do canto inferior esquerdo, com dois ecos sobre a foto.
+  function mascaraArco(F, rgb) {
+    var W = F.w, H = F.h, r = Math.round(H * 0.62);
+    return '<svg class="sn-el sn-m-arco" data-mascara="arco" aria-hidden="true" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">' +
+      '<circle data-r="0" cx="0" cy="' + H + '" r="' + (r + 150) + '" fill="rgba(' + rgb + ',0.18)"/>' +
+      '<circle data-r="104" cx="0" cy="' + H + '" r="' + (r + 104) + '" fill="none" stroke="var(--grafismo-forte)" stroke-width="3" stroke-opacity="0.55"/>' +
+      '<circle data-r="50" cx="0" cy="' + H + '" r="' + (r + 50) + '" fill="none" stroke="var(--grafismo-forte)" stroke-width="5"/>' +
+      '<circle data-r="0" cx="0" cy="' + H + '" r="' + r + '" fill="var(--fundo)"/>' +
+      '</svg>';
+  }
+
+  // Foto estourada + máscara + texto. tipo: onda | arco | lateral | veu.
+  function comMascara(s, F, o) {
+    var tipo = s.mascara || o.mascara || 'onda';
+    if (F.h === 1920 && tipo !== 'veu') tipo = 'onda';
+    var W = F.w, H = F.h, rgb = VEU_RGB[s.tema] || VEU_RGB.marinho;
+    var f = o.foto || s.foto || {};
+    var logoPe = s._logo ? '<div class="sn-logo-pe">' + logo(s._logo) + '</div>' : '';
+    var wp = Math.round(W * (o.fracao || 0.6));
+    var estiloFoto = o.estiloFoto || (tipo === 'onda' ? 'position:absolute;left:0;right:0;top:0;height:' + px(H * 0.62) + ';'
+      : tipo === 'lateral' ? 'position:absolute;top:0;bottom:0;right:0;left:' + px(wp - 160) + ';' : '');
+    var ondasHtml = f.ondas === true ? '<div class="sn-el sn-ondas-auto" data-ondas-auto></div>' : (f.ondas ? ondasNoFoco(F, f.ondas) : '');
+    var h = foto(f, estiloFoto, ' data-foto-mascara="' + tipo + '"') + ondasHtml + (o.sobreFoto || '');
+    if (tipo === 'veu') {
+      return h + veu(s.veu || 'base', s.tema, { plato: 0.22, alcance: 0.76, forca: 0.95 }) +
+        veu('topo', s.tema === 'claro' || s.tema === 'bruma' ? s.tema : 'marinho', { plato: 0, alcance: 0.24, forca: 0.6 }) +
+        '<div class="sn-safe">' + topo(s) + pilha('sn-fim', o.conteudo, o.largura) + '</div>';
+    }
+    if (tipo === 'lateral') {
+      return h + mascaraLateral(F, rgb, wp) +
+        '<div class="sn-safe sn-na-lateral" style="right:' + px(W - wp + 24) + '">' + topo(s) + pilha(o.alinhar || 'sn-centro', o.conteudo) +
+          (o.legenda ? '<div class="sn-base">' + o.legenda + '</div>' : '') + '</div>';
+    }
+    if (tipo === 'arco') {
+      return h + veu('topo', s.tema === 'claro' || s.tema === 'bruma' ? s.tema : 'marinho', { plato: 0, alcance: 0.22, forca: 0.55 }) + mascaraArco(F, rgb) +
+        '<div class="sn-safe">' + topo(s) + pilha('sn-fim sn-no-arco', o.conteudo, F.h === 1080 ? 480 : 520) + '</div>';
+    }
+    return h + mascaraOnda(F, rgb) +
+      '<div class="sn-safe" style="top:' + px(H * (F.h === 1920 ? 0.42 : 0.36) + 110) + '">' + pilha('sn-fim', o.conteudo + (o.legenda || '') + logoPe + (o.navegar || '')) + '</div>';
+  }
 
   /* ---------- modelos ---------- */
   var T = {};
 
   T['frase-foto'] = function (s, F) {
-    var lado = s.veu || 'base', tema = s.tema;
-    var col = lado === 'esquerda' && F.h !== 1920 ? Math.round(F.w * 0.6) : null;
-    return foto(s.foto) +
-      (lado === 'esquerda'
-        ? veu('esquerda', tema, { plato: 0.22, alcance: 0.82, forca: 0.95 })
-        : veu('base', tema, { plato: F.h === 1920 ? 0.26 : 0.16, alcance: 0.72, forca: 0.94 })) +
-      (tema !== 'claro' ? veu('topo', 'marinho', { plato: 0, alcance: 0.26, forca: 0.55 }) : '') +
-      (s.foto && s.foto.ondas ? ondasNoFoco(F, s.foto.ondas) :
-        has(s.elementos, 'arcos') ? arcos({ w: F.w, h: F.h, cx: F.w + 40, cy: -40, r: 250, passo: 64, espessura: 10, de: 90, ate: 180,
-          cores: ['var(--branco)'], opacidades: [0.85, 0.5, 0.25] }) : '') +
-      '<div class="sn-safe">' + topo(s) +
-        pilha(lado === 'esquerda' ? 'sn-centro' : 'sn-fim', rotulo(s.rotulo) + titulo(s.titulo, 'display', 72) + apoio(s.apoio), col) +
-      '</div>';
+    return comMascara(s, F, { mascara: 'onda', conteudo: textoPadrao(s, 'titulo', 60) });
   };
 
   T.frase = function (s, F) {
@@ -295,50 +370,26 @@
       (has(s.elementos, 'arcos') ? arcos({ w: W, h: H, cx: W + 30, cy: -30, r: 230, passo: 70, espessura: 20, de: 90, ate: 180 }) : '') +
       (temOnda ? onda({ w: W, h: H, altura: F.mb + 120 }) : '') +
       '<div class="sn-safe"' + (temOnda ? ' style="bottom:' + px(F.mb + 150) + '"' : '') + '>' + topo(s) +
-        pilha('sn-centro', rotulo(s.rotulo) + titulo(s.titulo, 'display', 80) + apoio(s.apoio)) +
+        pilha('sn-centro', rotulo(s.rotulo) + titulo(s.titulo, 'display', 80) + apoio(s.apoio) + corpo(s.corpo)) +
         (has(s.elementos, 'linha') ? '<div class="sn-base">' + linhaDeSom({ largura: W - 2 * F.m, altura: 112 }) + '</div>' : '') +
       '</div>';
   };
 
-  // Foto sangrada + véu claro: educativo e fono compartilham a composição.
-  function fotoComVeuClaro(s, F, fotoFicha, conteudoTopo, rodape) {
-    var story = F.h === 1920, lado = s.veu || (story ? 'base' : 'esquerda');
-    var v = lado === 'base' ? veu('base', s.tema, { plato: story ? 0.3 : 0.34, alcance: story ? 0.66 : 0.7, forca: 0.98 })
-      : lado === 'topo' ? veu('topo', s.tema, { plato: 0.3, alcance: 0.66, forca: 0.97 })
-      : veu('esquerda', s.tema, { plato: 0.3, alcance: 0.8, forca: 0.97 });
-    var col = lado === 'esquerda' ? colunaTexto(F) : null;
-    return foto(fotoFicha) + v +
-      (lado !== 'topo' ? veu('topo', s.tema, { plato: 0, alcance: F.h === 1920 ? 0.3 : 0.2, forca: 0.85 }) : '') +
-      (fotoFicha && fotoFicha.ondas ? ondasNoFoco(F, fotoFicha.ondas) : '') +
-      '<div class="sn-safe">' + topo(s) +
-        pilha(lado === 'base' ? 'sn-fim' : 'sn-inicio', conteudoTopo, col) +
-        (rodape ? '<div class="sn-base">' + rodape + '</div>' : '') +
-      '</div>';
-  }
-
   T.educativo = function (s, F) {
-    return fotoComVeuClaro(s, F, s.foto,
-      rotulo(s.rotulo) + titulo(s.titulo, 'titulo', 60) + apoio(s.apoio),
-      s.legenda ? '<div class="legenda sn-assina">' + rich(s.legenda) + '</div>' : '');
+    return comMascara(s, F, { mascara: 'lateral', alinhar: 'sn-inicio', conteudo: textoPadrao(s, 'titulo', 56),
+      legenda: s.legenda ? '<div class="legenda sn-assina">' + rich(s.legenda) + '</div>' : '' });
   };
 
   T.fono = function (s, F) {
     var p = s.pessoa || {};
-    var s2 = {}; for (var k in s) s2[k] = s[k];
-    if (!s.veu) s2.veu = 'base';
-    return fotoComVeuClaro(s2, F, p.foto,
-      rotulo(s.rotulo || 'Com a fono') + titulo(s.titulo, 'titulo', 56) + apoio(s.apoio) +
-      assinatura(p.nome || 'Nome da fono', p.detalhe || 'Fonoaudióloga · sócia da Sonata'), '');
+    return comMascara(s, F, { mascara: 'onda', foto: p.foto,
+      conteudo: rotulo(s.rotulo || 'Com a fono') + titulo(s.titulo, 'titulo', 56) + apoio(s.apoio) + corpo(s.corpo) +
+        assinatura(p.nome || 'Nome da fono', p.detalhe || 'Fonoaudióloga · sócia da Sonata') });
   };
 
   T.tecnologia = function (s, F) {
     var W = F.w, H = F.h, f = s.foto || {};
-    if (!f.recorte) {
-      return foto(f) + veu('base', s.tema, { plato: 0.2, alcance: 0.7, forca: 0.95 }) +
-        veu('topo', 'marinho', { plato: 0, alcance: 0.26, forca: 0.55 }) +
-        (f.ondas ? ondasNoFoco(F, f.ondas, ['var(--agua-300)', 'var(--branco)', 'var(--branco)']) : '') +
-        '<div class="sn-safe">' + topo(s) + pilha('sn-fim', conteudoTec(s)) + '</div>';
-    }
+    if (!f.recorte) return comMascara(s, F, { mascara: 'onda', conteudo: conteudoTec(s) });
     var d = F.h === 1920 ? 760 : (F.h === 1080 ? 480 : 640);
     var cx = W * 0.6, cy = F.mt + (F.h === 1080 ? 30 : 60) + d / 2;
     return '<div class="sn-halo" style="background:radial-gradient(circle at ' + px(cx) + ' ' + px(cy) + ', var(--fundo-2) 0, transparent ' + px(d * 0.95) + ')"></div>' +
@@ -348,48 +399,26 @@
       '<div class="sn-safe">' + topo(s) + pilha('sn-fim', conteudoTec(s)) + '</div>';
   };
   function conteudoTec(s) {
-    return rotulo(s.rotulo) + titulo(s.titulo, 'titulo', 60) +
+    return rotulo(s.rotulo) + titulo(s.titulo, 'titulo', 60) + apoio(s.apoio) + corpo(s.corpo) +
       (s.chips && s.chips.length ? '<div class="sn-chips">' + s.chips.slice(0, 3).map(function (c) { return '<span class="sn-chip chamada"><i></i>' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
       (s.legenda ? '<div class="legenda sn-legal">' + esc(s.legenda) + '</div>' : '');
   }
 
   T.data = function (s, F) {
-    var W = F.w, H = F.h;
-    var campo = F.h === 1920 ? 820 : (F.h === 1080 ? 470 : 590);
-    var base = H - campo;
-    var fill = { agua: 'var(--agua-400)', bruma: 'var(--agua-50)', mar: 'url(#sn-mar)' }[s.tema] || 'var(--agua-400)';
-    var tras = { agua: 'var(--agua-200)', bruma: 'var(--branco)', mar: 'var(--agua-600)' }[s.tema] || 'var(--agua-200)';
-    var defs = '<defs><linearGradient id="sn-mar" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="var(--agua-800)"/><stop offset="1" stop-color="var(--marinho-900)"/></linearGradient></defs>';
-    return foto(s.foto, 'position:absolute;left:0;right:0;top:0;height:' + px(base + 120) + ';') +
-      '<svg class="sn-el sn-campo" aria-hidden="true" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">' + defs +
-        '<path d="' + caminhoOnda(W, H, base - 18, 30, 0.5, W * 1.25) + '" fill="' + tras + '" fill-opacity="0.85"/>' +
-        '<path d="' + caminhoOnda(W, H, base + 16, 26, 2.2, W * 1.05) + '" fill="' + fill + '"/></svg>' +
-      '<div class="sn-safe" style="top:' + px(base + 96) + '">' +
-        pilha('sn-inicio', rotulo(s.rotulo) +
-          (s.manuscrito ? '<div class="manuscrito sn-manuscrito" data-fit="120">' + esc(s.manuscrito) + '</div>' : '') +
-          apoio(s.apoio)) +
-        (s._logo ? '<div class="sn-base">' + logo(s._logo) + '</div>' : '') +
-      '</div>';
+    return comMascara(s, F, { mascara: 'onda',
+      conteudo: rotulo(s.rotulo) + (s.manuscrito ? '<div class="manuscrito sn-manuscrito" data-fit="120">' + esc(s.manuscrito) + '</div>' : '') + apoio(s.apoio) });
   };
 
   T.depoimento = function (s, F) {
     var W = F.w, H = F.h, p = s.pessoa || {};
+    var citacao = '<blockquote class="titulo-compacto sn-titulo sn-citacao" data-fit="44">' + rich(s.titulo) + '</blockquote>';
     if (p.foto && (p.foto.src || p.foto.assunto)) {
-      var lado = s.veu || (F.h === 1920 ? 'base' : 'esquerda'), escuro = s.tema === 'marinho';
-      return foto(p.foto) +
-        veu(lado, s.tema, lado === 'base' ? { plato: 0.24, alcance: 0.72, forca: 0.96 } : { plato: 0.3, alcance: 0.82, forca: 0.97 }) +
-        veu('topo', escuro ? 'marinho' : s.tema, { plato: 0, alcance: 0.22, forca: escuro ? 0.55 : 0.85 }) +
-        '<div class="sn-safe">' + topo(s) +
-          pilha(lado === 'base' ? 'sn-fim' : 'sn-centro', aspas(84) +
-            '<blockquote class="titulo-compacto sn-titulo sn-citacao" data-fit="44">' + rich(s.titulo) + '</blockquote>' +
-            assinatura(p.nome, p.detalhe), lado === 'esquerda' ? colunaTexto(F) : null) +
-        '</div>';
+      return comMascara(s, F, { mascara: 'lateral', foto: p.foto, conteudo: aspas(84) + citacao + assinatura(p.nome, p.detalhe) });
     }
     return '<div class="sn-halo"></div>' +
       (has(s.elementos, 'arcos') ? arcos({ w: W, h: H, cx: W + 30, cy: -30, r: 230, passo: 70, espessura: 20, de: 90, ate: 180 }) : '') +
-      '<div class="sn-safe">' + '<div class="sn-topo">' + aspas(120) + '</div>' +
-        pilha('sn-centro', '<blockquote class="titulo-compacto sn-titulo sn-citacao" data-fit="46">' + rich(s.titulo) + '</blockquote>' +
-          assinatura(p.nome || 'Nome da paciente', p.detalhe || 'Paciente Sonata')) +
+      '<div class="sn-safe"><div class="sn-topo">' + aspas(120) + '</div>' +
+        pilha('sn-centro', citacao + assinatura(p.nome || 'Nome da paciente', p.detalhe || 'Paciente Sonata')) +
         (s._logo ? '<div class="sn-base" style="justify-content:flex-end">' + logo(s._logo, 'height:52px') + '</div>' : '') +
       '</div>';
   };
@@ -397,35 +426,28 @@
   T.oferta = function (s, F) {
     var W = F.w, H = F.h, sd = 248, sx = W - F.m - sd, sy = F.mt + (F.h === 1920 ? 40 : 0);
     var p = s.preco || {}, se = s.selo, comFoto = s.foto && (s.foto.src || s.foto.assunto);
-    var fundo = comFoto
-      ? foto(s.foto) + veu(F.h === 1920 ? 'base' : 'esquerda', s.tema, F.h === 1920 ? { plato: 0.3, alcance: 0.75, forca: 0.95 } : { plato: 0.34, alcance: 0.86, forca: 0.95 }) +
-        veu('topo', 'marinho', { plato: 0, alcance: 0.26, forca: 0.55 })
-      : '<div class="sn-halo"></div>' +
-        (has(s.elementos, 'arcos') ? arcos({ w: W, h: H, cx: sx + sd / 2, cy: sy + sd / 2, r: sd / 2 + 40, passo: 44, espessura: 14, de: 100, ate: 200 }) : '');
-    return fundo +
-      (se ? '<div class="sn-selo" style="left:' + px(sx) + ';top:' + px(sy) + ';width:' + px(sd) + ';height:' + px(sd) + '">' +
-        '<span class="chamada">' + esc(se.topo || '') + '</span><b class="numeral">' + esc(se.destaque || '') + '</b><span class="chamada">' + esc(se.base || '') + '</span></div>' : '') +
-      '<div class="sn-safe">' + topo(s) +
-        pilha('sn-fim', rotulo(s.rotulo) + titulo(s.titulo, 'titulo-compacto', 52) +
-          '<div class="sn-preco">' + (p.prefixo ? '<span class="apoio">' + esc(p.prefixo) + '</span>' : '') +
-            '<span class="sn-preco-linha"><b class="numeral">' + esc(p.valor || '') + '</b>' + (p.sufixo ? '<span class="apoio">' + esc(p.sufixo) + '</span>' : '') + '</span></div>' +
-          '<div class="sn-acao">' + cta(s.cta) + '</div>' +
-          (s.legenda ? '<div class="legenda sn-legal">' + esc(s.legenda) + '</div>' : ''), comFoto && F.h !== 1920 ? Math.round(W * 0.74) : null) +
-      '</div>';
+    var selo = se ? '<div class="sn-selo" style="left:' + px(sx) + ';top:' + px(sy) + ';width:' + px(sd) + ';height:' + px(sd) + '">' +
+      '<span class="chamada">' + esc(se.topo || '') + '</span><b class="numeral">' + esc(se.destaque || '') + '</b><span class="chamada">' + esc(se.base || '') + '</span></div>' : '';
+    var conteudo = rotulo(s.rotulo) + titulo(s.titulo, 'titulo-compacto', 52) +
+      '<div class="sn-preco">' + (p.prefixo ? '<span class="apoio">' + esc(p.prefixo) + '</span>' : '') +
+        '<span class="sn-preco-linha"><b class="numeral">' + esc(p.valor || '') + '</b>' + (p.sufixo ? '<span class="apoio">' + esc(p.sufixo) + '</span>' : '') + '</span></div>' +
+      '<div class="sn-acao">' + cta(s.cta) + '</div>' +
+      (s.legenda ? '<div class="legenda sn-legal">' + esc(s.legenda) + '</div>' : '');
+    if (comFoto) return comMascara(s, F, { mascara: 'onda', conteudo: conteudo, sobreFoto: selo });
+    return '<div class="sn-halo"></div>' +
+      (has(s.elementos, 'arcos') ? arcos({ w: W, h: H, cx: sx + sd / 2, cy: sy + sd / 2, r: sd / 2 + 40, passo: 44, espessura: 14, de: 100, ate: 200 }) : '') +
+      selo + '<div class="sn-safe">' + topo(s) + pilha('sn-fim', conteudo) + '</div>';
   };
 
   T['carrossel-capa'] = function (s, F) {
     var W = F.w, H = F.h, comFoto = s.foto && (s.foto.src || s.foto.assunto);
-    var fundo = comFoto
-      ? foto(s.foto) + veu('base', s.tema === 'bruma' ? 'bruma' : s.tema, { plato: 0.3, alcance: 0.84, forca: 0.96 }) +
-        veu('topo', 'marinho', { plato: 0, alcance: 0.26, forca: 0.55 }) +
-        (s.foto.ondas ? ondasNoFoco(F, s.foto.ondas) : '')
-      : '<div class="sn-halo"></div>' +
-        (has(s.elementos, 'arcos') ? arcos({ w: W, h: H, cx: W + 30, cy: -30, r: 230, passo: 70, espessura: 20, de: 90, ate: 180 }) : '');
-    return fundo +
+    var navegar = '<div class="sn-navegar"><span class="chamada sn-deslize">Deslize' + seta() + '</span>' + dots(s.pagina) + '</div>';
+    if (comFoto) return comMascara(s, F, { mascara: 'onda', conteudo: textoPadrao(s, 'titulo', 60), navegar: navegar });
+    return '<div class="sn-halo"></div>' +
+      (has(s.elementos, 'arcos') ? arcos({ w: W, h: H, cx: W + 30, cy: -30, r: 230, passo: 70, espessura: 20, de: 90, ate: 180 }) : '') +
       '<div class="sn-safe">' + topo(s) +
-        pilha(comFoto ? 'sn-fim' : 'sn-centro', rotulo(s.rotulo) + titulo(s.titulo, 'display', 80) + apoio(s.apoio)) +
-        '<div class="sn-base sn-entre"><span class="chamada sn-deslize">Deslize' + seta() + '</span>' + dots(s.pagina) + '</div>' +
+        pilha('sn-centro', rotulo(s.rotulo) + titulo(s.titulo, 'display', 80) + apoio(s.apoio)) +
+        '<div class="sn-base">' + navegar + '</div>' +
       '</div>';
   };
 
@@ -437,26 +459,20 @@
           caminhoOndaTopo(W, y0 + 10, 26, 1.2, W * 1.1) + '" fill="var(--fundo)"/></svg>' : '') +
       '<div class="sn-safe"' + (temFoto && fh ? ' style="bottom:' + px(fh + 40) + '"' : '') + '>' +
         pilha('sn-inicio', (s.passo ? '<div class="numeral sn-passo">' + esc(s.passo) + '</div>' : '') +
-          titulo(s.titulo, 'titulo-compacto', 52) + (s.corpo ? '<p class="corpo sn-apoio">' + rich(s.corpo) + '</p>' : '')) +
+          titulo(s.titulo, 'titulo-compacto', 52) + corpo(s.corpo)) +
       '</div>' +
       '<div class="sn-rodape-carrossel" style="left:' + px(F.m) + ';right:' + px(F.m) + ';bottom:' + px(F.mb) + '">' + dots(s.pagina) + (s._logo ? logo(s._logo, 'height:44px') : '') + '</div>';
   };
 
   T['carrossel-fim'] = function (s, F) {
     var W = F.w, H = F.h, p = s.pessoa, comFoto = p && p.foto && (p.foto.src || p.foto.assunto);
-    if (comFoto) {
-      var lado = s.veu || (F.h === 1920 ? 'base' : 'esquerda');
-      return foto(p.foto) + veu(lado, s.tema, lado === 'base' ? { plato: 0.3, alcance: 0.75, forca: 0.97 } : { plato: 0.34, alcance: 0.84, forca: 0.97 }) +
-        '<div class="sn-safe"><div class="sn-topo sn-entre">' + (s._logo ? logo(s._logo) : '<span></span>') + dots(s.pagina) + '</div>' +
-          pilha(lado === 'base' ? 'sn-fim' : 'sn-centro', titulo(s.titulo, 'titulo', 60) + apoio(s.apoio) + '<div class="sn-acao">' + cta(s.cta) + '</div>' +
-            assinatura(p.nome, p.detalhe), lado === 'esquerda' ? Math.round(W * 0.58) : null) +
-        '</div>';
-    }
+    var conteudo = titulo(s.titulo, 'titulo', 60) + apoio(s.apoio) + '<div class="sn-acao">' + cta(s.cta) + '</div>';
+    if (comFoto) return comMascara(s, F, { mascara: 'onda', foto: p.foto, conteudo: conteudo + assinatura(p.nome, p.detalhe), navegar: dots(s.pagina) });
     var ondaAlt = F.mb + 100;
     return '<div class="sn-halo"></div>' +
       onda({ w: W, h: H, altura: ondaAlt, amplitude: 28, cores: s.tema === 'agua' ? ['var(--agua-300)', 'var(--branco)'] : ['var(--grafismo-medio)', 'var(--grafismo-forte)'] }) +
       '<div class="sn-safe" style="bottom:' + px(ondaAlt + 40) + '"><div class="sn-topo sn-entre">' + (s._logo ? logo(s._logo) : '<span></span>') + dots(s.pagina) + '</div>' +
-        pilha('sn-centro', titulo(s.titulo, 'titulo', 60) + apoio(s.apoio) + '<div class="sn-acao">' + cta(s.cta) + '</div>') +
+        pilha('sn-centro', conteudo) +
       '</div>';
   };
 
@@ -479,7 +495,7 @@
     if (/\*/.test(s.apoio || '') || /\*/.test(s.corpo || '')) av('apoio', 'Ênfase colorida só no título; no apoio, reescreva sem asteriscos.');
     var tudo = [s.rotulo, s.titulo, s.apoio, s.corpo, s.manuscrito, s.cta].map(plain).join(' ');
     var total = words(tudo);
-    var teto = /^carrossel/.test(s.modelo) ? 45 : 35;
+    var teto = m.teto || 35;
     if (total > teto) av('texto', total + ' palavras na arte; o teto é ' + teto + '. Leve o resto para a legenda do Instagram.');
     var baixo = tudo.toLowerCase();
     PROIBIDAS.forEach(function (w) { if (baixo.indexOf(w) !== -1) av('texto', '"' + w + '" está fora do vocabulário da marca. Veja o guia de voz.'); });
@@ -488,6 +504,8 @@
     if (s.manuscrito && words(s.manuscrito) > 4) av('manuscrito', 'Manuscrito tem no máximo 4 palavras.');
     if (s.manuscrito && s.modelo !== 'data') av('manuscrito', 'Manuscrito grande é exclusivo do modelo data.');
     if (s.veu && !has(['base', 'esquerda', 'topo'], s.veu)) av('veu', 'Véu aceita base, esquerda ou topo.');
+    if (s.mascara && !has(['onda', 'arco', 'lateral', 'veu'], s.mascara)) av('mascara', 'Máscara aceita onda, arco, lateral ou veu.');
+    if (s.corpo && words(s.corpo) > 28) av('corpo', words(s.corpo) + ' palavras no texto; use até 28 e leve o resto para a legenda.');
     var graf = (s.elementos || []).filter(function (e) { return has(['arcos', 'onda', 'linha'], e); });
     if (graf.length > 2) av('elementos', 'No máximo dois grafismos por post.');
     return avisos;
@@ -531,7 +549,57 @@
         size -= 2; el.style.fontSize = size + 'px';
       }
     }
+    ajustarMascaras(post);
     return post;
+  }
+
+  // A máscara cresce até cobrir o texto com folga: a faixa sobe, o arco abre.
+  function ajustarMascaras(post) {
+    var stack = post.querySelector('[data-pilha]');
+    if (!stack || !stack.offsetParent) { enquadrarRosto(post); return; }
+    var H = post.offsetHeight, safe = stack.offsetParent;
+    var top = safe.offsetTop + stack.offsetTop, left = safe.offsetLeft + stack.offsetLeft, w = stack.offsetWidth;
+    var faixa = post.querySelector('[data-mascara="onda"]');
+    if (faixa) {
+      var topoFaixa = Math.max(H * 0.28, Math.min(top - 96, H * 0.66));
+      faixa.style.height = Math.round(H - topoFaixa) + 'px';
+      var fo = post.querySelector('[data-foto-mascara="onda"]');
+      if (fo) fo.style.height = Math.round(topoFaixa + 150) + 'px';
+    }
+    var arco = post.querySelector('[data-mascara="arco"]');
+    if (arco) {
+      var r = Math.round(Math.sqrt(Math.pow(left + w + 40, 2) + Math.pow(H - top + 70, 2)));
+      var cs = arco.querySelectorAll('circle');
+      for (var i = 0; i < cs.length; i++) {
+        var extra = +cs[i].getAttribute('data-r');
+        cs[i].setAttribute('r', i === 0 ? r + 150 : r + extra);
+      }
+    }
+    enquadrarRosto(post);
+  }
+
+  // Posiciona a foto para que o rosto (ponto em % da imagem) caia na área livre da máscara.
+  // Alvos: faixa = centro da área acima da onda; lateral = centro da área à direita; foto inteira = terço superior direito.
+  var ALVO_ROSTO = { onda: [0.5, 0.42], lateral: [0.52, 0.4], arco: [0.66, 0.3], veu: [0.5, 0.3] };
+  function enquadrarRosto(post) {
+    var caixas = post.querySelectorAll('.sn-foto[data-rosto]');
+    for (var i = 0; i < caixas.length; i++) {
+      var cx = caixas[i], img = cx.querySelector('img');
+      if (!img || !img.naturalWidth) continue;
+      var p = cx.getAttribute('data-rosto').split(/\s+/), rx = parseFloat(p[0]) / 100, ry = parseFloat(p[1]) / 100;
+      var w = cx.offsetWidth, h = cx.offsetHeight, k = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+      var sw = img.naturalWidth * k, sh = img.naturalHeight * k;
+      var alvo = ALVO_ROSTO[cx.getAttribute('data-foto-mascara')] || [0.5, 0.35];
+      var ox = Math.min(0, Math.max(w - sw, alvo[0] * w - rx * sw));
+      var oy = Math.min(0, Math.max(h - sh, alvo[1] * h - ry * sh));
+      img.style.objectPosition = Math.round(ox) + 'px ' + Math.round(oy) + 'px';
+      var ondas = post.querySelector('[data-ondas-auto]');
+      if (ondas) {
+        var W = post.offsetWidth, H = post.offsetHeight;
+        var fx = cx.offsetLeft + ox + rx * sw, fy = cx.offsetTop + oy + ry * sh;
+        ondas.innerHTML = ondasNoFoco({ w: W, h: H }, (fx / W * 100).toFixed(1) + '% ' + (fy / H * 100).toFixed(1) + '%');
+      }
+    }
   }
 
   // Monta o post dentro de `alvo`, reduzido para `largura` px (padrão: tamanho real).
@@ -548,6 +616,8 @@
     if (alvo) alvo.appendChild(moldura);
     ajustar(post);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ajustar(post); });
+    var imgs = post.querySelectorAll('img');
+    for (var i = 0; i < imgs.length; i++) if (!imgs[i].complete) imgs[i].addEventListener('load', function () { ajustar(post); });
     return moldura;
   }
 
@@ -568,6 +638,6 @@
     montar: montar,
     ajustar: ajustar,
     validar: validar,
-    elementos: { arcos: arcos, ondasNoFoco: ondasNoFoco, veu: veu, onda: onda, linhaDeSom: linhaDeSom, foto: foto, recorte: recorte, logo: logo, cta: cta, dots: dots, aspas: aspas }
+    elementos: { enquadrarRosto: enquadrarRosto, arcos: arcos, ondasNoFoco: ondasNoFoco, veu: veu, mascaraOnda: mascaraOnda, mascaraArco: mascaraArco, mascaraLateral: mascaraLateral, marca: marca, onda: onda, linhaDeSom: linhaDeSom, foto: foto, recorte: recorte, logo: logo, cta: cta, dots: dots, aspas: aspas }
   };
 })(typeof window !== 'undefined' ? window : this);

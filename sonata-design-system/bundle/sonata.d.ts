@@ -15,8 +15,10 @@ export interface Foto {
   assunto?: string;
   /** object-position, ex.: '50% 20%'. Mantém rostos fora do véu. */
   foco?: string;
-  /** Ponto da cabeça de quem escuta, em % do post: desenha ondas finas ao redor. */
-  ondas?: string;
+  /** Onde está o rosto na imagem (% da foto). O motor mantém esse ponto na área livre da máscara. */
+  rosto?: string;
+  /** true: ondas finas ao redor do rosto; ou um ponto em % do post. */
+  ondas?: boolean | string;
   /** PNG transparente de produto, flutuando sem caixa. */
   recorte?: boolean;
 }
@@ -42,7 +44,9 @@ export interface PostProps {
   selo?: { topo?: string; destaque: string; base?: string };
   passo?: string;
   pagina?: { atual: number; total: number };
-  /** De onde sai o véu sobre a foto. */
+  /** Máscara de cor que segura o texto sobre a foto. */
+  mascara?: 'onda' | 'lateral' | 'arco' | 'veu';
+  /** De onde sai o véu quando mascara = 'veu'. */
   veu?: 'base' | 'esquerda' | 'topo';
   elementos?: Grafismo[];
   logo?: 'auto' | 'marinho' | 'agua' | 'branco' | false;

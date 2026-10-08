@@ -1,4 +1,4 @@
-Sistema visual das redes sociais da Sonata Aparelhos Auditivos (Porto Alegre). Ele organiza o que o feed já tem de melhor — fotos de gente de verdade ocupando o post inteiro, o azul-marinho do logo, o verde-água do site, a Poppins leve com a palavra em negrito itálico — e dá um passo à frente: paleta fechada, véus em degradê no lugar de caixas, uma assinatura gráfica só (as ondas que abraçam o "S" do logo), tamanhos de letra pensados para quem tem 60 anos ou mais e modelos de post que uma pessoa ou uma IA monta sem errar. Tudo aqui vale para o canvas real do post, com 1080 px de largura.
+Sistema visual das redes sociais da Sonata Aparelhos Auditivos (Porto Alegre). Ele organiza o que o feed já tem de melhor — fotos de gente de verdade ocupando o post inteiro, o azul-marinho do logo, o verde-água do site, a Poppins leve com a palavra em negrito itálico — e dá um passo à frente: paleta fechada, máscaras de cor em onda que seguram o texto sobre a foto, uma assinatura gráfica só (as ondas que abraçam o "S" do logo), tamanhos de letra pensados para quem tem 60 anos ou mais e modelos de post que uma pessoa ou uma IA monta sem errar. Tudo aqui vale para o canvas real do post, com 1080 px de largura.
 
 ## Essência
 
@@ -130,7 +130,8 @@ Um elemento por nível. Se dois disputam a atenção (dois números, duas fotos,
 
 Todos derivam das duas ondas que abraçam o "S" do logo. Use **no máximo dois grafismos por post**, nunca atrás de texto.
 
-- **Véus** — a peça que mais trabalha no sistema. Degradê suave (curva senoidal) da cor do tema até o transparente, saindo do lado onde fica o texto: da base (`frase-foto`, `fono`, stories), da esquerda (`educativo`, `oferta`, `depoimento`) ou do topo. Cores: `marinho-900` e `agua-900` nos temas escuros, `branco` e `agua-50` nos claros, `agua-400` no fechamento do carrossel. Um véu curto no topo protege o logo quando a foto é clara ali. O véu cobre o texto, nunca o rosto.
+- **Máscaras** — a peça que segura o texto sobre a foto: faixa em onda, painel lateral ondulado ou arco de canto, em cor sólida do tema, com duas linhas de eco em `grafismo-forte` acompanhando a borda. Ver Fotografia.
+- **Véus** — degradês de apoio. Degradê suave (curva senoidal) da cor do tema até o transparente, saindo do lado onde fica o texto: da base (`frase-foto`, `fono`, stories), da esquerda (`educativo`, `oferta`, `depoimento`) ou do topo. Cores: `marinho-900` e `agua-900` nos temas escuros, `branco` e `agua-50` nos claros, `agua-400` no fechamento do carrossel. Um véu curto no topo protege o logo quando a foto é clara ali. O véu cobre o texto, nunca o rosto.
 - **Ondas no foco** — três arcos finos (9 px), brancos, ao redor da cabeça de quem escuta, abrindo para o lado do texto: o som chegando à pessoa. Na ficha, `foto.ondas` com o ponto em porcentagem ("46% 27%"). Use só quando a pessoa está ouvindo algo ou alguém.
 - **Arcos de escuta** — três traços concêntricos com ponta redonda, do mais forte (dentro, `grafismo-forte`) ao mais suave (fora, `grafismo-suave`), cortados pela borda num canto. Nos posts de cor são a assinatura; sobre foto, ficam finos e brancos.
 - **Onda** — faixa fluida em duas camadas. Em posts de cor, pousa na base. Sobre foto, vira **campo de onda**: a cor do tema sobe da base com borda ondulada e a foto continua por trás, sem moldura (`data`, miolo do carrossel).
@@ -144,21 +145,27 @@ Todos derivam das duas ondas que abraçam o "S" do logo. Use **no máximo dois g
 
 ## Fotografia
 
-**Foto sempre estourada.** A foto ocupa o post inteiro, ou sobe da base até uma onda; nunca em círculo, caixa, moldura com canto recortado ou janela. Quem aparece na foto não pode parecer preso a uma forma. A legibilidade vem do véu, não do recorte.
+**Foto sempre estourada, texto sempre sobre cor.** A foto ocupa o post sem moldura: nunca em círculo, caixa ou janela. O texto nunca fica solto sobre a imagem: ele pousa numa **máscara** de cor sólida, nascida das ondas do logo, que entra pela foto e segura título, subtítulo e texto.
 
-- Pessoas de 60+ **com alguém**: casal, netos, amigas, família, a fono. Em movimento: caminhando, cantando, rindo, torcendo, viajando.
-- Luz natural e quente, pele real, fundo com profundidade (parque, casa, rua, consultório claro).
-- Enquadre deixando ar do lado do texto: rosto no terço de cima quando o véu vem da base; pessoa à direita quando o véu vem da esquerda. Ajuste com `foco` (object-position) até nenhum rosto ficar sob o véu.
-- As fonos olham para a câmera; as demais pessoas olham umas para as outras ou para o que estão vivendo.
-- Aparelho: recorte limpo em PNG, ou foto de uso real (atrás da orelha, nas mãos, no estojo). Sempre com `legenda` "Imagem ilustrativa ampliada." quando ampliado.
-- Evite: close de exame com otoscópio, pessoa sozinha e aflita para dramatizar a perda, fundo branco de banco de imagem, filtro colorido. A única cor sobre a foto é o véu da paleta.
-- Use os arquivos originais em alta (mínimo 1080 px no lado menor). Fotos do site da Sonata já servem: sócias, gaúcho, casal no karaokê, mulher no parque, adaptação do aparelho.
+| Máscara | Forma | Use em |
+|---|---|---|
+| `onda` (padrão) | Faixa de cor que sobe da base com borda ondulada e duas linhas de eco | `frase-foto`, `fono`, `data`, `tecnologia`, `oferta`, capas, stories |
+| `lateral` | Painel de 60% da largura com borda vertical ondulada | `educativo`, `depoimento` com foto |
+| `arco` | Quarto de disco que nasce do canto inferior esquerdo, com dois ecos sobre a foto | Frases curtas (até 8 palavras, sem apoio) |
+| `veu` | Só degradê, sem máscara | Exceção: foto com área escura e limpa onde o texto já se sustenta |
+
+- A máscara cresce até cobrir o texto com folga e a foto se reenquadra na área que sobra.
+- Na ficha, `foto.rosto` diz onde está o rosto na imagem ("57% 30%"): o motor posiciona a foto para o rosto cair no centro da área livre, nunca sob a máscara. `foto.ondas: true` desenha as ondas finas ao redor desse rosto.
+- Pessoas de 60+ **com alguém**, em movimento, luz natural e quente, fundo com profundidade. As fonos olham para a câmera; as demais pessoas, umas para as outras.
+- Aparelho: recorte limpo em PNG flutuando, ou foto de uso real. Sempre com "Imagem ilustrativa ampliada." quando ampliado.
+- Evite: exame clínico em close, pessoa sozinha e aflita, fundo branco de banco de imagem, filtro colorido.
+- Use os originais em alta (mínimo 1080 px no lado menor). As fotos do site da Sonata já servem para layout.
 
 ## Logo
 
 - Três versões: `sonata-marinho` (fundos `claro`, `bruma`, `agua` e véus claros), `sonata-branco` (`marinho`, `mar` e fotos com véu escuro) e `sonata-agua` (só sobre `marinho-800` ou `marinho-900`, quando o branco pesar).
 - Altura de 64 px no feed e no story, 56 px no quadrado. Área livre ao redor: a altura do "S".
-- Posição fixa: canto superior esquerdo, sobre o véu curto do topo quando há foto. Exceções: sobre o campo de onda em `data` e no canto inferior direito do `depoimento` sem foto. Um logo por post; o miolo do carrossel não leva logo.
+- Posição fixa: nos posts com foto, dentro da máscara, ao pé do texto (no painel lateral, no topo dele); nos posts de cor, canto superior esquerdo; no `depoimento` sem foto, canto inferior direito. Um logo por post; o miolo do carrossel não leva logo.
 - Nunca recolorir fora das três versões, distorcer, contornar ou aplicar sobre área clara de foto sem véu.
 
 ## Movimento (Reels e stories)
@@ -169,7 +176,7 @@ Os arcos se desenham de dentro para fora (2,4 s, curva suave, 0,25 s entre arcos
 
 - Várias fontes cursivas e condensadas → Poppins com papéis fixos + um único manuscrito, só em datas.
 - Ondas e formas diferentes a cada post → arcos de escuta e uma onda padronizada, tirados do logo.
-- Fotos em caixas, círculos e molduras → foto sempre estourada, com véu em degradê da paleta do lado do texto.
+- Fotos em caixas e texto solto sobre a imagem → foto sempre estourada e texto sempre sobre uma máscara de cor em onda.
 - Verde-água em vários tons soltos → duas escalas fechadas de 10 tons e cinco fundos.
 - Texto branco sobre verde-água → texto marinho sobre água.
 - Letras de 20 a 24 px no canvas → mínimo de 28 px, corpo a partir de 38 px.
@@ -180,14 +187,14 @@ Os arcos se desenham de dentro para fora (2,4 s, curva suave, 0,25 s entre arcos
 
 | Modelo | Pilar | Temas | Composição |
 |---|---|---|---|
-| `frase-foto` | Afeto | marinho, mar, claro | Foto estourada, véu da base (ou da esquerda), frase grande |
+| `frase-foto` | Afeto | marinho, mar, claro | Foto estourada no alto, faixa em onda com o texto (ou arco, para frases curtas) |
 | `frase` | Afeto | todos | Sem foto: o vazio é o protagonista, arcos e linha de som |
-| `educativo` | Cuidado | claro, bruma | Foto estourada, véu claro da esquerda, assinatura da fono |
-| `tecnologia` | Tecnologia | marinho, mar | Aparelho recortado no centro dos anéis, ou foto de uso sob véu |
-| `data` | Afeto | agua, bruma, mar | Foto estourada e campo de onda subindo da base com o manuscrito |
-| `depoimento` | Sonata | bruma, claro, marinho | Com foto: pessoa estourada e véu; sem foto: a citação ocupa o post |
-| `fono` | Sonata | claro, bruma | Foto da sócia estourada, véu claro da base, nome sob fio |
-| `oferta` | Sonata | marinho, mar | Foto de pessoas sob véu marinho, ou só cor; selo e um CTA |
-| `carrossel-capa` / `-passo` / `-fim` | Cuidado | mar · claro · agua | Capa com foto e véu; passo com foto subindo numa onda; fim com a fono |
+| `educativo` | Cuidado | claro, bruma | Painel lateral ondulado com o texto, foto estourada à direita, assinatura da fono |
+| `tecnologia` | Tecnologia | marinho, mar | Aparelho recortado no centro dos anéis, ou foto de uso com faixa em onda |
+| `data` | Afeto | agua, bruma, mar | Foto estourada e faixa em onda com a data e o manuscrito |
+| `depoimento` | Sonata | bruma, claro, marinho | Com foto: painel lateral com a citação; sem foto: a citação ocupa o post |
+| `fono` | Sonata | claro, bruma | Foto da sócia no alto, faixa em onda com dica, nome e logo |
+| `oferta` | Sonata | marinho, mar | Foto de pessoas com faixa em onda, ou só cor; selo e um CTA |
+| `carrossel-capa` / `-passo` / `-fim` | Cuidado | mar · claro · agua | Capa com foto e faixa; passo com foto subindo numa onda; fim com a fono |
 
 Cada modelo tem um card com variações e regras. Para montar posts com IA, siga o **Guia para IA**: a IA escreve uma ficha JSON (`ia/ficha-post.schema.json`) e o motor `Sonata.render()` aplica este manual sozinho.

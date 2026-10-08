@@ -1,0 +1,13 @@
+{
+  "modelo": "frase-foto",
+  "tema": "mar",
+  "mascara": "onda",
+  "rotulo": "Para pensar",
+  "titulo": "A risada de quem a gente ama é o *melhor som* do dia.",
+  "apoio": "Ouvir bem é estar presente nos pequenos momentos.",
+  "foto": {
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto, rindo",
+    "rosto": "55% 30%"
+  }
+}

@@ -5,13 +5,14 @@ window.EXEMPLOS = [
   "ficha": {
    "modelo": "frase-foto",
    "tema": "marinho",
+   "rotulo": "Dia a dia",
    "titulo": "Voltar a ouvir é voltar a *sair de casa*.",
    "apoio": "A cidade, o parque, a conversa no caminho.",
    "foto": {
     "src": "mulher-parque",
     "assunto": "Mulher 60+ sorrindo num parque de Porto Alegre, luz de fim de tarde",
-    "foco": "50% 30%",
-    "ondas": "46% 27%"
+    "ondas": true,
+    "rosto": "48% 40%"
    }
   }
  },
@@ -49,12 +50,13 @@ window.EXEMPLOS = [
    "tema": "claro",
    "rotulo": "Saúde auditiva",
    "titulo": "A adaptação é feita *com calma*, no seu tempo.",
-   "apoio": "Ajustamos o aparelho com você, em mais de uma visita, até a escuta ficar natural.",
+   "apoio": "Ajustamos o aparelho com você, em mais de uma visita.",
+   "corpo": "Cada retorno afina o som para a sua rotina, até a escuta ficar natural.",
    "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
    "foto": {
     "src": "ajuste-aparelho",
     "assunto": "Fono ajustando o aparelho de uma senhora, mãos cuidadosas, luz suave",
-    "foco": "78% 40%"
+    "rosto": "76% 40%"
    }
   }
  },
@@ -89,7 +91,7 @@ window.EXEMPLOS = [
    "foto": {
     "src": "gaucho",
     "assunto": "Gaúcho de boina e lenço mostrando o aparelho, sorriso aberto",
-    "foco": "50% 8%"
+    "rosto": "46% 36%"
    }
   }
  },
@@ -112,14 +114,14 @@ window.EXEMPLOS = [
    "tema": "claro",
    "rotulo": "Dica da fono",
    "titulo": "O aparelho certo é o que você *esquece* que está usando.",
-   "apoio": "Por isso a gente testa com você, no seu dia a dia, antes de qualquer decisão.",
+   "apoio": "Por isso a gente testa com você, no seu dia a dia.",
    "pessoa": {
     "nome": "Fernanda Brugiolo",
     "detalhe": "Fonoaudióloga · sócia da Sonata",
     "foto": {
      "src": "fernanda",
      "assunto": "Fernanda de jaleco no consultório, sorrindo para a câmera",
-     "foco": "50% 0%"
+     "rosto": "57% 30%"
     }
    }
   }
@@ -156,7 +158,7 @@ window.EXEMPLOS = [
    "foto": {
     "src": "ajuste-aparelho",
     "assunto": "Fono ajustando o aparelho de uma senhora",
-    "foco": "70% 35%"
+    "rosto": "76% 40%"
    },
    "pagina": {
     "atual": 1,
@@ -198,7 +200,7 @@ window.EXEMPLOS = [
     "foto": {
      "src": "daiana",
      "assunto": "Daiana no consultório mostrando um aparelho",
-     "foco": "50% 10%"
+     "rosto": "41% 28%"
     }
    },
    "pagina": {
@@ -213,12 +215,13 @@ window.EXEMPLOS = [
    "modelo": "frase-foto",
    "formato": "story",
    "tema": "marinho",
+   "rotulo": "Afeto",
    "titulo": "Cantar junto *não tem idade*.",
    "apoio": "Ouvir a própria voz e a de quem está ao lado.",
    "foto": {
     "src": "casal-karaoke",
     "assunto": "Casal 60+ cantando junto, rindo, luz quente",
-    "foco": "45% 30%"
+    "rosto": "55% 30%"
    }
   }
  },
@@ -248,7 +251,7 @@ window.EXEMPLOS = [
    "foto": {
     "src": "mulher-parque",
     "assunto": "Mulher 60+ sorrindo ao ar livre, luz de fim de tarde",
-    "foco": "50% 20%"
+    "rosto": "48% 40%"
    }
   }
  },
@@ -266,7 +269,7 @@ window.EXEMPLOS = [
    "foto": {
     "src": "ouvido-aparelho",
     "assunto": "Aparelho discreto atrás da orelha, luz natural",
-    "foco": "50% 40%"
+    "rosto": "50% 45%"
    }
   }
  },
@@ -291,7 +294,37 @@ window.EXEMPLOS = [
    "foto": {
     "src": "casal-karaoke",
     "assunto": "Casal 60+ cantando junto",
-    "foco": "45% 25%"
+    "rosto": "55% 30%"
+   }
+  }
+ },
+ {
+  "arquivo": "18-frase-foto-onda.json",
+  "ficha": {
+   "modelo": "frase-foto",
+   "tema": "mar",
+   "mascara": "onda",
+   "rotulo": "Para pensar",
+   "titulo": "A risada de quem a gente ama é o *melhor som* do dia.",
+   "apoio": "Ouvir bem é estar presente nos pequenos momentos.",
+   "foto": {
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto, rindo",
+    "rosto": "55% 30%"
+   }
+  }
+ },
+ {
+  "arquivo": "19-frase-foto-arco.json",
+  "ficha": {
+   "modelo": "frase-foto",
+   "tema": "marinho",
+   "mascara": "arco",
+   "titulo": "Ouvir é estar *perto*.",
+   "foto": {
+    "src": "mulher-parque",
+    "assunto": "Mulher 60+ sorrindo ao ar livre",
+    "rosto": "48% 40%"
    }
   }
  }

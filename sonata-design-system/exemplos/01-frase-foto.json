@@ -1,12 +1,13 @@
 {
   "modelo": "frase-foto",
   "tema": "marinho",
+  "rotulo": "Dia a dia",
   "titulo": "Voltar a ouvir é voltar a *sair de casa*.",
   "apoio": "A cidade, o parque, a conversa no caminho.",
   "foto": {
     "src": "mulher-parque",
     "assunto": "Mulher 60+ sorrindo num parque de Porto Alegre, luz de fim de tarde",
-    "foco": "50% 30%",
-    "ondas": "46% 27%"
+    "ondas": true,
+    "rosto": "48% 40%"
   }
 }

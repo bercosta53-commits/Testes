@@ -28,7 +28,7 @@ Passo a passo:
 3. **Tema** permitido pelo modelo. Alterne claro e escuro em sequência de posts.
 4. **Formato**: `feed` por padrão; `story` para chamadas rápidas; `quadrado` para anúncio.
 5. **Texto** dentro dos limites do modelo; marque a ênfase do título com `*asteriscos*`.
-6. **Foto**: use `src` quando houver arquivo; senão, escreva em `assunto` o briefing da foto (quem, fazendo o quê, luz) e deixe `src` vazio. Use `foco` para manter rostos fora do véu, `ondas` para o ponto da cabeça de quem escuta e `recorte: true` para PNG de produto. `veu` escolhe de onde vem o degradê (base, esquerda ou topo).
+6. **Foto**: use `src` quando houver arquivo; senão, escreva em `assunto` o briefing da foto (quem, fazendo o quê, luz) e deixe `src` vazio. Informe `rosto` (onde está o rosto na imagem, em %, ex.: "57% 30%") para o motor manter a pessoa na área livre; `ondas: true` desenha as ondas finas ao redor dela; `recorte: true` para PNG de produto. `mascara` troca a máscara padrão do modelo (onda, lateral, arco ou veu).
 
 Exemplo de saída:
 
@@ -40,7 +40,7 @@ Exemplo de saída:
   "titulo": "Ouvir bem também é *se equilibrar*.",
   "apoio": "A audição ajuda o cérebro a perceber o espaço. Cuidar dos ouvidos protege você de quedas.",
   "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
-  "foto": { "assunto": "Homem 60+ se alongando em casa, em equilíbrio, luz da manhã", "foco": "70% 30%" }
+  "foto": { "assunto": "Homem 60+ se alongando em casa, em equilíbrio, luz da manhã", "rosto": "70% 30%" }
 }
 ```
 
@@ -83,9 +83,9 @@ Branco #FFFFFF. Só para texto: cinza-700 #3E4A57 e cinza-500 #5F6B78. Nenhuma o
 
 **Tipografia**: Poppins. Título Light 300 (112 px na frase, 84 px no título comum, 64 px no carrossel), ênfase em ExtraBold 800 itálico no mesmo tamanho, apoio Regular 42 px, rótulo SemiBold 28 px em caixa alta com espaçamento 0,16em, legenda 28 px. Manuscrito (Ms Madi, 150 px) só em datas comemorativas. Tudo alinhado à esquerda.
 
-**Fotos**: sempre estouradas, ocupando o post inteiro (ou subindo da base até uma onda de cor). Nunca em círculo, caixa ou moldura. O texto fica sobre um véu: degradê suave da cor do tema até o transparente, saindo do lado do texto (base ou esquerda), cobrindo de 70% a 85% do post. Rostos nunca ficam sob o véu.
+**Fotos e máscaras**: a foto é sempre estourada (sem moldura) e o texto nunca fica solto sobre ela. O texto pousa numa máscara de cor sólida do tema: uma faixa que sobe da base com borda ondulada (padrão), um painel lateral de 60% com borda ondulada (educativo, depoimento) ou um quarto de disco no canto inferior esquerdo (frases curtas). A borda leva duas linhas finas de eco em verde-água. A foto ocupa a área que sobra, com o rosto no centro dela.
 
-**Posições**: logo no canto superior esquerdo, 64 px de altura (marinho em fundo claro, água e véu claro; branco em marinho, mar e véu escuro), com um véu curto no topo se a foto for clara ali. Títulos começam na margem esquerda de 96 px. Arcos de escuta no canto superior direito, cortados pela borda; sobre foto, finos e brancos ao redor da cabeça de quem escuta.
+**Posições**: nos posts com foto, o logo fica dentro da máscara, ao pé do texto (56 px); nos posts de cor, no canto superior esquerdo (64 px). Marinho em fundos claros e água; branco em marinho e mar. Títulos começam na margem esquerda de 96 px. Arcos de escuta no canto superior direito, cortados pela borda; sobre foto, finos e brancos ao redor da cabeça de quem escuta.
 
 ## Regras que nunca se quebram
 
@@ -101,7 +101,7 @@ Branco #FFFFFF. Só para texto: cinza-700 #3E4A57 e cinza-500 #5F6B78. Nenhuma o
 10. Sem emoji na arte, no máximo uma exclamação.
 11. Nunca invente preço, prazo, número, nome de paciente ou depoimento. Se a pauta não trouxer o dado, deixe o campo de fora e avise.
 12. Educativo sempre assinado por uma fono; foto ampliada de aparelho sempre com "Imagem ilustrativa ampliada.".
-13. Foto sempre estourada, nunca recortada em formas; legibilidade só com véu da paleta.
+13. Foto sempre estourada, nunca recortada em formas; texto sempre sobre uma máscara de cor (onda, lateral ou arco), nunca solto sobre a imagem.
 
 ## Antes de entregar, confira
 

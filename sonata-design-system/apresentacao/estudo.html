@@ -68,30 +68,38 @@
   pre { margin: 0; background: var(--marinho-900); color: var(--agua-200); border-radius: 20px; padding: 32px 36px; font: 19px/1.55 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; }
   pre .k { color: var(--agua-400); } pre .s { color: var(--branco); }
   .seta { font-size: 40px; color: var(--agua-600); line-height: 1; }
+  /* os posts mantêm as cores do próprio tema, mesmo dentro de páginas escuras */
+  .slide .sn-post .sn-titulo { color: var(--titulo); }
+  .slide .sn-post .sn-apoio, .slide .sn-post .sn-corpo { color: var(--apoio); }
+  .slide .sn-post .legenda { color: var(--legenda); }
+  .slide .sn-post b, .slide .sn-post strong { color: inherit; }
+  .slide .sn-post .sn-enf { color: var(--enfase); }
+  .slide .sn-post .sn-citacao .sn-enf { color: var(--titulo); }
 </style>
 <script src="../bundle/sonata.js"></script>
 <script src="../modelos/assets.js"></script>
+<script src="../modelos/exemplos.js"></script>
 </head>
 <body>
 
 <!-- 1 · CAPA -->
 <section class="slide escuro">
-  <div class="bg"><img src="../assets/fotos/casal-karaoke.jpg" alt="" style="object-position:50% 30%"></div>
-  <div class="bg" data-veu="esquerda,marinho,0.3,0.78,0.96"></div>
-  <div class="bg" data-veu="topo,marinho,0,0.25,0.5"></div>
+  <div class="bg" style="left:860px !important"><img src="../assets/fotos/casal-karaoke.jpg" alt="" style="object-position:50% 28%"></div>
+  <div class="bg" data-mascara-slide="lateral,marinho,0.52"></div>
   <img src="../assets/logos/sonata-branco.png" alt="Sonata aparelhos auditivos" style="height:72px;display:block">
   <div style="position:absolute;left:128px;bottom:170px;width:1000px">
     <p class="rot">Design system · redes sociais</p>
     <h1 style="font-size:124px">Sonata Social <em>Ondas</em></h1>
-    <p style="margin:28px 0 0"><span class="tag" style="background:var(--agua-400);color:var(--marinho-900);font-size:17px">Versão 1 · para aprovação</span></p>
+    <p style="margin:28px 0 0"><span class="tag" style="background:var(--agua-400);color:var(--marinho-900);font-size:17px">Versão 2 · para aprovação</span></p>
     <p class="lead" style="max-width:860px">Um sistema visual para organizar e profissionalizar a presença da Sonata nas redes: foto, cor, letra, grid, elementos e modelos que pessoas e ferramentas de IA conseguem repetir.</p>
   </div>
-  <div class="rodape"><span>Porto Alegre · 8 de outubro de 2026</span><span>Versão 1 · para aprovação</span></div>
+  <div class="rodape"><span>Porto Alegre · 8 de outubro de 2026</span><span>Versão 2 · para aprovação</span></div>
 </section>
 
 <!-- 2 · PONTO DE PARTIDA -->
 <section class="slide">
-  <div style="position:absolute;right:0;top:0;bottom:0;width:820px"><div class="bg"><img src="../assets/fotos/mulher-parque.jpg" alt="" style="object-position:45% 30%"></div><div class="bg" data-veu="esquerda,claro,0,0.45,1"></div></div>
+  <div class="bg" style="left:1000px !important"><img src="../assets/fotos/mulher-parque.jpg" alt="" style="object-position:45% 34%"></div>
+  <div class="bg" data-mascara-slide="lateral,claro,0.6"></div>
   <div style="width:1000px">
     <p class="rot">Ponto de partida</p>
     <h2>O primeiro passo foi <em>existir</em>. O segundo é organizar para crescer.</h2>
@@ -102,7 +110,7 @@
       <div class="col" style="flex:1"><div class="num">11</div><p><b>modelos de post</b> em feed, story e quadrado.</p></div>
     </div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- DECISÕES PARA APROVAÇÃO -->
@@ -110,10 +118,10 @@
   <p class="rot">O que estamos aprovando</p>
   <h2 style="font-size:56px">Onze decisões, <em>uma</em> linguagem.</h2>
   <div class="row" style="margin-top:20px;gap:72px">
-    <div class="col" style="flex:1;gap:0"><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">01</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Conceito</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">"Ondas: o som que aproxima" como ideia central da comunicação.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="conceito"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">02</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Voz e vocabulário</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Calorosa e precisa; palavras que usamos e que evitamos.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="voz"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">03</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Pilares e mix</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Afeto 35%, Cuidado 30%, Tecnologia 15%, Sonata 20%; oferta em até 1 de cada 5 posts.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="pilares"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">04</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Fotografia</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Foto sempre estourada, com véu em degradê da paleta do lado do texto.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="fotografia"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">05</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Cores</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Paleta fechada: marinho e verde-água em 10 tons cada, cinco fundos, contraste conferido.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="paleta"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">06</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Tipografia</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Poppins com papéis fixos; um único manuscrito, só em datas comemorativas.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="tipografia"></span></span></div></div>
-    <div class="col" style="flex:1;gap:0"><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">07</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Grid e tamanhos</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Margem de 96 px, 6 colunas, texto mínimo de 28 px e até 35 palavras por arte.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="grid"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">08</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Elementos</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Arcos de escuta, véus, onda e linha de som, todos tirados do logo.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="elementos"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">09</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Logo</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Três versões, 64 px de altura, posição fixa por modelo.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="logo"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">10</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Modelos de post</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">11 modelos em feed, story e quadrado.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="modelos"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">11</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Uso com IA</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Guia, ficha JSON e motor que monta os posts dentro das regras.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="ia"></span></span></div></div>
+    <div class="col" style="flex:1;gap:0"><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">01</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Conceito</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">"Ondas: o som que aproxima" como ideia central da comunicação.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="conceito"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">02</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Voz e vocabulário</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Calorosa e precisa; palavras que usamos e que evitamos.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="voz"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">03</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Pilares e mix</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Afeto 35%, Cuidado 30%, Tecnologia 15%, Sonata 20%; oferta em até 1 de cada 5 posts.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="pilares"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">04</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Fotografia</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Foto sempre estourada; o texto pousa numa máscara de cor em onda.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="fotografia"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">05</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Cores</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Paleta fechada: marinho e verde-água em 10 tons cada, cinco fundos, contraste conferido.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="paleta"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">06</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Tipografia</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Poppins com papéis fixos; um único manuscrito, só em datas comemorativas.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="tipografia"></span></span></div></div>
+    <div class="col" style="flex:1;gap:0"><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">07</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Grid e tamanhos</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Margem de 96 px, 6 colunas, texto mínimo de 28 px e até 35 palavras por arte.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="grid"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">08</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Elementos</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Máscaras em onda, arcos de escuta e linha de som, todos tirados do logo.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="elementos"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">09</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Logo</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Três versões, 64 px de altura, posição fixa por modelo.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="logo"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">10</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Modelos de post</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">11 modelos em feed, story e quadrado.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="modelos"></span></span></div><div style="display:grid;grid-template-columns:56px minmax(0,1fr) 90px;gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--marinho-100)"><span class="num" style="font-size:38px;line-height:1">11</span><span><b style="display:block;font-size:24px;margin-bottom:4px">Uso com IA</b><span style="font-size:19px;line-height:1.4;color:var(--cinza-700)">Guia, ficha JSON e motor que monta os posts dentro das regras.</span></span><span class="small" style="text-align:right;padding-top:6px">p. <span data-ref="ia"></span></span></div></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 3 · DIAGNÓSTICO -->
@@ -142,7 +150,7 @@
       <li><span class="n">6</span><span><b>Contraste.</b> No site, branco sobre verde-água (1,8:1).</span></li>
     </ol>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 4 · O QUE FICA -->
@@ -155,14 +163,14 @@
     <div class="col" style="width:280px"><img class="img" src="img/ok-redescobrindo.jpg" style="width:280px;height:376px" alt="Post Redescobrindo o mundo"><p class="cap"><b>Marinho com respiro</b>Fundo escuro, letra leve, linha de som.</p></div>
     <div class="col" style="width:280px"><img class="img" src="img/ok-audiologista.jpg" style="width:280px;height:376px" alt="Post Dia do Audiologista"><p class="cap"><b>O rosto das sócias</b>As fonos dão confiança. Ganham um modelo próprio.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 5 · CONCEITO -->
 <section class="slide escuro" id="p-conceito">
-  <div class="bg"><img src="../assets/fotos/mulher-parque.jpg" alt="" style="object-position:50% 32%"></div>
-  <div class="bg" data-veu="esquerda,marinho,0.34,0.82,0.95"></div>
-  <div class="bg" data-ondas="1440,330"></div>
+  <div class="bg" style="left:960px !important"><img src="../assets/fotos/mulher-parque.jpg" alt="" style="object-position:50% 36%"></div>
+  <div class="bg" data-mascara-slide="lateral,marinho,0.56"></div>
+  <div class="bg" data-ondas="1500,400"></div>
   <div style="width:960px">
     <p class="rot">Conceito</p>
     <h1 style="font-size:120px">Ondas: o som que <em>aproxima</em>.</h1>
@@ -174,12 +182,13 @@
     <div class="col" style="flex:1"><p class="rot" style="margin:0">Profissional</p><p style="font-size:22px;margin:0">Grid fixo, assinatura da fono.</p></div>
     <div class="col" style="flex:1"><p class="rot" style="margin:0">Cuidadosa</p><p style="font-size:22px;margin:0">Respiro e letra grande.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 6 · PÚBLICO -->
 <section class="slide">
-  <div style="position:absolute;right:0;top:0;bottom:0;width:760px"><div class="bg"><img src="../assets/fotos/ajuste-aparelho.jpg" alt="" style="object-position:72% 40%"></div><div class="bg" data-veu="esquerda,claro,0,0.4,1"></div></div>
+  <div class="bg" style="left:1060px !important"><img src="../assets/fotos/ajuste-aparelho.jpg" alt="" style="object-position:76% 40%"></div>
+  <div class="bg" data-mascara-slide="lateral,claro,0.62"></div>
   <div style="width:1060px">
     <p class="rot">Para quem falamos</p>
     <h2>Falamos com quem <em>decide</em>.</h2>
@@ -193,7 +202,7 @@
       <div class="col" style="flex:1"><div class="num">35</div><p style="font-size:22px">palavras no máximo por arte.</p></div>
     </div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 7 · VOZ -->
@@ -217,7 +226,7 @@
       <tr><td style="font-weight:400;color:var(--cinza-500)">Bateria de lítio com 24 h</td><td style="color:var(--marinho-700)">Carregue à noite. Converse o dia inteiro.</td></tr>
     </table>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 8 · PILARES -->
@@ -241,7 +250,7 @@
     <span class="chip"><i></i>Nunca 3 posts seguidos no mesmo fundo</span>
     <span class="chip"><i></i>Fecha o mês com depoimento ou fono</span>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 9 · O PERFIL ORGANIZADO -->
@@ -254,25 +263,25 @@
     </div>
     <div id="grid-perfil" style="display:grid;grid-template-columns:repeat(3,250px);gap:6px;flex:none"></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 10 · FOTOGRAFIA -->
 <section class="slide" id="p-fotografia">
   <p class="rot">Fotografia</p>
-  <h2>Foto sempre <em>estourada</em>. O véu faz o resto.</h2>
+  <h2>Foto sempre <em>estourada</em>. A máscara segura o texto.</h2>
   <div class="row" style="margin-top:48px;gap:36px;align-items:flex-start">
-    <div><div class="post" data-k="frase-foto" data-w="300"></div><p class="cap"><b>Véu da base</b>Marinho sobe da base; rosto no terço de cima.</p></div>
-    <div><div class="post" data-k="educativo" data-w="300"></div><p class="cap"><b>Véu lateral</b>Branco vem da esquerda; a pessoa fica à direita.</p></div>
-    <div><div class="post" data-k="data" data-w="300"></div><p class="cap"><b>Campo de onda</b>A cor sobe da base com borda ondulada.</p></div>
+    <div><div class="post" data-k="frase-foto" data-w="300"></div><p class="cap"><b>Faixa em onda</b>A cor sobe da base e segura rótulo, título, subtítulo e logo.</p></div>
+    <div><div class="post" data-k="educativo" data-w="300"></div><p class="cap"><b>Painel lateral</b>60% de cor com borda ondulada; a pessoa fica à direita.</p></div>
+    <div><div class="post" data-k="arco" data-w="300"></div><p class="cap"><b>Arco de canto</b>Para frases curtas: nasce do canto, como as ondas do "S".</p></div>
     <ul class="lista" style="flex:1;margin-top:8px">
-      <li><span class="n">1</span><span>A foto ocupa o post inteiro. <b>Nunca</b> em círculo, caixa ou moldura recortada.</span></li>
-      <li><span class="n">2</span><span>O texto pousa num <b>véu em degradê</b> da paleta, do lado oposto ao rosto.</span></li>
-      <li><span class="n">3</span><span>Gente de 60+ <b>com alguém</b>, em movimento, luz natural e quente.</span></li>
-      <li><span class="n">4</span><span>Sobre a foto, as ondas ficam <b>finas e brancas</b>, ao redor de quem escuta.</span></li>
+      <li><span class="n">1</span><span>A foto ocupa o post. <b>Nunca</b> em círculo, caixa ou janela.</span></li>
+      <li><span class="n">2</span><span>O texto <b>nunca fica solto</b> sobre a imagem: pousa numa máscara de cor sólida.</span></li>
+      <li><span class="n">3</span><span>A máscara cresce com o texto; a foto se reenquadra e o <b>rosto</b> fica no centro da área livre.</span></li>
+      <li><span class="n">4</span><span>Duas linhas de eco acompanham a borda: <b>as ondas</b> do logo.</span></li>
     </ul>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 11 · PALETA -->
@@ -289,7 +298,7 @@
       <div style="flex:10;background:var(--agua-400);padding:0 12px;display:flex;align-items:center;font-size:18px;color:var(--marinho-900)">10%</div>
     </div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 12 · FUNDOS -->
@@ -303,7 +312,7 @@
     <div><div class="post" data-k="t-marinho" data-w="296"></div><p class="cap"><b>Marinho</b>Texto branco. Tecnologia e impacto.</p></div>
     <div><div class="post" data-k="t-mar" data-w="296"></div><p class="cap"><b>Mar</b>Água profunda até marinho. Capas e noite.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 13 · CONTRASTE -->
@@ -326,7 +335,7 @@
       <tr><td><span style="color:#9BE5E0">■</span> água-300</td><td>água-800</td><td>5,5:1</td><td>Ênfase no mar</td></tr>
     </table>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 14 · TIPOGRAFIA -->
@@ -343,7 +352,7 @@
     </div>
     <div id="escala-tipo" class="col" style="flex:1;gap:0;margin-top:40px"></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 15 · GRID -->
@@ -360,7 +369,7 @@
       <p class="small" style="margin-top:12px">Rótulo → título 24 · título → apoio 32 · texto → foto 48 · apoio → CTA 64 · margem 96.</p>
     </div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 16 · HIERARQUIA -->
@@ -378,7 +387,7 @@
       </ol>
     </div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 17 · ORIGEM DOS ELEMENTOS -->
@@ -393,8 +402,8 @@
     <span class="seta" style="color:var(--agua-400)">→</span>
     <div id="arcos-origem" style="position:relative;width:520px;height:420px;flex:none;border-radius:24px;overflow:hidden"></div>
   </div>
-  <p class="lead" style="position:absolute;left:128px;bottom:150px;max-width:1300px">As duas ondas que abraçam o "S" viram os <b>arcos de escuta</b>: três traços concêntricos, do mais forte ao mais suave. Nos posts de cor, saem de um canto; sobre a foto, ficam finos e brancos ao redor de quem escuta, como o som chegando.</p>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <p class="lead" style="position:absolute;left:128px;bottom:150px;max-width:1400px">As duas ondas que abraçam o "S" viram os <b>arcos de escuta</b> e as <b>máscaras em onda</b>: a borda ondulada que segura o texto leva sempre duas linhas de eco, como o som se espalhando. Sobre a foto, as ondas ficam finas e brancas ao redor de quem escuta.</p>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 18 · FAMÍLIA DE ELEMENTOS -->
@@ -402,7 +411,7 @@
   <p class="rot">Elementos</p>
   <h2>Uma família só, no máximo <em>dois</em> por post.</h2>
   <div id="elementos" style="margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px"></div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 19 · LOGO -->
@@ -423,11 +432,11 @@
     <div id="logo-pos" style="display:flex;gap:24px"></div>
     <ul class="lista" style="flex:1">
       <li><span class="n">1</span><span><b>64 px de altura</b> no feed e no story, 56 no quadrado.</span></li>
-      <li><span class="n">2</span><span><b>Superior esquerdo</b>, com véu curto se a foto for clara. Sobre a onda nas datas.</span></li>
+      <li><span class="n">2</span><span>Nos posts com foto, <b>dentro da máscara</b>, ao pé do texto. Nos de cor, no canto superior esquerdo.</span></li>
       <li><span class="n">3</span><span>Nunca recolorir, distorcer, contornar ou pôr sobre foto clara sem véu.</span></li>
     </ul>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 20 · MODELOS AFETO -->
@@ -435,11 +444,12 @@
   <p class="rot">Modelos · Afeto</p>
   <h2>Emoção com <em>espaço</em> para respirar.</h2>
   <div class="row" style="margin-top:48px;gap:40px">
-    <div><div class="post" data-k="frase-foto" data-w="380"></div><p class="cap"><b>frase-foto</b>Gente junta em foto estourada, frase sobre véu marinho, ondas finas ao redor de quem escuta.</p></div>
-    <div><div class="post" data-k="frase-bruma" data-w="380"></div><p class="cap"><b>frase</b>Sem foto: o vazio é o protagonista. Arcos e linha de som.</p></div>
-    <div><div class="post" data-k="data" data-w="380"></div><p class="cap"><b>data</b>A cor sobe da base numa onda, com o manuscrito.</p></div>
+    <div><div class="post" data-k="frase-foto" data-w="340"></div><p class="cap"><b>frase-foto · faixa</b>Gente junta no alto, faixa em onda com o texto, ondas finas ao redor de quem escuta.</p></div>
+    <div><div class="post" data-k="arco" data-w="340"></div><p class="cap"><b>frase-foto · arco</b>Frase curta no arco que nasce do canto.</p></div>
+    <div><div class="post" data-k="frase-bruma" data-w="340"></div><p class="cap"><b>frase</b>Sem foto: o vazio é o protagonista.</p></div>
+    <div><div class="post" data-k="data" data-w="340"></div><p class="cap"><b>data</b>A faixa leva a data e o manuscrito.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 21 · MODELOS CUIDADO -->
@@ -447,13 +457,13 @@
   <p class="rot">Modelos · Cuidado</p>
   <h2>Saúde auditiva explicada, <em>assinada</em> pela fono.</h2>
   <div class="row" style="margin-top:48px;gap:28px">
-    <div><div class="post" data-k="educativo" data-w="360"></div><p class="cap"><b>educativo</b>Foto estourada, véu claro da esquerda, assinatura da fono.</p></div>
+    <div><div class="post" data-k="educativo" data-w="360"></div><p class="cap"><b>educativo</b>Painel lateral ondulado, foto estourada à direita, assinatura da fono.</p></div>
     <div style="width:2px;align-self:stretch;background:var(--marinho-100)"></div>
-    <div><div class="post" data-k="capa" data-w="300"></div><p class="cap"><b>carrossel · capa</b>Promete o que entrega.</p></div>
+    <div><div class="post" data-k="capa" data-w="300"></div><p class="cap"><b>carrossel · capa</b>Foto no alto, faixa com a promessa.</p></div>
     <div><div class="post" data-k="passo" data-w="300"></div><p class="cap"><b>carrossel · passo</b>A foto sobe da base numa onda.</p></div>
     <div><div class="post" data-k="fim" data-w="300"></div><p class="cap"><b>carrossel · fim</b>A fono como rosto do convite.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 22 · MODELOS TECNOLOGIA E SONATA -->
@@ -462,12 +472,12 @@
   <h2>Produto, pessoas e <em>condições</em> sem gritar.</h2>
   <div class="row" style="margin-top:48px;gap:28px">
     <div><div class="post" data-k="tecnologia" data-w="320"></div><p class="cap"><b>tecnologia · recorte</b>O aparelho flutua no centro dos anéis.</p></div>
-    <div><div class="post" data-k="tec-foto" data-w="320"></div><p class="cap"><b>tecnologia · foto</b>Uso real sob véu marinho.</p></div>
-    <div><div class="post" data-k="fono" data-w="320"></div><p class="cap"><b>fono</b>A sócia em foto estourada, nome sob fio.</p></div>
+    <div><div class="post" data-k="tec-foto" data-w="320"></div><p class="cap"><b>tecnologia · foto</b>Uso real, faixa em onda marinho.</p></div>
+    <div><div class="post" data-k="fono" data-w="320"></div><p class="cap"><b>fono</b>A sócia no alto, dica e nome na faixa.</p></div>
     <div><div class="post" data-k="depoimento" data-w="320"></div><p class="cap"><b>depoimento</b>Sem foto, a frase da paciente ocupa o post.</p></div>
     <div><div class="post" data-k="oferta" data-w="320"></div><p class="cap"><b>oferta</b>Selo, preço e um CTA. 1 em 5 posts.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 23 · FORMATOS -->
@@ -480,7 +490,7 @@
     <div><div class="post" data-k="s-oferta" data-w="300"></div><p class="cap"><b>oferta · story</b></p></div>
     <div class="col" style="gap:0"><div class="post" data-k="q-frase" data-w="420"></div><p class="cap" style="max-width:420px"><b>frase · quadrado</b>Para anúncio e WhatsApp. No story, topo 250 e base 320 ficam livres de texto.</p></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 24 · ANTES E DEPOIS -->
@@ -495,7 +505,7 @@
     <div class="row" style="gap:16px;align-items:center"><img class="img" src="img/antes-dia-mundial.jpg" style="width:250px;height:328px" alt="Antes: Dia Mundial da Audição"><span class="seta">→</span><div class="post" data-k="mundial" data-w="270"></div></div>
     <div class="row" style="gap:16px;align-items:center"><img class="img" src="img/antes-idoso.jpg" style="width:250px;height:334px" alt="Antes: Dia do Idoso"><span class="seta">→</span><div class="post" data-k="idoso" data-w="270"></div></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 25 · O QUE MUDA -->
@@ -505,14 +515,14 @@
   <table style="margin-top:48px">
     <tr><th style="width:44%">Hoje</th><th>No sistema Ondas</th></tr>
     <tr><td style="font-weight:400;color:var(--cinza-700)">Várias fontes cursivas e condensadas</td><td style="color:var(--marinho-700)">Poppins com papéis fixos e um único manuscrito, só em datas</td></tr>
-    <tr><td style="font-weight:400;color:var(--cinza-700)">Ondas e formas diferentes a cada post</td><td style="color:var(--marinho-700)">Arcos de escuta, véus e uma onda padronizada, tirados do logo</td></tr>
-    <tr><td style="font-weight:400;color:var(--cinza-700)">Fotos ora estouradas, ora em caixas e janelas</td><td style="color:var(--marinho-700)">Foto sempre estourada, com véu em degradê do lado do texto</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Ondas e formas diferentes a cada post</td><td style="color:var(--marinho-700)">Máscaras em onda, arcos de escuta e linha de som, tirados do logo</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Fotos em caixas e texto solto sobre a imagem</td><td style="color:var(--marinho-700)">Foto sempre estourada, texto sempre sobre máscara de cor em onda</td></tr>
     <tr><td style="font-weight:400;color:var(--cinza-700)">Verdes soltos e cores de data na arte</td><td style="color:var(--marinho-700)">Duas escalas fechadas de 10 tons e cinco fundos</td></tr>
     <tr><td style="font-weight:400;color:var(--cinza-700)">Texto branco sobre verde-água</td><td style="color:var(--marinho-700)">Texto marinho sobre água, contraste conferido</td></tr>
     <tr><td style="font-weight:400;color:var(--cinza-700)">Letras de 20 a 24 px no post</td><td style="color:var(--marinho-700)">Mínimo de 28 px; corpo a partir de 38 px</td></tr>
     <tr><td style="font-weight:400;color:var(--cinza-700)">Logo e quantidade de texto variando</td><td style="color:var(--marinho-700)">Logo em posição fixa; até 35 palavras, o resto na legenda</td></tr>
   </table>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 26 · IA -->
@@ -522,8 +532,8 @@
   <div class="row" style="margin-top:44px;gap:20px;align-items:stretch">
     <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">1 · Pauta</p><p style="margin:0;font-size:22px">A equipe descreve o post e os dados confirmados.</p></div>
     <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">2 · Guia</p><p style="margin:0;font-size:22px">Instrução pronta com regras, cores, letras e limites.</p></div>
-    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">3 · Ficha</p><p style="margin:0;font-size:22px">Modelo, tema, título com ênfase, apoio, foto e foco.</p></div>
-    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">4 · Motor</p><p style="margin:0;font-size:22px">Monta o post, ajusta o título e aponta o que fere as regras.</p></div>
+    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">3 · Ficha</p><p style="margin:0;font-size:22px">Modelo, tema, título com ênfase, subtítulo, texto, foto e rosto.</p></div>
+    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">4 · Motor</p><p style="margin:0;font-size:22px">Monta o post, dimensiona a máscara, enquadra o rosto e aponta o que fere as regras.</p></div>
     <div class="card" style="flex:1;background:var(--marinho-700);padding:28px"><p class="rot" style="margin:0 0 8px;color:var(--agua-300)">5 · PNG</p><p style="margin:0;font-size:22px;color:var(--marinho-100)">1080 px, pronto para revisar e publicar.</p></div>
   </div>
   <div class="row" style="margin-top:40px;gap:48px;align-items:flex-start">
@@ -533,19 +543,20 @@
   <span class="k">"rotulo"</span>: <span class="s">"Saúde auditiva"</span>,
   <span class="k">"titulo"</span>: <span class="s">"A adaptação é feita *com calma*, no seu tempo."</span>,
   <span class="k">"apoio"</span>: <span class="s">"Ajustamos o aparelho com você, em mais de uma visita."</span>,
+  <span class="k">"corpo"</span>: <span class="s">"Cada retorno afina o som para a sua rotina."</span>,
   <span class="k">"legenda"</span>: <span class="s">"Por Daiana Cardoso Kuse, fonoaudióloga"</span>,
-  <span class="k">"foto"</span>: { <span class="k">"src"</span>: <span class="s">"ajuste-aparelho"</span>, <span class="k">"foco"</span>: <span class="s">"78% 40%"</span> }
+  <span class="k">"foto"</span>: { <span class="k">"src"</span>: <span class="s">"ajuste-aparelho"</span>, <span class="k">"rosto"</span>: <span class="s">"76% 40%"</span> }
 }</pre>
     <span class="seta" style="margin-top:150px">→</span>
     <div class="post" data-k="educativo" data-w="300"></div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <!-- 27 · ENTREGÁVEIS -->
 <section class="slide escuro">
-  <div class="bg"><img src="../assets/fotos/daiana.jpg" alt="" style="object-position:50% 20%"></div>
-  <div class="bg" data-veu="esquerda,marinho,0.42,0.86,0.96"></div>
+  <div class="bg" style="left:1120px !important"><img src="../assets/fotos/daiana.jpg" alt="" style="object-position:45% 26%"></div>
+  <div class="bg" data-mascara-slide="lateral,marinho,0.64"></div>
   <div style="width:1100px">
     <p class="rot">Entregáveis e próximos passos</p>
     <h2>Pronto para usar, com <em>quatro</em> pendências.</h2>
@@ -590,7 +601,7 @@
       <p style="margin:0;font-size:22px">Data: ______ / ______ / __________</p>
     </div>
   </div>
-  <div class="rodape"><span>Sonata Social — Ondas · versão 1 para aprovação</span><span class="pg"></span></div>
+  <div class="rodape"><span>Sonata Social — Ondas · versão 2 para aprovação</span><span class="pg"></span></div>
 </section>
 
 <script>
@@ -620,6 +631,12 @@
     't-marinho': { modelo: 'frase', tema: 'marinho', rotulo: 'Marinho', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'linha'] },
     't-mar': { modelo: 'frase', tema: 'mar', rotulo: 'Mar', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'onda'] }
   };
+  var EX = {}; (window.EXEMPLOS || []).forEach(function (e) { EX[e.arquivo.slice(0, 2)] = e.ficha; });
+  F['frase-foto'] = EX['01']; F.educativo = EX['04']; F.tecnologia = EX['05']; F.data = EX['06']; F.depoimento = EX['07']; F.fono = EX['08'];
+  F.oferta = EX['09']; F.capa = EX['10']; F.passo = EX['11']; F.fim = EX['12']; F['s-foto'] = EX['13']; F['q-frase'] = EX['14'];
+  F['s-edu'] = EX['15']; F['tec-foto'] = EX['16']; F['s-oferta'] = EX['17']; F.arco = EX['19'];
+  F.mundial.foto = { src: 'ouvido-aparelho', rosto: '50% 45%' };
+  F.idoso.foto = { src: 'casal-karaoke', rosto: '55% 30%' };
   var E = Sonata.elementos;
   document.querySelectorAll('.post[data-k]').forEach(function (el) { Sonata.montar(F[el.dataset.k], el, { largura: +el.dataset.w }); });
 
@@ -627,6 +644,12 @@
   document.querySelectorAll('[data-veu]').forEach(function (el) {
     var a = el.getAttribute('data-veu').split(',');
     el.innerHTML = E.veu(a[0], a[1], { plato: +a[2], alcance: +a[3], forca: +a[4] });
+  });
+  var RGB = { marinho: '7,35,58', mar: '0,64,65', claro: '255,255,255', bruma: '241,253,252', agua: '102,210,205' };
+  document.querySelectorAll('[data-mascara-slide]').forEach(function (el) {
+    var a = el.getAttribute('data-mascara-slide').split(',');
+    el.setAttribute('data-theme', a[1]);
+    el.innerHTML = E.mascaraLateral({ w: 1920, h: 1080 }, RGB[a[1]], Math.round(1920 * +a[2]));
   });
   document.querySelectorAll('[data-ondas]').forEach(function (el) {
     var c = el.getAttribute('data-ondas').split(',');
@@ -696,7 +719,7 @@
 
   // hierarquia anotada
   var hm = Sonata.montar(F.educativo, document.getElementById('hier'), { largura: 600 }), hp = hm.firstChild;
-  [[1, 900, 760], [2, 640, 250], [3, 640, 600], [4, 470, 1160]].forEach(function (t) {
+  [[1, 880, 640], [2, 560, 260], [3, 560, 520], [4, 470, 1170]].forEach(function (t) {
     var d = document.createElement('div');
     d.style.cssText = 'position:absolute;left:' + t[1] + 'px;top:' + t[2] + 'px;width:72px;height:72px;border-radius:50%;background:#143D66;color:#fff;font:600 36px/72px Poppins;text-align:center;box-shadow:0 0 0 8px #fff';
     d.textContent = t[0]; hp.appendChild(d);
@@ -718,12 +741,12 @@
     b.innerHTML = '<div style="position:absolute;left:0;top:0;width:1080px;height:800px;transform:scale(.375);transform-origin:0 0">' + html + '</div><div style="position:absolute;left:20px;bottom:16px;font:600 17px/1.3 Poppins;color:var(--titulo)">' + titulo + '</div>';
     el.appendChild(b);
   }
-  caixa('marinho', 'Véu da base', E.foto({ src: 'casal-karaoke', foco: '50% 25%' }) + E.veu('base', 'marinho', { plato: 0.18, alcance: 0.7, forca: 0.95 }));
-  caixa('claro', 'Véu lateral claro', E.foto({ src: 'ajuste-aparelho', foco: '80% 40%' }) + E.veu('esquerda', 'claro', { plato: 0.3, alcance: 0.8, forca: 0.97 }));
-  caixa('marinho', 'Ondas no foco', E.foto({ src: 'mulher-parque', foco: '50% 30%' }) + E.veu('base', 'marinho', { plato: 0, alcance: 0.5, forca: 0.6 }) +
+  var F8 = { w: 1080, h: 800 };
+  caixa('marinho', 'Faixa em onda', E.foto({ src: 'casal-karaoke' }, 'position:absolute;left:0;right:0;top:0;height:520px;') + E.mascaraOnda(F8, '7,35,58').replace('height:368px', 'height:360px'));
+  caixa('claro', 'Painel lateral', E.foto({ src: 'ajuste-aparelho', foco: '85% 40%' }, 'position:absolute;top:0;bottom:0;right:0;left:460px;') + E.mascaraLateral(F8, '255,255,255', 600));
+  caixa('marinho', 'Arco de canto', E.foto({ src: 'mulher-parque', foco: '40% 30%' }) + E.mascaraArco(F8, '7,35,58').replace(/r="(\d+)"/g, function (m, r) { return 'r="' + Math.round(r * 0.78) + '"'; }));
+  caixa('marinho', 'Ondas no rosto', E.foto({ src: 'mulher-parque', foco: '50% 30%' }) + E.veu('base', 'marinho', { plato: 0, alcance: 0.5, forca: 0.6 }) +
     E.arcos({ w: 1080, h: 800, cx: 520, cy: 300, r: 190, passo: 66, espessura: 11, de: 150, ate: 240, cores: ['var(--branco)'], opacidades: [0.95, 0.6, 0.32] }));
-  caixa('agua', 'Campo de onda', E.foto({ src: 'gaucho', foco: '50% 10%' }, 'position:absolute;left:0;right:0;top:0;height:560px;') +
-    E.onda({ w: 1080, h: 800, altura: 330, amplitude: 30, cores: ['var(--agua-200)', 'var(--agua-400)'], opacidades: [0.85, 1] }));
   caixa('bruma', 'Arcos no canto', E.arcos({ w: 1080, h: 800, cx: 1110, cy: -30, r: 280, passo: 84, espessura: 28, de: 90, ate: 180 }));
   caixa('marinho', 'Recorte com anéis', '<div class="sn-halo" style="background:radial-gradient(circle at 540px 400px, var(--fundo-2) 0, transparent 520px)"></div>' +
     E.arcos({ w: 1080, h: 800, cx: 540, cy: 400, r: 270, passo: 70, espessura: 6, de: 0, ate: 360, cores: ['var(--agua-400)'], opacidades: [0.75, 0.45, 0.22] }) +
@@ -733,7 +756,7 @@
 
   // logo: posições
   var lp = document.getElementById('logo-pos');
-  [[F['frase-foto'], 'Sobre foto: topo esquerdo'], [F.educativo, 'Véu claro: topo esquerdo'], [F.data, 'Datas: sobre a onda']].forEach(function (x) {
+  [[F['frase-foto'], 'Faixa: ao pé do texto'], [F.educativo, 'Painel lateral: no topo'], [F['t-marinho'], 'Post de cor: canto superior']].forEach(function (x) {
     var d = document.createElement('div'); Sonata.montar(x[0], d, { largura: 200 });
     var c = document.createElement('p'); c.className = 'small'; c.style.margin = '8px 0 0'; c.textContent = x[1]; d.appendChild(c); lp.appendChild(d);
   });
