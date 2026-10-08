@@ -1,0 +1,113 @@
+/* Sonata Social — Ondas · estilos dos posts. Depende de tokens.css (cores por tema, espaços, raios, estilos de texto). */
+
+.sn-moldura-preview { position: relative; overflow: hidden; flex: none; border-radius: 6px; }
+
+.sn-post {
+  position: relative; overflow: hidden; box-sizing: border-box;
+  background: var(--fundo); color: var(--titulo);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+}
+.sn-post *, .sn-post *::before, .sn-post *::after { box-sizing: border-box; }
+.sn-post h1, .sn-post p, .sn-post blockquote { margin: 0; }
+.sn-tema-mar { background: linear-gradient(160deg, var(--fundo) 0%, var(--fundo-2) 100%); }
+
+/* respiro com cor: halo radial do próprio tema */
+.sn-halo { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 88% 8%, var(--fundo-2) 0, transparent 58%); }
+.sn-halo-baixo { background: radial-gradient(circle at 100% 100%, var(--fundo-2) 0, transparent 70%); }
+.sn-tema-mar .sn-halo { background: radial-gradient(circle at 92% 6%, var(--agua-700) 0, transparent 52%); opacity: .55; }
+.sn-el { position: absolute; left: 0; top: 0; pointer-events: none; }
+
+/* área segura e pilha de conteúdo */
+.sn-safe { position: absolute; left: var(--m); right: var(--m); top: var(--mt); bottom: var(--mb);
+  display: flex; flex-direction: column; gap: var(--esp-48); }
+.sn-topo { flex: none; display: flex; align-items: center; min-height: 64px; }
+.sn-main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.sn-stack { display: flex; flex-direction: column; gap: var(--esp-32); }
+.sn-inicio { margin-bottom: auto; }
+.sn-preenche { flex: 1 1 auto; min-height: 0; }
+.sn-assina { position: absolute; }
+.sn-centro { margin-block: auto; }
+.sn-fim { margin-top: auto; }
+.sn-base { flex: none; display: flex; align-items: center; }
+.sn-entre { justify-content: space-between; align-items: center; }
+
+/* texto: cores semânticas do tema */
+.sn-titulo { color: var(--titulo); text-wrap: balance; }
+.sn-enf { font-style: italic; font-weight: 800; letter-spacing: -0.03em; color: var(--enfase); padding-right: .04em; }
+.sn-apoio { color: var(--apoio); max-width: 860px; text-wrap: pretty; }
+.sn-rotulo { color: var(--rotulo); text-transform: uppercase; margin-bottom: calc(var(--esp-24) - var(--esp-32)); }
+.sn-post .legenda { color: var(--legenda); }
+.sn-post .nome { color: var(--titulo); }
+.sn-legal { margin-top: calc(var(--esp-16) - var(--esp-32)); }
+
+/* logo */
+.sn-logo { display: block; height: 64px; width: auto; }
+.sn-fmt-quadrado .sn-logo { height: 56px; }
+.sn-logo-texto { font: 300 52px/1 var(--font-sans); letter-spacing: .12em; color: var(--titulo); }
+.sn-logo-texto small { display: block; font-size: 17px; letter-spacing: .1em; margin-top: 6px; }
+.sn-logo-base { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+.sn-logo-base .sn-logo { height: 60px; }
+
+/* foto e molduras */
+.sn-foto { overflow: hidden; background: linear-gradient(150deg, var(--marinho-100), var(--agua-100)); }
+.sn-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sn-foto-vazia { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: 12px; padding: 48px; text-align: center; color: var(--marinho-700); }
+.sn-foto-vazia .legenda { color: var(--marinho-700); max-width: 420px; }
+.sn-iniciais { display: flex; align-items: center; justify-content: center; background: var(--agua-200); color: var(--marinho-700);
+  font: 600 56px/1 var(--font-sans); letter-spacing: .04em; }
+.sn-veu { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 28%, var(--veu-foto) 100%); }
+.sn-veu-topo { position: absolute; inset: 0; background: linear-gradient(180deg, var(--veu-topo) 0, transparent 22%); }
+
+/* frase-foto: o texto fica sobre o véu */
+.sn-frase-foto .sn-titulo { color: var(--branco); }
+
+/* manuscrito */
+.sn-manuscrito { color: var(--manuscrito-cor); margin-top: -8px; line-height: .95; }
+
+/* citação */
+.sn-citacao { font-style: normal; color: var(--titulo); }
+.sn-citacao .sn-enf { color: var(--titulo); }
+.sn-aspas { display: block; }
+.sn-autor { position: absolute; display: flex; flex-direction: column; justify-content: center; gap: var(--esp-8); }
+
+/* fono */
+.sn-quem { position: absolute; display: flex; flex-direction: column; gap: var(--esp-16); }
+.sn-quem .sn-rotulo { margin-bottom: 0; }
+
+/* CTA, chips, selo, preço */
+.sn-acao { display: flex; margin-top: var(--esp-16); }
+.sn-cta { display: inline-flex; align-items: center; gap: 20px; height: 104px; padding: 0 52px; white-space: nowrap;
+  border-radius: var(--raio-pilula); background: var(--cta-fundo); color: var(--cta-texto); }
+.sn-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.sn-chip { display: inline-flex; align-items: center; gap: 14px; height: 80px; padding: 0 28px; white-space: nowrap; font-size: 30px;
+  border-radius: var(--raio-pilula); background: var(--chip-fundo); border: 2px solid var(--linha); color: var(--titulo); font-weight: 500; }
+.sn-chip i { width: 16px; height: 16px; border-radius: 50%; background: var(--grafismo-forte); display: block; }
+.sn-selo { position: absolute; border-radius: 50%; background: var(--cta-fundo); color: var(--cta-texto);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; }
+.sn-selo .numeral { font-size: 112px; line-height: .9; }
+.sn-selo .chamada { font-size: 28px; font-weight: 500; }
+.sn-preco { display: flex; flex-direction: column; gap: var(--esp-8); color: var(--titulo); }
+.sn-preco .apoio { color: var(--apoio); }
+.sn-preco-linha { display: flex; align-items: baseline; gap: var(--esp-24); }
+.sn-preco .numeral { color: var(--titulo); white-space: nowrap; }
+
+/* carrossel */
+.sn-dots { display: flex; gap: 12px; align-items: center; }
+.sn-dots i { display: block; width: 16px; height: 16px; border-radius: var(--raio-pilula); background: var(--linha); }
+.sn-dots i.on { width: 56px; background: var(--grafismo-forte); }
+.sn-deslize { display: inline-flex; align-items: center; gap: 16px; color: var(--titulo); }
+.sn-passo { color: var(--enfase); font-size: 200px; margin-bottom: calc(var(--esp-8) - var(--esp-32)); }
+.sn-pessoa { display: flex; align-items: center; gap: var(--esp-32); }
+.sn-pessoa .legenda { margin-top: 6px; }
+
+.sn-linha { display: block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sn-anima .sn-arcos path { stroke-dasharray: 2400; stroke-dashoffset: 2400; animation: sn-desenha 2.4s cubic-bezier(.2,.7,.2,1) forwards; }
+  .sn-anima .sn-arcos path:nth-child(2) { animation-delay: .25s; }
+  .sn-anima .sn-arcos path:nth-child(3) { animation-delay: .5s; }
+  @keyframes sn-desenha { to { stroke-dashoffset: 0; } }
+}

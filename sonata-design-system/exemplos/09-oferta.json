@@ -1,0 +1,18 @@
+{
+  "modelo": "oferta",
+  "tema": "marinho",
+  "rotulo": "Seu aparelho auditivo novo",
+  "titulo": "Teste sem compromisso antes de *decidir*.",
+  "preco": {
+    "prefixo": "a partir de",
+    "valor": "R$ 125",
+    "sufixo": "por mês"
+  },
+  "selo": {
+    "topo": "em até",
+    "destaque": "18x",
+    "base": "no cartão"
+  },
+  "cta": "Agende sua avaliação",
+  "legenda": "Teste sem compromisso. Consulte as condições."
+}

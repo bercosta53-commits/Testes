@@ -1,0 +1,9 @@
+{
+  "modelo": "tecnologia",
+  "tema": "marinho",
+  "rotulo": "Tecnologia",
+  "titulo": "Pequeno no ouvido. *Enorme* na conversa.",
+  "chips": ["Recarregável", "Bluetooth", "Discreto"],
+  "legenda": "Imagem ilustrativa ampliada.",
+  "foto": { "src": "aparelho", "assunto": "Recorte do aparelho retroauricular, luz lateral suave", "foco": "40% 50%" }
+}

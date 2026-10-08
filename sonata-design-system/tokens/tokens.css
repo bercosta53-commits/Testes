@@ -1,0 +1,148 @@
+/* Sonata Social — Ondas — generated from tokens.json */
+:root, [data-theme="claro"] {
+  --marinho-50: #f2f7fe;
+  --marinho-100: #e4eefa;
+  --marinho-200: #c9dbf0;
+  --marinho-300: #a3bddc;
+  --marinho-400: #7698c0;
+  --marinho-500: #4e76a2;
+  --marinho-600: #2f5986;
+  --marinho-700: #143d66;
+  --marinho-800: #0b2f50;
+  --marinho-900: #07233a;
+  --agua-50: #f1fdfc;
+  --agua-100: #e5f8f6;
+  --agua-200: #c6f1ee;
+  --agua-300: #9be5e0;
+  --agua-400: #66d2cd;
+  --agua-500: #2cb6b1;
+  --agua-600: #0c9591;
+  --agua-700: #007776;
+  --agua-800: #005b5b;
+  --agua-900: #004041;
+  --branco: #ffffff;
+  --cinza-700: #3e4a57;
+  --cinza-500: #5f6b78;
+  --veu-foto: rgba(7, 35, 58, 0.9);
+  --veu-topo: rgba(7, 35, 58, 0.45);
+  --fundo: var(--branco);
+  --fundo-2: var(--agua-100);
+  --titulo: var(--marinho-700);
+  --enfase: var(--agua-600);
+  --apoio: var(--cinza-700);
+  --rotulo: var(--agua-700);
+  --legenda: var(--cinza-500);
+  --manuscrito-cor: var(--agua-700);
+  --grafismo-forte: var(--agua-400);
+  --grafismo-medio: var(--agua-200);
+  --grafismo-suave: var(--agua-100);
+  --linha: var(--marinho-100);
+  --chip-fundo: var(--agua-50);
+  --cta-fundo: var(--marinho-700);
+  --cta-texto: var(--branco);
+  --sombra-flutuante: 0 24px 64px rgba(7, 35, 58, 0.18);
+}
+[data-theme="bruma"] {
+  --fundo: var(--agua-50);
+  --fundo-2: var(--agua-200);
+  --titulo: var(--marinho-700);
+  --enfase: var(--agua-700);
+  --apoio: var(--cinza-700);
+  --rotulo: var(--agua-700);
+  --legenda: var(--cinza-500);
+  --manuscrito-cor: var(--agua-700);
+  --grafismo-forte: var(--agua-400);
+  --grafismo-medio: var(--agua-300);
+  --grafismo-suave: var(--agua-200);
+  --linha: var(--agua-200);
+  --chip-fundo: var(--branco);
+  --cta-fundo: var(--marinho-700);
+  --cta-texto: var(--branco);
+}
+[data-theme="agua"] {
+  --fundo: var(--agua-400);
+  --fundo-2: var(--agua-300);
+  --titulo: var(--marinho-900);
+  --enfase: var(--marinho-700);
+  --apoio: var(--marinho-800);
+  --rotulo: var(--marinho-700);
+  --legenda: var(--marinho-800);
+  --manuscrito-cor: var(--marinho-800);
+  --grafismo-forte: var(--branco);
+  --grafismo-medio: var(--agua-200);
+  --grafismo-suave: var(--agua-300);
+  --linha: var(--agua-300);
+  --chip-fundo: var(--agua-300);
+  --cta-fundo: var(--marinho-800);
+  --cta-texto: var(--branco);
+}
+[data-theme="marinho"] {
+  --fundo: var(--marinho-800);
+  --fundo-2: var(--marinho-700);
+  --titulo: var(--branco);
+  --enfase: var(--agua-400);
+  --apoio: var(--marinho-200);
+  --rotulo: var(--agua-300);
+  --legenda: var(--marinho-300);
+  --manuscrito-cor: var(--branco);
+  --grafismo-forte: var(--agua-400);
+  --grafismo-medio: var(--marinho-600);
+  --grafismo-suave: var(--marinho-700);
+  --linha: var(--marinho-600);
+  --chip-fundo: var(--marinho-700);
+  --cta-fundo: var(--agua-400);
+  --cta-texto: var(--marinho-900);
+}
+[data-theme="mar"] {
+  --fundo: var(--agua-800);
+  --fundo-2: var(--marinho-900);
+  --titulo: var(--branco);
+  --enfase: var(--agua-300);
+  --apoio: var(--agua-100);
+  --rotulo: var(--agua-300);
+  --legenda: var(--agua-200);
+  --manuscrito-cor: var(--branco);
+  --grafismo-forte: var(--agua-400);
+  --grafismo-medio: var(--agua-600);
+  --grafismo-suave: var(--agua-700);
+  --linha: var(--agua-700);
+  --chip-fundo: var(--agua-900);
+  --cta-fundo: var(--branco);
+  --cta-texto: var(--agua-800);
+}
+:root {
+  --esp-8: 8px;
+  --esp-16: 16px;
+  --esp-24: 24px;
+  --esp-32: 32px;
+  --esp-48: 48px;
+  --esp-64: 64px;
+  --esp-96: 96px;
+  --esp-128: 128px;
+  --story-topo: 250px;
+  --story-base: 320px;
+  --raio-24: 24px;
+  --raio-48: 48px;
+  --raio-onda: 280px;
+  --raio-pilula: 999px;
+  --formato-feed: 1080px 1350px;
+  --formato-quadrado: 1080px 1080px;
+  --formato-story: 1080px 1920px;
+  --grid-colunas: 6;
+  --grid-coluna: 128px;
+  --grid-linha-base: 8px;
+  --font-sans: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  --font-manuscrito: "Ms Madi", "Brush Script MT", cursive;
+}
+.display { font-family: var(--font-sans); font-size: 112px; line-height: 1.04; font-weight: 300; letter-spacing: -0.02em; }
+.titulo { font-family: var(--font-sans); font-size: 84px; line-height: 1.08; font-weight: 300; letter-spacing: -0.015em; }
+.titulo-compacto { font-family: var(--font-sans); font-size: 64px; line-height: 1.12; font-weight: 300; letter-spacing: -0.01em; }
+.enfase { font-family: var(--font-sans); font-size: 84px; line-height: 1.08; font-weight: 800; font-style: italic; letter-spacing: -0.03em; }
+.apoio { font-family: var(--font-sans); font-size: 42px; line-height: 1.35; font-weight: 400; }
+.corpo { font-family: var(--font-sans); font-size: 38px; line-height: 1.45; font-weight: 400; }
+.rotulo { font-family: var(--font-sans); font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: 0.16em; }
+.legenda { font-family: var(--font-sans); font-size: 28px; line-height: 1.4; font-weight: 400; }
+.nome { font-family: var(--font-sans); font-size: 34px; line-height: 1.2; font-weight: 600; }
+.chamada { font-family: var(--font-sans); font-size: 34px; line-height: 1; font-weight: 600; }
+.numeral { font-family: var(--font-sans); font-size: 220px; line-height: 0.9; font-weight: 800; font-style: italic; letter-spacing: -0.04em; }
+.manuscrito { font-family: var(--font-manuscrito); font-size: 150px; line-height: 1; font-weight: 400; }

@@ -1,0 +1,324 @@
+{
+  "versao": "1.0.0",
+  "formatos": {
+    "feed": {
+      "w": 1080,
+      "h": 1350,
+      "m": 96,
+      "mt": 96,
+      "mb": 96
+    },
+    "quadrado": {
+      "w": 1080,
+      "h": 1080,
+      "m": 88,
+      "mt": 88,
+      "mb": 88
+    },
+    "story": {
+      "w": 1080,
+      "h": 1920,
+      "m": 96,
+      "mt": 250,
+      "mb": 320
+    }
+  },
+  "vocabularioEvitado": [
+    "surdo",
+    "surda",
+    "surdez",
+    "deficiente",
+    "deficiência",
+    "velho",
+    "velha",
+    "velhinho",
+    "velhinha",
+    "vovozinha",
+    "vovozinho",
+    "imperdível",
+    "não perca",
+    "compre já",
+    "barato"
+  ],
+  "modelos": {
+    "frase-foto": {
+      "nome": "Frase com foto",
+      "pilar": "Afeto",
+      "quando": "Vida, convivência, emoção. A foto de pessoas juntas é o centro; a frase fecha a ideia.",
+      "temas": [
+        "marinho"
+      ],
+      "temaPadrao": "marinho",
+      "obrigatorio": [
+        "titulo",
+        "foto"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio"
+      ],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 14,
+        "apoio": 18
+      }
+    },
+    "frase": {
+      "nome": "Frase com respiro",
+      "pilar": "Afeto",
+      "quando": "Reflexão, frase de impacto, abertura de campanha. Sem foto: o espaço vazio é o protagonista.",
+      "temas": [
+        "claro",
+        "bruma",
+        "agua",
+        "marinho",
+        "mar"
+      ],
+      "temaPadrao": "bruma",
+      "obrigatorio": [
+        "titulo"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio"
+      ],
+      "elementos": [
+        "arcos",
+        "linha"
+      ],
+      "limites": {
+        "titulo": 10,
+        "apoio": 18
+      }
+    },
+    "educativo": {
+      "nome": "Educativo",
+      "pilar": "Cuidado",
+      "quando": "Saúde auditiva explicada com clareza: um fato, um conselho, um porquê. Assinado por uma fono.",
+      "temas": [
+        "claro",
+        "bruma"
+      ],
+      "temaPadrao": "claro",
+      "obrigatorio": [
+        "titulo",
+        "foto"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio",
+        "legenda"
+      ],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 12,
+        "apoio": 22
+      }
+    },
+    "tecnologia": {
+      "nome": "Tecnologia",
+      "pilar": "Tecnologia",
+      "quando": "Aparelho, recurso, novidade. O aparelho no centro de ondas sonoras; até 3 benefícios em chips.",
+      "temas": [
+        "marinho",
+        "mar"
+      ],
+      "temaPadrao": "marinho",
+      "obrigatorio": [
+        "titulo",
+        "foto"
+      ],
+      "opcional": [
+        "rotulo",
+        "chips",
+        "legenda"
+      ],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 10,
+        "chips": 3
+      }
+    },
+    "data": {
+      "nome": "Data comemorativa",
+      "pilar": "Afeto",
+      "quando": "Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. Única vez em que o manuscrito aparece grande.",
+      "temas": [
+        "agua",
+        "bruma",
+        "mar"
+      ],
+      "temaPadrao": "agua",
+      "obrigatorio": [
+        "rotulo",
+        "manuscrito",
+        "foto"
+      ],
+      "opcional": [
+        "apoio"
+      ],
+      "elementos": [
+        "onda"
+      ],
+      "limites": {
+        "manuscrito": 4,
+        "apoio": 16
+      }
+    },
+    "depoimento": {
+      "nome": "Depoimento",
+      "pilar": "Sonata",
+      "quando": "A voz de quem voltou a ouvir. Sempre com nome real, detalhe (idade ou cidade) e autorização.",
+      "temas": [
+        "bruma",
+        "claro"
+      ],
+      "temaPadrao": "bruma",
+      "obrigatorio": [
+        "titulo",
+        "pessoa"
+      ],
+      "opcional": [],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 32
+      }
+    },
+    "fono": {
+      "nome": "Com a fono",
+      "pilar": "Sonata",
+      "quando": "As sócias falando de perto: dica, bastidor, opinião profissional. Próxima e técnica ao mesmo tempo.",
+      "temas": [
+        "claro",
+        "bruma"
+      ],
+      "temaPadrao": "claro",
+      "obrigatorio": [
+        "titulo",
+        "pessoa"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio"
+      ],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 12,
+        "apoio": 20
+      }
+    },
+    "oferta": {
+      "nome": "Oferta",
+      "pilar": "Sonata",
+      "quando": "Condição comercial real (parcelamento, preço de entrada, teste sem custo). No máximo 1 em cada 5 posts.",
+      "temas": [
+        "marinho",
+        "mar"
+      ],
+      "temaPadrao": "marinho",
+      "obrigatorio": [
+        "preco",
+        "cta"
+      ],
+      "opcional": [
+        "rotulo",
+        "titulo",
+        "selo",
+        "legenda"
+      ],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 10
+      }
+    },
+    "carrossel-capa": {
+      "nome": "Carrossel · capa",
+      "pilar": "Cuidado",
+      "quando": "Primeira lâmina: promete o que o carrossel entrega.",
+      "temas": [
+        "mar",
+        "marinho",
+        "bruma"
+      ],
+      "temaPadrao": "mar",
+      "obrigatorio": [
+        "titulo",
+        "pagina"
+      ],
+      "opcional": [
+        "rotulo",
+        "apoio"
+      ],
+      "elementos": [
+        "arcos"
+      ],
+      "limites": {
+        "titulo": 10,
+        "apoio": 14
+      }
+    },
+    "carrossel-passo": {
+      "nome": "Carrossel · passo",
+      "pilar": "Cuidado",
+      "quando": "Miolo: um passo ou ideia por lâmina, numerado só quando a ordem importa.",
+      "temas": [
+        "claro",
+        "bruma"
+      ],
+      "temaPadrao": "claro",
+      "obrigatorio": [
+        "titulo",
+        "pagina"
+      ],
+      "opcional": [
+        "passo",
+        "corpo",
+        "foto"
+      ],
+      "elementos": [],
+      "limites": {
+        "titulo": 10,
+        "corpo": 30
+      }
+    },
+    "carrossel-fim": {
+      "nome": "Carrossel · fechamento",
+      "pilar": "Sonata",
+      "quando": "Última lâmina: um convite claro, com a fono como rosto do atendimento.",
+      "temas": [
+        "agua",
+        "bruma",
+        "marinho"
+      ],
+      "temaPadrao": "agua",
+      "obrigatorio": [
+        "titulo",
+        "cta",
+        "pagina"
+      ],
+      "opcional": [
+        "apoio",
+        "pessoa"
+      ],
+      "elementos": [
+        "onda"
+      ],
+      "limites": {
+        "titulo": 8,
+        "apoio": 14
+      }
+    }
+  }
+}

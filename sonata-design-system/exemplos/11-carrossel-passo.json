@@ -1,0 +1,9 @@
+{
+  "modelo": "carrossel-passo",
+  "tema": "claro",
+  "passo": "04",
+  "titulo": "Teste sem custo",
+  "corpo": "Leve o aparelho para casa e use por até uma semana, sem custo, nos lugares onde você mais quer ouvir.",
+  "foto": { "src": "fones", "assunto": "Homem 70+ sorrindo, ouvindo música em casa", "foco": "50% 35%" },
+  "pagina": { "atual": 5, "total": 6 }
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonata Social — modelos</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../bundle/fontes-locais.css">
+<link rel="stylesheet" href="../bundle/sonata.css">
+<style>
+  body { margin: 0; background: var(--marinho-50); color: var(--marinho-800); font-family: var(--font-sans); }
+  header { padding: 40px 32px 8px; max-width: 1400px; margin: 0 auto; }
+  h1 { font-weight: 300; font-size: 40px; margin: 0 0 8px; color: var(--marinho-700); }
+  h1 b { font-weight: 800; font-style: italic; color: var(--agua-700); }
+  p { margin: 0; max-width: 70ch; color: var(--cinza-700); line-height: 1.5; }
+  main { max-width: 1400px; margin: 0 auto; padding: 24px 32px 64px; }
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 32px 24px; }
+  figure { margin: 0; }
+  figcaption { font-size: 13px; margin-top: 10px; color: var(--cinza-700); }
+  figcaption code { color: var(--marinho-700); font-weight: 600; }
+  .aviso { color: var(--marinho-800); background: var(--agua-100); border-radius: 6px; padding: 6px 8px; margin-top: 6px; font-size: 12px; }
+  .teste { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; margin: 48px 0 0; align-items: start; }
+  textarea { width: 100%; min-height: 420px; font: 13px/1.5 ui-monospace, Menlo, monospace; padding: 12px; border: 1px solid var(--marinho-200); border-radius: 8px; background: #fff; color: var(--marinho-900); box-sizing: border-box; }
+  h2 { font-weight: 600; font-size: 20px; margin: 48px 0 8px; color: var(--marinho-700); }
+  @media (max-width: 760px) { .teste { grid-template-columns: 1fr; } }
+</style>
+<script src="../bundle/sonata.js"></script>
+<script src="assets.js"></script>
+<script src="exemplos.js"></script>
+</head>
+<body>
+<header>
+  <h1>Sonata Social — <b>Ondas</b></h1>
+  <p>Todos os modelos renderizados pelo motor <code>Sonata.render()</code> a partir das fichas em <code>exemplos/</code>. Cole uma ficha JSON (de uma IA, por exemplo) no campo abaixo para ver o post e os avisos de regra.</p>
+</header>
+<main>
+  <div class="grade" id="grade"></div>
+  <h2>Testar uma ficha</h2>
+  <div class="teste">
+    <textarea id="ficha" spellcheck="false" aria-label="Ficha JSON do post"></textarea>
+    <div id="saida"></div>
+  </div>
+</main>
+<script>
+  var grade = document.getElementById('grade');
+  EXEMPLOS.forEach(function (e) {
+    var fig = document.createElement('figure');
+    Sonata.montar(e.ficha, fig, { largura: 300 });
+    var cap = document.createElement('figcaption');
+    cap.innerHTML = '<code>' + e.ficha.modelo + '</code> · ' + (e.ficha.tema || Sonata.modelos[e.ficha.modelo].temaPadrao) + ' · ' + (e.ficha.formato || 'feed') + ' — ' + e.arquivo;
+    Sonata.validar(e.ficha).forEach(function (a) { cap.innerHTML += '<div class="aviso">' + a.campo + ': ' + a.aviso + '</div>'; });
+    fig.appendChild(cap);
+    grade.appendChild(fig);
+  });
+  var campo = document.getElementById('ficha'), saida = document.getElementById('saida');
+  campo.value = JSON.stringify(EXEMPLOS[3].ficha, null, 2);
+  function atualizar() {
+    saida.innerHTML = '';
+    try {
+      var f = JSON.parse(campo.value);
+      Sonata.montar(f, saida, { largura: 360 });
+      Sonata.validar(f).forEach(function (a) { var d = document.createElement('div'); d.className = 'aviso'; d.textContent = a.campo + ': ' + a.aviso; saida.appendChild(d); });
+    } catch (err) { saida.innerHTML = '<div class="aviso">' + err.message + '</div>'; }
+  }
+  campo.addEventListener('input', atualizar); atualizar();
+</script>
+</body>
+</html>

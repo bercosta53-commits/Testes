@@ -1,0 +1,12 @@
+{
+  "modelo": "fono",
+  "tema": "claro",
+  "rotulo": "Dica da fono",
+  "titulo": "O aparelho certo é o que você *esquece* que está usando.",
+  "apoio": "Por isso a gente testa com você, no seu dia a dia, antes de qualquer decisão.",
+  "pessoa": {
+    "nome": "Fernanda Brugiolo",
+    "detalhe": "Fonoaudióloga · sócia da Sonata",
+    "foto": { "src": "fono", "assunto": "Fernanda de jaleco, olhar para a câmera, fundo claro", "foco": "50% 30%" }
+  }
+}

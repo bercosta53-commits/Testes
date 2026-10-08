@@ -1,0 +1,11 @@
+{
+  "modelo": "frase-foto",
+  "formato": "feed",
+  "titulo": "Uma boa *conversa* fica melhor com o tempo.",
+  "foto": {
+    "src": "casal",
+    "assunto": "Casal 60+ abraçado, rindo junto, luz natural quente",
+    "foco": "50% 35%"
+  },
+  "apoio": "E cada palavra merece ser ouvida."
+}

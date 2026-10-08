@@ -1,0 +1,9 @@
+{
+  "modelo": "carrossel-fim",
+  "tema": "agua",
+  "titulo": "Vamos ouvir *juntos*?",
+  "apoio": "Agende sua avaliação com a nossa equipe.",
+  "cta": "Agende pelo link da bio",
+  "pessoa": { "nome": "Fernanda Brugiolo", "detalhe": "Fonoaudióloga · sócia da Sonata", "foto": { "src": "fono", "foco": "50% 25%" } },
+  "pagina": { "atual": 6, "total": 6 }
+}
