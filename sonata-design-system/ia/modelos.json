@@ -1,5 +1,5 @@
 {
-  "versao": "1.0.0",
+  "versao": "2.0.0",
   "formatos": {
     "feed": {
       "w": 1080,
@@ -44,9 +44,11 @@
     "frase-foto": {
       "nome": "Frase com foto",
       "pilar": "Afeto",
-      "quando": "Vida, convivência, emoção. A foto de pessoas juntas é o centro; a frase fecha a ideia.",
+      "quando": "Vida, convivência, emoção. A foto de pessoas juntas ocupa o post inteiro; a frase pousa no véu.",
       "temas": [
-        "marinho"
+        "marinho",
+        "mar",
+        "claro"
       ],
       "temaPadrao": "marinho",
       "obrigatorio": [
@@ -55,7 +57,8 @@
       ],
       "opcional": [
         "rotulo",
-        "apoio"
+        "apoio",
+        "veu"
       ],
       "elementos": [
         "arcos"
@@ -96,7 +99,7 @@
     "educativo": {
       "nome": "Educativo",
       "pilar": "Cuidado",
-      "quando": "Saúde auditiva explicada com clareza: um fato, um conselho, um porquê. Assinado por uma fono.",
+      "quando": "Saúde auditiva explicada com clareza: um fato, um conselho, um porquê. Foto sangrada, texto no véu claro, assinado por uma fono.",
       "temas": [
         "claro",
         "bruma"
@@ -109,7 +112,8 @@
       "opcional": [
         "rotulo",
         "apoio",
-        "legenda"
+        "legenda",
+        "veu"
       ],
       "elementos": [
         "arcos"
@@ -122,7 +126,7 @@
     "tecnologia": {
       "nome": "Tecnologia",
       "pilar": "Tecnologia",
-      "quando": "Aparelho, recurso, novidade. O aparelho no centro de ondas sonoras; até 3 benefícios em chips.",
+      "quando": "Aparelho, recurso, novidade. O aparelho recortado flutua no centro das ondas, ou uma foto de uso real sob véu marinho.",
       "temas": [
         "marinho",
         "mar"
@@ -148,7 +152,7 @@
     "data": {
       "nome": "Data comemorativa",
       "pilar": "Afeto",
-      "quando": "Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. Única vez em que o manuscrito aparece grande.",
+      "quando": "Dia dos Avós, Dia das Mães, Dia do Idoso, Natal, Dia do Gaúcho. A foto ocupa o post e uma onda de cor sobe da base com o manuscrito.",
       "temas": [
         "agua",
         "bruma",
@@ -174,17 +178,20 @@
     "depoimento": {
       "nome": "Depoimento",
       "pilar": "Sonata",
-      "quando": "A voz de quem voltou a ouvir. Sempre com nome real, detalhe (idade ou cidade) e autorização.",
+      "quando": "A voz de quem voltou a ouvir. Com foto autorizada, a pessoa ocupa o post; sem foto, a frase ocupa o espaço. Sempre com nome real e detalhe.",
       "temas": [
         "bruma",
-        "claro"
+        "claro",
+        "marinho"
       ],
       "temaPadrao": "bruma",
       "obrigatorio": [
         "titulo",
         "pessoa"
       ],
-      "opcional": [],
+      "opcional": [
+        "veu"
+      ],
       "elementos": [
         "arcos"
       ],
@@ -195,7 +202,7 @@
     "fono": {
       "nome": "Com a fono",
       "pilar": "Sonata",
-      "quando": "As sócias falando de perto: dica, bastidor, opinião profissional. Próxima e técnica ao mesmo tempo.",
+      "quando": "As sócias falando de perto: dica, bastidor, opinião profissional. A foto da fono ocupa o post; o texto pousa no véu claro.",
       "temas": [
         "claro",
         "bruma"
@@ -207,7 +214,8 @@
       ],
       "opcional": [
         "rotulo",
-        "apoio"
+        "apoio",
+        "veu"
       ],
       "elementos": [
         "arcos"
@@ -220,7 +228,7 @@
     "oferta": {
       "nome": "Oferta",
       "pilar": "Sonata",
-      "quando": "Condição comercial real (parcelamento, preço de entrada, teste sem custo). No máximo 1 em cada 5 posts.",
+      "quando": "Condição comercial real (parcelamento, preço de entrada, teste sem custo). Com foto de pessoas sob véu marinho, ou só cor. No máximo 1 em cada 5 posts.",
       "temas": [
         "marinho",
         "mar"
@@ -234,7 +242,8 @@
         "rotulo",
         "titulo",
         "selo",
-        "legenda"
+        "legenda",
+        "foto"
       ],
       "elementos": [
         "arcos"
@@ -246,7 +255,7 @@
     "carrossel-capa": {
       "nome": "Carrossel · capa",
       "pilar": "Cuidado",
-      "quando": "Primeira lâmina: promete o que o carrossel entrega.",
+      "quando": "Primeira lâmina: promete o que o carrossel entrega. Com foto sangrada sob véu, ou só cor.",
       "temas": [
         "mar",
         "marinho",
@@ -259,7 +268,8 @@
       ],
       "opcional": [
         "rotulo",
-        "apoio"
+        "apoio",
+        "foto"
       ],
       "elementos": [
         "arcos"
@@ -272,7 +282,7 @@
     "carrossel-passo": {
       "nome": "Carrossel · passo",
       "pilar": "Cuidado",
-      "quando": "Miolo: um passo ou ideia por lâmina, numerado só quando a ordem importa.",
+      "quando": "Miolo: um passo ou ideia por lâmina, numerado só quando a ordem importa. A foto, se houver, sobe da base numa onda.",
       "temas": [
         "claro",
         "bruma"

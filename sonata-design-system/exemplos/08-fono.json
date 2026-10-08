@@ -7,6 +7,10 @@
   "pessoa": {
     "nome": "Fernanda Brugiolo",
     "detalhe": "Fonoaudióloga · sócia da Sonata",
-    "foto": { "src": "fono", "assunto": "Fernanda de jaleco, olhar para a câmera, fundo claro", "foco": "50% 30%" }
+    "foto": {
+      "src": "fernanda",
+      "assunto": "Fernanda de jaleco no consultório, sorrindo para a câmera",
+      "foco": "50% 0%"
+    }
   }
 }

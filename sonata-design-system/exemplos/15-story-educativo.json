@@ -6,5 +6,9 @@
   "titulo": "A perda auditiva costuma chegar *devagar*.",
   "apoio": "Pedir para repetir e aumentar a TV são os primeiros sinais. Uma avaliação tira a dúvida.",
   "legenda": "Por Fernanda Brugiolo, fonoaudióloga",
-  "foto": { "src": "cuidado-ouvido", "assunto": "Mulher 60+ com a mão no ouvido, atenta", "foco": "45% 35%" }
+  "foto": {
+    "src": "mulher-parque",
+    "assunto": "Mulher 60+ sorrindo ao ar livre, luz de fim de tarde",
+    "foco": "50% 20%"
+  }
 }

@@ -1,11 +1,12 @@
 {
   "modelo": "frase-foto",
-  "formato": "feed",
-  "titulo": "Uma boa *conversa* fica melhor com o tempo.",
+  "tema": "marinho",
+  "titulo": "Voltar a ouvir é voltar a *sair de casa*.",
+  "apoio": "A cidade, o parque, a conversa no caminho.",
   "foto": {
-    "src": "casal",
-    "assunto": "Casal 60+ abraçado, rindo junto, luz natural quente",
-    "foco": "50% 35%"
-  },
-  "apoio": "E cada palavra merece ser ouvida."
+    "src": "mulher-parque",
+    "assunto": "Mulher 60+ sorrindo num parque de Porto Alegre, luz de fim de tarde",
+    "foco": "50% 30%",
+    "ondas": "46% 27%"
+  }
 }

@@ -28,7 +28,7 @@ Passo a passo:
 3. **Tema** permitido pelo modelo. Alterne claro e escuro em sequência de posts.
 4. **Formato**: `feed` por padrão; `story` para chamadas rápidas; `quadrado` para anúncio.
 5. **Texto** dentro dos limites do modelo; marque a ênfase do título com `*asteriscos*`.
-6. **Foto**: use `src` quando houver arquivo; senão, escreva em `assunto` o briefing da foto (quem, fazendo o quê, luz) e deixe `src` vazio.
+6. **Foto**: use `src` quando houver arquivo; senão, escreva em `assunto` o briefing da foto (quem, fazendo o quê, luz) e deixe `src` vazio. Use `foco` para manter rostos fora do véu, `ondas` para o ponto da cabeça de quem escuta e `recorte: true` para PNG de produto. `veu` escolhe de onde vem o degradê (base, esquerda ou topo).
 
 Exemplo de saída:
 
@@ -40,7 +40,7 @@ Exemplo de saída:
   "titulo": "Ouvir bem também é *se equilibrar*.",
   "apoio": "A audição ajuda o cérebro a perceber o espaço. Cuidar dos ouvidos protege você de quedas.",
   "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
-  "foto": { "assunto": "Homem 60+ se alongando em casa, em equilíbrio, luz da manhã", "foco": "60% 30%" }
+  "foto": { "assunto": "Homem 60+ se alongando em casa, em equilíbrio, luz da manhã", "foco": "70% 30%" }
 }
 ```
 
@@ -78,11 +78,14 @@ Branco #FFFFFF. Só para texto: cinza-700 #3E4A57 e cinza-500 #5F6B78. Nenhuma o
 | agua | #66D2CD | #07233A | #143D66 | #0B2F50 | #143D66 |
 | marinho | #0B2F50 | #FFFFFF | #66D2CD | #C9DBF0 | #9BE5E0 |
 | mar | gradiente 160° #005B5B → #07233A | #FFFFFF | #9BE5E0 | #E5F8F6 | #9BE5E0 |
-| foto | foto + véu de transparente a rgba(7,35,58,.9) na metade de baixo | #FFFFFF | #66D2CD | #E4EEFA | #9BE5E0 |
+| foto escura | foto + véu de rgba(7,35,58,.94) a transparente, da base até ~72% | #FFFFFF | #66D2CD | #C9DBF0 | #9BE5E0 |
+| foto clara | foto + véu de branco a transparente, da esquerda até ~80% | #143D66 | #0C9591 | #3E4A57 | #007776 |
 
 **Tipografia**: Poppins. Título Light 300 (112 px na frase, 84 px no título comum, 64 px no carrossel), ênfase em ExtraBold 800 itálico no mesmo tamanho, apoio Regular 42 px, rótulo SemiBold 28 px em caixa alta com espaçamento 0,16em, legenda 28 px. Manuscrito (Ms Madi, 150 px) só em datas comemorativas. Tudo alinhado à esquerda.
 
-**Posições**: logo no canto superior esquerdo, 64 px de altura (marinho em fundo claro e água; branco em marinho, mar e foto). Títulos começam na margem esquerda de 96 px. Arcos de escuta no canto superior direito, cortados pela borda; ou concêntricos ao canto arredondado da foto. Fotos com cantos de 48 px e um único canto de 280 px apontando para o texto.
+**Fotos**: sempre estouradas, ocupando o post inteiro (ou subindo da base até uma onda de cor). Nunca em círculo, caixa ou moldura. O texto fica sobre um véu: degradê suave da cor do tema até o transparente, saindo do lado do texto (base ou esquerda), cobrindo de 70% a 85% do post. Rostos nunca ficam sob o véu.
+
+**Posições**: logo no canto superior esquerdo, 64 px de altura (marinho em fundo claro, água e véu claro; branco em marinho, mar e véu escuro), com um véu curto no topo se a foto for clara ali. Títulos começam na margem esquerda de 96 px. Arcos de escuta no canto superior direito, cortados pela borda; sobre foto, finos e brancos ao redor da cabeça de quem escuta.
 
 ## Regras que nunca se quebram
 
@@ -98,6 +101,7 @@ Branco #FFFFFF. Só para texto: cinza-700 #3E4A57 e cinza-500 #5F6B78. Nenhuma o
 10. Sem emoji na arte, no máximo uma exclamação.
 11. Nunca invente preço, prazo, número, nome de paciente ou depoimento. Se a pauta não trouxer o dado, deixe o campo de fora e avise.
 12. Educativo sempre assinado por uma fono; foto ampliada de aparelho sempre com "Imagem ilustrativa ampliada.".
+13. Foto sempre estourada, nunca recortada em formas; legibilidade só com véu da paleta.
 
 ## Antes de entregar, confira
 

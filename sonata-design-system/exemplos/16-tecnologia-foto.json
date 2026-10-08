@@ -1,0 +1,15 @@
+{
+  "modelo": "tecnologia",
+  "tema": "marinho",
+  "rotulo": "Recarregável",
+  "titulo": "Carregue à noite. Converse o *dia inteiro*.",
+  "chips": [
+    "Sem pilhas",
+    "Estojo de carga"
+  ],
+  "foto": {
+    "src": "ouvido-aparelho",
+    "assunto": "Aparelho discreto atrás da orelha, luz natural",
+    "foco": "50% 40%"
+  }
+}

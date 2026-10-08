@@ -1,8 +1,12 @@
 {
   "modelo": "data",
   "tema": "agua",
-  "rotulo": "26 de julho",
-  "manuscrito": "Feliz Dia dos Avós",
-  "apoio": "Para quem conta as melhores histórias e merece ouvir todas elas.",
-  "foto": { "src": "avo-neto", "assunto": "Neto contando um segredo no ouvido da avó", "foco": "50% 30%" }
+  "rotulo": "20 de setembro",
+  "manuscrito": "Dia do Gaúcho",
+  "apoio": "Orgulho de ouvir, sentir e fazer parte desta terra.",
+  "foto": {
+    "src": "gaucho",
+    "assunto": "Gaúcho de boina e lenço mostrando o aparelho, sorriso aberto",
+    "foco": "50% 8%"
+  }
 }

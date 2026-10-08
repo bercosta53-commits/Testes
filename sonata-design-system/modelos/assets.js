@@ -6,13 +6,15 @@ Sonata.config({
     branco: '../assets/logos/sonata-branco.png'
   },
   fotos: {
-    'avo-neto': '../assets/fotos/avo-neto.jpg',
-    casal: '../assets/fotos/casal.jpg',
-    'cuidado-ouvido': '../assets/fotos/cuidado-ouvido.jpg',
-    fones: '../assets/fotos/fones.jpg',
-    fono: '../assets/fotos/fono.jpg',
-    movimento: '../assets/fotos/movimento.jpg',
-    torcida: '../assets/fotos/torcida.jpg',
-    aparelho: '../assets/fotos/aparelho.jpg'
+    'mulher-parque': '../assets/fotos/mulher-parque.jpg',
+    'casal-karaoke': '../assets/fotos/casal-karaoke.jpg',
+    'ajuste-aparelho': '../assets/fotos/ajuste-aparelho.jpg',
+    daiana: '../assets/fotos/daiana.jpg',
+    fernanda: '../assets/fotos/fernanda.jpg',
+    gaucho: '../assets/fotos/gaucho.jpg',
+    'escuta-sorriso': '../assets/fotos/escuta-sorriso.jpg',
+    'ouvido-aparelho': '../assets/fotos/ouvido-aparelho.jpg',
+    'aparelho-recorte': '../assets/fotos/aparelho-recorte.png',
+    'carregador-recorte': '../assets/fotos/carregador-recorte.png'
   }
 });

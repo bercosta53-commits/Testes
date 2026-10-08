@@ -1,0 +1,22 @@
+{
+  "modelo": "oferta",
+  "formato": "story",
+  "tema": "marinho",
+  "rotulo": "Seu aparelho auditivo novo",
+  "preco": {
+    "prefixo": "a partir de",
+    "valor": "R$ 125",
+    "sufixo": "por mês"
+  },
+  "selo": {
+    "topo": "em até",
+    "destaque": "18x",
+    "base": "no cartão"
+  },
+  "cta": "Agende sua avaliação",
+  "foto": {
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto",
+    "foco": "45% 25%"
+  }
+}

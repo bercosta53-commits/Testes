@@ -4,14 +4,15 @@ window.EXEMPLOS = [
   "arquivo": "01-frase-foto.json",
   "ficha": {
    "modelo": "frase-foto",
-   "formato": "feed",
-   "titulo": "Uma boa *conversa* fica melhor com o tempo.",
+   "tema": "marinho",
+   "titulo": "Voltar a ouvir é voltar a *sair de casa*.",
+   "apoio": "A cidade, o parque, a conversa no caminho.",
    "foto": {
-    "src": "casal",
-    "assunto": "Casal 60+ abraçado, rindo junto, luz natural quente",
-    "foco": "50% 35%"
-   },
-   "apoio": "E cada palavra merece ser ouvida."
+    "src": "mulher-parque",
+    "assunto": "Mulher 60+ sorrindo num parque de Porto Alegre, luz de fim de tarde",
+    "foco": "50% 30%",
+    "ondas": "46% 27%"
+   }
   }
  },
  {
@@ -47,13 +48,13 @@ window.EXEMPLOS = [
    "modelo": "educativo",
    "tema": "claro",
    "rotulo": "Saúde auditiva",
-   "titulo": "Ouvir bem também é *se equilibrar*.",
-   "apoio": "A audição ajuda o cérebro a perceber o espaço. Cuidar dos ouvidos protege você de quedas.",
+   "titulo": "A adaptação é feita *com calma*, no seu tempo.",
+   "apoio": "Ajustamos o aparelho com você, em mais de uma visita, até a escuta ficar natural.",
    "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
    "foto": {
-    "src": "movimento",
-    "assunto": "Homem 60+ se alongando em casa, em equilíbrio",
-    "foco": "60% 30%"
+    "src": "ajuste-aparelho",
+    "assunto": "Fono ajustando o aparelho de uma senhora, mãos cuidadosas, luz suave",
+    "foco": "78% 40%"
    }
   }
  },
@@ -71,9 +72,9 @@ window.EXEMPLOS = [
    ],
    "legenda": "Imagem ilustrativa ampliada.",
    "foto": {
-    "src": "aparelho",
-    "assunto": "Recorte do aparelho retroauricular, luz lateral suave",
-    "foco": "40% 50%"
+    "src": "aparelho-recorte",
+    "assunto": "Recorte do aparelho retroauricular",
+    "recorte": true
    }
   }
  },
@@ -82,13 +83,13 @@ window.EXEMPLOS = [
   "ficha": {
    "modelo": "data",
    "tema": "agua",
-   "rotulo": "26 de julho",
-   "manuscrito": "Feliz Dia dos Avós",
-   "apoio": "Para quem conta as melhores histórias e merece ouvir todas elas.",
+   "rotulo": "20 de setembro",
+   "manuscrito": "Dia do Gaúcho",
+   "apoio": "Orgulho de ouvir, sentir e fazer parte desta terra.",
    "foto": {
-    "src": "avo-neto",
-    "assunto": "Neto contando um segredo no ouvido da avó",
-    "foco": "50% 30%"
+    "src": "gaucho",
+    "assunto": "Gaúcho de boina e lenço mostrando o aparelho, sorriso aberto",
+    "foco": "50% 8%"
    }
   }
  },
@@ -116,9 +117,9 @@ window.EXEMPLOS = [
     "nome": "Fernanda Brugiolo",
     "detalhe": "Fonoaudióloga · sócia da Sonata",
     "foto": {
-     "src": "fono",
-     "assunto": "Fernanda de jaleco, olhar para a câmera, fundo claro",
-     "foco": "50% 30%"
+     "src": "fernanda",
+     "assunto": "Fernanda de jaleco no consultório, sorrindo para a câmera",
+     "foco": "50% 0%"
     }
    }
   }
@@ -152,6 +153,11 @@ window.EXEMPLOS = [
    "rotulo": "Guia rápido",
    "titulo": "Como voltar a *escutar* com a Sonata",
    "apoio": "Do primeiro teste ao acompanhamento, passo a passo.",
+   "foto": {
+    "src": "ajuste-aparelho",
+    "assunto": "Fono ajustando o aparelho de uma senhora",
+    "foco": "70% 35%"
+   },
    "pagina": {
     "atual": 1,
     "total": 6
@@ -167,9 +173,9 @@ window.EXEMPLOS = [
    "titulo": "Teste sem custo",
    "corpo": "Leve o aparelho para casa e use por até uma semana, sem custo, nos lugares onde você mais quer ouvir.",
    "foto": {
-    "src": "fones",
-    "assunto": "Homem 70+ sorrindo, ouvindo música em casa",
-    "foco": "50% 35%"
+    "src": "escuta-sorriso",
+    "assunto": "Homem 60+ sorrindo com a mão no ouvido, atento",
+    "foco": "60% 40%"
    },
    "pagina": {
     "atual": 5,
@@ -182,15 +188,17 @@ window.EXEMPLOS = [
   "ficha": {
    "modelo": "carrossel-fim",
    "tema": "agua",
+   "veu": "base",
    "titulo": "Vamos ouvir *juntos*?",
    "apoio": "Agende sua avaliação com a nossa equipe.",
    "cta": "Agende pelo link da bio",
    "pessoa": {
-    "nome": "Fernanda Brugiolo",
+    "nome": "Daiana Cardoso Kuse",
     "detalhe": "Fonoaudióloga · sócia da Sonata",
     "foto": {
-     "src": "fono",
-     "foco": "50% 25%"
+     "src": "daiana",
+     "assunto": "Daiana no consultório mostrando um aparelho",
+     "foco": "50% 10%"
     }
    },
    "pagina": {
@@ -204,12 +212,13 @@ window.EXEMPLOS = [
   "ficha": {
    "modelo": "frase-foto",
    "formato": "story",
-   "titulo": "A emoção de torcer *não tem idade*.",
-   "apoio": "Ouvir o grito de gol junto com a família é outra coisa.",
+   "tema": "marinho",
+   "titulo": "Cantar junto *não tem idade*.",
+   "apoio": "Ouvir a própria voz e a de quem está ao lado.",
    "foto": {
-    "src": "torcida",
-    "assunto": "Família de várias gerações torcendo junta no sofá",
-    "foco": "50% 30%"
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto, rindo, luz quente",
+    "foco": "45% 30%"
    }
   }
  },
@@ -237,9 +246,52 @@ window.EXEMPLOS = [
    "apoio": "Pedir para repetir e aumentar a TV são os primeiros sinais. Uma avaliação tira a dúvida.",
    "legenda": "Por Fernanda Brugiolo, fonoaudióloga",
    "foto": {
-    "src": "cuidado-ouvido",
-    "assunto": "Mulher 60+ com a mão no ouvido, atenta",
-    "foco": "45% 35%"
+    "src": "mulher-parque",
+    "assunto": "Mulher 60+ sorrindo ao ar livre, luz de fim de tarde",
+    "foco": "50% 20%"
+   }
+  }
+ },
+ {
+  "arquivo": "16-tecnologia-foto.json",
+  "ficha": {
+   "modelo": "tecnologia",
+   "tema": "marinho",
+   "rotulo": "Recarregável",
+   "titulo": "Carregue à noite. Converse o *dia inteiro*.",
+   "chips": [
+    "Sem pilhas",
+    "Estojo de carga"
+   ],
+   "foto": {
+    "src": "ouvido-aparelho",
+    "assunto": "Aparelho discreto atrás da orelha, luz natural",
+    "foco": "50% 40%"
+   }
+  }
+ },
+ {
+  "arquivo": "17-oferta-story.json",
+  "ficha": {
+   "modelo": "oferta",
+   "formato": "story",
+   "tema": "marinho",
+   "rotulo": "Seu aparelho auditivo novo",
+   "preco": {
+    "prefixo": "a partir de",
+    "valor": "R$ 125",
+    "sufixo": "por mês"
+   },
+   "selo": {
+    "topo": "em até",
+    "destaque": "18x",
+    "base": "no cartão"
+   },
+   "cta": "Agende sua avaliação",
+   "foto": {
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto",
+    "foco": "45% 25%"
    }
   }
  }

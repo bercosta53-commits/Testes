@@ -13,8 +13,12 @@ export interface Foto {
   src?: string;
   /** Briefing da foto; também é o texto alternativo. */
   assunto?: string;
-  /** object-position, ex.: '50% 30%'. */
+  /** object-position, ex.: '50% 20%'. Mantém rostos fora do véu. */
   foco?: string;
+  /** Ponto da cabeça de quem escuta, em % do post: desenha ondas finas ao redor. */
+  ondas?: string;
+  /** PNG transparente de produto, flutuando sem caixa. */
+  recorte?: boolean;
 }
 
 export interface Pessoa { nome: string; detalhe?: string; foto?: Foto; }
@@ -38,6 +42,8 @@ export interface PostProps {
   selo?: { topo?: string; destaque: string; base?: string };
   passo?: string;
   pagina?: { atual: number; total: number };
+  /** De onde sai o véu sobre a foto. */
+  veu?: 'base' | 'esquerda' | 'topo';
   elementos?: Grafismo[];
   logo?: 'auto' | 'marinho' | 'agua' | 'branco' | false;
 }
@@ -62,6 +68,8 @@ export interface SonataAPI {
   elementos: {
     arcos(o: { w: number; h: number; cx: number; cy: number; r?: number; passo?: number; espessura?: number; de?: number; ate?: number; cores?: string[]; opacidades?: number[] }): string;
     onda(o: { w: number; h: number; altura?: number; amplitude?: number; cores?: [string, string] }): string;
+    veu(lado: 'base' | 'topo' | 'esquerda' | 'direita', tema: Tema, o?: { plato?: number; alcance?: number; forca?: number }): string;
+    ondasNoFoco(F: { w: number; h: number }, ponto: string, cores?: string[]): string;
     linhaDeSom(o?: { largura?: number; altura?: number; cor?: string; corSuave?: string }): string;
   };
 }

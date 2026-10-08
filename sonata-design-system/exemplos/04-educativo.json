@@ -2,8 +2,12 @@
   "modelo": "educativo",
   "tema": "claro",
   "rotulo": "Saúde auditiva",
-  "titulo": "Ouvir bem também é *se equilibrar*.",
-  "apoio": "A audição ajuda o cérebro a perceber o espaço. Cuidar dos ouvidos protege você de quedas.",
+  "titulo": "A adaptação é feita *com calma*, no seu tempo.",
+  "apoio": "Ajustamos o aparelho com você, em mais de uma visita, até a escuta ficar natural.",
   "legenda": "Por Daiana Cardoso Kuse, fonoaudióloga",
-  "foto": { "src": "movimento", "assunto": "Homem 60+ se alongando em casa, em equilíbrio", "foco": "60% 30%" }
+  "foto": {
+    "src": "ajuste-aparelho",
+    "assunto": "Fono ajustando o aparelho de uma senhora, mãos cuidadosas, luz suave",
+    "foco": "78% 40%"
+  }
 }

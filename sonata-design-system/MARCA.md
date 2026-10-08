@@ -1,4 +1,4 @@
-Sistema visual das redes sociais da Sonata Aparelhos Auditivos (Porto Alegre). Ele organiza o que o feed já tem de melhor — o azul-marinho do logo, o verde-água do site, a Poppins leve com a palavra em negrito itálico — e dá um passo à frente: paleta fechada, uma assinatura gráfica só (as ondas que abraçam o "S" do logo), tamanhos de letra pensados para quem tem 60 anos ou mais e modelos de post que uma pessoa ou uma IA monta sem errar. Tudo aqui vale para o canvas real do post, com 1080 px de largura.
+Sistema visual das redes sociais da Sonata Aparelhos Auditivos (Porto Alegre). Ele organiza o que o feed já tem de melhor — fotos de gente de verdade ocupando o post inteiro, o azul-marinho do logo, o verde-água do site, a Poppins leve com a palavra em negrito itálico — e dá um passo à frente: paleta fechada, véus em degradê no lugar de caixas, uma assinatura gráfica só (as ondas que abraçam o "S" do logo), tamanhos de letra pensados para quem tem 60 anos ou mais e modelos de post que uma pessoa ou uma IA monta sem errar. Tudo aqui vale para o canvas real do post, com 1080 px de largura.
 
 ## Essência
 
@@ -74,7 +74,7 @@ Cada post recebe um tema; os tokens semânticos (`fundo`, `titulo`, `enfase`, `a
 
 - **Nunca texto branco sobre `agua-400`** (1,8:1). O botão atual do site faz isso; nas redes, texto sobre água é sempre `marinho-800` ou `marinho-900`.
 - `agua-600` sobre branco tem 3,7:1: serve só para a ênfase do título (64 px ou mais). Em texto menor, use `agua-700` (5,4:1).
-- `agua-400` como texto só sobre `marinho-800` ou mais escuro (7,8:1).
+- `agua-400` como texto só sobre `marinho-800` ou mais escuro (7,6:1).
 - Ênfase colorida existe só no título. No apoio e no corpo, nada de cor nem de asterisco.
 
 ## Tipografia
@@ -130,30 +130,36 @@ Um elemento por nível. Se dois disputam a atenção (dois números, duas fotos,
 
 Todos derivam das duas ondas que abraçam o "S" do logo. Use **no máximo dois grafismos por post**, nunca atrás de texto.
 
-- **Arcos de escuta** — três traços concêntricos com ponta redonda, do mais forte (dentro, `grafismo-forte`) ao mais suave (fora, `grafismo-suave`), com espessura caindo 22% a cada arco. Dois usos: no canto, cortados pela borda do post (o canto oposto ao logo), ou abraçando uma foto, concêntricos ao canto `raio-onda` da moldura ou ao retrato redondo, como as ondas abraçam o "S". Arquivos: `arcos-escuta-*.svg`, `arcos-retrato.svg`.
-- **Onda** — faixa fluida na base, duas camadas (`grafismo-medio` atrás, `grafismo-forte` na frente), uma ondulação e meia na largura do post. Só em `data`, `carrossel-fim` e frases de fechamento. No tema `agua`, a camada da frente é `branco` e o logo pousa nela.
-- **Linha de som** — barras simétricas que crescem no centro, largura útil do grid, 112 px de altura. Só em frases sem foto e em tecnologia.
-- **Moldura** — foto com cantos `raio-48` e **um** canto `raio-onda` (280 px), sempre o canto que aponta para o texto; ou sangrada na borda com só o canto orgânico; ou círculo para retratos. Nunca moldura com borda ou sombra, exceto `sombra-flutuante` no aparelho.
+- **Véus** — a peça que mais trabalha no sistema. Degradê suave (curva senoidal) da cor do tema até o transparente, saindo do lado onde fica o texto: da base (`frase-foto`, `fono`, stories), da esquerda (`educativo`, `oferta`, `depoimento`) ou do topo. Cores: `marinho-900` e `agua-900` nos temas escuros, `branco` e `agua-50` nos claros, `agua-400` no fechamento do carrossel. Um véu curto no topo protege o logo quando a foto é clara ali. O véu cobre o texto, nunca o rosto.
+- **Ondas no foco** — três arcos finos (9 px), brancos, ao redor da cabeça de quem escuta, abrindo para o lado do texto: o som chegando à pessoa. Na ficha, `foto.ondas` com o ponto em porcentagem ("46% 27%"). Use só quando a pessoa está ouvindo algo ou alguém.
+- **Arcos de escuta** — três traços concêntricos com ponta redonda, do mais forte (dentro, `grafismo-forte`) ao mais suave (fora, `grafismo-suave`), cortados pela borda num canto. Nos posts de cor são a assinatura; sobre foto, ficam finos e brancos.
+- **Onda** — faixa fluida em duas camadas. Em posts de cor, pousa na base. Sobre foto, vira **campo de onda**: a cor do tema sobe da base com borda ondulada e a foto continua por trás, sem moldura (`data`, miolo do carrossel).
+- **Linha de som** — barras simétricas que crescem no centro, largura útil do grid, 112 px de altura. Só em frases sem foto.
+- **Recorte de produto** — o aparelho em PNG transparente, flutuando com `sombra-flutuante` no centro de anéis de escuta. Nunca dentro de círculo ou caixa.
 - **CTA** — pílula `raio-pilula`, 104 px de altura, `cta-fundo` e `cta-texto`, verbo + objeto + seta. Um por post.
 - **Chips** — até 3 benefícios de uma ou duas palavras, com ponto `grafismo-forte`.
 - **Selo** — círculo de 248 px em `cta-fundo` com `numeral` reduzido ("18x"). Só em `oferta`.
+- **Assinatura de pessoa** — nome em `nome` e detalhe em `legenda` sob um fio curto de `grafismo-forte`. Nunca retrato em círculo.
 - **Indicador de página** — pontos de 16 px, ativo em pílula de 56 px, no rodapé do carrossel.
 
 ## Fotografia
 
-- Pessoas de 60+ **com alguém**: casal, netos, amigas, família, a fono. Em movimento: caminhando, dançando, rindo, torcendo, viajando, tocando música.
-- Luz natural e quente, pele real. Olhares entre as pessoas, não para a câmera (as fonos são a exceção: olham para quem as segue).
-- Referências de Porto Alegre quando couber: Redenção, orla do Guaíba, chimarrão na praça.
-- Aparelho: recorte limpo, 3/4, luz lateral suave, sempre com `legenda` "Imagem ilustrativa ampliada.".
-- Evite: close de orelha com otoscópio, idoso sozinho e triste, banco de imagem com fundo branco infinito, filtro colorido. A única camada de cor sobre foto é o véu marinho.
-- Enquadre deixando ar no lado do texto; use `foco` para manter rostos fora da área do título.
+**Foto sempre estourada.** A foto ocupa o post inteiro, ou sobe da base até uma onda; nunca em círculo, caixa, moldura com canto recortado ou janela. Quem aparece na foto não pode parecer preso a uma forma. A legibilidade vem do véu, não do recorte.
+
+- Pessoas de 60+ **com alguém**: casal, netos, amigas, família, a fono. Em movimento: caminhando, cantando, rindo, torcendo, viajando.
+- Luz natural e quente, pele real, fundo com profundidade (parque, casa, rua, consultório claro).
+- Enquadre deixando ar do lado do texto: rosto no terço de cima quando o véu vem da base; pessoa à direita quando o véu vem da esquerda. Ajuste com `foco` (object-position) até nenhum rosto ficar sob o véu.
+- As fonos olham para a câmera; as demais pessoas olham umas para as outras ou para o que estão vivendo.
+- Aparelho: recorte limpo em PNG, ou foto de uso real (atrás da orelha, nas mãos, no estojo). Sempre com `legenda` "Imagem ilustrativa ampliada." quando ampliado.
+- Evite: close de exame com otoscópio, pessoa sozinha e aflita para dramatizar a perda, fundo branco de banco de imagem, filtro colorido. A única cor sobre a foto é o véu da paleta.
+- Use os arquivos originais em alta (mínimo 1080 px no lado menor). Fotos do site da Sonata já servem: sócias, gaúcho, casal no karaokê, mulher no parque, adaptação do aparelho.
 
 ## Logo
 
-- Três versões: `sonata-marinho` (fundos `claro`, `bruma`, `agua`), `sonata-branco` (`marinho`, `mar` e fotos com véu) e `sonata-agua` (só sobre `marinho-800` ou `marinho-900`, quando o branco pesar).
+- Três versões: `sonata-marinho` (fundos `claro`, `bruma`, `agua` e véus claros), `sonata-branco` (`marinho`, `mar` e fotos com véu escuro) e `sonata-agua` (só sobre `marinho-800` ou `marinho-900`, quando o branco pesar).
 - Altura de 64 px no feed e no story, 56 px no quadrado. Área livre ao redor: a altura do "S".
-- Posição fixa: canto superior esquerdo. Exceções: centro da base em `data` (sobre a onda) e canto inferior direito em `depoimento`. Um logo por post; o miolo do carrossel não leva logo.
-- Nunca recolorir fora das três versões, distorcer, contornar ou aplicar sobre área clara de foto sem `veu-topo`.
+- Posição fixa: canto superior esquerdo, sobre o véu curto do topo quando há foto. Exceções: sobre o campo de onda em `data` e no canto inferior direito do `depoimento` sem foto. Um logo por post; o miolo do carrossel não leva logo.
+- Nunca recolorir fora das três versões, distorcer, contornar ou aplicar sobre área clara de foto sem véu.
 
 ## Movimento (Reels e stories)
 
@@ -163,6 +169,7 @@ Os arcos se desenham de dentro para fora (2,4 s, curva suave, 0,25 s entre arcos
 
 - Várias fontes cursivas e condensadas → Poppins com papéis fixos + um único manuscrito, só em datas.
 - Ondas e formas diferentes a cada post → arcos de escuta e uma onda padronizada, tirados do logo.
+- Fotos em caixas, círculos e molduras → foto sempre estourada, com véu em degradê da paleta do lado do texto.
 - Verde-água em vários tons soltos → duas escalas fechadas de 10 tons e cinco fundos.
 - Texto branco sobre verde-água → texto marinho sobre água.
 - Letras de 20 a 24 px no canvas → mínimo de 28 px, corpo a partir de 38 px.
@@ -171,16 +178,16 @@ Os arcos se desenham de dentro para fora (2,4 s, curva suave, 0,25 s entre arcos
 
 ## Modelos
 
-| Modelo | Pilar | Temas | Quando |
+| Modelo | Pilar | Temas | Composição |
 |---|---|---|---|
-| `frase-foto` | Afeto | foto + véu marinho | Convivência e emoção; a foto é o centro |
-| `frase` | Afeto | todos | Frase de impacto sem foto; o vazio é o protagonista |
-| `educativo` | Cuidado | claro, bruma | Um fato de saúde auditiva, assinado pela fono |
-| `tecnologia` | Tecnologia | marinho, mar | Aparelho no centro de ondas, até 3 chips |
-| `data` | Afeto | agua, bruma, mar | Datas comemorativas, com manuscrito |
-| `depoimento` | Sonata | bruma, claro | Paciente real, nome e detalhe |
-| `fono` | Sonata | claro, bruma | As sócias falando de perto |
-| `oferta` | Sonata | marinho, mar | Condição comercial real, 1 em 5 posts |
-| `carrossel-capa` / `-passo` / `-fim` | Cuidado | mar · claro · agua | Guias, passo a passo, listas |
+| `frase-foto` | Afeto | marinho, mar, claro | Foto estourada, véu da base (ou da esquerda), frase grande |
+| `frase` | Afeto | todos | Sem foto: o vazio é o protagonista, arcos e linha de som |
+| `educativo` | Cuidado | claro, bruma | Foto estourada, véu claro da esquerda, assinatura da fono |
+| `tecnologia` | Tecnologia | marinho, mar | Aparelho recortado no centro dos anéis, ou foto de uso sob véu |
+| `data` | Afeto | agua, bruma, mar | Foto estourada e campo de onda subindo da base com o manuscrito |
+| `depoimento` | Sonata | bruma, claro, marinho | Com foto: pessoa estourada e véu; sem foto: a citação ocupa o post |
+| `fono` | Sonata | claro, bruma | Foto da sócia estourada, véu claro da base, nome sob fio |
+| `oferta` | Sonata | marinho, mar | Foto de pessoas sob véu marinho, ou só cor; selo e um CTA |
+| `carrossel-capa` / `-passo` / `-fim` | Cuidado | mar · claro · agua | Capa com foto e véu; passo com foto subindo numa onda; fim com a fono |
 
 Cada modelo tem um card com variações e regras. Para montar posts com IA, siga o **Guia para IA**: a IA escreve uma ficha JSON (`ia/ficha-post.schema.json`) e o motor `Sonata.render()` aplica este manual sozinho.

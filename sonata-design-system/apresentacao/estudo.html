@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sonata Social — Ondas · estudo</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../bundle/fontes-locais.css">
+<link rel="stylesheet" href="../bundle/sonata.css">
+<style>
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { margin: 0; padding: 0; background: var(--branco); }
+  body { font-family: var(--font-sans); color: var(--marinho-800); -webkit-font-smoothing: antialiased; }
+  .slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; page-break-after: always; break-after: page;
+    background: var(--branco); box-sizing: border-box; padding: 112px 128px 120px; }
+  .slide > * { position: relative; }
+  .slide.bruma { background: var(--agua-50); }
+  .slide.marinho { background: var(--marinho-800); color: var(--branco); }
+  .slide.mar { background: linear-gradient(160deg, var(--agua-800) 0%, var(--marinho-900) 100%); color: var(--branco); }
+  .bg { position: absolute !important; inset: 0; }
+  .bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .deco { position: absolute !important; left: 0; top: 0; pointer-events: none; }
+
+  .rot { font-size: 22px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--agua-700); margin: 0 0 28px; display: flex; align-items: center; gap: 16px; }
+  .rot::before { content: ""; width: 40px; height: 3px; border-radius: 2px; background: currentColor; opacity: .8; }
+  .escuro .rot { color: var(--agua-300); }
+  h1, h2 { font-weight: 300; letter-spacing: -0.02em; margin: 0; color: var(--marinho-700); text-wrap: balance; }
+  .escuro h1, .escuro h2 { color: var(--branco); }
+  h1 { font-size: 136px; line-height: 1.0; }
+  h2 { font-size: 66px; line-height: 1.08; max-width: 1300px; }
+  h1 em, h2 em, .em { font-style: italic; font-weight: 800; letter-spacing: -0.03em; color: var(--agua-600); }
+  .escuro h1 em, .escuro h2 em, .escuro .em { color: var(--agua-400); }
+  p, li { font-size: 26px; line-height: 1.5; color: var(--cinza-700); }
+  .escuro p, .escuro li { color: var(--marinho-100); }
+  .lead { font-size: 30px; line-height: 1.5; max-width: 1000px; margin: 36px 0 0; }
+  .small { font-size: 20px; line-height: 1.45; color: var(--cinza-500); }
+  .escuro .small { color: var(--marinho-200); }
+  b, strong { font-weight: 600; color: var(--marinho-700); }
+  .escuro b { color: var(--branco); }
+  .rodape { position: absolute !important; left: 128px; right: 128px; bottom: 48px; display: flex; justify-content: space-between;
+    font-size: 16px; color: var(--cinza-500); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+  .escuro .rodape { color: var(--marinho-200); }
+  .row { display: flex; gap: 48px; align-items: flex-start; }
+  .col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .cap { font-size: 19px; line-height: 1.45; color: var(--cinza-700); margin-top: 16px; max-width: 360px; }
+  .cap b { display: block; font-size: 21px; margin-bottom: 2px; }
+  .escuro .cap { color: var(--marinho-100); }
+  .post { flex: none; }
+  .post .sn-moldura-preview { border-radius: 10px; box-shadow: 0 2px 0 rgba(7,35,58,.04), 0 24px 60px rgba(7,35,58,.16); }
+  .escuro .post .sn-moldura-preview { box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  table { border-collapse: collapse; width: 100%; font-size: 22px; }
+  th { text-align: left; font-size: 17px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--agua-700); padding: 0 24px 14px 0; border-bottom: 2px solid var(--marinho-100); }
+  td { padding: 16px 24px 16px 0; border-bottom: 1px solid var(--marinho-100); vertical-align: top; line-height: 1.4; color: var(--cinza-700); }
+  td:first-child { color: var(--marinho-700); font-weight: 600; }
+  .num { font-size: 120px; font-weight: 800; font-style: italic; letter-spacing: -0.04em; line-height: .9; color: var(--agua-600); font-variant-numeric: tabular-nums; }
+  .escuro .num { color: var(--agua-400); }
+  .chip { display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 26px; border-radius: 999px; border: 2px solid var(--agua-200); background: var(--branco); font-size: 22px; font-weight: 500; color: var(--marinho-700); }
+  .chip i { width: 12px; height: 12px; border-radius: 50%; background: var(--agua-400); display: block; }
+  .card { background: var(--branco); border-radius: 24px; padding: 40px; box-sizing: border-box; }
+  .img { display: block; border-radius: 12px; object-fit: cover; }
+  .mk { position: absolute; width: 44px; height: 44px; border-radius: 50%; background: var(--marinho-700); color: var(--branco);
+    font: 600 22px/44px var(--font-sans); text-align: center; box-shadow: 0 0 0 5px var(--branco); transform: translate(-50%, -50%); }
+  .lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 22px; }
+  .lista li { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 20px; align-items: start; font-size: 23px; line-height: 1.45; }
+  .lista .n { width: 44px; height: 44px; border-radius: 50%; background: var(--marinho-700); color: var(--branco); font: 600 20px/44px var(--font-sans); text-align: center; }
+  .escuro .lista .n { background: var(--agua-400); color: var(--marinho-900); }
+  .tag { display: inline-block; font-size: 15px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; background: var(--agua-100); color: var(--agua-800); }
+  .tag.x { background: var(--marinho-100); color: var(--marinho-800); }
+  pre { margin: 0; background: var(--marinho-900); color: var(--agua-200); border-radius: 20px; padding: 32px 36px; font: 19px/1.55 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; }
+  pre .k { color: var(--agua-400); } pre .s { color: var(--branco); }
+  .seta { font-size: 40px; color: var(--agua-600); line-height: 1; }
+</style>
+<script src="../bundle/sonata.js"></script>
+<script src="../modelos/assets.js"></script>
+</head>
+<body>
+
+<!-- 1 · CAPA -->
+<section class="slide escuro">
+  <div class="bg"><img src="../assets/fotos/casal-karaoke.jpg" alt="" style="object-position:50% 30%"></div>
+  <div class="bg" data-veu="esquerda,marinho,0.3,0.78,0.96"></div>
+  <div class="bg" data-veu="topo,marinho,0,0.25,0.5"></div>
+  <img src="../assets/logos/sonata-branco.png" alt="Sonata aparelhos auditivos" style="height:72px;display:block">
+  <div style="position:absolute;left:128px;bottom:190px;width:860px">
+    <p class="rot">Design system · redes sociais</p>
+    <h1>Sonata Social <em>Ondas</em></h1>
+    <p class="lead">Um sistema visual para organizar e profissionalizar a presença da Sonata nas redes: foto, cor, letra, grid, elementos e modelos que pessoas e ferramentas de IA conseguem repetir.</p>
+  </div>
+  <div class="rodape"><span>Porto Alegre · outubro de 2026</span><span>Estudo de design system</span></div>
+</section>
+
+<!-- 2 · PONTO DE PARTIDA -->
+<section class="slide">
+  <div style="position:absolute;right:0;top:0;bottom:0;width:820px"><div class="bg"><img src="../assets/fotos/mulher-parque.jpg" alt="" style="object-position:45% 30%"></div><div class="bg" data-veu="esquerda,claro,0,0.45,1"></div></div>
+  <div style="width:1000px">
+    <p class="rot">Ponto de partida</p>
+    <h2>O primeiro passo foi <em>existir</em>. O segundo é organizar para crescer.</h2>
+    <p class="lead" style="max-width:900px">A Sonata já tem presença digital: site, feed ativo, fotos de gente de verdade e o rosto das sócias. Este estudo pega o que já funciona, transforma em regra e define o que muda, para que cada post pareça da mesma marca, seja quem for que o produza.</p>
+    <div class="row" style="margin-top:80px;gap:56px">
+      <div class="col" style="flex:1"><div class="num">2</div><p><b>famílias de cor</b>, marinho e verde-água, 10 tons cada.</p></div>
+      <div class="col" style="flex:1"><div class="num">1</div><p><b>família de letra</b>, a Poppins do site, com papéis fixos.</p></div>
+      <div class="col" style="flex:1"><div class="num">11</div><p><b>modelos de post</b> em feed, story e quadrado.</p></div>
+    </div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 3 · DIAGNÓSTICO -->
+<section class="slide bruma">
+  <p class="rot">Diagnóstico do feed atual</p>
+  <h2 style="font-size:54px">Muita coisa boa, mas cada post fala <em>uma língua</em>.</h2>
+  <div class="row" style="margin-top:36px;gap:72px">
+    <div style="position:relative;width:680px;flex:none">
+      <div style="position:relative">
+        <img class="img" src="img/feed-atual-1.jpg" style="width:680px;height:auto" alt="Feed atual, parte 1">
+        <span class="mk" style="left:29%;top:30%">1</span><span class="mk" style="left:22%;top:72%">3</span><span class="mk" style="left:68%;top:8%">2</span>
+        <span class="mk" style="left:5%;top:7%">5</span><span class="mk" style="left:86%;top:43%">5</span><span class="mk" style="left:4%;top:49%">4</span>
+      </div>
+      <div style="position:relative;margin-top:16px">
+        <img class="img" src="img/feed-atual-2.jpg" style="width:680px;height:auto" alt="Feed atual, parte 2">
+        <span class="mk" style="left:48%;top:30%">1</span><span class="mk" style="left:31%;top:82%">1</span><span class="mk" style="left:89%;top:75%">1</span>
+        <span class="mk" style="left:9%;top:70%">3</span><span class="mk" style="left:39%;top:31%">4</span>
+      </div>
+    </div>
+    <ol class="lista" style="flex:1">
+      <li><span class="n">1</span><span><b>Letras.</b> Leve geométrica, black condensada em caixa alta e duas cursivas diferentes no mesmo grid.</span></li>
+      <li><span class="n">2</span><span><b>Grafismos.</b> Arcos, ondas, faixas e molduras mudam de forma e de cor a cada post.</span></li>
+      <li><span class="n">3</span><span><b>Cor.</b> Verdes soltos e cores de data (bandeira, verde-amarelo) dentro da arte.</span></li>
+      <li><span class="n">4</span><span><b>Legibilidade.</b> Textos de apoio pequenos e finos para quem tem 60+.</span></li>
+      <li><span class="n">5</span><span><b>Logo.</b> Muda de posição e de cor a cada post.</span></li>
+      <li><span class="n">6</span><span><b>Contraste.</b> No site, branco sobre verde-água (1,8:1).</span></li>
+    </ol>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 4 · O QUE FICA -->
+<section class="slide">
+  <p class="rot">O que fica</p>
+  <h2>O que já é <em>Sonata</em> vira regra.</h2>
+  <div class="row" style="margin-top:64px;gap:40px">
+    <div class="col" style="width:520px"><img class="img" src="img/site-hero.jpg" style="width:520px;height:294px" alt="Hero do site"><p class="cap" style="max-width:520px"><b>A frase leve com a palavra que vibra</b>"Redescubra o prazer de <i>ouvir</i>": Poppins fina com uma palavra em negrito itálico. Vira a assinatura tipográfica.</p></div>
+    <div class="col" style="width:280px"><img class="img" src="img/ok-baixinho.jpg" style="width:280px;height:376px" alt="Post Dia dos Avós"><p class="cap"><b>Foto estourada, gente junta</b>A foto ocupa o post inteiro, de perto, com emoção real.</p></div>
+    <div class="col" style="width:280px"><img class="img" src="img/ok-redescobrindo.jpg" style="width:280px;height:376px" alt="Post Redescobrindo o mundo"><p class="cap"><b>Marinho com respiro</b>Fundo escuro, letra leve, linha de som.</p></div>
+    <div class="col" style="width:280px"><img class="img" src="img/ok-audiologista.jpg" style="width:280px;height:376px" alt="Post Dia do Audiologista"><p class="cap"><b>O rosto das sócias</b>As fonos dão confiança. Ganham um modelo próprio.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 5 · CONCEITO -->
+<section class="slide escuro">
+  <div class="bg"><img src="../assets/fotos/mulher-parque.jpg" alt="" style="object-position:50% 32%"></div>
+  <div class="bg" data-veu="esquerda,marinho,0.34,0.82,0.95"></div>
+  <div class="bg" data-ondas="1440,330"></div>
+  <div style="width:960px">
+    <p class="rot">Conceito</p>
+    <h1 style="font-size:120px">Ondas: o som que <em>aproxima</em>.</h1>
+    <p class="lead" style="max-width:860px">A Sonata não vende aparelho: devolve conversa, risada, música e a voz de quem a gente ama. O som chega em ondas, e as ondas são a linguagem do sistema, nos arcos, nos véus, na faixa que sobe da base e no ritmo entre cheio e vazio.</p>
+  </div>
+  <div class="row" style="position:absolute;left:128px;width:980px;bottom:150px;gap:32px">
+    <div class="col" style="flex:1"><p class="rot" style="margin:0">Próxima</p><p style="font-size:22px;margin:0">Gente junta, "você", "a gente".</p></div>
+    <div class="col" style="flex:1"><p class="rot" style="margin:0">Efetiva</p><p style="font-size:22px;margin:0">Uma ideia por post.</p></div>
+    <div class="col" style="flex:1"><p class="rot" style="margin:0">Profissional</p><p style="font-size:22px;margin:0">Grid fixo, assinatura da fono.</p></div>
+    <div class="col" style="flex:1"><p class="rot" style="margin:0">Cuidadosa</p><p style="font-size:22px;margin:0">Respiro e letra grande.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 6 · PÚBLICO -->
+<section class="slide">
+  <div style="position:absolute;right:0;top:0;bottom:0;width:760px"><div class="bg"><img src="../assets/fotos/ajuste-aparelho.jpg" alt="" style="object-position:72% 40%"></div><div class="bg" data-veu="esquerda,claro,0,0.4,1"></div></div>
+  <div style="width:1060px">
+    <p class="rot">Para quem falamos</p>
+    <h2>Falamos com quem <em>decide</em>.</h2>
+    <div class="row" style="margin-top:48px;gap:48px">
+      <div style="flex:1.1"><p style="font-size:44px;line-height:1.15;color:var(--marinho-700);margin:0 0 14px;font-weight:300">Ela, <span class="em">60+</span></p><p style="margin:0">Aposentada, classe AB, ativa. É quem mais aceita o tratamento, cuida do aparelho e muitas vezes compra também para o marido.</p></div>
+      <div style="flex:1"><p style="font-size:44px;line-height:1.15;color:var(--marinho-700);margin:0 0 14px;font-weight:300">Os filhos que <span class="em">cuidam</span></p><p style="margin:0">De 50 a 65 anos, classe AB. Procuram segurança e informação clara para os pais.</p></div>
+    </div>
+    <div class="row" style="margin-top:84px;gap:56px">
+      <div class="col" style="flex:1"><div class="num">28<span style="font-size:44px"> px</span></div><p style="font-size:22px">menor texto no post; corpo a partir de 38 px.</p></div>
+      <div class="col" style="flex:1"><div class="num">4,5:1</div><p style="font-size:22px">contraste mínimo, conferido em todas as combinações.</p></div>
+      <div class="col" style="flex:1"><div class="num">35</div><p style="font-size:22px">palavras no máximo por arte.</p></div>
+    </div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 7 · VOZ -->
+<section class="slide bruma">
+  <p class="rot">Voz</p>
+  <h2>Calorosa e <em>precisa</em>, como uma conversa de consultório.</h2>
+  <div class="row" style="margin-top:56px;gap:80px">
+    <ul class="lista" style="flex:1">
+      <li><span class="n">1</span><span>Segunda pessoa, frases de até 12 palavras, <b>uma ideia por post</b>.</span></li>
+      <li><span class="n">2</span><span><b>Benefício antes da especificação.</b> O que a pessoa volta a fazer.</span></li>
+      <li><span class="n">3</span><span>"Perda auditiva", "ouvir melhor", "voltar a escutar". <b>Nunca</b> surdo, deficiente, velhinho.</span></li>
+      <li><span class="n">4</span><span>Sem "imperdível". No máximo uma exclamação. <b>Emoji só na legenda.</b></span></li>
+      <li><span class="n">5</span><span>Educativo assinado pela fono. Depoimento real, com nome e autorização.</span></li>
+    </ul>
+    <table style="flex:1.1">
+      <tr><th>Em vez de</th><th>Escreva</th></tr>
+      <tr><td style="font-weight:400;color:var(--cinza-500)">Não sofra mais com a surdez!</td><td style="color:var(--marinho-700)">Volte a escutar quem você ama.</td></tr>
+      <tr><td style="font-weight:400;color:var(--cinza-500)">A melhor tecnologia do mercado</td><td style="color:var(--marinho-700)">Pequeno no ouvido. Enorme na conversa.</td></tr>
+      <tr><td style="font-weight:400;color:var(--cinza-500)">Promoção imperdível!!!</td><td style="color:var(--marinho-700)">Seu aparelho novo a partir de R$ 125 por mês.</td></tr>
+      <tr><td style="font-weight:400;color:var(--cinza-500)">Idosos com perda auditiva</td><td style="color:var(--marinho-700)">Quem já não escuta como antes</td></tr>
+      <tr><td style="font-weight:400;color:var(--cinza-500)">Bateria de lítio com 24 h</td><td style="color:var(--marinho-700)">Carregue à noite. Converse o dia inteiro.</td></tr>
+    </table>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 8 · PILARES -->
+<section class="slide">
+  <p class="rot">Pilares de conteúdo</p>
+  <h2>Quatro pilares, um <em>ritmo</em> por mês.</h2>
+  <div style="display:flex;height:120px;border-radius:24px;overflow:hidden;margin-top:72px">
+    <div style="flex:35;background:var(--agua-400);padding:24px 32px;box-sizing:border-box"><span style="font-size:44px;font-weight:800;font-style:italic;color:var(--marinho-900)">35%</span></div>
+    <div style="flex:30;background:var(--marinho-700);padding:24px 32px;box-sizing:border-box"><span style="font-size:44px;font-weight:800;font-style:italic;color:var(--branco)">30%</span></div>
+    <div style="flex:15;background:var(--agua-700);padding:24px 32px;box-sizing:border-box"><span style="font-size:44px;font-weight:800;font-style:italic;color:var(--branco)">15%</span></div>
+    <div style="flex:20;background:var(--marinho-900);padding:24px 32px;box-sizing:border-box"><span style="font-size:44px;font-weight:800;font-style:italic;color:var(--branco)">20%</span></div>
+  </div>
+  <div style="display:flex;margin-top:32px">
+    <div style="flex:35;padding-right:32px"><p style="margin:0"><b>Afeto</b><br>Vida, convivência, datas. <span class="small">frase-foto · frase · data</span></p></div>
+    <div style="flex:30;padding-right:32px"><p style="margin:0"><b>Cuidado</b><br>Saúde auditiva explicada. <span class="small">educativo · carrossel</span></p></div>
+    <div style="flex:15;padding-right:24px"><p style="margin:0"><b>Tecnologia</b><br>Aparelhos. <span class="small">tecnologia</span></p></div>
+    <div style="flex:20"><p style="margin:0"><b>Sonata</b><br>Fonos, pacientes, condições. <span class="small">fono · depoimento · oferta</span></p></div>
+  </div>
+  <div class="row" style="position:absolute;left:128px;right:128px;bottom:170px;gap:24px">
+    <span class="chip"><i></i>Oferta: no máximo 1 em cada 5 posts</span>
+    <span class="chip"><i></i>Nunca 3 posts seguidos no mesmo fundo</span>
+    <span class="chip"><i></i>Fecha o mês com depoimento ou fono</span>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 9 · O PERFIL ORGANIZADO -->
+<section class="slide bruma">
+  <div class="row" style="gap:96px;align-items:center;height:100%">
+    <div class="col" style="width:620px;flex:none">
+      <p class="rot">Como o perfil fica</p>
+      <h2>Um grid que se lê como <em>uma marca</em>.</h2>
+      <p class="lead" style="max-width:600px">Fotos estouradas e cheias de gente, alternando com posts de cor que respiram. A mesma letra, os mesmos véus e arcos, o logo sempre no mesmo canto. A variedade vem das pessoas e das pautas, não da forma.</p>
+    </div>
+    <div id="grid-perfil" style="display:grid;grid-template-columns:repeat(3,250px);gap:6px;flex:none"></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 10 · FOTOGRAFIA -->
+<section class="slide">
+  <p class="rot">Fotografia</p>
+  <h2>Foto sempre <em>estourada</em>. O véu faz o resto.</h2>
+  <div class="row" style="margin-top:48px;gap:36px;align-items:flex-start">
+    <div><div class="post" data-k="frase-foto" data-w="300"></div><p class="cap"><b>Véu da base</b>Marinho sobe da base; rosto no terço de cima.</p></div>
+    <div><div class="post" data-k="educativo" data-w="300"></div><p class="cap"><b>Véu lateral</b>Branco vem da esquerda; a pessoa fica à direita.</p></div>
+    <div><div class="post" data-k="data" data-w="300"></div><p class="cap"><b>Campo de onda</b>A cor sobe da base com borda ondulada.</p></div>
+    <ul class="lista" style="flex:1;margin-top:8px">
+      <li><span class="n">1</span><span>A foto ocupa o post inteiro. <b>Nunca</b> em círculo, caixa ou moldura recortada.</span></li>
+      <li><span class="n">2</span><span>O texto pousa num <b>véu em degradê</b> da paleta, do lado oposto ao rosto.</span></li>
+      <li><span class="n">3</span><span>Gente de 60+ <b>com alguém</b>, em movimento, luz natural e quente.</span></li>
+      <li><span class="n">4</span><span>Sobre a foto, as ondas ficam <b>finas e brancas</b>, ao redor de quem escuta.</span></li>
+    </ul>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 11 · PALETA -->
+<section class="slide">
+  <p class="rot">Cor</p>
+  <h2>Paleta fechada: <em>marinho</em> e verde-água.</h2>
+  <div id="escalas" style="margin-top:56px;display:flex;flex-direction:column;gap:20px"></div>
+  <div class="row" style="position:absolute;left:128px;right:128px;bottom:150px;gap:40px;align-items:center">
+    <div style="display:flex;gap:12px;align-items:center"><span style="width:56px;height:56px;border-radius:12px;background:#fff;border:2px solid var(--marinho-100)"></span><span style="width:56px;height:56px;border-radius:12px;background:var(--cinza-700)"></span><span style="width:56px;height:56px;border-radius:12px;background:var(--cinza-500)"></span></div>
+    <p style="margin:0;max-width:620px">Branco e dois cinzas (<b>#3E4A57</b>, <b>#5F6B78</b>) só para texto. Nenhuma outra cor entra na arte, nem em datas.</p>
+    <div style="flex:1;display:flex;height:56px;border-radius:12px;overflow:hidden">
+      <div style="flex:60;background:var(--agua-50);border:2px solid var(--agua-100);box-sizing:border-box;padding:0 18px;display:flex;align-items:center;font-size:18px;color:var(--marinho-700)">60% fundo ou foto</div>
+      <div style="flex:30;background:var(--marinho-700);padding:0 18px;display:flex;align-items:center;font-size:18px;color:#fff">30% marinho</div>
+      <div style="flex:10;background:var(--agua-400);padding:0 12px;display:flex;align-items:center;font-size:18px;color:var(--marinho-900)">10%</div>
+    </div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 12 · FUNDOS -->
+<section class="slide bruma">
+  <p class="rot">Fundos</p>
+  <h2>Cinco fundos de cor, e os textos <em>trocam sozinhos</em>.</h2>
+  <div class="row" style="margin-top:56px;gap:32px">
+    <div><div class="post" data-k="t-claro" data-w="296"></div><p class="cap"><b>Claro</b>Branco com halo água. Educativo, fono, miolo.</p></div>
+    <div><div class="post" data-k="t-bruma" data-w="296"></div><p class="cap"><b>Bruma</b>Água-50 com halo. O respiro com cor.</p></div>
+    <div><div class="post" data-k="t-agua" data-w="296"></div><p class="cap"><b>Água</b>Água-400, texto marinho. Datas e números.</p></div>
+    <div><div class="post" data-k="t-marinho" data-w="296"></div><p class="cap"><b>Marinho</b>Texto branco. Tecnologia e impacto.</p></div>
+    <div><div class="post" data-k="t-mar" data-w="296"></div><p class="cap"><b>Mar</b>Água profunda até marinho. Capas e noite.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 13 · CONTRASTE -->
+<section class="slide">
+  <p class="rot">Contraste</p>
+  <h2>Texto sobre verde-água é sempre <em>marinho</em>.</h2>
+  <div class="row" style="margin-top:64px;gap:72px">
+    <div class="row" style="width:720px;flex:none;gap:24px">
+      <div style="flex:1"><div style="height:250px;border-radius:24px;background:var(--agua-400);padding:36px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end"><span style="font-size:34px;font-weight:800;font-style:italic;color:#fff;line-height:1.1">Teste sem compromisso</span></div><p class="cap"><span class="tag x">Hoje no site</span><br>Branco sobre água-400: <b style="display:inline">1,8:1</b>. Some para quem enxerga menos.</p></div>
+      <div style="flex:1"><div style="height:250px;border-radius:24px;background:var(--agua-400);padding:36px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end"><span style="font-size:34px;font-weight:800;font-style:italic;color:var(--marinho-900);line-height:1.1">Teste sem compromisso</span></div><p class="cap"><span class="tag">No sistema</span><br>Marinho-900 sobre água-400: <b style="display:inline">8,9:1</b>.</p></div>
+    </div>
+    <table style="flex:1">
+      <tr><th>Texto</th><th>Fundo</th><th>Contraste</th><th>Uso</th></tr>
+      <tr><td><span style="color:#143D66">■</span> marinho-700</td><td>branco</td><td>11,1:1</td><td>Títulos no claro</td></tr>
+      <tr><td><span style="color:#3E4A57">■</span> cinza-700</td><td>branco</td><td>9,0:1</td><td>Apoio e corpo</td></tr>
+      <tr><td><span style="color:#007776">■</span> água-700</td><td>branco</td><td>5,4:1</td><td>Rótulo, ênfase pequena</td></tr>
+      <tr><td><span style="color:#0C9591">■</span> água-600</td><td>branco</td><td>3,7:1</td><td>Só ênfase de título, 64 px+</td></tr>
+      <tr><td><span style="color:#C9DBF0">■</span> marinho-200</td><td>marinho-800</td><td>9,7:1</td><td>Apoio no marinho</td></tr>
+      <tr><td><span style="color:#66D2CD">■</span> água-400</td><td>marinho-800</td><td>7,6:1</td><td>Ênfase no marinho</td></tr>
+      <tr><td><span style="color:#9BE5E0">■</span> água-300</td><td>água-800</td><td>5,5:1</td><td>Ênfase no mar</td></tr>
+    </table>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 14 · TIPOGRAFIA -->
+<section class="slide">
+  <div class="row" style="gap:96px">
+    <div class="col" style="width:820px;flex:none">
+      <p class="rot">Tipografia · Poppins</p>
+      <p style="font-size:124px;line-height:1;font-weight:300;letter-spacing:-.03em;color:var(--marinho-700);margin:0">Redescubra o prazer de <span class="em">ouvir</span>.</p>
+      <p class="lead" style="max-width:780px">A fonte do site ganha papéis fixos. A frase em <b>Light 300</b>, a voz calma. De 1 a 3 palavras em <b>ExtraBold 800 itálico</b>, a palavra que vibra. Sempre à esquerda, em caixa baixa de frase.</p>
+      <div style="margin-top:32px;display:flex;align-items:flex-end;gap:32px">
+        <span style="font-family:var(--font-manuscrito);font-size:96px;line-height:1;color:var(--agua-700);white-space:nowrap">Dia do Gaúcho</span>
+        <p class="small" style="margin:0 0 14px;max-width:340px">Manuscrito (Ms Madi): só em datas, 1 a 4 palavras, nunca a única fonte da informação.</p>
+      </div>
+    </div>
+    <div id="escala-tipo" class="col" style="flex:1;gap:0;margin-top:40px"></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 15 · GRID -->
+<section class="slide bruma">
+  <p class="rot">Grid e espaçamento</p>
+  <h2>Margem de 96, seis colunas, <em>40%</em> de respiro.</h2>
+  <div class="row" style="margin-top:48px;gap:48px;align-items:flex-start">
+    <div><div id="g-feed"></div><p class="cap"><b>Feed 1080 × 1350</b>Margem 96. 6 colunas de 128 com calha de 24.</p></div>
+    <div><div id="g-quad"></div><p class="cap"><b>Quadrado 1080 × 1080</b>Margem 88.</p></div>
+    <div><div id="g-story"></div><p class="cap" style="max-width:240px"><b>Story 1080 × 1920</b>Topo 250 e base 320 livres.</p></div>
+    <div class="col" style="flex:1;gap:14px">
+      <p class="rot" style="margin:0 0 8px">Escala de espaço (px no post)</p>
+      <div id="esp"></div>
+      <p class="small" style="margin-top:12px">Rótulo → título 24 · título → apoio 32 · texto → foto 48 · apoio → CTA 64 · margem 96.</p>
+    </div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 16 · HIERARQUIA -->
+<section class="slide">
+  <div class="row" style="gap:120px;align-items:center;height:100%">
+    <div id="hier" style="flex:none"></div>
+    <div class="col" style="flex:1">
+      <p class="rot">Hierarquia</p>
+      <h2 style="font-size:60px">Quatro níveis, <em>um</em> elemento em cada.</h2>
+      <ol class="lista" style="margin-top:48px">
+        <li><span class="n">1</span><span><b>Imagem.</b> A pessoa, o aparelho ou o número que faz o dedo parar.</span></li>
+        <li><span class="n">2</span><span><b>Título.</b> A maior letra da arte, pelo menos o dobro do apoio. Uma ênfase.</span></li>
+        <li><span class="n">3</span><span><b>Apoio.</b> Completa ou explica, nunca repete. Até 3 linhas.</span></li>
+        <li><span class="n">4</span><span><b>Assinatura.</b> Logo, legenda e CTA, pequenos e sempre no mesmo lugar.</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 17 · ORIGEM DOS ELEMENTOS -->
+<section class="slide marinho escuro">
+  <p class="rot">Elementos</p>
+  <h2>Do logo nascem as <em>ondas</em>.</h2>
+  <div class="row" style="margin-top:96px;gap:80px;align-items:center">
+    <div style="position:relative;width:760px;flex:none">
+      <img src="../assets/logos/sonata-branco.png" alt="Logo Sonata" style="width:760px;display:block">
+      <span style="position:absolute;left:-26px;top:-26px;width:130px;height:150px;border-radius:50%;border:4px dashed var(--agua-400)"></span>
+    </div>
+    <span class="seta" style="color:var(--agua-400)">→</span>
+    <div id="arcos-origem" style="position:relative;width:520px;height:420px;flex:none;border-radius:24px;overflow:hidden"></div>
+  </div>
+  <p class="lead" style="position:absolute;left:128px;bottom:150px;max-width:1300px">As duas ondas que abraçam o "S" viram os <b>arcos de escuta</b>: três traços concêntricos, do mais forte ao mais suave. Nos posts de cor, saem de um canto; sobre a foto, ficam finos e brancos ao redor de quem escuta, como o som chegando.</p>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 18 · FAMÍLIA DE ELEMENTOS -->
+<section class="slide">
+  <p class="rot">Elementos</p>
+  <h2>Uma família só, no máximo <em>dois</em> por post.</h2>
+  <div id="elementos" style="margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px"></div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 19 · LOGO -->
+<section class="slide">
+  <p class="rot">Logo</p>
+  <h2>Três versões, um <em>lugar</em> fixo.</h2>
+  <div class="row" style="margin-top:56px;gap:24px">
+    <div style="flex:1;height:200px;border-radius:24px;border:2px solid var(--marinho-100);display:flex;align-items:center;padding:0 48px;box-sizing:border-box"><img src="../assets/logos/sonata-marinho.png" alt="Logo marinho" style="height:72px"></div>
+    <div style="flex:1;height:200px;border-radius:24px;background:var(--marinho-800);display:flex;align-items:center;padding:0 48px;box-sizing:border-box"><img src="../assets/logos/sonata-branco.png" alt="Logo branco" style="height:72px"></div>
+    <div style="flex:1;height:200px;border-radius:24px;background:var(--marinho-900);display:flex;align-items:center;padding:0 48px;box-sizing:border-box"><img src="../assets/logos/sonata-agua.png" alt="Logo verde-água" style="height:72px"></div>
+  </div>
+  <div class="row" style="margin-top:16px;gap:24px">
+    <p class="small" style="flex:1;margin:0">Marinho: fundos claros, água e véus claros.</p>
+    <p class="small" style="flex:1;margin:0">Branco: marinho, mar e véus escuros.</p>
+    <p class="small" style="flex:1;margin:0">Verde-água: só sobre marinho-800 e 900.</p>
+  </div>
+  <div class="row" style="margin-top:48px;gap:48px;align-items:flex-start">
+    <div id="logo-pos" style="display:flex;gap:24px"></div>
+    <ul class="lista" style="flex:1">
+      <li><span class="n">1</span><span><b>64 px de altura</b> no feed e no story, 56 no quadrado.</span></li>
+      <li><span class="n">2</span><span><b>Superior esquerdo</b>, com véu curto se a foto for clara. Sobre a onda nas datas.</span></li>
+      <li><span class="n">3</span><span>Nunca recolorir, distorcer, contornar ou pôr sobre foto clara sem véu.</span></li>
+    </ul>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 20 · MODELOS AFETO -->
+<section class="slide bruma">
+  <p class="rot">Modelos · Afeto</p>
+  <h2>Emoção com <em>espaço</em> para respirar.</h2>
+  <div class="row" style="margin-top:48px;gap:40px">
+    <div><div class="post" data-k="frase-foto" data-w="380"></div><p class="cap"><b>frase-foto</b>Gente junta em foto estourada, frase sobre véu marinho, ondas finas ao redor de quem escuta.</p></div>
+    <div><div class="post" data-k="frase-bruma" data-w="380"></div><p class="cap"><b>frase</b>Sem foto: o vazio é o protagonista. Arcos e linha de som.</p></div>
+    <div><div class="post" data-k="data" data-w="380"></div><p class="cap"><b>data</b>A cor sobe da base numa onda, com o manuscrito.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 21 · MODELOS CUIDADO -->
+<section class="slide">
+  <p class="rot">Modelos · Cuidado</p>
+  <h2>Saúde auditiva explicada, <em>assinada</em> pela fono.</h2>
+  <div class="row" style="margin-top:48px;gap:28px">
+    <div><div class="post" data-k="educativo" data-w="360"></div><p class="cap"><b>educativo</b>Foto estourada, véu claro da esquerda, assinatura da fono.</p></div>
+    <div style="width:2px;align-self:stretch;background:var(--marinho-100)"></div>
+    <div><div class="post" data-k="capa" data-w="300"></div><p class="cap"><b>carrossel · capa</b>Promete o que entrega.</p></div>
+    <div><div class="post" data-k="passo" data-w="300"></div><p class="cap"><b>carrossel · passo</b>A foto sobe da base numa onda.</p></div>
+    <div><div class="post" data-k="fim" data-w="300"></div><p class="cap"><b>carrossel · fim</b>A fono como rosto do convite.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 22 · MODELOS TECNOLOGIA E SONATA -->
+<section class="slide bruma">
+  <p class="rot">Modelos · Tecnologia e Sonata</p>
+  <h2>Produto, pessoas e <em>condições</em> sem gritar.</h2>
+  <div class="row" style="margin-top:48px;gap:28px">
+    <div><div class="post" data-k="tecnologia" data-w="320"></div><p class="cap"><b>tecnologia · recorte</b>O aparelho flutua no centro dos anéis.</p></div>
+    <div><div class="post" data-k="tec-foto" data-w="320"></div><p class="cap"><b>tecnologia · foto</b>Uso real sob véu marinho.</p></div>
+    <div><div class="post" data-k="fono" data-w="320"></div><p class="cap"><b>fono</b>A sócia em foto estourada, nome sob fio.</p></div>
+    <div><div class="post" data-k="depoimento" data-w="320"></div><p class="cap"><b>depoimento</b>Sem foto, a frase da paciente ocupa o post.</p></div>
+    <div><div class="post" data-k="oferta" data-w="320"></div><p class="cap"><b>oferta</b>Selo, preço e um CTA. 1 em 5 posts.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 23 · FORMATOS -->
+<section class="slide marinho escuro">
+  <p class="rot">Formatos</p>
+  <h2>A mesma ficha vira <em>story</em> ou quadrado.</h2>
+  <div class="row" style="margin-top:48px;gap:32px;align-items:flex-start">
+    <div><div class="post" data-k="s-foto" data-w="300"></div><p class="cap"><b>frase-foto · story</b></p></div>
+    <div><div class="post" data-k="s-edu" data-w="300"></div><p class="cap"><b>educativo · story</b></p></div>
+    <div><div class="post" data-k="s-oferta" data-w="300"></div><p class="cap"><b>oferta · story</b></p></div>
+    <div class="col" style="gap:0"><div class="post" data-k="q-frase" data-w="420"></div><p class="cap" style="max-width:420px"><b>frase · quadrado</b>Para anúncio e WhatsApp. No story, topo 250 e base 320 ficam livres de texto.</p></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 24 · ANTES E DEPOIS -->
+<section class="slide">
+  <p class="rot">O passo à frente</p>
+  <h2>Mesmas pautas, <em>uma</em> só linguagem.</h2>
+  <div class="row" style="margin-top:44px;gap:160px;justify-content:center">
+    <div class="row" style="gap:16px;align-items:center"><img class="img" src="img/antes-gaucho.jpg" style="width:250px;height:337px" alt="Antes: Dia do Gaúcho"><span class="seta">→</span><div class="post" data-k="data" data-w="270"></div></div>
+    <div class="row" style="gap:16px;align-items:center"><img class="img" src="img/antes-aparelho.jpg" style="width:250px;height:328px" alt="Antes: aparelho auditivo"><span class="seta">→</span><div class="post" data-k="tecnologia" data-w="270"></div></div>
+  </div>
+  <div class="row" style="margin-top:28px;gap:160px;justify-content:center">
+    <div class="row" style="gap:16px;align-items:center"><img class="img" src="img/antes-dia-mundial.jpg" style="width:250px;height:328px" alt="Antes: Dia Mundial da Audição"><span class="seta">→</span><div class="post" data-k="mundial" data-w="270"></div></div>
+    <div class="row" style="gap:16px;align-items:center"><img class="img" src="img/antes-idoso.jpg" style="width:250px;height:334px" alt="Antes: Dia do Idoso"><span class="seta">→</span><div class="post" data-k="idoso" data-w="270"></div></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 25 · O QUE MUDA -->
+<section class="slide bruma">
+  <p class="rot">O que muda</p>
+  <h2>Da presença à <em>consistência</em>.</h2>
+  <table style="margin-top:48px">
+    <tr><th style="width:44%">Hoje</th><th>No sistema Ondas</th></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Várias fontes cursivas e condensadas</td><td style="color:var(--marinho-700)">Poppins com papéis fixos e um único manuscrito, só em datas</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Ondas e formas diferentes a cada post</td><td style="color:var(--marinho-700)">Arcos de escuta, véus e uma onda padronizada, tirados do logo</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Fotos ora estouradas, ora em caixas e janelas</td><td style="color:var(--marinho-700)">Foto sempre estourada, com véu em degradê do lado do texto</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Verdes soltos e cores de data na arte</td><td style="color:var(--marinho-700)">Duas escalas fechadas de 10 tons e cinco fundos</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Texto branco sobre verde-água</td><td style="color:var(--marinho-700)">Texto marinho sobre água, contraste conferido</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Letras de 20 a 24 px no post</td><td style="color:var(--marinho-700)">Mínimo de 28 px; corpo a partir de 38 px</td></tr>
+    <tr><td style="font-weight:400;color:var(--cinza-700)">Logo e quantidade de texto variando</td><td style="color:var(--marinho-700)">Logo em posição fixa; até 35 palavras, o resto na legenda</td></tr>
+  </table>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 26 · IA -->
+<section class="slide">
+  <p class="rot">Com inteligência artificial</p>
+  <h2>A IA escreve a ficha. O sistema faz o <em>layout</em>.</h2>
+  <div class="row" style="margin-top:44px;gap:20px;align-items:stretch">
+    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">1 · Pauta</p><p style="margin:0;font-size:22px">A equipe descreve o post e os dados confirmados.</p></div>
+    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">2 · Guia</p><p style="margin:0;font-size:22px">Instrução pronta com regras, cores, letras e limites.</p></div>
+    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">3 · Ficha</p><p style="margin:0;font-size:22px">Modelo, tema, título com ênfase, apoio, foto e foco.</p></div>
+    <div class="card" style="flex:1;background:var(--agua-50);padding:28px"><p class="rot" style="margin:0 0 8px">4 · Motor</p><p style="margin:0;font-size:22px">Monta o post, ajusta o título e aponta o que fere as regras.</p></div>
+    <div class="card" style="flex:1;background:var(--marinho-700);padding:28px"><p class="rot" style="margin:0 0 8px;color:var(--agua-300)">5 · PNG</p><p style="margin:0;font-size:22px;color:var(--marinho-100)">1080 px, pronto para revisar e publicar.</p></div>
+  </div>
+  <div class="row" style="margin-top:40px;gap:48px;align-items:flex-start">
+    <pre style="flex:1">{
+  <span class="k">"modelo"</span>: <span class="s">"educativo"</span>,
+  <span class="k">"tema"</span>: <span class="s">"claro"</span>,
+  <span class="k">"rotulo"</span>: <span class="s">"Saúde auditiva"</span>,
+  <span class="k">"titulo"</span>: <span class="s">"A adaptação é feita *com calma*, no seu tempo."</span>,
+  <span class="k">"apoio"</span>: <span class="s">"Ajustamos o aparelho com você, em mais de uma visita."</span>,
+  <span class="k">"legenda"</span>: <span class="s">"Por Daiana Cardoso Kuse, fonoaudióloga"</span>,
+  <span class="k">"foto"</span>: { <span class="k">"src"</span>: <span class="s">"ajuste-aparelho"</span>, <span class="k">"foco"</span>: <span class="s">"78% 40%"</span> }
+}</pre>
+    <span class="seta" style="margin-top:150px">→</span>
+    <div class="post" data-k="educativo" data-w="300"></div>
+  </div>
+  <div class="rodape"><span>Sonata Social — Ondas</span><span class="pg"></span></div>
+</section>
+
+<!-- 27 · ENTREGÁVEIS -->
+<section class="slide escuro">
+  <div class="bg"><img src="../assets/fotos/daiana.jpg" alt="" style="object-position:50% 20%"></div>
+  <div class="bg" data-veu="esquerda,marinho,0.42,0.86,0.96"></div>
+  <div style="width:1100px">
+    <p class="rot">Entregáveis e próximos passos</p>
+    <h2>Pronto para usar, com <em>quatro</em> pendências.</h2>
+    <div class="row" style="margin-top:56px;gap:64px">
+      <div class="col" style="flex:1">
+        <p class="rot" style="margin:0 0 8px">Entregue</p>
+        <ul class="lista">
+          <li><span class="n">✓</span><span><b>Design system navegável</b> com manual, tokens e 11 modelos.</span></li>
+          <li><span class="n">✓</span><span><b>Guia para IA</b>, schema da ficha e catálogo de modelos.</span></li>
+          <li><span class="n">✓</span><span><b>Motor de layout</b> e gerador de PNG, com exemplos.</span></li>
+          <li><span class="n">✓</span><span><b>Logos e grafismos</b> em PNG e SVG.</span></li>
+        </ul>
+      </div>
+      <div class="col" style="flex:1">
+        <p class="rot" style="margin:0 0 8px">Pendências</p>
+        <ul class="lista">
+          <li><span class="n">1</span><span><b>Fotos originais em alta</b> e um banco próprio de convívio.</span></li>
+          <li><span class="n">2</span><span><b>Logos oficiais</b> verde-água e branco.</span></li>
+          <li><span class="n">3</span><span><b>Autorização por escrito</b> dos depoimentos.</span></li>
+          <li><span class="n">4</span><span><b>Calendário editorial</b> com o mix de pilares.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <img src="../assets/logos/sonata-branco.png" alt="Sonata aparelhos auditivos" style="position:absolute;left:128px;bottom:110px;height:56px">
+  <div class="rodape"><span></span><span class="pg"></span></div>
+</section>
+
+<script>
+(function () {
+  var F = {
+    'frase-foto': { modelo: 'frase-foto', tema: 'marinho', titulo: 'Voltar a ouvir é voltar a *sair de casa*.', apoio: 'A cidade, o parque, a conversa no caminho.', foto: { src: 'mulher-parque', foco: '50% 30%', ondas: '46% 27%' } },
+    'frase-bruma': { modelo: 'frase', tema: 'bruma', rotulo: 'Redescobrindo o mundo', titulo: 'Os pequenos sons fazem os *grandes* momentos.', apoio: 'O canto do bem-te-vi, a chaleira, o “boa noite” de quem você ama.', elementos: ['arcos', 'linha'] },
+    data: { modelo: 'data', tema: 'agua', rotulo: '20 de setembro', manuscrito: 'Dia do Gaúcho', apoio: 'Orgulho de ouvir, sentir e fazer parte desta terra.', foto: { src: 'gaucho', foco: '50% 8%' } },
+    educativo: { modelo: 'educativo', tema: 'claro', rotulo: 'Saúde auditiva', titulo: 'A adaptação é feita *com calma*, no seu tempo.', apoio: 'Ajustamos o aparelho com você, em mais de uma visita, até a escuta ficar natural.', legenda: 'Por Daiana Cardoso Kuse, fonoaudióloga', foto: { src: 'ajuste-aparelho', foco: '78% 40%' } },
+    tecnologia: { modelo: 'tecnologia', tema: 'marinho', rotulo: 'Tecnologia', titulo: 'Pequeno no ouvido. *Enorme* na conversa.', chips: ['Recarregável', 'Bluetooth', 'Discreto'], legenda: 'Imagem ilustrativa ampliada.', foto: { src: 'aparelho-recorte', recorte: true } },
+    'tec-foto': { modelo: 'tecnologia', tema: 'marinho', rotulo: 'Recarregável', titulo: 'Carregue à noite. Converse o *dia inteiro*.', chips: ['Sem pilhas', 'Estojo de carga'], foto: { src: 'ouvido-aparelho', foco: '50% 40%' } },
+    depoimento: { modelo: 'depoimento', tema: 'bruma', titulo: 'Tenho com elas uma relação de *confiança* e proximidade muito grande. O que indicam sempre visa o melhor para mim e minha audição.', pessoa: { nome: 'Nilza Martins', detalhe: 'Paciente Sonata' } },
+    fono: { modelo: 'fono', tema: 'claro', rotulo: 'Dica da fono', titulo: 'O aparelho certo é o que você *esquece* que está usando.', apoio: 'Por isso a gente testa com você, no seu dia a dia, antes de qualquer decisão.', pessoa: { nome: 'Fernanda Brugiolo', detalhe: 'Fonoaudióloga · sócia da Sonata', foto: { src: 'fernanda', foco: '50% 0%' } } },
+    oferta: { modelo: 'oferta', tema: 'marinho', rotulo: 'Seu aparelho auditivo novo', titulo: 'Teste sem compromisso antes de *decidir*.', preco: { prefixo: 'a partir de', valor: 'R$ 125', sufixo: 'por mês' }, selo: { topo: 'em até', destaque: '18x', base: 'no cartão' }, cta: 'Agende sua avaliação', legenda: 'Teste sem compromisso. Consulte as condições.' },
+    capa: { modelo: 'carrossel-capa', tema: 'mar', rotulo: 'Guia rápido', titulo: 'Como voltar a *escutar* com a Sonata', apoio: 'Do primeiro teste ao acompanhamento, passo a passo.', foto: { src: 'ajuste-aparelho', foco: '70% 35%' }, pagina: { atual: 1, total: 6 } },
+    passo: { modelo: 'carrossel-passo', tema: 'claro', passo: '04', titulo: 'Teste sem custo', corpo: 'Leve o aparelho para casa e use por até uma semana, sem custo, nos lugares onde você mais quer ouvir.', foto: { src: 'escuta-sorriso', foco: '60% 40%' }, pagina: { atual: 5, total: 6 } },
+    fim: { modelo: 'carrossel-fim', tema: 'agua', veu: 'base', titulo: 'Vamos ouvir *juntos*?', apoio: 'Agende sua avaliação com a nossa equipe.', cta: 'Agende pelo link da bio', pessoa: { nome: 'Daiana Cardoso Kuse', detalhe: 'Fonoaudióloga · sócia da Sonata', foto: { src: 'daiana', foco: '50% 10%' } }, pagina: { atual: 6, total: 6 } },
+    's-foto': { modelo: 'frase-foto', formato: 'story', tema: 'marinho', titulo: 'Cantar junto *não tem idade*.', apoio: 'Ouvir a própria voz e a de quem está ao lado.', foto: { src: 'casal-karaoke', foco: '45% 30%' } },
+    's-edu': { modelo: 'educativo', formato: 'story', tema: 'bruma', rotulo: 'Você sabia?', titulo: 'A perda auditiva costuma chegar *devagar*.', apoio: 'Pedir para repetir e aumentar a TV são os primeiros sinais.', legenda: 'Por Fernanda Brugiolo, fonoaudióloga', foto: { src: 'mulher-parque', foco: '50% 20%' } },
+    's-oferta': { modelo: 'oferta', formato: 'story', tema: 'marinho', rotulo: 'Seu aparelho auditivo novo', preco: { prefixo: 'a partir de', valor: 'R$ 125', sufixo: 'por mês' }, selo: { topo: 'em até', destaque: '18x', base: 'no cartão' }, cta: 'Agende sua avaliação', foto: { src: 'casal-karaoke', foco: '45% 25%' } },
+    'q-frase': { modelo: 'frase', formato: 'quadrado', tema: 'agua', titulo: 'Mais de *2.500* pacientes ouvindo melhor.', apoio: 'Revisões gratuitas e ilimitadas, para sempre.', elementos: ['arcos'] },
+    mundial: { modelo: 'carrossel-capa', tema: 'mar', rotulo: '3 de março', titulo: 'Dia Mundial da Audição: *4 motivos* para se cuidar', apoio: 'Um guia rápido da nossa equipe.', foto: { src: 'ouvido-aparelho', foco: '50% 40%' }, pagina: { atual: 1, total: 6 } },
+    idoso: { modelo: 'data', tema: 'mar', rotulo: '1º de outubro', manuscrito: 'Dia do Idoso', apoio: 'Ouvir bem é sobre conexão, em qualquer idade.', foto: { src: 'casal-karaoke', foco: '50% 20%' } },
+    't-claro': { modelo: 'frase', tema: 'claro', rotulo: 'Claro', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'linha'] },
+    't-bruma': { modelo: 'frase', tema: 'bruma', rotulo: 'Bruma', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'linha'] },
+    't-agua': { modelo: 'frase', tema: 'agua', rotulo: 'Água', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'onda'] },
+    't-marinho': { modelo: 'frase', tema: 'marinho', rotulo: 'Marinho', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'linha'] },
+    't-mar': { modelo: 'frase', tema: 'mar', rotulo: 'Mar', titulo: 'Ouvir é estar *perto*.', elementos: ['arcos', 'onda'] }
+  };
+  var E = Sonata.elementos;
+  document.querySelectorAll('.post[data-k]').forEach(function (el) { Sonata.montar(F[el.dataset.k], el, { largura: +el.dataset.w }); });
+
+  // véus e ondas dos slides de foto (mesmo motor dos posts)
+  document.querySelectorAll('[data-veu]').forEach(function (el) {
+    var a = el.getAttribute('data-veu').split(',');
+    el.innerHTML = E.veu(a[0], a[1], { plato: +a[2], alcance: +a[3], forca: +a[4] });
+  });
+  document.querySelectorAll('[data-ondas]').forEach(function (el) {
+    var c = el.getAttribute('data-ondas').split(',');
+    el.innerHTML = E.arcos({ w: 1920, h: 1080, cx: +c[0], cy: +c[1], r: 190, passo: 70, espessura: 10, de: 145, ate: 235, cores: ['var(--branco)'], opacidades: [0.9, 0.6, 0.32] });
+  });
+
+  // perfil 3×3 (recorte 3:4 do grid do Instagram)
+  var perfil = ['frase-foto', 'frase-bruma', 'educativo', 't-marinho', 'data', 'fono', 'capa', 'depoimento', 's-oferta'];
+  var gp = document.getElementById('grid-perfil');
+  perfil.forEach(function (k) {
+    var f = {}; for (var x in F[k]) f[x] = F[k][x]; f.formato = 'feed';
+    var cel = document.createElement('div');
+    cel.style.cssText = 'width:250px;height:333px;overflow:hidden;position:relative';
+    var m = Sonata.montar(f, null, { largura: 266 });
+    m.style.position = 'absolute'; m.style.left = '-8px'; m.style.top = '0'; m.style.borderRadius = '0';
+    cel.appendChild(m); gp.appendChild(cel); Sonata.ajustar(m.firstChild);
+  });
+
+  // escalas de cor
+  var tons = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+  var css = getComputedStyle(document.documentElement);
+  var esc = document.getElementById('escalas');
+  [['marinho', 700, 'logo'], ['agua', 400, 'site']].forEach(function (fam) {
+    var row = document.createElement('div'); row.style.cssText = 'display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:12px';
+    tons.forEach(function (t) {
+      var hex = css.getPropertyValue('--' + fam[0] + '-' + t).trim().toUpperCase();
+      var escuro = t >= (fam[0] === 'marinho' ? 500 : 600);
+      var c = document.createElement('div');
+      c.style.cssText = 'height:250px;border-radius:18px;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;background:' + hex + ';color:' + (escuro ? '#fff' : '#07233A') + (t === 50 ? ';border:2px solid #E4EEFA' : '');
+      c.innerHTML = '<span style="font:600 15px/1 Poppins;letter-spacing:.12em;text-transform:uppercase;opacity:' + (t === fam[1] ? 1 : 0) + '">' + fam[2] + '</span><span><span style="display:block;font:600 22px/1.2 Poppins">' + (fam[0] === 'agua' ? 'água' : 'marinho') + '-' + t + '</span><span style="display:block;font:400 18px/1.4 Poppins;opacity:.85">' + hex + '</span></span>';
+      row.appendChild(c);
+    });
+    esc.appendChild(row);
+  });
+
+  // escala tipográfica
+  var tipos = [['display', 'Frase do post', 112, 300, false], ['titulo', 'Título', 84, 300, false], ['titulo-compacto', 'Carrossel, citação', 64, 300, false],
+    ['ênfase', 'ouvir', 84, 800, true], ['apoio', 'Apoio', 42, 400, false], ['corpo', 'Corpo do carrossel', 38, 400, false],
+    ['nome · chamada', 'Assinatura e CTA', 34, 600, false], ['rótulo · legenda', 'Sobretítulo, nota', 28, 600, false], ['numeral', 'Preço, passo', 220, 800, true]];
+  var et = document.getElementById('escala-tipo');
+  tipos.forEach(function (t) {
+    var d = document.createElement('div');
+    d.style.cssText = 'display:grid;grid-template-columns:200px 90px minmax(0,1fr);align-items:baseline;gap:20px;padding:12px 0;border-bottom:1px solid var(--marinho-100)';
+    d.innerHTML = '<span style="font:600 18px/1.3 Poppins;color:var(--agua-700);letter-spacing:.04em">' + t[0] + '</span><span style="font:400 18px/1 Poppins;color:var(--cinza-500);font-variant-numeric:tabular-nums">' + t[2] + ' px</span>' +
+      '<span style="font-family:Poppins;font-size:' + Math.min(t[2] * 0.5, 60) + 'px;line-height:1.1;font-weight:' + t[3] + ';font-style:' + (t[4] ? 'italic' : 'normal') + ';color:var(--marinho-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + t[1] + '</span>';
+    et.appendChild(d);
+  });
+
+  // grid com sobreposição
+  function grade(id, ficha, larg) {
+    var m = Sonata.montar(ficha, document.getElementById(id), { largura: larg }), post = m.firstChild, Fm = Sonata.formatos[ficha.formato || 'feed'];
+    var o = document.createElement('div'); o.style.cssText = 'position:absolute;inset:0;pointer-events:none';
+    var h = '<div style="position:absolute;left:' + Fm.m + 'px;right:' + Fm.m + 'px;top:' + Fm.mt + 'px;bottom:' + Fm.mb + 'px;border:4px dashed #0C9591"></div>';
+    for (var i = 0; i < 6; i++) h += '<div style="position:absolute;top:' + Fm.mt + 'px;bottom:' + Fm.mb + 'px;left:' + (Fm.m + i * 152) + 'px;width:128px;background:rgba(102,210,205,.2)"></div>';
+    if (ficha.formato === 'story') h += '<div style="position:absolute;left:0;right:0;top:0;height:250px;background:rgba(20,61,102,.25)"></div><div style="position:absolute;left:0;right:0;bottom:0;height:320px;background:rgba(20,61,102,.25)"></div>';
+    o.innerHTML = h; post.appendChild(o);
+  }
+  grade('g-feed', F.educativo, 320);
+  grade('g-quad', { modelo: 'frase', formato: 'quadrado', tema: 'claro', titulo: 'Margem de *88*.', elementos: ['arcos'] }, 320);
+  grade('g-story', F['s-foto'], 230);
+  var esp = document.getElementById('esp');
+  [8, 16, 24, 32, 48, 64, 96, 128].forEach(function (v) {
+    var r = document.createElement('div'); r.style.cssText = 'display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;gap:16px;margin-bottom:10px';
+    r.innerHTML = '<span style="font:600 18px/1 Poppins;color:var(--marinho-700)">esp-' + v + '</span><span style="display:block;height:22px;width:' + (v * 2.4) + 'px;background:' + (v === 96 ? 'var(--marinho-700)' : 'var(--agua-400)') + ';border-radius:4px"></span>';
+    esp.appendChild(r);
+  });
+
+  // hierarquia anotada
+  var hm = Sonata.montar(F.educativo, document.getElementById('hier'), { largura: 600 }), hp = hm.firstChild;
+  [[1, 900, 760], [2, 640, 250], [3, 640, 600], [4, 470, 1160]].forEach(function (t) {
+    var d = document.createElement('div');
+    d.style.cssText = 'position:absolute;left:' + t[1] + 'px;top:' + t[2] + 'px;width:72px;height:72px;border-radius:50%;background:#143D66;color:#fff;font:600 36px/72px Poppins;text-align:center;box-shadow:0 0 0 8px #fff';
+    d.textContent = t[0]; hp.appendChild(d);
+  });
+
+  // origem dos arcos: ondas finas ao redor de quem escuta
+  document.getElementById('arcos-origem').innerHTML =
+    '<img src="../assets/fotos/escuta-sorriso.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 40%">' +
+    E.veu('esquerda', 'marinho', { plato: 0, alcance: 0.6, forca: 0.6 }) +
+    E.arcos({ w: 520, h: 420, cx: 360, cy: 210, r: 80, passo: 34, espessura: 7, de: 145, ate: 235, cores: ['var(--branco)'], opacidades: [0.95, 0.65, 0.35] })
+      .replace('class="sn-el sn-arcos"', 'style="position:absolute;left:0;top:0"');
+
+  // família de elementos
+  var el = document.getElementById('elementos');
+  function caixa(tema, titulo, html) {
+    var b = document.createElement('div');
+    b.className = 'sn-post sn-tema-' + tema; b.setAttribute('data-theme', tema);
+    b.style.cssText = 'position:relative;width:auto;height:300px;border-radius:20px;overflow:hidden';
+    b.innerHTML = '<div style="position:absolute;left:0;top:0;width:1080px;height:800px;transform:scale(.375);transform-origin:0 0">' + html + '</div><div style="position:absolute;left:20px;bottom:16px;font:600 17px/1.3 Poppins;color:var(--titulo)">' + titulo + '</div>';
+    el.appendChild(b);
+  }
+  caixa('marinho', 'Véu da base', E.foto({ src: 'casal-karaoke', foco: '50% 25%' }) + E.veu('base', 'marinho', { plato: 0.18, alcance: 0.7, forca: 0.95 }));
+  caixa('claro', 'Véu lateral claro', E.foto({ src: 'ajuste-aparelho', foco: '80% 40%' }) + E.veu('esquerda', 'claro', { plato: 0.3, alcance: 0.8, forca: 0.97 }));
+  caixa('marinho', 'Ondas no foco', E.foto({ src: 'mulher-parque', foco: '50% 30%' }) + E.veu('base', 'marinho', { plato: 0, alcance: 0.5, forca: 0.6 }) +
+    E.arcos({ w: 1080, h: 800, cx: 520, cy: 300, r: 190, passo: 66, espessura: 11, de: 150, ate: 240, cores: ['var(--branco)'], opacidades: [0.95, 0.6, 0.32] }));
+  caixa('agua', 'Campo de onda', E.foto({ src: 'gaucho', foco: '50% 10%' }, 'position:absolute;left:0;right:0;top:0;height:560px;') +
+    E.onda({ w: 1080, h: 800, altura: 330, amplitude: 30, cores: ['var(--agua-200)', 'var(--agua-400)'], opacidades: [0.85, 1] }));
+  caixa('bruma', 'Arcos no canto', E.arcos({ w: 1080, h: 800, cx: 1110, cy: -30, r: 280, passo: 84, espessura: 28, de: 90, ate: 180 }));
+  caixa('marinho', 'Recorte com anéis', '<div class="sn-halo" style="background:radial-gradient(circle at 540px 400px, var(--fundo-2) 0, transparent 520px)"></div>' +
+    E.arcos({ w: 1080, h: 800, cx: 540, cy: 400, r: 270, passo: 70, espessura: 6, de: 0, ate: 360, cores: ['var(--agua-400)'], opacidades: [0.75, 0.45, 0.22] }) +
+    E.recorte({ src: 'aparelho-recorte' }, 'position:absolute;left:290px;top:150px;width:500px;height:500px;object-fit:contain;'));
+  caixa('marinho', 'Linha de som', '<div style="position:absolute;left:96px;top:300px">' + E.linhaDeSom({ largura: 888, altura: 180 }) + '</div>');
+  caixa('claro', 'CTA, chips e páginas', '<div style="position:absolute;left:96px;top:150px;display:flex;flex-direction:column;gap:40px;align-items:flex-start">' + E.cta('Agende sua avaliação') + '<div class="sn-chips"><span class="sn-chip chamada"><i></i>Recarregável</span><span class="sn-chip chamada"><i></i>Bluetooth</span></div>' + E.dots({ atual: 2, total: 6 }) + '</div>');
+
+  // logo: posições
+  var lp = document.getElementById('logo-pos');
+  [[F['frase-foto'], 'Sobre foto: topo esquerdo'], [F.educativo, 'Véu claro: topo esquerdo'], [F.data, 'Datas: sobre a onda']].forEach(function (x) {
+    var d = document.createElement('div'); Sonata.montar(x[0], d, { largura: 200 });
+    var c = document.createElement('p'); c.className = 'small'; c.style.margin = '8px 0 0'; c.textContent = x[1]; d.appendChild(c); lp.appendChild(d);
+  });
+
+  // números de página
+  var slides = document.querySelectorAll('.slide');
+  slides.forEach(function (s, i) { var p = s.querySelector('.pg'); if (p) p.textContent = String(i + 1).padStart(2, '0') + ' / ' + slides.length; });
+})();
+</script>
+</body>
+</html>

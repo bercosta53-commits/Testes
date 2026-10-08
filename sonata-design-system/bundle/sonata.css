@@ -15,7 +15,6 @@
 /* respiro com cor: halo radial do próprio tema */
 .sn-halo { position: absolute; inset: 0; pointer-events: none;
   background: radial-gradient(circle at 88% 8%, var(--fundo-2) 0, transparent 58%); }
-.sn-halo-baixo { background: radial-gradient(circle at 100% 100%, var(--fundo-2) 0, transparent 70%); }
 .sn-tema-mar .sn-halo { background: radial-gradient(circle at 92% 6%, var(--agua-700) 0, transparent 52%); opacity: .55; }
 .sn-el { position: absolute; left: 0; top: 0; pointer-events: none; }
 
@@ -26,8 +25,6 @@
 .sn-main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 .sn-stack { display: flex; flex-direction: column; gap: var(--esp-32); }
 .sn-inicio { margin-bottom: auto; }
-.sn-preenche { flex: 1 1 auto; min-height: 0; }
-.sn-assina { position: absolute; }
 .sn-centro { margin-block: auto; }
 .sn-fim { margin-top: auto; }
 .sn-base { flex: none; display: flex; align-items: center; }
@@ -37,32 +34,31 @@
 .sn-titulo { color: var(--titulo); text-wrap: balance; }
 .sn-enf { font-style: italic; font-weight: 800; letter-spacing: -0.03em; color: var(--enfase); padding-right: .04em; }
 .sn-apoio { color: var(--apoio); max-width: 860px; text-wrap: pretty; }
-.sn-rotulo { color: var(--rotulo); text-transform: uppercase; margin-bottom: calc(var(--esp-24) - var(--esp-32)); }
+.sn-rotulo { color: var(--rotulo); text-transform: uppercase; margin-bottom: calc(var(--esp-24) - var(--esp-32)); display: flex; align-items: center; gap: 18px; }
+.sn-rotulo::before { content: ""; width: 48px; height: 3px; border-radius: 2px; background: currentColor; opacity: .8; }
 .sn-post .legenda { color: var(--legenda); }
 .sn-post .nome { color: var(--titulo); }
 .sn-legal { margin-top: calc(var(--esp-16) - var(--esp-32)); }
+.sn-assina { max-width: 560px; }
+
+/* quem assina: nome + detalhe sob um fio curto */
+.sn-quem { display: flex; flex-direction: column; gap: var(--esp-8); padding-top: var(--esp-24); position: relative; }
+.sn-quem::before { content: ""; position: absolute; left: 0; top: 0; width: 64px; height: 3px; border-radius: 2px; background: var(--grafismo-forte); }
 
 /* logo */
 .sn-logo { display: block; height: 64px; width: auto; }
 .sn-fmt-quadrado .sn-logo { height: 56px; }
 .sn-logo-texto { font: 300 52px/1 var(--font-sans); letter-spacing: .12em; color: var(--titulo); }
 .sn-logo-texto small { display: block; font-size: 17px; letter-spacing: .1em; margin-top: 6px; }
-.sn-logo-base { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
-.sn-logo-base .sn-logo { height: 60px; }
 
-/* foto e molduras */
-.sn-foto { overflow: hidden; background: linear-gradient(150deg, var(--marinho-100), var(--agua-100)); }
+/* foto sempre sangrada; véus em degradê da paleta (o gradiente vem do motor) */
+.sn-foto { overflow: hidden; background: linear-gradient(160deg, var(--marinho-200), var(--agua-200)); }
 .sn-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sn-foto-vazia { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-  gap: 12px; padding: 48px; text-align: center; color: var(--marinho-700); }
-.sn-foto-vazia .legenda { color: var(--marinho-700); max-width: 420px; }
-.sn-iniciais { display: flex; align-items: center; justify-content: center; background: var(--agua-200); color: var(--marinho-700);
-  font: 600 56px/1 var(--font-sans); letter-spacing: .04em; }
-.sn-veu { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 28%, var(--veu-foto) 100%); }
-.sn-veu-topo { position: absolute; inset: 0; background: linear-gradient(180deg, var(--veu-topo) 0, transparent 22%); }
-
-/* frase-foto: o texto fica sobre o véu */
-.sn-frase-foto .sn-titulo { color: var(--branco); }
+  gap: 14px; padding: 96px; text-align: center; color: var(--marinho-700); }
+.sn-foto-vazia .legenda { color: var(--marinho-700); max-width: 520px; font-size: 32px; }
+.sn-veu { position: absolute; inset: 0; pointer-events: none; }
+.sn-recorte { position: absolute; display: block; filter: drop-shadow(0 48px 56px rgba(0, 0, 0, .35)); }
 
 /* manuscrito */
 .sn-manuscrito { color: var(--manuscrito-cor); margin-top: -8px; line-height: .95; }
@@ -71,11 +67,6 @@
 .sn-citacao { font-style: normal; color: var(--titulo); }
 .sn-citacao .sn-enf { color: var(--titulo); }
 .sn-aspas { display: block; }
-.sn-autor { position: absolute; display: flex; flex-direction: column; justify-content: center; gap: var(--esp-8); }
-
-/* fono */
-.sn-quem { position: absolute; display: flex; flex-direction: column; gap: var(--esp-16); }
-.sn-quem .sn-rotulo { margin-bottom: 0; }
 
 /* CTA, chips, selo, preço */
 .sn-acao { display: flex; margin-top: var(--esp-16); }
@@ -100,8 +91,7 @@
 .sn-dots i.on { width: 56px; background: var(--grafismo-forte); }
 .sn-deslize { display: inline-flex; align-items: center; gap: 16px; color: var(--titulo); }
 .sn-passo { color: var(--enfase); font-size: 200px; margin-bottom: calc(var(--esp-8) - var(--esp-32)); }
-.sn-pessoa { display: flex; align-items: center; gap: var(--esp-32); }
-.sn-pessoa .legenda { margin-top: 6px; }
+.sn-rodape-carrossel { position: absolute; display: flex; justify-content: space-between; align-items: center; }
 
 .sn-linha { display: block; }
 

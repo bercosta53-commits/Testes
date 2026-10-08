@@ -1,7 +1,12 @@
 {
   "modelo": "frase-foto",
   "formato": "story",
-  "titulo": "A emoção de torcer *não tem idade*.",
-  "apoio": "Ouvir o grito de gol junto com a família é outra coisa.",
-  "foto": { "src": "torcida", "assunto": "Família de várias gerações torcendo junta no sofá", "foco": "50% 30%" }
+  "tema": "marinho",
+  "titulo": "Cantar junto *não tem idade*.",
+  "apoio": "Ouvir a própria voz e a de quem está ao lado.",
+  "foto": {
+    "src": "casal-karaoke",
+    "assunto": "Casal 60+ cantando junto, rindo, luz quente",
+    "foco": "45% 30%"
+  }
 }

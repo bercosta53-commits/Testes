@@ -10,6 +10,7 @@ Design system das redes sociais da **Sonata Aparelhos Auditivos**: cores, tipogr
 |---|---|
 | Entender a marca e as regras | [`MARCA.md`](MARCA.md) — o manual (essência, voz, cor, tipo, grid, hierarquia, elementos, fotografia, logo) |
 | Pedir posts a uma IA | [`ia/GUIA-IA.md`](ia/GUIA-IA.md) — instrução de sistema pronta, com regras, medidas e prompt |
+| Apresentar o estudo | [`apresentacao/Sonata-Social-Ondas-estudo.pdf`](apresentacao/Sonata-Social-Ondas-estudo.pdf) — 27 páginas, gerado de `apresentacao/estudo.html` |
 | Ver todos os modelos | [`modelos/index.html`](modelos/index.html) no navegador, ou as imagens em [`previews/`](previews) |
 | Valores exatos | [`tokens/tokens.json`](tokens/tokens.json) (fonte única) e [`tokens/tokens.css`](tokens/tokens.css) |
 
@@ -38,13 +39,14 @@ ia/                      guia para IA, schema da ficha, catálogo de modelos
 tokens/                  tokens.json (fonte única) → tokens.css
 bundle/                  motor de layout (sonata.js), estilos, tipos, fontes locais
 modelos/                 galeria e página de render
-exemplos/                15 fichas reais (feed, story, quadrado, carrossel)
+exemplos/                17 fichas reais (feed, story, quadrado, carrossel)
+apresentacao/            o estudo em HTML e PDF
 previews/                os exemplos renderizados
 assets/logos/            marinho, verde-água e branco
 assets/elementos/        arcos de escuta, onda, linha de som (SVG)
-assets/fotos/            fotos de referência (baixa resolução, só para layout)
+assets/fotos/            fotos do site da Sonata (sócias, pacientes, aparelhos)
 fonts/                   Poppins e Ms Madi (SIL Open Font License)
-scripts/                 build-tokens, exportar, render
+scripts/                 build-tokens, exportar, render, pdf
 ```
 
 ## Comandos
@@ -54,10 +56,12 @@ node scripts/build-tokens.mjs        # tokens.json → tokens.css
 node scripts/exportar.mjs            # SVGs dos grafismos, ia/modelos.json, modelos/exemplos.js
 node scripts/render.mjs              # todas as fichas de exemplos/ → previews/ (precisa do Playwright)
 node scripts/render.mjs ficha.json saida.png --escala=1
+node scripts/pdf.mjs                 # apresentacao/estudo.html → PDF
 ```
 
 ## Observações
 
-- As fotos em `assets/fotos/` foram recortadas das telas do site e do Instagram atuais, em baixa resolução: servem para testar layout, não para publicar.
+- As fotos em `assets/fotos/` vêm do site da Sonata (sonata.med.br). Para publicar, prefira os arquivos originais em alta.
+- Regra de fotografia: foto sempre sangrada, nunca recortada em círculo, caixa ou moldura; a legibilidade vem dos véus em degradê da paleta.
 - O logo verde-água e o branco foram gerados a partir do arquivo marinho enviado. Substitua pelos arquivos oficiais quando possível, mantendo os nomes.
 - Poppins e Ms Madi são distribuídas sob a SIL Open Font License 1.1 (Google Fonts).
