@@ -84,6 +84,42 @@ export function Campo({ id, label, erro, campoRef, ...props }) {
   );
 }
 
+export function Selecao({ id, label, erro, campoRef, opcoes, ...props }) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-semibold mb-1" style={{ color: cores.ink }}>
+        {label}
+      </label>
+      <select
+        id={id}
+        ref={campoRef}
+        {...props}
+        aria-invalid={!!erro}
+        aria-describedby={erro ? `${id}-erro` : undefined}
+        className={`w-full px-4 py-3 rounded-lg text-base ${focoPadrao}`}
+        style={{
+          border: `1.5px solid ${erro ? cores.error : "#9A917C"}`,
+          background: cores.card,
+          color: props.value ? cores.ink : "#A39A85",
+          minHeight: 48,
+        }}
+      >
+        <option value="">Selecione</option>
+        {opcoes.map((o) => (
+          <option key={o} value={o} style={{ color: cores.ink }}>
+            {o}
+          </option>
+        ))}
+      </select>
+      {erro && (
+        <p id={`${id}-erro`} className="text-sm mt-1" style={{ color: cores.error }}>
+          {erro}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export function BarraProgresso({ largura, animar, reduzido, altura = 6 }) {
   return (
     <div className="relative w-full rounded-full overflow-hidden" style={{ height: altura, background: cores.line }}>

@@ -1,7 +1,7 @@
 import { Check, Clock, Copy, Mail, MessageCircle, PhoneCall, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SeloNivel } from "../components/ui";
-import { rotuloResposta } from "../lib/calculo";
+import { numerica, rotuloResposta } from "../lib/calculo";
 import { perguntas } from "../lib/dados";
 import { dataHora, formatarFone, moeda } from "../lib/formatar";
 import {
@@ -95,6 +95,7 @@ export default function DetalheLead({ lead, onFechar }) {
           <h2 id="detalhe-titulo" className="text-xl font-bold tracking-tight">{lead.lead.nome}</h2>
           <p className="mt-1 text-sm text-apagado">
             {lead.lead.instituicao} · {rotuloResposta("tipo", lead.respostas.tipo)}
+            {lead.lead.area && ` · ${lead.lead.area}`}
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <SeloNivel nivel={r.nivel} />
@@ -144,7 +145,7 @@ export default function DetalheLead({ lead, onFechar }) {
       <dl className="mx-5 mb-6 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha sm:mx-7 sm:grid-cols-2">
         <Metrica rotulo="Renegociações por mês" valor={capacidadeTexto(r)} />
         <Metrica rotulo="Potencial adicional" valor={potencialAdicionalTexto(r)} />
-        <Metrica rotulo="Saldo em atraso estimado" valor={moeda(lead.respostas.contratos * lead.respostas.ticket)} />
+        <Metrica rotulo="Saldo em atraso estimado" valor={moeda(numerica(lead.respostas).contratos * numerica(lead.respostas).ticket)} />
         <Metrica rotulo="Ponto crítico" valor={analise?.critico?.nome ?? "Nenhum: todas as dimensões com 2 pontos ou mais"} />
       </dl>
 

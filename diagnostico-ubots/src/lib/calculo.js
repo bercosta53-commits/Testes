@@ -4,12 +4,16 @@ import {
   dimensoes,
   niveis,
   nomePorDimensao,
+  numeroDaResposta,
   ordemPrioridade,
   passoIntegracao,
   passosGerais,
   passosPorDimensao,
   perguntas,
+  pontosDaResposta,
   pontosMax,
+  pontosMaxDaPergunta,
+  respondeuNaoSei,
 } from "./dados";
 import {
   duracao,
@@ -28,12 +32,21 @@ export const rotuloResposta = (idPergunta, valor) =>
   perguntas.find((p) => p.id === idPergunta)?.opcoes.find((o) => o.value === valor)?.label ??
   (typeof valor === "number" ? numero(valor) : "");
 
+/** Valores numéricos das 4 perguntas de operação (resolve faixas abertas e "Não sei"). */
+export const numerica = (r) => ({
+  pessoas: numeroDaResposta("pessoas", r.pessoas),
+  contratos: numeroDaResposta("contratos", r.contratos),
+  ticket: numeroDaResposta("ticket", r.ticket),
+  ritmo: numeroDaResposta("ritmo", r.ritmo),
+});
+
 /** Cálculo numérico: pontuação, nível e capacidade com/sem IA. null se faltar resposta. */
-export function calcular(r) {
-  if ([...CAMPOS_NUMERICOS, ...dimensoes.map((d) => d.id)].some((id) => r[id] === undefined)) {
+export function calcular(resp) {
+  if ([...CAMPOS_NUMERICOS, ...dimensoes.map((d) => d.id)].some((id) => resp[id] === undefined)) {
     return null;
   }
-  const pontos = dimensoes.reduce((s, d) => s + r[d.id], 0);
+  const r = numerica(resp);
+  const pontos = dimensoes.reduce((s, d) => s + pontosDaResposta(d.id, resp[d.id]), 0);
   const nivel = niveis.find((n) => pontos <= n.max) || niveis[niveis.length - 1];
   const atual = r.pessoas * r.ritmo * config.diasUteisMes;
   const ia = [atual * nivel.mult[0], atual * nivel.mult[1]];
@@ -64,11 +77,12 @@ export function analisar(r) {
   if (!res) return null;
   const nivel = res.nivel.nome;
 
+  const num = numerica(r);
   const dims = dimensoes.map((d) => ({
     id: d.id,
     nome: d.dim,
-    pontos: r[d.id],
-    max: Math.max(...d.opcoes.map((o) => o.value)),
+    pontos: pontosDaResposta(d.id, r[d.id]),
+    max: pontosMaxDaPergunta(d),
     resposta: rotuloResposta(d.id, r[d.id]),
     leitura: aplicarTermos(d.leituras[r[d.id]] ?? "", r.tipo),
   }));
@@ -77,16 +91,15 @@ export function analisar(r) {
     .filter((d) => d.pontos < 2)
     .sort((a, b) => a.pontos - b.pontos || ordemPrioridade.indexOf(a.id) - ordemPrioridade.indexOf(b.id));
   const critico = fracas[0] || null;
-  const bloqueios = fracas.filter(
-    (d) => d.pontos === 0 && ["politica", "consentimento", "integracao"].includes(d.id),
-  );
+  // Sem política, autorização e acesso aos dados (pontos 0 ou 1) o agente não negocia.
+  const bloqueios = fracas.filter((d) => ["politica", "consentimento", "integracao"].includes(d.id));
 
   const resumo = aplicarTermos(
     {
       "Preparar a base": `Antes do agente, vale organizar ${juntarComE(fracas.slice(0, 2))}.`,
       "Pronta para piloto": bloqueios.length
         ? `{Inst} pode testar um agente numa campanha depois de resolver ${juntarComE(bloqueios)}.`
-        : "{Inst} já tem o essencial para testar um agente numa campanha.",
+        : "{Inst} já tem o essencial para testar um agente em uma campanha.",
       "Pronta para escalar": critico
         ? `{Inst} tem quase toda a base pronta. Antes da operação contínua, resolva ${nomePorDimensao[critico.id]}.`
         : "Regras, canal e dados {daInst} estão maduros. O agente pode entrar na operação contínua.",
@@ -136,16 +149,20 @@ export function analisar(r) {
     valorHoje: moeda(res.valorHoje),
     valorIA: faixaMoeda(res.valorIA),
     extra: res.extra[1] > 0 ? faixaMoeda(res.extra) : null,
-    saldo: moeda(r.contratos * r.ticket),
-    contratos: numeroAprox(r.contratos),
+    saldo: moeda(num.contratos * num.ticket),
+    contratos: numeroAprox(num.contratos),
+    aproximada: respondeuNaoSei(r),
   };
 }
 
 /** Frase de capacidade usada na transição entre as partes do quiz. */
-export const capacidadeMensal = (r) => numeroAprox(r.pessoas * r.ritmo * config.diasUteisMes);
+export const capacidadeMensal = (r) => {
+  const n = numerica(r);
+  return numeroAprox(n.pessoas * n.ritmo * config.diasUteisMes);
+};
 
 // ---- Validação do formulário de captura ----
-export const formularioVazio = { nome: "", email: "", fone: "", instituicao: "", aceite: false };
+export const formularioVazio = { nome: "", email: "", fone: "", instituicao: "", area: "", aceite: false };
 
 export function validarFormulario(form, campoInstituicao) {
   const erros = {};
@@ -158,6 +175,7 @@ export function validarFormulario(form, campoInstituicao) {
   if (form.instituicao.trim().length < 2) {
     erros.instituicao = `Informe o ${campoInstituicao.charAt(0).toLowerCase()}${campoInstituicao.slice(1)}.`;
   }
+  if (!form.area) erros.area = "Selecione a sua área de atuação.";
   if (!form.aceite) erros.aceite = "Marque a autorização para ver o diagnóstico.";
   return erros;
 }

@@ -1,4 +1,4 @@
-import { analisar, rotuloResposta } from "./calculo";
+import { analisar, numerica, rotuloResposta } from "./calculo";
 import { perguntas } from "./dados";
 import { dataHora, decimal, faixaMoeda, faixaNumero, formatarFone, numeroAprox } from "./formatar";
 
@@ -96,7 +96,7 @@ export function linhaDeAbertura(lead) {
 /** CSV (separador ;, com BOM para abrir bem no Excel). */
 export function gerarCsv(leads) {
   const cabecalho = [
-    "Data", "Nome", "E-mail", "WhatsApp", "Instituição", "Tipo", "Nível", "Pontos",
+    "Data", "Nome", "E-mail", "WhatsApp", "Instituição", "Área", "Tipo", "Nível", "Pontos",
     "Renegociações por mês hoje", "Com IA (mínimo)", "Com IA (máximo)",
     "Potencial adicional no primeiro mês (mínimo)", "Potencial adicional no primeiro mês (máximo)",
     "Origem",
@@ -110,14 +110,14 @@ export function gerarCsv(leads) {
     const res = analise?.res;
     return [
       dataHora(l.enviado_em), l.lead.nome, l.lead.email, formatarFone(l.lead.whatsapp),
-      l.lead.instituicao, rotuloResposta("tipo", l.respostas.tipo), r.nivel,
+      l.lead.instituicao, l.lead.area ?? "", rotuloResposta("tipo", l.respostas.tipo), r.nivel,
       `${r.pontos} de ${r.pontos_max}`, r.capacidade_atual_mes,
       r.capacidade_ia_mes[0], r.capacidade_ia_mes[1],
       r.valor_adicional_mes[0], r.valor_adicional_mes[1],
       origem(l.utm_content),
       ...perguntas.map((p) => rotuloResposta(p.id, l.respostas[p.id])),
       l.interesse ? "Sim" : "Não", l.interesse ? dataHora(l.interesse.em) : "",
-      analise?.critico?.nome ?? "Nenhum", l.respostas.contratos * l.respostas.ticket,
+      analise?.critico?.nome ?? "Nenhum", numerica(l.respostas).contratos * numerica(l.respostas).ticket,
       ...(res && !res.filaCoberta
         ? [res.mesesHoje, res.mesesIA[0], res.mesesIA[1]].map(decimal)
         : ["", "", ""]),

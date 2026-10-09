@@ -77,6 +77,8 @@ export const perguntas = [
       { label: "11 a 20", value: 15 },
       { label: "21 a 50", value: 35 },
       { label: "51 a 100", value: 75 },
+      { label: "Mais de 100", value: "mais-100", numero: 150 },
+      { label: "Não sei", value: "nao-sei", numero: 15, naoSei: true },
     ],
   },
   {
@@ -91,6 +93,8 @@ export const perguntas = [
       { label: "5 mil a 10 mil", value: 7500 },
       { label: "10 mil a 20 mil", value: 15000 },
       { label: "20 mil a 50 mil", value: 35000 },
+      { label: "Mais de 50 mil", value: "mais-50mil", numero: 75000 },
+      { label: "Não sei", value: "nao-sei", numero: 7500, naoSei: true },
     ],
   },
   {
@@ -104,12 +108,14 @@ export const perguntas = [
       { label: "R$ 5 mil a R$ 10 mil", value: 7500 },
       { label: "R$ 10 mil a R$ 20 mil", value: 15000 },
       { label: "R$ 20 mil a R$ 50 mil", value: 35000 },
+      { label: "Acima de R$ 50 mil", value: "acima-50mil", numero: 75000 },
+      { label: "Não sei", value: "nao-sei", numero: 7500, naoSei: true },
     ],
   },
   {
     id: "ritmo",
     fase: FASE_OPERACAO,
-    titulo: "Quantas renegociações cada pessoa fecha por dia, em média?",
+    titulo: "Quantos acordos cada pessoa fecha por dia, em média?",
     porque: "Com esse número, calculamos o tempo para percorrer a fila.",
     opcoes: [
       { label: "Até 2", value: 1 },
@@ -130,7 +136,7 @@ export const perguntas = [
       { label: "A mesma mensagem para todos", value: 0 },
       { label: "Mensagens por faixa de atraso", value: 1 },
       { label: "Propostas por perfil", value: 2 },
-      { label: "Proposta ajustada caso a caso", value: 3 },
+      { label: "Proposta calculada pela capacidade de pagamento de cada cliente", value: 3 },
     ],
     leituras: {
       0: "Mesma proposta para todos, sem olhar a capacidade de pagamento.",
@@ -150,12 +156,14 @@ export const perguntas = [
       { label: "SMS ou e-mail", value: 1 },
       { label: "WhatsApp com atendente", value: 2 },
       { label: "WhatsApp com alguma automação", value: 3 },
+      { label: "Na agência, presencialmente", value: "agencia", pontos: 0 },
     ],
     leituras: {
       0: "Negociação por ligação, fora do canal do agente.",
       1: "SMS ou e-mail, fora do canal do agente.",
       2: "WhatsApp com atendente: o agente assume as etapas operacionais.",
       3: "WhatsApp com automação: o agente entra no canal que os {clientes} já usam.",
+      agencia: "Negociação presencial, fora do canal do agente.",
     },
   },
   {
@@ -190,12 +198,14 @@ export const perguntas = [
       { label: "Sistema central, sem API disponível", value: 1 },
       { label: "Sistema com API que a TI pode liberar", value: 2 },
       { label: "API já usada em outros canais digitais", value: 3 },
+      { label: "Outro", value: "outro", pontos: 1, comTexto: "Qual?" },
     ],
     leituras: {
       0: "Dados em planilhas, sem consulta direta para o agente.",
       1: "Sistema sem API: falta um caminho de consulta para o agente.",
       2: "API que a TI pode liberar: uma integração simples resolve.",
       3: "API já usada em canais digitais: a integração segue o mesmo caminho.",
+      outro: "Outro caminho de consulta: vale confirmar com a TI se o agente pode usá-lo.",
     },
   },
   {
@@ -204,27 +214,56 @@ export const perguntas = [
     dim: "Consentimento e LGPD",
     titulo: "Os clientes autorizaram contato por WhatsApp?",
     tituloTipo: "Os {clientes} autorizaram contato por WhatsApp?",
-    porque: "Contato com registro protege {instCurta} perante o CDC e a LGPD.",
+    porque: "Mensagens iniciadas pela instituição no WhatsApp exigem autorização do cliente, e o registro ajuda a demonstrar conformidade com a LGPD.",
     opcoes: [
       { label: "Não sabemos", value: 0 },
       { label: "Só uma parte da base", value: 1 },
+      { label: "A maioria, sem registro", value: "sem-registro", pontos: 2 },
       { label: "A maioria, com registro", value: 3 },
     ],
     leituras: {
       0: "Não se sabe quem autorizou o contato por WhatsApp.",
       1: "Só parte da base autorizou: o agente começa por esse grupo.",
+      "sem-registro": "A maioria autorizou, mas sem registro: falta formalizar para o agente iniciar o contato.",
       3: "Base autorizada, com registro: o agente pode iniciar o contato.",
     },
   },
 ];
 
+const opcaoDe = (idPergunta, valor) =>
+  perguntas.find((p) => p.id === idPergunta)?.opcoes.find((o) => o.value === valor);
+
+/** Pontos de uma resposta de prontidão (a opção pode valer diferente do seu identificador). */
+export const pontosDaResposta = (idPergunta, valor) => {
+  const o = opcaoDe(idPergunta, valor);
+  return o ? (o.pontos ?? o.value) : typeof valor === "number" ? valor : 0;
+};
+
+/** Número usado no cálculo (faixas abertas e "Não sei" têm um valor de referência). */
+export const numeroDaResposta = (idPergunta, valor) => {
+  const o = opcaoDe(idPergunta, valor);
+  return o?.numero ?? (typeof valor === "number" ? valor : 0);
+};
+
+export const respondeuNaoSei = (respostas) =>
+  perguntas.some((p) => opcaoDe(p.id, respostas[p.id])?.naoSei);
+
 /** Perguntas que compõem a pontuação de prontidão. */
 export const dimensoes = perguntas.filter((p) => p.dim);
 
-export const pontosMax = dimensoes.reduce(
-  (soma, d) => soma + Math.max(...d.opcoes.map((o) => o.value)),
-  0,
-);
+export const pontosMaxDaPergunta = (p) => Math.max(...p.opcoes.map((o) => o.pontos ?? o.value));
+
+export const pontosMax = dimensoes.reduce((soma, d) => soma + pontosMaxDaPergunta(d), 0);
+
+/** Área de atuação do contato (campo do formulário). */
+export const areas = [
+  "Recuperação de crédito/cobrança",
+  "Relacionamento/agências",
+  "TI",
+  "Marketing",
+  "Comercial/negócios",
+  "Diretoria",
+];
 
 /** Níveis de prontidão e multiplicador de capacidade (faixa conservadora). */
 export const niveis = [
@@ -235,7 +274,7 @@ export const niveis = [
 
 export const passosPorDimensao = {
   regua: {
-    texto: "Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no bolso.",
+    texto: "Segmente a carteira pela capacidade de pagamento, para propor parcelas que cabem no orçamento.",
     pronto: "cada faixa de atraso tem 2 ou 3 propostas por perfil de renda ou de risco.",
   },
   canal: {
@@ -320,6 +359,7 @@ const formBase = {
   email: "ana@cooperativa-exemplo.com.br",
   fone: "(51) 99999-0000",
   instituicao: "Cooperativa Exemplo",
+  area: "Recuperação de crédito/cobrança",
   aceite: true,
 };
 const formsPorTipo = {

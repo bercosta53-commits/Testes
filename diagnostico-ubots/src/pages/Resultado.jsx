@@ -1,7 +1,7 @@
 import { MessageCircle, RotateCcw, Check } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { BarraProgresso, BotaoPrimario, BotaoTexto } from "../components/ui";
-import { cores, config } from "../lib/config";
+import { config, cores } from "../lib/config";
 import { niveis } from "../lib/dados";
 
 const titulo = { fontSize: "clamp(1.75rem, 5.5vw, 2.5rem)", lineHeight: 1.1, letterSpacing: "-0.03em" };
@@ -110,8 +110,9 @@ export default function Resultado({ a, lead, animar, reduzido, pedido, onPedir, 
             )}
           </p>
           <p className="text-xs mt-auto pt-3" style={{ color: cores.muted, lineHeight: 1.5 }}>
-            Estimativa conservadora: {res.nivel.mult[0]} a {res.nivel.mult[1]} vezes a capacidade de hoje, conforme a
-            prontidão. Valores arredondados. Renegociado não é o mesmo que recebido.
+            Estimativa com base nas suas respostas e em premissas de mercado. Não é uma promessa de resultado. Valores
+            arredondados. Renegociado não é o mesmo que recebido.
+            {a.aproximada && " Você respondeu “Não sei” em alguma pergunta, então usamos um valor intermediário de referência."}
           </p>
         </section>
 
@@ -130,6 +131,7 @@ export default function Resultado({ a, lead, animar, reduzido, pedido, onPedir, 
                 <div className="flex justify-between items-baseline gap-2 text-sm mb-1">
                   <span className="font-semibold">
                     {d.nome}
+                    {a.critico?.id === d.id && " "}
                     {a.critico?.id === d.id && (
                       <span
                         className="ml-2 rounded-full px-2 py-0.5 text-xs font-semibold"
@@ -192,20 +194,52 @@ export default function Resultado({ a, lead, animar, reduzido, pedido, onPedir, 
               style={{ lineHeight: 1.5 }}
             >
               <Check size={18} className="shrink-0 mt-0.5" style={{ color: cores.yellow }} aria-hidden="true" />
-              Pedido registrado. O time da Ubots vai falar com você pelo WhatsApp, com este diagnóstico em mãos.
+              Pronto! Um especialista da Ubots vai falar com você em até 1 dia útil.
             </p>
           ) : (
-            <BotaoPrimario onClick={onPedir} disabled={pedido === "enviando"}>
-              <MessageCircle size={18} className="hidden sm:block shrink-0" aria-hidden="true" /> Conversar com um especialista
-            </BotaoPrimario>
+            <div className="flex flex-col gap-2">
+              <BotaoPrimario onClick={onPedir} disabled={pedido === "enviando"}>
+                <MessageCircle size={18} className="hidden sm:block shrink-0" aria-hidden="true" />{" "}
+                {pedido === "enviando" ? "Registrando seu pedido" : "Conversar com um especialista"}
+              </BotaoPrimario>
+              {pedido === "erro" && (
+                <p role="alert" className="text-sm" style={{ color: "#FFB4A8", lineHeight: 1.5 }}>
+                  Não conseguimos registrar o pedido agora. Tente de novo em instantes.
+                </p>
+              )}
+            </div>
           )}
         </div>
       </section>
 
+      <ul className="mt-4 flex flex-col gap-2 text-sm font-semibold sm:flex-row sm:gap-6">
+        <li>
+          <a
+            href={config.playbookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-amarelo decoration-2 underline-offset-4 hover:text-apagado"
+          >
+            Baixe o Playbook de recuperação de crédito com IA
+          </a>
+        </li>
+        <li>
+          <a
+            href={config.listaInteresseUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-amarelo decoration-2 underline-offset-4 hover:text-apagado"
+          >
+            Quer ouvir o time do Sicoob Crediauc? Entre na lista de interesse.
+          </a>
+        </li>
+      </ul>
+
       <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs" style={{ color: cores.muted }}>
           Como calculamos: pessoas × renegociações por dia × {config.diasUteisMes} dias úteis, multiplicado pela faixa do
-          nível. Cada resposta usa um valor de referência dentro da faixa escolhida, e os resultados são arredondados.
+          nível. Cada resposta usa um valor de referência dentro da faixa escolhida, e os resultados são arredondados. O
+          resultado nunca passa do tamanho da carteira informada.
         </p>
         <BotaoTexto onClick={onRefazer}>
           <RotateCcw size={16} aria-hidden="true" /> Refazer diagnóstico

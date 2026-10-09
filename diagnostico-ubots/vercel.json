@@ -1,1 +1,12 @@
-{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+{
+  "headers": [
+    {
+      "source": "/ubots-diagnostico.js",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
+      ]
+    }
+  ],
+  "rewrites": [{ "source": "/((?!ubots-diagnostico\\.js).*)", "destination": "/index.html" }]
+}
