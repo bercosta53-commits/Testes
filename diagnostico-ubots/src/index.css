@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-creme text-tinta antialiased;
+  }
+}
+
+dialog::backdrop {
+  background: #14141473;
+}
+dialog:not([open]) {
+  display: none;
+}
+.foco-claro:focus-visible {
+  outline-color: #ffc800;
+}
+.gaveta[open] {
+  animation: gaveta-entra 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.modal[open] {
+  animation: modal-entra 0.2s ease-out;
+}
+
+@keyframes gaveta-entra {
+  0% { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes modal-entra {
+  0% { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sobe {
+  0% { transform: translateY(100%); }
+  to { transform: none; }
+}
+@keyframes dg-entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.dg-entra {
+  animation: dg-entra 0.24s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, :before, :after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sem-impressao { display: none !important; }
+  body { background: #fff; }
+  section, li, dl > div { break-inside: avoid; }
+}
