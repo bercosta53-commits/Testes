@@ -1,7 +1,13 @@
 /*
- * Momon — expressões. Vale para o app e para a página de teste.
- * O humor vem de data-humor no <svg class="momon">:
- *   neutro | feliz | ronronando | dormindo | surpreso
+ * Momon — humores. Vale para o app e para a página de teste.
+ * O humor vem de data-humor no <svg class="momon">.
+ *
+ * Do emburrado ao feliz (o carinho vai levando de um ao outro):
+ *   emburrado | desconfiado | amolecendo | contente | feliz
+ * Momentos especiais:
+ *   ronronando | dormindo | surpreso
+ *
+ * Emburrado é fofo: bico, nariz empinado e olhar de lado. Nunca bravo nem triste.
  * Esquerda/direita são as da tela.
  */
 
@@ -13,9 +19,13 @@
 }
 
 .momon [data-parte],
+.momon .orelhas,
+.momon .rosto,
+.momon .rosto-pele,
 .momon .palpebra,
 .momon .palpebra-cima,
-.momon .palpebra-baixo {
+.momon .palpebra-baixo,
+.momon .olho-estrela {
   transform-box: view-box;
 }
 
@@ -26,7 +36,14 @@
   transition: opacity .16s ease;
 }
 
-.momon[data-humor="neutro"] .v-neutro,
+.momon .v-aberto { opacity: 1; }
+.momon[data-humor="ronronando"] .v-aberto,
+.momon[data-humor="dormindo"] .v-aberto { opacity: 0; }
+
+.momon[data-humor="emburrado"] .v-emburrado,
+.momon[data-humor="desconfiado"] .v-desconfiado,
+.momon[data-humor="amolecendo"] .v-amolecendo,
+.momon[data-humor="contente"] .v-contente,
 .momon[data-humor="feliz"] .v-feliz,
 .momon[data-humor="ronronando"] .v-ronronando,
 .momon[data-humor="dormindo"] .v-dormindo,
@@ -43,60 +60,122 @@
 .momon [data-parte="olho-dir"],
 .momon [data-parte="peito-barriga"],
 .momon [data-parte="bigodes"],
+.momon .orelhas,
+.momon .rosto,
+.momon .rosto-pele,
 .momon .palpebra,
 .momon .palpebra-cima,
-.momon .palpebra-baixo {
-  transition: transform .45s cubic-bezier(.34, 1.4, .64, 1);
+.momon .palpebra-baixo,
+.momon .olho-estrela {
+  transition: transform .5s cubic-bezier(.34, 1.3, .64, 1);
 }
 
-/* pálpebras abertas por padrão (a forma está desenhada fechada) */
-.momon .palpebra-cima { transform: translateY(-72px); }
+/* pálpebras abertas por padrão (as formas estão desenhadas fechada / sorrindo) */
+.momon .palpebra-cima { transform: translateY(-74px); }
 .momon .palpebra-baixo { transform: translateY(40px); }
 
-/* ---------- cores que mudam com o humor */
+/* ---------- luzes e cores que mudam com o humor */
 
-.momon .orelha-dentro { transition: fill .5s ease; }
-.momon .bochecha { opacity: .32; transition: opacity .5s ease; }
-.momon .lua-forma { transition: fill .6s ease; }
-.momon .lua-luz { opacity: 0; transition: opacity .6s ease; }
-.momon [data-parte="ponta-rabo"] { transition: color .6s ease; }
+.momon .bochecha { opacity: 0; transition: opacity .5s ease; }
+.momon .orelha-rubor { opacity: 0; transition: opacity .5s ease; }
+.momon .lua-luz,
+.momon .lua-acesa,
 .momon .ponta-luz { opacity: 0; transition: opacity .6s ease; }
+.momon .ponta-acesa { opacity: 0; transition: opacity .6s ease; }
 
-/* ---------- feliz: olhos sorrindo, orelhas em pé, lua e rabo acesos */
+/* ponta do rabo acesa (vaga-lume) */
+.momon:is([data-humor="contente"], [data-humor="feliz"], [data-humor="ronronando"]) .ponta-acesa { opacity: .9; }
+.momon[data-humor="amolecendo"] .ponta-acesa { opacity: .35; }
+.momon[data-humor="dormindo"] .ponta-acesa { opacity: .3; }
 
-.momon[data-humor="feliz"] .palpebra-baixo { transform: translateY(0); }
+/* ---------- emburrado: vira o rosto de lado, nariz empinado, bico */
+
+.momon[data-humor="emburrado"] [data-parte="cabeca"] { transform: rotate(-6deg); }
+.momon[data-humor="emburrado"] .rosto,
+.momon[data-humor="emburrado"] .rosto-pele { transform: translate(-14px, -4px); }
+.momon[data-humor="emburrado"] .orelhas { transform: translateX(5px); }
+.momon[data-humor="emburrado"] [data-parte="orelha-esq"] { transform: rotate(-14deg); }
+.momon[data-humor="emburrado"] [data-parte="orelha-dir"] { transform: rotate(10deg); }
+.momon[data-humor="emburrado"] [data-parte="olho-esq"],
+.momon[data-humor="emburrado"] .palpebra-esq { transform: scaleX(.86); }
+.momon[data-humor="emburrado"] [data-parte="olho-dir"],
+.momon[data-humor="emburrado"] .palpebra-dir { transform: scaleX(1.03); }
+.momon[data-humor="emburrado"] .olho-estrela { transform: translate(-3px, 14px) scale(.8); }
+.momon[data-humor="emburrado"] .palpebra-esq .palpebra-cima { transform: translateY(-36px) rotate(6deg); }
+.momon[data-humor="emburrado"] .palpebra-dir .palpebra-cima { transform: translateY(-36px) rotate(-6deg); }
+.momon[data-humor="emburrado"] [data-parte="bigodes"] { transform: scaleY(.9); }
+
+/* ---------- desconfiado: já espia, mas ainda de pálpebra baixa */
+
+.momon[data-humor="desconfiado"] [data-parte="cabeca"] { transform: rotate(-2deg); }
+.momon[data-humor="desconfiado"] .rosto,
+.momon[data-humor="desconfiado"] .rosto-pele { transform: translate(-5px, -1px); }
+.momon[data-humor="desconfiado"] .orelhas { transform: translateX(2px); }
+.momon[data-humor="desconfiado"] [data-parte="orelha-esq"] { transform: rotate(-7deg); }
+.momon[data-humor="desconfiado"] [data-parte="orelha-dir"] { transform: rotate(5deg); }
+.momon[data-humor="desconfiado"] [data-parte="olho-esq"],
+.momon[data-humor="desconfiado"] .palpebra-esq { transform: scaleX(.95); }
+.momon[data-humor="desconfiado"] .palpebra-esq .palpebra-cima { transform: translateY(-46px) rotate(2deg); }
+.momon[data-humor="desconfiado"] .palpebra-dir .palpebra-cima { transform: translateY(-46px) rotate(-2deg); }
+.momon[data-humor="desconfiado"] .olho-estrela { transform: translate(-2px, 9px) scale(.9); }
+.momon[data-humor="desconfiado"] .bochecha { opacity: .12; }
+
+/* ---------- amolecendo: olha de frente e segura o sorriso */
+
+.momon[data-humor="amolecendo"] [data-parte="orelha-esq"] { transform: rotate(-2deg); }
+.momon[data-humor="amolecendo"] [data-parte="orelha-dir"] { transform: rotate(2deg); }
+.momon[data-humor="amolecendo"] .palpebra-cima { transform: translateY(-56px); }
+.momon[data-humor="amolecendo"] .bochecha { opacity: .4; }
+.momon[data-humor="amolecendo"] .orelha-rubor { opacity: .15; }
+.momon[data-humor="amolecendo"] .lua-luz { opacity: .2; }
+.momon[data-humor="amolecendo"] .lua-acesa { opacity: .15; }
+.momon[data-humor="amolecendo"] .ponta-luz { opacity: .3; }
+
+/* ---------- contente: sorrisinho, lua e rabo acendendo */
+
+.momon[data-humor="contente"] [data-parte="cabeca"] { transform: rotate(2deg); }
+.momon[data-humor="contente"] [data-parte="peito-barriga"] { transform: scale(1.02); }
+.momon[data-humor="contente"] .bochecha { opacity: .6; }
+.momon[data-humor="contente"] .orelha-rubor { opacity: .25; }
+.momon[data-humor="contente"] .lua-luz { opacity: .45; }
+.momon[data-humor="contente"] .lua-acesa { opacity: .35; }
+.momon[data-humor="contente"] .ponta-luz { opacity: .65; }
+
+/* ---------- feliz: chega pertinho, olhos sorrindo, tudo aceso */
+
+.momon[data-humor="feliz"] [data-parte="cabeca"] { transform: rotate(4deg) scale(1.03); }
 .momon[data-humor="feliz"] [data-parte="orelha-esq"] { transform: rotate(-3deg); }
 .momon[data-humor="feliz"] [data-parte="orelha-dir"] { transform: rotate(3deg); }
-.momon[data-humor="feliz"] .orelha-dentro { fill: #FF9DB2; }
-.momon[data-humor="feliz"] .bochecha { opacity: .7; }
-.momon[data-humor="feliz"] .lua-forma { fill: #FFF0BC; }
-.momon[data-humor="feliz"] .lua-luz { opacity: .55; }
-.momon[data-humor="feliz"] [data-parte="ponta-rabo"] { color: #FFF7A6; }
-.momon[data-humor="feliz"] .ponta-luz { opacity: .9; }
+.momon[data-humor="feliz"] [data-parte="peito-barriga"] { transform: scale(1.04); }
+.momon[data-humor="feliz"] .palpebra-baixo { transform: translateY(0); }
+.momon[data-humor="feliz"] .bochecha { opacity: .85; }
+.momon[data-humor="feliz"] .orelha-rubor { opacity: .35; }
+.momon[data-humor="feliz"] .lua-luz { opacity: .75; }
+.momon[data-humor="feliz"] .lua-acesa { opacity: .6; }
+.momon[data-humor="feliz"] .ponta-luz { opacity: 1; }
 
-/* ---------- ronronando: olhos fechados em arco, peito estufado */
+/* ---------- ronronando: olhos fechados em arco, encostando no carinho */
 
-.momon[data-humor="ronronando"] [data-parte="cabeca"] { transform: rotate(3deg); }
+.momon[data-humor="ronronando"] [data-parte="cabeca"] { transform: rotate(5deg); }
 .momon[data-humor="ronronando"] [data-parte="orelha-esq"] { transform: rotate(-9deg); }
 .momon[data-humor="ronronando"] [data-parte="orelha-dir"] { transform: rotate(9deg); }
 .momon[data-humor="ronronando"] [data-parte="peito-barriga"] { transform: scale(1.05); }
-.momon[data-humor="ronronando"] .orelha-dentro { fill: #FF94AD; }
-.momon[data-humor="ronronando"] .bochecha { opacity: .8; }
-.momon[data-humor="ronronando"] .lua-forma { fill: #FFF3C6; }
-.momon[data-humor="ronronando"] .lua-luz { opacity: .85; }
-.momon[data-humor="ronronando"] [data-parte="ponta-rabo"] { color: #FFF7A6; }
+.momon[data-humor="ronronando"] .bochecha { opacity: .9; }
+.momon[data-humor="ronronando"] .orelha-rubor { opacity: .4; }
+.momon[data-humor="ronronando"] .lua-luz { opacity: .95; }
+.momon[data-humor="ronronando"] .lua-acesa { opacity: .75; }
 .momon[data-humor="ronronando"] .ponta-luz { opacity: 1; }
 
 /* ---------- dormindo: cabeça baixinha, orelhas relaxadas, luz fraquinha */
 
 .momon[data-humor="dormindo"] [data-parte="cabeca"] { transform: translateY(8px) rotate(-5deg); }
+.momon[data-humor="dormindo"] .rosto,
+.momon[data-humor="dormindo"] .rosto-pele { transform: translateY(2px); }
 .momon[data-humor="dormindo"] [data-parte="orelha-esq"] { transform: rotate(-15deg); }
 .momon[data-humor="dormindo"] [data-parte="orelha-dir"] { transform: rotate(15deg); }
 .momon[data-humor="dormindo"] [data-parte="bigodes"] { transform: scaleY(.85); }
-.momon[data-humor="dormindo"] .orelha-dentro { fill: #E9A9BC; }
-.momon[data-humor="dormindo"] .bochecha { opacity: .25; }
+.momon[data-humor="dormindo"] .bochecha { opacity: .3; }
 .momon[data-humor="dormindo"] .lua-luz { opacity: .2; }
-.momon[data-humor="dormindo"] [data-parte="ponta-rabo"] { color: #FFF3C0; }
 .momon[data-humor="dormindo"] .ponta-luz { opacity: .35; }
 
 /* ---------- surpreso (curioso!): cabeça inclinada, olhos maiores, orelhas atentas */
@@ -108,6 +187,5 @@
 .momon[data-humor="surpreso"] [data-parte="olho-dir"],
 .momon[data-humor="surpreso"] .palpebra { transform: scale(1.12); }
 .momon[data-humor="surpreso"] [data-parte="bigodes"] { transform: scaleY(1.15); }
-.momon[data-humor="surpreso"] .orelha-dentro { fill: #FFB0C0; }
-.momon[data-humor="surpreso"] .bochecha { opacity: .4; }
+.momon[data-humor="surpreso"] .bochecha { opacity: .2; }
 .momon[data-humor="surpreso"] .lua-luz { opacity: .25; }

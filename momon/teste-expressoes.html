@@ -8,12 +8,12 @@
   <style>
     :root {
       --fundo: #FBF1E6;
-      --cartao: #FFFDF9;
+      --cartao: linear-gradient(180deg, #F8EADD 0%, #EFDCCB 100%);
       --texto: #5A3B32;
       --suave: #9C7B6E;
-      --borda: #F0DCCB;
+      --borda: #EBD5C2;
       --destaque: #F4A45E;
-      --noite: #2E2A4F;
+      --noite: linear-gradient(180deg, #2B2852 0%, #3B3466 100%);
     }
     * { box-sizing: border-box; }
     body {
@@ -25,41 +25,58 @@
     }
     header, main, section { max-width: 1240px; margin: 0 auto; }
     h1 { margin: 0; font-size: 28px; }
-    h2 { font-size: 20px; margin: 40px 0 6px; }
-    header p, section > p { margin: 4px 0 20px; color: var(--suave); }
+    h2 { font-size: 20px; margin: 36px 0 4px; }
+    header p, section > p { margin: 4px 0 16px; color: var(--suave); }
 
     .grade {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 14px;
     }
+    .grade.tres { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 744px; }
     .cartao {
+      position: relative;
       margin: 0;
       background: var(--cartao);
       border: 2px solid var(--borda);
       border-radius: 24px;
-      padding: 18px 14px 12px;
+      padding: 18px 16px 12px;
       text-align: center;
     }
-    .cartao figcaption strong { display: block; margin-top: 6px; font-size: 17px; }
+    .cartao figcaption strong { display: block; margin-top: 8px; font-size: 17px; }
     .cartao figcaption span { display: block; font-size: 13px; color: var(--suave); }
+    .progressao .cartao:not(:last-child)::after {
+      content: "♥";
+      position: absolute;
+      right: -13px;
+      top: 42%;
+      z-index: 1;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      color: #F2849C;
+      font-size: 13px;
+      line-height: 24px;
+      box-shadow: 0 1px 4px rgba(90, 59, 50, .18);
+    }
 
     .palco {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 280px;
+      grid-template-columns: minmax(0, 1fr) 300px;
       gap: 20px;
       align-items: center;
       background: var(--cartao);
       border: 2px solid var(--borda);
       border-radius: 28px;
       padding: 20px;
-      transition: background .6s ease, border-color .6s ease;
     }
-    .palco.noite { background: var(--noite); border-color: var(--noite); }
-    .palco .momon { max-width: 440px; margin: 0 auto; }
-    .botoes { display: grid; gap: 10px; }
+    .palco.noite { background: var(--noite); border-color: #2B2852; }
+    .palco.noite + .legenda { color: var(--suave); }
+    .palco .momon { max-width: 460px; margin: 0 auto; }
+    .botoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .botoes button {
-      min-height: 52px;
+      min-height: 50px;
       border: 2px solid var(--borda);
       border-radius: 16px;
       background: #fff;
@@ -69,12 +86,14 @@
       cursor: pointer;
     }
     .botoes button[aria-pressed="true"] { background: var(--destaque); border-color: var(--destaque); color: #fff; }
+    .botoes .largo { grid-column: 1 / -1; }
+    .botoes #carinho { background: #FFE3EA; border-color: #F7B8C6; }
 
     .partes { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
     .partes li {
       padding: 6px 12px;
       border-radius: 999px;
-      background: var(--cartao);
+      background: #FFFDF9;
       border: 2px solid var(--borda);
       font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
@@ -89,12 +108,14 @@
 
     @media (max-width: 900px) {
       .grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .progressao .cartao:nth-child(3n)::after { display: none; }
       .palco { grid-template-columns: 1fr; }
       .botoes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (max-width: 560px) {
-      .grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .grade, .grade.tres { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .grade > :last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 5px); }
+      .progressao .cartao::after { display: none; }
       .botoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
@@ -102,14 +123,22 @@
 <body>
   <header>
     <h1>Momon · folha de expressões</h1>
-    <p>Página de teste do passo 1: o desenho do Momon e os cinco estados de expressão lado a lado.</p>
+    <p>Estilo levemente 3D. Personalidade: emburradinho, mas muito carinhoso. O carinho e a atenção vão deixando ele feliz e pertinho.</p>
   </header>
 
-  <main class="grade" id="grade"></main>
+  <main>
+    <h2>Do emburrado ao feliz</h2>
+    <p>O caminho que o carinho faz com ele. Emburrado é bico e nariz empinado, nunca bravo nem triste.</p>
+    <div class="grade progressao" id="progressao"></div>
+
+    <h2>Momentos especiais</h2>
+    <p>Fazendo carinho longo, na hora de dormir e quando algo chama a atenção dele.</p>
+    <div class="grade tres" id="especiais"></div>
+  </main>
 
   <section>
     <h2>Trocar de humor</h2>
-    <p>O mesmo Momon passando de um estado para outro, com as transições que o app vai usar.</p>
+    <p>O mesmo Momon passando de um humor para outro, com as transições que o app vai usar. "Dar carinho" avança um passo.</p>
     <div class="palco" id="palco">
       <div id="palco-momon"></div>
       <div class="botoes" id="botoes"></div>
@@ -130,43 +159,56 @@
 
   <script src="assets/momon.svg.js"></script>
   <script>
-    const { criar, HUMORES, PARTES, COR } = Momon.svg;
+    const { criar, HUMORES, PROGRESSAO, ESPECIAIS, PARTES, COR } = Momon.svg;
 
     const NOTAS = {
-      neutro: 'olhando, tranquilo',
-      feliz: 'olhinhos sorrindo, lua e rabo acesos',
-      ronronando: 'olhos fechados em arco, peito estufado',
+      emburrado: 'vira a cara e faz bico',
+      desconfiado: 'espia com o canto do olho',
+      amolecendo: 'segura o sorriso, a luz começa',
+      contente: 'sorrisinho, lua e rabo acendendo',
+      feliz: 'chega pertinho, tudo aceso',
+      ronronando: 'olhos fechados, encostando no carinho',
       dormindo: 'cabeça baixinha, luz fraquinha',
       surpreso: 'curioso: cabeça inclinada, olhos grandes',
     };
 
-    // Os cinco lado a lado (cada um com prefixo próprio: ids não podem repetir).
-    document.getElementById('grade').innerHTML = HUMORES.map(humor => `
+    // Cada Momon da folha tem prefixo próprio: ids não podem repetir na página.
+    const cartao = humor => `
       <figure class="cartao">
         ${criar({ humor, prefixo: humor + '-' })}
         <figcaption><strong>${humor}</strong><span>${NOTAS[humor]}</span></figcaption>
-      </figure>`).join('');
+      </figure>`;
+    document.getElementById('progressao').innerHTML = PROGRESSAO.map(cartao).join('');
+    document.getElementById('especiais').innerHTML = ESPECIAIS.map(cartao).join('');
 
     // Palco: um Momon só (sem prefixo, ids exatamente como no app).
     const palco = document.getElementById('palco');
-    document.getElementById('palco-momon').innerHTML = criar({ humor: 'neutro' });
+    document.getElementById('palco-momon').innerHTML = criar({ humor: PROGRESSAO[0] });
     const grande = palco.querySelector('.momon');
     const botoes = document.getElementById('botoes');
-    botoes.innerHTML = HUMORES.map(h => `<button type="button" data-humor="${h}">${h}</button>`).join('') +
+    const CAMINHO = [...PROGRESSAO, 'ronronando'];
+    botoes.innerHTML =
+      '<button type="button" class="largo" id="carinho">♥ dar carinho</button>' +
+      HUMORES.map(h => `<button type="button" data-humor="${h}">${h}</button>`).join('') +
       '<button type="button" id="noite" aria-pressed="false">☾ fundo noite</button>';
-    const marcar = () => botoes.querySelectorAll('[data-humor]').forEach(b =>
-      b.setAttribute('aria-pressed', String(b.dataset.humor === grande.dataset.humor)));
+    const mostrar = humor => {
+      grande.dataset.humor = humor;
+      botoes.querySelectorAll('[data-humor]').forEach(b =>
+        b.setAttribute('aria-pressed', String(b.dataset.humor === humor)));
+    };
     botoes.addEventListener('click', e => {
       const b = e.target.closest('button');
       if (!b) return;
       if (b.id === 'noite') {
         b.setAttribute('aria-pressed', String(palco.classList.toggle('noite')));
+      } else if (b.id === 'carinho') {
+        const i = CAMINHO.indexOf(grande.dataset.humor);
+        mostrar(CAMINHO[Math.min(i + 1, CAMINHO.length - 1)]);
       } else {
-        grande.dataset.humor = b.dataset.humor;
-        marcar();
+        mostrar(b.dataset.humor);
       }
     });
-    marcar();
+    mostrar(PROGRESSAO[0]);
 
     // Checagem: as 16 partes existem em cada Momon da página.
     const instancias = [...HUMORES.map(h => h + '-'), ''];
@@ -178,7 +220,7 @@
       : `${PARTES.length} de ${PARTES.length} partes encontradas em todos os ${instancias.length} Momons da página.`;
 
     const NOMES_COR = {
-      laranja: 'pelo ruivo', branco: 'pelo branco', contorno: 'contorno', lua: 'lua da testa',
+      laranja: 'pelo ruivo', branco: 'pelo branco', lua: 'lua da testa',
       pontaRabo: 'ponta do rabo', rosaOrelha: 'dentro da orelha', nariz: 'nariz', olho: 'olhos', bochecha: 'bochechas',
     };
     document.getElementById('paleta').innerHTML = Object.entries(NOMES_COR).map(([k, nome]) =>
