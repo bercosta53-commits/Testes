@@ -1,8 +1,19 @@
-// Desenho do painel: destaque, ranking, matrizes 2x2, barras empilhadas e tabela.
-// A estrutura é criada uma vez (montar) e depois só atualizada (renderizar),
-// para que as transições de CSS animem as barras.
+// Desenho do painel: resumo executivo, ranking, matrizes 2x2, barras empilhadas
+// e tabela. A estrutura é criada uma vez (montar) e depois só atualizada
+// (renderizar), para que as transições de CSS animem as barras.
 import { CANDIDATOS, CLUBES, PERFIS } from './calc.js';
-import { CENARIOS, dec, formulaCenario, formulaDerrotas, formulaRebaixamento, num, pct } from './format.js';
+import {
+  CENARIOS,
+  COR_IDENTIDADE,
+  dec,
+  formulaCenario,
+  formulaDerrotas,
+  formulaRebaixamento,
+  num,
+  pct,
+  pp,
+} from './format.js';
+import { resumoExecutivo, tituloEmpilhadas, tituloMatrizes, tituloRanking } from './narrativa.js';
 import { definirDica } from './dica.js';
 import { misturar, tintaSobre, token } from './cores.js';
 
@@ -10,7 +21,7 @@ const PIOR = CENARIOS[0];
 
 /** Último resultado desenhado; as dicas leem daqui na hora de abrir. */
 let atual = null;
-const refs = { ranking: new Map(), matrizes: new Map(), empilhadas: new Map(), tabela: new Map() };
+const refs = { ranking: new Map(), matrizes: new Map(), empilhadas: new Map(), tabela: new Map(), resumo: [] };
 
 function h(tag, atributos = {}, ...filhos) {
   const el = document.createElement(tag);
@@ -24,9 +35,29 @@ function h(tag, atributos = {}, ...filhos) {
 }
 
 const perfilAtual = (id) => atual.r.perfis.find((p) => p.id === id);
+const perfilBase = (id) => atual.base?.perfis.find((p) => p.id === id) ?? null;
+
+/** Ficha de duas cores: clube à esquerda, candidato à direita. */
+function chip(perfil) {
+  return h(
+    'span',
+    { class: 'chip', 'aria-hidden': 'true' },
+    h('i', { style: `background: var(${COR_IDENTIDADE[perfil.clube]})` }),
+    h('i', { style: `background: var(${COR_IDENTIDADE[perfil.candidato]})` }),
+  );
+}
+
+function delta(perfil) {
+  const base = perfilBase(perfil.id);
+  if (!base) return { texto: '—', seta: '' };
+  const d = perfil.quedaEDerrota - base.quedaEDerrota;
+  const arredondado = Math.round(d * 1000);
+  return { texto: pp(d), seta: arredondado > 0 ? '▲' : arredondado < 0 ? '▼' : '=' };
+}
 
 export function montar() {
   montarLegendas();
+  montarResumo();
   montarRanking();
   montarMatrizes();
   montarEmpilhadas();
@@ -34,9 +65,17 @@ export function montar() {
   new ResizeObserver(() => atual && ajustarRotulosEmpilhadas()).observe(document.getElementById('empilhadas'));
 }
 
-export function renderizar(r, params) {
-  atual = { r, params };
-  renderizarDestaque(r);
+/**
+ * @param r resultado de calcPerfis com as premissas atuais
+ * @param params premissas atuais
+ * @param base resultado antes do jogo, para a coluna "vs. pré-jogo" (ou null)
+ */
+export function renderizar(r, params, base) {
+  atual = { r, params, base };
+  renderizarResumo(r, base, params);
+  document.getElementById('fig1-titulo').textContent = tituloRanking(r);
+  document.getElementById('fig2-titulo').textContent = tituloMatrizes(r);
+  document.getElementById('fig3-titulo').textContent = tituloEmpilhadas(r);
   renderizarRanking(r);
   renderizarMatrizes(r);
   renderizarEmpilhadas(r);
@@ -45,81 +84,119 @@ export function renderizar(r, params) {
 
 /** Esmaece os gráficos enquanto as premissas estão inválidas. */
 export function marcarDesatualizado(sim) {
-  for (const el of document.querySelectorAll('[data-atualizavel], #destaque')) {
-    el.classList.toggle('desatualizado', sim);
-  }
+  for (const el of document.querySelectorAll('[data-atualizavel]')) el.classList.toggle('desatualizado', sim);
 }
 
 // --- Legendas -------------------------------------------------------------
 
+function amostra(...tokens) {
+  return h(
+    'span',
+    { class: 'amostra', 'aria-hidden': 'true' },
+    ...tokens.map((t) => h('i', { style: `background: var(${t})` })),
+  );
+}
+
 function montarLegendas() {
+  for (const lista of document.querySelectorAll('[data-legenda-identidade]')) {
+    lista.replaceChildren(
+      h('li', { class: 'legenda-grupo', text: 'Clubes' }),
+      h('li', {}, amostra('--gremio'), 'Grêmio'),
+      h('li', {}, amostra('--inter'), 'Inter'),
+      h('li', { class: 'legenda-grupo', text: 'Candidatos' }),
+      h('li', {}, amostra('--lula'), 'Lula (PT)'),
+      h('li', {}, amostra('--flavio'), 'Flávio (PL)'),
+    );
+  }
   for (const lista of document.querySelectorAll('[data-legenda-cenarios]')) {
     lista.replaceChildren(
-      ...CENARIOS.map((c) =>
-        h(
-          'li',
-          {},
-          h('span', { class: 'amostra', style: `--cor: var(${c.cor})`, 'aria-hidden': 'true' }),
-          c.marca ? `${c.nome} (${c.marca})` : c.nome,
-        ),
-      ),
+      h('li', {}, amostra('--c-pior'), 'Sofrimento duplo (pior)'),
+      h('li', {}, amostra('--gremio', '--inter'), 'Só o clube cai (cor do clube)'),
+      h('li', {}, amostra('--lula', '--flavio'), 'Só o candidato perde (cor do candidato)'),
+      h('li', {}, amostra('--c-melhor'), 'Nenhuma derrota (melhor)'),
     );
   }
 }
 
-// --- Destaque -------------------------------------------------------------
+// --- Resumo executivo -----------------------------------------------------
 
-function renderizarDestaque(r) {
-  const [lider] = r.lideres;
-  const empate = r.lideres.length > 1;
-  const $ = (id) => document.getElementById(id);
-
-  $('destaque-nome').textContent = empate ? `Empate: ${juntar(r.lideres.map((p) => p.nome))}` : lider.nome;
-  $('destaque-pct').textContent = pct(lider.quedaEDerrota);
-  $('destaque-frase-texto').textContent = empate
-    ? 'de chance do pior cenário para cada um.'
-    : `de chance de ver o ${CLUBES[lider.clube]} rebaixado e ${CANDIDATOS[lider.candidato]} derrotado.`;
-
-  $('destaque-detalhes').hidden = empate;
-  if (!empate) {
-    $('medidor-clube-rotulo').textContent = `${CLUBES[lider.clube]} cai`;
-    $('medidor-clube-valor').textContent = pct(lider.pClube);
-    $('medidor-clube').style.width = `${lider.pClube * 100}%`;
-    $('medidor-cand-rotulo').textContent = `${CANDIDATOS[lider.candidato]} perde`;
-    $('medidor-cand-valor').textContent = pct(1 - lider.pCand);
-    $('medidor-cand').style.width = `${(1 - lider.pCand) * 100}%`;
-    $('destaque-derrotas').textContent = num(lider.derrotasEsperadas);
+function montarResumo() {
+  const lista = document.getElementById('resumo-lista');
+  for (let i = 0; i < 4; i++) {
+    const rotulo = h('p', { class: 'resumo-rotulo' });
+    const valor = h('p', { class: 'resumo-valor' });
+    const texto = h('p', { class: 'resumo-texto' });
+    const item = h('li', { class: 'resumo-item' }, rotulo, valor, texto);
+    lista.append(item);
+    refs.resumo.push({ item, rotulo, valor, texto });
   }
-
-  const ultimo = r.ranking.at(-1);
-  $('destaque-outra-ponta').textContent = empate && r.lideres.length === r.ranking.length
-    ? 'Todos os perfis estão empatados.'
-    : `Na outra ponta, ${ultimo.nome}: ${pct(ultimo.quedaEDerrota)} de chance do pior cenário.`;
 }
 
-function juntar(nomes) {
-  return nomes.length <= 1 ? nomes.join('') : `${nomes.slice(0, -1).join(', ')} e ${nomes.at(-1)}`;
+function renderizarResumo(r, base, params) {
+  resumoExecutivo(r, base, params).forEach((achado, i) => {
+    const ref = refs.resumo[i];
+    ref.item.dataset.achado = achado.id;
+    ref.rotulo.textContent = achado.rotulo;
+    ref.valor.textContent = achado.valor;
+    ref.texto.replaceChildren(...(achado.perfil && r.lideres.length === 1 ? [chip(achado.perfil)] : []), achado.texto);
+  });
 }
 
 // --- Ranking --------------------------------------------------------------
 
 function montarRanking() {
   const raiz = document.getElementById('ranking');
+  const cabecalho = h(
+    'div',
+    { class: 'ranking-cabecalho', 'aria-hidden': 'true' },
+    h('span'),
+    h('span', { class: 'col-perfil', text: 'Perfil' }),
+    h('span', { class: 'col-trilho', text: 'Derrotas esperadas (0 a 2)' }),
+    h('span', { class: 'col-pior', text: 'Sofrimento duplo' }),
+    h('span', { class: 'col-delta', text: 'vs. pré-jogo' }),
+  );
+  const linhas = h('div', { class: 'ranking-linhas' });
+  const eixo = h(
+    'div',
+    { class: 'ranking-eixo', 'aria-hidden': 'true' },
+    h(
+      'div',
+      { class: 'eixo eixo-ranking' },
+      ...[
+        [0, '0'],
+        [0.25, '0,5'],
+        [0.5, '1'],
+        [0.75, '1,5'],
+        [1, '2'],
+      ].map(([x, t]) => h('span', { style: `--x: ${x}`, text: t })),
+    ),
+  );
+  raiz.append(cabecalho, linhas, eixo);
+
   for (const perfil of PERFIS) {
     const posicao = h('span', { class: 'posicao' });
-    const pior = h('strong');
-    const piorRotulo = h('span', { class: 'pior', tabindex: '0' }, pior, ' no pior cenário');
-    const segClube = h('span', { class: 'seg seg-clube' });
-    const segCand = h('span', { class: 'seg seg-cand' });
+    const piorValor = h('strong');
+    const pior = h('span', { class: 'pior', tabindex: '0' }, piorValor);
+    const segClube = h('span', { class: 'seg', style: `background: var(${COR_IDENTIDADE[perfil.clube]})` });
+    const segCand = h('span', {
+      class: 'seg seg-final',
+      style: `background: var(${COR_IDENTIDADE[perfil.candidato]})`,
+    });
     const valor = h('span', { class: 'valor' });
+    const deltaSeta = h('span', { class: 'delta-seta', 'aria-hidden': 'true' });
+    const deltaTexto = h('span');
+    const deltaEl = h('span', { class: 'delta' }, deltaSeta, deltaTexto);
     const linha = h(
       'div',
       { class: 'ranking-linha', tabindex: '0' },
-      h('div', { class: 'ranking-topo' }, posicao, h('span', { class: 'perfil-nome', text: perfil.nome }), piorRotulo),
+      posicao,
+      h('span', { class: 'ranking-perfil' }, chip(perfil), h('span', { class: 'perfil-nome', text: perfil.nome })),
       h('div', { class: 'trilho' }, segClube, segCand, valor),
+      pior,
+      deltaEl,
     );
-    raiz.append(linha);
-    refs.ranking.set(perfil.id, { linha, posicao, pior, segClube, segCand, valor });
+    linhas.append(linha);
+    refs.ranking.set(perfil.id, { linha, posicao, piorValor, segClube, segCand, valor, deltaSeta, deltaTexto });
 
     const p = () => perfilAtual(perfil.id);
     const clube = CLUBES[perfil.clube];
@@ -135,18 +212,19 @@ function montarRanking() {
       titulo: `Chance de ${cand} perder · ${perfil.nome}`,
       formula: `1 − P(${cand} vence) = 1 − ${dec(p().pCand)}`,
     }));
-    definirDica(piorRotulo, () => ({
+    definirDica(pior, () => ({
       valor: pct(p().quedaEDerrota, 1),
-      titulo: `Pior cenário: ${clube} cai e ${cand} perde`,
+      titulo: `Sofrimento duplo: ${clube} cai e ${cand} perde`,
       formula: formulaCenario(p(), PIOR),
+      nota: perfilBase(perfil.id) ? `Antes do jogo: ${pct(perfilBase(perfil.id).quedaEDerrota, 1)} (${delta(p()).texto}).` : null,
     }));
     const resumo = () => ({
       valor: `${num(p().derrotasEsperadas)} derrotas esperadas`,
       titulo: perfil.nome,
       linhas: [
-        { cor: '--s-clube', rotulo: `${clube} cai`, valor: pct(p().pClube, 1) },
-        { cor: '--s-cand', rotulo: `${cand} perde`, valor: pct(1 - p().pCand, 1) },
-        { cor: PIOR.cor, rotulo: 'Pior cenário', valor: pct(p().quedaEDerrota, 1) },
+        { cor: COR_IDENTIDADE[perfil.clube], rotulo: `${clube} cai`, valor: pct(p().pClube, 1) },
+        { cor: COR_IDENTIDADE[perfil.candidato], rotulo: `${cand} perde`, valor: pct(1 - p().pCand, 1) },
+        { cor: PIOR.cor(perfil), rotulo: 'Sofrimento duplo', valor: pct(p().quedaEDerrota, 1) },
       ],
       formula: formulaDerrotas(p()),
     });
@@ -160,19 +238,22 @@ function renderizarRanking(r) {
     const ref = refs.ranking.get(p.id);
     const w1 = (p.pClube / 2) * 100;
     const w2 = ((1 - p.pCand) / 2) * 100;
+    const d = delta(p);
     ref.linha.style.setProperty('--pos', i);
     ref.linha.classList.toggle('lider', r.lideres.includes(p));
     ref.linha.setAttribute(
       'aria-label',
-      `${p.posicao}º lugar: ${p.nome}. ${num(p.derrotasEsperadas)} derrotas esperadas; ${pct(p.quedaEDerrota, 1)} de chance do pior cenário.`,
+      `${p.posicao}º lugar: ${p.nome}. ${num(p.derrotasEsperadas)} derrotas esperadas; ${pct(p.quedaEDerrota, 1)} de chance de sofrimento duplo; ${d.texto} contra o pré-jogo.`,
     );
     ref.posicao.textContent = `${p.posicao}º`;
-    ref.pior.textContent = pct(p.quedaEDerrota);
+    ref.piorValor.textContent = pct(p.quedaEDerrota);
     ref.segClube.style.width = `${w1}%`;
     ref.segCand.style.left = `calc(${w1}% + 2px)`;
     ref.segCand.style.width = `max(0px, calc(${w2}% - 2px))`;
     ref.valor.style.left = `calc(${w1 + w2}% + 6px)`;
     ref.valor.textContent = num(p.derrotasEsperadas);
+    ref.deltaSeta.textContent = d.seta;
+    ref.deltaTexto.textContent = d.texto;
   });
 }
 
@@ -192,7 +273,7 @@ function montarMatrizes() {
       celulas.set(c.chave, { el, valor });
       definirDica(el, () => ({
         valor: pct(perfilAtual(perfil.id)[c.chave], 1),
-        titulo: `${clube} ${c.cai ? 'cai' : 'fica'} e ${cand} ${c.perde ? 'perde' : 'vence'} · ${perfil.nome}`,
+        titulo: `${c.nome}: ${clube} ${c.cai ? 'cai' : 'fica'} e ${cand} ${c.perde ? 'perde' : 'vence'}`,
         formula: formulaCenario(perfilAtual(perfil.id), c),
       }));
       return el;
@@ -201,7 +282,12 @@ function montarMatrizes() {
     const matriz = h(
       'figure',
       { class: 'matriz', tabindex: '0' },
-      h('figcaption', {}, h('strong', { text: perfil.nome }), h('span', { text: `${clube} · ${cand}` })),
+      h(
+        'figcaption',
+        {},
+        h('span', { class: 'matriz-nome' }, chip(perfil), h('strong', { text: perfil.nome })),
+        h('span', { class: 'matriz-sub', text: `Cai/fica: ${clube} · Perde/vence: ${cand}` }),
+      ),
       h(
         'div',
         { class: 'matriz-grade' },
@@ -228,8 +314,9 @@ function renderizarMatrizes(r) {
     const { matriz, celulas } = refs.matrizes.get(p.id);
     for (const c of CENARIOS) {
       const { el, valor } = celulas.get(c.chave);
-      // Intensidade proporcional à probabilidade, com um piso para a célula não sumir.
-      const cor = misturar(fundo, token(c.cor), 0.08 + 0.92 * p[c.chave]);
+      // Intensidade cresce com a probabilidade (raiz quadrada, para separar melhor
+      // as faixas baixas), com um piso para a célula não sumir.
+      const cor = misturar(fundo, token(c.cor(p)), 0.12 + 0.88 * Math.sqrt(p[c.chave]));
       el.style.background = cor;
       el.style.color = tintaSobre(cor);
       valor.textContent = pct(p[c.chave]);
@@ -241,11 +328,7 @@ function renderizarMatrizes(r) {
 function resumoCenarios(p) {
   return {
     titulo: p.nome,
-    linhas: CENARIOS.map((c) => ({
-      cor: c.cor,
-      rotulo: c.marca ? `${c.nome} (${c.marca})` : c.nome,
-      valor: pct(p[c.chave], 1),
-    })),
+    linhas: CENARIOS.map((c) => ({ cor: c.cor(p), rotulo: c.nome, valor: pct(p[c.chave], 1) })),
     nota: `Cai/fica: ${CLUBES[p.clube]}. Perde/vence: ${CANDIDATOS[p.candidato]}. Soma: ${pct(somaCenarios(p), 1)}.`,
   };
 }
@@ -265,19 +348,19 @@ function montarEmpilhadas() {
     const trilho = h('div', { class: 'empilhada-trilho' });
     for (const c of CENARIOS) {
       const rotulo = h('span', { class: 'seg-rotulo' });
-      const el = h('span', { class: 'seg-cenario', style: `--cor: var(${c.cor})` }, rotulo);
+      const el = h('span', { class: 'seg-cenario', style: `--cor: var(${c.cor(perfil)})` }, rotulo);
       trilho.append(el);
       segmentos.set(c.chave, { el, rotulo });
       definirDica(el, () => ({
         valor: pct(perfilAtual(perfil.id)[c.chave], 1),
-        titulo: `${c.marca ? `${c.nome} (${c.marca})` : c.nome} · ${perfil.nome}`,
+        titulo: `${c.nome} · ${perfil.nome}`,
         formula: formulaCenario(perfilAtual(perfil.id), c),
       }));
     }
     const linha = h(
       'div',
       { class: 'empilhada-linha', tabindex: '0' },
-      h('span', { class: 'empilhada-nome', text: perfil.nome }),
+      h('span', { class: 'empilhada-nome' }, chip(perfil), perfil.nome),
       trilho,
     );
     raiz.append(linha);
@@ -294,7 +377,7 @@ function renderizarEmpilhadas(r) {
       el.style.width = `${p[c.chave] * 100}%`;
       el.classList.toggle('vazio', p[c.chave] < 0.0005);
       rotulo.textContent = pct(p[c.chave]);
-      rotulo.style.color = tintaSobre(token(c.cor));
+      rotulo.style.color = tintaSobre(token(c.cor(p)));
     }
     linha.setAttribute('aria-label', rotuloCenarios(p));
   }
@@ -319,7 +402,7 @@ function ajustarRotulosEmpilhadas() {
 function montarTabela() {
   const corpo = document.getElementById('tabela-corpo');
   for (const perfil of PERFIS) {
-    const celulas = Array.from({ length: 8 }, () => h('td'));
+    const celulas = Array.from({ length: 9 }, () => h('td'));
     corpo.append(h('tr', {}, h('th', { scope: 'row', text: perfil.nome }), ...celulas));
     refs.tabela.set(perfil.id, celulas);
   }
@@ -333,6 +416,7 @@ function renderizarTabela(r) {
       ...CENARIOS.map((c) => pct(p[c.chave], 1)),
       pct(somaCenarios(p), 1),
       num(p.derrotasEsperadas),
+      delta(p).texto,
     ];
     refs.tabela.get(p.id).forEach((td, i) => {
       td.textContent = valores[i];

@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULTS, PERFIS, calcPerfis, probabilidadesDoJogo } from '../src/calc.js';
+import { DEFAULTS, PERFIS, PREMISSAS_PRE_JOGO, calcPerfis, probabilidadesDoJogo } from '../src/calc.js';
 
 const UM_PP = 0.01; // tolerância do critério de aceite: 1 ponto percentual
 
 const porId = (resultado) => Object.fromEntries(resultado.perfis.map((p) => [p.id, p]));
-const comParams = (mudancas) => ({ ...structuredClone(DEFAULTS), ...mudancas });
+const comParams = (mudancas) => ({ ...structuredClone(PREMISSAS_PRE_JOGO), ...mudancas });
 
-describe('calcPerfis com as premissas padrão', () => {
-  const r = calcPerfis(DEFAULTS);
+describe('calcPerfis com as premissas pré-jogo do briefing', () => {
+  const r = calcPerfis(PREMISSAS_PRE_JOGO);
   const p = porId(r);
 
   it('calcula o risco de rebaixamento ponderado pelo resultado do Gre-Nal', () => {
@@ -68,6 +68,69 @@ describe('calcPerfis com as premissas padrão', () => {
     expect(r.jogo.normalizado).toBe(false);
     expect(r.jogo.somaInformada).toBeCloseTo(1, 12);
   });
+
+  it('não aplica ajuste do Corinthians', () => {
+    expect(r.ajuste).toBe(0);
+    expect(r.pRebaixa).toEqual(r.pRebaixaModelo);
+  });
+});
+
+describe('calcPerfis com os padrões pós-rodada (empate no Gre-Nal e derrota do Corinthians)', () => {
+  const r = calcPerfis(DEFAULTS);
+  const p = porId(r);
+
+  it('fixa o empate e desconta 3 p.p. do risco de cada clube', () => {
+    expect(DEFAULTS.resultadoJogo).toBe('empate');
+    expect(r.jogo.efetiva).toEqual({ gremioVence: 0, empate: 1, interVence: 0 });
+    expect(r.pRebaixaModelo.gremio).toBeCloseTo(0.676, 12);
+    expect(r.pRebaixaModelo.inter).toBeCloseTo(0.461, 12);
+    expect(r.ajuste).toBe(0.03);
+    expect(r.pRebaixa.gremio).toBeCloseTo(0.646, 12);
+    expect(r.pRebaixa.inter).toBeCloseTo(0.431, 12);
+  });
+
+  it.each([
+    ['gremista-lula', 0.646 * 0.65, 0.646 + 0.65],
+    ['colorado-lula', 0.431 * 0.65, 0.431 + 0.65],
+    ['gremista-flavio', 0.646 * 0.35, 0.646 + 0.35],
+    ['colorado-flavio', 0.431 * 0.35, 0.431 + 0.35],
+  ])('%s', (id, pior, derrotas) => {
+    expect(p[id].quedaEDerrota).toBeCloseTo(pior, 10);
+    expect(p[id].derrotasEsperadas).toBeCloseTo(derrotas, 10);
+  });
+
+  it('mantém a ordem do ranking do pré-jogo', () => {
+    expect(r.ranking.map((x) => x.id)).toEqual(['gremista-lula', 'colorado-lula', 'gremista-flavio', 'colorado-flavio']);
+  });
+});
+
+describe('ajuste do Corinthians', () => {
+  it('desconta o mesmo valor dos dois clubes', () => {
+    const r = calcPerfis(comParams({ ajusteCorinthians: 0.05 }));
+    expect(r.pRebaixa.gremio).toBeCloseTo(0.6312 - 0.05, 12);
+    expect(r.pRebaixa.inter).toBeCloseTo(0.446204 - 0.05, 12);
+  });
+
+  it('não deixa o risco ficar negativo', () => {
+    const risco = { gremio: 0.02, inter: 0.5 };
+    const r = calcPerfis(
+      comParams({
+        resultadoJogo: 'empate',
+        ajusteCorinthians: 0.1,
+        riscoRebaixamento: { gremioVence: risco, empate: risco, interVence: risco },
+      }),
+    );
+    expect(r.pRebaixa.gremio).toBe(0);
+    expect(r.pRebaixa.inter).toBeCloseTo(0.4, 12);
+    for (const x of r.perfis) {
+      expect(x.quedaEDerrota + x.quedaEVitoria + x.ficaEDerrota + x.ficaEVitoria).toBeCloseTo(1, 12);
+    }
+  });
+
+  it('é tratado como zero quando ausente', () => {
+    const { ajusteCorinthians, ...semAjuste } = structuredClone(PREMISSAS_PRE_JOGO);
+    expect(calcPerfis(semAjuste).ajuste).toBe(0);
+  });
 });
 
 describe('soma dos cenários', () => {
@@ -75,6 +138,7 @@ describe('soma dos cenários', () => {
 
   it('é 100% para cada perfil com os padrões', () => {
     for (const x of calcPerfis(DEFAULTS).perfis) expect(cenarios(x)).toBeCloseTo(1, 12);
+    for (const x of calcPerfis(PREMISSAS_PRE_JOGO).perfis) expect(cenarios(x)).toBeCloseTo(1, 12);
   });
 
   it('é 100% para qualquer combinação de premissas', () => {
@@ -87,6 +151,7 @@ describe('soma dos cenários', () => {
       const params = {
         pFlavio: aleatorio(),
         resultadoJogo: ['probabilistico', 'gremioVence', 'empate', 'interVence'][i % 4],
+        ajusteCorinthians: aleatorio() * 0.1,
         probJogo: { gremioVence: aleatorio(), empate: aleatorio(), interVence: aleatorio() },
         riscoRebaixamento: {
           gremioVence: { gremio: aleatorio(), inter: aleatorio() },
@@ -170,6 +235,7 @@ describe('validação', () => {
     ['modo desconhecido', { resultadoJogo: 'goleada' }],
     ['probabilidade do jogo fora de 0–1', { probJogo: { gremioVence: 40.1, empate: 0.28, interVence: 0.319 } }],
     ['risco ausente', { riscoRebaixamento: { gremioVence: { gremio: 0.5 } } }],
+    ['ajuste negativo', { ajusteCorinthians: -0.01 }],
   ])('rejeita %s', (_, mudancas) => {
     expect(() => calcPerfis(comParams(mudancas))).toThrow(RangeError);
   });
@@ -181,8 +247,9 @@ describe('validação', () => {
     expect(params).toEqual(copia);
   });
 
-  it('DEFAULTS é imutável', () => {
+  it('DEFAULTS e PREMISSAS_PRE_JOGO são imutáveis', () => {
     expect(Object.isFrozen(DEFAULTS)).toBe(true);
     expect(Object.isFrozen(DEFAULTS.riscoRebaixamento.empate)).toBe(true);
+    expect(Object.isFrozen(PREMISSAS_PRE_JOGO)).toBe(true);
   });
 });

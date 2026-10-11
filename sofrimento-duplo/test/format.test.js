@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULTS, calcPerfis } from '../src/calc.js';
+import { DEFAULTS, PREMISSAS_PRE_JOGO, calcPerfis } from '../src/calc.js';
 import {
   CENARIOS,
   casasPct,
@@ -10,6 +10,7 @@ import {
   num,
   paraCampo,
   pct,
+  pp,
 } from '../src/format.js';
 
 describe('formatação pt-BR', () => {
@@ -26,6 +27,12 @@ describe('formatação pt-BR', () => {
     expect(casasPct(0.4)).toBe(0);
   });
 
+  it('formata diferenças em pontos percentuais com sinal', () => {
+    expect(pp(0.0096)).toBe('+1,0 p.p.');
+    expect(pp(-0.01)).toBe('−1,0 p.p.');
+    expect(pp(0.00001)).toBe('0,0 p.p.');
+  });
+
   it('converte probabilidade para o valor do campo em %', () => {
     expect(paraCampo(0.401)).toBe(40.1);
     expect(paraCampo(0.26)).toBe(26);
@@ -34,17 +41,16 @@ describe('formatação pt-BR', () => {
 });
 
 describe('textos de fórmula', () => {
-  const r = calcPerfis(DEFAULTS);
+  const r = calcPerfis(PREMISSAS_PRE_JOGO);
   const gremistaLula = r.perfis[0];
 
   it('mostra a soma ponderada do risco de rebaixamento', () => {
-    expect(formulaRebaixamento('gremio', r, DEFAULTS)).toBe('0,401 × 0,472 + 0,280 × 0,676 + 0,319 × 0,792');
+    expect(formulaRebaixamento('gremio', r, PREMISSAS_PRE_JOGO)).toBe('0,401 × 0,472 + 0,280 × 0,676 + 0,319 × 0,792');
   });
 
-  it('mostra só o risco condicional quando o resultado está fixado', () => {
-    const params = { ...DEFAULTS, resultadoJogo: 'empate' };
-    expect(formulaRebaixamento('inter', calcPerfis(params), params)).toBe(
-      'Resultado fixado (Empate): risco condicional de 0,461',
+  it('mostra o risco condicional e o ajuste quando o resultado está fixado', () => {
+    expect(formulaRebaixamento('inter', calcPerfis(DEFAULTS), DEFAULTS)).toBe(
+      'Risco no cenário “Empate”: 0,461 − 0,030 (ajuste Corinthians)',
     );
   });
 

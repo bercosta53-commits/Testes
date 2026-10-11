@@ -1,5 +1,5 @@
 import './style.css';
-import { DEFAULTS, FAIXA_P_FLAVIO, RESULTADOS, calcPerfis } from './calc.js';
+import { DEFAULTS, FAIXA_AJUSTE, FAIXA_P_FLAVIO, PREMISSAS_PRE_JOGO, RESULTADOS, calcPerfis } from './calc.js';
 import { NOMES_MODO, NOMES_RESULTADO, casasPct, dataBR, formulaRebaixamento, paraCampo, pct } from './format.js';
 import { atualizarDica, definirDica, iniciarDicas } from './dica.js';
 import { marcarDesatualizado, montar, renderizar } from './render.js';
@@ -16,6 +16,8 @@ let estado = structuredClone(DEFAULTS);
 /** Último cálculo válido e as premissas que o geraram. */
 let ultimo = null;
 let ultimoEstado = null;
+/** Mesmo cálculo antes do Gre-Nal e sem o ajuste do Corinthians (coluna "vs. pré-jogo"). */
+let ultimaBase = null;
 /** Campos com valor inválido: id → rótulo legível. */
 const invalidos = new Map();
 
@@ -26,6 +28,7 @@ const camposJogo = Object.fromEntries(RESULTADOS.map((r) => [r, $(`jogo-${r}`)])
 const camposRisco = Object.fromEntries(
   RESULTADOS.map((r) => [r, Object.fromEntries(CLUBES_RISCO.map((c) => [c, $(`risco-${r}-${c}`)]))]),
 );
+const campoAjuste = $('ajuste-corinthians');
 
 function preencherControles() {
   slider.min = String(FAIXA_P_FLAVIO.min * 100);
@@ -36,7 +39,10 @@ function preencherControles() {
     camposJogo[r].value = String(paraCampo(estado.probJogo[r]));
     for (const c of CLUBES_RISCO) camposRisco[r][c].value = String(paraCampo(estado.riscoRebaixamento[r][c]));
   }
-  for (const campo of document.querySelectorAll('.controles input[type="number"]')) campo.removeAttribute('aria-invalid');
+  campoAjuste.min = String(FAIXA_AJUSTE.min * 100);
+  campoAjuste.max = String(FAIXA_AJUSTE.max * 100);
+  campoAjuste.value = String(paraCampo(estado.ajusteCorinthians));
+  for (const campo of document.querySelectorAll('#premissas input[type="number"]')) campo.removeAttribute('aria-invalid');
   invalidos.clear();
 }
 
@@ -53,10 +59,10 @@ function montarEscalaSlider() {
   $('p-flavio-escala').replaceChildren(...marcas);
 }
 
-/** Lê um campo em % e devolve a probabilidade (0–1), ou null se inválido. */
+/** Lê um campo em % (ou p.p.) e devolve o valor na escala 0–1, ou null se inválido. */
 function lerPercentual(campo, rotulo) {
   const v = campo.valueAsNumber;
-  const ok = campo.value.trim() !== '' && Number.isFinite(v) && v >= 0 && v <= 100;
+  const ok = campo.value.trim() !== '' && Number.isFinite(v) && v >= Number(campo.min) && v <= Number(campo.max);
   campo.toggleAttribute('aria-invalid', !ok);
   if (ok) invalidos.delete(campo.id);
   else invalidos.set(campo.id, rotulo);
@@ -66,8 +72,12 @@ function lerPercentual(campo, rotulo) {
 /** Devolve um campo inválido ao valor em vigor no estado. Retorna true se mexeu. */
 function restaurarSeInvalido(campo) {
   if (!invalidos.has(campo.id)) return false;
-  const [, grupo, r, c] = campo.id.match(/^(jogo|risco)-(\w+?)(?:-(gremio|inter))?$/);
-  campo.value = String(paraCampo(grupo === 'jogo' ? estado.probJogo[r] : estado.riscoRebaixamento[r][c]));
+  if (campo === campoAjuste) {
+    campo.value = String(paraCampo(estado.ajusteCorinthians));
+  } else {
+    const [, grupo, r, c] = campo.id.match(/^(jogo|risco)-(\w+?)(?:-(gremio|inter))?$/);
+    campo.value = String(paraCampo(grupo === 'jogo' ? estado.probJogo[r] : estado.riscoRebaixamento[r][c]));
+  }
   lerPercentual(campo, '');
   return true;
 }
@@ -102,19 +112,22 @@ function ligarControles() {
     }
   }
 
-  // Ao sair de um campo inválido, volta ao último valor válido.
-  document.querySelector('.controles').addEventListener('focusout', (e) => {
-    if (e.target instanceof HTMLInputElement && restaurarSeInvalido(e.target)) atualizar();
-  });
-
-  $('restaurar').addEventListener('click', () => {
-    estado = structuredClone(DEFAULTS);
-    preencherControles();
+  campoAjuste.addEventListener('input', () => {
+    const v = lerPercentual(campoAjuste, 'Desconto do Corinthians');
+    if (v != null) estado.ajusteCorinthians = v;
     atualizar();
   });
 
+  // Ao sair de um campo inválido, volta ao último valor válido.
+  $('premissas').addEventListener('focusout', (e) => {
+    if (e.target instanceof HTMLInputElement && restaurarSeInvalido(e.target)) atualizar();
+  });
+
+  $('restaurar').addEventListener('click', () => carregar(DEFAULTS));
+  $('pre-jogo').addEventListener('click', () => carregar(PREMISSAS_PRE_JOGO));
+
   $('exportar').addEventListener('click', () => {
-    if (ultimo) exportarRankingPng(ultimo, ultimoEstado);
+    if (ultimo) exportarRankingPng(ultimo, ultimoEstado, ultimaBase);
   });
 
   for (const clube of CLUBES_RISCO) {
@@ -127,6 +140,12 @@ function ligarControles() {
 }
 
 // --- Recalcular ------------------------------------------------------------
+
+function carregar(premissas) {
+  estado = structuredClone(premissas);
+  preencherControles();
+  atualizar();
+}
 
 function atualizar() {
   sincronizarControles();
@@ -144,7 +163,12 @@ function atualizar() {
   marcarDesatualizado(false);
   ultimo = r;
   ultimoEstado = structuredClone(estado);
-  renderizar(r, ultimoEstado);
+  try {
+    ultimaBase = calcPerfis({ ...ultimoEstado, resultadoJogo: 'probabilistico', ajusteCorinthians: 0 });
+  } catch {
+    ultimaBase = null; // probabilidades pré-jogo inválidas: a coluna "vs. pré-jogo" mostra "—"
+  }
+  renderizar(r, ultimoEstado, ultimaBase);
   mostrarStatus(r);
   atualizarDica();
 }
@@ -188,7 +212,7 @@ function mostrarErro(erro) {
   status.classList.add('erro');
   if (invalidos.size) {
     const nomes = [...invalidos.values()].map((n) => `“${n}”`).join(', ');
-    status.textContent = `Valor inválido em ${nomes}: use um número de 0 a 100. Os gráficos mostram o último cálculo válido.`;
+    status.textContent = `Valor inválido em ${nomes}: use um número dentro da faixa do campo. Os gráficos mostram o último cálculo válido.`;
   } else if (/todas zero/.test(erro.message)) {
     status.textContent = 'As três probabilidades do jogo estão em zero. Coloque um valor acima de zero em pelo menos uma.';
   } else {
@@ -216,7 +240,7 @@ function aplicarTema(tema) {
   try {
     localStorage.setItem(CHAVE_TEMA, tema);
   } catch {}
-  if (ultimo) renderizar(ultimo, ultimoEstado); // cores das matrizes vêm dos tokens do tema
+  if (ultimo) renderizar(ultimo, ultimoEstado, ultimaBase); // cores das matrizes vêm dos tokens do tema
 }
 
 function ligarTema() {
@@ -227,7 +251,7 @@ function ligarTema() {
     aplicarTema(tema);
   });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (ultimo) renderizar(ultimo, ultimoEstado);
+    if (ultimo) renderizar(ultimo, ultimoEstado, ultimaBase);
   });
 }
 

@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap"
     />
     <script>
       // Aplica o tema salvo antes da primeira pintura.
@@ -25,62 +25,42 @@
   </head>
   <body>
     <div class="pagina">
-      <header class="topo">
-        <div class="topo-texto">
-          <p class="sobretitulo">Gre-Nal × Eleição 2026</p>
-          <h1>Sofrimento Duplo</h1>
-          <p class="subtitulo">
-            Qual perfil tem mais chance de ver o clube rebaixado <em>e</em> o candidato derrotado no 2º turno?
-            Dados de <time id="data-referencia" datetime="2026-10-11">11/10/2026</time>.
-          </p>
-        </div>
-        <div class="topo-acoes">
-          <p class="aviso" role="note">
-            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-              <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5" />
-              <path d="M8 4.5v4.5M8 11v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-            Estimativas, não previsões
-          </p>
-          <button id="tema" type="button" class="botao botao-fantasma">Tema: automático</button>
-        </div>
+      <header class="faixa">
+        <p class="faixa-marca">Sofrimento Duplo</p>
+        <p class="faixa-meta">
+          Gre-Nal × Eleição 2026 · Atualizado em <time id="data-referencia" datetime="2026-10-11">11/10/2026</time>, após a 30ª rodada
+        </p>
+        <button id="tema" type="button" class="botao-texto">Tema: automático</button>
       </header>
 
-      <main class="grade">
-        <section id="destaque" class="cartao destaque" aria-labelledby="destaque-rotulo">
-          <p id="destaque-rotulo" class="sobretitulo">Quem se dá pior?</p>
-          <div class="destaque-corpo" aria-live="polite">
-            <div class="destaque-principal">
-              <h2 id="destaque-nome" class="destaque-nome">—</h2>
-              <p class="destaque-numero"><span id="destaque-pct">—</span></p>
-              <p id="destaque-frase" class="destaque-frase">
-                <span class="marca marca-pior" aria-hidden="true"></span><span id="destaque-frase-texto"></span>
-              </p>
-            </div>
-            <div id="destaque-detalhes" class="destaque-detalhes">
-              <div class="medidor">
-                <div class="medidor-rotulo"><span id="medidor-clube-rotulo">Clube cai</span><strong id="medidor-clube-valor">—</strong></div>
-                <div class="medidor-trilho"><span id="medidor-clube" class="medidor-barra medidor-clube"></span></div>
-              </div>
-              <div class="medidor">
-                <div class="medidor-rotulo"><span id="medidor-cand-rotulo">Candidato perde</span><strong id="medidor-cand-valor">—</strong></div>
-                <div class="medidor-trilho"><span id="medidor-cand" class="medidor-barra medidor-cand"></span></div>
-              </div>
-              <p class="destaque-derrotas"><strong id="destaque-derrotas">—</strong> de 2 derrotas esperadas</p>
-            </div>
-          </div>
-          <p id="destaque-outra-ponta" class="destaque-outra-ponta"></p>
-        </section>
+      <section class="capa" aria-labelledby="titulo">
+        <p class="sobretitulo">Análise de cenários</p>
+        <h1 id="titulo">Sofrimento Duplo</h1>
+        <p class="capa-dek">
+          Qual torcedor-eleitor gaúcho tem mais chance de ver o clube rebaixado <em>e</em> o candidato derrotado no 2º turno
+          de 25 de outubro.
+        </p>
+        <p class="aviso" role="note">Estimativas, não previsões</p>
+      </section>
 
-        <section id="controles" class="cartao controles" aria-labelledby="controles-titulo">
-          <div class="cartao-cabecalho">
-            <h2 id="controles-titulo">Premissas</h2>
-            <button id="restaurar" type="button" class="botao">Restaurar padrões</button>
+      <section id="resumo" class="resumo" aria-labelledby="resumo-titulo" data-atualizavel>
+        <h2 id="resumo-titulo" class="secao-rotulo">Resumo executivo</h2>
+        <ol id="resumo-lista" class="resumo-lista" aria-live="polite"></ol>
+      </section>
+
+      <main class="grade">
+        <aside id="premissas" class="premissas" aria-labelledby="premissas-titulo">
+          <div class="premissas-cabecalho">
+            <h2 id="premissas-titulo" class="secao-rotulo">Premissas do modelo</h2>
+            <p class="nota">Mude qualquer valor e todo o painel é recalculado na hora.</p>
+            <div class="premissas-acoes">
+              <button id="restaurar" type="button" class="botao botao-primario">Restaurar pós-rodada</button>
+              <button id="pre-jogo" type="button" class="botao">Ver pré-jogo</button>
+            </div>
           </div>
-          <p class="descricao">Mude qualquer valor e todo o painel é recalculado na hora.</p>
 
           <fieldset class="bloco">
-            <legend>2º turno · 25/10</legend>
+            <legend>Eleição · 2º turno em 25/10</legend>
             <label for="p-flavio" class="rotulo">Chance de Flávio Bolsonaro vencer</label>
             <div class="slider-linha">
               <input id="p-flavio" type="range" min="40" max="70" step="0.5" value="65" aria-describedby="p-flavio-nota" />
@@ -88,8 +68,8 @@
             </div>
             <div id="p-flavio-escala" class="slider-escala" aria-hidden="true"></div>
             <p class="leitura">
-              <span>Flávio (PL) <strong id="leitura-flavio">65%</strong></span>
-              <span>Lula (PT) <strong id="leitura-lula">35%</strong></span>
+              <span><span class="marca marca-flavio" aria-hidden="true"></span>Flávio (PL) <strong id="leitura-flavio">65%</strong></span>
+              <span><span class="marca marca-lula" aria-hidden="true"></span>Lula (PT) <strong id="leitura-lula">35%</strong></span>
             </p>
             <p id="p-flavio-nota" class="nota">
               É chance de vitória, não intenção de voto. Referências: o Datafolha de 06–07/10 deu Flávio 52% × Lula 48% dos
@@ -105,18 +85,21 @@
 
           <fieldset class="bloco">
             <legend>Gre-Nal · 30ª rodada · 11/10</legend>
+            <p class="placar" role="note">
+              <strong>Resultado: empate.</strong> O Inter abriu o placar no 1º tempo e o Grêmio empatou.
+            </p>
             <div class="segmentado" id="modo-jogo">
-              <input type="radio" name="modo-jogo" id="modo-probabilistico" value="probabilistico" checked />
-              <label for="modo-probabilistico">Probabilístico</label>
+              <input type="radio" name="modo-jogo" id="modo-probabilistico" value="probabilistico" />
+              <label for="modo-probabilistico">Pré-jogo</label>
               <input type="radio" name="modo-jogo" id="modo-gremioVence" value="gremioVence" />
               <label for="modo-gremioVence">Grêmio venceu</label>
-              <input type="radio" name="modo-jogo" id="modo-empate" value="empate" />
+              <input type="radio" name="modo-jogo" id="modo-empate" value="empate" checked />
               <label for="modo-empate">Empate</label>
               <input type="radio" name="modo-jogo" id="modo-interVence" value="interVence" />
               <label for="modo-interVence">Inter venceu</label>
             </div>
 
-            <p class="rotulo rotulo-grupo" id="prob-jogo-rotulo">Probabilidades do jogo</p>
+            <p class="rotulo rotulo-grupo" id="prob-jogo-rotulo">Probabilidades pré-jogo</p>
             <div class="campos-jogo" role="group" aria-labelledby="prob-jogo-rotulo">
               <label class="campo" for="jogo-gremioVence">
                 <span>Grêmio vence</span>
@@ -146,8 +129,8 @@
                 <thead>
                   <tr>
                     <th scope="col">Se no Gre-Nal…</th>
-                    <th scope="col">Grêmio cai</th>
-                    <th scope="col">Inter cai</th>
+                    <th scope="col"><span class="marca marca-gremio" aria-hidden="true"></span>Grêmio cai</th>
+                    <th scope="col"><span class="marca marca-inter" aria-hidden="true"></span>Inter cai</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -179,7 +162,20 @@
             <p class="fonte">
               Fonte:
               <a href="https://valorfinal.com.br/brasileirao/2026/jogos/gremio-x-internacional" target="_blank" rel="noopener noreferrer">ValorFinal</a>,
-              modelo pré-jogo.
+              modelo pré-jogo. O risco final já desconta o ajuste abaixo.
+            </p>
+          </fieldset>
+
+          <fieldset class="bloco">
+            <legend>Resto da rodada · Corinthians</legend>
+            <label class="campo campo-largo" for="ajuste-corinthians">
+              <span class="rotulo">Desconto no risco de Grêmio e Inter</span>
+              <span class="campo-pct campo-pp"><input id="ajuste-corinthians" type="number" inputmode="decimal" min="0" max="10" step="0.5" aria-describedby="ajuste-nota" /></span>
+            </label>
+            <p id="ajuste-nota" class="nota">
+              O Corinthians perdeu, vive má fase e está perto da zona de rebaixamento. Um concorrente direto que não pontua alivia a
+              briga para Grêmio e Inter. O modelo do ValorFinal é anterior à rodada, então este desconto é uma estimativa desta
+              análise, sem fonte externa. Use 0 para desligar.
             </p>
           </fieldset>
 
@@ -190,99 +186,128 @@
               é estrutural e não tem campo para editar.
             </p>
           </div>
-        </section>
+        </aside>
 
-        <section class="cartao" aria-labelledby="ranking-titulo">
-          <div class="cartao-cabecalho">
-            <div>
-              <h2 id="ranking-titulo">Ranking de sofrimento</h2>
-              <p class="descricao">
-                Derrotas esperadas, de 0 a 2: risco de o clube cair somado à chance de o candidato perder. À direita, a
-                chance do pior cenário.
+        <div class="figuras">
+          <section class="figura" aria-labelledby="fig1-titulo">
+            <header class="figura-cabecalho">
+              <div>
+                <p class="figura-numero">Figura 1 · Ranking de sofrimento</p>
+                <h2 id="fig1-titulo" class="titulo-acao">—</h2>
+                <p class="figura-sub">Derrotas esperadas, de 0 a 2: risco de o clube cair somado à chance de o candidato perder</p>
+              </div>
+              <button id="exportar" type="button" class="botao">Exportar PNG</button>
+            </header>
+            <ul class="legenda" data-legenda-identidade></ul>
+            <div class="grafico" data-atualizavel>
+              <div id="ranking" class="ranking"></div>
+            </div>
+            <footer class="figura-rodape">
+              <p>
+                <strong>Nota:</strong> o 1º trecho de cada barra é o risco de o clube cair (cor do clube) e o 2º, a chance de o
+                candidato perder (cor do candidato). “vs. pré-jogo” compara o sofrimento duplo com o cenário antes do Gre-Nal e
+                sem o ajuste do Corinthians, mantendo as premissas da eleição.
               </p>
-            </div>
-            <button id="exportar" type="button" class="botao">Exportar PNG</button>
-          </div>
-          <ul class="legenda">
-            <li><span class="amostra amostra-clube" aria-hidden="true"></span>Clube rebaixado</li>
-            <li><span class="amostra amostra-cand" aria-hidden="true"></span>Candidato derrotado</li>
-          </ul>
-          <div class="grafico" data-atualizavel>
-            <div id="ranking" class="ranking"></div>
-            <div class="eixo eixo-ranking" aria-hidden="true">
-              <span style="--x: 0">0</span><span style="--x: 0.25">0,5</span><span style="--x: 0.5">1</span><span style="--x: 0.75">1,5</span><span style="--x: 1">2</span>
-            </div>
-          </div>
-        </section>
+              <p><strong>Fonte:</strong> ValorFinal (risco de rebaixamento); Datafolha e resultado do 1º turno (referência para a eleição); análise própria.</p>
+            </footer>
+          </section>
 
-        <section class="cartao" aria-labelledby="matrizes-titulo">
-          <h2 id="matrizes-titulo">Os quatro cenários de cada perfil</h2>
-          <p class="descricao">
-            Linhas: o clube cai ou fica. Colunas: o candidato perde ou vence. Quanto mais forte a cor, maior a chance.
-          </p>
-          <ul class="legenda" data-legenda-cenarios></ul>
-          <div id="matrizes" class="matrizes" data-atualizavel></div>
-        </section>
+          <section class="figura" aria-labelledby="fig2-titulo">
+            <header class="figura-cabecalho">
+              <div>
+                <p class="figura-numero">Figura 2 · Os quatro cenários de cada perfil</p>
+                <h2 id="fig2-titulo" class="titulo-acao">—</h2>
+                <p class="figura-sub">Probabilidade de cada combinação. Linhas: o clube cai ou fica. Colunas: o candidato perde ou vence.</p>
+              </div>
+            </header>
+            <ul class="legenda" data-legenda-cenarios></ul>
+            <div id="matrizes" class="matrizes" data-atualizavel></div>
+            <footer class="figura-rodape">
+              <p><strong>Nota:</strong> quanto mais forte a cor, maior a probabilidade da célula.</p>
+              <p><strong>Fonte:</strong> análise própria com base no ValorFinal e no Datafolha.</p>
+            </footer>
+          </section>
 
-        <section class="cartao" aria-labelledby="empilhadas-titulo">
-          <h2 id="empilhadas-titulo">Como os 100% se dividem</h2>
-          <p class="descricao">Cada barra soma 100%: os quatro cenários de um perfil, do pior (à esquerda) ao melhor.</p>
-          <ul class="legenda" data-legenda-cenarios></ul>
-          <div class="grafico" data-atualizavel>
-            <div id="empilhadas" class="empilhadas"></div>
-            <div class="eixo eixo-empilhadas" aria-hidden="true">
-              <span style="--x: 0">0%</span><span style="--x: 0.25">25%</span><span style="--x: 0.5">50%</span><span style="--x: 0.75">75%</span><span style="--x: 1">100%</span>
+          <section class="figura" aria-labelledby="fig3-titulo">
+            <header class="figura-cabecalho">
+              <div>
+                <p class="figura-numero">Figura 3 · Como os 100% se dividem</p>
+                <h2 id="fig3-titulo" class="titulo-acao">—</h2>
+                <p class="figura-sub">Os quatro cenários de cada perfil, do pior (à esquerda) ao melhor. Cada barra soma 100%.</p>
+              </div>
+            </header>
+            <ul class="legenda" data-legenda-cenarios></ul>
+            <div class="grafico" data-atualizavel>
+              <div id="empilhadas" class="empilhadas"></div>
+              <div class="eixo eixo-empilhadas" aria-hidden="true">
+                <span style="--x: 0">0%</span><span style="--x: 0.25">25%</span><span style="--x: 0.5">50%</span><span style="--x: 0.75">75%</span><span style="--x: 1">100%</span>
+              </div>
             </div>
-          </div>
-        </section>
+            <footer class="figura-rodape">
+              <p><strong>Fonte:</strong> análise própria com base no ValorFinal e no Datafolha.</p>
+            </footer>
+          </section>
 
-        <section class="cartao" aria-labelledby="tabela-titulo">
-          <details>
-            <summary><h2 id="tabela-titulo">Tabela com todos os números</h2></summary>
-            <div class="tabela-rolagem">
-              <table class="tabela-dados">
-                <thead>
-                  <tr>
-                    <th scope="col">Perfil</th>
-                    <th scope="col">Clube cai</th>
-                    <th scope="col">Candidato perde</th>
-                    <th scope="col">Cai e perde</th>
-                    <th scope="col">Cai, mas vence</th>
-                    <th scope="col">Fica, mas perde</th>
-                    <th scope="col">Fica e vence</th>
-                    <th scope="col">Soma</th>
-                    <th scope="col">Derrotas esperadas</th>
-                  </tr>
-                </thead>
-                <tbody id="tabela-corpo"></tbody>
-              </table>
-            </div>
-          </details>
-        </section>
+          <section class="figura figura-anexo" aria-labelledby="tabela-titulo">
+            <details>
+              <summary>
+                <span class="figura-numero">Anexo</span>
+                <h2 id="tabela-titulo" class="titulo-anexo">Tabela com todos os números</h2>
+              </summary>
+              <div class="tabela-rolagem">
+                <table class="tabela-dados">
+                  <thead>
+                    <tr>
+                      <th scope="col">Perfil</th>
+                      <th scope="col">Clube cai</th>
+                      <th scope="col">Candidato perde</th>
+                      <th scope="col">Sofrimento duplo</th>
+                      <th scope="col">Só o clube cai</th>
+                      <th scope="col">Só o candidato perde</th>
+                      <th scope="col">Nenhuma derrota</th>
+                      <th scope="col">Soma</th>
+                      <th scope="col">Derrotas esperadas</th>
+                      <th scope="col">vs. pré-jogo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabela-corpo"></tbody>
+                </table>
+              </div>
+            </details>
+          </section>
+        </div>
       </main>
 
       <footer class="rodape">
         <div>
-          <h2>Metodologia</h2>
+          <h2 class="secao-rotulo">Metodologia</h2>
           <ol>
-            <li>Risco de cada clube cair = Σ P(resultado do Gre-Nal) × risco de rebaixamento dado aquele resultado.</li>
+            <li>
+              Risco de cada clube cair = Σ P(resultado do Gre-Nal) × risco de rebaixamento dado aquele resultado, menos o
+              desconto pela derrota do Corinthians (com piso em zero). Com o resultado fixado, só a linha dele entra.
+            </li>
             <li>Chance de o candidato perder = 1 − P(candidato vence), com P(Lula) = 1 − P(Flávio).</li>
             <li>
-              Clube e eleição são independentes, então cada cenário é um produto: pior cenário = P(clube cai) × P(candidato
-              perde); melhor = P(clube fica) × P(candidato vence).
+              Clube e eleição são independentes, então cada cenário é um produto: sofrimento duplo = P(clube cai) × P(candidato
+              perde); nenhuma derrota = P(clube fica) × P(candidato vence).
             </li>
             <li>Derrotas esperadas = P(clube cai) + P(candidato perde), numa escala de 0 a 2. O ranking segue essa medida.</li>
-            <li>Se as três probabilidades do jogo não somarem 100%, o cálculo usa os valores normalizados.</li>
+            <li>Se as três probabilidades pré-jogo não somarem 100%, o cálculo usa os valores normalizados.</li>
           </ol>
         </div>
         <div>
-          <h2>Fontes</h2>
+          <h2 class="secao-rotulo">Fontes e cores</h2>
           <ul>
             <li><a href="https://www.diariodepernambuco.com.br/politica/2026/10/11726197-datafolha-flavio-bolsonaro-tem-52-dos-votos-validos-e-lula-48.html" target="_blank" rel="noopener noreferrer">Datafolha, 2º turno (Diario de Pernambuco, 08/10/2026)</a></li>
             <li><a href="https://mais.opovo.com.br/jornal/politica/2026/10/05/lula-fala-em-licao-da-democracia-e-considera-resultado-inesperado.html" target="_blank" rel="noopener noreferrer">Resultado do 1º turno (O Povo, 05/10/2026)</a></li>
             <li><a href="https://valorfinal.com.br/brasileirao/2026/jogos/gremio-x-internacional" target="_blank" rel="noopener noreferrer">Risco de rebaixamento no Gre-Nal (ValorFinal)</a></li>
           </ul>
-          <p class="nota">Tudo é calculado no navegador a partir das premissas acima. Nenhum dado é buscado online.</p>
+          <p class="nota">
+            Cores de identidade: azul do Grêmio, vermelho do Inter, vermelho do PT para Lula e o amarelo do verde-amarelo
+            associado ao bolsonarismo para Flávio. Os tons foram ajustados para que Inter e Lula, ambos vermelhos, continuem
+            distinguíveis, inclusive para daltônicos.
+          </p>
+          <p class="nota">Tudo é calculado no navegador a partir das premissas. Nenhum dado é buscado online.</p>
         </div>
       </footer>
     </div>

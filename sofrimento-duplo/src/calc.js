@@ -14,8 +14,9 @@ export const DEFAULTS = deepFreeze({
   pFlavio: 0.65,
 
   // Futebol: Grêmio x Inter, 30ª rodada do Brasileirão (11/10/2026).
-  // 'probabilistico' usa probJogo; os demais fixam o resultado em 100%.
-  resultadoJogo: 'probabilistico',
+  // Terminou empatado: o Inter abriu o placar no 1º tempo e o Grêmio empatou.
+  // 'probabilistico' usa probJogo (pré-jogo); os demais fixam o resultado em 100%.
+  resultadoJogo: 'empate',
   probJogo: { gremioVence: 0.401, empate: 0.28, interVence: 0.319 },
 
   // Risco de rebaixamento de cada clube, condicional ao resultado do Gre-Nal
@@ -25,10 +26,22 @@ export const DEFAULTS = deepFreeze({
     empate: { gremio: 0.676, inter: 0.461 },
     interVence: { gremio: 0.792, inter: 0.26 },
   },
+
+  // O Corinthians, concorrente direto perto da zona de rebaixamento, perdeu na
+  // mesma rodada. O modelo do ValorFinal é anterior à rodada, então este ajuste
+  // (estimativa desta análise, sem fonte externa) desconta o risco final de
+  // Grêmio e Inter. 0.03 = 3 pontos percentuais.
+  ajusteCorinthians: 0.03,
 });
+
+/** Premissas do briefing original, antes do Gre-Nal e do resto da rodada. */
+export const PREMISSAS_PRE_JOGO = deepFreeze({ ...DEFAULTS, resultadoJogo: 'probabilistico', ajusteCorinthians: 0 });
 
 /** Faixa do slider de P(Flávio vence). */
 export const FAIXA_P_FLAVIO = Object.freeze({ min: 0.4, max: 0.7 });
+
+/** Faixa do campo de ajuste pela derrota do Corinthians. */
+export const FAIXA_AJUSTE = Object.freeze({ min: 0, max: 0.1 });
 
 export const RESULTADOS = Object.freeze(['gremioVence', 'empate', 'interVence']);
 export const MODOS_JOGO = Object.freeze(['probabilistico', ...RESULTADOS]);
@@ -50,7 +63,8 @@ const EPS = 1e-9;
  *
  * Clube e eleição são tratados como independentes, então cada cenário é o
  * produto das probabilidades marginais. Se as três probabilidades do jogo não
- * somarem 1, elas são normalizadas (e `jogo.normalizado` vira true).
+ * somarem 1, elas são normalizadas (e `jogo.normalizado` vira true). O ajuste
+ * do Corinthians é subtraído do risco de cada clube, com piso em zero.
  *
  * @param {typeof DEFAULTS} params
  */
@@ -59,7 +73,11 @@ export function calcPerfis(params = DEFAULTS) {
   const pVence = { flavio: pFlavio, lula: 1 - pFlavio };
 
   const jogo = probabilidadesDoJogo(params.resultadoJogo, params.probJogo);
-  const pRebaixa = riscoDeRebaixamento(jogo.efetiva, params.riscoRebaixamento);
+  const pRebaixaModelo = riscoDeRebaixamento(jogo.efetiva, params.riscoRebaixamento);
+  const ajuste = prob(params.ajusteCorinthians ?? 0, 'ajusteCorinthians');
+  const pRebaixa = Object.fromEntries(
+    Object.entries(pRebaixaModelo).map(([clube, p]) => [clube, Math.max(0, p - ajuste)]),
+  );
 
   const perfis = PERFIS.map((perfil) => {
     const pClube = pRebaixa[perfil.clube];
@@ -84,7 +102,7 @@ export function calcPerfis(params = DEFAULTS) {
   });
   const lideres = ranking.filter((p) => p.posicao === 1);
 
-  return { pVence, jogo, pRebaixa, perfis, ranking, lideres };
+  return { pVence, jogo, pRebaixaModelo, ajuste, pRebaixa, perfis, ranking, lideres };
 }
 
 /**

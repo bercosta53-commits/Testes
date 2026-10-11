@@ -22,6 +22,13 @@ export const num = (x, casas = 2) =>
 /** Probabilidade nas fórmulas: 0.401 → "0,401". */
 export const dec = (x) => num(x, 3);
 
+/** Diferença em pontos percentuais, com sinal: 0.0096 → "+1,0 p.p."; 0 → "0,0 p.p.". */
+export const pp = (x, casas = 1) => {
+  const v = Math.round(x * 100 * 10 ** casas) / 10 ** casas;
+  const sinal = v > 0 ? '+' : v < 0 ? '−' : '';
+  return `${sinal}${num(Math.abs(v), casas)} p.p.`;
+};
+
 /** "2026-10-11" → "11/10/2026". */
 export const dataBR = (iso) => iso.split('-').reverse().join('/');
 
@@ -41,22 +48,35 @@ export const NOMES_MODO = Object.freeze({
   interVence: 'Inter venceu',
 });
 
-/** Os quatro cenários, na ordem do pior para o melhor. */
+/**
+ * Os quatro cenários, do pior para o melhor. A cor dos cenários de uma derrota
+ * só é a da origem da dor: a do clube quando só ele cai, a do candidato quando
+ * só ele perde.
+ */
 export const CENARIOS = Object.freeze([
-  { chave: 'quedaEDerrota', nome: 'Cai e perde', marca: 'pior', cor: '--c-pior', cai: true, perde: true },
-  { chave: 'quedaEVitoria', nome: 'Cai, mas vence', marca: null, cor: '--c-cai-vence', cai: true, perde: false },
-  { chave: 'ficaEDerrota', nome: 'Fica, mas perde', marca: null, cor: '--c-fica-perde', cai: false, perde: true },
-  { chave: 'ficaEVitoria', nome: 'Fica e vence', marca: 'melhor', cor: '--c-melhor', cai: false, perde: false },
+  { chave: 'quedaEDerrota', nome: 'Sofrimento duplo', marca: 'pior', cor: () => '--c-pior', cai: true, perde: true },
+  { chave: 'quedaEVitoria', nome: 'Só o clube cai', marca: null, cor: (p) => `--${p.clube}`, cai: true, perde: false },
+  { chave: 'ficaEDerrota', nome: 'Só o candidato perde', marca: null, cor: (p) => `--${p.candidato}`, cai: false, perde: true },
+  { chave: 'ficaEVitoria', nome: 'Nenhuma derrota', marca: 'melhor', cor: () => '--c-melhor', cai: false, perde: false },
 ]);
 
-/** Texto do cálculo de P(rebaixa) de um clube. */
+/** Token de cor de cada clube e candidato (a cor que identifica cada um). */
+export const COR_IDENTIDADE = Object.freeze({
+  gremio: '--gremio',
+  inter: '--inter',
+  lula: '--lula',
+  flavio: '--flavio',
+});
+
+/** Texto do cálculo de P(rebaixa) de um clube, com o ajuste do Corinthians. */
 export function formulaRebaixamento(clube, resultado, params) {
   const { resultadoJogo, riscoRebaixamento } = params;
+  const ajuste = resultado.ajuste > 0 ? ` − ${dec(resultado.ajuste)} (ajuste Corinthians)` : '';
   if (resultadoJogo !== 'probabilistico') {
-    return `Resultado fixado (${NOMES_MODO[resultadoJogo]}): risco condicional de ${dec(riscoRebaixamento[resultadoJogo][clube])}`;
+    return `Risco no cenário “${NOMES_MODO[resultadoJogo]}”: ${dec(riscoRebaixamento[resultadoJogo][clube])}${ajuste}`;
   }
   const { efetiva } = resultado.jogo;
-  return RESULTADOS.map((r) => `${dec(efetiva[r])} × ${dec(riscoRebaixamento[r][clube])}`).join(' + ');
+  return RESULTADOS.map((r) => `${dec(efetiva[r])} × ${dec(riscoRebaixamento[r][clube])}`).join(' + ') + ajuste;
 }
 
 /** Texto do cálculo de um cenário de um perfil. */
