@@ -9,7 +9,8 @@ export function token(nome) {
 }
 
 function rgb(hex) {
-  const h = hex.replace('#', '');
+  let h = hex.replace('#', '');
+  if (h.length === 3) h = [...h].map((c) => c + c).join(''); // o minificador de CSS pode encurtar #ffffff
   return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
 }
 
