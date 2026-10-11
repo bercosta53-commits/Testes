@@ -8,12 +8,12 @@
   <style>
     :root {
       --fundo: #FBF1E6;
-      --cartao: linear-gradient(180deg, #F8EADD 0%, #EFDCCB 100%);
+      --cartao: radial-gradient(circle at 40% 35%, #6E978E 0%, #4E7C76 50%, #34575A 100%);
       --texto: #5A3B32;
       --suave: #9C7B6E;
       --borda: #EBD5C2;
       --destaque: #F4A45E;
-      --noite: linear-gradient(180deg, #2B2852 0%, #3B3466 100%);
+      --noite: radial-gradient(circle at 50% 30%, #2F4566 0%, #1D2A44 100%);
     }
     * { box-sizing: border-box; }
     body {
@@ -43,8 +43,8 @@
       padding: 18px 16px 12px;
       text-align: center;
     }
-    .cartao figcaption strong { display: block; margin-top: 8px; font-size: 17px; }
-    .cartao figcaption span { display: block; font-size: 13px; color: var(--suave); }
+    .cartao figcaption strong { display: block; margin-top: 8px; font-size: 17px; color: #FFF4E4; }
+    .cartao figcaption span { display: block; font-size: 13px; color: #D6E6DF; }
     .progressao .cartao:not(:last-child)::after {
       content: "♥";
       position: absolute;
@@ -71,7 +71,7 @@
       border-radius: 28px;
       padding: 20px;
     }
-    .palco.noite { background: var(--noite); border-color: #2B2852; }
+    .palco.noite { background: var(--noite); border-color: #1D2A44; }
     .palco.noite + .legenda { color: var(--suave); }
     .palco .momon { max-width: 460px; margin: 0 auto; }
     .botoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -123,7 +123,7 @@
 <body>
   <header>
     <h1>Momon · folha de expressões</h1>
-    <p>Estilo levemente 3D. Personalidade: emburradinho, mas muito carinhoso. O carinho e a atenção vão deixando ele feliz e pertinho.</p>
+    <p>Pintado com luz de abajur e luar, pelo fofo e grão de papel. Personalidade: emburradinho, mas muito carinhoso. O carinho e a atenção vão deixando ele feliz e pertinho.</p>
   </header>
 
   <main>
@@ -159,7 +159,9 @@
 
   <script src="assets/momon.svg.js"></script>
   <script>
-    const { criar, HUMORES, PROGRESSAO, ESPECIAIS, PARTES, COR } = Momon.svg;
+    const { criar, texturas, HUMORES, PROGRESSAO, ESPECIAIS, PARTES, COR } = Momon.svg;
+    // o grão de pintura é um só para a página inteira
+    document.body.insertAdjacentHTML('afterbegin', texturas());
 
     const NOTAS = {
       emburrado: 'vira a cara e faz bico',
@@ -220,8 +222,9 @@
       : `${PARTES.length} de ${PARTES.length} partes encontradas em todos os ${instancias.length} Momons da página.`;
 
     const NOMES_COR = {
-      laranja: 'pelo ruivo', branco: 'pelo branco', lua: 'lua da testa',
-      pontaRabo: 'ponta do rabo', rosaOrelha: 'dentro da orelha', nariz: 'nariz', olho: 'olhos', bochecha: 'bochechas',
+      ruivo: 'pelo ruivo', ruivoClaro: 'ruivo na luz', ruivoSombra: 'ruivo na sombra', branco: 'pelo branco',
+      lua: 'lua da testa', pontaRabo: 'ponta do rabo', rosaOrelha: 'dentro da orelha', nariz: 'nariz', olho: 'olhos',
+      bochecha: 'bochechas', luzQuente: 'luz do abajur', luzFria: 'luar',
     };
     document.getElementById('paleta').innerHTML = Object.entries(NOMES_COR).map(([k, nome]) =>
       `<div><i style="background:${COR[k]}"></i>${nome}<br>${COR[k]}</div>`).join('');

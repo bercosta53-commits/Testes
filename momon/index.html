@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#2B2852">
+  <meta name="theme-color" content="#22393D">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,8 +19,9 @@
 <body>
   <div class="app" id="app" data-modo="inicio">
     <div class="camada" id="quarto"></div>
+    <!-- folhas perto da câmera: ficam nos cantos, longe do Momon, e escurecem com o quarto -->
+    <div class="camada" id="primeiro-plano"></div>
     <div class="camada noite" id="noite"></div>
-    <div class="camada estrelas-noite" id="estrelas-noite"></div>
     <div class="camada" id="luzes"></div>
 
     <div class="palco" id="palco">
@@ -37,6 +38,8 @@
     </div>
 
     <div class="camada particulas" id="particulas"></div>
+    <!-- grão de papel pintado por cima da cena inteira -->
+    <div class="camada papel" id="papel"></div>
 
     <!-- amassar pãozinho: metade esquerda e metade direita da tela -->
     <div class="zonas" id="zonas">

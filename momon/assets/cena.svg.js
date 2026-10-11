@@ -1,21 +1,31 @@
 /*
- * Cena do Momon: um quarto aconchegante à noite, no mesmo estilo levemente 3D.
+ * Cena do Momon: o cantinho dele numa casa brasileira, à noite.
  *
- *   Momon.cena.quarto()   -> <svg> do cômodo (parede, chão, tapete, cortinas, planta, abajur)
- *   Momon.cena.luzes()    -> <svg> do que brilha (janela com lua e estrelas, varal de luzinhas,
- *                            luz do abajur). Fica por cima da camada de noite, então continua
- *                            aceso quando o quarto escurece.
- *   Momon.cena.almofada() -> <svg> da almofada onde ele senta (mesmas coordenadas do Momon).
+ *   Momon.cena.quarto()        -> <svg> do cômodo: parede de reboco com barrado, chão de
+ *                                 lajota, tapete de crochê, janela com venezianas
+ *                                 azul-colonial, abajur de franja, desenho de criança na
+ *                                 parede, samambaia no macramê e cesto de novelos.
+ *   Momon.cena.luzes()         -> <svg> do que brilha: o céu da janela (lua, estrelas,
+ *                                 telhados com janelinhas acesas, vaga-lumes), o feixe de
+ *                                 luar no chão e a luz do abajur (classe "abajur-luz", que
+ *                                 apaga na hora de dormir). Fica por cima da camada de
+ *                                 noite, então continua aceso quando o quarto escurece.
+ *   Momon.cena.primeiroPlano() -> <svg> da folha de costela-de-adão na frente de tudo.
+ *   Momon.cena.almofada()      -> <svg> da almofada de chita onde ele senta (mesmas
+ *                                 coordenadas do Momon).
+ *   Momon.cena.papel()         -> textura de papel pintado (data URL), para pôr por cima.
  *
- * quarto() e luzes() usam o mesmo viewBox (1600 x 1000) e preserveAspectRatio
- * "xMidYMax slice": cobrem a tela inteira e se alinham entre si. O que importa
- * (janela, tapete) fica no meio, que é o que sobra no celular em pé.
+ * Os três primeiros usam o mesmo viewBox (1600 x 1000) e preserveAspectRatio
+ * "xMidYMax slice": cobrem a tela inteira e se alinham. O que importa (janela,
+ * tapete) fica no meio, que é o que sobra no celular em pé. Tudo é estático,
+ * então pode ter mais detalhe que o gatinho.
  */
 (function () {
   'use strict';
 
   const VIEWBOX = '0 0 1600 1000';
   const n = v => Math.round(v * 10) / 10;
+  const pt = (x, y) => `${n(x)} ${n(y)}`;
 
   const paradas = lista => lista.map(([o, c, a = 1]) => `<stop offset="${o}" stop-color="${c}" stop-opacity="${a}"/>`).join('');
   const linear = (id, lista, atributos = 'x1="0" y1="0" x2="0" y2="1"') => `<linearGradient id="${id}" ${atributos}>${paradas(lista)}</linearGradient>`;
@@ -23,11 +33,22 @@
   const svg = (classe, conteudo) =>
     `<svg class="${classe}" viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMax slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">${conteudo}</svg>`;
 
-  // Brilhinho de 4 pontas (estrelas da janela).
+  function sorteio(semente) {
+    let s = semente >>> 0;
+    return () => {
+      s = (s + 0x6D2B79F5) >>> 0;
+      let t = s;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // Brilhinho de 4 pontas (estrelas).
   function brilho(cx, cy, r) {
-    const i = r * .28;
-    return `M${n(cx)} ${n(cy - r)}Q${n(cx + i)} ${n(cy - i)} ${n(cx + r)} ${n(cy)}Q${n(cx + i)} ${n(cy + i)} ${n(cx)} ${n(cy + r)}` +
-      `Q${n(cx - i)} ${n(cy + i)} ${n(cx - r)} ${n(cy)}Q${n(cx - i)} ${n(cy - i)} ${n(cx)} ${n(cy - r)}Z`;
+    const i = r * .26;
+    return `M${pt(cx, cy - r)}Q${pt(cx + i, cy - i)} ${pt(cx + r, cy)}Q${pt(cx + i, cy + i)} ${pt(cx, cy + r)}` +
+      `Q${pt(cx - i, cy + i)} ${pt(cx - r, cy)}Q${pt(cx - i, cy - i)} ${pt(cx, cy - r)}Z`;
   }
 
   // Lua crescente (a mesma forma da testa do Momon).
@@ -37,166 +58,477 @@
     const h = Math.sqrt(r1 * r1 - a * a);
     const px = cx + (a * dx) / d, py = cy + (a * dy) / d;
     const ux = -dy / d, uy = dx / d;
-    const p1 = `${n(px + h * ux)} ${n(py + h * uy)}`, p2 = `${n(px - h * ux)} ${n(py - h * uy)}`;
-    return `M${p1}A${r1} ${r1} 0 1 1 ${p2}A${r2} ${r2} 0 0 0 ${p1}Z`;
+    return `M${pt(px + h * ux, py + h * uy)}A${r1} ${r1} 0 1 1 ${pt(px - h * ux, py - h * uy)}A${r2} ${r2} 0 0 0 ${pt(px + h * ux, py + h * uy)}Z`;
   }
 
-  // Janela com o alto em arco. (x, y) = canto de cima à esquerda; r = raio do arco.
-  const janela = (x, y, l, a) => {
-    const r = l / 2;
-    return `M${x} ${y + r}A${r} ${r} 0 0 1 ${x + l} ${y + r}L${x + l} ${y + a}L${x} ${y + a}Z`;
-  };
+  // Flor de chita: pétalas redondas em volta de um miolo (achatada para ficar deitada).
+  function florDeChita(cx, cy, r, petalas, cor, miolo, achatar = 1, giro = 0) {
+    let d = '';
+    for (let i = 0; i < petalas; i++) {
+      const a = giro + i * Math.PI * 2 / petalas;
+      const px = cx + Math.cos(a) * r * .62, py = cy + Math.sin(a) * r * .62 * achatar;
+      d += `<ellipse cx="${n(px)}" cy="${n(py)}" rx="${n(r * .46)}" ry="${n(r * .46 * achatar)}" fill="${cor}"/>`;
+    }
+    return d + `<ellipse cx="${n(cx)}" cy="${n(cy)}" rx="${n(r * .38)}" ry="${n(r * .38 * achatar)}" fill="${miolo}"/>` +
+      `<ellipse cx="${n(cx)}" cy="${n(cy)}" rx="${n(r * .16)}" ry="${n(r * .16 * achatar)}" fill="#FFF4D6" opacity=".8"/>`;
+  }
+
+  // Adesivos de estrelinha que brilham no escuro, colados na parede (x, y, raio, giro).
+  // De dia são de plástico clarinho; quando a luz apaga, acendem (camada de luzes).
+  const ADESIVOS = [[140, 110, 17, -8], [262, 52, 11, 14], [452, 128, 13, 4], [562, 48, 18, -12], [724, 42, 12, 20],
+    [902, 56, 16, -4], [1064, 92, 12, 10], [1160, 36, 10, -16], [1462, 118, 18, 6], [1546, 262, 12, -10], [1490, 430, 14, 16]];
+  const LUA_ADESIVO = [380, 62, 22];
+  function estrelaRedonda(cx, cy, R, giro) {
+    // estrela de 5 pontas com as pontas arredondadas (como adesivo de verdade)
+    const pts = [];
+    for (let i = 0; i < 10; i++) {
+      const a = (-90 + giro + i * 36) * Math.PI / 180, r = i % 2 ? R * .48 : R;
+      pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+    }
+    let d = '';
+    for (let i = 0; i < 10; i++) {
+      const p = pts[i], q = pts[(i + 1) % 10];
+      const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+      d += (i ? '' : `M${pt(...m)}`);
+      const r2 = pts[(i + 1) % 10], s2 = pts[(i + 2) % 10];
+      d += `Q${pt(...r2)} ${pt((r2[0] + s2[0]) / 2, (r2[1] + s2[1]) / 2)}`;
+    }
+    return d + 'Z';
+  }
+  const adesivos = (cor, extra = '') => ADESIVOS.map(([x, y, r, g]) => `<path d="${estrelaRedonda(x, y, r, g)}" fill="${cor}"${extra}/>`).join('') +
+    `<path d="${crescente(LUA_ADESIVO[0], LUA_ADESIVO[1], LUA_ADESIVO[2], 11, -8, LUA_ADESIVO[2] * .82)}" fill="${cor}"${extra}/>`;
+
+  // Janela: moldura com o alto em arco abatido.
+  const VAO = 'M628 168Q800 126 972 168L972 540L628 540Z';
+  // Cúpula do abajur (vista um pouquinho de cima: as bocas são elipses).
+  const CUPULA = 'M274 470L250 562A80 13 0 0 0 410 562L386 470A56 9 0 0 1 274 470Z';
+  const MOLDURA = 'M598 160Q800 102 1002 160L1002 562L598 562Z';
 
   // ---------------------------------------------------------------- quarto
 
   function quarto() {
+    const rnd = sorteio(42);
     const defs = `<defs>` +
-      linear('cq-parede', [[0, '#BBA5DD'], [.5, '#DDBFD8'], [1, '#F2D5C8']]) +
-      radial('cq-parede-luz', [[0, '#FFE9D6', .55], [1, '#FFE9D6', 0]]) +
-      linear('cq-chao', [[0, '#E2B193'], [1, '#C98F70']]) +
-      linear('cq-rodape', [[0, '#FFF3E8'], [1, '#EBD6C6']]) +
-      radial('cq-tapete', [[0, '#FFE7DA'], [.7, '#FBD3C4'], [1, '#EEB6A6']]) +
-      linear('cq-cortina', [[0, '#F7C3CF'], [.5, '#EFA8BA'], [1, '#E595AA']], 'x1="0" y1="0" x2="1" y2="0"') +
-      linear('cq-moldura', [[0, '#FFF8EF'], [1, '#EBDCCD']]) +
-      linear('cq-vaso', [[0, '#E8957A'], [1, '#C46E58']], 'x1="0" y1="0" x2="1" y2="0"') +
-      radial('cq-folha', [[0, '#A7D8A0'], [1, '#6FB27A']], ' cx=".35" cy=".3" r=".8"') +
-      radial('cq-sombra', [[0, '#5A3448', .3], [1, '#5A3448', 0]]) +
-      linear('cq-mesa', [[0, '#F3DCC8'], [1, '#D9B79C']]) +
+      linear('cq-parede', [[0, '#3E625F'], [.55, '#5D8781'], [1, '#6B938B']]) +
+      linear('cq-barrado', [[0, '#2E5450'], [1, '#26443F']]) +
+      radial('cq-canto', [[0, '#000', 0], [.62, '#0B1618', 0], [1, '#0B1618', .55]], ' cx=".5" cy=".42" r=".75"') +
+      linear('cq-moldura', [[0, '#F6ECD9'], [1, '#D9C7A9']]) +
+      linear('cq-veneziana', [[0, '#4C82B6'], [1, '#2F5D8E']], 'x1="0" y1="0" x2="1" y2="0"') +
+      linear('cq-chao', [[0, '#8E4A2E'], [1, '#B4633F']]) +
+      linear('cq-rodape', [[0, '#5B3A28'], [1, '#3D2619']]) +
+      linear('cq-mesa', [[0, '#9A6A45'], [1, '#6E4529']]) +
+      linear('cq-cupula', [[0, '#C98F2E'], [.5, '#F2C25A'], [1, '#C98F2E']], 'x1="0" y1="0" x2="1" y2="0"') +
+      linear('cq-vaso', [[0, '#2F6F80'], [.5, '#4B95A4'], [1, '#245766']], 'x1="0" y1="0" x2="1" y2="0"') +
+      linear('cq-barro', [[0, '#C46B45'], [1, '#8E4529']], 'x1="0" y1="0" x2="1" y2="0"') +
+      linear('cq-cesto', [[0, '#D3A564'], [1, '#9C6E36']]) +
+      radial('cq-sombra', [[0, '#120A0C', .5], [1, '#120A0C', 0]]) +
     `</defs>`;
 
-    // Pintinhas bem leves no papel de parede.
-    let pintas = '';
-    for (let y = 60; y < 700; y += 80) {
-      for (let x = (y / 80) % 2 ? 40 : 80; x < 1600; x += 80) {
-        pintas += `<circle cx="${x}" cy="${y}" r="4" fill="#fff"/>`;
+    // Parede: reboco esverdeado, barrado escuro embaixo, cantos mais escuros.
+    const parede = `<rect width="1600" height="712" fill="url(#cq-parede)"/>` +
+      `<rect y="566" width="1600" height="146" fill="url(#cq-barrado)"/>` +
+      `<rect y="562" width="1600" height="6" fill="#D9C7A9" opacity=".55"/>`;
+
+    // Chão de lajota em perspectiva (ponto de fuga no meio da parede).
+    const FUGA = [800, 380];
+    const linhas = [712, 728, 748, 774, 807, 848, 899, 962, 1040];
+    const xs = [];
+    for (let k = -14; k <= 14; k++) xs.push(800 + k * 86);
+    const noChao = (x0, y) => FUGA[0] + (x0 - FUGA[0]) * (y - FUGA[1]) / (712 - FUGA[1]);
+    let lajotas = '';
+    const tons = ['#A9573A', '#B5603F', '#9E4F33', '#B86A47', '#A65A3B', '#AF5E3D'];
+    for (let i = 0; i < linhas.length - 1; i++) {
+      for (let j = 0; j < xs.length - 1; j++) {
+        const y0 = linhas[i], y1 = linhas[i + 1];
+        const q = [[noChao(xs[j], y0), y0], [noChao(xs[j + 1], y0), y0], [noChao(xs[j + 1], y1), y1], [noChao(xs[j], y1), y1]];
+        lajotas += `<path d="M${q.map(p => pt(...p)).join('L')}Z" fill="${tons[Math.floor(rnd() * tons.length)]}"/>`;
       }
     }
+    let rejunte = linhas.map(y => `M0 ${y}H1600`).join('');
+    xs.forEach(x => { rejunte += `M${pt(noChao(x, 712), 712)}L${pt(noChao(x, 1040), 1040)}`; });
+    const chao = `<rect y="712" width="1600" height="288" fill="url(#cq-chao)"/>` + lajotas +
+      `<path d="${rejunte}" stroke="#6E3420" stroke-width="3" opacity=".55"/>` +
+      `<rect y="700" width="1600" height="18" fill="url(#cq-rodape)"/>`;
 
-    // Tábuas do chão, mais largas perto de quem olha.
-    const tabuas = [752, 792, 842, 904, 978].map(y =>
-      `<path d="M0 ${y}H1600" stroke="#F1C9AE" stroke-width="3" opacity=".55"/>`).join('');
+    // Tapete de crochê redondo, com a borda de bicos.
+    let bicos = '';
+    for (let i = 0; i < 64; i++) {
+      const a = i / 64 * Math.PI * 2;
+      bicos += `<ellipse cx="${n(800 + Math.cos(a) * 520)}" cy="${n(884 + Math.sin(a) * 104)}" rx="18" ry="8" fill="#EADBB8"/>`;
+    }
+    const aneis = [[506, 101, '#F1E4C6'], [452, 90, '#E7B54A'], [400, 80, '#F1E4C6'], [340, 68, '#D9705A'], [280, 56, '#F1E4C6'], [210, 42, '#E7B54A'], [130, 26, '#F1E4C6']];
+    let pontos = '';
+    aneis.forEach(([rx, ry], k) => {
+      if (k % 2) return;
+      for (let i = 0; i < 48; i++) {
+        const a = i / 48 * Math.PI * 2;
+        pontos += `<circle cx="${n(800 + Math.cos(a) * (rx - 14))}" cy="${n(884 + Math.sin(a) * (ry - 3))}" r="2.6" fill="#B89870" opacity=".5"/>`;
+      }
+    });
+    const tapete = `<ellipse cx="800" cy="896" rx="540" ry="112" fill="url(#cq-sombra)"/>` + bicos +
+      aneis.map(([rx, ry, cor]) => `<ellipse cx="800" cy="884" rx="${rx}" ry="${ry}" fill="${cor}"/>`).join('') + pontos;
 
-    // Cortinas presas dos lados da janela, com dobras feitas de faixas.
-    const cortina = (x, lado) => {
-      const s = lado; // 1 = esquerda, -1 = direita
-      const d = `M${x} 92C${x + s * 120} 92 ${x + s * 150} 92 ${x + s * 150} 92` +
-        `C${x + s * 140} 260 ${x + s * 96} 380 ${x + s * 72} 446` +
-        `C${x + s * 96} 520 ${x + s * 112} 600 ${x + s * 118} 660L${x} 660Z`;
-      const dobras = [0.25, 0.5, 0.75].map(k =>
-        `<path d="M${x + s * 150 * k} 96C${x + s * 140 * k} 280 ${x + s * 70 * k} 400 ${x + s * 60 * k + s * 10} 446C${x + s * 80 * k} 540 ${x + s * 96 * k} 610 ${x + s * 100 * k} 656" ` +
-        `fill="none" stroke="#D07E95" stroke-width="10" stroke-opacity=".22" stroke-linecap="round"/>`).join('');
-      return `<path d="${d}" fill="url(#cq-cortina)"/>${dobras}` +
-        `<path d="M${x + s * 46} 440Q${x + s * 78} 452 ${x + s * 98} 438" fill="none" stroke="#FFF1C9" stroke-width="12" stroke-linecap="round"/>`;
+    // Janela: moldura creme, peitoril, venezianas azuis abertas na parede.
+    const veneziana = (x, lado) => {
+      const largura = 128, topo = 150, base = 558;
+      const x2 = x + lado * largura;
+      const esq = Math.min(x, x2), dir = Math.max(x, x2);
+      let ripas = '';
+      for (let y = topo + 26; y < base - 16; y += 15) ripas += `M${esq + 14} ${y}H${dir - 14}`;
+      return `<rect x="${esq}" y="${topo}" width="${largura}" height="${base - topo}" rx="4" fill="url(#cq-veneziana)"/>` +
+        `<rect x="${esq + 10}" y="${topo + 14}" width="${largura - 20}" height="${base - topo - 28}" rx="3" fill="#2A5583" opacity=".55"/>` +
+        `<path d="${ripas}" stroke="#7FB0DD" stroke-width="5" opacity=".55"/>` +
+        `<path d="${ripas}" stroke="#1E436C" stroke-width="2" opacity=".6" transform="translate(0 4)"/>` +
+        `<rect x="${lado > 0 ? esq + largura - 10 : esq + 4}" y="${topo + 180}" width="6" height="26" rx="3" fill="#2A2E36" opacity=".7"/>`;
     };
+    const janela = veneziana(470, 1) + veneziana(1130, -1) +
+      `<path d="${MOLDURA}" fill="url(#cq-moldura)"/>` +
+      `<path d="M598 160Q800 102 1002 160" fill="none" stroke="#FFF8EC" stroke-width="5" opacity=".6"/>` +
+      `<rect x="574" y="556" width="452" height="26" rx="6" fill="#EDE0C8"/>` +
+      `<rect x="580" y="582" width="440" height="10" rx="5" fill="#1C1110" opacity=".3"/>` +
+      // cactozinho no peitoril
+      `<path d="M918 556L922 528H958L962 556Z" fill="url(#cq-barro)"/>` +
+      `<path d="M928 530C924 506 930 488 940 486C950 488 956 506 952 530Z" fill="#4E8C5A"/>` +
+      `<path d="M952 512C962 510 966 500 964 492" fill="none" stroke="#4E8C5A" stroke-width="8" stroke-linecap="round"/>` +
+      `<circle cx="940" cy="484" r="5" fill="#F28CA0"/>`;
 
-    const planta = `<g>` +
-      `<ellipse cx="250" cy="842" rx="96" ry="16" fill="url(#cq-sombra)"/>` +
-      ['M250 730C190 690 170 610 196 560C236 600 256 660 250 730Z', 'M250 730C300 680 330 610 310 556C268 600 246 664 250 730Z',
-        'M250 730C220 650 236 570 262 530C282 580 278 660 250 730Z', 'M250 730C180 720 140 680 132 640C186 640 226 670 250 730Z',
-        'M250 730C320 724 362 690 372 648C316 646 274 676 250 730Z'].map(d => `<path d="${d}" fill="url(#cq-folha)"/>`).join('') +
-      `<path d="M190 720H310L296 836Q250 850 204 836Z" fill="url(#cq-vaso)"/>` +
-      `<rect x="182" y="712" width="136" height="26" rx="10" fill="#EEA48C"/>` +
+    // Desenho de criança preso na parede: o Momon com a lua, um sol e um coração.
+    const desenho = `<g transform="rotate(-5 360 300)">` +
+      `<rect x="294" y="242" width="140" height="112" rx="3" fill="#FFF8EA"/>` +
+      `<rect x="294" y="242" width="140" height="112" rx="3" fill="#000" opacity=".06" transform="translate(4 5)"/>` +
+      `<rect x="300" y="236" width="34" height="12" fill="#F4F0D0" opacity=".7" transform="rotate(-12 317 242)"/>` +
+      `<rect x="396" y="236" width="34" height="12" fill="#F4F0D0" opacity=".7" transform="rotate(10 413 242)"/>` +
+      `<circle cx="352" cy="306" r="26" fill="none" stroke="#EC8A33" stroke-width="5"/>` +
+      `<path d="M330 290L332 268L346 282M362 281L374 266L376 290" fill="none" stroke="#EC8A33" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>` +
+      `<path d="M347 298Q352 294 354 299" fill="none" stroke="#E2B13B" stroke-width="4" stroke-linecap="round"/>` +
+      `<circle cx="343" cy="309" r="2.5" fill="#3A2A2A"/><circle cx="361" cy="309" r="2.5" fill="#3A2A2A"/>` +
+      `<path d="M346 318Q352 323 358 318" fill="none" stroke="#3A2A2A" stroke-width="2.5" stroke-linecap="round"/>` +
+      `<circle cx="410" cy="266" r="10" fill="none" stroke="#F2C12E" stroke-width="4"/>` +
+      `<path d="M410 250V246M424 266H428M410 282V286M396 266H392" stroke="#F2C12E" stroke-width="3" stroke-linecap="round"/>` +
+      `<path d="M408 330C400 323 397 318 400 314C403 311 407 313 408 316C409 313 413 311 416 314C419 318 416 323 408 330Z" fill="#E8546B"/>` +
+      `<path d="M304 344Q330 336 360 344T424 342" fill="none" stroke="#6DB36D" stroke-width="4" stroke-linecap="round"/>` +
     `</g>`;
 
-    const mesinha = `<g>` +
-      `<ellipse cx="1360" cy="846" rx="110" ry="18" fill="url(#cq-sombra)"/>` +
-      `<rect x="1352" y="680" width="16" height="160" rx="6" fill="#D2AE93"/>` +
-      `<ellipse cx="1360" cy="676" rx="96" ry="18" fill="url(#cq-mesa)"/>` +
-      // abajur de cogumelo
-      `<rect x="1346" y="590" width="28" height="86" rx="12" fill="#FFF3E2"/>` +
-      `<path d="M1270 600C1270 530 1450 530 1450 600Q1360 622 1270 600Z" fill="#F7B4C2"/>` +
-      [[1310, 574, 10], [1360, 560, 8], [1404, 580, 9]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#FFF3EA" opacity=".9"/>`).join('') +
-    `</g>`;
+    // Abajur de franja numa mesinha, com livros empilhados.
+    let franja = '';
+    for (let x = 254; x <= 406; x += 12) {
+      const y = 562 + 13 * Math.sqrt(Math.max(0, 1 - ((x - 330) / 80) ** 2));
+      franja += `<path d="M${x} ${n(y)}V${n(y + 7)}" stroke="#C98A2E" stroke-width="2"/><circle cx="${x}" cy="${n(y + 10)}" r="4.5" fill="#E1A13A"/>`;
+    }
+    const abajur = `<ellipse cx="330" cy="770" rx="130" ry="18" fill="url(#cq-sombra)"/>` +
+      `<path d="M262 650L248 764M330 654V770M398 650L412 764" stroke="#6E4529" stroke-width="10" stroke-linecap="round"/>` +
+      `<ellipse cx="330" cy="648" rx="118" ry="20" fill="#5E3A22"/>` +
+      `<ellipse cx="330" cy="640" rx="118" ry="20" fill="url(#cq-mesa)"/>` +
+      // livros
+      `<rect x="384" y="616" width="74" height="13" rx="3" fill="#C9473E"/>` +
+      `<rect x="390" y="603" width="64" height="13" rx="3" fill="#3E8B6E"/>` +
+      `<rect x="386" y="591" width="70" height="12" rx="3" fill="#E7B54A"/>` +
+      `<path d="M386 603H456M390 616H454" stroke="#fff" stroke-width="1.5" opacity=".35"/>` +
+      // pé de cerâmica e cúpula
+      `<path d="M308 636C296 620 300 596 318 586H342C360 596 364 620 352 636Z" fill="url(#cq-vaso)"/>` +
+      `<rect x="324" y="560" width="12" height="28" fill="#C9B79C"/>` +
+      `<ellipse cx="330" cy="470" rx="56" ry="9" fill="#8A5A1E"/>` +
+      `<path d="${CUPULA}" fill="url(#cq-cupula)"/>` +
+      `<path d="M302 472L288 573M330 479V575M358 472L372 573" stroke="#B57A24" stroke-width="2" opacity=".3"/>` +
+      franja;
 
-    return svg('cena-quarto', defs +
-      `<rect width="1600" height="740" fill="url(#cq-parede)"/>` +
-      `<g opacity=".18">${pintas}</g>` +
-      `<ellipse cx="800" cy="360" rx="560" ry="360" fill="url(#cq-parede-luz)"/>` +
-      `<rect y="720" width="1600" height="280" fill="url(#cq-chao)"/>` + tabuas +
-      `<rect y="708" width="1600" height="20" fill="url(#cq-rodape)"/>` +
-      `<rect y="728" width="1600" height="8" fill="#9C6650" opacity=".18"/>` +
-      // tapete redondo onde fica a almofada
-      `<ellipse cx="800" cy="884" rx="540" ry="100" fill="#C98F70" opacity=".35"/>` +
-      `<ellipse cx="800" cy="876" rx="530" ry="96" fill="url(#cq-tapete)"/>` +
-      `<ellipse cx="800" cy="876" rx="486" ry="78" fill="none" stroke="#FFF4EC" stroke-width="5" stroke-dasharray="14 12" opacity=".8"/>` +
-      // sombra da janela na parede e o parapeito
-      `<path d="${janela(578, 112, 444, 500)}" fill="#8B6A9E" opacity=".14"/>` +
-      `<path d="${janela(590, 120, 420, 484)}" fill="url(#cq-moldura)"/>` +
-      `<rect x="562" y="596" width="476" height="30" rx="12" fill="url(#cq-moldura)"/>` +
-      `<rect x="570" y="626" width="460" height="10" rx="5" fill="#9C6F86" opacity=".18"/>` +
-      // varão das cortinas
-      `<rect x="500" y="84" width="600" height="14" rx="7" fill="#C9A184"/>` +
-      `<circle cx="500" cy="91" r="14" fill="#E2BC9F"/><circle cx="1100" cy="91" r="14" fill="#E2BC9F"/>` +
-      cortina(500, 1) + cortina(1100, -1) +
-      planta + mesinha);
+    // Samambaia pendurada num macramê: as folhas de trás, o vaso, as folhas da frente.
+    const samambaia = (() => {
+      const X = 1240, BOCA = 236;
+      // macramê: argola, três cordas que se cruzam em nós e abraçam o vaso, e a franja embaixo
+      const corda = '#E9DCC0', cordaSombra = '#B9A98A';
+      const nos = [[1240, 70], [1222, 150], [1258, 150], [1240, 196]];
+      const macrame = `<path d="M1240 -10V58" stroke="${corda}" stroke-width="5"/>` +
+        `<path d="M1238 66L1206 230M1240 66L1240 150L1222 196L1214 230M1242 66L1240 150L1258 196L1266 230M1240 70L1222 150L1240 196L1258 150L1240 70" fill="none" stroke="${corda}" stroke-width="3.5"/>` +
+        `<path d="M1238 66L1206 230M1242 66L1274 230" fill="none" stroke="${cordaSombra}" stroke-width="3.5"/>` +
+        nos.map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="7" ry="9" fill="${corda}"/><path d="M${x - 6} ${y - 2}H${x + 6}M${x - 6} ${y + 3}H${x + 6}" stroke="${cordaSombra}" stroke-width="1.5"/>`).join('');
+      const franja = `<path d="M1240 300V330" stroke="${corda}" stroke-width="10" stroke-linecap="round"/>` +
+        `<path d="M1234 330L1228 384M1238 330L1236 392M1242 330L1244 390M1246 330L1252 382" stroke="${corda}" stroke-width="3" stroke-linecap="round"/>`;
+      // uma fronde: sobe um pouco por cima da boca do vaso e cai, com folíolos densos
+      const fronde = (lado, abre, sobe, cai, x0, fase) => {
+        const p0 = [x0, BOCA], p1 = [x0 + abre * .45, BOCA - sobe], p2 = [x0 + abre, BOCA - sobe * .6], p3 = [x0 + abre * 1.12, BOCA + cai];
+        const em = t => {
+          const u = 1 - t;
+          return [u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0],
+            u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1]];
+        };
+        let folhas = '';
+        const N = 30;
+        for (let k = 3; k < N; k++) {
+          const t = k / N, a = em(t), b = em(Math.min(1, t + .01));
+          const dir = Math.atan2(b[1] - a[1], b[0] - a[0]);
+          const tam = 21 * Math.sin(Math.PI * Math.min(1, t * 1.05 + .05)) * (1 - t * .35) + 4;
+          for (const s2 of [-1, 1]) {
+            const ang = dir + s2 * 1.05 + (k % 2 ? .08 : -.08) + fase;
+            const ux = Math.cos(ang), uy = Math.sin(ang), larg = tam * .3;
+            const ponta = [a[0] + ux * tam, a[1] + uy * tam];
+            folhas += `M${pt(...a)}Q${pt(a[0] + ux * tam * .5 - uy * larg, a[1] + uy * tam * .5 + ux * larg)} ${pt(...ponta)}` +
+              `Q${pt(a[0] + ux * tam * .5 + uy * larg, a[1] + uy * tam * .5 - ux * larg)} ${pt(...a)}Z`;
+          }
+        }
+        return { haste: `M${pt(...p0)}C${pt(...p1)} ${pt(...p2)} ${pt(...p3)}`, folhas };
+      };
+      const camada = (quantas, tons, sobeMax, semente) => {
+        const r = sorteio(semente);
+        const porTom = tons.map(() => ''), hastes = tons.map(() => '');
+        for (let f = 0; f < quantas; f++) {
+          const lado = f % 2 ? 1 : -1;
+          const abre = lado * (40 + r() * 120);
+          const fr = fronde(lado, abre, 20 + r() * sobeMax, 90 + r() * 220, X + (r() - .5) * 46, (r() - .5) * .2);
+          const i = f % tons.length;
+          porTom[i] += fr.folhas;
+          hastes[i] += fr.haste;
+        }
+        return tons.map((tom, i) => `<path d="${hastes[i]}" fill="none" stroke="${tom}" stroke-width="2.5"/><path d="${porTom[i]}" fill="${tom}"/>`).join('');
+      };
+      const vaso = `<path d="M1204 236H1276L1266 292Q1240 302 1214 292Z" fill="url(#cq-barro)"/>` +
+        `<path d="M1210 252H1270" stroke="#7A3A22" stroke-width="2" opacity=".5"/>` +
+        `<rect x="1198" y="230" width="84" height="14" rx="6" fill="#D47A52"/>` +
+        `<rect x="1198" y="230" width="84" height="4" rx="2" fill="#F0A27C" opacity=".6"/>`;
+      return macrame + franja +
+        camada(9, ['#2F5E3B', '#386E45'], 40, 12) + vaso +
+        camada(8, ['#4E9259', '#5FA866', '#46854F'], 70, 19);
+    })();
+
+    // Cesto de vime com novelos (os brinquedos que vêm depois).
+    let tramas = '';
+    for (let x = 1236; x <= 1400; x += 14) tramas += `M${x} 762L${x + 10} 832`;
+    const cesto = `<ellipse cx="1320" cy="840" rx="110" ry="18" fill="url(#cq-sombra)"/>` +
+      `<circle cx="1284" cy="752" r="34" fill="#E87D8F"/><path d="M1258 740Q1284 728 1310 746M1262 760Q1288 748 1314 766" fill="none" stroke="#C85D70" stroke-width="3"/>` +
+      `<circle cx="1346" cy="746" r="30" fill="#E7B54A"/><path d="M1324 736Q1346 726 1370 742M1326 756Q1348 744 1372 760" fill="none" stroke="#C4902E" stroke-width="3"/>` +
+      `<path d="M1228 758H1412L1398 836Q1320 850 1242 836Z" fill="url(#cq-cesto)"/>` +
+      `<path d="${tramas}" stroke="#8C5E2B" stroke-width="3" opacity=".45"/>` +
+      `<rect x="1222" y="752" width="196" height="14" rx="7" fill="#C49452"/>` +
+      `<circle cx="1180" cy="858" r="24" fill="#5FB1A6"/><path d="M1162 850Q1180 840 1198 854M1164 866Q1182 856 1200 870" fill="none" stroke="#3E8C82" stroke-width="3"/>` +
+      `<path d="M1156 862C1110 880 1060 900 1010 902" fill="none" stroke="#5FB1A6" stroke-width="3" stroke-linecap="round"/>`;
+
+    return svg('cena-quarto', defs + parede + adesivos('#E6EBCF', ' opacity=".5"') + chao + tapete + janela + desenho + abajur + samambaia + cesto +
+      `<rect width="1600" height="1000" fill="url(#cq-canto)"/>`);
   }
 
   // ---------------------------------------------------------------- luzes
 
   function luzes() {
-    const ESTRELAS = [[680, 230, 9], [742, 312, 6], [700, 420, 7], [836, 200, 6], [948, 378, 8], [880, 470, 5],
-      [760, 500, 6], [655, 340, 5], [930, 520, 6], [812, 404, 5]];
-    const LAMPADAS = ['#FFE58A', '#FFC1D2', '#B9F0DF', '#FFE58A', '#FFC1D2', '#B9F0DF', '#FFE58A', '#FFC1D2', '#B9F0DF'];
-    const VARAL = 'M530 104Q800 196 1070 104';
-
+    const rnd = sorteio(7);
     const defs = `<defs>` +
-      linear('cl-ceu', [[0, '#272A66'], [.6, '#45428A'], [1, '#7C68A8']]) +
-      radial('cl-lua', [[0, '#FFF6D2', .9], [.45, '#FFE9A0', .35], [1, '#FFE9A0', 0]]) +
-      linear('cl-lua-forma', [[0, '#FFF8DE'], [1, '#F6D88C']], 'x1="0" y1="0" x2="1" y2="1"') +
-      radial('cl-lampada', [[0, '#FFF6D6', .9], [1, '#FFF6D6', 0]]) +
-      radial('cl-abajur', [[0, '#FFE2B8', .55], [1, '#FFE2B8', 0]]) +
-      `<clipPath id="cl-vidro"><path d="${janela(616, 146, 368, 432)}"/></clipPath>` +
+      linear('cl-ceu', [[0, '#14244D'], [.55, '#253C74'], [1, '#43599A']]) +
+      radial('cl-lua', [[0, '#FFF4CC', .85], [.4, '#FFE7A0', .3], [1, '#FFE7A0', 0]]) +
+      linear('cl-lua-forma', [[0, '#FFF8DE'], [1, '#F3D48A']], 'x1="0" y1="0" x2="1" y2="1"') +
+      radial('cl-abajur', [[0, '#FFD58A', .55], [.35, '#FFC46A', .22], [1, '#FFC46A', 0]]) +
+      radial('cl-vagalume', [[0, '#FFFBD0', 1], [.3, '#F0FF8A', .7], [1, '#E0FF60', 0]]) +
+      linear('cl-feixe', [[0, '#C9DEFF', .16], [1, '#C9DEFF', 0]]) +
+      linear('cl-luar', [[0, '#D6E6FF', .26], [1, '#D6E6FF', .1]]) +
+      linear('cl-cupula-acesa', [[0, '#FFE6A8', .9], [1, '#FFC860', .75]]) +
+      radial('cl-adesivo', [[0, '#D8FF9C', .5], [.45, '#C8F58A', .14], [1, '#C8F58A', 0]]) +
+      linear('cl-cone-cima', [[0, '#FFE2A0', 0], [1, '#FFE2A0', .2]]) +
+      linear('cl-cone-baixo', [[0, '#FFE2A0', .32], [1, '#FFE2A0', .06]]) +
+      radial('cl-chao-quente', [[0, '#FFC978', .22], [1, '#FFC978', 0]]) +
+      `<clipPath id="cl-vao"><path d="${VAO}"/></clipPath>` +
     `</defs>`;
 
-    const ceu = `<g clip-path="url(#cl-vidro)">` +
-      `<rect x="600" y="130" width="400" height="460" fill="url(#cl-ceu)"/>` +
-      `<circle cx="902" cy="250" r="110" fill="url(#cl-lua)"/>` +
-      `<path d="${crescente(898, 252, 46, 22, -16, 40)}" fill="url(#cl-lua-forma)"/>` +
-      ESTRELAS.map(([x, y, r], i) =>
-        `<path class="estrela-janela" style="animation-delay:${(i * .37) % 3}s" d="${brilho(x, y, r)}" fill="#FFF7DA"/>`).join('') +
-      // morrinhos lá fora
-      `<path d="M600 540C680 486 760 500 820 530C880 490 960 480 1010 520V600H600Z" fill="#3B3672"/>` +
-      `<path d="M600 566C700 530 820 548 900 566C940 552 980 550 1010 560V600H600Z" fill="#2D2A5E"/>` +
+    // Lá fora: céu, lua grande, estrelas, morro, telhados com janelinhas acesas, uma palmeira.
+    let estrelas = '';
+    for (let i = 0; i < 24; i++) {
+      const x = 640 + rnd() * 320, y = 150 + rnd() * 250;
+      if (Math.hypot(x - 892, y - 236) < 80) continue;
+      const r = 2.5 + rnd() * 5;
+      estrelas += `<path class="estrela-janela" style="animation-delay:${n(rnd() * 3)}s" d="${brilho(x, y, r)}" fill="#FFF4CF"/>`;
+    }
+    const telhado = (x, y, l, a, cor) => `<path d="M${x} ${y}L${x + l / 2} ${y - a}L${x + l} ${y}V560H${x}Z" fill="${cor}"/>` +
+      `<path d="M${x - 6} ${y + 2}L${x + l / 2} ${y - a}L${x + l + 6} ${y + 2}" fill="none" stroke="#6A3328" stroke-width="7" stroke-linejoin="round"/>`;
+    const janelinha = (x, y) => `<rect x="${x}" y="${y}" width="12" height="14" rx="2" fill="#FFD27A"/>` +
+      `<rect x="${x - 8}" y="${y - 8}" width="28" height="30" rx="8" fill="#FFD27A" opacity=".18"/>`;
+    const lafora = `<g clip-path="url(#cl-vao)">` +
+      `<rect x="600" y="110" width="400" height="460" fill="url(#cl-ceu)"/>` +
+      estrelas +
+      `<circle cx="892" cy="236" r="120" fill="url(#cl-lua)"/>` +
+      `<path d="${crescente(888, 238, 50, 24, -18, 43)}" fill="url(#cl-lua-forma)"/>` +
+      `<path d="M600 470C680 440 760 452 820 470C880 446 950 440 1000 456V560H600Z" fill="#26305C"/>` +
+      telhado(612, 492, 120, 40, '#2B2846') + telhado(716, 506, 100, 34, '#332E50') + telhado(860, 486, 132, 44, '#2B2846') +
+      janelinha(652, 506) + janelinha(756, 518) + janelinha(900, 504) + janelinha(946, 514) +
+      // palmeira
+      `<path d="M820 540C822 500 818 470 826 440" fill="none" stroke="#1E1F38" stroke-width="7" stroke-linecap="round"/>` +
+      [[-60, 30], [-40, -6], [10, -24], [52, -4], [66, 26]].map(([dx, dy]) =>
+        `<path d="M826 440Q${826 + dx * .5} ${440 + dy - 22} ${826 + dx} ${440 + dy}" fill="none" stroke="#1E1F38" stroke-width="8" stroke-linecap="round"/>`).join('') +
+      // vaga-lumes lá fora
+      [[700, 470], [760, 430], [940, 450], [980, 410], [672, 420]].map(([x, y], i) =>
+        `<circle class="vagalume-janela" style="animation-delay:${i * .7}s" cx="${x}" cy="${y}" r="14" fill="url(#cl-vagalume)"/>`).join('') +
     `</g>` +
     // a cruz da janela
-    `<rect x="793" y="146" width="14" height="432" fill="#F2E6DA"/>` +
-    `<rect x="616" y="352" width="368" height="14" fill="#F2E6DA"/>` +
-    // reflexo no vidro
-    `<path d="M640 300L700 200L716 210L656 310Z" fill="#fff" opacity=".08"/>`;
+    `<rect x="794" y="134" width="12" height="406" fill="#E9DCC4"/>` +
+    `<rect x="628" y="330" width="344" height="12" fill="#E9DCC4"/>`;
 
-    // Varal de luzinhas em cima da janela.
-    const lampadas = LAMPADAS.map((cor, i) => {
-      const t = (i + .5) / LAMPADAS.length;
-      const x = 530 + 540 * t, y = 104 + 92 * 4 * t * (1 - t) * .5 + 2;
-      return `<circle class="lampada" style="animation-delay:${(i * .53) % 2.4}s" cx="${n(x)}" cy="${n(y + 18)}" r="30" fill="url(#cl-lampada)"/>` +
-        `<rect x="${n(x - 4)}" y="${n(y)}" width="8" height="8" rx="2" fill="#8E7A6B"/>` +
-        `<ellipse cx="${n(x)}" cy="${n(y + 18)}" rx="9" ry="12" fill="${cor}"/>` +
-        `<ellipse cx="${n(x - 3)}" cy="${n(y + 13)}" rx="3" ry="4" fill="#fff" opacity=".7"/>`;
-    }).join('');
+    // Feixe de luar: entra pela janela e desenha a janela no chão, em volta do Momon.
+    const luar = `<path d="M640 540L972 540L1000 1000L520 1000Z" fill="url(#cl-feixe)"/>` +
+      `<path d="M682 760L948 760L1004 990L556 990Z" fill="url(#cl-luar)"/>` +
+      `<path d="M818 760L830 990M670 852L978 852" stroke="#0C1426" stroke-width="16" opacity=".14"/>`;
 
-    return svg('cena-luzes', defs + ceu +
-      `<path d="${VARAL}" fill="none" stroke="#8E7A6B" stroke-width="3"/>` + lampadas +
-      `<circle class="luz-abajur" cx="1360" cy="600" r="180" fill="url(#cl-abajur)"/>`);
+    // Cone de luz com borda macia: várias camadas, cada uma mais larga e mais fraca.
+    const cone = ([[x0, y0], [x1, y1]], yFim, abre, macio, grad) => {
+      let d = '';
+      for (let k = 0; k < 5; k++) {
+        const extra = abre + macio * (k - 2) / 2;
+        d += `<path d="M${x0 + 2} ${y0}L${x1 - 2} ${y1}L${x1 + extra} ${yFim}L${x0 - extra} ${yFim}Z" fill="url(#${grad})" opacity=".36"/>`;
+      }
+      return d;
+    };
+
+    // Luz do abajur (apaga na hora de dormir): o halo, o cone para cima e para baixo
+    // na parede, a mesinha iluminada e a cúpula acesa por dentro.
+    const abajur = `<g class="abajur-luz">` +
+      `<circle cx="330" cy="540" r="520" fill="url(#cl-abajur)"/>` +
+      cone([[278, 470], [382, 470]], 0, 150, 210, 'cl-cone-cima') +
+      cone([[254, 566], [406, 566]], 642, 100, 26, 'cl-cone-baixo') +
+      `<ellipse cx="330" cy="640" rx="116" ry="19" fill="#FFD27A" opacity=".28"/>` +
+      `<ellipse cx="330" cy="782" rx="280" ry="46" fill="url(#cl-chao-quente)"/>` +
+      `<path d="${CUPULA}" fill="url(#cl-cupula-acesa)"/>` +
+      `<ellipse cx="330" cy="470" rx="54" ry="8" fill="#FFF3C8"/>` +
+      `<path d="M302 472L288 573M330 479V575M358 472L372 573" stroke="#C98A2E" stroke-width="2" opacity=".25"/>` +
+    `</g>`;
+
+    const brilhamNoEscuro = `<g class="adesivos-acesos">` +
+      ADESIVOS.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${n(r * 2.6)}" fill="url(#cl-adesivo)"/>`).join('') +
+      `<circle cx="${LUA_ADESIVO[0]}" cy="${LUA_ADESIVO[1]}" r="${LUA_ADESIVO[2] * 2.6}" fill="url(#cl-adesivo)"/>` +
+      adesivos('#E2FFB8') +
+    `</g>`;
+    return svg('cena-luzes', defs + luar + lafora + abajur + brilhamNoEscuro);
+  }
+
+  // ---------------------------------------------------------------- primeiro plano
+
+  // Folha de costela-de-adão. Coordenadas locais: o cabinho em (0,0), a ponta em (L,0).
+  // O contorno é um coração alongado; os recortes e os furinhos são feitos com máscara.
+  function costelaDeAdao(id, L, rnd) {
+    const P = (x, y) => pt(x * L, y * L);
+    const metade = s => `C${P(-.1, s * .1)} ${P(-.13, s * .33)} ${P(.04, s * .42)}` +
+      `C${P(.22, s * .54)} ${P(.64, s * .52)} ${P(.86, s * .26)}C${P(.95, s * .14)} ${P(1, s * .05)} ${P(1, 0)}`;
+    const contorno = `M${P(.02, 0)}${metade(-1)}` +
+      `C${P(1, .05)} ${P(.95, .14)} ${P(.86, .26)}C${P(.64, .52)} ${P(.22, .54)} ${P(.04, .42)}C${P(-.13, .33)} ${P(-.1, .1)} ${P(.02, 0)}Z`;
+    let cortes = '', furos = '';
+    for (const lado of [-1, 1]) {
+      for (let k = 0; k < 5; k++) {
+        const x0 = .14 + k * .16 + (rnd() - .5) * .03;
+        const dentro = .09 + rnd() * .04;                     // o recorte para antes da nervura
+        const ang = (62 - k * 7 + (rnd() - .5) * 8) * Math.PI / 180;
+        const ux = Math.cos(ang), uy = Math.sin(ang) * lado;
+        const ini = [x0 + ux * dentro / Math.sin(ang) * .2, lado * dentro];
+        const fim = [ini[0] + ux * .7, ini[1] + uy * .7];
+        const g = .03 + rnd() * .014;                         // largura do recorte na borda
+        const px = -uy * g, py = ux * g;
+        cortes += `M${P(...ini)}L${P(fim[0] + px, fim[1] + py)}L${P(fim[0] - px, fim[1] - py)}Z`;
+        if (k > 0 && k < 4 && rnd() < .8) {
+          const fx = x0 - .07, fy = lado * (.045 + rnd() * .02);
+          furos += `<ellipse cx="${n(fx * L)}" cy="${n(fy * L)}" rx="${n(L * .04)}" ry="${n(L * .016)}" transform="rotate(${n(lado * ang * 180 / Math.PI)} ${n(fx * L)} ${n(fy * L)})"/>`;
+        }
+      }
+    }
+    return {
+      mascara: `<mask id="${id}" maskUnits="userSpaceOnUse" x="${-L * .3}" y="${-L * .7}" width="${L * 1.6}" height="${L * 1.4}">` +
+        `<rect x="${-L * .3}" y="${-L * .7}" width="${L * 1.6}" height="${L * 1.4}" fill="#fff"/>` +
+        `<path d="${cortes}" fill="#000"/><g fill="#000">${furos}</g></mask>`,
+      contorno,
+    };
+  }
+
+  // Duas folhas escuras entrando pelo canto de baixo: dão profundidade (a câmera está
+  // "atrás" das plantas). No celular em pé ficam de fora, e o Momon fica sozinho.
+  function primeiroPlano() {
+    const rnd = sorteio(31);
+    let defs = '', corpo = '';
+    [[-50, 880, -34, 310, '#142822', '#47776A'], [-40, 1020, -8, 250, '#1A322B', '#53897A']].forEach(([x, y, giro, L, tom, luz], i) => {
+      const f = costelaDeAdao(`cp-recorte-${i}`, L, rnd);
+      defs += f.mascara;
+      corpo += `<g transform="translate(${x} ${y}) rotate(${giro})">` +
+        `<path d="M${-L * .6} ${L * .02}Q${-L * .3} 0 ${L * .02} 0" fill="none" stroke="${tom}" stroke-width="${n(L * .035)}" stroke-linecap="round"/>` +
+        `<g mask="url(#cp-recorte-${i})">` +
+          `<path d="${f.contorno}" fill="${tom}"/>` +
+          // borda de cima pega o luar (a janela fica à direita)
+          `<path d="${f.contorno}" fill="none" stroke="${luz}" stroke-width="${n(L * .012)}" opacity=".45" transform="translate(0 ${-L * .006})"/>` +
+          `<path d="M${L * .02} 0Q${L * .5} ${-L * .03} ${L * .98} 0" fill="none" stroke="${luz}" stroke-width="${n(L * .014)}" opacity=".55" stroke-linecap="round"/>` +
+        `</g>` +
+      `</g>`;
+    });
+    return svg('cena-primeiro-plano', `<defs>${defs}</defs>` + corpo);
   }
 
   // ---------------------------------------------------------------- almofada
 
-  // Na mesma escala do Momon (viewBox 0 0 400 420); passa um pouco das bordas.
+  // Almofada de chita, na mesma escala do Momon (viewBox 0 0 400 420); passa um pouco das bordas.
   function almofada() {
+    const flores = [
+      [70, 392, 22, '#D9443A', '#F2C230', 0], [150, 372, 18, '#F2C230', '#D9443A', .4], [236, 366, 20, '#F08FA4', '#D9443A', .2],
+      [318, 380, 22, '#D9443A', '#F2C230', .6], [372, 404, 14, '#F2C230', '#D9443A', .1], [26, 414, 14, '#F08FA4', '#F2C230', .3],
+      [118, 420, 16, '#F2C230', '#D9443A', .5], [204, 426, 22, '#D9443A', '#F2C230', .9], [286, 424, 16, '#F08FA4', '#F2C230', .7],
+    ];
+    const folhas = [[104, 386, -20], [192, 376, 30], [276, 372, -40], [350, 394, 20], [58, 420, 40], [160, 428, -30], [246, 434, 10], [334, 430, -20]];
     return `<svg class="almofada" viewBox="-40 300 480 170" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">` +
       `<defs>` +
-        linear('ca-lado', [[0, '#9FD6C9'], [1, '#6FB3A4']]) +
-        radial('ca-topo', [[0, '#E2F6F0'], [.7, '#C2E9DF'], [1, '#A6DACC']], ' cx=".45" cy=".4" r=".7"') +
-        radial('ca-sombra', [[0, '#3E2A36', .35], [1, '#3E2A36', 0]]) +
+        linear('ca-lado', [[0, '#1E3E78'], [1, '#132A55']]) +
+        radial('ca-luz', [[0, '#FFFFFF', .14], [.6, '#FFFFFF', 0], [1, '#0A1430', .35]], ' cx=".4" cy=".3" r=".8"') +
+        radial('ca-sombra', [[0, '#10080A', .55], [1, '#10080A', 0]]) +
+        `<clipPath id="ca-tampo"><ellipse cx="200" cy="398" rx="216" ry="54"/></clipPath>` +
+        `<clipPath id="ca-lateral"><path d="M-16 398C-16 446 92 466 200 466C308 466 416 446 416 398Z"/></clipPath>` +
       `</defs>` +
-      `<ellipse cx="200" cy="440" rx="236" ry="26" fill="url(#ca-sombra)"/>` +
-      `<path d="M-16 404C-16 444 92 462 200 462C308 462 416 444 416 404L416 392H-16Z" fill="url(#ca-lado)"/>` +
-      `<ellipse cx="200" cy="394" rx="216" ry="52" fill="url(#ca-topo)"/>` +
-      `<ellipse cx="200" cy="394" rx="188" ry="40" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="9 9" opacity=".6"/>` +
-      `<path d="M30 372Q60 350 120 346" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".45"/>` +
+      `<ellipse cx="200" cy="452" rx="244" ry="26" fill="url(#ca-sombra)"/>` +
+      // lateral (a chita continua, mais escura)
+      `<path d="M-16 398C-16 446 92 466 200 466C308 466 416 446 416 398Z" fill="url(#ca-lado)"/>` +
+      `<g clip-path="url(#ca-lateral)" opacity=".7">` +
+        [[10, 440, '#D9443A'], [96, 452, '#F2C230'], [190, 458, '#F08FA4'], [282, 452, '#D9443A'], [370, 440, '#F2C230']].map(([x, y, cor]) =>
+          florDeChita(x, y, 15, 6, cor, '#1E3E78', .7)).join('') +
+      `</g>` +
+      // tampo de chita
+      `<ellipse cx="200" cy="398" rx="216" ry="54" fill="#244A8C"/>` +
+      `<g clip-path="url(#ca-tampo)">` +
+        folhas.map(([x, y, g]) => `<ellipse cx="${x}" cy="${y}" rx="18" ry="6" fill="#3E8B57" transform="rotate(${g} ${x} ${y})"/>`).join('') +
+        flores.map(([x, y, r, cor, miolo, giro]) => florDeChita(x, y, r, 6, cor, miolo, .5, giro)).join('') +
+        [[40, 370], [120, 350], [272, 352], [350, 372], [176, 404], [258, 404], [98, 404]].map(([x, y]) =>
+          florDeChita(x, y, 6, 5, '#FFF4E4', '#F2C230', .5)).join('') +
+        `<ellipse cx="200" cy="398" rx="216" ry="54" fill="url(#ca-luz)"/>` +
+      `</g>` +
+      // cordão amarelo em volta
+      `<ellipse cx="200" cy="398" rx="214" ry="53" fill="none" stroke="#E9B43E" stroke-width="7"/>` +
+      `<ellipse cx="200" cy="398" rx="214" ry="53" fill="none" stroke="#B9852A" stroke-width="7" stroke-dasharray="3 6" opacity=".6"/>` +
     `</svg>`;
   }
 
+  // ---------------------------------------------------------------- papel
+
+  // Textura de papel pintado: manchas largas e bem leves e um grão quase invisível,
+  // para pôr por cima de tudo (512 px, mostrada a 256 px: fica nítida em tela retina).
+  let papelPronto = null;
+  function papel() {
+    if (papelPronto || typeof document === 'undefined') return papelPronto;
+    const tam = 512, c = document.createElement('canvas');
+    c.width = c.height = tam;
+    const g = c.getContext('2d');
+    const rnd = sorteio(5);
+    // manchas (repetidas nas bordas para o ladrilho emendar sem costura)
+    for (let i = 0; i < 70; i++) {
+      const x = rnd() * tam, y = rnd() * tam, r = 50 + rnd() * 150;
+      const claro = rnd() < .5;
+      const grad = g.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0, claro ? 'rgba(255,246,226,.05)' : 'rgba(40,24,16,.055)');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = grad;
+      for (const dx of [-tam, 0, tam]) for (const dy of [-tam, 0, tam]) { g.save(); g.translate(dx, dy); g.fillRect(x - r, y - r, r * 2, r * 2); g.restore(); }
+    }
+    // grão
+    const img = g.getImageData(0, 0, tam, tam);
+    for (let i = 0; i < tam * tam; i++) {
+      const v = rnd() * 2 - 1, k = i * 4;
+      const a = Math.pow(Math.abs(v), 4) * 34;
+      const cor = v > 0 ? 255 : 30;
+      const aOld = img.data[k + 3] / 255, aNew = a / 255;
+      const aTot = aNew + aOld * (1 - aNew);
+      if (aTot <= 0) continue;
+      for (let c2 = 0; c2 < 3; c2++) img.data[k + c2] = (cor * aNew + img.data[k + c2] * aOld * (1 - aNew)) / aTot;
+      img.data[k + 3] = aTot * 255;
+    }
+    g.putImageData(img, 0, 0);
+    papelPronto = c.toDataURL('image/png');
+    return papelPronto;
+  }
+
   window.Momon = window.Momon || {};
-  window.Momon.cena = { quarto, luzes, almofada };
+  window.Momon.cena = { quarto, luzes, primeiroPlano, almofada, papel };
 })();

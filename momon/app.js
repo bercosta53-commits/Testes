@@ -41,9 +41,12 @@
   // ------------------------------------------------ montar a tela
 
   const app = $('#app');
+  document.body.insertAdjacentHTML('afterbegin', M.svg.texturas());
   $('#quarto').innerHTML = M.cena.quarto();
   $('#luzes').innerHTML = M.cena.luzes();
+  $('#primeiro-plano').innerHTML = M.cena.primeiroPlano();
   $('#almofada').innerHTML = M.cena.almofada();
+  $('#papel').style.backgroundImage = `url(${M.cena.papel()})`;
   const lugar = $('#momon');
   lugar.innerHTML = M.svg.criar({ humor: 'dormindo', pose: 'enroscado' });
   const gato = lugar.querySelector('.momon');
@@ -58,12 +61,6 @@
   const dica = $('#dica');
   dica.innerHTML = M.icones.maozinha();
 
-  // Estrelinhas que aparecem pelo quarto quando escurece (sempre nos mesmos lugares).
-  $('#estrelas-noite').innerHTML = Array.from({ length: 18 }, (_, i) => {
-    const x = (i * 37 + 11) % 97, y = (i * 53 + 7) % 64, atraso = (i * .41) % 3;
-    return `<div class="estrelinha" style="left:${x}%;top:${y}%;animation-delay:${atraso.toFixed(2)}s">${M.icones.particula('brilho')}</div>`;
-  }).join('');
-
   let modo = 'inicio';
   function mudarModo(novo) {
     modo = novo;
@@ -71,6 +68,17 @@
   }
 
   // ------------------------------------------------ o gatinho
+
+  // Brilho da lua da testa (0 a 1). Só muda o estilo quando muda de verdade (em
+  // degraus de .05): cada mudança repinta o gatinho inteiro.
+  let luaAtual = null;
+  function acenderLua(v) {
+    const degrau = v === null ? null : (Math.round(v * 20) / 20).toFixed(2);
+    if (degrau === luaAtual) return;
+    luaAtual = degrau;
+    if (degrau === null) gato.style.removeProperty('--lua');
+    else gato.style.setProperty('--lua', degrau);
+  }
 
   const OLHOS_FECHADOS = ['ronronando', 'dormindo', 'bocejo'];
   const FECHADO = 'matrix(1, 0, 0, 1, 0, 0)';
@@ -285,7 +293,7 @@
     passageiro = null;
     cochilando = false;
     esconderDica();
-    gato.style.setProperty('--lua', '.2');
+    acenderLua(.2);
     momon.setHumor('ronronando');
     som.ronronar.ligar(.35);
     vibrar([14, 60, 14, 60, 14]);
@@ -296,7 +304,7 @@
     if (!carinho.ativo) return;
     carinho.ativo = false;
     som.ronronar.desligar(1.2);
-    gato.style.removeProperty('--lua');
+    acenderLua(null);
     memoria.dados.segundosDeCarinho = Math.round(memoria.dados.segundosDeCarinho + carinho.tempo);
     memoria.salvar();
     voltarAoHumor();
@@ -360,7 +368,7 @@
       gato.classList.add('com-cobertinha');
       som.fru();
       momon.pular(28, 560);
-      gato.style.setProperty('--lua', '.25');
+      acenderLua(.25);
       clearTimeout(passageiro);
       passageiro = null;
       momon.setHumor('amassando');
@@ -419,7 +427,7 @@
     // Mais ritmo: ronrona mais alto, a lua brilha mais (e as piscadas ficam mais lentas).
     aplicarRitmo() {
       som.ronronar.ajustar(.2 + .8 * this.ritmo);
-      gato.style.setProperty('--lua', (.2 + .8 * this.ritmo).toFixed(2));
+      acenderLua(.2 + .8 * this.ritmo);
     },
     // Final: ele se enrosca em cima da cobertinha, ronronando.
     enroscar() {
@@ -429,7 +437,7 @@
       app.classList.add('enroscou');
       momon.setPose('enroscado');
       momon.setHumor('ronronando');
-      gato.style.removeProperty('--lua');
+      acenderLua(null);
       som.ronronar.ajustar(.7);
       const c = momon.naTela(200, 260);
       for (let i = 0; i < 5; i++) {
@@ -441,7 +449,7 @@
       gato.classList.remove('com-cobertinha');
       app.classList.remove('enroscou');
       zonas.classList.remove('convite');
-      gato.style.removeProperty('--lua');
+      acenderLua(null);
       som.ronronar.desligar(1);
       momon.setPose('sentado');
       momon.pular(16, 420);
@@ -473,7 +481,7 @@
         clearTimeout(amassar.fimTimer);
         gato.classList.remove('com-cobertinha');
         app.classList.remove('enroscou');
-        gato.style.removeProperty('--lua');
+        acenderLua(null);
       }
       som.ronronar.desligar(1);
       app.classList.remove('cobriu', 'junto');
@@ -822,7 +830,7 @@
         carinho.tempo += dt;
         jeito.ganhar(dt * .075);
         som.ronronar.ajustar(limitar(.35 + carinho.tempo * .16, 0, 1));
-        gato.style.setProperty('--lua', limitar(.2 + carinho.tempo * .3, 0, 1).toFixed(2));
+        acenderLua(limitar(.2 + carinho.tempo * .3, 0, 1));
         if (carinho.tempo > 2.2) {
           carinho.magia += dt;
           if (carinho.magia > .38) { carinho.magia = 0; soltarMagia(); }

@@ -31,8 +31,8 @@ Depois de aberto uma vez com internet, ele funciona offline e em tela cheia. Pre
 - **Carinho:** arraste o dedo em cima dele. Ele fecha os olhos e ronrona, e o celular vibra de leve onde há suporte. Carinho longo faz brotar flores, estrelinhas e vaga-lumes e acende a lua da testa.
 - **Cutucar:** um toque rápido nele dá um miadinho e uma piscada. Tocar fora dele solta um brilhinho.
 - **Do emburrado ao feliz:** ele acorda emburradinho. Carinho, cutucadas e brincadeiras vão amolecendo o Momon (emburrado → desconfiado → amolecendo → contente → feliz). Cada dia em que ele chega no feliz aumenta a amizade, e nas próximas vezes ele amolece mais rápido.
-- **Amassar pãozinho (botão rosa da cobertinha):** a cobertinha aparece embaixo dele. Toque na metade esquerda e na metade direita da tela, alternando: a patinha do lado tocado amassa no compasso. Quanto mais ritmado, mais alto ele ronrona, mais devagar pisca e mais a lua brilha. Não existe erro: fora do ritmo ele só acompanha. No fim, ele se enrosca em cima da cobertinha. Toque nele para ele levantar, ou no botão rosa para sair.
-- **Dormir (botão azul da lua):** o quarto escurece e aparecem estrelas. Arraste a mantinha para cima dele (só tocar nela também cobre). Ele se enrosca e dorme, e toca uma cantiga. Os botões de lua, estrela e nuvem trocam entre as três cantigas. Depois de uns segundos, a tela fica bem escura (dormir junto). A cantiga toca três vezes e vai sumindo.
+- **Amassar pãozinho (botão rosa da cobertinha):** a cobertinha de tricô aparece embaixo dele. Toque na metade esquerda e na metade direita da tela, alternando: a patinha do lado tocado amassa no compasso. Quanto mais ritmado, mais alto ele ronrona, mais devagar pisca e mais a lua brilha. Não existe erro: fora do ritmo ele só acompanha. No fim, ele se enrosca em cima da cobertinha. Toque nele para ele levantar, ou no botão rosa para sair.
+- **Dormir (botão azul da lua):** o abajur apaga e as estrelinhas coladas na parede acendem, como adesivo que brilha no escuro. Arraste a mantinha (a colcha de retalhos) para cima dele; só tocar nela também cobre. Ele se enrosca e dorme, e toca uma cantiga. Os botões de lua, estrela e nuvem trocam entre as três cantigas. Depois de uns segundos, a tela fica bem escura (dormir junto). A cantiga toca três vezes e vai sumindo.
 - **Sair do dormir:** segure o sol (canto de cima) por **2 segundos**. Um toque rápido não sai, para a criança não acordar o Momon sem querer.
 - **Sessões curtas:** depois de uns 8 minutos, o botão da lua começa a brilhar, chamando para dormir. Se ninguém tocar por cerca de 50 segundos, ele cochila sentado.
 
@@ -44,12 +44,12 @@ Nada sai do aparelho. O app guarda no próprio navegador (`localStorage`) só se
 
 | Arquivo | O que tem |
 |---|---|
-| `index.html`, `style.css` | A tela: camadas da cena, palco do Momon, botões, zonas de amassar e tela inicial. |
+| `index.html`, `style.css` | A tela: camadas da cena, palco do Momon, botões, zonas de amassar, grão de papel e tela inicial. |
 | `app.js` | Os modos (início, livre, amassar, dormir), o carinho, o jeito emburrado → feliz, as partículas e as dicas. |
-| `assets/momon.svg.js` | O desenho do Momon: 16 partes em `<g id>` separados, as poses sentado e enroscado e as cobertas. |
+| `assets/momon.svg.js` | O desenho do Momon: 16 partes em `<g id>` separados, pelo, luz de abajur e luar, as poses sentado e enroscado e as cobertas (colcha de retalhos de chita e cobertinha de tricô). |
 | `assets/momon.css` | Os humores (`data-humor`), as poses (`data-pose`), a respiração e o rabo. |
-| `assets/cena.svg.js` | O quarto: o cômodo, as luzes (janela, lua, estrelas, varal) e a almofada. |
-| `assets/icones.svg.js` | Botões, partículas (flor, estrela, vaga-lume, coração, Z), patinha, mãozinha e o ovinho. |
+| `assets/cena.svg.js` | O cantinho dele, à noite: parede com barrado, chão de lajota, tapete de crochê, janela de veneziana com os telhados e a lua, abajur de franja, samambaia no macramê, desenho de criança, cesto de novelos, folhas na frente, almofada de chita e a textura de papel. |
+| `assets/icones.svg.js` | Botões de feltro com pesponto, partículas (flor de chita, estrela e coração de feltro, vaga-lume, Z), patinha, mãozinha e o ovinho. |
 | `audio/sons.js` | Miadinho, "mrrp", sininhos, amassada, bocejo, pop e vento, todos em Web Audio. |
 | `audio/purr.js` | O ronronar e o ronco de sono. |
 | `audio/lullaby.js` | As três cantigas de ninar originais (Lua, Estrela e Nuvem). |

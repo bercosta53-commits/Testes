@@ -19,7 +19,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  background: #2B2852;
+  background: #22393D;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -50,7 +50,7 @@ body {
 /* ---------- noite: escurece o quarto, mas não as luzes (que ficam por cima) */
 
 .noite {
-  background: #15123A;
+  background: #0F1A30;
   opacity: 0;
   transition: opacity 1.8s ease;
 }
@@ -61,36 +61,47 @@ body {
 #luzes { transition: opacity 1.5s ease; }
 .app.junto #luzes { opacity: .45; transition-duration: 8s; }
 
-/* estrelinhas pelo quarto: só no escuro */
-.estrelinha {
-  position: absolute;
-  width: clamp(10px, 2.2vmin, 22px);
-  height: clamp(10px, 2.2vmin, 22px);
-  opacity: 0;
-  transition: opacity 2.4s ease;
-}
-.estrelinha svg { display: block; width: 100%; height: 100%; }
-.app[data-modo="dormir"] .estrelinha,
-.app[data-modo="inicio"].sono .estrelinha {
-  opacity: .85;
-  animation: cintilar 3.2s ease-in-out infinite;
-}
-.app.junto .estrelinha { opacity: .45; }
+/* adesivos de estrelinha da parede: acendem quando a luz apaga */
+.adesivos-acesos { opacity: 0; transition: opacity 2.6s ease .6s; }
+.app[data-modo="dormir"] .adesivos-acesos,
+.app[data-modo="inicio"].sono .adesivos-acesos { opacity: 1; }
 
 @keyframes cintilar {
   0%, 100% { opacity: 1; }
   50% { opacity: .45; }
 }
 .estrela-janela { animation: cintilar 3.2s ease-in-out infinite; }
-.lampada { animation: cintilar 2.6s ease-in-out infinite; }
+
+/* vaga-lumes lá fora, na janela */
+@keyframes vagalume-janela {
+  0%, 100% { opacity: .15; transform: translate(0, 0); }
+  35% { opacity: 1; transform: translate(6px, -8px); }
+  70% { opacity: .5; transform: translate(-4px, -3px); }
+}
+.vagalume-janela { transform-box: fill-box; animation: vagalume-janela 4.6s ease-in-out infinite; }
+
+/* o abajur apaga na hora de dormir (fica só o luar) */
+.abajur-luz { transition: opacity 2.2s ease; }
+.app[data-modo="dormir"] .abajur-luz,
+.app[data-modo="inicio"].sono .abajur-luz { opacity: 0; }
+
+/* grão de papel pintado: une a cena e o Momon na mesma "pintura" */
+.papel {
+  z-index: 5;
+  background-size: 256px 256px;
+  opacity: .9;
+}
 
 /* dormir junto: escurece também o Momon e deixa só as luzinhas dele acesas */
 .noite-frente {
   z-index: 4;
-  background: #15123A;
+  background: #0F1A30;
   opacity: 0;
   transition: opacity 1.5s ease;
 }
+/* quando a luz apaga, o Momon também fica na penumbra (só um pouco: ele está no luar) */
+.app[data-modo="dormir"] .noite-frente { opacity: .2; transition-duration: 1.8s; }
+.app[data-modo="inicio"].sono .noite-frente { opacity: .14; }
 .app.junto .noite-frente { opacity: .55; transition-duration: 8s; }
 .brilhos-noite { z-index: 4; }
 .brilho-noite {
