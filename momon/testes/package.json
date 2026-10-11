@@ -1,0 +1,11 @@
+{
+  "name": "momon-testes",
+  "private": true,
+  "description": "Testes automáticos do Momon (o app em si não tem dependências).",
+  "scripts": {
+    "test": "node fluxo.cjs && node caos.cjs && node pwa.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}

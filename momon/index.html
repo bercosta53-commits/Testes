@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#2B2852">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Momon">
+  <meta name="description" content="Momon, um amigo gatinho para brincar.">
+  <title>Momon</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="assets/icones/icone-192.png">
+  <link rel="apple-touch-icon" href="assets/icones/icone-180.png">
+  <link rel="stylesheet" href="assets/momon.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app" id="app" data-modo="inicio">
+    <div class="camada" id="quarto"></div>
+    <div class="camada noite" id="noite"></div>
+    <div class="camada estrelas-noite" id="estrelas-noite"></div>
+    <div class="camada" id="luzes"></div>
+
+    <div class="palco" id="palco">
+      <div class="almofada-lugar" id="almofada"></div>
+      <div class="momon-lugar" id="momon"></div>
+      <div class="ovo" id="ovo" hidden></div>
+    </div>
+
+    <!-- dormir junto: escurece até o Momon; só o vaga-lume e a lua continuam acesos -->
+    <div class="camada noite-frente" id="noite-frente"></div>
+    <div class="camada brilhos-noite" aria-hidden="true">
+      <div class="brilho-noite vagalume-noite"></div>
+      <div class="brilho-noite lua-noite"></div>
+    </div>
+
+    <div class="camada particulas" id="particulas"></div>
+
+    <!-- amassar pãozinho: metade esquerda e metade direita da tela -->
+    <div class="zonas" id="zonas">
+      <div class="zona" data-lado="esq"></div>
+      <div class="zona" data-lado="dir"></div>
+    </div>
+
+    <button type="button" class="botao botao-coberta" id="bt-coberta" aria-label="Cobertinha"></button>
+    <button type="button" class="botao botao-dormir" id="bt-dormir" aria-label="Hora de dormir"></button>
+
+    <div class="melodias" id="melodias">
+      <button type="button" class="botao" data-melodia="0" aria-label="Cantiga da lua"></button>
+      <button type="button" class="botao" data-melodia="1" aria-label="Cantiga da estrela"></button>
+      <button type="button" class="botao" data-melodia="2" aria-label="Cantiga da nuvem"></button>
+    </div>
+    <!-- acordar: só com toque longo (2 s), para não sair sem querer -->
+    <button type="button" class="botao botao-acordar" id="bt-acordar" aria-label="Acordar (segure)">
+      <svg class="anel" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="48" r="47"/></svg>
+    </button>
+
+    <div class="dica" id="dica" aria-hidden="true"></div>
+    <div class="inicio" id="inicio" aria-label="Toque para acordar o Momon"></div>
+  </div>
+
+  <script src="assets/momon.svg.js"></script>
+  <script src="assets/cena.svg.js"></script>
+  <script src="assets/icones.svg.js"></script>
+  <script src="audio/sons.js"></script>
+  <script src="audio/purr.js"></script>
+  <script src="audio/lullaby.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

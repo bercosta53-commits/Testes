@@ -6,6 +6,12 @@
  *   emburrado | desconfiado | amolecendo | contente | feliz
  * Momentos especiais:
  *   ronronando | dormindo | surpreso
+ * De passagem (usados pelo app):
+ *   amassando | bocejo
+ *
+ * A pose vem de data-pose: sentado | enroscado (deitado em bolinha).
+ * As animações de repouso (respirar, rabo) também ficam aqui; o app só
+ * dispara as curtinhas (piscar, orelha, pulo) pela Web Animations API.
  *
  * Emburrado é fofo: bico, nariz empinado e olhar de lado. Nunca bravo nem triste.
  * Esquerda/direita são as da tela.
@@ -25,7 +31,17 @@
 .momon .palpebra,
 .momon .palpebra-cima,
 .momon .palpebra-baixo,
-.momon .olho-estrela {
+.momon .olho-estrela,
+.momon .pulo,
+.momon .pose-sentado,
+.momon .cabeca-pose,
+.momon .cabeca-respira,
+.momon .respira-enroscado,
+.momon .mantinha,
+.momon .mantinha-respira,
+.momon .cobertinha,
+.momon .amassado,
+.momon .orelha-mexe {
   transform-box: view-box;
 }
 
@@ -38,7 +54,8 @@
 
 .momon .v-aberto { opacity: 1; }
 .momon[data-humor="ronronando"] .v-aberto,
-.momon[data-humor="dormindo"] .v-aberto { opacity: 0; }
+.momon[data-humor="dormindo"] .v-aberto,
+.momon[data-humor="bocejo"] .v-aberto { opacity: 0; }
 
 .momon[data-humor="emburrado"] .v-emburrado,
 .momon[data-humor="desconfiado"] .v-desconfiado,
@@ -47,7 +64,9 @@
 .momon[data-humor="feliz"] .v-feliz,
 .momon[data-humor="ronronando"] .v-ronronando,
 .momon[data-humor="dormindo"] .v-dormindo,
-.momon[data-humor="surpreso"] .v-surpreso {
+.momon[data-humor="surpreso"] .v-surpreso,
+.momon[data-humor="amassando"] .v-amassando,
+.momon[data-humor="bocejo"] .v-bocejo {
   opacity: 1;
 }
 
@@ -84,7 +103,7 @@
 .momon .ponta-acesa { opacity: 0; transition: opacity .6s ease; }
 
 /* ponta do rabo acesa (vaga-lume) */
-.momon:is([data-humor="contente"], [data-humor="feliz"], [data-humor="ronronando"]) .ponta-acesa { opacity: .9; }
+.momon:is([data-humor="contente"], [data-humor="feliz"], [data-humor="ronronando"], [data-humor="amassando"]) .ponta-acesa { opacity: .9; }
 .momon[data-humor="amolecendo"] .ponta-acesa { opacity: .35; }
 .momon[data-humor="dormindo"] .ponta-acesa { opacity: .3; }
 
@@ -162,8 +181,9 @@
 .momon[data-humor="ronronando"] [data-parte="peito-barriga"] { transform: scale(1.05); }
 .momon[data-humor="ronronando"] .bochecha { opacity: .9; }
 .momon[data-humor="ronronando"] .orelha-rubor { opacity: .4; }
-.momon[data-humor="ronronando"] .lua-luz { opacity: .95; }
-.momon[data-humor="ronronando"] .lua-acesa { opacity: .75; }
+/* durante o carinho o app faz a lua acender aos poucos (--lua, de 0 a 1) */
+.momon[data-humor="ronronando"] .lua-luz { opacity: var(--lua, .95); }
+.momon[data-humor="ronronando"] .lua-acesa { opacity: calc(var(--lua, .95) * .8); }
 .momon[data-humor="ronronando"] .ponta-luz { opacity: 1; }
 
 /* ---------- dormindo: cabeça baixinha, orelhas relaxadas, luz fraquinha */
@@ -189,3 +209,109 @@
 .momon[data-humor="surpreso"] [data-parte="bigodes"] { transform: scaleY(1.15); }
 .momon[data-humor="surpreso"] .bochecha { opacity: .2; }
 .momon[data-humor="surpreso"] .lua-luz { opacity: .25; }
+
+/* ---------- amassando pãozinho: olhinhos meio fechados de gostoso.
+   O app controla o brilho da lua pelo ritmo (--lua, de 0 a 1). */
+
+.momon[data-humor="amassando"] [data-parte="cabeca"] { transform: rotate(2deg); }
+.momon[data-humor="amassando"] [data-parte="orelha-esq"] { transform: rotate(-5deg); }
+.momon[data-humor="amassando"] [data-parte="orelha-dir"] { transform: rotate(5deg); }
+.momon[data-humor="amassando"] .palpebra-cima { transform: translateY(-58px); }
+.momon[data-humor="amassando"] .palpebra-baixo { transform: translateY(9px); }
+.momon[data-humor="amassando"] .bochecha { opacity: .75; }
+.momon[data-humor="amassando"] .orelha-rubor { opacity: .3; }
+.momon[data-humor="amassando"] .lua-luz { opacity: var(--lua, .4); }
+.momon[data-humor="amassando"] .lua-acesa { opacity: calc(var(--lua, .4) * .8); }
+.momon[data-humor="amassando"] .ponta-luz { opacity: .8; }
+
+/* ---------- bocejo: boca bem aberta, olhos espremidos, orelhas para trás */
+
+.momon[data-humor="bocejo"] [data-parte="cabeca"] { transform: translateY(-4px) rotate(-3deg); }
+.momon[data-humor="bocejo"] [data-parte="orelha-esq"] { transform: rotate(-12deg); }
+.momon[data-humor="bocejo"] [data-parte="orelha-dir"] { transform: rotate(12deg); }
+.momon[data-humor="bocejo"] .bochecha { opacity: .3; }
+
+/* ---------- poses: sentado | enroscado */
+
+.momon .pose-sentado {
+  transition: opacity .45s ease, transform .6s cubic-bezier(.34, 1.2, .64, 1);
+}
+.momon .pose-enroscado {
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+.momon .cabeca-pose {
+  transition: transform .7s cubic-bezier(.34, 1.15, .64, 1);
+}
+.momon[data-pose="enroscado"] .pose-sentado { opacity: 0; transform: scaleY(.6); }
+.momon[data-pose="enroscado"] .pose-enroscado { opacity: 1; }
+.momon[data-pose="enroscado"] .cabeca-pose { transform: translate(-62px, 112px) rotate(-14deg) scale(.72); }
+
+/* ---------- cobertas */
+
+.momon .cobertinha {
+  opacity: 0;
+  transform: scale(.2, .1);
+  transition: opacity .3s ease, transform .55s cubic-bezier(.34, 1.4, .64, 1);
+}
+.momon.com-cobertinha .cobertinha { opacity: 1; transform: none; }
+.momon .amassado { opacity: 0; }
+
+/* a mantinha de dormir só aparece no modo dormir; o app a arrasta */
+.momon .mantinha { opacity: 0; transition: opacity .4s ease; }
+.momon.com-mantinha .mantinha { opacity: 1; }
+
+/* ---------- repouso: respirar e rabo */
+
+@keyframes momon-respirar {
+  0%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(1.024); }
+}
+@keyframes momon-respirar-cabeca {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-2.4px); }
+}
+@keyframes momon-rabo-calmo {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-4.5deg); }
+}
+/* emburrado: o rabo dá umas batidinhas, de cara amarrada */
+@keyframes momon-rabo-batendo {
+  0%, 62%, 100% { transform: rotate(0deg); }
+  70% { transform: rotate(-7deg); }
+  77% { transform: rotate(1.5deg); }
+  84% { transform: rotate(-5deg); }
+  91% { transform: rotate(0deg); }
+}
+
+.momon [data-parte="corpo"],
+.momon .respira-enroscado,
+.momon .mantinha-respira {
+  animation: momon-respirar 3.4s ease-in-out infinite;
+}
+.momon .cabeca-respira {
+  animation: momon-respirar-cabeca 3.4s ease-in-out infinite;
+}
+.momon [data-parte="rabo"] {
+  animation: momon-rabo-calmo 4.4s ease-in-out infinite;
+}
+.momon:is([data-humor="emburrado"], [data-humor="desconfiado"]) [data-parte="rabo"] {
+  animation: momon-rabo-batendo 2.8s ease-in-out infinite;
+}
+/* ronronando respira mais rápido; dormindo, bem devagar e fundo */
+.momon[data-humor="ronronando"] :is([data-parte="corpo"], .respira-enroscado, .mantinha-respira, .cabeca-respira) {
+  animation-duration: 2.6s;
+}
+.momon[data-humor="dormindo"] :is([data-parte="corpo"], .respira-enroscado, .mantinha-respira, .cabeca-respira) {
+  animation-duration: 5.4s;
+}
+
+/* aba escondida: tudo parado */
+.pausado .momon *,
+.momon.pausado * {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .momon [data-parte="rabo"] { animation-duration: 9s; }
+}

@@ -1,0 +1,327 @@
+/*
+ * Momon — o app: tela cheia, sem texto, só toques grandes.
+ * As expressões e animações do gatinho ficam em assets/momon.css.
+ */
+
+:root {
+  --margem: max(14px, 2.6vmin);
+  --botao: clamp(96px, 15vmin, 136px);
+  --seguro-baixo: env(safe-area-inset-bottom, 0px);
+  --seguro-esq: env(safe-area-inset-left, 0px);
+  --seguro-dir: env(safe-area-inset-right, 0px);
+  --seguro-cima: env(safe-area-inset-top, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #2B2852;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+.app {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.camada {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.camada > svg { display: block; width: 100%; height: 100%; }
+
+/* ---------- noite: escurece o quarto, mas não as luzes (que ficam por cima) */
+
+.noite {
+  background: #15123A;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+.app[data-modo="dormir"] .noite { opacity: .6; }
+.app[data-modo="inicio"].sono .noite { opacity: .45; }
+.app.junto .noite { opacity: .87; transition-duration: 8s; }
+/* escurece devagar (8 s) ao entrar no dormir junto; ao acordar, clareia rápido */
+#luzes { transition: opacity 1.5s ease; }
+.app.junto #luzes { opacity: .45; transition-duration: 8s; }
+
+/* estrelinhas pelo quarto: só no escuro */
+.estrelinha {
+  position: absolute;
+  width: clamp(10px, 2.2vmin, 22px);
+  height: clamp(10px, 2.2vmin, 22px);
+  opacity: 0;
+  transition: opacity 2.4s ease;
+}
+.estrelinha svg { display: block; width: 100%; height: 100%; }
+.app[data-modo="dormir"] .estrelinha,
+.app[data-modo="inicio"].sono .estrelinha {
+  opacity: .85;
+  animation: cintilar 3.2s ease-in-out infinite;
+}
+.app.junto .estrelinha { opacity: .45; }
+
+@keyframes cintilar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .45; }
+}
+.estrela-janela { animation: cintilar 3.2s ease-in-out infinite; }
+.lampada { animation: cintilar 2.6s ease-in-out infinite; }
+
+/* dormir junto: escurece também o Momon e deixa só as luzinhas dele acesas */
+.noite-frente {
+  z-index: 4;
+  background: #15123A;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.app.junto .noite-frente { opacity: .55; transition-duration: 8s; }
+.brilhos-noite { z-index: 4; }
+.brilho-noite {
+  position: absolute;
+  width: clamp(70px, 14vmin, 130px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.vagalume-noite { background: radial-gradient(circle, rgba(255, 250, 200, .9) 0%, rgba(255, 238, 140, .4) 30%, rgba(255, 232, 120, 0) 68%); }
+.lua-noite { width: clamp(50px, 9vmin, 90px); background: radial-gradient(circle, rgba(255, 246, 214, .55) 0%, rgba(255, 236, 170, .2) 35%, rgba(255, 236, 170, 0) 68%); }
+@keyframes luz-de-sono {
+  0%, 100% { opacity: .55; }
+  45% { opacity: 1; }
+}
+.app.junto .brilho-noite { opacity: 1; transition-duration: 8s; }
+.app.junto .brilho-noite.vagalume-noite { animation: luz-de-sono 5.4s ease-in-out 8s infinite; }
+
+/* ---------- palco: o Momon em cima da almofada */
+
+.palco {
+  position: absolute;
+  left: 50%;
+  bottom: calc(5vh + var(--seguro-baixo));
+  width: min(84vw, 55vh);
+  aspect-ratio: 400 / 420;
+  transform: translateX(-50%);
+}
+@supports (height: 1dvh) {
+  .palco { width: min(84vw, 55dvh); bottom: calc(5dvh + var(--seguro-baixo)); }
+}
+.palco > * { position: absolute; }
+.momon-lugar { inset: 0; }
+/* a almofada usa as mesmas coordenadas do Momon (viewBox -40 300 480 170) */
+.almofada-lugar { left: -10%; top: 71.43%; width: 120%; height: 40.48%; }
+.almofada-lugar svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.momon-lugar .momon { transition: opacity .5s ease, transform .6s cubic-bezier(.34, 1.4, .64, 1); }
+.momon-lugar.escondido .momon { opacity: 0; transform: scale(.4); transform-origin: 50% 90%; }
+
+/* ---------- ovinho de estrela (só na primeira vez) */
+
+.ovo { left: 27%; width: 46%; bottom: 3%; }
+.ovo[hidden] { display: none; }
+.ovo svg { display: block; width: 100%; height: auto; overflow: visible; }
+@keyframes ovo-balanca {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-5deg); }
+  40% { transform: rotate(4deg); }
+  55% { transform: rotate(0deg); }
+}
+@keyframes aura {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+.ovo .ovo-svg { transform-origin: 50% 85%; animation: ovo-balanca 2.6s ease-in-out infinite; }
+.ovo .ovo-aura { animation: aura 2.6s ease-in-out infinite; }
+.ovo .ovo-rachado { stroke-dasharray: 160; stroke-dashoffset: 160; transition: stroke-dashoffset .35s ease; }
+.ovo.rachando .ovo-rachado { stroke-dashoffset: 0; }
+.ovo .ovo-cima { transform-box: view-box; transform-origin: 50px 60px; transition: transform .6s cubic-bezier(.3, 1.3, .6, 1), opacity .6s ease .15s; }
+.ovo.abriu .ovo-cima { transform: translate(18px, -70px) rotate(32deg); opacity: 0; }
+.ovo.abriu .ovo-baixo { transition: opacity .5s ease .45s; opacity: 0; }
+.ovo.abriu .ovo-svg { animation: none; }
+
+/* ---------- partículas (flores, estrelas, vaga-lumes, corações, zzz) */
+
+.particulas { z-index: 5; }
+.particula {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+.particula svg { display: block; width: 100%; height: 100%; }
+
+/* ---------- amassar pãozinho: as duas metades da tela */
+
+.zonas {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.app[data-modo="amassar"] .zonas { opacity: 1; pointer-events: auto; }
+.app[data-modo="amassar"].enroscou .zonas { opacity: 0; pointer-events: none; }
+.zona { position: relative; flex: 1; }
+.zona .pata-svg {
+  position: absolute;
+  top: 54%;
+  width: clamp(80px, 19vmin, 170px);
+  height: auto;
+  opacity: .28;
+  transform: translate(-50%, -50%);
+  transition: opacity .3s ease;
+}
+.zona[data-lado="esq"] .pata-svg { left: 20%; transform: translate(-50%, -50%) rotate(-12deg); }
+.zona[data-lado="dir"] .pata-svg { left: 80%; transform: translate(-50%, -50%) rotate(12deg); }
+@keyframes pata-convite {
+  0%, 100% { opacity: .2; }
+  50% { opacity: .5; }
+}
+.zonas.convite .zona[data-lado="esq"] .pata-svg { animation: pata-convite 1.2s ease-in-out infinite; }
+.zonas.convite .zona[data-lado="dir"] .pata-svg { animation: pata-convite 1.2s ease-in-out .6s infinite; }
+@keyframes pata-tocou {
+  0% { opacity: .75; }
+  100% { opacity: .28; }
+}
+.zona.tocou .pata-svg { animation: pata-tocou .45s ease-out; }
+
+/* ---------- botões: grandes, redondos, sem texto */
+
+.botao {
+  position: absolute;
+  z-index: 8;
+  width: var(--botao);
+  height: var(--botao);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  touch-action: none;
+  transition: transform .18s ease, opacity .5s ease;
+}
+.botao .icone-botao { display: block; width: 100%; height: 100%; pointer-events: none; }
+.botao:active { transform: scale(.92); }
+.botao:focus-visible { outline: 4px solid #FFF4C8; outline-offset: 4px; }
+
+.botao-coberta { left: calc(var(--margem) + var(--seguro-esq)); bottom: calc(var(--margem) + var(--seguro-baixo)); }
+.botao-dormir { right: calc(var(--margem) + var(--seguro-dir)); bottom: calc(var(--margem) + var(--seguro-baixo)); }
+.botao-acordar { right: calc(var(--margem) + var(--seguro-dir)); top: calc(var(--margem) + var(--seguro-cima)); }
+
+/* o botão da cobertinha fica "ligado" enquanto amassa */
+.app[data-modo="amassar"] .botao-coberta .icone-botao { filter: drop-shadow(0 0 10px #FFD3DE) drop-shadow(0 0 22px #FF9DB5); }
+
+/* convite para dormir, depois de um tempo brincando */
+@keyframes convite {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255, 240, 190, 0)); }
+  50% { transform: scale(1.07); filter: drop-shadow(0 0 16px rgba(255, 240, 190, .9)); }
+}
+.botao-dormir.convite { animation: convite 2.4s ease-in-out infinite; }
+
+.melodias {
+  position: absolute;
+  z-index: 8;
+  left: calc(var(--margem) + var(--seguro-esq));
+  top: calc(var(--margem) + var(--seguro-cima));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: opacity 1s ease;
+}
+.melodias .botao { position: relative; }
+.melodias .botao[aria-pressed="true"] .icone-botao { filter: drop-shadow(0 0 10px #FFF0BE) drop-shadow(0 0 20px #FFE27A); }
+.app[data-modo="dormir"].cobriu .melodias { opacity: 1; }
+
+/* anel do botão acordar: enche durante os 2 s de toque longo */
+.botao-acordar .anel {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  pointer-events: none;
+  transform: rotate(-90deg);
+}
+.botao-acordar .anel circle {
+  fill: none;
+  stroke: #FFF4C8;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 296;
+  stroke-dashoffset: 296;
+  transition: stroke-dashoffset .35s ease;
+}
+.botao-acordar.segurando .anel circle { stroke-dashoffset: 0; transition: stroke-dashoffset 2s linear; }
+
+/* quem aparece em cada modo */
+.app[data-modo="inicio"] .botao,
+.app:not([data-modo="dormir"]) .botao-acordar,
+.app:not([data-modo="dormir"]) .melodias,
+.app[data-modo="dormir"] .botao-coberta,
+.app[data-modo="dormir"] .botao-dormir,
+.app[data-modo="dormir"]:not(.cobriu) .melodias {
+  opacity: 0;
+  pointer-events: none;
+}
+.app[data-modo="dormir"].junto .botao-acordar,
+.app[data-modo="dormir"].cobriu.junto .melodias { opacity: .3; }
+
+/* ---------- dica: a mãozinha que mostra o que fazer (sem palavras) */
+
+.dica {
+  position: absolute;
+  z-index: 9;
+  width: clamp(64px, 13vmin, 110px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.dica.visivel { opacity: .95; }
+.dica svg { display: block; width: 100%; height: auto; }
+@keyframes dica-tocar {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  45% { transform: translate(0, 6px) scale(.9); }
+}
+@keyframes dica-arrastar {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  75% { transform: translateY(-120%); opacity: 1; }
+  100% { transform: translateY(-140%); opacity: 0; }
+}
+.dica.tocar svg { animation: dica-tocar 1.2s ease-in-out infinite; }
+.dica.arrastar svg { animation: dica-arrastar 1.9s ease-in-out infinite; }
+
+/* ---------- tela inicial: toque em qualquer lugar */
+
+.inicio {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+}
+.app:not([data-modo="inicio"]) .inicio { display: none; }
+
+/* aba escondida: tudo parado */
+.app.pausado *,
+.app.pausado *::before,
+.app.pausado *::after {
+  animation-play-state: paused !important;
+}

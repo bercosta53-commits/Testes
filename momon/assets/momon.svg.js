@@ -1,7 +1,7 @@
 /*
  * Momon — o gatinho, desenhado em SVG com partes separadas para animar.
  *
- *   Momon.svg.criar({ humor: 'emburrado', prefixo: '' })  -> string <svg>
+ *   Momon.svg.criar({ humor: 'emburrado', pose: 'sentado', prefixo: '' })  -> string <svg>
  *
  * Personalidade: o Momon é emburradinho, mas muito carinhoso. Os humores de
  * PROGRESSAO vão do emburrado ao feliz: é o caminho que o carinho e a atenção
@@ -19,8 +19,11 @@
  * Esquerda/direita são as da TELA (de quem olha), não as do gato:
  * tocar no lado esquerdo da tela mexe a "pata-esq".
  *
- * O humor fica em data-humor no <svg>; as poses, cores e transições de cada
- * humor estão em momon.css. Nenhum grupo animável recebe o atributo transform
+ * O humor fica em data-humor e a pose (sentado | enroscado) em data-pose, no <svg>;
+ * as poses, cores, transições e animações de repouso estão em momon.css.
+ * A cabeça é a mesma nas duas poses: no enroscado o CSS só a leva para a frente,
+ * deitada sobre as patinhas. Grupos de animação (pulo, respiração, pose) ficam
+ * por fora dos grupos das partes, para não brigarem com as expressões. Nenhum grupo animável recebe o atributo transform
  * (o CSS sobrescreveria): quando uma forma precisa ser deslocada ou espelhada,
  * ela ganha um <g> interno.
  */
@@ -31,6 +34,8 @@
   const PROGRESSAO = ['emburrado', 'desconfiado', 'amolecendo', 'contente', 'feliz'];
   const ESPECIAIS = ['ronronando', 'dormindo', 'surpreso'];
   const HUMORES = [...PROGRESSAO, ...ESPECIAIS];
+  // De passagem, usados pelo app: amassando pãozinho e bocejando.
+  const OUTROS = ['amassando', 'bocejo'];
 
   const PARTES = [
     'corpo', 'peito-barriga', 'cabeca', 'orelha-esq', 'orelha-dir',
@@ -184,11 +189,31 @@
   const BOCA_RETA = `${MEIO_W}M190 226Q195 224.5 200 ${BOCA_Y}Q205 224.5 210 226`;
   // Amolecendo: segurando o sorriso, só um cantinho sobe.
   const BOCA_CANTINHO = `${MEIO_W}M200 ${BOCA_Y}Q194.5 227 189.5 225.5M200 ${BOCA_Y}Q205 229.5 211 226.5Q213.5 225 214 222`;
+  // Bocejo: a boca bem aberta.
+  const BOCA_BOCEJO = { cx: 200, cy: 234, rx: 12.5, ry: 15.5 };
+
+  // ---------------------------------------------------------------- enroscado
+  // Deitado em bolinha (dormindo, e no fim do amassar pãozinho). A cabeça é a do
+  // sentado; o rabo dá a volta pela frente e a ponta acesa fica perto do rosto.
+  const ENROSCADO = 'M70 398C48 362 66 304 136 284C188 268 270 266 322 292C372 318 376 382 352 401C300 411 118 411 70 398Z';
+  const RABO_ENROSCADO_CURVAS = [
+    [[338, 330], [388, 370], [352, 410], [286, 409]],
+    [[286, 409], [248, 408], [222, 406], [204, 400]],
+  ];
+  const PATINHAS_ENROSCADO = [[108, 397, 25, 12], [158, 401, 23, 11]];
+
+  // Mantinha de dormir, que cobre o corpo enroscado (a cabeça fica de fora).
+  const MANTINHA = 'M166 312C210 282 300 276 348 299C384 318 388 384 362 405C332 415 220 415 174 411C158 381 156 337 166 312Z';
+  const MANTINHA_DOBRA = 'M170 318C214 292 298 287 342 307';
+  const MANTINHA_ESTRELAS = [[230, 340], [292, 330], [262, 372], [326, 362], [204, 382], [318, 396], [190, 346]];
+  // Cobertinha de amassar pãozinho, esticada no chão embaixo dele.
+  const COBERTINHA = 'M30 393C40 372 110 362 200 362C290 362 360 372 370 393C378 409 330 425 200 425C70 425 22 409 30 393Z';
+  const COBERTINHA_BORDA = 'M48 393C58 378 118 371 200 371C282 371 342 378 352 393C358 405 318 416 200 416C82 416 42 405 48 393Z';
 
   // ---------------------------------------------------------------- montagem
 
   function criar(opcoes) {
-    const { prefixo = '', humor = PROGRESSAO[0] } = opcoes || {};
+    const { prefixo = '', humor = PROGRESSAO[0], pose = 'sentado' } = opcoes || {};
     const ref = nome => `momon-${prefixo}${nome}`; // ids internos (defs)
     const url = nome => `url(#${ref(nome)})`;
     const origem = ([x, y]) => ` style="transform-origin:${x}px ${y}px"`;
@@ -237,6 +262,10 @@
       linear('boca', [[0, '#5A2230'], [1, '#8E3A48']], vertical) +
       radial('luz-lua', [[0, '#FFF7D6', .95], [.5, '#FFEBA8', .45], [1, '#FFEBA8', 0]]) +
       radial('luz-vagalume', [[0, '#FFFBE0'], [.4, '#FFF08A', .6], [1, '#FFE45C', 0]]) +
+      linear('mantinha', [[0, '#DCD2F8'], [.45, '#B9A9EC'], [1, '#8F7DD0']], 'x1=".2" y1="0" x2=".6" y2="1"') +
+      linear('cobertinha', [[0, '#FFE0E7'], [.5, '#FBBFCD'], [1, '#EE9FB3']], vertical) +
+      radial('amassado', [[0, '#C9708A', .45], [1, '#C9708A', 0]]) +
+      `<clipPath id="${ref('clip-boca-bocejo')}"><ellipse cx="${BOCA_BOCEJO.cx}" cy="${BOCA_BOCEJO.cy}" rx="${BOCA_BOCEJO.rx}" ry="${BOCA_BOCEJO.ry}"/></clipPath>` +
     `</defs>`;
 
     // Mancha macia: elipse com borda que some (pelo branco, sombra, bochecha).
@@ -254,23 +283,26 @@
     const chao = mancha(200, 403, 172, 19, 'chao');
 
     // Tubo (rabo): camadas cada vez mais finas e claras, deslocadas na direção
-    // da luz. Na ponta, o começo é reto e o fim é redondo.
-    const tubo = (d, camadas, ponta) => camadas.map(([cor, fracao, desloc, a = 1]) => {
+    // da luz. Na ponta (fim = ponto final), o começo é reto e o fim é redondo.
+    const tubo = (d, camadas, fim) => camadas.map(([cor, fracao, desloc, a = 1]) => {
       const largura = RABO_L * fracao;
-      const forma = ponta
+      const forma = fim
         ? `<path d="${d}" fill="none" stroke="${cor}" stroke-width="${largura}"/>` +
-          `<circle cx="${PONTA_FIM[0]}" cy="${PONTA_FIM[1]}" r="${largura / 2}" fill="${cor}"/>`
+          `<circle cx="${fim[0]}" cy="${fim[1]}" r="${largura / 2}" fill="${cor}"/>`
         : `<path d="${d}" ${linha(largura, cor)}/>`;
       return `<g transform="translate(${-desloc} ${-desloc})"${a < 1 ? ` opacity="${a}"` : ''}>${forma}</g>`;
     }).join('');
+    const PELO_RABO = [[COR.laranjaSombra, 1, 0], ['#E58F4E', .84, 1.2], [COR.laranja, .64, 2.6], ['#FBB777', .38, 4.2], ['#FFD9B3', .16, 5.6, .7]];
+    // A ponta clarinha e, por cima, a mesma ponta acesa (o CSS acende como vaga-lume).
+    const pontaDoRabo = (d, fim) =>
+      tubo(d, [['#E5C9A4', 1, 0], ['#F2DFC4', .84, 1.2], [COR.pontaRabo, .64, 2.6], ['#FFFBF2', .38, 4.2], ['#FFFFFF', .16, 5.6, .8]], fim) +
+      `<g class="ponta-acesa">${tubo(d, [['#FFE97A', 1, 0], ['#FFF6B0', .6, 2.6], ['#FFFFFF', .2, 4.6, .8]], fim)}</g>`;
+    const luzDaPonta = fim => `<circle class="ponta-luz" cx="${fim[0]}" cy="${fim[1]}" r="50" fill="${url('luz-vagalume')}"/>`;
 
     const rabo = parte('rabo',
-      `<circle class="ponta-luz" cx="${PONTA_FIM[0]}" cy="${PONTA_FIM[1]}" r="50" fill="${url('luz-vagalume')}"/>` +
-      tubo(RABO, [[COR.laranjaSombra, 1, 0], ['#E58F4E', .84, 1.2], [COR.laranja, .64, 2.6], ['#FBB777', .38, 4.2], ['#FFD9B3', .16, 5.6, .7]]) +
-      parte('ponta-rabo',
-        tubo(PONTA, [['#E5C9A4', 1, 0], ['#F2DFC4', .84, 1.2], [COR.pontaRabo, .64, 2.6], ['#FFFBF2', .38, 4.2], ['#FFFFFF', .16, 5.6, .8]], true) +
-        `<g class="ponta-acesa">${tubo(PONTA, [['#FFE97A', 1, 0], ['#FFF6B0', .6, 2.6], ['#FFFFFF', .2, 4.6, .8]], true)}</g>`,
-        PONTA_FIM) +
+      luzDaPonta(PONTA_FIM) +
+      tubo(RABO, PELO_RABO) +
+      parte('ponta-rabo', pontaDoRabo(PONTA, PONTA_FIM), PONTA_FIM) +
       // o corpo faz sombra no começo do rabo
       mancha(268, 384, 34, 22, 'oclusao'),
       RABO_CURVAS[0][0]);
@@ -299,7 +331,8 @@
       `</g>`,
       [163 + dx, 406]);
 
-    const orelha =
+    // O grupo "orelha-mexe" é para a orelhinha tremer sem mexer na pose do humor.
+    const orelha = `<g class="orelha-mexe"${origem([124, 118])}>` +
       `<path d="${ORELHA}" fill="${COR.laranja}"/>` + luz(ORELHA) +
       `<path d="${ORELHA_DENTRO}" fill="${url('dentro-orelha')}"/>` +
       `<g clip-path="${url('clip-orelha')}">` +
@@ -309,7 +342,8 @@
       `</g>` +
       `<path d="${ORELHA_TUFO}" ${linha(3, COR.branco)} opacity=".85"/>` +
       // base da orelha, atrás da cabeça, mais escura
-      mancha(128, 128, 52, 30, 'oclusao');
+      mancha(128, 128, 52, 30, 'oclusao') +
+    `</g>`;
 
     const LUA = crescente(198, 110, 17, 8.5, -6.5, 15);
     const lua = parte('lua-testa',
@@ -347,7 +381,7 @@
 
     const palpebras = parte('pálpebras',
       palpebra('esq') + palpebra('dir') +
-      `<g class="var v-ronronando">${arcos(ARCO_FELIZ, 5.5)}</g>` +
+      `<g class="var v-ronronando v-bocejo">${arcos(ARCO_FELIZ, 5.5)}</g>` +
       `<g class="var v-dormindo">${arcos(ARCO_SONO, 5)}</g>`);
 
     const focinho = parte('focinho',
@@ -362,7 +396,7 @@
       `<g class="var v-emburrado"><path d="${BOCA_BICO}" ${traco}/></g>` +
       `<g class="var v-desconfiado"><path d="${BOCA_RETA}" ${traco}/></g>` +
       `<g class="var v-amolecendo"><path d="${BOCA_CANTINHO}" ${traco}/></g>` +
-      `<g class="var v-contente"><path d="${bocaW(11, 8)}" ${traco}/></g>` +
+      `<g class="var v-contente v-amassando"><path d="${bocaW(11, 8)}" ${traco}/></g>` +
       `<g class="var v-feliz">` +
         `<path d="${BOCA_ABERTA}" fill="${url('boca')}"/>` +
         `<ellipse cx="200" cy="${BOCA_Y + 16}" rx="8" ry="5.5" fill="${COR.lingua}" clip-path="${url('clip-boca')}"/>` +
@@ -371,7 +405,11 @@
       `<g class="var v-ronronando"><path d="${bocaW(12, 7)}" ${traco}/></g>` +
       `<g class="var v-dormindo"><path d="${bocaW(8, 5)}" ${traco}/></g>` +
       `<g class="var v-surpreso"><path d="${MEIO_W}" ${traco}/>` +
-        `<ellipse cx="200" cy="${BOCA_Y + 9}" rx="6.5" ry="8" fill="${url('boca')}"/></g>`,
+        `<ellipse cx="200" cy="${BOCA_Y + 9}" rx="6.5" ry="8" fill="${url('boca')}"/></g>` +
+      `<g class="var v-bocejo">` +
+        `<ellipse cx="${BOCA_BOCEJO.cx}" cy="${BOCA_BOCEJO.cy}" rx="${BOCA_BOCEJO.rx}" ry="${BOCA_BOCEJO.ry}" fill="${url('boca')}"/>` +
+        `<ellipse cx="200" cy="${BOCA_BOCEJO.cy + 12}" rx="9" ry="6.5" fill="${COR.lingua}" clip-path="${url('clip-boca-bocejo')}"/>` +
+      `</g>`,
       [200, BOCA_Y]);
 
     const bigodes = parte('bigodes',
@@ -400,11 +438,54 @@
       `</g>`,
       [200, 278]);
 
-    return `<svg class="momon" viewBox="0 0 400 420" data-humor="${humor}" role="img" aria-label="Momon, o gatinho" xmlns="http://www.w3.org/2000/svg">` +
-      defs + chao + rabo + corpo + pata('esq', 0) + pata('dir', 74) + cabeca +
+    // ------------------------------------------------ pose enroscado
+    const [rabo1, rabo2] = RABO_ENROSCADO_CURVAS;
+    const RABO_ENR = `M${pt(...rabo1[0])}` + RABO_ENROSCADO_CURVAS.map(([, a, b, c]) => `C${pt(...a)} ${pt(...b)} ${pt(...c)}`).join('');
+    const PONTA_ENR = finalDaCurva(rabo2, 0.45);
+    const enroscadoAtras = `<g class="pose-enroscado">` +
+      mancha(205, 405, 180, 17, 'chao') +
+      `<g class="respira-enroscado"${origem([210, 406])}>` +
+        `<path d="${ENROSCADO}" fill="${COR.laranja}"/>` + luz(ENROSCADO) + luz(ENROSCADO, 'contraluz') +
+        mancha(298, 318, 48, 30, 'brilho') +
+      `</g>` +
+    `</g>`;
+    const enroscadoFrente = `<g class="pose-enroscado">` +
+      luzDaPonta(rabo2[3]) + tubo(RABO_ENR, PELO_RABO) + pontaDoRabo(PONTA_ENR, rabo2[3]) +
+      PATINHAS_ENROSCADO.map(([cx, cy, rx, ry]) =>
+        mancha(cx, cy + 9, rx, 5, 'oclusao') + `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${url('pata')}"/>`).join('') +
+    `</g>`;
+
+    // ------------------------------------------------ cobertas
+    // Cobertinha do amassar pãozinho: no chão, embaixo dele (aparece com a classe com-cobertinha).
+    const cobertinha = `<g class="cobertinha"${origem([200, 400])}>` +
+      `<path d="${COBERTINHA}" fill="${url('cobertinha')}"/>` +
+      `<path d="${COBERTINHA_BORDA}" fill="none" stroke="#FFF4F6" stroke-width="3" stroke-dasharray="7 7" stroke-linecap="round" opacity=".9"/>` +
+      [[70, 396], [128, 384], [200, 380], [272, 384], [330, 396], [104, 408], [296, 408], [200, 404]].map(([cx, cy]) =>
+        `<ellipse cx="${cx}" cy="${cy}" rx="7" ry="3.2" fill="#fff" opacity=".55"/>`).join('') +
+      mancha(163, 409, 34, 9, 'amassado', ' class="amassado amassado-esq" style="transform-origin:163px 409px"') +
+      mancha(237, 409, 34, 9, 'amassado', ' class="amassado amassado-dir" style="transform-origin:237px 409px"') +
+    `</g>`;
+    // Mantinha de dormir: o app arrasta o grupo de fora; o de dentro respira junto com ele.
+    const mantinha = `<g class="mantinha"><g class="mantinha-respira"${origem([260, 410])}>` +
+      mancha(262, 410, 104, 10, 'oclusao') +
+      `<path d="${MANTINHA}" fill="${url('mantinha')}"/>` + luz(MANTINHA, 'volume') +
+      `<path d="${MANTINHA_DOBRA}" fill="none" stroke="#EEE8FD" stroke-width="13" stroke-linecap="round"/>` +
+      `<path d="${MANTINHA_DOBRA}" fill="none" stroke="#7B68BF" stroke-opacity=".25" stroke-width="3" stroke-linecap="round" transform="translate(0 8)"/>` +
+      MANTINHA_ESTRELAS.map(([x, y], i) =>
+        `<path d="${estrela(x, y, i % 2 ? 6 : 7.5, i % 2 ? 2.6 : 3.2)}" fill="#FFF3C4" stroke="#FFF3C4" stroke-width="1.5" stroke-linejoin="round" opacity=".9"/>`).join('') +
+    `</g></g>`;
+
+    return `<svg class="momon" viewBox="0 0 400 420" data-humor="${humor}" data-pose="${pose}" role="img" aria-label="Momon, o gatinho" xmlns="http://www.w3.org/2000/svg">` +
+      defs +
+      `<g class="pulo"${origem([200, 410])}>` +
+        cobertinha +
+        `<g class="pose-sentado"${origem([200, 405])}>` + chao + rabo + corpo + pata('esq', 0) + pata('dir', 74) + `</g>` +
+        enroscadoAtras + mantinha + enroscadoFrente +
+        `<g class="cabeca-pose"${origem([200, 278])}><g class="cabeca-respira">` + cabeca + `</g></g>` +
+      `</g>` +
       `</svg>`;
   }
 
   window.Momon = window.Momon || {};
-  window.Momon.svg = { criar, HUMORES, PROGRESSAO, ESPECIAIS, PARTES, COR };
+  window.Momon.svg = { criar, HUMORES, PROGRESSAO, ESPECIAIS, OUTROS, PARTES, COR };
 })();
