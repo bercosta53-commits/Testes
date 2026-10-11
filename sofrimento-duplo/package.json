@@ -1,0 +1,18 @@
+{
+  "name": "sofrimento-duplo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Dashboard: qual perfil de torcedor/eleitor tem mais chance de ver o clube rebaixado e o candidato derrotado (Gre-Nal x Eleição 2026).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}
