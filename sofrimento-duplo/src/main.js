@@ -118,16 +118,20 @@ function temaSalvo() {
   }
 }
 
+// Tema que a página encontrou ao abrir (por exemplo, o escolhido no visualizador
+// do claude.ai). O modo automático volta a ele em vez de apagá-lo.
+const temaOriginal = temaSalvo() === 'auto' ? document.documentElement.dataset.theme : undefined;
+
 function aplicarTema(tema) {
   const raiz = document.documentElement;
   if (tema === 'claro') raiz.dataset.theme = 'light';
   else if (tema === 'escuro') raiz.dataset.theme = 'dark';
+  else if (temaOriginal) raiz.dataset.theme = temaOriginal;
   else delete raiz.dataset.theme;
   $('tema').textContent = `Tema: ${NOMES_TEMA[tema]}`;
   try {
     localStorage.setItem(CHAVE_TEMA, tema);
   } catch {}
-  if (ultimo) renderizar(ultimo); // as cores das matrizes vêm dos tokens do tema
 }
 
 function ligarTema() {
@@ -137,9 +141,12 @@ function ligarTema() {
     tema = TEMAS[(TEMAS.indexOf(tema) + 1) % TEMAS.length];
     aplicarTema(tema);
   });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  const redesenhar = () => {
     if (ultimo) renderizar(ultimo);
-  });
+  };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redesenhar);
+  // O visualizador pode trocar o tema por fora, mudando o atributo data-theme.
+  new MutationObserver(redesenhar).observe(document.documentElement, { attributeFilter: ['data-theme'] });
 }
 
 // --- Início ------------------------------------------------------------------
