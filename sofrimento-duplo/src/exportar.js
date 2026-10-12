@@ -1,7 +1,6 @@
-// Exporta a Figura 1 (ranking) como PNG, desenhada num canvas com as cores do
-// tema atual, no mesmo formato de figura do painel.
+// Exporta o ranking como PNG, desenhado num canvas com as cores do tema atual.
 import { DEFAULTS } from './calc.js';
-import { COR_IDENTIDADE, NOMES_MODO, casasPct, dataBR, num, pct, pp } from './format.js';
+import { COR_IDENTIDADE, casasPct, dataBR, num, pct } from './format.js';
 import { tituloRanking } from './narrativa.js';
 import { token } from './cores.js';
 
@@ -9,16 +8,19 @@ const LARGURA = 960;
 const MARGEM = 40;
 const ALTURA_LINHA = 52;
 const COLUNA_NOME = 230;
-const COLUNA_PIOR = 120;
-const COLUNA_DELTA = 110;
+const COLUNA_PIOR = 150;
 const ESPACO_VALOR = 48;
 const ESPESSURA = 18;
 
-export async function exportarRankingPng(resultado, params, base) {
+export async function exportarRankingPng(resultado) {
   await document.fonts?.ready;
 
   const linhas = resultado.ranking;
-  const TOPO = 196;
+  const texto = token('--fonte');
+  const titulo = quebrarLinhas(`800 26px ${texto}`, tituloRanking(resultado), LARGURA - 2 * MARGEM);
+  const yTitulo = MARGEM + 48;
+  const ySub = yTitulo + (titulo.length - 1) * 32 + 32;
+  const TOPO = ySub + 70;
   const altura = TOPO + linhas.length * ALTURA_LINHA + 120;
   const escala = 2;
   const canvas = document.createElement('canvas');
@@ -28,41 +30,37 @@ export async function exportarRankingPng(resultado, params, base) {
   ctx.scale(escala, escala);
 
   const cor = Object.fromEntries(
-    ['superficie', 'tinta', 'tinta-2', 'apagado', 'grade', 'eixo', 'regua', 'gremio', 'inter', 'lula', 'flavio'].map((t) => [
+    ['superficie', 'tinta', 'tinta-2', 'apagado', 'grade', 'eixo', 'acento', 'gremio', 'inter', 'lula', 'flavio'].map((t) => [
       t,
       token(`--${t}`),
     ]),
   );
-  const texto = token('--fonte-texto');
-  const serifa = token('--fonte-titulo');
   const identidade = (chave) => cor[COR_IDENTIDADE[chave].slice(2)];
 
   ctx.fillStyle = cor.superficie;
   ctx.fillRect(0, 0, LARGURA, altura);
 
-  // Régua, número da figura, título-conclusão e subtítulo
-  ctx.fillStyle = cor.regua;
-  ctx.fillRect(MARGEM, MARGEM, LARGURA - 2 * MARGEM, 2);
+  // Rótulo, título-conclusão e premissas
+  const pf = resultado.pVence.flavio;
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = cor['tinta-2'];
-  ctx.font = `600 12px ${texto}`;
-  ctx.fillText('FIGURA 1 · RANKING DE SOFRIMENTO', MARGEM, MARGEM + 26);
+  ctx.fillStyle = cor.acento;
+  ctx.font = `650 12px ${texto}`;
+  ctx.fillText('SOFRIMENTO DUPLO · RANKING', MARGEM, MARGEM + 12);
   ctx.fillStyle = cor.tinta;
-  ctx.font = `600 24px ${serifa}`;
-  quebrar(ctx, tituloRanking(resultado), MARGEM, MARGEM + 58, LARGURA - 2 * MARGEM, 30);
+  ctx.font = `800 26px ${texto}`;
+  titulo.forEach((linha, i) => ctx.fillText(linha, MARGEM, yTitulo + i * 32));
   ctx.fillStyle = cor['tinta-2'];
   ctx.font = `400 14px ${texto}`;
   ctx.fillText(
-    `Derrotas esperadas (0 a 2) · P(Flávio vence) ${pct(params.pFlavio, casasPct(params.pFlavio))} · Gre-Nal: ${NOMES_MODO[params.resultadoJogo]}`,
+    `Derrotas esperadas (0 a 2) · Flávio ${pct(pf, casasPct(pf))} × Lula ${pct(1 - pf, casasPct(pf))} · risco de queda após o empate no Gre-Nal`,
     MARGEM,
-    MARGEM + 118,
+    ySub,
   );
 
   // Cabeçalho das colunas
   const x0 = MARGEM + COLUNA_NOME;
-  const xPior = LARGURA - MARGEM - COLUNA_DELTA;
-  const xDelta = LARGURA - MARGEM;
-  const largura = xPior - COLUNA_PIOR - ESPACO_VALOR - x0 + 40;
+  const xPior = LARGURA - MARGEM;
+  const largura = xPior - COLUNA_PIOR - ESPACO_VALOR - x0;
   const yCab = TOPO - 16;
   ctx.fillStyle = cor['tinta-2'];
   ctx.font = `600 11px ${texto}`;
@@ -70,10 +68,9 @@ export async function exportarRankingPng(resultado, params, base) {
   ctx.fillText('DERROTAS ESPERADAS', x0, yCab);
   ctx.textAlign = 'right';
   ctx.fillText('SOFRIMENTO DUPLO', xPior, yCab);
-  ctx.fillText('VS. PRÉ-JOGO', xDelta, yCab);
   ctx.textAlign = 'left';
   ctx.fillStyle = cor.tinta;
-  ctx.fillRect(MARGEM, yCab + 8, LARGURA - 2 * MARGEM, 1);
+  ctx.fillRect(MARGEM, yCab + 8, LARGURA - 2 * MARGEM, 2);
 
   const yFim = TOPO + linhas.length * ALTURA_LINHA;
   for (const t of [0, 0.25, 0.5, 0.75, 1]) {
@@ -118,12 +115,9 @@ export async function exportarRankingPng(resultado, params, base) {
     ctx.fillText(num(p.derrotasEsperadas), x0 + w1 + w2 + 8, yMeio + 5);
 
     ctx.textAlign = 'right';
-    ctx.font = `600 18px ${texto}`;
-    ctx.fillText(pct(p.quedaEDerrota), xPior, yMeio + 6);
-    const b = base?.perfis.find((x) => x.id === p.id);
-    ctx.fillStyle = cor['tinta-2'];
-    ctx.font = `400 13px ${texto}`;
-    ctx.fillText(b ? pp(p.quedaEDerrota - b.quedaEDerrota) : '—', xDelta, yMeio + 5);
+    ctx.fillStyle = p.posicao === 1 ? cor.acento : cor.tinta;
+    ctx.font = `850 22px ${texto}`;
+    ctx.fillText(pct(p.quedaEDerrota), xPior, yMeio + 8);
     ctx.textAlign = 'left';
 
     ctx.fillStyle = cor.grade;
@@ -150,11 +144,7 @@ export async function exportarRankingPng(resultado, params, base) {
   ctx.fillRect(MARGEM, yLegenda + 18, LARGURA - 2 * MARGEM, 1);
   ctx.fillStyle = cor.apagado;
   ctx.font = `400 11px ${texto}`;
-  ctx.fillText(
-    '1º trecho da barra: risco de o clube cair. 2º trecho: chance de o candidato perder. “vs. pré-jogo”: antes do Gre-Nal e sem o ajuste do Corinthians.',
-    MARGEM,
-    yLegenda + 36,
-  );
+  ctx.fillText('1º trecho da barra: risco de o clube cair. 2º trecho: chance de o candidato perder.', MARGEM, yLegenda + 36);
   ctx.fillText(
     `Fonte: ValorFinal; Datafolha; análise própria · Sofrimento Duplo · dados de ${dataBR(DEFAULTS.dataReferencia)} · estimativas, não previsões`,
     MARGEM,
@@ -162,30 +152,54 @@ export async function exportarRankingPng(resultado, params, base) {
   );
 
   const blob = await new Promise((ok) => canvas.toBlob(ok, 'image/png'));
+  await salvar(blob, 'ranking-sofrimento-duplo.png');
+}
+
+/**
+ * Dentro do visualizador de artefatos do claude.ai, o download passa pelo
+ * recurso "downloads" (o visitante confirma). Fora dele, usa um link comum.
+ */
+export async function downloadsDoVisualizador() {
+  return (await window.claude?.use?.('downloads')) ?? null;
+}
+
+async function salvar(blob, nome) {
+  if (window.claude?.use) {
+    const downloads = await downloadsDoVisualizador();
+    if (!downloads) return;
+    try {
+      await downloads.save({ filename: nome, data: blob });
+    } catch {
+      // Recusado pelo visitante ou indisponível: não há o que fazer.
+    }
+    return;
+  }
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'ranking-sofrimento-duplo.png';
+  link.download = nome;
   document.body.append(link);
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-/** Escreve texto quebrando linhas na largura dada. */
-function quebrar(ctx, texto, x, y, largura, entrelinha) {
+/** Quebra o texto em linhas que cabem na largura dada, com a fonte dada. */
+function quebrarLinhas(fonte, texto, largura) {
+  const ctx = document.createElement('canvas').getContext('2d');
+  ctx.font = fonte;
+  const linhas = [];
   let linha = '';
   for (const palavra of texto.split(' ')) {
     const teste = linha ? `${linha} ${palavra}` : palavra;
     if (ctx.measureText(teste).width > largura && linha) {
-      ctx.fillText(linha, x, y);
+      linhas.push(linha);
       linha = palavra;
-      y += entrelinha;
     } else {
       linha = teste;
     }
   }
-  ctx.fillText(linha, x, y);
+  return [...linhas, linha];
 }
 
 function retangulo(ctx, x, y, w, h, raio) {
