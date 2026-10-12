@@ -42,9 +42,22 @@
 
   const app = $('#app');
   document.body.insertAdjacentHTML('afterbegin', M.svg.texturas());
-  $('#quarto').innerHTML = M.cena.quarto();
-  $('#luzes').innerHTML = M.cena.luzes();
-  $('#primeiro-plano').innerHTML = M.cena.primeiroPlano();
+
+  // O quarto tem dois arranjos: em pé (celular, o principal) e deitado (tablet).
+  // Troca sozinho quando a tela gira.
+  const emPe = matchMedia('(orientation: portrait)');
+  function montarCena() {
+    const formato = emPe.matches ? 'retrato' : 'paisagem';
+    if (app.dataset.formato === formato) return;
+    app.dataset.formato = formato;
+    $('#quarto').innerHTML = M.cena.quarto(formato);
+    $('#luzes').innerHTML = M.cena.luzes(formato);
+    $('#primeiro-plano').innerHTML = M.cena.primeiroPlano(formato);
+  }
+  montarCena();
+  if (emPe.addEventListener) emPe.addEventListener('change', montarCena);
+  else if (emPe.addListener) emPe.addListener(montarCena);
+
   $('#almofada').innerHTML = M.cena.almofada();
   $('#papel').style.backgroundImage = `url(${M.cena.papel()})`;
   const lugar = $('#momon');
@@ -759,11 +772,23 @@
     const el = document.documentElement;
     const instalado = matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches || navigator.standalone;
     const pedir = el.requestFullscreen || el.webkitRequestFullscreen;
-    if (instalado || !pedir || document.fullscreenElement || !matchMedia('(pointer: coarse)').matches) return;
+    if (instalado) { travarEmPe(); return; }
+    if (!pedir || document.fullscreenElement || !matchMedia('(pointer: coarse)').matches) return;
     try {
       const p = pedir.call(el, { navigationUI: 'hide' });
-      if (p && p.catch) p.catch(() => {});
+      if (p && p.then) p.then(travarEmPe, () => {});
     } catch (e) { /* sem tela cheia */ }
+  }
+
+  // No celular a tela fica em pé, mesmo que a criança vire o aparelho (onde o navegador
+  // deixa: Android em tela cheia ou instalado). No tablet ela gira à vontade.
+  function travarEmPe() {
+    const celular = Math.min(screen.width, screen.height) < 600;
+    if (!celular || !screen.orientation || !screen.orientation.lock) return;
+    try {
+      const p = screen.orientation.lock('portrait');
+      if (p && p.catch) p.catch(() => {});
+    } catch (e) { /* sem trava: o quarto deitado também funciona */ }
   }
 
   // ------------------------------------------------ toques: tudo passa por aqui

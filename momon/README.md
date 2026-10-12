@@ -2,7 +2,7 @@
 
 Um amigo gatinho para crianças de 3 a 5 anos. O Momon é emburradinho, mas muito carinhoso: o carinho e a atenção vão deixando ele feliz e pertinho.
 
-É um app web estático (PWA), sem build e sem dependências. Funciona sem internet depois da primeira abertura, não tem anúncios, links externos nem coleta de dados, e não exige leitura: tudo é toque, som e animação.
+É um app web estático (PWA), sem build e sem dependências, feito primeiro para o **celular em pé**. Também funciona no tablet e com a tela deitada: o quarto tem um arranjo para cada jeito e troca sozinho quando a tela gira. Funciona sem internet depois da primeira abertura, não tem anúncios, links externos nem coleta de dados, e não exige leitura: tudo é toque, som e animação.
 
 ## Rodar
 
@@ -23,7 +23,7 @@ npx serve momon
 - **Android (Chrome):** abra o endereço, toque no menu ⋮ e escolha **Instalar app** (ou **Adicionar à tela inicial**).
 - **iPad / iPhone (Safari):** toque em **Compartilhar** e escolha **Adicionar à Tela de Início**.
 
-Depois de aberto uma vez com internet, ele funciona offline e em tela cheia. Precisa de iOS/iPadOS 15 ou mais novo, ou de um Android com o Chrome atualizado.
+Depois de aberto uma vez com internet, ele funciona offline e em tela cheia. No celular Android a tela fica sempre em pé, mesmo que a criança vire o aparelho; no iPhone isso depende do bloqueio de rotação do próprio aparelho. Precisa de iOS/iPadOS 15 ou mais novo, ou de um Android com o Chrome atualizado.
 
 ## Como brincar (para os adultos)
 
@@ -48,7 +48,7 @@ Nada sai do aparelho. O app guarda no próprio navegador (`localStorage`) só se
 | `app.js` | Os modos (início, livre, amassar, dormir), o carinho, o jeito emburrado → feliz, as partículas e as dicas. |
 | `assets/momon.svg.js` | O desenho do Momon: 16 partes em `<g id>` separados, pelo, luz de abajur e luar, as poses sentado e enroscado e as cobertas (colcha de retalhos de chita e cobertinha de tricô). |
 | `assets/momon.css` | Os humores (`data-humor`), as poses (`data-pose`), a respiração e o rabo. |
-| `assets/cena.svg.js` | O cantinho dele, à noite: parede com barrado, chão de lajota, tapete de crochê, janela de veneziana com os telhados e a lua, abajur de franja, samambaia no macramê, desenho de criança, cesto de novelos, folhas na frente, almofada de chita e a textura de papel. |
+| `assets/cena.svg.js` | O cantinho dele, à noite, em dois arranjos (em pé e deitado): parede com barrado, chão de lajota, tapete de crochê, janela de veneziana com os telhados e a lua, abajur de franja, samambaia no macramê, desenho de criança, cesto de novelos, adesivos que brilham no escuro, almofada de chita e a textura de papel. |
 | `assets/icones.svg.js` | Botões de feltro com pesponto, partículas (flor de chita, estrela e coração de feltro, vaga-lume, Z), patinha, mãozinha e o ovinho. |
 | `audio/sons.js` | Miadinho, "mrrp", sininhos, amassada, bocejo, pop e vento, todos em Web Audio. |
 | `audio/purr.js` | O ronronar e o ronco de sono. |
@@ -68,6 +68,6 @@ São para quem for mexer no código e precisam de Node:
 cd momon/testes
 npm install
 npx playwright install chromium
-npm test                 # fluxo completo (tablet e celular), "criança apertando tudo" e PWA
+npm test                 # fluxo completo (três celulares e um tablet), "criança apertando tudo" e PWA
 FOTOS=1 node fluxo.cjs   # guarda uma foto de cada etapa em testes/fotos/
 ```

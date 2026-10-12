@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const { servir, checagens } = require('./servidor.cjs');
 
-const TAMANHOS = process.argv[3] ? [[+process.argv[2], +process.argv[3]]] : [[1024, 768], [390, 844]];
+const TAMANHOS = process.argv[3] ? [[+process.argv[2], +process.argv[3]]] : [[390, 844], [360, 800], [375, 667], [1024, 768]];
 const PASTA_FOTOS = path.join(__dirname, 'fotos');
 
 async function rodar(browser, url, [L, A], c) {

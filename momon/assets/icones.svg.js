@@ -191,26 +191,30 @@
   }
 
   // Ovinho de estrela: casca de baixo, casca de cima (que sai voando) e o brilho.
+  // Fosco, como cerâmica pintada, com estrelinhas de feltro costuradas.
   function ovo() {
     const id = novoId('ovo');
     const CASCA = 'M50 4C74 4 92 40 92 70C92 98 74 118 50 118C26 118 8 98 8 70C8 40 26 4 50 4Z';
     const RACHADO = 'M8 64L22 56L32 68L44 54L56 68L66 54L78 66L92 58';
-    const estrelinhas = [[34, 40, 6], [62, 30, 5], [70, 62, 7], [30, 82, 5], [52, 96, 6], [48, 58, 4]]
-      .map(([x, y, r]) => `<path d="${estrela(x, y, r, r * .45)}" fill="#FFD66B" stroke="#FFD66B" stroke-linejoin="round"/>`).join('');
-    const corpo = `<path d="${CASCA}" fill="url(#${id}-casca)"/>${estrelinhas}<path d="${CASCA}" fill="url(#${id}-luz)"/>`;
+    const estrelinhas = [[34, 40, 7], [63, 29, 6], [71, 63, 8], [29, 84, 6], [53, 98, 7], [48, 60, 5]]
+      .map(([x, y, r]) => `<path d="${estrela(x, y + 1.2, r, r * .48)}" fill="#8E5A1A" opacity=".25"/>` +
+        `<path d="${estrela(x, y, r, r * .48)}" fill="#E9AE3C" stroke="#E9AE3C" stroke-width="1.6" stroke-linejoin="round"/>` +
+        `<path d="${estrela(x, y, r * .62, r * .3)}" fill="none" stroke="#FFF1C9" stroke-width=".9" stroke-dasharray="1.6 1.3" opacity=".9"/>`).join('');
+    const corpo = `<path d="${CASCA}" fill="url(#${id}-casca)"/>` +
+      `<path d="${CASCA}" fill="url(#momon-grao)" opacity=".18"/>${estrelinhas}<path d="${CASCA}" fill="url(#${id}-luz)"/>`;
     return `<svg class="ovo-svg" viewBox="-10 -20 120 150" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">` +
       `<defs>` +
-        `<radialGradient id="${id}-casca" cx=".4" cy=".35" r=".8">${paradas([[0, '#FFFFFF'], [.55, '#FFF5E6'], [1, '#F2DCC4']])}</radialGradient>` +
-        `<radialGradient id="${id}-luz" cx=".42" cy=".34" r=".74" fx=".34" fy=".2">${paradas([[0, '#fff', .5], [.4, '#fff', 0], [.85, '#9C6E5A', .16], [1, '#9C6E5A', .24]])}</radialGradient>` +
-        `<radialGradient id="${id}-aura">${paradas([[0, '#FFF3B0', .7], [1, '#FFF3B0', 0]])}</radialGradient>` +
+        `<radialGradient id="${id}-casca" cx=".4" cy=".34" r=".8">${paradas([[0, '#FFFEF8'], [.5, '#FBF1E2'], [1, '#EBD6BA']])}</radialGradient>` +
+        `<radialGradient id="${id}-luz" cx=".36" cy=".3" r=".8">${paradas([[0, '#FFF0C8', .35], [.45, '#FFF0C8', 0], [.84, '#7A4A34', .08], [1, '#7A4A34', .22]])}</radialGradient>` +
+        `<radialGradient id="${id}-aura">${paradas([[0, '#FFE9A8', .6], [1, '#FFE9A8', 0]])}</radialGradient>` +
         `<clipPath id="${id}-baixo"><path d="${RACHADO}L92 130L8 130Z"/></clipPath>` +
         `<clipPath id="${id}-cima"><path d="${RACHADO}L92 -20L8 -20Z"/></clipPath>` +
       `</defs>` +
       `<ellipse class="ovo-aura" cx="50" cy="66" rx="62" ry="70" fill="url(#${id}-aura)"/>` +
-      `<ellipse cx="50" cy="122" rx="40" ry="7" fill="#3E2A36" opacity=".25"/>` +
+      `<ellipse cx="50" cy="121" rx="38" ry="6" fill="#2A1420" opacity=".3"/>` +
       `<g class="ovo-baixo" clip-path="url(#${id}-baixo)">${corpo}</g>` +
       `<g class="ovo-cima"><g clip-path="url(#${id}-cima)">${corpo}</g></g>` +
-      `<path class="ovo-rachado" d="${RACHADO}" fill="none" stroke="#B88A6E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>` +
+      `<path class="ovo-rachado" d="${RACHADO}" fill="none" stroke="#9C6E52" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>` +
     `</svg>`;
   }
 

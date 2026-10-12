@@ -135,6 +135,11 @@ body {
 @supports (height: 1dvh) {
   .palco { width: min(84vw, 55dvh); bottom: calc(5dvh + var(--seguro-baixo)); }
 }
+/* celular em pé: o Momon senta logo acima dos botões, que ficam no tapete, ao alcance
+   do polegar e sem cobrir as patinhas dele */
+@media (orientation: portrait) and (max-aspect-ratio: 2/3) {
+  .palco { bottom: calc(var(--botao) + var(--margem) + var(--seguro-baixo)); }
+}
 .palco > * { position: absolute; }
 .momon-lugar { inset: 0; }
 /* a almofada usa as mesmas coordenadas do Momon (viewBox -40 300 480 170) */

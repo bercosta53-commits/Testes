@@ -11,7 +11,7 @@ const BOTOES = ['#bt-coberta', '#bt-dormir', '[data-melodia="0"]', '[data-melodi
   const servidor = await servir();
   const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
   const c = checagens();
-  for (const [L, A] of [[1024, 768], [390, 844]]) {
+  for (const [L, A] of [[390, 844], [360, 800], [1024, 768]]) {
     const page = await browser.newPage({ viewport: { width: L, height: A }, hasTouch: true });
     const erros = [];
     page.on('pageerror', e => erros.push(e.message));

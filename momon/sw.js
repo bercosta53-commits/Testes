@@ -3,7 +3,7 @@
  * Ao mudar qualquer arquivo do app, aumente VERSAO: o navegador baixa tudo de
  * novo na próxima visita com internet e apaga a versão antiga.
  */
-const VERSAO = 'momon-v3';
+const VERSAO = 'momon-v4';
 
 const ARQUIVOS = [
   './',
