@@ -1045,7 +1045,7 @@ input[type='range']::-moz-range-thumb {
   gap: 40px;
 }
 
-@media (min-width: 980px) {
+@media (min-width: 900px) {
   .cruzamentos {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     gap: 48px;
@@ -1342,6 +1342,134 @@ details[open] .titulo-anexo::after {
 .rodape .nota {
   margin-top: 12px;
   font-size: 0.8125rem;
+}
+
+/* --- Impressão / PDF --------------------------------------------------- */
+
+.premissas-impressas {
+  display: none;
+}
+
+@page {
+  size: A4;
+  margin: 14mm 12mm 16mm;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* No papel, a metodologia e as fontes sobem para a página 1, abaixo do mapa. */
+  .pagina {
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    padding: 0;
+  }
+
+  .rodape {
+    order: 1;
+  }
+
+  .bloco {
+    order: 2;
+  }
+
+  .botao-texto,
+  .controles,
+  #exportar,
+  .dica {
+    display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+
+  .premissas-impressas {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 16px 20px;
+    border-radius: var(--raio);
+    background: var(--painel);
+  }
+
+  .premissas-impressas dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .premissas-impressas dt {
+    font-size: 0.8125rem;
+    color: var(--tinta-2);
+  }
+
+  .premissas-impressas dd {
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+
+  .premissas-impressas .nota {
+    max-width: none;
+    font-size: 0.75rem;
+  }
+
+  .mapa-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .destaque,
+  .bloco,
+  .cartao-lider,
+  .matriz,
+  .empilhada-linha,
+  .rodape > div {
+    break-inside: avoid;
+  }
+
+  .bloco-ranking {
+    break-before: page;
+  }
+
+  .destaque,
+  .bloco {
+    margin-bottom: 40px;
+  }
+
+  .anexo {
+    margin-bottom: 24px;
+  }
+
+  .titulo-anexo {
+    font-size: 1.125rem;
+    font-weight: 800;
+  }
+
+  details[open] .titulo-anexo::after,
+  .titulo-anexo::after {
+    content: none;
+  }
+
+  .tabela-dados {
+    margin-top: 8px;
+  }
+
+  .tabela-dados th,
+  .tabela-dados td {
+    padding-block: 5px;
+  }
+
+  .rodape {
+    margin-top: 0;
+    padding-top: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

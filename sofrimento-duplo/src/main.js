@@ -102,6 +102,9 @@ function atualizar() {
 
   status.textContent = '';
   marcarDesatualizado(false);
+  $('imp-eleicao').textContent = `Flávio ${pct(pf, casas)} × Lula ${pct(1 - pf, casas)}`;
+  $('imp-risco').textContent =
+    `Grêmio ${pct(estado.riscoRebaixamento.gremio, 1)} · Inter ${pct(estado.riscoRebaixamento.inter, 1)}`;
   ultimo = calcPerfis(estado);
   renderizar(ultimo);
   atualizarDica();
@@ -148,6 +151,31 @@ function ligarTema() {
   // O visualizador pode trocar o tema por fora, mudando o atributo data-theme.
   new MutationObserver(redesenhar).observe(document.documentElement, { attributeFilter: ['data-theme'] });
 }
+
+// --- Impressão ---------------------------------------------------------------
+
+/** Para imprimir (ou salvar como PDF): tema claro e tabela do anexo aberta. */
+export function prepararImpressao() {
+  const raiz = document.documentElement;
+  const tabela = document.querySelector('.anexo details');
+  const antes = { tema: raiz.dataset.theme, aberta: tabela.open };
+  raiz.dataset.theme = 'light';
+  tabela.open = true;
+  return () => {
+    if (antes.tema) raiz.dataset.theme = antes.tema;
+    else delete raiz.dataset.theme;
+    tabela.open = antes.aberta;
+  };
+}
+
+let desfazerImpressao = null;
+window.addEventListener('beforeprint', () => {
+  desfazerImpressao = prepararImpressao();
+});
+window.addEventListener('afterprint', () => {
+  desfazerImpressao?.();
+  desfazerImpressao = null;
+});
 
 // --- Início ------------------------------------------------------------------
 

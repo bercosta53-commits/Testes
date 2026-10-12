@@ -16,6 +16,12 @@ npm run build     # gera dist/, que pode ser servido de qualquer pasta
 npm run preview   # serve o build
 ```
 
+## PDF
+
+[`sofrimento-duplo.pdf`](sofrimento-duplo.pdf) traz o estudo em 2 páginas A4, com as premissas padrão. A página tem estilos próprios para impressão: os controles viram um resumo das premissas, a tabela do anexo aparece aberta, o tema fica claro e a metodologia sobe para a página 1.
+
+Para gerar de novo com outras premissas, abra a página no Chrome, ajuste os valores e use Imprimir → Salvar como PDF, com papel A4, escala 75% e gráficos de fundo ativados.
+
 ## O que a página mostra
 
 1. **Premissas**, numa barra no topo: a chance de vitória de cada candidato e o risco de queda de cada clube. Mudar qualquer valor recalcula tudo na hora.
