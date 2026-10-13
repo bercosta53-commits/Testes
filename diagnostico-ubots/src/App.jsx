@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Artigo from "./pages/Artigo";
 import Diagnostico from "./pages/Diagnostico";
 import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
 import Painel from "./pages/Painel";
 
 /** A cada troca de rota: volta ao topo e move o foco para o início da página (acessibilidade). */
@@ -26,6 +27,7 @@ export default function App() {
       <RestauraNavegacao />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/lp" element={<LandingPage />} />
         <Route path="/artigo" element={<Artigo />} />
         <Route path="/diagnostico" element={<Diagnostico />} />
         <Route path="/painel" element={<Painel />} />
