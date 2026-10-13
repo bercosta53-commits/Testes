@@ -55,7 +55,9 @@ export default function Fluxo({
     }
     reenviarPendentes();
     emitir("visualizado", { origem: utmContent ?? null });
-  }, [utmContent]);
+    // Quando a primeira resposta veio do card da LP, o fluxo já começou.
+    if (etapaInicial === "quiz" && respostasIniciais?.tipo) emitir("iniciado", { origem: utmContent ?? null });
+  }, [utmContent, etapaInicial]);
 
   const rolarParaOTopo = useCallback(() => {
     const comportamento = reduzido ? "auto" : "smooth";
