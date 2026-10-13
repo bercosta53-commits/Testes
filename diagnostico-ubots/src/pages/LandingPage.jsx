@@ -1,74 +1,176 @@
-import { ArrowRight, Check, ChevronRight, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BarChart3, Check, ClipboardCheck, Clock3, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
+import { perguntas } from "../lib/dados";
 import { usePageTitle } from "../lib/util";
 
-const fotoEquipe = "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1400&q=85";
-const fotoConversa = "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1300&q=85";
-const botao = "inline-flex min-h-[52px] items-center justify-center gap-3 rounded-full bg-[#FFC800] px-7 py-3 font-semibold text-[#141414] transition hover:bg-[#f0bc00] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-[#141414]";
-const container = "mx-auto w-full max-w-6xl px-5 sm:px-8";
-const titulo = "font-bold leading-[1.12] tracking-[-0.035em] text-[clamp(2rem,4vw,3.6rem)]";
+const urlDiagnostico = "/diagnostico?utm_content=lp-direto";
+const fotoEquipe = "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=85";
 
-function Cta({ children = "Fazer meu diagnóstico gratuito" }) {
-  return <Link to="/diagnostico?utm_content=lp-humanizada" className={botao}>{children}<ArrowRight size={19} aria-hidden="true"/></Link>;
+const beneficios = [
+  {
+    icon: BarChart3,
+    nome: "Capacidade e potencial",
+    descricao: "Renegociações por mês, prazo da carteira e projeção de valor negociado.",
+  },
+  {
+    icon: ClipboardCheck,
+    nome: "Prontidão para IA",
+    descricao: "Sua operação avaliada em 5 dimensões, com pontos de atenção.",
+  },
+  {
+    icon: Sparkles,
+    nome: "Próximos passos",
+    descricao: "O que priorizar para preparar a base, testar ou escalar.",
+  },
+];
+
+function LinkParaPergunta({ opcao }) {
+  const destino = "/diagnostico?tipo=" + encodeURIComponent(opcao.value) + "&utm_content=lp-inicio";
+  return (
+    <Link
+      to={destino}
+      className="group flex min-h-[58px] items-center justify-between gap-3 rounded-xl border border-[#E8E5DB] bg-white px-4 py-3 text-left text-[15px] font-semibold leading-snug text-[#242424] transition-colors duration-150 hover:border-[#141414] hover:bg-[#FFF8DF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#141414]"
+    >
+      <span>{opcao.label}</span>
+      <span aria-hidden="true" className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#DEDACF] transition-colors group-hover:border-[#141414] group-hover:bg-[#FFC800]">
+        <ArrowRight size={15} />
+      </span>
+    </Link>
+  );
 }
+
 export default function LandingPage() {
   usePageTitle("Diagnóstico de recuperação de crédito com IA | Ubots");
-  return <div className="bg-[#FFFBEF] text-[#141414]">
-    <header className={container + " flex items-center justify-between gap-4 py-6"}>
-      <Logo />
-      <a href="#como-funciona" className="hidden text-sm font-semibold underline underline-offset-4 sm:inline">Como funciona</a>
-      <Link to="/diagnostico?utm_content=lp-header" className="rounded-full border border-[#141414] px-4 py-2 text-sm font-semibold hover:bg-white">Iniciar diagnóstico</Link>
-    </header>
-    <main>
-      <section className={container + " grid items-center gap-10 pb-16 pt-10 lg:grid-cols-[1.05fr_.95fr] lg:pb-24 lg:pt-16"}>
-        <div>
-          <p className="mb-5 text-xs font-bold uppercase tracking-[.14em] text-[#6B6558]">Recuperação de crédito com inteligência artificial</p>
-          <h1 className={titulo + " max-w-[680px]"}>Sua carteira em atraso não espera. <span className="bg-[linear-gradient(transparent_66%,#FFC800_66%)]">Sua equipe não consegue estar em todas as negociações.</span></h1>
-          <p className="mt-7 max-w-[590px] text-lg leading-[1.7] text-[#474238]">Recuperar crédito exige mais do que disparar mensagens. Exige entender a realidade de cada pessoa, negociar dentro de regras claras e ter tempo para acompanhar cada conversa.</p>
-          <p className="mt-3 max-w-[590px] text-lg leading-[1.7] text-[#474238]">Descubra como a IA pode ampliar a capacidade da sua operação — e o que precisa estar preparado antes de começar.</p>
-          <div className="mt-8"><Cta /></div>
-          <p className="mt-4 text-sm text-[#6B6558]">10 perguntas · Cerca de 2 minutos · Resultado personalizado</p>
+
+  return (
+    <div className="min-h-screen bg-[#FFFBEF] text-[#141414]">
+      <header className="border-b border-[#EEE7D6] bg-[#FFFBEF]">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-4 sm:px-8 sm:py-5">
+          <Logo />
+          <div className="flex items-center gap-5">
+            <a href="#o-que-voce-recebe" className="hidden text-sm font-semibold text-[#605B52] hover:text-[#141414] sm:block">O que você recebe</a>
+            <a href="#iniciar" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[#141414] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#383838] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#141414]">
+              Começar <ArrowRight size={15} aria-hidden="true" />
+            </a>
+          </div>
         </div>
-        <figure className="relative overflow-hidden rounded-[28px] bg-[#E7E0D0]">
-          <img src={fotoEquipe} alt="Profissionais colaborando em um ambiente de trabalho" className="h-[340px] w-full object-cover sm:h-[440px] lg:h-[520px]" fetchPriority="high"/>
-          <figcaption className="absolute bottom-3 left-3 right-3 rounded-xl bg-white/95 px-4 py-3 text-xs text-[#514C42] shadow-sm">Mais capacidade para negociar, sem perder de vista as pessoas. Fotografia ilustrativa.</figcaption>
-        </figure>
-      </section>
-      <section className="bg-white py-20 sm:py-24">
-        <div className={container + " grid gap-9 md:grid-cols-[.8fr_1.2fr] md:gap-20"}>
-          <div><p className="mb-4 text-xs font-bold uppercase tracking-[.14em] text-[#6B6558]">A realidade da operação</p><h2 className={titulo}>Por trás de cada contrato em atraso, existe uma conversa que ainda precisa acontecer.</h2></div>
-          <div className="space-y-5 text-lg leading-[1.75] text-[#474238]"><p>A equipe liga, envia mensagens, consulta sistemas, verifica condições e solicita aprovações. Enquanto isso, novas pendências entram na carteira.</p><p>Nem todo contato se transforma em acordo — e nem todo acordo se sustenta. A questão não é pressionar mais pessoas; é conseguir conversar melhor, com consistência e no momento certo.</p><p className="border-l-4 border-[#FFC800] pl-5 font-semibold text-[#141414]">E se a tecnologia cuidasse das etapas repetitivas para que sua equipe pudesse se concentrar nas negociações que realmente exigem uma pessoa?</p></div>
-        </div>
-      </section>
-      <section className={container + " py-20 sm:py-24"}>
-        <div className="max-w-3xl"><p className="mb-4 text-xs font-bold uppercase tracking-[.14em] text-[#6B6558]">Tecnologia + pessoas</p><h2 className={titulo}>IA não substitui a relação. Ajuda a dar escala a ela.</h2><p className="mt-6 text-lg leading-[1.7] text-[#474238]">Com regras de negociação definidas, acesso às informações necessárias e autorização para contato, um agente de IA pode iniciar conversas pelo WhatsApp, entender a capacidade de pagamento, apresentar alternativas compatíveis com a política da instituição e transferir exceções para um analista com o histórico organizado.</p></div>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {[
-            ["01","Iniciar conversas","Abordar carteiras elegíveis pelo canal autorizado, de forma consistente."],
-            ["02","Negociar com contexto","Apresentar condições dentro das regras e da capacidade de pagamento."],
-            ["03","Envolver especialistas","Direcionar situações complexas para quem precisa decidir, com histórico."],
-          ].map(([n,t,d])=><div key={n} className="rounded-2xl border border-[#ECE4CF] bg-white p-7"><span className="text-sm font-bold text-[#947000]">{n}</span><h3 className="mt-5 text-xl font-bold">{t}</h3><p className="mt-3 leading-relaxed text-[#6B6558]">{d}</p></div>)}
-        </div>
-      </section>
-      <section className="bg-[#141414] py-20 text-white sm:py-24">
-        <div className={container + " grid items-center gap-10 md:grid-cols-2 md:gap-16"}>
-          <figure className="overflow-hidden rounded-[26px]"><img src={fotoConversa} alt="Pessoas em um ambiente de atendimento e conversa profissional" loading="lazy" className="h-[310px] w-full object-cover sm:h-[470px]"/><figcaption className="p-3 text-xs text-white/65">Imagem editorial ilustrativa, não um registro da operação Crediauc.</figcaption></figure>
-          <div><p className="mb-4 text-xs font-bold uppercase tracking-[.14em] text-[#FFC800]">Na prática · Sicoob Crediauc</p><h2 className={titulo}>Mais conversas com inteligência. Mais atenção aos casos complexos.</h2><p className="mt-6 text-lg leading-[1.7] text-white/80">Na campanha Desenrola Brasil, a Crediauc utilizou um agente de IA da Ubots para apoiar negociações pelo WhatsApp. Com acompanhamento de um colaborador, foram renegociados:</p><div className="mt-7 flex flex-wrap gap-x-9 gap-y-5"><div><p className="text-4xl font-bold text-[#FFC800]">R$ 23,4 mil</p><p className="mt-2 text-sm text-white/70">Valor renegociado</p></div><div><p className="text-4xl font-bold text-[#FFC800]">6 contratos</p><p className="mt-2 text-sm text-white/70">Em cinco dias de campanha</p></div></div><p className="mt-7 text-sm leading-relaxed text-white/65">Resultado específico observado no case. Não representa garantia ou previsão de desempenho para outras instituições.</p></div>
-        </div>
-      </section>
-      <section id="como-funciona" className={container + " py-20 sm:py-24"}>
-        <div className="max-w-3xl"><p className="mb-4 text-xs font-bold uppercase tracking-[.14em] text-[#6B6558]">Seu diagnóstico</p><h2 className={titulo}>E na sua instituição? O que faz sentido automatizar primeiro?</h2><p className="mt-6 text-lg leading-[1.7] text-[#474238]">Responda dez perguntas simples sobre a carteira, a equipe, o ritmo dos acordos e as condições para iniciar a operação com IA. Receba uma análise aplicada à sua realidade — com limites claros e prioridades práticas.</p></div>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {[["Capacidade e potencial","Compare renegociações por mês, tempo para percorrer a carteira e valor renegociado estimado no primeiro mês."],["Prontidão em cinco dimensões","Avalie régua de cobrança, canais, política de negociação, acesso aos dados e consentimento/LGPD."],["Próximos passos personalizados","Descubra a prioridade da sua instituição: preparar a base, estruturar um piloto ou ampliar a operação."]].map(([a,b])=><article key={a} className="rounded-2xl border border-[#ECE4CF] bg-white p-7"><div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFF4C7]"><Check size={20}/></div><h3 className="text-xl font-bold">{a}</h3><p className="mt-3 leading-relaxed text-[#6B6558]">{b}</p></article>)}
-        </div>
-        <div className="mt-10"><Cta>Descobrir minha capacidade de recuperação</Cta><p className="mt-3 text-sm text-[#6B6558]">Gratuito · Estimativas, não garantias</p></div>
-      </section>
-      <section className="border-y border-[#ECE4CF] bg-white py-20">
-        <div className={container}><h2 className="text-[clamp(1.8rem,3vw,2.7rem)] font-bold tracking-tight">Dois minutos para entender por onde começar.</h2><div className="mt-9 grid gap-7 md:grid-cols-3">{[["1","Conte como sua equipe negocia hoje."],["2","Mostre como funcionam as condições, os canais e os dados."],["3","Veja sua análise completa e decida os próximos passos."]].map(([n,t])=><div key={n} className="flex gap-4"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFC800] font-bold">{n}</span><p className="pt-2 font-semibold leading-relaxed">{t}</p></div>)}</div><p className="mt-8 flex items-start gap-2 text-sm text-[#6B6558]"><ShieldCheck size={18} className="shrink-0"/>Antes de ver o resultado, solicitamos dados profissionais de contato e autorização para que a Ubots possa dar continuidade à conversa.</p></div>
-      </section>
-      <section className={container + " py-20 text-center sm:py-24"}><p className="mx-auto mb-4 text-xs font-bold uppercase tracking-[.14em] text-[#6B6558]">Próximo passo</p><h2 className={titulo + " mx-auto max-w-3xl"}>A próxima conversa sobre recuperação de crédito pode começar com um diagnóstico melhor.</h2><p className="mx-auto mt-6 max-w-2xl text-lg leading-[1.7] text-[#474238]">Nem toda operação está no mesmo momento. Descubra o que faz sentido para a sua instituição, com números estimados e prioridades práticas.</p><div className="mt-8 flex flex-wrap items-center justify-center gap-5"><Cta/><a href="https://ubots.com.br/" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">Entender a solução Ubots <ChevronRight size={16} className="inline"/></a></div></section>
-    </main>
-    <footer className={container + " flex flex-wrap items-center justify-between gap-3 border-t border-[#ECE4CF] py-7"}><Logo/><p className="text-xs leading-relaxed text-[#6B6558]">Estimativas ilustrativas baseadas nas respostas. Valor renegociado não é valor recebido.</p></footer>
-  </div>;
+      </header>
+
+      <main>
+        <section className="mx-auto grid w-full max-w-6xl items-start gap-9 px-5 pb-12 pt-9 sm:px-8 sm:pb-16 sm:pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(390px,0.9fr)] lg:items-center lg:gap-16 lg:pb-20 lg:pt-16">
+          <div className="max-w-[590px]">
+            <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[.11em] text-[#615B4F]">
+              <span className="h-2 w-2 rounded-full bg-[#FFC800]" aria-hidden="true" />
+              Diagnóstico gratuito de recuperação de crédito
+            </p>
+            <h1 className="max-w-xl text-[clamp(2.1rem,4.1vw,3.5rem)] font-bold leading-[1.13] tracking-[-.042em] [text-wrap:balance]">
+              Sua operação está pronta para <span className="bg-[linear-gradient(transparent_65%,#FFC800_65%,#FFC800_88%,transparent_88%)]">negociar mais com IA?</span>
+            </h1>
+            <p className="mt-5 max-w-[510px] text-[16px] leading-[1.65] text-[#555047] sm:text-[18px]">
+              Descubra o potencial da sua carteira, os gargalos da operação e por onde começar. Um diagnóstico feito para a realidade da sua instituição.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-[#49453E]">
+              <span className="inline-flex items-center gap-2"><Check size={16} strokeWidth={3} className="text-[#987300]"/> Potencial estimado</span>
+              <span className="inline-flex items-center gap-2"><Check size={16} strokeWidth={3} className="text-[#987300]"/> Prontidão para IA</span>
+              <span className="inline-flex items-center gap-2"><Check size={16} strokeWidth={3} className="text-[#987300]"/> Plano de ação</span>
+            </div>
+            <div className="mt-7 flex items-center gap-2 text-sm text-[#6B6558]">
+              <Clock3 size={17} aria-hidden="true"/> 10 perguntas · Cerca de 2 minutos · Sem custo
+            </div>
+          </div>
+
+          <section id="iniciar" aria-labelledby="inicio-titulo" className="scroll-mt-5 overflow-hidden rounded-[22px] border border-[#E5DDC9] bg-white shadow-[0_18px_55px_-28px_rgba(20,20,20,.25)]">
+            <div className="flex items-center justify-between gap-3 border-b border-[#EEEAE0] bg-[#FFF7DA] px-5 py-4 sm:px-6">
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-[#514736]">Seu diagnóstico começa aqui</span>
+              <span className="rounded-full bg-[#141414] px-3 py-1 text-xs font-bold text-white">01 / 10</span>
+            </div>
+            <div className="px-5 pb-6 pt-6 sm:px-6 sm:pb-7">
+              <div className="mb-5 flex gap-1" aria-hidden="true">
+                {Array.from({ length: 10 }, (_, i) => <span key={i} className={"h-1.5 flex-1 rounded-full " + (i === 0 ? "bg-[#141414]" : "bg-[#EFEDE5]")} />)}
+              </div>
+              <h2 id="inicio-titulo" className="max-w-[360px] text-[22px] font-bold leading-tight tracking-[-.025em] sm:text-2xl">
+                Para começar, qual instituição você representa?
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-[#6B6558]">Escolha uma opção para iniciar o diagnóstico.</p>
+              <div className="mt-5 grid gap-2.5">
+                {perguntas[0].opcoes.map((opcao) => <LinkParaPergunta key={opcao.value} opcao={opcao} />)}
+              </div>
+              <p className="mt-5 flex items-center gap-2 border-t border-[#F0EDE6] pt-4 text-xs text-[#736E64]">
+                <ShieldCheck size={15} aria-hidden="true" /> Respostas usadas para personalizar sua análise.
+              </p>
+            </div>
+          </section>
+        </section>
+
+        <section id="o-que-voce-recebe" className="scroll-mt-5 border-y border-[#EEEAE0] bg-white py-12 sm:py-14">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="mb-2 text-xs font-bold uppercase tracking-[.11em] text-[#857B64]">O resultado</p>
+                <h2 className="text-[clamp(1.65rem,3vw,2.3rem)] font-bold leading-tight tracking-[-.025em]">O que você vai descobrir</h2>
+              </div>
+              <span className="text-sm text-[#736E64]">Uma análise prática, não apenas uma pontuação.</span>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {beneficios.map(({ icon: Icon, nome, descricao }) => (
+                <article key={nome} className="flex gap-4 rounded-2xl border border-[#EDE9DE] bg-[#FFFEFA] p-5 sm:p-6">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#FFF1B7]"><Icon size={20} aria-hidden="true"/></span>
+                  <div>
+                    <h3 className="text-base font-bold leading-snug">{nome}</h3>
+                    <p className="mt-1.5 text-sm leading-[1.6] text-[#635E55]">{descricao}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-14 sm:px-8 sm:py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
+          <figure className="overflow-hidden rounded-[20px] bg-[#EAE5DB]">
+            <img src={fotoEquipe} alt="Profissionais colaborando em uma mesa de trabalho" loading="lazy" className="h-[220px] w-full object-cover sm:h-[270px]" />
+            <figcaption className="px-3 py-2 text-xs text-[#6B6558]">Imagem ilustrativa · Tecnologia a serviço de conversas mais humanas.</figcaption>
+          </figure>
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[.11em] text-[#756C59]">Aplicação real · Sicoob Crediauc</p>
+            <h2 className="max-w-lg text-[clamp(1.65rem,2.8vw,2.2rem)] font-bold leading-tight tracking-[-.025em]">
+              IA no apoio à equipe. Pessoas no centro da negociação.
+            </h2>
+            <p className="mt-3 max-w-lg text-[15px] leading-[1.7] text-[#5C564C]">
+              Na campanha Desenrola Brasil, um agente da Ubots apoiou negociações pelo WhatsApp, com acompanhamento humano.
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="rounded-xl border border-[#E9E1CF] bg-white p-4">
+                <p className="text-[clamp(1.4rem,2.6vw,2rem)] font-bold tracking-tight">R$ 23,4 mil</p>
+                <p className="mt-1 text-xs text-[#635E55]">Renegociados em 5 dias</p>
+              </div>
+              <div className="rounded-xl border border-[#E9E1CF] bg-white p-4">
+                <p className="text-[clamp(1.4rem,2.6vw,2rem)] font-bold tracking-tight">6 contratos</p>
+                <p className="mt-1 text-xs text-[#635E55]">Na campanha acompanhada</p>
+              </div>
+            </div>
+            <p className="mt-3 text-xs leading-relaxed text-[#817B70]">Resultado de um caso específico; não representa garantia para outras instituições.</p>
+          </div>
+        </section>
+
+        <section className="bg-[#141414] py-11 text-white sm:py-12">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-10">
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-[.12em] text-[#FFC800]">Próximo passo</p>
+              <h2 className="max-w-xl text-2xl font-bold leading-tight tracking-[-.025em] sm:text-[28px]">Seu diagnóstico começa com uma resposta.</h2>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">Entenda a capacidade da sua operação e o caminho para avançar.</p>
+            </div>
+            <a href="#iniciar" className="inline-flex min-h-[50px] shrink-0 items-center justify-center gap-2 self-start rounded-full bg-[#FFC800] px-6 py-3 text-sm font-bold text-[#141414] transition hover:bg-[#FFDF5F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+              Iniciar diagnóstico <ArrowRight size={17} aria-hidden="true"/>
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-6 text-xs leading-relaxed text-[#79736A] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <Logo />
+        <p>Estimativas, não promessas de resultado. Valor renegociado não equivale a valor recebido.</p>
+      </footer>
+    </div>
+  );
 }
