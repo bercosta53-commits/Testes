@@ -26,7 +26,8 @@ export default function App() {
     <>
       <RestauraNavegacao />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/prototipo" element={<Home />} />
         <Route path="/lp" element={<LandingPage />} />
         <Route path="/artigo" element={<Artigo />} />
         <Route path="/diagnostico" element={<Diagnostico />} />
