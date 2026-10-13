@@ -210,11 +210,12 @@ export default function Fluxo({
           <main className="dg-entra grid gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-8 lg:items-start">
             <div>
               <h1 ref={tituloRef} tabIndex={-1} className="font-bold mb-4 outline-none [text-wrap:balance]" style={titulo}>
-                Descubra o que falta para usar IA na recuperação de crédito da sua instituição
+                Sua equipe consegue negociar toda a carteira em atraso? Descubra onde a IA pode ajudar.
               </h1>
               <p className="text-base sm:text-lg" style={{ color: cores.muted, lineHeight: 1.55 }}>
-                Responda 10 perguntas sobre a sua operação de recuperação de crédito. Ao final, você informa seus dados e recebe o
-                diagnóstico completo na hora.
+                Entre metas, atendimentos e negociações que exigem atenção individual, nem sempre sobra tempo para
+                conversar com todos. Em 10 perguntas, entenda a capacidade atual da sua operação, onde um agente de IA
+                pode apoiar a equipe e o que precisa estar pronto antes de começar.
               </p>
             </div>
             <section
@@ -230,14 +231,33 @@ export default function Fluxo({
                   <Opcao key={o.value} label={o.label} selecionada={respostas.tipo === o.value} onClick={() => responder(perguntas[0], o.value)} />
                 ))}
               </div>
-              <p className="text-sm mt-4" style={{ color: cores.muted }}>10 perguntas · cerca de 2 minutos · sem custo</p>
+              <p className="text-sm mt-4" style={{ color: cores.muted }}>10 perguntas · cerca de 2 minutos · diagnóstico gratuito</p>
             </section>
-            <figure className="pt-6 lg:col-start-1 lg:row-start-2" style={{ borderTop: `1px solid ${cores.line}` }}>
-              <p className="text-base font-semibold" style={{ lineHeight: 1.5 }}>
-                No Sicoob Crediauc, depois de 75 dias de campanha, um agente de IA passou a apoiar um colaborador nas
-                negociações mais complexas. Em 5 dias, foram R$ 23,4 mil renegociados em 6 contratos.
-              </p>
-            </figure>
+            <div className="lg:col-start-1 lg:row-start-2 space-y-5">
+              <figure className="overflow-hidden rounded-2xl">
+                <img
+                  src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80"
+                  alt="Profissionais conversando e colaborando em um ambiente de trabalho"
+                  className="h-40 w-full object-cover sm:h-48"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <figcaption className="mt-2 text-xs text-apagado">
+                  Foto ilustrativa. Pessoas reais seguem no centro das negociações.
+                </figcaption>
+              </figure>
+              <div className="border-t border-linha pt-5">
+                <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-apagado">Um exemplo real: Sicoob Crediauc</p>
+                <p className="text-base font-semibold leading-relaxed">
+                  Uma dívida não é apenas um número. Cada pessoa tem uma realidade, e cada negociação exige escuta.
+                  Na Crediauc, um agente de IA apoiou um colaborador nos casos mais complexos. Em cinco dias,
+                  foram R$ 23,4 mil renegociados em seis contratos.
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-apagado">
+                  Resultado observado em uma campanha específica, não uma previsão de desempenho da sua instituição.
+                </p>
+              </div>
+            </div>
           </main>
         )}
 
