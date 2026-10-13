@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import Fluxo from "../components/Fluxo";
 import { SeloNivel } from "../components/ui";
 import { analisar } from "../lib/calculo";
-import { cenariosDemo, formularioDemo } from "../lib/dados";
+import { cenariosDemo, formularioDemo, perguntas } from "../lib/dados";
 import { reduzirMovimento, usePageTitle } from "../lib/util";
 
 /** Painel flutuante do modo demonstração (?demo=1): pula direto para cenários prontos. */
@@ -75,6 +75,8 @@ export default function Diagnostico() {
   const [params] = useSearchParams();
   const demo = params.get("demo") === "1";
   const utmContent = params.get("utm_content");
+  const tipoInicial = params.get("tipo");
+  const tipoValido = perguntas[0].opcoes.some((o) => o.value === tipoInicial) ? tipoInicial : null;
   const raiz = useRef(null);
   const [estado, setEstado] = useState({ chave: 0, cenario: null });
   const [formDemo, setFormDemo] = useState(null);
@@ -118,8 +120,8 @@ export default function Diagnostico() {
       <Fluxo
         key={estado.chave}
         utmContent={utmContent}
-        respostasIniciais={cenario?.respostas}
-        etapaInicial={cenario ? "captura" : undefined}
+        respostasIniciais={cenario?.respostas ?? (tipoValido ? { tipo: tipoValido } : undefined)}
+        etapaInicial={cenario ? "captura" : tipoValido ? "quiz" : undefined}
         formInicial={formDemo}
         onReiniciar={() => setEstado((s) => ({ ...s, cenario: null }))}
       />
