@@ -51,11 +51,11 @@ try {
   // Lay out at the slide canvas size, 1920x1080.
   const pdfPage = await open({ width: 1920, height: 1080 });
   await pdfPage.emulateMedia({ media: 'print' });
-  // Each card clips its overflow, so report any card whose content no longer fits its cell.
+  // Cards (and blocks marked data-fit) clip their overflow, so report any whose content no longer fits.
   const clipped = await pdfPage.evaluate(() =>
     [...document.querySelectorAll('.slide')].flatMap((pg, i) =>
-      [...pg.querySelectorAll('.card')]
-        .map(c => ({ page: i + 1, card: c.style.getPropertyValue('--a').trim(), over: c.scrollHeight - c.clientHeight }))
+      [...pg.querySelectorAll('.card, [data-fit]')]
+        .map(c => ({ page: i + 1, card: c.style.getPropertyValue('--a').trim() || c.dataset.fit, over: c.scrollHeight - c.clientHeight }))
         .filter(c => c.over > 1)));
   for (const c of clipped) console.warn(`slide ${c.page}, card "${c.card}": content clipped by ${c.over}px`);
   await pdfPage.pdf({ path: OUT, printBackground: true, preferCSSPageSize: true });

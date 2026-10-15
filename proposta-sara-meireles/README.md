@@ -2,7 +2,7 @@
 
 Proposta de Estratégia e Gestão de Aquisição Digital para Sara Meireles, Consultoria de Estilo e Imagem.
 
-- **PDF para envio:** [`proposta-sara-meireles.pdf`](proposta-sara-meireles.pdf) (apresentação 16:9, 14 slides, honorários de R$ 3.500)
+- **PDF para envio:** [`proposta-sara-meireles.pdf`](proposta-sara-meireles.pdf) (apresentação 16:9, 16 slides, honorários de R$ 3.500, mídia de € 800/mês com funil ilustrativo)
 - **Fonte:** `proposta.html`, uma página Artifact (sem o esqueleto `<html>`/`<head>`, que é adicionado na publicação). Slides 16:9 em mosaico de cards; botão Apresentar abre em tela cheia (← → navegam); no celular os cards viram uma coluna.
 - **Fotos:** `img/`, recortes em preto e branco das fotos enviadas pelo cliente. Para trocar uma foto, substitua o arquivo mantendo o nome.
 
