@@ -1,4 +1,4 @@
-// Renders proposta.html to an A4 PDF in headless Chromium.
+// Renders proposta.html (a 16:9 deck) to a PDF in headless Chromium, one slide per page.
 //
 //   node render-pdf.mjs [--out proposta-sara-meireles.pdf] [--shots <dir>]
 //
@@ -48,16 +48,16 @@ async function open(viewport) {
 }
 
 try {
-  // Lay out at the A4 sheet's own width (210 mm at 96 dpi).
-  const pdfPage = await open({ width: 794, height: 1123 });
+  // Lay out at the slide canvas size, 1920x1080.
+  const pdfPage = await open({ width: 1920, height: 1080 });
   await pdfPage.emulateMedia({ media: 'print' });
   // Each card clips its overflow, so report any card whose content no longer fits its cell.
   const clipped = await pdfPage.evaluate(() =>
-    [...document.querySelectorAll('.page')].flatMap((pg, i) =>
+    [...document.querySelectorAll('.slide')].flatMap((pg, i) =>
       [...pg.querySelectorAll('.card')]
         .map(c => ({ page: i + 1, card: c.style.getPropertyValue('--a').trim(), over: c.scrollHeight - c.clientHeight }))
         .filter(c => c.over > 1)));
-  for (const c of clipped) console.warn(`page ${c.page}, card "${c.card}": content clipped by ${c.over}px`);
+  for (const c of clipped) console.warn(`slide ${c.page}, card "${c.card}": content clipped by ${c.over}px`);
   await pdfPage.pdf({ path: OUT, printBackground: true, preferCSSPageSize: true });
   console.log('PDF ->', path.relative(process.cwd(), OUT));
 
