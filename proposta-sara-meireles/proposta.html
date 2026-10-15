@@ -283,7 +283,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 .sign .ast { font-size: calc(var(--k) * 72); }
 
 /* ---------- 14 · Projeção: verba de mídia ---------- */
-.s-pm { --areas: "head head head head head head head head ph ph ph ph" "big big big dist dist dist dist dist ph ph ph ph"; --rows: .78fr 1.22fr; }
+.s-pm { --areas: "head head head head head head head head ph ph ph ph" "big big big dist dist dist dist dist ph ph ph ph"; --rows: .84fr 1.16fr; }
 .big-n { font-size: calc(var(--k) * 150); font-weight: 500; line-height: .8; letter-spacing: -.06em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .big-n small { font-family: var(--mono); font-size: .16em; font-weight: 400; letter-spacing: 0; vertical-align: .9em; margin-right: .3em; }
 .bands { flex: 1 1 0; min-height: 0; display: grid; grid-auto-rows: 1fr; }
@@ -301,27 +301,31 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 .band.is-main .track i { background: var(--orange); }
 .band.is-main .bv { color: var(--paper); }
 
-/* ---------- 15 · Projeção: funil ---------- */
-.s-pf { --areas: "head head head head head head head head ph ph ph ph" "fun fun fun fun fun fun fun fun res res res res"; --rows: .48fr 1fr; }
-.fun-note { padding-top: calc(var(--k) * 4); font-size: var(--f-label); line-height: 1.45; color: var(--mute); max-width: 110ch; text-wrap: pretty; }
-.funnel { flex: 1 1 0; min-height: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: max(1px, calc(var(--k) * 2)) solid var(--paper); }
-.step { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-.step + .step { padding-left: calc(var(--k) * 24); border-left: 1px solid var(--line); }
-.rate { min-height: calc(var(--f-label) * 2.9); display: flex; align-items: flex-end; flex-wrap: wrap; gap: 0 .4em; font-family: var(--mono); font-size: var(--f-label); line-height: 1.45; color: var(--mute); }
-.rate .pill { font-size: 1.15em; }
-.step b { margin-top: calc(var(--k) * 14); font-size: calc(var(--k) * 100); font-weight: 500; line-height: .86; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
-.step.is-out b { color: var(--orange); }
-.lbl { margin-top: calc(var(--k) * 10); min-height: calc(var(--f-small) * 2.7); font-size: var(--f-small); line-height: 1.3; }
-.barbox { flex: 1 1 0; min-height: 0; display: flex; align-items: flex-end; margin-top: calc(var(--k) * 14); }
-.barbox i { width: calc(100% - var(--k) * 24); height: var(--v); background: var(--mute-dk); }
-.step:first-child .barbox i { background: var(--stone); }
-.step.is-out .barbox i { background: var(--orange); }
-.results { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: space-between; }
-.results li { display: grid; gap: calc(var(--k) * 8); }
-.results li + li { padding-top: calc(var(--k) * 20); border-top: 1px solid var(--line); }
-.results b { font-size: calc(var(--k) * 104); font-weight: 500; line-height: .84; letter-spacing: -.055em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.results li.sm b { font-size: calc(var(--k) * 64); }
-.results strong { font-size: var(--f-body); font-weight: 500; letter-spacing: -.012em; line-height: 1.2; }
+/* ---------- 13 · 09 Implantação 30/60/90 ---------- */
+.s-imp { --areas: "head head head head head head head head head head head head" "d30 d30 d30 d30 d60 d60 d60 d60 d90 d90 d90 d90" "note note note note note note note note note note note note"; --rows: auto 1fr auto; }
+.phase-n { display: flex; align-items: baseline; gap: calc(var(--k) * 14); }
+.phase-n b { font-size: calc(var(--k) * 120); font-weight: 500; line-height: .8; letter-spacing: -.06em; color: var(--orange); font-variant-numeric: tabular-nums; }
+.phase h3 { min-height: calc(var(--f-h3) * 1.08 * 2); }
+.phase .rows li { grid-template-columns: calc(var(--k) * 34) minmax(0, 1fr); }
+.s-imp .row-card { padding-block: calc(var(--k) * 26); }
+
+/* ---------- 16 · 11 Projeção: cenários ---------- */
+.s-sc { --areas: "head head head head head head head head head head head head" "tab tab tab tab tab tab tab tab be be be be"; --rows: auto 1fr; }
+.scen-wrap { flex: 1 1 0; min-height: 0; overflow-x: auto; }
+.scen { width: 100%; height: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.scen th, .scen td { border-bottom: 1px solid var(--line); padding: calc(var(--k) * 5) 0; vertical-align: middle; }
+.scen thead th { padding: 0 0 calc(var(--k) * 14); font-size: var(--f-small); font-weight: 500; letter-spacing: -.01em; text-align: right; border-bottom-color: var(--paper); }
+.scen thead th:first-child { text-align: left; }
+.scen tbody th { text-align: left; font-size: var(--f-small); font-weight: 400; line-height: 1.3; color: var(--mute); }
+.scen tbody th small { display: block; font-family: var(--mono); font-size: var(--f-label); color: var(--mute); }
+.scen td { width: calc(var(--k) * 230); text-align: right; font-size: calc(var(--k) * 32); font-weight: 500; letter-spacing: -.02em; line-height: 1.1; white-space: nowrap; }
+.scen tr.is-key th { font-size: var(--f-body); font-weight: 500; color: var(--paper); }
+.scen tr.is-key td { font-size: calc(var(--k) * 70); line-height: .9; letter-spacing: -.05em; color: var(--orange); }
+.scen-note { font-size: var(--f-label); line-height: 1.45; color: var(--mute); text-wrap: pretty; }
+.be-n { display: flex; align-items: baseline; gap: calc(var(--k) * 16); font-size: calc(var(--k) * 200); font-weight: 500; line-height: .8; letter-spacing: -.06em; }
+.be-n small { font-family: var(--mono); font-size: var(--f-label); font-weight: 400; letter-spacing: .03em; }
+.be .statement { font-size: calc(var(--k) * 40); }
+.be-foot { display: grid; gap: calc(var(--k) * 10); padding-top: calc(var(--k) * 18); border-top: 1px solid var(--line); }
 
 /* ---------- Modo apresentação ---------- */
 .deck.presenting { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; gap: 0; padding: 0; background: #000000; overflow: hidden; }
@@ -375,21 +379,18 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   .deck:not(.presenting) .row-card { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .deck:not(.presenting) .s-cover .c-photo, .deck:not(.presenting) .s-close .c-photo { aspect-ratio: 4 / 5; }
   .deck:not(.presenting) .big-n { font-size: 84px; }
-  .deck:not(.presenting) .bands, .deck:not(.presenting) .funnel, .deck:not(.presenting) .results { flex: none; grid-auto-rows: auto; }
+  .deck:not(.presenting) .bands { flex: none; grid-auto-rows: auto; }
   .deck:not(.presenting) .band { padding-block: 12px; }
   .deck:not(.presenting) .bp { font-size: 34px; }
   .deck:not(.presenting) .band.is-main .bp { font-size: 46px; }
-  .deck:not(.presenting) .s-pf .c-photo { aspect-ratio: 2 / 1; }
-  .deck:not(.presenting) .funnel { grid-template-columns: minmax(0, 1fr); }
-  .deck:not(.presenting) .step + .step { padding-left: 0; border-left: 0; }
-  .deck:not(.presenting) .step { padding-block: 14px; border-top: 1px solid var(--line); }
-  .deck:not(.presenting) .rate, .deck:not(.presenting) .lbl { min-height: 0; }
-  .deck:not(.presenting) .step b { font-size: 44px; }
-  .deck:not(.presenting) .barbox { flex: none; height: 10px; margin-top: 12px; }
-  .deck:not(.presenting) .barbox i { width: var(--v); height: 100%; }
-  .deck:not(.presenting) .results { gap: 18px; }
-  .deck:not(.presenting) .results b { font-size: 56px; }
-  .deck:not(.presenting) .results li.sm b { font-size: 38px; }
+  .deck:not(.presenting) .phase-n b { font-size: 64px; }
+  .deck:not(.presenting) .phase h3 { min-height: 0; }
+  .deck:not(.presenting) .scen-wrap { flex: none; }
+  .deck:not(.presenting) .scen td { width: auto; padding-left: 10px; font-size: 16px; }
+  .deck:not(.presenting) .scen thead th { font-size: 12px; padding-left: 6px; }
+  .deck:not(.presenting) .scen tr.is-key td { font-size: 34px; }
+  .deck:not(.presenting) .be-n { font-size: 84px; }
+  .deck:not(.presenting) .be .statement { font-size: 22px; }
   .deck:not(.presenting) .head-end { flex-direction: column-reverse; align-items: flex-start; gap: 14px; }
   .deck:not(.presenting) .name { font-size: 52px; }
   .deck:not(.presenting) .bio .statement { font-size: 22px; }
@@ -429,7 +430,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <header class="deck-bar">
   <span class="mono deck-title">Proposta · Sara Meireles · Estratégia e Gestão de Aquisição Digital</span>
   <span class="mono hint">← → para navegar</span>
-  <span class="mono" id="count">16 slides</span>
+  <span class="mono" id="count">17 slides</span>
   <button type="button" class="btn" id="present">Apresentar <svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></button>
 </header>
 
@@ -492,8 +493,9 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
         <li><a href="#indicadores"><span class="n">06</span><span class="t">Indicadores, mensuração e otimização</span><span class="p">10</span></a></li>
         <li><a href="#entregaveis"><span class="n">07</span><span class="t">Entregáveis mensais</span><span class="p">11</span></a></li>
         <li><a href="#equipe"><span class="n">08</span><span class="t">Equipe responsável</span><span class="p">12</span></a></li>
-        <li><a href="#investimento"><span class="n">09</span><span class="t">Investimento</span><span class="p">13</span></a></li>
-        <li><a href="#projecao-midia"><span class="n">—</span><span class="t">Projeção: mídia e funil</span><span class="p">14</span></a></li>
+        <li><a href="#implantacao"><span class="n">09</span><span class="t">Implantação em 90 dias</span><span class="p">13</span></a></li>
+        <li><a href="#investimento"><span class="n">10</span><span class="t">Investimento</span><span class="p">14</span></a></li>
+        <li><a href="#projecao-midia"><span class="n">11</span><span class="t">Projeção: mídia e cenários</span><span class="p">15</span></a></li>
       </ol>
     </nav>
     <figure class="card c-photo" style="--a:ph"><img src="img/sumario-escolha.jpg" alt="Mulher escolhendo um blazer em uma arara, com a cidade ao fundo" style="object-position:28% 50%"></figure>
@@ -773,11 +775,53 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   </div>
 </section>
 
-<!-- 13 · 09 Investimento -->
+<!-- 13 · 09 Implantação -->
+<section class="slide s-imp" id="implantacao" aria-labelledby="timp">
+  <div class="sl">
+    <article class="card c-paper" style="--a:head">
+      <div class="ct"><span class="tag">Implantação</span><span class="cnum s">09</span></div>
+      <h2 class="s" id="timp">Como começamos: implantação em 90 dias.</h2>
+      <p class="lead">Três fases com objetivos claros. São metas de processo e aprendizado, não promessas de performance.</p>
+    </article>
+    <article class="card c-paper phase" style="--a:d30">
+      <p class="phase-n"><b>30</b><span class="mono">dias</span></p>
+      <h3>Planejamento, estudo e estruturação</h3>
+      <ul class="rows fill sm end">
+        <li><span class="i">—</span><span>Diagnóstico da conta, histórico e funil atual</span></li>
+        <li><span class="i">—</span><span>Definição de públicos, mensagens e oferta prioritária</span></li>
+        <li><span class="i">—</span><span>Estrutura de mensuração e eventos validada</span></li>
+      </ul>
+    </article>
+    <article class="card c-stone phase" style="--a:d60">
+      <p class="phase-n"><b>60</b><span class="mono">dias</span></p>
+      <h3>Otimização de audiências, mensagens e conversões</h3>
+      <ul class="rows fill sm end">
+        <li><span class="i">—</span><span>Testes de públicos e criativos com critério definido</span></li>
+        <li><span class="i">—</span><span>Ajustes de mensagem e página de destino</span></li>
+        <li><span class="i">—</span><span>Revisão semanal de custo por reunião e qualidade de lead</span></li>
+      </ul>
+    </article>
+    <article class="card c-dark phase" style="--a:d90">
+      <p class="phase-n"><b>90</b><span class="mono">dias</span></p>
+      <h3>Consolidação e decisões de escala</h3>
+      <ul class="rows fill sm end">
+        <li><span class="i">—</span><span>Síntese de aprendizados por público e canal</span></li>
+        <li><span class="i">—</span><span>Recomendação de manutenção, ajuste ou escala da verba</span></li>
+        <li><span class="i">—</span><span>Plano de continuidade para o próximo trimestre</span></li>
+      </ul>
+    </article>
+    <article class="card c-black row-card" style="--a:note">
+      <span class="tag">Natureza das metas</span>
+      <p class="small"><em>Objetivos de execução e aprendizado. Resultados dependem de verba, volume de público, dados comerciais disponíveis e capacidade de atribuição.</em></p>
+    </article>
+  </div>
+</section>
+
+<!-- 14 · 10 Investimento -->
 <section class="slide s-09" id="investimento" aria-labelledby="t09">
   <div class="sl">
     <article class="card c-paper" style="--a:h9">
-      <div class="ct"><span class="tag">Honorários</span><span class="cnum s">09</span></div>
+      <div class="ct"><span class="tag">Honorários</span><span class="cnum s">10</span></div>
       <h2 class="s" id="t09">Investimento</h2>
       <p class="lead end">O investimento contempla a estratégia, gestão e execução da mídia, acompanhamento de indicadores, análises de conversão, reuniões e relacionamento contínuo com a equipe.</p>
     </article>
@@ -802,11 +846,11 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   </div>
 </section>
 
-<!-- 14 · Projeção: investimento de mídia -->
+<!-- 15 · 11 Projeção: investimento de mídia -->
 <section class="slide s-pm" id="projecao-midia" aria-labelledby="tpa">
   <div class="sl">
     <article class="card c-paper" style="--a:head">
-      <div class="ct"><span class="tag">Projeção · Investimento de mídia</span><span class="chip">Meta Ads · Instagram + Facebook</span></div>
+      <div class="ct"><span class="tag">Projeção · Investimento de mídia</span><span class="cnum s">11</span></div>
       <h2 class="s" id="tpa">€ 800/mês para construir audiência e gerar oportunidades.</h2>
       <p class="lead end">Investimento concentrado em Meta Ads, combinando descoberta, captação de leads e recuperação de interesse.</p>
     </article>
@@ -830,37 +874,46 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   </div>
 </section>
 
-<!-- 15 · Projeção: funil e simulação -->
-<section class="slide s-pf" id="projecao-funil" aria-labelledby="tpb">
+<!-- 16 · 11 Projeção: cenários e ponto de equilíbrio -->
+<section class="slide s-sc" id="projecao-cenarios" aria-labelledby="tsc">
   <div class="sl">
     <article class="card c-paper" style="--a:head">
-      <div class="ct"><span class="tag">Projeção · Funil e simulação</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
-      <h2 class="s" id="tpb">Da audiência à cliente: um funil orientado à conversão.</h2>
-      <p class="small end">Cenário matemático ilustrativo a partir de € 800 mensais em Meta Ads.</p>
+      <div class="ct"><span class="tag">Projeção · Cenários</span><span class="cnum s">11</span></div>
+      <h2 class="s" id="tsc">Quanto precisa vender para a operação se pagar.</h2>
+      <p class="lead">Três cenários a partir de € 800/mês de mídia e R$ 3.500/mês de honorários. Simulação matemática, não previsão.</p>
     </article>
-    <figure class="card c-photo" style="--a:ph"><img src="img/projecao-cabides.jpg" alt="Cabides e golas de peças em tons de cinza numa arara"></figure>
-    <article class="card c-dark" style="--a:fun">
-      <div class="ct"><span class="tag">Funil do cenário</span><span class="mono">lead → agendamento → reunião → venda</span></div>
-      <ol class="funnel" aria-label="Funil do cenário ilustrativo">
-        <li class="step" style="--v:100%"><span class="rate">€ 800 ÷ CPL médio hipotético de € 30</span><b>26,7</b><span class="lbl">leads captados</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-        <li class="step" style="--v:35%"><span class="rate"><span class="pill">35%</span> agendam</span><b>9,3</b><span class="lbl">reuniões agendadas</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-        <li class="step" style="--v:26.25%"><span class="rate"><span class="pill">75%</span> comparecem</span><b>7,0</b><span class="lbl">reuniões realizadas</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-        <li class="step is-out" style="--v:13.125%"><span class="rate"><span class="pill">50%</span> fecham</span><b>3,5</b><span class="lbl">vendas esperadas no modelo</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-      </ol>
-      <p class="fun-note">Simulação ilustrativa, não previsão de resultados nem garantia de vendas. A formulação de metas e projeções confiáveis dependerá do acesso à documentação da operação, histórico de campanhas, site, métricas de conversão e dados comerciais/CRM da Sara.</p>
+    <article class="card c-dark" style="--a:tab">
+      <div class="scen-wrap" data-fit="tabela de cenários">
+        <table class="scen">
+          <thead><tr><th scope="col"><span class="tag">Premissas e resultado mensal</span></th><th scope="col">Conservador</th><th scope="col">Base</th><th scope="col">Otimista</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Leads por mês</th><td>20</td><td>27</td><td>35</td></tr>
+            <tr><th scope="row">Reuniões realizadas</th><td>4</td><td>7</td><td>10</td></tr>
+            <tr><th scope="row">Taxa lead → reunião realizada</th><td>20%</td><td>26%</td><td>29%</td></tr>
+            <tr><th scope="row">Taxa reunião → venda</th><td>30%</td><td>50%</td><td>50%</td></tr>
+            <tr class="is-key"><th scope="row">Vendas por mês</th><td>1</td><td>3</td><td>5</td></tr>
+            <tr><th scope="row">Ticket médio (€)</th><td>1.500</td><td>1.500</td><td>1.500</td></tr>
+            <tr><th scope="row">Receita mensal (€)</th><td>1.500</td><td>4.500</td><td>7.500</td></tr>
+            <tr><th scope="row">Custo total mensal (€)<small>mídia + honorários convertidos</small></th><td>[≈ 1.425]</td><td>[≈ 1.425]</td><td>[≈ 1.425]</td></tr>
+            <tr><th scope="row">ROAS sobre a operação total</th><td>≈ 1,1x</td><td>≈ 3,2x</td><td>≈ 5,3x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="scen-note">Simulação ilustrativa. Não representa previsão de resultado nem garantia de vendas. Premissas a validar com histórico de campanhas, taxa de comparecimento real e dados comerciais da Sara. Vendas arredondadas para baixo.</p>
     </article>
-    <article class="card c-grad" style="--a:res">
-      <div class="ct"><span class="tag">Resultado teórico</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
-      <ul class="results">
-        <li><b>€ 5.250</b><strong>Receita teórica do cenário</strong><span class="mono">3,5 × ticket médio de € 1.500</span></li>
-        <li><b>6,56x</b><strong>ROAS teórico sobre mídia</strong><span class="mono">€ 5.250 ÷ € 800</span></li>
-        <li class="sm"><b>€ 229</b><strong>CAC teórico de mídia por venda</strong><span class="mono">€ 800 ÷ 3,5</span></li>
-      </ul>
+    <article class="card c-grad be" style="--a:be">
+      <div class="ct"><span class="tag">Conclusão</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
+      <p class="be-n">1<small>venda por mês</small></p>
+      <p class="statement">Ponto de equilíbrio: 1 venda por mês cobre a operação inteira.</p>
+      <div class="be-foot end">
+        <span class="mono">Ticket de € 1.500 frente a um custo total de [≈ € 1.425] por mês</span>
+        <span class="mono">Câmbio de referência: R$ 5,60 = € 1 · ajustar na data de envio</span>
+      </div>
     </article>
   </div>
 </section>
 
-<!-- 16 · Nossa abordagem -->
+<!-- 17 · Nossa abordagem -->
 <section class="slide s-close" id="abordagem" aria-labelledby="t10">
   <div class="sl">
     <article class="card c-grad man" style="--a:man">
