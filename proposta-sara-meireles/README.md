@@ -1,0 +1,15 @@
+# Proposta Sara Meireles
+
+Proposta de Estratégia e Gestão de Aquisição Digital para Sara Meireles, Consultoria de Estilo e Imagem.
+
+- **PDF para envio:** [`proposta-sara-meireles.pdf`](proposta-sara-meireles.pdf) (A4, 10 páginas)
+- **Fonte:** `proposta.html`, uma página Artifact (sem o esqueleto `<html>`/`<head>`, que é adicionado na publicação). Funciona em tema claro e escuro e no celular.
+
+Para gerar o PDF de novo depois de editar o texto:
+
+```sh
+node render-pdf.mjs                   # -> proposta-sara-meireles.pdf
+node render-pdf.mjs --shots ./shots   # também salva capturas de desktop e celular
+```
+
+O script usa o Playwright com Chromium e baixa as fontes (Bodoni Moda, Jost, DM Mono) do Google Fonts.

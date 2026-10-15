@@ -1,0 +1,1025 @@
+<title>Proposta Sara Meireles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Proposta de Estratégia e Gestão de Aquisição Digital para Sara Meireles, Consultoria de Estilo e Imagem.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=DM+Mono:wght@400;500&family=Jost:wght@300..600&display=swap">
+<style>
+/* Layout: dossiê de ateliê — capa em vinho, capítulos presos a uma coluna de numerais,
+   fita métrica de alfaiate para a jornada, etiqueta de roupa para os honorários. */
+:root {
+  --bg: #F2EEEF;
+  --surface: #FBF9FA;
+  --ink: #241A20;
+  --ink-2: #6A5C64;
+  --line: #DCD1D5;
+  --accent: #7A2238;
+  --tape: #EBD3D8;
+  --tick: #8F6C79;
+  --band: #4A1525;
+  --band-ink: #F4E6E9;
+  --band-ink-2: #D2AEB7;
+  --band-line: #6E3242;
+  --shadow: rgba(74, 21, 37, .16);
+
+  --serif: "Bodoni Moda", "Bodoni 72", Didot, "Didot LT STD", Georgia, serif;
+  --sans: "Jost", Futura, "Avenir Next", "Century Gothic", "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151014;
+    --surface: #1F181D;
+    --ink: #F1E8EB;
+    --ink-2: #B4A4AC;
+    --line: #3A2E35;
+    --accent: #E8A0B0;
+    --tape: #3F222B;
+    --tick: #C995A3;
+    --band: #2A0C16;
+    --band-ink: #F4E6E9;
+    --band-ink-2: #CB9DA9;
+    --band-line: #55232F;
+    --shadow: rgba(0, 0, 0, .5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151014;
+  --surface: #1F181D;
+  --ink: #F1E8EB;
+  --ink-2: #B4A4AC;
+  --line: #3A2E35;
+  --accent: #E8A0B0;
+  --tape: #3F222B;
+  --tick: #C995A3;
+  --band: #2A0C16;
+  --band-ink: #F4E6E9;
+  --band-ink-2: #CB9DA9;
+  --band-line: #55232F;
+  --shadow: rgba(0, 0, 0, .5);
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--tape); color: var(--ink); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+em { font-style: italic; }
+
+.wrap {
+  max-width: 1160px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) {
+  .wrap {
+    padding-left: max(48px, env(safe-area-inset-left, 0px));
+    padding-right: max(48px, env(safe-area-inset-right, 0px));
+  }
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+.accent { color: var(--accent); }
+.muted { color: var(--ink-2); }
+
+/* ---------- Capa ---------- */
+.cover { background: var(--band); color: var(--band-ink); }
+.cover-inner {
+  display: grid;
+  gap: clamp(56px, 9vw, 112px);
+  padding-block: 28px 56px;
+}
+.cover-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--band-line);
+  color: var(--band-ink-2);
+}
+.cover-client {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 28px;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.cover-client .sep { width: 32px; height: 1px; background: var(--band-ink-2); }
+.cover-client span:last-child { color: var(--band-ink-2); }
+.cover h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.9rem, 7.6vw, 6.2rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  max-width: 13ch;
+}
+.cover h1 em { color: var(--band-ink-2); }
+.cover-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 48px;
+  align-items: end;
+}
+.signed { display: grid; gap: 6px; }
+.signed .label { color: var(--band-ink-2); }
+.signed-name { font-family: var(--serif); font-style: italic; font-size: 1.9rem; line-height: 1.1; }
+.signed-role { font-size: .95rem; color: var(--band-ink-2); }
+.toc .label { color: var(--band-ink-2); margin-bottom: 10px; }
+.toc a {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  align-items: baseline;
+  padding-block: 7px;
+  border-top: 1px solid var(--band-line);
+  text-decoration: none;
+  font-size: .95rem;
+  line-height: 1.4;
+  transition: color .2s ease;
+}
+.toc li:last-child a { border-bottom: 1px solid var(--band-line); }
+.toc .n { font-family: var(--serif); font-style: italic; color: var(--band-ink-2); transition: transform .2s ease; }
+.toc a:hover .n, .toc a:focus-visible .n { transform: translateX(4px); color: var(--band-ink); }
+
+/* ---------- Objetivo + ficha técnica ---------- */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+  padding-block: clamp(64px, 9vw, 112px);
+}
+.intro-text { display: grid; gap: 22px; }
+.statement {
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.statement em { color: var(--accent); }
+.intro-text .body { max-width: 56ch; color: var(--ink-2); }
+.spec {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  outline: 1px dashed var(--line);
+  outline-offset: -9px;
+  padding: 30px 30px 18px;
+}
+.spec > .label { color: var(--accent); margin-bottom: 14px; }
+.spec dl > div {
+  display: grid;
+  grid-template-columns: 6.6rem minmax(0, 1fr);
+  gap: 12px;
+  padding-block: 11px;
+  border-top: 1px solid var(--line);
+}
+.spec dt { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); padding-top: .2rem; }
+.spec dd { font-size: .95rem; line-height: 1.5; }
+
+/* ---------- Capítulos ---------- */
+.chapter-grid {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr);
+  gap: 48px;
+  padding-block: clamp(64px, 8vw, 104px);
+  border-top: 1px solid var(--line);
+}
+.chapter-mark {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 32px);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 4.4rem;
+  line-height: .85;
+  color: var(--accent);
+  font-variant-numeric: lining-nums;
+}
+.chapter-mark .label { color: var(--ink-2); }
+.chapter-body { min-width: 0; }
+.chapter-body h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 2.85rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+  max-width: 21ch;
+}
+.lead { margin-top: 20px; max-width: 62ch; font-size: 1.18rem; line-height: 1.6; text-wrap: pretty; }
+.pull {
+  margin-top: 26px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  line-height: 1.2;
+  color: var(--accent);
+}
+.pull + .lead { margin-top: 12px; }
+
+.block { margin-top: 44px; }
+.block-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+.block-head::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.block-intro { margin-bottom: 16px; color: var(--ink-2); }
+
+.list { display: grid; gap: 12px 44px; }
+.list.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.list li { position: relative; padding-left: 26px; line-height: 1.55; text-wrap: pretty; }
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .8em;
+  width: 13px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* Etiquetas bordadas dos públicos */
+.woven { display: flex; flex-wrap: wrap; gap: 10px; }
+.woven li {
+  padding: 11px 16px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  outline: 1px dashed var(--tick);
+  outline-offset: -5px;
+  font-family: var(--mono);
+  font-size: .74rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.note {
+  margin-top: 28px;
+  max-width: 68ch;
+  padding-left: 18px;
+  border-left: 1px solid var(--accent);
+  font-size: .95rem;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+.note .label { display: block; margin-bottom: 4px; color: var(--accent); }
+
+/* ---------- 02 · Canais ---------- */
+.channels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
+  margin-top: 44px;
+}
+.channel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink);
+}
+.channel-head { display: grid; gap: 8px; }
+.channel-head .label { display: flex; justify-content: space-between; gap: 10px; color: var(--ink-2); }
+.badge { color: var(--accent); }
+.channel h3 { font-family: var(--serif); font-size: 1.85rem; font-weight: 400; line-height: 1.1; }
+.channel h3 small { display: block; margin-top: 4px; font-family: var(--sans); font-size: .85rem; color: var(--ink-2); letter-spacing: .02em; }
+.channel-desc { font-size: .98rem; color: var(--ink-2); text-wrap: pretty; }
+.channel .list { font-size: .95rem; gap: 9px; }
+.volume {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+.volume .label { color: var(--ink-2); }
+.volume strong { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.2rem; text-align: right; }
+
+/* ---------- 03 · Audiências ---------- */
+.split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 44px;
+}
+.split-col { display: grid; align-content: start; gap: 14px; }
+.split-col:first-child { padding-right: 40px; }
+.split-col + .split-col { padding-left: 40px; border-left: 1px solid var(--line); }
+.split h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; line-height: 1.2; margin-bottom: 8px; text-wrap: balance; }
+.split .list { font-size: .98rem; }
+
+/* ---------- 06 · Fita métrica da jornada ---------- */
+.journey { margin-top: 48px; }
+.journey figcaption { color: var(--ink-2); margin-bottom: 18px; }
+.tape-stops {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  padding-top: 72px;
+}
+.tape-stops::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42px;
+  background-color: var(--tape);
+  background-image:
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 50px),
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 5px);
+  background-size: 100% 56%, 100% 32%, 100% 17%;
+  background-repeat: no-repeat;
+  border-top: 1px solid var(--tick);
+  border-bottom: 1px solid var(--tick);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.stop {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 0 16px 4px 14px;
+  border-left: 1px solid var(--line);
+}
+.stop::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: -72px;
+  width: 2px;
+  height: 56px;
+  background: var(--accent);
+}
+.stop::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -20px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.stop .label { color: var(--accent); }
+.kpi { font-family: var(--serif); font-size: 1.32rem; line-height: 1.15; text-wrap: balance; }
+.goal { font-size: .9rem; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+
+/* ---------- 07 · Entregáveis ---------- */
+.sheet-scroll { margin-top: 40px; overflow-x: auto; }
+.sheet { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.sheet thead th {
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ink-2);
+}
+.sheet .group th {
+  padding: 28px 0 8px;
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--accent);
+  border-bottom: 1px solid var(--line);
+}
+.sheet td { padding: 14px 24px 14px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; line-height: 1.45; }
+.sheet td:last-child { width: 15rem; padding-right: 0; font-family: var(--serif); font-style: italic; font-size: 1.15rem; }
+.sheet tbody tr:not(.group):hover td { background: var(--surface); }
+
+/* ---------- 08 · Equipe ---------- */
+.team { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; margin-top: 44px; }
+.person { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: 22px; align-items: start; }
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 4.75rem;
+  aspect-ratio: 1;
+  max-width: 100%;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.6rem;
+  letter-spacing: .02em;
+}
+.person h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; line-height: 1.15; }
+.person .label { margin: 6px 0 12px; }
+.person p:last-child { color: var(--ink-2); font-size: .98rem; text-wrap: pretty; }
+
+/* ---------- 09 · Investimento ---------- */
+.invest {
+  display: grid;
+  grid-template-columns: 19rem minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+  margin-top: 36px;
+}
+.hangtag { position: relative; padding-top: 64px; filter: drop-shadow(0 0 1px var(--band-line)) drop-shadow(0 22px 34px var(--shadow)); }
+.hangtag .string { position: absolute; top: 0; left: calc(50% - 112px); width: 112px; height: 96px; overflow: visible; }
+.hangtag .string path { fill: none; stroke: var(--ink-2); stroke-width: 1.2; stroke-linecap: round; }
+.tag {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 72px 28px 30px;
+  background: var(--band);
+  color: var(--band-ink);
+  text-align: center;
+  clip-path: polygon(24% 0, 76% 0, 100% 12%, 100% 100%, 0 100%, 0 12%);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.tag .hole {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .35);
+}
+.tag .label { color: var(--band-ink-2); }
+.price { display: flex; align-items: flex-start; gap: 6px; margin-top: 8px; font-family: var(--serif); font-size: 4.3rem; line-height: 1; font-variant-numeric: lining-nums; }
+.price .cur { font-family: var(--mono); font-size: 1rem; letter-spacing: .06em; margin-top: .55rem; color: var(--band-ink-2); }
+.per { font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--band-ink-2); }
+.tag-rule { width: 100%; height: 1px; margin: 20px 0 14px; background: var(--band-line); }
+.tag-note { font-size: .85rem; line-height: 1.45; color: var(--band-ink-2); max-width: 22ch; }
+.invest-text .lead { margin-top: 0; }
+
+/* ---------- Encerramento ---------- */
+.closing { background: var(--band); color: var(--band-ink); }
+.closing-inner { display: grid; gap: 40px; padding-block: clamp(72px, 10vw, 128px) 32px; }
+.closing .label { color: var(--band-ink-2); }
+.manifesto {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  max-width: 23ch;
+  text-wrap: balance;
+}
+.manifesto em { color: var(--band-ink-2); }
+.closing-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px; max-width: 920px; color: var(--band-ink-2); font-size: 1.05rem; }
+.signoff { display: grid; gap: 6px; margin-top: 12px; }
+.signoff .sig { font-family: var(--serif); font-style: italic; font-size: 2.1rem; line-height: 1.1; }
+.colophon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 48px;
+  padding-top: 18px;
+  border-top: 1px solid var(--band-line);
+  color: var(--band-ink-2);
+}
+
+/* ---------- Telas estreitas ---------- */
+@media screen and (max-width: 900px) {
+  .cover-foot, .intro, .closing-cols { grid-template-columns: minmax(0, 1fr); }
+  .cover-foot { gap: 40px; }
+  .chapter-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .chapter-mark { position: static; flex-direction: row; align-items: baseline; gap: 16px; }
+  .num { font-size: 3.2rem; }
+  .channels { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+  .invest { grid-template-columns: minmax(0, 1fr); }
+  .hangtag { width: min(100%, 19rem); }
+}
+@media screen and (max-width: 720px) {
+  .list.two, .team { grid-template-columns: minmax(0, 1fr); }
+  .split { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .split-col:first-child { padding-right: 0; }
+  .split-col + .split-col { padding-left: 0; padding-top: 36px; border-left: 0; border-top: 1px solid var(--line); }
+  .tape-stops { grid-template-columns: minmax(0, 1fr); gap: 22px; padding-top: 0; padding-left: 64px; }
+  .tape-stops::before {
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: 42px;
+    height: auto;
+    background-image:
+      repeating-linear-gradient(180deg, var(--tick) 0 1px, transparent 1px 50px),
+      repeating-linear-gradient(180deg, var(--tick) 0 1px, transparent 1px 10px),
+      repeating-linear-gradient(180deg, var(--tick) 0 1px, transparent 1px 5px);
+    background-size: 56% 100%, 32% 100%, 17% 100%;
+    border: 0;
+    border-left: 1px solid var(--tick);
+    border-right: 1px solid var(--tick);
+  }
+  .stop { padding: 12px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+  .stop::before { left: -64px; top: -1px; width: 52px; height: 2px; }
+  .stop::after { left: -16px; top: -5px; }
+  .sheet td:last-child { width: 8.5rem; font-size: 1.05rem; }
+  .person { grid-template-columns: 3.75rem minmax(0, 1fr); gap: 16px; }
+  .monogram { width: 3.75rem; font-size: 1.3rem; }
+  .price { font-size: 3.7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc a, .toc .n { transition: none; }
+}
+
+/* ---------- Impressão / PDF (A4) ---------- */
+@page {
+  size: A4;
+  margin: 18mm 16mm 20mm;
+  background: #F2EEEF;
+  @bottom-left {
+    content: "Sara Meireles · Estratégia e Gestão de Aquisição Digital";
+    font-family: "DM Mono", monospace;
+    font-size: 7pt;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #6A5C64;
+  }
+  @bottom-right {
+    content: counter(page, decimal-leading-zero);
+    font-family: "Bodoni Moda", serif;
+    font-style: italic;
+    font-size: 10pt;
+    color: #7A2238;
+  }
+}
+@page full-bleed {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+@media print {
+  html { font-size: 12px; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .wrap { padding-left: 0; padding-right: 0; max-width: none; }
+  .cover, .closing { page: full-bleed; }
+  .cover .wrap, .closing .wrap { padding-left: 16mm; padding-right: 16mm; }
+  .cover { break-after: page; }
+  .cover-inner { min-height: 297mm; grid-template-rows: auto 1fr auto; align-content: stretch; padding-block: 14mm 16mm; }
+  .cover-title { align-self: center; }
+  .cover h1 { font-size: 5.6rem; }
+  .intro { padding-block: 0 9mm; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 12mm; }
+  .chapter-grid { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 7mm; padding-block: 8mm; }
+  .block { margin-top: 30px; }
+  .kpi { font-size: 1.15rem; }
+  .chapter-mark { position: static; }
+  .num { font-size: 3.6rem; }
+  .chapter-body h2, .block-head, .pull, .split h3 { break-after: avoid; }
+  .channel, .split-col, .stop, .person, .sheet tr, .spec, .invest, .note, .list li, .woven { break-inside: avoid; }
+  .chapter-grid, .journey, .team { break-inside: avoid; }
+  .channels { gap: 7mm; }
+  .closing { break-before: page; }
+  .closing-inner { min-height: 297mm; align-content: center; padding-block: 20mm 16mm; }
+  .sheet tbody tr:hover td { background: none; }
+  .toc a { text-decoration: none; }
+}
+</style>
+
+<div class="doc" lang="pt-BR">
+
+<header class="cover" id="capa">
+  <div class="wrap cover-inner">
+    <div class="cover-top label">
+      <span>Proposta comercial</span>
+      <span>Outubro de 2026</span>
+    </div>
+
+    <div class="cover-title">
+      <p class="cover-client"><span>Sara Meireles</span><span class="sep" aria-hidden="true"></span><span>Consultoria de Estilo e Imagem</span></p>
+      <h1>Estratégia e gestão de <em>aquisição digital</em></h1>
+    </div>
+
+    <div class="cover-foot">
+      <div class="signed">
+        <p class="label">Preparada por</p>
+        <p class="signed-name">Bernardo Costa</p>
+        <p class="signed-role">Estratégia e Gestão de Aquisição</p>
+      </div>
+      <nav class="toc" aria-label="Sumário">
+        <p class="label">Sumário</p>
+        <ol>
+          <li><a href="#planejamento"><span class="n">01</span><span>Planejamento e estratégia de aquisição</span></a></li>
+          <li><a href="#trafego"><span class="n">02</span><span>Gestão e execução de tráfego pago</span></a></li>
+          <li><a href="#audiencias"><span class="n">03</span><span>Inteligência de audiências, Lookalike e Remarketing</span></a></li>
+          <li><a href="#jornada"><span class="n">04</span><span>Otimização da jornada de aquisição e conversão</span></a></li>
+          <li><a href="#inbound"><span class="n">05</span><span>Inbound Marketing e materiais interativos</span></a></li>
+          <li><a href="#indicadores"><span class="n">06</span><span>Indicadores, mensuração e otimização</span></a></li>
+          <li><a href="#entregaveis"><span class="n">07</span><span>Entregáveis mensais</span></a></li>
+          <li><a href="#equipe"><span class="n">08</span><span>Equipe responsável</span></a></li>
+          <li><a href="#investimento"><span class="n">09</span><span>Investimento</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="wrap intro" id="objetivo" aria-label="Objetivo">
+  <div class="intro-text">
+    <p class="label accent">Objetivo</p>
+    <p class="statement">Desenvolver e executar uma estratégia de aquisição digital para ampliar a visibilidade da Sara junto ao público qualificado, gerar novas oportunidades comerciais e <em>aumentar as vendas de consultorias e mentorias online.</em></p>
+    <p class="body">O trabalho integra mídia paga, inteligência de audiência, otimização de conversão e estratégia de crescimento, conectando o investimento em publicidade aos resultados do negócio.</p>
+  </div>
+  <aside class="spec" aria-label="Ficha técnica da proposta">
+    <p class="label">Ficha técnica</p>
+    <dl>
+      <div><dt>Cliente</dt><dd>Sara Meireles, Consultoria de Estilo e Imagem</dd></div>
+      <div><dt>Canais</dt><dd>Meta Ads, Google Ads e TikTok Ads</dd></div>
+      <div><dt>Frentes</dt><dd>Estratégia, mídia paga, audiências, conversão, inbound e mensuração</dd></div>
+      <div><dt>Cadência</dt><dd>2 reuniões e 1 relatório por mês</dd></div>
+      <div><dt>Equipe</dt><dd>Bernardo Costa e Felipe</dd></div>
+      <div><dt>Honorários</dt><dd>R$ 2.500 mensais, com a verba de mídia à parte</dd></div>
+    </dl>
+  </aside>
+</section>
+
+<!-- 01 -->
+<section class="chapter" id="planejamento" aria-labelledby="t01">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">01</span><span class="label">Estratégia</span></div>
+      <div class="chapter-body">
+        <h2 id="t01">Planejamento e estratégia de aquisição</h2>
+        <p class="lead">Definição e evolução da estratégia de crescimento digital, considerando o posicionamento da Sara, seus produtos e o perfil de suas potenciais clientes.</p>
+
+        <div class="block">
+          <p class="block-head label">Atividades contempladas</p>
+          <ul class="list two">
+            <li>Definição dos canais de aquisição e seus papéis na jornada comercial.</li>
+            <li>Planejamento de campanhas de reconhecimento, consideração, geração de leads e conversão.</li>
+            <li>Apoio estratégico às decisões de produto, canais, preço e promoção.</li>
+            <li>Identificação de oportunidades de campanhas, ofertas e abordagens comerciais.</li>
+            <li>Planejamento contínuo de testes e oportunidades de crescimento.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <p class="block-head label">Públicos prioritários</p>
+          <p class="block-intro">Segmentação de públicos prioritários, incluindo:</p>
+          <ul class="woven">
+            <li>Empreendedoras</li>
+            <li>Profissionais liberais</li>
+            <li>Médicas</li>
+            <li>Proprietárias de clínicas</li>
+            <li>Mulheres em cargos de liderança</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="chapter" id="trafego" aria-labelledby="t02">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">02</span><span class="label">Mídia paga</span></div>
+      <div class="chapter-body">
+        <h2 id="t02">Gestão e execução de tráfego pago</h2>
+        <p class="lead">Planejamento, configuração, ativação e otimização de campanhas em três plataformas.</p>
+
+        <div class="channels">
+          <article class="channel">
+            <div class="channel-head">
+              <p class="label"><span class="badge">Canal principal</span></p>
+              <h3>Meta Ads <small>Instagram e Facebook</small></h3>
+            </div>
+            <p class="channel-desc">Principal ambiente de aquisição, relacionamento e conversão, utilizando conteúdos da Sara para alcançar e desenvolver audiências qualificadas.</p>
+            <ul class="list">
+              <li>Patrocínio estratégico de conteúdos.</li>
+              <li>Campanhas de tráfego, engajamento, geração de leads e conversão.</li>
+              <li>Testes de públicos, criativos, formatos e objetivos.</li>
+              <li>Gestão de distribuição de verba e otimização dos anúncios.</li>
+            </ul>
+            <p class="volume"><span class="label">Volume</span><strong>Até 20 patrocínios/mês</strong></p>
+          </article>
+
+          <article class="channel">
+            <div class="channel-head">
+              <p class="label"><span>Demanda qualificada</span></p>
+              <h3>Google Ads <small>Rede de pesquisa</small></h3>
+            </div>
+            <p class="channel-desc">Captação de demanda qualificada de pessoas que já demonstram interesse por serviços de consultoria de estilo, imagem pessoal e mentorias relacionadas.</p>
+            <ul class="list">
+              <li>Estruturação e gestão de campanha de pesquisa.</li>
+              <li>Pesquisa e seleção de palavras-chave.</li>
+              <li>Testes de anúncios, termos de busca e páginas de destino.</li>
+              <li>Otimização para geração de oportunidades comerciais.</li>
+            </ul>
+            <p class="volume"><span class="label">Volume</span><strong>1 campanha ativa</strong></p>
+          </article>
+
+          <article class="channel">
+            <div class="channel-head">
+              <p class="label"><span>Alcance e descoberta</span></p>
+              <h3>TikTok Ads <small>Conteúdos em vídeo</small></h3>
+            </div>
+            <p class="channel-desc">Ampliação de alcance, descoberta de marca e construção de novas audiências a partir de conteúdos em vídeo.</p>
+            <ul class="list">
+              <li>Patrocínio de conteúdos selecionados.</li>
+              <li>Testes de formatos, segmentações e abordagens.</li>
+              <li>Construção de audiências para ações posteriores de conversão.</li>
+            </ul>
+            <p class="volume"><span class="label">Volume</span><strong>Até 10 patrocínios/mês</strong></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="chapter" id="audiencias" aria-labelledby="t03">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">03</span><span class="label">Audiências</span></div>
+      <div class="chapter-body">
+        <h2 id="t03">Inteligência de audiências, Lookalike e Remarketing</h2>
+        <p class="lead">Construção e evolução de públicos para melhorar a eficiência da aquisição e reduzir desperdícios no investimento.</p>
+
+        <div class="split">
+          <div class="split-col">
+            <p class="label accent">Expandir alcance</p>
+            <h3>Prospecção e públicos semelhantes (Lookalike)</h3>
+            <ul class="list">
+              <li>Públicos por interesses, comportamentos e características demográficas.</li>
+              <li>Públicos semelhantes aos seguidores e pessoas que interagem com os perfis sociais, conforme os dados disponíveis.</li>
+              <li>Públicos semelhantes às pessoas que assistem ou interagem com vídeos.</li>
+              <li>Públicos semelhantes aos visitantes do site.</li>
+              <li>Públicos semelhantes a leads e clientes, quando houver base suficiente.</li>
+            </ul>
+          </div>
+          <div class="split-col">
+            <p class="label accent">Recuperar interesse</p>
+            <h3>Remarketing e Retargeting</h3>
+            <ul class="list">
+              <li>Pessoas que interagiram com conteúdos ou perfis sociais.</li>
+              <li>Visitantes do site e de páginas específicas.</li>
+              <li>Pessoas que iniciaram uma conversão, mas não concluíram.</li>
+              <li>Leads que demonstraram interesse, mas não avançaram comercialmente.</li>
+              <li>Audiências de reengajamento e recuperação de oportunidades.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="note">A ativação dessas audiências considera a disponibilidade de dados, os requisitos de cada plataforma e as regras de privacidade aplicáveis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="chapter" id="jornada" aria-labelledby="t04">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">04</span><span class="label">Conversão</span></div>
+      <div class="chapter-body">
+        <h2 id="t04">Otimização da jornada de aquisição e conversão</h2>
+        <p class="pull">O trabalho não termina no clique.</p>
+        <p class="lead">Acompanharemos a experiência da potencial cliente desde o primeiro contato com a Sara até a oportunidade comercial e a venda.</p>
+
+        <div class="block">
+          <p class="block-head label">Frentes de atuação</p>
+          <ul class="list two">
+            <li>Avaliação dos conteúdos e anúncios que melhor conduzem visitantes ao site.</li>
+            <li>Análise da experiência nas páginas de destino.</li>
+            <li>Identificação de barreiras, atritos e oportunidades de melhoria de conversão.</li>
+            <li>Recomendações para formulários, chamadas, argumentos de venda e agendamento de reuniões.</li>
+            <li>Análise do desempenho das etapas do funil e identificação dos principais pontos de perda.</li>
+            <li>Proposição de testes e melhorias contínuas na jornada.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="chapter" id="inbound" aria-labelledby="t05">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">05</span><span class="label">Inbound</span></div>
+      <div class="chapter-body">
+        <h2 id="t05">Inbound Marketing e materiais interativos</h2>
+        <p class="lead">Apoio estratégico na criação de novas oportunidades de captação de leads qualificados, especialmente no meio do funil de aquisição.</p>
+
+        <div class="block">
+          <p class="block-head label">Possibilidades de desenvolvimento</p>
+          <ul class="list two">
+            <li>Testes e diagnósticos de estilo e imagem pessoal.</li>
+            <li>Questionários de autoconhecimento e necessidades de imagem.</li>
+            <li>Experiências interativas que conectem o perfil da visitante às soluções da Sara.</li>
+            <li>Estratégias de materiais ricos e conteúdos de conversão.</li>
+            <li>Réguas e propostas de nutrição e qualificação de leads.</li>
+          </ul>
+        </div>
+
+        <p class="note"><span class="label">Escopo</span>O escopo contempla concepção estratégica, recomendações de conteúdo e estruturação da lógica de aquisição. Desenvolvimento técnico integral de ferramentas ou páginas poderá ser orçado separadamente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="chapter" id="indicadores" aria-labelledby="t06">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">06</span><span class="label">Mensuração</span></div>
+      <div class="chapter-body">
+        <h2 id="t06">Indicadores, mensuração e otimização</h2>
+        <p class="lead">Acompanhamento contínuo das campanhas e dos indicadores, orientado à eficiência do investimento e à geração de receita.</p>
+
+        <figure class="journey">
+          <figcaption class="label">Indicadores ao longo da jornada, do anúncio ao retorno</figcaption>
+          <ol class="tape-stops">
+            <li class="stop"><span class="label">Anúncio</span><span class="kpi">CPC e CTR</span><span class="goal">Avaliar eficiência de anúncios e mensagens</span></li>
+            <li class="stop"><span class="label">Página</span><span class="kpi">Taxa de conversão</span><span class="goal">Melhorar o aproveitamento do tráfego</span></li>
+            <li class="stop"><span class="label">Lead</span><span class="kpi">CPL</span><span class="goal">Reduzir custo de aquisição de leads</span></li>
+            <li class="stop"><span class="label">Reunião</span><span class="kpi">Custo por reunião</span><span class="goal">Aumentar a eficiência comercial</span></li>
+            <li class="stop"><span class="label">Venda</span><span class="kpi">Custo por fechamento /&nbsp;CAC</span><span class="goal">Mensurar o investimento para conquistar clientes</span></li>
+            <li class="stop"><span class="label">Retorno</span><span class="kpi">ROAS</span><span class="goal">Avaliar retorno sobre investimento em publicidade</span></li>
+          </ol>
+        </figure>
+
+        <p class="note">Os indicadores de vendas e ROAS serão acompanhados conforme a disponibilidade dos dados comerciais e a capacidade de atribuição das conversões.</p>
+        <p class="lead">A análise alimentará decisões recorrentes de investimento, segmentação, conteúdos, canais e otimização da jornada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="chapter" id="entregaveis" aria-labelledby="t07">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">07</span><span class="label">Entregas</span></div>
+      <div class="chapter-body">
+        <h2 id="t07">Entregáveis mensais</h2>
+
+        <div class="sheet-scroll">
+          <table class="sheet">
+            <thead>
+              <tr><th scope="col">Entregável</th><th scope="col">Volume</th></tr>
+            </thead>
+            <tbody>
+              <tr class="group"><th colspan="2" scope="colgroup">Ativação de mídia</th></tr>
+              <tr><td>Patrocínios de conteúdos em Meta Ads (Instagram/Facebook)</td><td>Até 20/mês</td></tr>
+              <tr><td>Gestão de campanha no Google Ads</td><td>1 campanha ativa</td></tr>
+              <tr><td>Patrocínios de conteúdos no TikTok</td><td>Até 10/mês</td></tr>
+              <tr class="group"><th colspan="2" scope="colgroup">Estratégia e otimização</th></tr>
+              <tr><td>Estratégia, segmentações e testes de audiências</td><td>Contínuos</td></tr>
+              <tr><td>Remarketing e otimização de campanhas</td><td>Contínuos</td></tr>
+              <tr><td>Análise da jornada e recomendações de conversão</td><td>Contínuas</td></tr>
+              <tr><td>Apoio estratégico em produtos, ofertas e inbound marketing</td><td>Conforme oportunidades</td></tr>
+              <tr class="group"><th colspan="2" scope="colgroup">Acompanhamento</th></tr>
+              <tr><td>Relatório de desempenho e resultados</td><td>1/mês</td></tr>
+              <tr><td>Reuniões de acompanhamento e planejamento</td><td>2/mês</td></tr>
+              <tr><td>Contato e alinhamento operacional</td><td>Contínuo</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="note">Os patrocínios representam ativações de conteúdos, não a produção de novas peças. O volume será distribuído conforme a estratégia, os resultados e a verba disponível.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="chapter" id="equipe" aria-labelledby="t08">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">08</span><span class="label">Equipe</span></div>
+      <div class="chapter-body">
+        <h2 id="t08">Equipe responsável</h2>
+
+        <div class="team">
+          <article class="person">
+            <div class="monogram" aria-hidden="true">BC</div>
+            <div>
+              <h3>Bernardo Costa</h3>
+              <p class="label accent">Estratégia e Gestão de Aquisição</p>
+              <p>Responsável pelo planejamento estratégico, definição de canais e audiências, execução e otimização de mídia, inteligência de resultados, evolução da jornada de aquisição e relacionamento estratégico com a Sara.</p>
+            </div>
+          </article>
+          <article class="person">
+            <div class="monogram" aria-hidden="true">F</div>
+            <div>
+              <h3>Felipe</h3>
+              <p class="label accent">Operação e Tecnologia de Mídia</p>
+              <p>Responsável pelo suporte à execução das campanhas, configurações técnicas, implementação de estruturas de mídia, acompanhamento operacional e apoio às otimizações.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="chapter" id="investimento" aria-labelledby="t09">
+  <div class="wrap">
+    <div class="chapter-grid">
+      <div class="chapter-mark"><span class="num">09</span><span class="label">Investimento</span></div>
+      <div class="chapter-body">
+        <h2 id="t09">Investimento</h2>
+
+        <div class="invest">
+          <div class="hangtag">
+            <svg class="string" viewBox="0 0 112 96" aria-hidden="true"><path d="M4 2 C 30 10, 52 30, 70 52 S 104 84, 112 94"/></svg>
+            <div class="tag">
+              <span class="hole" aria-hidden="true"></span>
+              <p class="label">Honorários</p>
+              <p class="price"><span class="cur">R$</span>2.500</p>
+              <p class="per">mensais</p>
+              <span class="tag-rule" aria-hidden="true"></span>
+              <p class="tag-note">Verba de mídia em Meta, Google e TikTok à parte</p>
+            </div>
+          </div>
+
+          <div class="invest-text">
+            <p class="lead">O investimento contempla a estratégia, gestão e execução da mídia, acompanhamento de indicadores, análises de conversão, reuniões e relacionamento contínuo com a equipe.</p>
+            <div class="block">
+              <p class="block-head label">Condições e premissas</p>
+              <ul class="list">
+                <li>O investimento nas plataformas de publicidade (Meta, Google e TikTok) é separado dos honorários.</li>
+                <li>A distribuição da verba será recomendada e ajustada conforme o desempenho e as prioridades de aquisição.</li>
+                <li>A produção de vídeos, fotografias, peças criativas e o desenvolvimento integral de sites ou ferramentas não estão incluídos.</li>
+                <li>A execução depende de acesso às contas, às ferramentas de mensuração e aos materiais necessários.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="closing" id="abordagem" aria-labelledby="t10">
+  <div class="wrap closing-inner">
+    <p class="label" id="t10">Nossa abordagem</p>
+    <blockquote class="manifesto">Mais do que anunciar conteúdos, queremos construir uma operação de aquisição que <em>aprenda, evolua e gere negócios.</em></blockquote>
+    <div class="closing-cols">
+      <p>Cada campanha, audiência e ponto de contato será observado como parte de uma jornada integrada: da descoberta da Sara ao interesse, da oportunidade comercial à contratação de suas consultorias e mentorias.</p>
+      <p>A proposta é combinar execução consistente com inteligência estratégica para transformar a presença digital em crescimento comercial sustentável.</p>
+    </div>
+    <div class="signoff">
+      <p class="sig">Bernardo Costa</p>
+      <p class="label">Estratégia e Gestão de Aquisição</p>
+    </div>
+    <footer class="colophon label">
+      <span>Proposta preparada para Sara Meireles</span>
+      <span>Outubro de 2026</span>
+    </footer>
+  </div>
+</section>
+
+</div>
