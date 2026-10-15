@@ -277,93 +277,46 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 .sign strong { display: block; font-size: var(--f-h3); font-weight: 500; letter-spacing: -.03em; line-height: 1.05; margin-bottom: calc(var(--k) * 6); }
 .sign .ast { font-size: calc(var(--k) * 72); }
 
-/* ---------- 14–15 · Projeção: folhas de dados off-white, só preto e cinzas ---------- */
-.px {
-  --k: calc(100cqw / 1920);
-  --pw: #F7F7F5;
-  --pk: #141414;
-  --pg: #606060;
-  --pl: #D8D8D8;
-  --mute: var(--pg);
-  --x-h: calc(var(--k) * 62);
-  --x-sub: calc(var(--k) * 28);
-  --x-body: calc(var(--k) * 26);
-  --x-small: calc(var(--k) * 22);
-  --x-label: calc(var(--k) * 20);
-  --x-big: calc(var(--k) * 150);
-  --x-num: calc(var(--k) * 108);
-  --x-res: calc(var(--k) * 96);
-  --rule: max(1px, calc(var(--k) * 2));
-  position: absolute;
-  inset: 0;
-  background: var(--pw);
-  color: var(--pk);
-  font-size: var(--x-body);
-  line-height: 1.4;
-}
-.px .tag, .px .mono { font-size: var(--x-label); }
-.px .tag::before { color: var(--pk); }
-.px-h { font-size: var(--x-h); font-weight: 500; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; max-width: 19ch; }
-.px-sub { font-size: var(--x-sub); line-height: 1.36; letter-spacing: -.012em; color: var(--pg); max-width: 46ch; text-wrap: pretty; }
-.px-foot { font-size: var(--x-small); line-height: 1.4; color: var(--pg); max-width: 92ch; text-wrap: pretty; }
+/* ---------- 14 · Projeção: verba de mídia ---------- */
+.s-pm { --areas: "head head head head head head head head ph ph ph ph" "big big big dist dist dist dist dist ph ph ph ph"; --rows: .78fr 1.22fr; }
+.big-n { font-size: calc(var(--k) * 150); font-weight: 500; line-height: .8; letter-spacing: -.06em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.big-n small { font-family: var(--mono); font-size: .16em; font-weight: 400; letter-spacing: 0; vertical-align: .9em; margin-right: .3em; }
+.bands { flex: 1 1 0; min-height: 0; display: grid; grid-auto-rows: 1fr; }
+.band { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: calc(var(--k) * 28); row-gap: calc(var(--k) * 12); align-content: center; border-top: 1px solid var(--line); }
+.band:last-child { border-bottom: 1px solid var(--line); }
+.bt strong { display: block; font-size: var(--f-body); font-weight: 500; letter-spacing: -.015em; line-height: 1.2; }
+.bt span { display: block; margin-top: calc(var(--k) * 4); font-size: var(--f-label); font-family: var(--mono); color: var(--mute); line-height: 1.35; }
+.bp { justify-self: end; align-self: end; font-size: calc(var(--k) * 64); font-weight: 500; line-height: .85; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.track { position: relative; height: calc(var(--k) * 30); }
+.track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); }
+.track i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--v); background: var(--stone); }
+.bv { justify-self: end; align-self: center; font-family: var(--mono); font-size: var(--f-small); color: var(--mute); font-variant-numeric: tabular-nums; }
+.band.is-main .bp { font-size: calc(var(--k) * 92); color: var(--orange); }
+.band.is-main .track { height: calc(var(--k) * 46); }
+.band.is-main .track i { background: var(--orange); }
+.band.is-main .bv { color: var(--paper); }
 
-/* Slide 14: verba e distribuição */
-.px-a { display: grid; grid-template-columns: minmax(0, 1fr) calc(var(--k) * 730); }
-.px-main { display: flex; flex-direction: column; min-width: 0; overflow: hidden; padding: calc(var(--k) * 64) calc(var(--k) * 76) calc(var(--k) * 56) calc(var(--k) * 110); }
-.px-meta { display: flex; justify-content: space-between; gap: 24px; margin-bottom: calc(var(--k) * 34); }
-.px-main .px-h { max-width: 23ch; }
-.px-main .px-sub { margin-top: calc(var(--k) * 16); }
-.px-total { display: flex; align-items: flex-end; gap: calc(var(--k) * 32); margin-top: calc(var(--k) * 38); }
-.px-big { font-size: var(--x-big); font-weight: 500; line-height: .8; letter-spacing: -.06em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.px-total .mono { padding-bottom: calc(var(--k) * 6); }
-.bands { margin-top: calc(var(--k) * 34); border-top: var(--rule) solid var(--pk); }
-.band { display: grid; grid-template-columns: minmax(0, 1fr) calc(var(--k) * 168) calc(var(--k) * 350); gap: calc(var(--k) * 28); align-items: center; padding-block: calc(var(--k) * 12); border-bottom: 1px solid var(--pl); }
-.track { position: relative; height: calc(var(--k) * 40); }
-.track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: var(--rule); margin-top: calc(var(--rule) / -2); background: var(--pl); }
-.track i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--v); background: var(--pg); }
-.band.is-main .track { height: calc(var(--k) * 72); }
-.band.is-main .track i { background: var(--pk); }
-.bn { display: grid; gap: calc(var(--k) * 4); }
-.bn b { font-size: calc(var(--k) * 54); font-weight: 500; line-height: .9; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
-.band.is-main .bn b { font-size: calc(var(--k) * 80); }
-.bn span { font-size: var(--x-body); font-weight: 500; letter-spacing: -.015em; font-variant-numeric: tabular-nums; }
-.bt strong { display: block; font-size: var(--x-body); font-weight: 500; letter-spacing: -.015em; line-height: 1.2; }
-.bt span { display: block; margin-top: calc(var(--k) * 6); font-size: var(--x-label); line-height: 1.35; color: var(--pg); }
-.px-main .px-foot { margin-top: auto; padding-top: calc(var(--k) * 24); }
-.px-photo { position: relative; margin: 0; overflow: hidden; background: var(--pk); }
-.px-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 35% 50%; }
-
-/* Slide 15: funil e simulação */
-.px-b {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) calc(var(--k) * 440);
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  grid-template-areas: "head ." "fun res" "foot foot";
-  column-gap: calc(var(--k) * 90);
-  row-gap: calc(var(--k) * 44);
-  padding: calc(var(--k) * 64) calc(var(--k) * 110) calc(var(--k) * 56);
-}
-.px-edge { position: absolute; top: 0; right: 0; width: calc(var(--k) * 560); height: calc(var(--k) * 270); margin: 0; overflow: hidden; }
-.px-edge img { width: 100%; height: 100%; object-fit: cover; }
-.px-head { grid-area: head; display: grid; gap: calc(var(--k) * 16); align-content: start; }
-.px-head .tag { margin-bottom: calc(var(--k) * 18); }
-.funnel { grid-area: fun; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); min-height: 0; overflow: hidden; border-bottom: var(--rule) solid var(--pk); }
+/* ---------- 15 · Projeção: funil ---------- */
+.s-pf { --areas: "head head head head head head head head ph ph ph ph" "fun fun fun fun fun fun fun fun res res res res"; --rows: .48fr 1fr; }
+.fun-note { padding-top: calc(var(--k) * 4); font-size: var(--f-label); line-height: 1.45; color: var(--mute); max-width: 110ch; text-wrap: pretty; }
+.funnel { flex: 1 1 0; min-height: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: max(1px, calc(var(--k) * 2)) solid var(--paper); }
 .step { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-.step + .step { padding-left: calc(var(--k) * 26); border-left: 1px solid var(--pl); }
-.rate { min-height: calc(var(--x-label) * 2.8); display: flex; align-items: flex-end; font-family: var(--mono); font-size: var(--x-label); line-height: 1.4; color: var(--pg); }
-.step b { margin-top: calc(var(--k) * 16); font-size: var(--x-num); font-weight: 500; line-height: .9; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
-.lbl { margin-top: calc(var(--k) * 12); min-height: calc(var(--x-body) * 2.5); font-size: var(--x-body); line-height: 1.25; letter-spacing: -.012em; }
-.barbox { flex: 1 1 0; min-height: 0; display: flex; align-items: flex-end; margin-top: calc(var(--k) * 22); }
-.barbox i { width: calc(100% - var(--k) * 26); height: var(--v); background: var(--pg); }
-.step:first-child .barbox i { background: var(--pl); }
-.step.is-out .barbox i { background: var(--pk); }
-.results { grid-area: res; display: flex; flex-direction: column; justify-content: space-between; min-height: 0; overflow: hidden; }
+.step + .step { padding-left: calc(var(--k) * 24); border-left: 1px solid var(--line); }
+.rate { min-height: calc(var(--f-label) * 2.9); display: flex; align-items: flex-end; flex-wrap: wrap; gap: 0 .4em; font-family: var(--mono); font-size: var(--f-label); line-height: 1.45; color: var(--mute); }
+.rate .pill { font-size: 1.15em; }
+.step b { margin-top: calc(var(--k) * 14); font-size: calc(var(--k) * 100); font-weight: 500; line-height: .86; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.step.is-out b { color: var(--orange); }
+.lbl { margin-top: calc(var(--k) * 10); min-height: calc(var(--f-small) * 2.7); font-size: var(--f-small); line-height: 1.3; }
+.barbox { flex: 1 1 0; min-height: 0; display: flex; align-items: flex-end; margin-top: calc(var(--k) * 14); }
+.barbox i { width: calc(100% - var(--k) * 24); height: var(--v); background: var(--mute-dk); }
+.step:first-child .barbox i { background: var(--stone); }
+.step.is-out .barbox i { background: var(--orange); }
+.results { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: space-between; }
 .results li { display: grid; gap: calc(var(--k) * 8); }
-.results li + li { padding-top: calc(var(--k) * 24); border-top: 1px solid var(--pl); }
-.results b { font-size: var(--x-res); font-weight: 500; line-height: .86; letter-spacing: -.05em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.results li.sm b { font-size: calc(var(--x-res) * .62); }
-.results strong { font-size: var(--x-body); font-weight: 500; letter-spacing: -.012em; line-height: 1.2; }
-.px-b .px-foot { grid-area: foot; max-width: none; }
+.results li + li { padding-top: calc(var(--k) * 20); border-top: 1px solid var(--line); }
+.results b { font-size: calc(var(--k) * 104); font-weight: 500; line-height: .84; letter-spacing: -.055em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.results li.sm b { font-size: calc(var(--k) * 64); }
+.results strong { font-size: var(--f-body); font-weight: 500; letter-spacing: -.012em; line-height: 1.2; }
 
 /* ---------- Modo apresentação ---------- */
 .deck.presenting { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; gap: 0; padding: 0; background: #000000; overflow: hidden; }
@@ -416,38 +369,22 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   .deck:not(.presenting) .rows li, .deck:not(.presenting) .toc li a, .deck:not(.presenting) .spec dl div { padding-block: 10px; }
   .deck:not(.presenting) .row-card { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .deck:not(.presenting) .s-cover .c-photo, .deck:not(.presenting) .s-close .c-photo { aspect-ratio: 4 / 5; }
-  .deck:not(.presenting) .px {
-    --k: .5px;
-    --x-h: 28px;
-    --x-sub: 16px;
-    --x-body: 15px;
-    --x-small: 13px;
-    --x-label: 11px;
-    --x-big: 72px;
-    --x-num: 44px;
-    --x-res: 48px;
-    --rule: 2px;
-    position: static;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    padding: 24px 20px;
-  }
-  .deck:not(.presenting) .px-main { padding: 0; overflow: visible; }
-  .deck:not(.presenting) .px-meta { flex-direction: column; gap: 4px; margin-bottom: 16px; }
-  .deck:not(.presenting) .band { grid-template-columns: minmax(0, 1fr) 4.6rem; row-gap: 8px; }
-  .deck:not(.presenting) .band .bt { grid-column: 1 / -1; }
-  .deck:not(.presenting) .band.is-main .bn b { font-size: 40px; }
-  .deck:not(.presenting) .bn b { font-size: 30px; }
-  .deck:not(.presenting) .px-photo { aspect-ratio: 4 / 3; max-width: 100%; }
-  .deck:not(.presenting) .px-edge { position: static; width: 100%; height: auto; aspect-ratio: 2 / 1; }
-  .deck:not(.presenting) .funnel { grid-template-columns: minmax(0, 1fr); overflow: visible; }
+  .deck:not(.presenting) .big-n { font-size: 84px; }
+  .deck:not(.presenting) .bands, .deck:not(.presenting) .funnel, .deck:not(.presenting) .results { flex: none; grid-auto-rows: auto; }
+  .deck:not(.presenting) .band { padding-block: 12px; }
+  .deck:not(.presenting) .bp { font-size: 34px; }
+  .deck:not(.presenting) .band.is-main .bp { font-size: 46px; }
+  .deck:not(.presenting) .s-pf .c-photo { aspect-ratio: 2 / 1; }
+  .deck:not(.presenting) .funnel { grid-template-columns: minmax(0, 1fr); }
   .deck:not(.presenting) .step + .step { padding-left: 0; border-left: 0; }
-  .deck:not(.presenting) .step { padding-block: 14px; border-top: 1px solid var(--pl); }
+  .deck:not(.presenting) .step { padding-block: 14px; border-top: 1px solid var(--line); }
   .deck:not(.presenting) .rate, .deck:not(.presenting) .lbl { min-height: 0; }
+  .deck:not(.presenting) .step b { font-size: 44px; }
   .deck:not(.presenting) .barbox { flex: none; height: 10px; margin-top: 12px; }
   .deck:not(.presenting) .barbox i { width: var(--v); height: 100%; }
-  .deck:not(.presenting) .results { gap: 18px; overflow: visible; }
+  .deck:not(.presenting) .results { gap: 18px; }
+  .deck:not(.presenting) .results b { font-size: 56px; }
+  .deck:not(.presenting) .results li.sm b { font-size: 38px; }
   .deck:not(.presenting) .head-end { flex-direction: column-reverse; align-items: flex-start; gap: 14px; }
   .deck:not(.presenting) .name { font-size: 52px; }
   .deck:not(.presenting) .bio .lead { font-size: 17px; }
@@ -857,45 +794,60 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 </section>
 
 <!-- 14 · Projeção: investimento de mídia -->
-<section class="slide s-proj" id="projecao-midia" aria-labelledby="tpa">
-  <div class="px px-a">
-    <div class="px-main" data-fit="projeção · mídia">
-      <div class="px-meta"><span class="tag">Projeção · Investimento de mídia</span><span class="mono">Meta Ads · Instagram + Facebook</span></div>
-      <h2 class="px-h" id="tpa">€ 800/mês para construir audiência e gerar oportunidades.</h2>
-      <p class="px-sub">Investimento concentrado em Meta Ads, combinando descoberta, captação de leads e recuperação de interesse.</p>
-      <div class="px-total"><span class="px-big">€ 800</span><span class="mono">por mês · 100%<br>Total Meta Ads</span></div>
-      <ul class="bands" aria-label="Distribuição da verba mensal">
-        <li class="band is-main" style="--v:70%"><span class="track" aria-hidden="true"><i></i></span><span class="bn"><b>70%</b><span>€ 560</span></span><span class="bt"><strong>Aquisição de leads e agendamentos</strong><span>Transformar interesse em contatos e reuniões</span></span></li>
-        <li class="band" style="--v:20%"><span class="track" aria-hidden="true"><i></i></span><span class="bn"><b>20%</b><span>€ 160</span></span><span class="bt"><strong>Audiência e engajamento</strong><span>Ampliar alcance qualificado e alimentar novos públicos</span></span></li>
-        <li class="band" style="--v:10%"><span class="track" aria-hidden="true"><i></i></span><span class="bn"><b>10%</b><span>€ 80</span></span><span class="bt"><strong>Remarketing e recuperação</strong><span>Reimpactar quem interagiu, visitou ou não concluiu uma ação</span></span></li>
+<section class="slide s-pm" id="projecao-midia" aria-labelledby="tpa">
+  <div class="sl">
+    <article class="card c-paper" style="--a:head">
+      <div class="ct"><span class="tag">Projeção · Investimento de mídia</span><span class="chip">Meta Ads · Instagram + Facebook</span></div>
+      <h2 class="s" id="tpa">€ 800/mês para construir audiência e gerar oportunidades.</h2>
+      <p class="lead end">Investimento concentrado em Meta Ads, combinando descoberta, captação de leads e recuperação de interesse.</p>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/projecao-mesa.jpg" alt="Caderno com caneta, amostras de tecido e a ponta de uma trena sobre mesa clara"></figure>
+    <article class="card c-grad" style="--a:big">
+      <div class="ct"><span class="tag">Verba mensal de mídia</span><i class="ico ico--dn"></i></div>
+      <div>
+        <p class="big-n">€ 800</p>
+        <p class="mono" style="margin-top:calc(var(--k) * 16)">por mês · 100% em Meta Ads</p>
+      </div>
+      <p class="small end">Distribuição inicial sugerida. A verba poderá ser realocada conforme o desempenho e o tamanho das audiências disponíveis. Investimento de mídia separado dos honorários de gestão.</p>
+    </article>
+    <article class="card c-dark" style="--a:dist">
+      <div class="ct"><span class="tag">Distribuição da verba</span><span class="mono">€ 560 + € 160 + € 80 = € 800</span></div>
+      <ul class="bands">
+        <li class="band is-main" style="--v:70%"><span class="bt"><strong>Aquisição de leads e agendamentos</strong><span>Transformar interesse em contatos e reuniões</span></span><b class="bp">70%</b><span class="track" aria-hidden="true"><i></i></span><span class="bv">€ 560</span></li>
+        <li class="band" style="--v:20%"><span class="bt"><strong>Audiência e engajamento</strong><span>Ampliar alcance qualificado e alimentar novos públicos</span></span><b class="bp">20%</b><span class="track" aria-hidden="true"><i></i></span><span class="bv">€ 160</span></li>
+        <li class="band" style="--v:10%"><span class="bt"><strong>Remarketing e recuperação</strong><span>Reimpactar quem interagiu, visitou ou não concluiu uma ação</span></span><b class="bp">10%</b><span class="track" aria-hidden="true"><i></i></span><span class="bv">€ 80</span></li>
       </ul>
-      <p class="px-foot">Distribuição inicial sugerida. A verba poderá ser realocada conforme o desempenho e o tamanho das audiências disponíveis. Investimento de mídia separado dos honorários de gestão.</p>
-    </div>
-    <figure class="px-photo"><img src="img/projecao-mesa.jpg" alt="Caderno com caneta, amostras de tecido e a ponta de uma trena sobre mesa clara"></figure>
+    </article>
   </div>
 </section>
 
 <!-- 15 · Projeção: funil e simulação -->
-<section class="slide s-proj" id="projecao-funil" aria-labelledby="tpb">
-  <div class="px px-b">
-    <figure class="px-edge"><img src="img/projecao-cabides.jpg" alt="Cabides e golas de peças em tons de cinza numa arara"></figure>
-    <header class="px-head">
-      <span class="tag">Projeção · Funil e simulação</span>
-      <h2 class="px-h" id="tpb">Da audiência à cliente: um funil orientado à conversão.</h2>
-      <p class="px-sub">Cenário matemático ilustrativo a partir de € 800 mensais em Meta Ads.</p>
-    </header>
-    <ol class="funnel" data-fit="funil" aria-label="Funil do cenário ilustrativo">
-      <li class="step" style="--v:100%"><span class="rate">€ 800 ÷ CPL médio hipotético de € 30</span><b>26,7</b><span class="lbl">leads captados</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-      <li class="step" style="--v:35%"><span class="rate">→ 35% agendam</span><b>9,3</b><span class="lbl">reuniões agendadas</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-      <li class="step" style="--v:26.25%"><span class="rate">→ 75% comparecem</span><b>7,0</b><span class="lbl">reuniões realizadas</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-      <li class="step is-out" style="--v:13.125%"><span class="rate">→ 50% fecham</span><b>3,5</b><span class="lbl">vendas esperadas no modelo</span><span class="barbox" aria-hidden="true"><i></i></span></li>
-    </ol>
-    <ul class="results" data-fit="resultados">
-      <li><b>€ 5.250</b><strong>Receita teórica do cenário</strong><span class="mono">3,5 × ticket médio de € 1.500</span></li>
-      <li><b>6,56x</b><strong>ROAS teórico sobre mídia</strong><span class="mono">€ 5.250 ÷ € 800</span></li>
-      <li class="sm"><b>€ 229</b><strong>CAC teórico de mídia por venda</strong><span class="mono">€ 800 ÷ 3,5</span></li>
-    </ul>
-    <p class="px-foot">Simulação ilustrativa, não previsão de resultados nem garantia de vendas. A formulação de metas e projeções confiáveis dependerá do acesso à documentação da operação, histórico de campanhas, site, métricas de conversão e dados comerciais/CRM da Sara.</p>
+<section class="slide s-pf" id="projecao-funil" aria-labelledby="tpb">
+  <div class="sl">
+    <article class="card c-paper" style="--a:head">
+      <div class="ct"><span class="tag">Projeção · Funil e simulação</span><i class="ico"></i></div>
+      <h2 class="s" id="tpb">Da audiência à cliente: um funil orientado à conversão.</h2>
+      <p class="small end">Cenário matemático ilustrativo a partir de € 800 mensais em Meta Ads.</p>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/projecao-cabides.jpg" alt="Cabides e golas de peças em tons de cinza numa arara"></figure>
+    <article class="card c-dark" style="--a:fun">
+      <div class="ct"><span class="tag">Funil do cenário</span><span class="mono">lead → agendamento → reunião → venda</span></div>
+      <ol class="funnel" aria-label="Funil do cenário ilustrativo">
+        <li class="step" style="--v:100%"><span class="rate">€ 800 ÷ CPL médio hipotético de € 30</span><b>26,7</b><span class="lbl">leads captados</span><span class="barbox" aria-hidden="true"><i></i></span></li>
+        <li class="step" style="--v:35%"><span class="rate"><span class="pill">35%</span> agendam</span><b>9,3</b><span class="lbl">reuniões agendadas</span><span class="barbox" aria-hidden="true"><i></i></span></li>
+        <li class="step" style="--v:26.25%"><span class="rate"><span class="pill">75%</span> comparecem</span><b>7,0</b><span class="lbl">reuniões realizadas</span><span class="barbox" aria-hidden="true"><i></i></span></li>
+        <li class="step is-out" style="--v:13.125%"><span class="rate"><span class="pill">50%</span> fecham</span><b>3,5</b><span class="lbl">vendas esperadas no modelo</span><span class="barbox" aria-hidden="true"><i></i></span></li>
+      </ol>
+      <p class="fun-note">Simulação ilustrativa, não previsão de resultados nem garantia de vendas. A formulação de metas e projeções confiáveis dependerá do acesso à documentação da operação, histórico de campanhas, site, métricas de conversão e dados comerciais/CRM da Sara.</p>
+    </article>
+    <article class="card c-grad" style="--a:res">
+      <div class="ct"><span class="tag">Resultado teórico</span><i class="ico ico--dn"></i></div>
+      <ul class="results">
+        <li><b>€ 5.250</b><strong>Receita teórica do cenário</strong><span class="mono">3,5 × ticket médio de € 1.500</span></li>
+        <li><b>6,56x</b><strong>ROAS teórico sobre mídia</strong><span class="mono">€ 5.250 ÷ € 800</span></li>
+        <li class="sm"><b>€ 229</b><strong>CAC teórico de mídia por venda</strong><span class="mono">€ 800 ÷ 3,5</span></li>
+      </ul>
+    </article>
   </div>
 </section>
 
