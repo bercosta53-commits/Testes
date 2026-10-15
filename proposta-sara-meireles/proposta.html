@@ -124,12 +124,12 @@ img { display: block; }
 .c-grad .tag::before { color: var(--ink); }
 
 /* Ícones desenhados por máscara, na cor do texto */
-.ico, .cap, .ast { display: inline-block; flex: none; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
-.ico { width: var(--ico); height: var(--ico); --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.3'%3E%3Ccircle cx='12' cy='12' r='11'/%3E%3Cpath d='M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8'/%3E%3C/svg%3E"); }
+.ico, .cap, .ast { display: inline-block; flex: none; overflow: visible; }
+.ico { width: var(--ico); height: var(--ico); }
 .ico--dn { transform: rotate(90deg); }
 .ico--bk { transform: rotate(-90deg); }
-.cap { width: 4.4em; height: 1em; vertical-align: -.12em; --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 22' fill='none' stroke='black' stroke-width='1.5'%3E%3Crect x='1' y='1' width='94' height='20' rx='10'/%3E%3Cpath d='M13 11h68M75 6l6 5-6 5'/%3E%3C/svg%3E"); }
-.ast { width: 1em; height: 1em; color: var(--orange); --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='black'%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6'/%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6' transform='rotate(45 12 12)'/%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6' transform='rotate(90 12 12)'/%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6' transform='rotate(135 12 12)'/%3E%3C/g%3E%3C/svg%3E"); }
+.cap { width: 4.4em; height: 1em; vertical-align: -.12em; }
+.ast { width: 1em; height: 1em; color: var(--orange); }
 .c-grad .ast { color: var(--ink); }
 
 /* Tipografia */
@@ -205,16 +205,20 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 .toc a:hover .p { color: var(--orange); }
 
 /* ---------- 4 · Quem conduz ---------- */
-.s-bio { --areas: "pt pt pt pt bio bio bio bio bio bio bio bio" "pt pt pt pt nums nums nums nums nums nums nums nums" "pt pt pt pt traj traj traj traj traj traj traj traj"; --rows: .98fr .62fr 1.26fr; }
+.s-bio { --areas: "pt pt pt pt bio bio bio bio bio bio bio bio" "pt pt pt pt nums nums nums nums nums nums nums nums" "pt pt pt pt brands brands brands brands brands cred cred cred"; --rows: 1fr .56fr 1.14fr; }
 .name { font-size: calc(var(--k) * 100); font-weight: 500; line-height: .92; letter-spacing: -.05em; }
-.bio .lead { max-width: 62ch; font-size: calc(var(--k) * 28); }
+.bio .statement { font-size: calc(var(--k) * 38); max-width: 44ch; }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: 100%; }
 .stats li { display: flex; flex-direction: column; justify-content: space-between; gap: calc(var(--k) * 14); padding-inline: calc(var(--k) * 24); border-left: 1px solid var(--line); }
 .stats li:first-child { padding-left: 0; border-left: 0; }
 .stats b { font-size: calc(var(--k) * 66); font-weight: 500; line-height: .8; letter-spacing: -.05em; color: var(--orange); white-space: nowrap; }
 .stats b small { font-family: var(--mono); font-size: .3em; font-weight: 400; letter-spacing: 0; margin-right: .2em; vertical-align: .9em; color: var(--mute); }
-.traj .rows li { grid-template-columns: calc(var(--k) * 190) minmax(0, 1fr) auto; padding-block: calc(var(--k) * 7); }
-.traj .co { font-family: var(--mono); font-size: var(--f-label); color: var(--mute); text-align: right; }
+.marks { flex: 1 1 0; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; }
+.marks li { display: flex; align-items: center; padding: calc(var(--k) * 10) calc(var(--k) * 16) calc(var(--k) * 10) 0; border-top: 1px solid var(--line); font-size: calc(var(--k) * 30); font-weight: 500; letter-spacing: -.03em; line-height: 1.08; }
+.marks li:nth-child(3n+2), .marks li:nth-child(3n) { padding-left: calc(var(--k) * 20); border-left: 1px solid var(--line); }
+.cred ul { flex: 1 1 0; min-height: 0; display: grid; grid-auto-rows: 1fr; }
+.cred li { display: grid; align-content: center; gap: calc(var(--k) * 6); border-top: 1px solid var(--line); }
+.cred strong { font-size: var(--f-small); font-weight: 500; line-height: 1.25; letter-spacing: -.01em; }
 .initials { font-size: var(--f-big); font-weight: 500; line-height: .78; letter-spacing: -.07em; color: var(--orange); }
 
 /* ---------- 5 · 01 ---------- */
@@ -229,7 +233,9 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 .chan .rows li { grid-template-columns: calc(var(--k) * 30) minmax(0, 1fr); font-size: var(--f-small); padding-block: calc(var(--k) * 8); }
 .vol { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; padding-top: calc(var(--k) * 16); border-top: 1px solid var(--line); }
 .vol-n { font-size: calc(var(--k) * 112); font-weight: 500; line-height: .78; letter-spacing: -.065em; color: var(--orange); }
-.vol-l { display: grid; justify-items: end; gap: calc(var(--k) * 10); text-align: right; }
+.vol-l { text-align: right; line-height: 1.45; }
+.vol-n small { font-family: var(--mono); font-size: var(--f-label); font-weight: 400; letter-spacing: .03em; color: var(--mute); margin-right: calc(var(--k) * 8); }
+.chan-id { display: grid; justify-items: start; gap: calc(var(--k) * 14); }
 
 /* ---------- 7 · 03 ---------- */
 .s-03 { --areas: "head head head head look look look look rem rem rem rem"; --rows: 1fr; }
@@ -243,8 +249,6 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 
 /* ---------- 10 · 06 ---------- */
 .s-06 { --areas: "head head head k1 k1 k1 k2 k2 k2 k3 k3 k3" "head head head k4 k4 k4 k5 k5 k5 k6 k6 k6" "head head head note note note note note note note note note"; --rows: 1fr 1fr .56fr; }
-.flow { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--k) * 10) calc(var(--k) * 12); font-family: var(--mono); font-size: var(--f-label); color: var(--mute); }
-.flow .cap { color: var(--orange); }
 .kpi.c-grad .tag { color: var(--brown); }
 
 /* ---------- 11 · 07 ---------- */
@@ -256,13 +260,14 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 .sheet .group th::before { content: "+ "; color: var(--orange); }
 .sheet td { padding: calc(var(--k) * 11) calc(var(--k) * 24) calc(var(--k) * 11) 0; font-size: var(--f-small); line-height: 1.3; }
 .sheet td:first-child { width: calc(var(--k) * 80); font-family: var(--mono); font-size: var(--f-label); color: var(--mute); }
-.sheet td:last-child { width: calc(var(--k) * 300); padding-right: 0; font-family: var(--mono); font-style: italic; font-size: var(--f-small); }
+.sheet td:last-child { width: calc(var(--k) * 360); padding-right: 0; font-family: var(--mono); font-style: italic; font-size: var(--f-small); }
 .sheet-wrap { flex: 1 1 0; overflow-x: auto; }
 .sheet-wrap .sheet { height: 100%; }
 
 /* ---------- 12 · 08 ---------- */
 .s-08 { --areas: "h8 h8 h8 h8 p1 p1 p1 p1 p2 p2 p2 p2" "ph ph ph ph p1 p1 p1 p1 p2 p2 p2 p2"; --rows: .8fr 1.2fr; }
 .person .lead { font-size: var(--f-body); color: var(--mute); }
+.person .ct { align-items: flex-start; }
 
 /* ---------- 13 · 09 ---------- */
 .s-09 { --areas: "h9 h9 h9 h9 h9 h9 price price price price price price" "conds conds conds conds conds conds price price price price price price"; --rows: .82fr 1.18fr; }
@@ -387,12 +392,15 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   .deck:not(.presenting) .results li.sm b { font-size: 38px; }
   .deck:not(.presenting) .head-end { flex-direction: column-reverse; align-items: flex-start; gap: 14px; }
   .deck:not(.presenting) .name { font-size: 52px; }
-  .deck:not(.presenting) .bio .lead { font-size: 17px; }
+  .deck:not(.presenting) .bio .statement { font-size: 22px; }
   .deck:not(.presenting) .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 0; }
   .deck:not(.presenting) .stats li:nth-child(odd) { padding-left: 0; border-left: 0; }
   .deck:not(.presenting) .stats b { font-size: 40px; }
-  .deck:not(.presenting) .traj .rows li { grid-template-columns: 6.5rem minmax(0, 1fr); }
-  .deck:not(.presenting) .traj .co { grid-column: 2; text-align: left; }
+  .deck:not(.presenting) .marks, .deck:not(.presenting) .cred ul { flex: none; grid-auto-rows: auto; }
+  .deck:not(.presenting) .marks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .deck:not(.presenting) .marks li { min-height: 52px; font-size: 17px; padding: 8px 12px 8px 0; border-left: 0; }
+  .deck:not(.presenting) .marks li:nth-child(even) { padding-left: 12px; border-left: 1px solid var(--line); }
+  .deck:not(.presenting) .cred li { padding-block: 10px; }
   .deck:not(.presenting) .price-n { font-size: 96px; }
   .deck:not(.presenting) .manifesto { font-size: 32px; }
   .deck:not(.presenting) .sheet-wrap { flex: none; }
@@ -422,7 +430,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   <span class="mono deck-title">Proposta · Sara Meireles · Estratégia e Gestão de Aquisição Digital</span>
   <span class="mono hint">← → para navegar</span>
   <span class="mono" id="count">16 slides</span>
-  <button type="button" class="btn" id="present">Apresentar <i class="ico ico--dn"></i></button>
+  <button type="button" class="btn" id="present">Apresentar <svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></button>
 </header>
 
 <!-- 1 · Capa -->
@@ -436,7 +444,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
           <div><span class="mono">Para</span><strong>Sara Meireles</strong><span class="mono">Consultoria de Estilo e Imagem</span></div>
           <div><span class="mono">Por</span><strong>Bernardo Costa</strong><span class="mono">Estratégia e Gestão de Aquisição</span></div>
         </div>
-        <i class="ast" aria-hidden="true"></i>
+        <svg class="ast" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="10.4" width="3.2" height="24" rx="1.6"/><rect x="10.4" width="3.2" height="24" rx="1.6" transform="rotate(45 12 12)"/><rect x="10.4" width="3.2" height="24" rx="1.6" transform="rotate(90 12 12)"/><rect x="10.4" width="3.2" height="24" rx="1.6" transform="rotate(135 12 12)"/></svg>
       </div>
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/capa-retrato.jpg" alt="Retrato em preto e branco: gola alta preta, brinco de prata e mão próxima ao pescoço" style="object-position:50% 30%"></figure>
@@ -447,7 +455,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-obj" id="objetivo" aria-label="Objetivo">
   <div class="sl">
     <article class="card c-paper obj" style="--a:obj">
-      <div class="ct"><span class="tag">Objetivo</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Objetivo</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <p class="statement end">Desenvolver e executar uma estratégia de aquisição digital para ampliar a <span class="pill">visibilidade</span> da Sara junto ao público qualificado, gerar novas <span class="pill">oportunidades</span> comerciais e aumentar as vendas de consultorias e mentorias online.</p>
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/objetivo-rua.jpg" alt="Mulher de blazer e calça de alfaiataria caminhando na rua com um café e uma bolsa"></figure>
@@ -495,11 +503,11 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <!-- 4 · Quem conduz -->
 <section class="slide s-bio" id="quem-conduz" aria-label="Quem conduz">
   <div class="sl">
-    <figure class="card c-photo" style="--a:pt"><img src="img/perfil-bernardo.jpg" alt="Bernardo Costa sentado em uma poltrona, em um escritório" style="object-position:50% 40%"></figure>
+    <figure class="card c-photo" style="--a:pt"><img src="img/perfil-bernardo.jpg" alt="Retrato de Bernardo Costa em um escritório" style="object-position:50% 30%"></figure>
     <article class="card c-paper bio" style="--a:bio">
-      <div class="ct"><span class="tag">Quem conduz · Estratégia, Planejamento &amp; Growth</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Quem conduz</span><span class="mono">Head de Estratégia &amp; Crescimento · Velora</span></div>
       <h2 class="name">Bernardo Costa</h2>
-      <p class="lead end">15+ anos conectando estratégia, performance e execução em growth e aquisição, em operações B2B e B2C, na agência, dentro da empresa e como consultor.</p>
+      <p class="statement end">15+ anos conectando estratégia, performance e execução para transformar investimento em mídia em <span class="pill">resultado de negócio.</span></p>
     </article>
     <article class="card c-dark" style="--a:nums">
       <ul class="stats" aria-label="Números da trajetória">
@@ -509,16 +517,22 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
         <li><b>15</b><span class="mono">pessoas em times liderados</span></li>
       </ul>
     </article>
-    <article class="card c-stone traj" style="--a:traj">
-      <div class="ct"><span class="tag">Trajetória</span><span class="mono">MBA ESPM · Professor na Escola Conquer</span></div>
-      <ol class="rows fill sm">
-        <li><span class="i">2026 — hoje</span><span>Head de Estratégia &amp; Crescimento</span><span class="co">Velora</span></li>
-        <li><span class="i">2024 — 2025</span><span>Head Sênior de Growth</span><span class="co">Villela Brasil Bank</span></li>
-        <li><span class="i">2020 — 2023</span><span>Head of Marketing</span><span class="co">Brivia</span></li>
-        <li><span class="i">2018 — 2020</span><span>Head of Marketing · Growth &amp; Digital</span><span class="co">Trinto Digital Partners</span></li>
-        <li><span class="i">2016 — 2018</span><span>Head de Digital</span><span class="co">Competence Comunicação</span></li>
-        <li><span class="i">Contas</span><span>Unimed, ThyssenKrupp, JBL, Colcci, Panvel, Cassol e Grupo Paquetá</span><span class="co"></span></li>
-      </ol>
+    <article class="card c-stone brands" style="--a:brands">
+      <span class="tag">Marcas e operações</span>
+      <ul class="marks">
+        <li>Unimed</li><li>ThyssenKrupp</li><li>JBL</li>
+        <li>Colcci</li><li>Panvel</li><li>Cassol</li>
+        <li>Grupo Paquetá</li><li>Villela Brasil Bank</li><li>Brivia</li>
+      </ul>
+      <p class="mono">Varejo, saúde, serviços financeiros e tecnologia · B2B e B2C</p>
+    </article>
+    <article class="card c-grad cred" style="--a:cred">
+      <span class="tag">Credenciais</span>
+      <ul>
+        <li><strong>Report direto a CEOs e CMOs</strong><span class="mono">desde 2018</span></li>
+        <li><strong>Agência, empresa e consultoria</strong><span class="mono">visão das três pontas</span></li>
+        <li><strong>Professor na Escola Conquer</strong><span class="mono">100+ aulas · MBA ESPM</span></li>
+      </ul>
     </article>
   </div>
 </section>
@@ -527,12 +541,9 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-01" id="planejamento" aria-labelledby="t01">
   <div class="sl">
     <article class="card c-paper head" style="--a:head">
-      <div class="ct"><span class="tag">Capítulo 01 — Estratégia</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Estratégia</span><span class="cnum s">01</span></div>
       <h2 class="s" id="t01">Planejamento e estratégia de aquisição</h2>
-      <div class="head-end end">
-        <p class="lead">Definição e evolução da estratégia de crescimento digital, considerando o posicionamento da Sara, seus produtos e o perfil de suas potenciais clientes.</p>
-        <span class="cnum">01</span>
-      </div>
+      <p class="lead end">Definição e evolução da estratégia de crescimento digital, considerando o posicionamento da Sara, seus produtos e o perfil de suas potenciais clientes.</p>
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/planejamento-berlim.jpg" alt="Consultora apresentando um moodboard em sala de reunião com vista para Berlim" style="object-position:44% 50%"></figure>
     <article class="card c-dark" style="--a:acts">
@@ -546,7 +557,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
       </ol>
     </article>
     <article class="card c-grad aud" style="--a:aud">
-      <div class="ct"><span class="tag">Públicos prioritários</span><i class="ico ico--dn"></i></div>
+      <div class="ct"><span class="tag">Públicos prioritários</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <p class="statement">Segmentação de públicos prioritários, incluindo:</p>
       <div class="pills end">
         <span class="pill-o">Empreendedoras</span>
@@ -563,8 +574,8 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-02" id="trafego" aria-labelledby="t02">
   <div class="sl">
     <article class="card c-paper" style="--a:head">
-      <div class="ct"><span class="tag">Capítulo 02 — Mídia paga</span><span class="cnum s">02</span></div>
-      <h2 id="t02">Gestão e execução de tráfego pago</h2>
+      <div class="ct"><span class="tag">Mídia paga</span><span class="cnum s">02</span></div>
+      <h2 class="s" id="t02">Gestão e execução de tráfego pago</h2>
       <div class="end">
         <p class="lead">Planejamento, configuração, ativação e otimização de campanhas.</p>
         <p class="small" style="margin-top:calc(var(--k) * 10)">Meta Ads é o canal principal. Google Ads e TikTok Ads são avaliados na estratégia e já estão incluídos no pacote, caso sejam ativados.</p>
@@ -572,22 +583,22 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/midia-berlim.jpg" alt="Mulher de casaco preto caminhando entre colunas" style="object-position:20% 50%"></figure>
     <article class="card c-dark chan" style="--a:meta">
-      <div class="ct"><span class="tag">Aquisição e conversão</span><span class="chip">canal principal</span></div>
-      <h3>Meta Ads<small>Instagram e Facebook</small></h3>
+      <span class="tag">Aquisição e conversão</span>
+      <div class="chan-id"><h3>Meta Ads<small>Instagram e Facebook</small></h3><span class="chip">canal principal</span></div>
       <p class="small">Principal ambiente de aquisição, relacionamento e conversão, utilizando conteúdos da Sara para alcançar e desenvolver audiências qualificadas.</p>
-      <div class="vol end"><span class="vol-n">20</span><span class="vol-l"><i class="cap" aria-hidden="true"></i><span class="mono">Até 20 patrocínios/mês</span></span></div>
+      <div class="vol end"><span class="vol-n"><small>até</small>20</span><span class="mono vol-l">patrocínios<br>por mês</span></div>
     </article>
     <article class="card c-paper chan" style="--a:goo">
-      <div class="ct"><span class="tag">Demanda qualificada</span><span class="chip chip--o">se ativado</span></div>
-      <h3>Google Ads<small>Rede de pesquisa</small></h3>
+      <span class="tag">Demanda qualificada</span>
+      <div class="chan-id"><h3>Google Ads<small>Rede de pesquisa</small></h3><span class="chip chip--o">se ativado</span></div>
       <p class="small">Captação de demanda qualificada de pessoas que já demonstram interesse por serviços de consultoria de estilo, imagem pessoal e mentorias relacionadas.</p>
-      <div class="vol end"><span class="vol-n">01</span><span class="vol-l"><i class="cap" aria-hidden="true"></i><span class="mono">1 campanha ativa · incluso</span></span></div>
+      <div class="vol end"><span class="vol-n">01</span><span class="mono vol-l">campanha<br>ativa</span></div>
     </article>
     <article class="card c-stone chan" style="--a:tik">
-      <div class="ct"><span class="tag">Alcance e descoberta</span><span class="chip chip--o">se ativado</span></div>
-      <h3>TikTok Ads<small>Conteúdos em vídeo</small></h3>
+      <span class="tag">Alcance e descoberta</span>
+      <div class="chan-id"><h3>TikTok Ads<small>Conteúdos em vídeo</small></h3><span class="chip chip--o">se ativado</span></div>
       <p class="small">Ampliação de alcance, descoberta de marca e construção de novas audiências a partir de conteúdos em vídeo.</p>
-      <div class="vol end"><span class="vol-n">10</span><span class="vol-l"><i class="cap" aria-hidden="true"></i><span class="mono">Até 10 patrocínios/mês · incluso</span></span></div>
+      <div class="vol end"><span class="vol-n"><small>até</small>10</span><span class="mono vol-l">patrocínios<br>por mês</span></div>
     </article>
   </div>
 </section>
@@ -596,7 +607,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-03" id="audiencias" aria-labelledby="t03">
   <div class="sl">
     <article class="card c-dark" style="--a:head">
-      <div class="ct"><span class="tag">Capítulo 03 — Audiências</span><span class="cnum s">03</span></div>
+      <div class="ct"><span class="tag">Audiências</span><span class="cnum s">03</span></div>
       <h2 class="s" id="t03">Inteligência de audiências, Lookalike e Remarketing</h2>
       <p class="lead">Construção e evolução de públicos para melhorar a eficiência da aquisição e reduzir desperdícios no investimento.</p>
       <div class="inset end">
@@ -605,7 +616,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
       </div>
     </article>
     <article class="card c-paper" style="--a:look">
-      <div class="ct"><span class="tag">Expandir alcance</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Expandir alcance</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <h3>Prospecção e públicos semelhantes <span class="pill">Lookalike</span></h3>
       <ol class="rows fill sm">
         <li><span class="i">A</span><span>Públicos por interesses, comportamentos e características demográficas.</span></li>
@@ -616,7 +627,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
       </ol>
     </article>
     <article class="card c-grad" style="--a:rem">
-      <div class="ct"><span class="tag">Recuperar interesse</span><i class="ico ico--bk"></i></div>
+      <div class="ct"><span class="tag">Recuperar interesse</span><svg class="ico ico--bk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <h3>Remarketing e <span class="pill">Retargeting</span></h3>
       <ol class="rows fill sm">
         <li><span class="i">A</span><span>Pessoas que interagiram com conteúdos ou perfis sociais.</span></li>
@@ -633,13 +644,13 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-04" id="jornada" aria-labelledby="t04">
   <div class="sl">
     <article class="card c-grad" style="--a:h4">
-      <div class="ct"><span class="tag">Capítulo 04 — Conversão</span><span class="cnum s">04</span></div>
+      <div class="ct"><span class="tag">Conversão</span><span class="cnum s">04</span></div>
       <h2 class="s" id="t04">Otimização da jornada de aquisição e conversão</h2>
       <p class="lead">Acompanharemos a experiência da potencial cliente desde o primeiro contato com a Sara até a oportunidade comercial e a venda.</p>
       <p class="statement end">O trabalho não termina no <span class="pill">clique.</span></p>
     </article>
     <article class="card c-paper" style="--a:i4">
-      <div class="ct"><span class="tag">Frentes de atuação</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Frentes de atuação</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <ol class="rows fill sm">
         <li><span class="i">4.1</span><span>Avaliação dos conteúdos e anúncios que melhor conduzem visitantes ao site.</span></li>
         <li><span class="i">4.2</span><span>Análise da experiência nas páginas de destino.</span></li>
@@ -658,12 +669,12 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   <div class="sl">
     <figure class="card c-photo" style="--a:ph"><img src="img/inbound-paleta.jpg" alt="Cartela de cores, brincos de prata, xícara de café e trena sobre a mesa"></figure>
     <article class="card c-dark" style="--a:h5">
-      <div class="ct"><span class="tag">Capítulo 05 — Inbound</span><span class="cnum s">05</span></div>
+      <div class="ct"><span class="tag">Inbound</span><span class="cnum s">05</span></div>
       <h2 class="s" id="t05">Inbound Marketing e materiais interativos</h2>
       <p class="lead end">Apoio estratégico na criação de novas oportunidades de captação de leads qualificados, especialmente no meio do funil de aquisição.</p>
     </article>
     <article class="card c-stone" style="--a:i5">
-      <div class="ct"><span class="tag">Possibilidades de desenvolvimento</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Possibilidades de desenvolvimento</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <ol class="rows fill sm">
         <li><span class="i">5.1</span><span>Testes e diagnósticos de estilo e imagem pessoal.</span></li>
         <li><span class="i">5.2</span><span>Questionários de autoconhecimento e necessidades de imagem.</span></li>
@@ -683,18 +694,16 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-06" id="indicadores" aria-labelledby="t06">
   <div class="sl">
     <article class="card c-paper" style="--a:head">
-      <div class="ct"><span class="tag">Capítulo 06 — Mensuração</span><i class="ico"></i></div>
-      <span class="cnum">06</span>
+      <div class="ct"><span class="tag">Mensuração</span><span class="cnum s">06</span></div>
       <h2 class="s" id="t06">Indicadores, mensuração e otimização</h2>
-      <p class="small">Acompanhamento contínuo das campanhas e dos indicadores, orientado à eficiência do investimento e à geração de receita.</p>
-      <p class="flow end" aria-label="Etapas da jornada">Anúncio <i class="cap"></i> Página <i class="cap"></i> Lead <i class="cap"></i> Reunião <i class="cap"></i> Venda <i class="cap"></i> Retorno</p>
+      <p class="small end">Acompanhamento contínuo das campanhas e dos indicadores, orientado à eficiência do investimento e à geração de receita.</p>
     </article>
-    <article class="card c-dark kpi" style="--a:k1"><div class="ct"><span class="tag">01 · Anúncio</span><i class="ico"></i></div><h3>CPC e CTR</h3><p class="small end">Avaliar eficiência de anúncios e mensagens</p></article>
-    <article class="card c-stone kpi" style="--a:k2"><div class="ct"><span class="tag">02 · Página</span><i class="ico"></i></div><h3>Taxa de conversão</h3><p class="small end">Melhorar o aproveitamento do tráfego</p></article>
-    <article class="card c-dark kpi" style="--a:k3"><div class="ct"><span class="tag">03 · Lead</span><i class="ico"></i></div><h3>CPL</h3><p class="small end">Reduzir custo de aquisição de leads</p></article>
-    <article class="card c-paper kpi" style="--a:k4"><div class="ct"><span class="tag">04 · Reunião</span><i class="ico"></i></div><h3>Custo por reunião</h3><p class="small end">Aumentar a eficiência comercial</p></article>
-    <article class="card c-dark kpi" style="--a:k5"><div class="ct"><span class="tag">05 · Venda</span><i class="ico"></i></div><h3>Custo por fechamento / CAC</h3><p class="small end">Mensurar o investimento para conquistar clientes</p></article>
-    <article class="card c-grad kpi" style="--a:k6"><div class="ct"><span class="tag">06 · Retorno</span><i class="ico"></i></div><h3>ROAS</h3><p class="small end">Avaliar retorno sobre investimento em publicidade</p></article>
+    <article class="card c-dark kpi" style="--a:k1"><div class="ct"><span class="tag">01 · Anúncio</span></div><h3>CPC e CTR</h3><p class="small end">Avaliar eficiência de anúncios e mensagens</p></article>
+    <article class="card c-stone kpi" style="--a:k2"><div class="ct"><span class="tag">02 · Página</span></div><h3>Taxa de conversão</h3><p class="small end">Melhorar o aproveitamento do tráfego</p></article>
+    <article class="card c-dark kpi" style="--a:k3"><div class="ct"><span class="tag">03 · Lead</span></div><h3>CPL</h3><p class="small end">Reduzir custo de aquisição de leads</p></article>
+    <article class="card c-paper kpi" style="--a:k4"><div class="ct"><span class="tag">04 · Reunião</span></div><h3>Custo por reunião</h3><p class="small end">Aumentar a eficiência comercial</p></article>
+    <article class="card c-dark kpi" style="--a:k5"><div class="ct"><span class="tag">05 · Venda</span></div><h3>Custo por fechamento / CAC</h3><p class="small end">Mensurar o investimento para conquistar clientes</p></article>
+    <article class="card c-grad kpi" style="--a:k6"><div class="ct"><span class="tag">06 · Retorno</span></div><h3>ROAS</h3><p class="small end">Avaliar retorno sobre investimento em publicidade</p></article>
     <article class="card c-black row-card" style="--a:note">
       <span class="tag">Atribuição</span>
       <p class="small">Os indicadores de vendas e ROAS serão acompanhados conforme a disponibilidade dos dados comerciais e a capacidade de atribuição das conversões. A análise alimentará decisões recorrentes de investimento, segmentação, conteúdos, canais e otimização da jornada.</p>
@@ -706,20 +715,20 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-07" id="entregaveis" aria-labelledby="t07">
   <div class="sl">
     <article class="card c-paper" style="--a:head">
-      <div class="ct"><span class="tag">Capítulo 07 — Entregas</span><span class="cnum s">07</span></div>
-      <h2 id="t07">Entregáveis mensais</h2>
+      <div class="ct"><span class="tag">Entregas</span><span class="cnum s">07</span></div>
+      <h2 class="s" id="t07">Entregáveis mensais</h2>
       <p class="small end">Os patrocínios representam ativações de conteúdos, não a produção de novas peças. O volume será distribuído conforme a estratégia, os resultados e a verba disponível.</p>
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/entregas-loft.jpg" alt="Loft claro com arara de blazers e espelho encostado na parede"></figure>
     <article class="card c-paper" style="--a:table">
-      <div class="ct"><span class="tag">Entregáveis e volumes</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Entregáveis e volumes</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <div class="sheet-wrap">
         <table class="sheet">
           <thead><tr><th scope="col">Ref.</th><th scope="col">Entregável</th><th scope="col">Volume</th></tr></thead>
           <tbody>
             <tr class="group"><th colspan="3" scope="colgroup">Ativação de mídia</th></tr>
             <tr><td>7.1</td><td>Patrocínios de conteúdos em Meta Ads (Instagram/Facebook)</td><td>Até 20/mês</td></tr>
-            <tr><td>7.2</td><td>Gestão de campanha no Google Ads</td><td>1 campanha ativa, se ativado</td></tr>
+            <tr><td>7.2</td><td>Gestão de campanha no Google Ads</td><td>1 campanha, se ativado</td></tr>
             <tr><td>7.3</td><td>Patrocínios de conteúdos no TikTok</td><td>Até 10/mês, se ativado</td></tr>
             <tr class="group"><th colspan="3" scope="colgroup">Estratégia e otimização</th></tr>
             <tr><td>7.4</td><td>Estratégia, segmentações e testes de audiências</td><td>Contínuos</td></tr>
@@ -741,12 +750,12 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-08" id="equipe" aria-labelledby="t08">
   <div class="sl">
     <article class="card c-stone" style="--a:h8">
-      <div class="ct"><span class="tag">Capítulo 08 — Equipe</span><span class="cnum s">08</span></div>
-      <h2 class="end" id="t08">Equipe responsável</h2>
+      <div class="ct"><span class="tag">Equipe</span><span class="cnum s">08</span></div>
+      <h2 class="s end" id="t08">Equipe responsável</h2>
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/equipe-consultoria.jpg" alt="Duas mulheres analisando amostras de tecido e cartelas de cor em uma mesa"></figure>
     <article class="card c-dark person" style="--a:p1">
-      <div class="ct"><span class="initials" aria-hidden="true">BC</span><i class="ico"></i></div>
+      <div class="ct"><span class="initials" aria-hidden="true">BC</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <div class="end">
         <h3>Bernardo Costa</h3>
         <p style="margin-block:calc(var(--k) * 16) calc(var(--k) * 24)"><span class="chip">Estratégia e Gestão de Aquisição</span></p>
@@ -754,7 +763,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
       </div>
     </article>
     <article class="card c-dark person" style="--a:p2">
-      <div class="ct"><span class="initials" aria-hidden="true">FM</span><i class="ico"></i></div>
+      <div class="ct"><span class="initials" aria-hidden="true">FM</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <div class="end">
         <h3>Felipe Mazuolo</h3>
         <p style="margin-block:calc(var(--k) * 16) calc(var(--k) * 24)"><span class="chip">Operação e Tecnologia de Mídia</span></p>
@@ -768,8 +777,8 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-09" id="investimento" aria-labelledby="t09">
   <div class="sl">
     <article class="card c-paper" style="--a:h9">
-      <div class="ct"><span class="tag">Capítulo 09 — Investimento</span><span class="cnum s">09</span></div>
-      <h2 id="t09">Investimento</h2>
+      <div class="ct"><span class="tag">Honorários</span><span class="cnum s">09</span></div>
+      <h2 class="s" id="t09">Investimento</h2>
       <p class="lead end">O investimento contempla a estratégia, gestão e execução da mídia, acompanhamento de indicadores, análises de conversão, reuniões e relacionamento contínuo com a equipe.</p>
     </article>
     <article class="card c-dark" style="--a:conds">
@@ -783,7 +792,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
       </ol>
     </article>
     <article class="card c-grad" style="--a:price">
-      <div class="ct"><span class="tag">Honorários mensais</span><i class="ico ico--dn"></i></div>
+      <div class="ct"><span class="tag">Honorários mensais</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <div class="end">
         <p class="price-n"><small>R$</small>3.500</p>
         <p class="per">por mês</p>
@@ -803,7 +812,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/projecao-mesa.jpg" alt="Caderno com caneta, amostras de tecido e a ponta de uma trena sobre mesa clara"></figure>
     <article class="card c-grad" style="--a:big">
-      <div class="ct"><span class="tag">Verba mensal de mídia</span><i class="ico ico--dn"></i></div>
+      <div class="ct"><span class="tag">Verba mensal de mídia</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <div>
         <p class="big-n">€ 800</p>
         <p class="mono" style="margin-top:calc(var(--k) * 16)">por mês · 100% em Meta Ads</p>
@@ -825,7 +834,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-pf" id="projecao-funil" aria-labelledby="tpb">
   <div class="sl">
     <article class="card c-paper" style="--a:head">
-      <div class="ct"><span class="tag">Projeção · Funil e simulação</span><i class="ico"></i></div>
+      <div class="ct"><span class="tag">Projeção · Funil e simulação</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <h2 class="s" id="tpb">Da audiência à cliente: um funil orientado à conversão.</h2>
       <p class="small end">Cenário matemático ilustrativo a partir de € 800 mensais em Meta Ads.</p>
     </article>
@@ -841,7 +850,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
       <p class="fun-note">Simulação ilustrativa, não previsão de resultados nem garantia de vendas. A formulação de metas e projeções confiáveis dependerá do acesso à documentação da operação, histórico de campanhas, site, métricas de conversão e dados comerciais/CRM da Sara.</p>
     </article>
     <article class="card c-grad" style="--a:res">
-      <div class="ct"><span class="tag">Resultado teórico</span><i class="ico ico--dn"></i></div>
+      <div class="ct"><span class="tag">Resultado teórico</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <ul class="results">
         <li><b>€ 5.250</b><strong>Receita teórica do cenário</strong><span class="mono">3,5 × ticket médio de € 1.500</span></li>
         <li><b>6,56x</b><strong>ROAS teórico sobre mídia</strong><span class="mono">€ 5.250 ÷ € 800</span></li>
@@ -855,11 +864,11 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
 <section class="slide s-close" id="abordagem" aria-labelledby="t10">
   <div class="sl">
     <article class="card c-grad man" style="--a:man">
-      <div class="ct"><span class="tag" id="t10">Nossa abordagem</span><i class="ico ico--dn"></i></div>
+      <div class="ct"><span class="tag" id="t10">Nossa abordagem</span><svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg></div>
       <blockquote class="manifesto">Mais do que anunciar conteúdos, queremos construir uma operação de aquisição que <span class="it">aprenda, evolua e gere negócios.</span></blockquote>
       <div class="sign end">
         <div><strong>Bernardo Costa</strong><span class="mono">Estratégia e Gestão de Aquisição · Outubro 2026</span></div>
-        <i class="ast" aria-hidden="true"></i>
+        <svg class="ast" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="10.4" width="3.2" height="24" rx="1.6"/><rect x="10.4" width="3.2" height="24" rx="1.6" transform="rotate(45 12 12)"/><rect x="10.4" width="3.2" height="24" rx="1.6" transform="rotate(90 12 12)"/><rect x="10.4" width="3.2" height="24" rx="1.6" transform="rotate(135 12 12)"/></svg>
       </div>
     </article>
     <figure class="card c-photo" style="--a:ph"><img src="img/abordagem-espelho.jpg" alt="Reflexo de uma mulher no espelho ao lado de um blazer pendurado"></figure>
@@ -903,7 +912,7 @@ h3 { font-size: var(--f-h3); font-weight: 500; line-height: 1.08; letter-spacing
   }
   function stop() {
     deck.classList.remove('presenting');
-    btn.innerHTML = 'Apresentar <i class="ico ico--dn"></i>';
+    btn.innerHTML = 'Apresentar <svg class="ico ico--dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8"/></svg>';
     count.textContent = `${slides.length} slides`;
     slides[cur].scrollIntoView({ block: 'start' });
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
