@@ -40,22 +40,34 @@ async function open(viewport, colorScheme) {
   await page.setContent(html, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
   const missing = await page.evaluate(() =>
-    ['16px "Bodoni Moda"', '16px Jost', '16px "DM Mono"'].filter(f => !document.fonts.check(f)));
+    ['800 16px Archivo', '500 16px "IBM Plex Mono"'].filter(f => !document.fonts.check(f)));
   if (missing.length) console.warn('Fonts not loaded:', missing.join(', '));
   return page;
 }
 
-const pdfPage = await open({ width: 1240, height: 1754 }, 'light');
+// Lay out at the A4 sheet's own width (210 mm at 96 dpi) so script-measured sizes match the PDF.
+const pdfPage = await open({ width: 794, height: 1123 }, 'light');
 await pdfPage.emulateMedia({ media: 'print', colorScheme: 'light' });
+// The page fits its cover title and draws its dash fields from the laid-out sizes,
+// so redo that for the A4 layout, then flag any plate whose content outgrows its page.
+const overflowing = await pdfPage.evaluate(async () => {
+  const frame = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  await frame();
+  window.__layout?.();
+  await frame();
+  return [...document.querySelectorAll('.plate > .inner')]
+    .map((el, i) => ({ page: i + 1, over: el.scrollHeight - el.clientHeight }))
+    .filter(p => p.over > 1);
+});
+for (const { page, over } of overflowing) console.warn(`page ${page}: content overflows by ${over}px`);
 await pdfPage.pdf({ path: OUT, printBackground: true, preferCSSPageSize: true });
 console.log('PDF ->', path.relative(process.cwd(), OUT));
 
 if (SHOTS) {
   fs.mkdirSync(SHOTS, { recursive: true });
   for (const [name, viewport, scheme] of [
-    ['desktop-light', { width: 1440, height: 900 }, 'light'],
-    ['desktop-dark', { width: 1440, height: 900 }, 'dark'],
-    ['mobile-light', { width: 390, height: 844 }, 'light'],
+    ['desktop', { width: 1440, height: 900 }, 'dark'],
+    ['mobile', { width: 390, height: 844 }, 'dark'],
   ]) {
     const page = await open(viewport, scheme);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
