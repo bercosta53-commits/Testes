@@ -3,39 +3,43 @@
 <meta name="description" content="Proposta de Estratégia e Gestão de Aquisição Digital para Sara Meireles, Consultoria de Estilo e Imagem.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-/* Layout: dossiê de passarela — placas full-bleed em grade modular com filetes, nenhuma célula vazia;
-   o campo de traços laranja é o único gesto alto. Tema único, grafite + concreto + laranja sinal, por decisão. */
+/* Layout: quadro de agência — cada página é um mosaico de cards (papel, pedra, grafite, gradiente laranja, foto P&B)
+   sobre fundo grafite, separados por um vão de 8px; nenhum vazio, cada card preenche sua célula.
+   Tema único por decisão: o quadro é sempre grafite. */
 :root {
-  --ink-0: #121212;
-  --ink-1: #1C1C1B;
-  --line-dk: #343432;
-  --ash: #9A9A95;
-  --paper: #EDEDE9;
-  --concrete: #D9D8D3;
-  --concrete-hi: #E4E3DE;
-  --line-lt: #B6B5AF;
-  --ash-dk: #565652;
-  --orange: #FF5A1A;
-  --orange-ink: #3D1606;
-  --orange-line: #D9470C;
+  --board: #151515;
+  --char: #252524;
+  --black: #0C0C0C;
+  --paper: #F3F2EE;
+  --stone: #E2DED7;
+  --ink: #121212;
+  --mute-lt: #625F5A;
+  --mute-dk: #A7A49E;
+  --line-lt: #CDC8BF;
+  --line-dk: #3B3B39;
+  --orange: #FF4F1A;
+  --brown: #4A1C0B;
+  --line-or: #B8542E;
+  --grad: linear-gradient(158deg, #FF4F1A 0%, #FF6B2E 34%, #F79E73 66%, #EAD9CC 100%);
 
-  --display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sans: "Host Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
 
-  --fs-num: clamp(4.5rem, 8.5vw, 8rem);
-  --fs-h2: clamp(1.75rem, 3vw, 2.75rem);
-  --fs-h3: clamp(1.2rem, 1.7vw, 1.55rem);
-  --fs-statement: clamp(1.5rem, 3vw, 2.65rem);
-  --fs-big: clamp(3rem, 5.5vw, 5.25rem);
-  --fs-lead: 1.1rem;
-  --fs-body: 1rem;
-  --fs-small: .9rem;
-  --fs-label: .7rem;
-  --gap: clamp(18px, 2.2vw, 28px);
-  --pad: clamp(16px, 2vw, 26px);
-  --step: 38px;
+  --t-label: .72rem;
+  --t-small: .9rem;
+  --t-body: .98rem;
+  --t-lead: 1.12rem;
+  --t-h3: clamp(1.3rem, 1.8vw, 1.65rem);
+  --t-h2: clamp(1.95rem, 3.3vw, 3.15rem);
+  --t-statement: clamp(1.5rem, 2.6vw, 2.4rem);
+  --t-num: clamp(3.6rem, 6vw, 5.6rem);
+  --t-big: clamp(4rem, 7vw, 6.4rem);
+  --t-hero: clamp(2.7rem, 5.4vw, 5.1rem);
+  --gap: 8px;
+  --pad: clamp(18px, 2vw, 28px);
 
   color-scheme: dark;
 }
@@ -43,857 +47,713 @@
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 body {
-  background: var(--ink-0);
+  background: var(--board);
   color: var(--paper);
-  font-family: var(--display);
-  font-size: var(--fs-body);
-  line-height: 1.5;
+  font-family: var(--sans);
+  font-size: var(--t-body);
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, p, ul, ol, dl, dd, blockquote, figure { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 a { color: inherit; text-decoration: none; }
+img { display: block; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-::selection { background: var(--orange); color: var(--ink-0); }
+::selection { background: var(--orange); color: var(--ink); }
 
-.plate { background: var(--p-bg); color: var(--p-fg); }
-.plate--dark   { --p-bg: var(--ink-0);    --p-fg: var(--paper); --p-mute: var(--ash);        --p-line: var(--line-dk);     --p-tile: var(--ink-1); }
-.plate--light  { --p-bg: var(--concrete); --p-fg: var(--ink-0); --p-mute: var(--ash-dk);     --p-line: var(--line-lt);     --p-tile: var(--concrete-hi); }
-.plate--orange { --p-bg: var(--orange);   --p-fg: var(--ink-0); --p-mute: var(--orange-ink); --p-line: var(--orange-line); --p-tile: var(--orange); }
-
-.inner {
-  max-width: 1320px;
-  margin-inline: auto;
+.doc { padding-block: 16px 24px; }
+.page {
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: clamp(24px, 3.4vw, 44px) clamp(48px, 6vw, 88px);
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap);
 }
+.page + .page { margin-top: var(--gap); }
 @media (min-width: 720px) {
-  .inner {
-    padding-left: max(40px, env(safe-area-inset-left, 0px));
-    padding-right: max(40px, env(safe-area-inset-right, 0px));
+  .doc { padding-block: 24px 40px; }
+  .page {
+    padding-left: max(24px, env(safe-area-inset-left, 0px));
+    padding-right: max(24px, env(safe-area-inset-right, 0px));
   }
 }
-
-.label {
-  font-family: var(--mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: .16em;
-  line-height: 1.45;
-  text-transform: uppercase;
-  color: var(--p-mute);
-}
-.wide { font-size: var(--fs-label); letter-spacing: .36em; line-height: 1.6; color: var(--p-fg); }
-
-/* Faixas superior e inferior de cada placa */
-.strip {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--p-line);
-}
-.strip--foot { display: none; align-items: baseline; border-bottom: 0; border-top: 1px solid var(--p-line); padding: 10px 0 0; }
-.strip--keep { display: flex; }
-.pg { font-weight: 800; font-stretch: 125%; font-size: .85rem; color: var(--p-fg); }
-.strip--keep .pg, .pg-ref { display: none; }
-
-/* Grade de células com filete de 1px */
-.cells { display: grid; gap: 1px; background: var(--p-line); border: 1px solid var(--p-line); }
-.cells > * { background: var(--p-bg); padding: var(--pad); min-width: 0; }
-.cells--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.cells--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.cells--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.tile { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; min-height: 8.5rem; }
-
-.list { display: grid; gap: 8px; }
-.list li { position: relative; padding-left: 18px; line-height: 1.45; text-wrap: pretty; }
-.list li::before { content: ""; position: absolute; left: 0; top: .5em; width: 6px; height: 6px; background: var(--orange); }
-
-.field { position: relative; overflow: hidden; color: var(--orange); }
-.field svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.plate--orange .field { color: var(--ink-0); }
-
-mark {
-  background: var(--orange);
-  color: var(--ink-0);
-  padding: 0 .14em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
-/* ---------- Capa ---------- */
-.cover-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; }
-.cover-top > :nth-child(2) { text-align: center; }
-.cover-top > :last-child { justify-self: end; }
-.kicker {
-  font-stretch: 125%;
-  font-weight: 500;
-  text-transform: uppercase;
-  font-size: clamp(1rem, 2.1vw, 1.8rem);
-  letter-spacing: .01em;
-  margin-bottom: .4em;
-}
-.cover h1 { font-weight: 800; font-stretch: 125%; text-transform: uppercase; letter-spacing: -.025em; }
-.fit { display: block; width: max-content; white-space: nowrap; line-height: .84; font-size: clamp(3rem, 11vw, 10rem); }
-.dot { color: var(--orange); }
-.cover-body { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-.cover-meta { display: grid; gap: 1px; background: var(--p-line) !important; padding: 0 !important; }
-.cover-meta > div { background: var(--p-bg); padding: var(--pad); display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
-.cover-meta dd { display: grid; gap: 6px; }
-.cover-meta strong { display: block; font-stretch: 125%; font-weight: 700; font-size: var(--fs-h3); line-height: 1.1; text-transform: uppercase; letter-spacing: -.01em; }
-.cover-meta span { color: var(--p-mute); font-size: var(--fs-small); }
-.cover-field { min-height: 380px; padding: 0 !important; }
-
-/* ---------- Objetivo ---------- */
-.statement {
-  font-size: var(--fs-statement);
-  font-weight: 600;
-  font-stretch: 108%;
-  line-height: 1.12;
-  letter-spacing: -.015em;
-  text-wrap: pretty;
-  max-width: 34ch;
-}
-.obj-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--gap); align-items: stretch; }
-.obj-text { display: flex; flex-direction: column; justify-content: space-between; gap: 18px; padding-top: 4px; }
-.obj-text p:last-child { font-size: var(--fs-lead); line-height: 1.5; }
-.spec > div { display: grid; align-content: space-between; gap: 10px; }
-.spec dd { font-size: var(--fs-small); line-height: 1.4; }
-.toc > li { padding: 0; }
-.toc a { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; height: 100%; min-height: 7.5rem; padding: var(--pad); transition: background .2s ease; }
-.toc a:hover { background: var(--p-tile); }
-.toc .n { font-weight: 800; font-stretch: 125%; font-size: 2.2rem; line-height: 1; display: flex; justify-content: space-between; align-items: baseline; }
-.toc .t { font-weight: 600; font-size: var(--fs-small); line-height: 1.3; text-wrap: balance; }
-
-/* ---------- Cabeçalho de capítulo ---------- */
-.ch-head { grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 4fr); }
-.ch-head--2 { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
-.ch-head > .ch-tile { background: var(--ink-1); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; min-height: 11rem; }
-.plate--light .ch-head > .ch-tile { background: var(--ink-0); }
-.ch-tile .label { color: var(--ash); }
-.ch-num { font-size: var(--fs-num); font-weight: 800; font-stretch: 125%; line-height: .78; letter-spacing: -.04em; color: var(--orange); }
-.ch-title { display: flex; align-items: flex-end; }
-.ch-title h2 {
-  font-size: var(--fs-h2);
-  font-weight: 700;
-  font-stretch: 112%;
-  line-height: 1.02;
-  letter-spacing: -.02em;
-  text-wrap: balance;
-}
-.ch-lead { display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; font-size: var(--fs-lead); line-height: 1.45; text-wrap: pretty; }
-.pull { font-stretch: 125%; font-weight: 700; text-transform: uppercase; font-size: var(--fs-h3); line-height: 1.08; letter-spacing: -.01em; }
-
-/* ---------- 01 ---------- */
-.rows-head { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--p-line); }
-.rows li {
+.board {
+  max-width: 1320px;
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 13rem);
-  gap: 16px;
-  align-items: baseline;
-  padding-block: 15px;
-  border-bottom: 1px solid var(--p-line);
-  font-size: var(--fs-lead);
-  line-height: 1.4;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas: var(--areas);
+  grid-template-rows: var(--rows);
+  gap: var(--gap);
 }
-.idx { font-family: var(--mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
-.plate--light .idx { color: var(--ash-dk); }
-.key { justify-self: end; text-align: right; font-stretch: 125%; font-weight: 700; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--p-mute); }
-.seg-block { display: flex; flex-direction: column; }
-.seg-intro { margin-bottom: 12px; }
-.seg { min-height: 10rem; }
-.seg-top { display: flex; justify-content: space-between; align-items: center; }
-.seg-top i { width: 8px; height: 8px; background: var(--orange); }
-.seg strong { font-stretch: 108%; font-weight: 800; font-size: 1.02rem; line-height: 1.12; text-transform: uppercase; letter-spacing: -.005em; text-wrap: balance; }
+.board > * { grid-area: var(--a); }
 
-/* ---------- 02 ---------- */
-.channel { display: flex; flex-direction: column; gap: 16px; }
-.chan-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 1.6rem; }
-.chip { font-family: var(--mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; background: var(--orange); color: var(--ink-0); padding: 3px 8px; }
-.chan-name { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: var(--fs-h3); line-height: 1; letter-spacing: -.01em; }
-.chan-name small { display: block; margin-top: 8px; font-family: var(--mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: .14em; color: var(--p-mute); }
-.chan-desc { color: var(--p-mute); font-size: var(--fs-small); line-height: 1.45; text-wrap: pretty; }
-.channel .list { font-size: var(--fs-small); }
-.chan-field { flex: 1 1 auto; min-height: 130px; margin-inline: calc(var(--pad) * -1); border-block: 1px solid var(--p-line); --step: 24px; }
-.vol { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
-.vol-n { font-stretch: 125%; font-weight: 800; font-size: var(--fs-big); line-height: .8; letter-spacing: -.04em; }
-.vol-l { text-align: right; }
+/* ---------- Cards ---------- */
+.card { position: relative; display: flex; flex-direction: column; gap: 14px; padding: var(--pad); min-width: 0; overflow: hidden; }
+.card > .end { margin-top: auto; }
+.c-paper { background: var(--paper); color: var(--ink); --mute: var(--mute-lt); --line: var(--line-lt); }
+.c-stone { background: var(--stone); color: var(--ink); --mute: var(--mute-lt); --line: var(--line-lt); }
+.c-dark  { background: var(--char);  color: var(--paper); --mute: var(--mute-dk); --line: var(--line-dk); }
+.c-black { background: var(--black); color: var(--paper); --mute: var(--mute-dk); --line: var(--line-dk); }
+.c-grad  { background: var(--grad);  color: var(--ink); --mute: var(--brown); --line: var(--line-or); }
+.c-orange { background: var(--orange); color: var(--ink); --mute: var(--brown); --line: var(--line-or); }
+.c-photo { padding: 0; background: var(--black); min-height: 220px; }
+.c-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-/* ---------- 03 ---------- */
-.aud { display: flex; flex-direction: column; gap: 14px; }
-.aud h3 { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: var(--fs-h3); line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; }
-.aud .list { font-size: var(--fs-small); }
-.aud .field { flex: 1 1 auto; min-height: 170px; margin: 6px calc(var(--pad) * -1) calc(var(--pad) * -1); border-top: 1px solid var(--p-line); --step: 30px; }
-.note { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 1px; background: var(--p-line); border: 1px solid var(--p-line); }
-.note > * { background: var(--p-bg); padding: 14px var(--pad); }
-.note p:last-child { color: var(--p-mute); font-size: var(--fs-small); line-height: 1.45; }
+.ct { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.tag { font-family: var(--mono); font-size: var(--t-label); letter-spacing: .03em; line-height: 1.4; color: var(--mute); }
+.tag::before { content: "+ "; color: var(--orange); }
+.c-grad .tag::before, .c-orange .tag::before { color: var(--ink); }
+.mono { font-family: var(--mono); font-size: var(--t-label); letter-spacing: .03em; color: var(--mute); }
 
-/* ---------- 04 + 05 ---------- */
-.half { display: flex; flex-direction: column; gap: 0; }
-.half > .cells + .cells { border-top: 0; }
-.item { min-height: 7.5rem; }
-.item p { font-size: var(--fs-small); line-height: 1.4; text-wrap: pretty; }
-.item > .idx, .cond-n { font-family: var(--display); font-stretch: 125%; font-weight: 800; font-size: 1.7rem; line-height: .9; letter-spacing: -.03em; color: var(--p-fg); text-transform: none; }
-.item--scope > .idx { font-family: var(--mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
-.items > .item--scope { background: var(--ink-0); color: var(--paper); }
-.item--scope .idx { color: var(--orange) !important; }
+/* Ícones desenhados por máscara, na cor do texto */
+.ico, .cap, .ast { display: inline-block; flex: none; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+.ico { width: 22px; height: 22px; --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.3'%3E%3Ccircle cx='12' cy='12' r='11'/%3E%3Cpath d='M8.6 15.4l6.8-6.8M9.6 8.6h5.8v5.8'/%3E%3C/svg%3E"); }
+.ico--dn { transform: rotate(90deg); }
+.ico--bk { transform: rotate(-90deg); }
+.cap { width: 4.4em; height: 1em; vertical-align: -.12em; --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 22' fill='none' stroke='black' stroke-width='1.5'%3E%3Crect x='1' y='1' width='94' height='20' rx='10'/%3E%3Cpath d='M13 11h68M75 6l6 5-6 5'/%3E%3C/svg%3E"); }
+.ast { width: 1em; height: 1em; color: var(--orange); --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='black'%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6'/%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6' transform='rotate(45 12 12)'/%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6' transform='rotate(90 12 12)'/%3E%3Crect x='10.4' y='0' width='3.2' height='24' rx='1.6' transform='rotate(135 12 12)'/%3E%3C/g%3E%3C/svg%3E"); }
 
-/* ---------- 06 ---------- */
-.flow { height: 120px; border: 1px solid var(--p-line); --step: 26px; }
-.flow-labels { display: flex; justify-content: space-between; padding-top: 8px; }
-.kpi { min-height: 9.5rem; }
-.kpi strong { display: block; font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: var(--fs-h3); line-height: 1.02; letter-spacing: -.01em; margin-bottom: 8px; text-wrap: balance; }
-.kpi p { color: var(--p-mute); font-size: var(--fs-small); line-height: 1.4; }
+/* Tipografia */
+h1 { font-size: var(--t-hero); font-weight: 500; line-height: .98; letter-spacing: -.045em; text-wrap: balance; }
+h2 { font-size: var(--t-h2); font-weight: 500; line-height: 1.02; letter-spacing: -.04em; text-wrap: balance; }
+h3 { font-size: var(--t-h3); font-weight: 500; line-height: 1.08; letter-spacing: -.03em; text-wrap: balance; }
+.lead { font-size: var(--t-lead); line-height: 1.42; letter-spacing: -.012em; text-wrap: pretty; max-width: 48ch; }
+.statement { font-size: var(--t-statement); font-weight: 400; line-height: 1.16; letter-spacing: -.035em; text-wrap: pretty; }
+.it { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.01em; }
+.small { font-size: var(--t-small); line-height: 1.45; color: var(--mute); text-wrap: pretty; }
+.pill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-style: italic;
+  font-weight: 400;
+  font-size: .8em;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  padding: .06em .55em .12em;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #FFFFFF;
+  white-space: nowrap;
+  vertical-align: .04em;
+}
+.c-grad .pill, .c-orange .pill { background: var(--ink); color: var(--paper); }
+.pill-o { display: inline-flex; align-items: center; border: 1.5px solid currentColor; border-radius: 999px; padding: .38em .95em .42em; font-size: var(--t-body); line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--mono); font-style: italic; font-size: var(--t-label); background: var(--orange); color: var(--ink); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
 
-/* ---------- 07 ---------- */
-.sum { min-height: 8.5rem; }
-.sum-n { font-stretch: 125%; font-weight: 800; font-size: var(--fs-big); line-height: .8; letter-spacing: -.04em; }
-.sum-n small { display: block; font-family: var(--mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; color: var(--p-mute); }
-.sum .label { color: var(--p-fg); }
-.sheet-wrap { overflow-x: auto; }
+/* Cabeçalho de capítulo */
+.head h2 { max-width: 15ch; }
+.head-end { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
+.cnum { font-size: var(--t-num); font-weight: 500; line-height: .8; letter-spacing: -.06em; color: var(--orange); }
+.c-grad .cnum, .c-orange .cnum { color: var(--ink); }
+
+/* Linhas numeradas */
+.rows li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding-block: 11px; border-top: 1px solid var(--line); line-height: 1.38; }
+.rows li:last-child { border-bottom: 1px solid var(--line); }
+.rows .i { font-family: var(--mono); font-size: var(--t-label); color: var(--mute); }
+.rows .ico { width: 16px; height: 16px; align-self: center; color: var(--mute); }
+.rows.fill, .toc ol, .spec dl { flex: 1 1 auto; display: grid; grid-auto-rows: 1fr; }
+.rows.fill li, .toc li a, .spec dl div { align-items: center; }
+.toc li a { height: 100%; }
+.rows--2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+.rows--2 li:nth-last-child(2) { border-bottom: 1px solid var(--line); }
+.rows--2 li:nth-last-child(2):nth-child(even) { border-bottom: 0; }
+
+/* ---------- Página 1 · Capa ---------- */
+.p-cover {
+  --areas: "hero hero hero hero hero hero hero ph ph ph ph ph" "hero hero hero hero hero hero hero ph ph ph ph ph" "hero hero hero hero hero hero hero meta meta meta meta meta" "ch ch ch ch dt dt dt dt fr fr fr fr";
+  --rows: 210px 210px auto auto;
+  --rows-print: 1fr 1fr .64fr .38fr;
+}
+.hero h1 { margin-top: 28px; max-width: 11ch; }
+.hero-end { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.hero-end strong { display: block; font-size: var(--t-h3); font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
+.hero-end .ast { font-size: 3.2rem; color: var(--ink); }
+.meta dl { display: grid; gap: 14px; }
+.meta dl div { display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.meta dd { font-size: var(--t-h3); font-weight: 500; letter-spacing: -.03em; line-height: 1.08; }
+.meta dd small { display: block; margin-top: 4px; font-size: var(--t-small); font-weight: 400; letter-spacing: 0; color: var(--mute); }
+.dt-big { font-size: var(--t-h3); font-weight: 500; letter-spacing: -.03em; display: flex; align-items: center; gap: 12px; }
+
+/* ---------- Página 2 · Objetivo ---------- */
+.p-obj {
+  --areas: "obj obj obj obj obj obj obj obj ph ph ph ph" "obj obj obj obj obj obj obj obj ph ph ph ph" "spec spec spec spec spec toc toc toc toc toc toc toc";
+  --rows: minmax(250px, auto) minmax(150px, auto) auto;
+  --rows-print: .92fr .48fr 1.3fr;
+}
+.obj .statement { max-width: 30ch; }
+.obj-how { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.spec dl div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 12px; padding-block: 10px; border-top: 1px solid var(--line); }
+.spec dl div:last-child { border-bottom: 1px solid var(--line); }
+.spec dt { font-family: var(--mono); font-size: var(--t-label); color: var(--mute); padding-top: .15em; }
+.spec dd { font-size: var(--t-small); line-height: 1.38; }
+.toc li a { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; gap: 12px; align-items: center; padding-block: 8px; border-top: 1px solid var(--line); transition: padding .2s ease; }
+.toc li:last-child a { border-bottom: 1px solid var(--line); }
+.toc .n { font-family: var(--mono); font-size: var(--t-label); color: var(--mute); }
+.toc .t { font-size: var(--t-body); letter-spacing: -.015em; }
+.toc .ico { width: 16px; height: 16px; }
+.toc a:hover { padding-left: 6px; }
+.toc a:hover .ico { color: var(--orange); }
+
+/* ---------- Página 3 · 01 ---------- */
+.p-01 {
+  --areas: "head head head head head head head ph ph ph ph ph" "acts acts acts acts acts acts acts aud aud aud aud aud";
+  --rows: minmax(330px, auto) auto;
+  --rows-print: 1fr 1.2fr;
+}
+.aud .statement { font-size: var(--t-h3); }
+.aud .pill-o { font-size: 1.05rem; }
+
+/* ---------- Página 4 · 02 ---------- */
+.p-02 {
+  --areas: "head head head head head head head ph ph ph ph ph" "meta meta meta meta goo goo goo goo tik tik tik tik";
+  --rows: minmax(300px, auto) auto;
+  --rows-print: .64fr 1.58fr;
+}
+.chan h3 small { display: block; margin-top: 6px; font-family: var(--mono); font-size: var(--t-label); font-weight: 400; letter-spacing: .03em; color: var(--mute); }
+.chan .rows li { grid-template-columns: 1.4rem minmax(0, 1fr); padding-block: 8px; font-size: var(--t-small); }
+.vol { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.vol-n { font-size: var(--t-big); font-weight: 500; line-height: .78; letter-spacing: -.065em; color: var(--orange); }
+.vol-l { display: grid; justify-items: end; gap: 8px; text-align: right; }
+
+/* ---------- Página 5 · 03 ---------- */
+.p-03 {
+  --areas: "ph ph ph ph ph head head head head head head head" "look look look look look look rem rem rem rem rem rem" "note note note note note note note note note note note note";
+  --rows: minmax(320px, auto) auto auto;
+  --rows-print: .95fr 1.4fr .2fr;
+}
+.note { flex-direction: row; align-items: center; gap: 24px; }
+.note .small { max-width: 90ch; }
+
+/* ---------- Página 6 · 04 + 05 ---------- */
+.p-0405 {
+  --areas: "h4 h4 h4 h4 h4 i4 i4 i4 i4 i4 i4 i4" "ph ph ph ph h5 h5 h5 h5 h5 h5 h5 h5" "scope scope scope scope scope scope scope scope scope scope scope scope";
+  --rows: auto auto auto;
+  --rows-print: 1fr 1.08fr .2fr;
+}
+.h4 .statement { font-size: var(--t-h3); }
+.h5-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 24px; align-items: end; }
+.p-0405 .c-photo { min-height: 300px; }
+
+/* ---------- Página 7 · 06 ---------- */
+.p-06 {
+  --areas: "head head head head head head head head ph ph ph ph" "k1 k1 k1 k1 k2 k2 k2 k2 k3 k3 k3 k3" "k4 k4 k4 k4 k5 k5 k5 k5 k6 k6 k6 k6" "note note note note note note note note note note note note";
+  --rows: minmax(300px, auto) auto auto auto;
+  --rows-print: 1fr .6fr .6fr .22fr;
+}
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-family: var(--mono); font-size: var(--t-label); color: var(--mute); }
+.flow .cap { color: var(--orange); }
+.kpi { min-height: 190px; }
+.kpi h3 { font-size: clamp(1.5rem, 2.2vw, 2.05rem); }
+
+/* ---------- Página 8 · 07 ---------- */
+.p-07 {
+  --areas: "head head head head head head head ph ph ph ph ph" "sums sums sums sums sums sums sums sums sums sums sums sums" "table table table table table table table table table table table table";
+  --rows: minmax(290px, auto) auto auto;
+  --rows-print: .64fr .46fr 1.4fr;
+}
+.sums-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.sum { display: flex; flex-direction: column; justify-content: space-between; gap: 18px; padding-inline: 18px; border-left: 1px solid var(--line); }
+.sum:first-child { padding-left: 0; border-left: 0; }
+.sum b { font-size: var(--t-big); font-weight: 500; line-height: .78; letter-spacing: -.065em; color: var(--orange); }
+.sum b small { font-family: var(--mono); font-size: var(--t-label); font-weight: 400; letter-spacing: .03em; color: var(--mute); margin-right: 6px; }
 .sheet { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.sheet th, .sheet td { text-align: left; border-bottom: 1px solid var(--p-line); }
-.sheet thead th { padding: 0 0 10px; }
-.sheet .group th { padding: 18px 0 8px; color: var(--p-fg); }
-.sheet td { padding: 10px 20px 10px 0; font-size: var(--fs-small); line-height: 1.35; vertical-align: baseline; }
-.sheet td:first-child { white-space: nowrap; width: 3.5rem; }
-.sheet td:last-child { padding-right: 0; width: 15rem; font-stretch: 125%; font-weight: 700; text-transform: uppercase; font-size: .78rem; letter-spacing: .02em; }
+.sheet th, .sheet td { text-align: left; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+.sheet thead th { font-family: var(--mono); font-size: var(--t-label); font-weight: 400; color: var(--mute); padding: 0 0 10px; }
+.sheet .group th { font-family: var(--mono); font-size: var(--t-label); font-weight: 400; padding: 16px 0 8px; }
+.sheet .group th::before { content: "+ "; color: var(--orange); }
+.sheet td { padding: 9px 20px 9px 0; font-size: var(--t-small); line-height: 1.35; }
+.sheet td:first-child { width: 3.6rem; font-family: var(--mono); font-size: var(--t-label); color: var(--mute); }
+.sheet td:last-child { width: 14rem; padding-right: 0; font-family: var(--mono); font-style: italic; font-size: var(--t-small); }
+.sheet-wrap { overflow-x: auto; }
 
-/* ---------- 08 + 09 ---------- */
-.person { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--pad); }
-.portrait { position: relative; aspect-ratio: 4 / 5; max-width: 100%; background: var(--ink-1); border: 1px solid var(--p-line); overflow: hidden; }
-.portrait .field { position: absolute; top: 0; left: 0; width: 72%; height: 46%; --step: 22px; }
-.portrait b { position: absolute; left: 12px; bottom: 6px; font-stretch: 125%; font-weight: 800; font-size: 3.6rem; line-height: 1; letter-spacing: -.04em; color: var(--paper); }
-.person-txt { display: flex; flex-direction: column; gap: 10px; }
-.person-txt h3 { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: var(--fs-h3); line-height: 1.02; letter-spacing: -.01em; }
-.person-txt .label { color: var(--orange); }
-.person-txt p:last-child { color: var(--p-mute); font-size: var(--fs-small); line-height: 1.45; text-wrap: pretty; }
-.invest { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-.invest > .price-tile { background: var(--orange); color: var(--ink-0); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; min-height: 16rem; }
-.price-tile .label { color: var(--orange-ink); }
-.price { font-stretch: 125%; font-weight: 800; line-height: .8; letter-spacing: -.04em; font-size: calc(var(--fs-big) * 1.25); display: flex; align-items: flex-start; gap: .12em; }
-.price small { font-size: .28em; letter-spacing: 0; margin-top: .25em; }
-.price-sub { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--orange-line); padding-top: 10px; }
-.price-sub span:first-child { font-stretch: 125%; font-weight: 700; text-transform: uppercase; font-size: .8rem; }
-.invest > .conds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--p-line); padding: 0; }
-.conds > li { background: var(--p-bg); padding: var(--pad); display: flex; flex-direction: column; justify-content: space-between; gap: 18px; font-size: var(--fs-small); line-height: 1.42; }
+/* ---------- Página 9 · 08 + 09 ---------- */
+.p-0809 {
+  --areas: "h8 h8 h8 h8 p1 p1 p1 p1 p2 p2 p2 p2" "h9 h9 h9 h9 h9 h9 h9 price price price price price" "conds conds conds conds conds conds conds price price price price price";
+  --rows: auto auto auto;
+  --rows-print: .98fr .55fr .85fr;
+}
+.h8 .ast { font-size: 2.6rem; }
+.initials { font-size: var(--t-big); font-weight: 500; line-height: .8; letter-spacing: -.07em; color: var(--orange); }
+.person .chip { align-self: flex-start; }
+.price-n { display: flex; align-items: flex-start; gap: .1em; font-size: var(--t-big); font-weight: 500; line-height: .82; letter-spacing: -.06em; }
+.price-n small { font-family: var(--mono); font-size: .22em; font-weight: 400; letter-spacing: 0; margin-top: .3em; }
+.price .per { font-family: var(--serif); font-style: italic; font-size: var(--t-h3); }
+.conds .rows li { grid-template-columns: 2.4rem minmax(0, 1fr); font-size: var(--t-small); }
 
-/* ---------- Encerramento ---------- */
-.manifesto {
-  font-weight: 700;
-  font-stretch: 112%;
-  font-size: clamp(2rem, 4.6vw, 4.25rem);
-  line-height: 1;
-  letter-spacing: -.03em;
-  text-wrap: balance;
-  max-width: 20ch;
+/* ---------- Página 10 · Abordagem ---------- */
+.p-close {
+  --areas: "man man man man man man man man ph ph ph ph" "man man man man man man man man ph ph ph ph" "t1 t1 t1 t1 t2 t2 t2 t2 sig sig sig sig";
+  --rows: 230px 230px auto;
+  --rows-print: 1fr 1fr .5fr;
 }
-.closing-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-.closing-text { display: flex; flex-direction: column; gap: 18px; }
-.closing-text p { font-size: var(--fs-lead); line-height: 1.45; }
-.closing-grid > .closing-field { padding: 0; min-height: 360px; --step: 32px; }
-.sign { display: grid; gap: 6px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--p-line); }
-.sign strong { display: block; font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: var(--fs-h2); line-height: .95; letter-spacing: -.03em; }
+.manifesto { font-size: clamp(2rem, 4vw, 3.9rem); font-weight: 400; line-height: 1.02; letter-spacing: -.045em; text-wrap: balance; max-width: 17ch; }
+.man .ast { font-size: 3.6rem; color: var(--ink); }
+.sig strong { font-size: var(--t-h3); font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
 
-/* ---------- Telas médias e estreitas ---------- */
-@media screen and (max-width: 1100px) {
-  .cells--5 { grid-template-columns: minmax(0, 1fr); }
-  .seg { min-height: 0; flex-direction: row; align-items: baseline; justify-content: flex-start; gap: 16px; }
-  .seg-top i { display: none; }
-  .sum { min-height: 0; flex-direction: row; align-items: flex-end; justify-content: space-between; }
-  .sum .sum-n { order: 2; }
+/* ---------- Telas estreitas: o mosaico vira uma coluna ---------- */
+@media screen and (max-width: 900px) {
+  .board { display: flex; flex-direction: column; }
+  .c-photo { min-height: 0; aspect-ratio: 4 / 3; max-width: 100%; }
+  .p-0405 .c-photo { min-height: 0; }
+  .hero { min-height: 420px; }
+  .man { min-height: 380px; }
+  .obj-how, .h5-grid { grid-template-columns: minmax(0, 1fr); }
+  .rows.fill, .toc ol, .spec dl { grid-auto-rows: auto; }
+  .note { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
-@media screen and (max-width: 1000px) {
-  .ch-head { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
-  .ch-head > .ch-lead { grid-column: 1 / -1; }
-  .channels, .kpis, .items, .closing-grid, .invest, .obj-grid { grid-template-columns: minmax(0, 1fr); }
-}
-@media screen and (max-width: 720px) {
-  .cover-top { grid-template-columns: 1fr auto; row-gap: 10px; }
-  .cover-top > :nth-child(2) { text-align: right; }
-  .cover-top > :last-child { grid-column: 1 / -1; justify-self: start; }
-  .cover-body, .ch-head, .ch-head--2, .cells--2, .cells--3, .note, .invest > .conds { grid-template-columns: minmax(0, 1fr); }
-  .ch-head > .ch-lead { grid-column: auto; }
-  .cover-field { min-height: 260px; }
-  .ch-head > .ch-tile { min-height: 0; flex-direction: row; align-items: flex-end; justify-content: space-between; }
-  .ch-num { font-size: 4.5rem; }
-  .rows li { grid-template-columns: 3rem minmax(0, 1fr); }
-  .rows .key { grid-column: 2; justify-self: start; text-align: left; }
-  .person { grid-template-columns: 7.5rem minmax(0, 1fr); }
-  .portrait b { font-size: 2.2rem; }
+@media screen and (max-width: 600px) {
+  .rows--2 { grid-template-columns: minmax(0, 1fr); }
+  .rows--2 li:nth-last-child(2) { border-bottom: 0; }
+  .sums-grid { grid-template-columns: minmax(0, 1fr); }
+  .sum { flex-direction: row; align-items: flex-end; padding: 12px 0; border-left: 0; border-top: 1px solid var(--line); }
+  .sum:first-child { border-top: 0; padding-top: 0; }
   .sheet td:first-child, .sheet thead th:first-child { display: none; }
-  .sheet td:last-child { width: 8.5rem; }
-  .toc a { min-height: 0; flex-direction: row; align-items: baseline; justify-content: flex-start; }
-  .toc .n { font-size: 1.2rem; min-width: 2.6rem; }
-  .tile, .item, .kpi { min-height: 0; }
+  .sheet td:last-child { width: 8rem; }
+  .spec dl div { grid-template-columns: 5.5rem minmax(0, 1fr); }
+  .head-end { flex-direction: column-reverse; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toc a { transition: none; }
+  .toc li a { transition: none; }
 }
 
-/* ---------- PDF A4: uma placa por página, cada placa preenche a folha ---------- */
+/* ---------- PDF A4: uma página por folha, mosaico preenchendo a folha ---------- */
 @page { size: A4; margin: 0; }
 @media print {
   :root {
-    --fs-num: 88px;
-    --fs-h2: 25px;
-    --fs-h3: 15px;
-    --fs-statement: 29px;
-    --fs-big: 52px;
-    --fs-lead: 12px;
-    --fs-body: 11px;
-    --fs-small: 10px;
-    --fs-label: 7px;
-    --gap: 12px;
-    --pad: 12px;
-    --step: 24px;
+    --t-label: 8px;
+    --t-small: 11.5px;
+    --t-body: 12px;
+    --t-lead: 14px;
+    --t-h3: 22px;
+    --t-h2: 40px;
+    --t-statement: 27px;
+    --t-num: 72px;
+    --t-big: 88px;
+    --t-hero: 64px;
+    --gap: 6px;
+    --pad: 18px;
   }
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .plate { height: 297mm; overflow: hidden; break-after: page; }
-  .plate > .inner { height: 100%; max-width: none; padding: 10mm 11mm 8mm; }
-  .strip { padding-bottom: 8px; }
-  .strip--foot { display: flex; margin-top: auto; }
-  .strip--keep .pg, .pg-ref { display: inline; }
-  .grow { flex: 1 1 0; min-height: 0; }
-  .cells.grow { grid-auto-rows: 1fr; }
-  .tile, .seg, .item, .kpi, .sum { min-height: 0; }
-  .cover-field { min-height: 0; }
-  .kicker { font-size: 19px; }
-  .cover-meta { grid-auto-rows: 1fr; }
-  .ch-head > .ch-tile { min-height: 0; gap: 14px; }
-  .rows-block { display: flex; flex-direction: column; }
-  .rows-block .rows { flex: 1 1 0; display: grid; grid-auto-rows: 1fr; }
-  .rows li { padding-block: 6px; align-items: center; font-size: 15px; grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 9rem); }
-  .seg { height: 30mm; }
-  .seg strong { font-stretch: 100%; font-size: 12.5px; }
-  nav.grow { display: flex; flex-direction: column; }
-  .toc { flex: 1 1 0; grid-auto-rows: 1fr; }
-  .toc a { min-height: 0; }
-  .toc .n { font-size: 40px; }
-  .chan-field { min-height: 0; --step: 18px; }
-  .channel .list, .chan-desc { font-size: 10.5px; }
-  .item > .idx, .cond-n { font-size: 30px; }
-  .item p { font-size: 12.5px; }
-  .kpi strong { font-size: 21px; }
-  .kpi p { font-size: 11px; }
-  .sum-n { font-size: 60px; }
-  .sum { height: 33mm; }
+  .doc { padding: 0; }
+  .page { height: 297mm; padding: 7mm; margin: 0 !important; break-after: page; overflow: hidden; }
+  .board { height: 100%; max-width: none; grid-template-rows: var(--rows-print); }
+  .card { gap: 10px; }
+  .c-photo, .kpi, .p-0405 .c-photo { min-height: 0; }
+  .rows li { padding-block: 7px; }
+  .rows.fill, .toc ol, .spec dl { flex: 1 1 0; }
+  .h5-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .obj .statement { font-size: 30px; }
+  .chan .rows li { padding-block: 5px; }
+  .sheet-wrap.end { flex: 1 1 0; }
   .sheet { height: 100%; }
-  .flow-wrap { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
-  .flow-wrap .flow { flex: 1 1 0; height: auto; }
-  .kpi { height: 38mm; }
-  .invest > .conds { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr; }
-  .conds > li { flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; }
-  .cond-n { min-width: 46px; }
-  .cover-meta strong { font-size: 20px; }
-  .toc .t { font-size: 13px; }
-  .price { font-size: 72px; }
-  .conds > li { font-size: 11.5px; }
-  .closing-text p { font-size: 15px; }
-  .chan-name small { margin-top: 5px; }
-  .aud .field { min-height: 0; }
-  .flow { --step: 20px; }
-  .portrait b { font-size: 34px; }
-  .portrait .field { --step: 14px; }
-  .invest > .price-tile { min-height: 0; }
-  .manifesto { font-size: 54px; }
-  .closing-grid > .closing-field { min-height: 0; }
-  .sheet .group th { padding-top: 12px; }
-  .sheet td { padding-block: 7px; }
-  .sheet td:last-child { width: 9.5rem; }
-  .toc a:hover { background: none; }
+  .pills { gap: 6px; }
+  .pill-o { font-size: 12px; }
+  .aud .pill-o { font-size: 15px; }
+  .aud .statement { font-size: 26px; }
+  .ico { width: 16px; height: 16px; }
+  .rows .ico, .toc .ico { width: 12px; height: 12px; }
+  .hero h1 { margin-top: 10px; }
+  .hero-end .ast { font-size: 34px; }
+  .man .ast { font-size: 36px; }
+  .manifesto { font-size: 46px; }
+  .kpi h3 { font-size: 30px; }
+  .chan h3 { font-size: 28px; }
+  .vol-n, .sum b { font-size: 76px; }
+  .h8 .ast { font-size: 28px; }
+  .sheet td { padding-block: 6px; }
+  .sheet .group th { padding-top: 10px; }
+  .toc li a { padding-block: 6px; }
+  .toc a:hover { padding-left: 0; }
 }
 </style>
 
 <div class="doc" lang="pt-BR">
 
-<!-- 01 · CAPA -->
-<section class="plate plate--dark cover" id="capa">
-  <div class="inner">
-    <header class="strip cover-top">
-      <span class="label">Proposta comercial</span>
-      <span class="label">Outubro 2026</span>
-      <span class="wide">Sara Meireles<br>Estilo e Imagem</span>
-    </header>
-
-    <div class="cover-title">
-      <p class="kicker">Estratégia e gestão de</p>
-      <h1><span class="fit">Aquisição</span><span class="fit">Digital<span class="dot">.</span></span></h1>
-    </div>
-
-    <div class="cells cover-body grow">
-      <dl class="cover-meta">
-        <div><dt class="label">Para</dt><dd><strong>Sara Meireles</strong><span>Consultoria de Estilo e Imagem</span></dd></div>
-        <div><dt class="label">Por</dt><dd><strong>Bernardo Costa</strong><span>Estratégia e Gestão de Aquisição</span></dd></div>
-        <div><dt class="label">Canais</dt><dd><strong>Meta · Google · TikTok</strong><span>Mídia paga, audiências, conversão e inbound</span></dd></div>
+<!-- 1 · Capa -->
+<section class="page p-cover" id="capa">
+  <div class="board">
+    <article class="card c-grad hero" style="--a:hero">
+      <div class="ct"><span class="tag">Proposta comercial</span><i class="ico ico--dn"></i></div>
+      <h1>Estratégia e gestão de aquisição <span class="it">digital</span></h1>
+      <div class="hero-end end">
+        <div><strong>Sara Meireles</strong><span class="mono">Consultoria de Estilo e Imagem</span></div>
+        <i class="ast" aria-hidden="true"></i>
+      </div>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/capa-manequim.jpg" alt="Manequim de costura com fita métrica laranja"></figure>
+    <article class="card c-paper meta" style="--a:meta">
+      <div class="ct"><span class="tag">Ficha da proposta</span><i class="ico"></i></div>
+      <dl>
+        <div><dt class="mono">Para</dt><dd>Sara Meireles<small>Consultoria de Estilo e Imagem</small></dd></div>
+        <div><dt class="mono">Por</dt><dd>Bernardo Costa<small>Estratégia e Gestão de Aquisição</small></dd></div>
       </dl>
-      <div class="field cover-field" data-sx=".035" data-sy=".05" data-animate="1" aria-hidden="true"></div>
-    </div>
-
-    <footer class="strip strip--foot strip--keep">
-      <span class="label">Estratégia / Mídia paga / Audiências / Conversão / Inbound / Mensuração</span>
-      <span class="pg">01</span>
-    </footer>
+    </article>
+    <article class="card c-dark" style="--a:ch">
+      <span class="tag">Canais</span>
+      <div class="pills end"><span class="pill-o">Meta Ads</span><span class="pill-o">Google Ads</span><span class="pill-o">TikTok Ads</span></div>
+    </article>
+    <article class="card c-stone" style="--a:dt">
+      <span class="tag">Data</span>
+      <p class="dt-big end">Outubro 2026 <i class="cap" aria-hidden="true"></i></p>
+    </article>
+    <article class="card c-black" style="--a:fr">
+      <span class="tag">Frentes</span>
+      <p class="small end">Estratégia, mídia paga, audiências, conversão, inbound e mensuração</p>
+    </article>
   </div>
 </section>
 
-<!-- 02 · OBJETIVO -->
-<section class="plate plate--light" id="objetivo" aria-label="Objetivo">
-  <div class="inner">
-    <header class="strip"><span class="label">00 — Objetivo</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <p class="statement">Desenvolver e executar uma estratégia de aquisição digital para ampliar a visibilidade da Sara junto ao público qualificado, gerar novas oportunidades comerciais e <mark>aumentar as vendas de consultorias e mentorias online.</mark></p>
-
-    <div class="obj-grid">
-      <div class="obj-text">
-        <p class="label">Como trabalhamos</p>
-        <p>O trabalho integra mídia paga, inteligência de audiência, otimização de conversão e estratégia de crescimento, conectando o investimento em publicidade aos resultados do negócio.</p>
+<!-- 2 · Objetivo e sumário -->
+<section class="page p-obj" id="objetivo" aria-label="Objetivo">
+  <div class="board">
+    <article class="card c-paper obj" style="--a:obj">
+      <div class="ct"><span class="tag">Objetivo</span><i class="ico"></i></div>
+      <p class="statement">Desenvolver e executar uma estratégia de aquisição digital para ampliar a <span class="pill">visibilidade</span> da Sara junto ao público qualificado, gerar novas <span class="pill">oportunidades</span> comerciais e aumentar as vendas de consultorias e mentorias online.</p>
+      <div class="obj-how end">
+        <span class="tag">Como trabalhamos</span>
+        <p class="small">O trabalho integra mídia paga, inteligência de audiência, otimização de conversão e estratégia de crescimento, conectando o investimento em publicidade aos resultados do negócio.</p>
       </div>
-      <dl class="cells cells--3 spec" aria-label="Ficha técnica">
-        <div><dt class="label">Cliente</dt><dd>Sara Meireles, Consultoria de Estilo e Imagem</dd></div>
-        <div><dt class="label">Canais</dt><dd>Meta Ads, Google Ads e TikTok Ads</dd></div>
-        <div><dt class="label">Frentes</dt><dd>Estratégia, mídia paga, audiências, conversão, inbound e mensuração</dd></div>
-        <div><dt class="label">Cadência</dt><dd>2 reuniões e 1 relatório por mês</dd></div>
-        <div><dt class="label">Equipe</dt><dd>Bernardo Costa e Felipe</dd></div>
-        <div><dt class="label">Honorários</dt><dd>R$ 2.500 mensais, verba de mídia à parte</dd></div>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/objetivo-documentos.jpg" alt="Mulher analisando documentos ao lado de um notebook"></figure>
+    <article class="card c-dark spec" style="--a:spec">
+      <span class="tag">Ficha técnica</span>
+      <dl class="end">
+        <div><dt>Cliente</dt><dd>Sara Meireles, Consultoria de Estilo e Imagem</dd></div>
+        <div><dt>Canais</dt><dd>Meta Ads, Google Ads e TikTok Ads</dd></div>
+        <div><dt>Frentes</dt><dd>Estratégia, mídia paga, audiências, conversão, inbound e mensuração</dd></div>
+        <div><dt>Cadência</dt><dd>2 reuniões e 1 relatório por mês</dd></div>
+        <div><dt>Equipe</dt><dd>Bernardo Costa e Felipe</dd></div>
+        <div><dt>Honorários</dt><dd>R$ 2.500 mensais, verba de mídia à parte</dd></div>
       </dl>
-    </div>
-
-    <nav class="grow" aria-label="Sumário">
-      <ol class="cells cells--3 toc">
-        <li><a href="#planejamento"><span class="n">01<span class="label pg-ref">p. 03</span></span><span class="t">Planejamento e estratégia de aquisição</span></a></li>
-        <li><a href="#trafego"><span class="n">02<span class="label pg-ref">p. 04</span></span><span class="t">Gestão e execução de tráfego pago</span></a></li>
-        <li><a href="#audiencias"><span class="n">03<span class="label pg-ref">p. 05</span></span><span class="t">Inteligência de audiências, Lookalike e Remarketing</span></a></li>
-        <li><a href="#jornada"><span class="n">04<span class="label pg-ref">p. 06</span></span><span class="t">Otimização da jornada de aquisição e conversão</span></a></li>
-        <li><a href="#inbound"><span class="n">05<span class="label pg-ref">p. 06</span></span><span class="t">Inbound Marketing e materiais interativos</span></a></li>
-        <li><a href="#indicadores"><span class="n">06<span class="label pg-ref">p. 07</span></span><span class="t">Indicadores, mensuração e otimização</span></a></li>
-        <li><a href="#entregaveis"><span class="n">07<span class="label pg-ref">p. 08</span></span><span class="t">Entregáveis mensais</span></a></li>
-        <li><a href="#equipe"><span class="n">08<span class="label pg-ref">p. 09</span></span><span class="t">Equipe responsável</span></a></li>
-        <li><a href="#investimento"><span class="n">09<span class="label pg-ref">p. 09</span></span><span class="t">Investimento</span></a></li>
+    </article>
+    <nav class="card c-stone toc" style="--a:toc" aria-label="Sumário">
+      <span class="tag">Sumário</span>
+      <ol class="end">
+        <li><a href="#planejamento"><span class="n">01</span><span class="t">Planejamento e estratégia de aquisição</span><i class="ico"></i></a></li>
+        <li><a href="#trafego"><span class="n">02</span><span class="t">Gestão e execução de tráfego pago</span><i class="ico"></i></a></li>
+        <li><a href="#audiencias"><span class="n">03</span><span class="t">Inteligência de audiências, Lookalike e Remarketing</span><i class="ico"></i></a></li>
+        <li><a href="#jornada"><span class="n">04</span><span class="t">Otimização da jornada de aquisição e conversão</span><i class="ico"></i></a></li>
+        <li><a href="#inbound"><span class="n">05</span><span class="t">Inbound Marketing e materiais interativos</span><i class="ico"></i></a></li>
+        <li><a href="#indicadores"><span class="n">06</span><span class="t">Indicadores, mensuração e otimização</span><i class="ico"></i></a></li>
+        <li><a href="#entregaveis"><span class="n">07</span><span class="t">Entregáveis mensais</span><i class="ico"></i></a></li>
+        <li><a href="#equipe"><span class="n">08</span><span class="t">Equipe responsável</span><i class="ico"></i></a></li>
+        <li><a href="#investimento"><span class="n">09</span><span class="t">Investimento</span><i class="ico"></i></a></li>
       </ol>
     </nav>
-
-    <footer class="strip strip--foot"><span class="label">Objetivo e sumário</span><span class="pg">02</span></footer>
   </div>
 </section>
 
-<!-- 03 · 01 PLANEJAMENTO -->
-<section class="plate plate--dark" id="planejamento" aria-labelledby="t01">
-  <div class="inner">
-    <header class="strip"><span class="label">01 — Estratégia</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="cells ch-head">
-      <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">01</span></div>
-      <div class="ch-title"><h2 id="t01">Planejamento e estratégia de aquisição</h2></div>
-      <div class="ch-lead"><p>Definição e evolução da estratégia de crescimento digital, considerando o posicionamento da Sara, seus produtos e o perfil de suas potenciais clientes.</p></div>
-    </div>
-
-    <div class="rows-block grow">
-      <div class="rows-head"><span class="label">Atividades contempladas</span><span class="label">Frente</span></div>
-      <ol class="rows">
-        <li><span class="idx">1.1</span><span>Definição dos canais de aquisição e seus papéis na jornada comercial.</span><span class="key">Canais</span></li>
-        <li><span class="idx">1.2</span><span>Planejamento de campanhas de reconhecimento, consideração, geração de leads e conversão.</span><span class="key">Funil</span></li>
-        <li><span class="idx">1.3</span><span>Apoio estratégico às decisões de produto, canais, preço e promoção.</span><span class="key">Oferta</span></li>
-        <li><span class="idx">1.4</span><span>Identificação de oportunidades de campanhas, ofertas e abordagens comerciais.</span><span class="key">Oportunidades</span></li>
-        <li><span class="idx">1.5</span><span>Planejamento contínuo de testes e oportunidades de crescimento.</span><span class="key">Testes</span></li>
+<!-- 3 · 01 Planejamento -->
+<section class="page p-01" id="planejamento" aria-labelledby="t01">
+  <div class="board">
+    <article class="card c-paper head" style="--a:head">
+      <div class="ct"><span class="tag">Capítulo 01 — Estratégia</span><i class="ico"></i></div>
+      <h2 id="t01">Planejamento e estratégia de aquisição</h2>
+      <div class="head-end end">
+        <p class="lead">Definição e evolução da estratégia de crescimento digital, considerando o posicionamento da Sara, seus produtos e o perfil de suas potenciais clientes.</p>
+        <span class="cnum">01</span>
+      </div>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/estrategia-laptop.jpg" alt="Mulher de blazer trabalhando em um notebook"></figure>
+    <article class="card c-dark" style="--a:acts">
+      <div class="ct"><span class="tag">Atividades contempladas</span><span class="mono">05</span></div>
+      <ol class="rows fill end">
+        <li><span class="i">1.1</span><span>Definição dos canais de aquisição e seus papéis na jornada comercial.</span><i class="ico"></i></li>
+        <li><span class="i">1.2</span><span>Planejamento de campanhas de reconhecimento, consideração, geração de leads e conversão.</span><i class="ico"></i></li>
+        <li><span class="i">1.3</span><span>Apoio estratégico às decisões de produto, canais, preço e promoção.</span><i class="ico"></i></li>
+        <li><span class="i">1.4</span><span>Identificação de oportunidades de campanhas, ofertas e abordagens comerciais.</span><i class="ico"></i></li>
+        <li><span class="i">1.5</span><span>Planejamento contínuo de testes e oportunidades de crescimento.</span><i class="ico"></i></li>
       </ol>
-    </div>
+    </article>
+    <article class="card c-grad aud" style="--a:aud">
+      <div class="ct"><span class="tag">Públicos prioritários</span><i class="ico ico--dn"></i></div>
+      <p class="statement">Segmentação de públicos prioritários, incluindo:</p>
+      <div class="pills end">
+        <span class="pill-o">Empreendedoras</span>
+        <span class="pill-o">Profissionais liberais</span>
+        <span class="pill-o">Médicas</span>
+        <span class="pill-o">Proprietárias de clínicas</span>
+        <span class="pill-o">Mulheres em cargos de liderança</span>
+      </div>
+    </article>
+  </div>
+</section>
 
-    <div class="seg-block">
-      <div class="rows-head seg-intro"><span class="label">Públicos prioritários — segmentação de públicos prioritários, incluindo:</span></div>
-      <ul class="cells cells--5">
-        <li class="tile seg"><span class="seg-top"><span class="idx">A</span><i></i></span><strong>Empreendedoras</strong></li>
-        <li class="tile seg"><span class="seg-top"><span class="idx">B</span><i></i></span><strong>Profissionais liberais</strong></li>
-        <li class="tile seg"><span class="seg-top"><span class="idx">C</span><i></i></span><strong>Médicas</strong></li>
-        <li class="tile seg"><span class="seg-top"><span class="idx">D</span><i></i></span><strong>Proprietárias de clínicas</strong></li>
-        <li class="tile seg"><span class="seg-top"><span class="idx">E</span><i></i></span><strong>Mulheres em cargos de liderança</strong></li>
+<!-- 4 · 02 Tráfego -->
+<section class="page p-02" id="trafego" aria-labelledby="t02">
+  <div class="board">
+    <article class="card c-paper head" style="--a:head">
+      <div class="ct"><span class="tag">Capítulo 02 — Mídia paga</span><i class="ico"></i></div>
+      <h2 id="t02">Gestão e execução de tráfego pago</h2>
+      <div class="head-end end">
+        <p class="lead">Planejamento, configuração, ativação e otimização de campanhas em três plataformas.</p>
+        <span class="cnum">02</span>
+      </div>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/midia-celular.jpg" alt="Mão segurando um celular com aplicativos de redes sociais"></figure>
+    <article class="card c-dark chan" style="--a:meta">
+      <div class="ct"><span class="tag">Aquisição e conversão</span><span class="chip">canal principal</span></div>
+      <h3>Meta Ads<small>Instagram e Facebook</small></h3>
+      <p class="small">Principal ambiente de aquisição, relacionamento e conversão, utilizando conteúdos da Sara para alcançar e desenvolver audiências qualificadas.</p>
+      <ul class="rows fill">
+        <li><span class="i">—</span><span>Patrocínio estratégico de conteúdos.</span></li>
+        <li><span class="i">—</span><span>Campanhas de tráfego, engajamento, geração de leads e conversão.</span></li>
+        <li><span class="i">—</span><span>Testes de públicos, criativos, formatos e objetivos.</span></li>
+        <li><span class="i">—</span><span>Gestão de distribuição de verba e otimização dos anúncios.</span></li>
       </ul>
-    </div>
-
-    <footer class="strip strip--foot"><span class="label">Planejamento e estratégia de aquisição</span><span class="pg">03</span></footer>
-  </div>
-</section>
-
-<!-- 04 · 02 TRÁFEGO -->
-<section class="plate plate--light" id="trafego" aria-labelledby="t02">
-  <div class="inner">
-    <header class="strip"><span class="label">02 — Mídia paga</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="cells ch-head">
-      <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">02</span></div>
-      <div class="ch-title"><h2 id="t02">Gestão e execução de tráfego pago</h2></div>
-      <div class="ch-lead"><p>Planejamento, configuração, ativação e otimização de campanhas em três plataformas.</p></div>
-    </div>
-
-    <div class="cells cells--3 channels grow">
-      <article class="channel">
-        <div class="chan-top"><span class="label">Aquisição e conversão</span><span class="chip">Principal</span></div>
-        <h3 class="chan-name">Meta Ads<small>Instagram e Facebook</small></h3>
-        <p class="chan-desc">Principal ambiente de aquisição, relacionamento e conversão, utilizando conteúdos da Sara para alcançar e desenvolver audiências qualificadas.</p>
-        <ul class="list">
-          <li>Patrocínio estratégico de conteúdos.</li>
-          <li>Campanhas de tráfego, engajamento, geração de leads e conversão.</li>
-          <li>Testes de públicos, criativos, formatos e objetivos.</li>
-          <li>Gestão de distribuição de verba e otimização dos anúncios.</li>
-        </ul>
-        <div class="field chan-field" data-sx="0" data-sy="0" aria-hidden="true"></div>
-        <div class="vol"><span class="vol-n">20</span><span class="label vol-l">Até 20<br>patrocínios/mês</span></div>
-      </article>
-      <article class="channel">
-        <div class="chan-top"><span class="label">Demanda qualificada</span></div>
-        <h3 class="chan-name">Google Ads<small>Rede de pesquisa</small></h3>
-        <p class="chan-desc">Captação de demanda qualificada de pessoas que já demonstram interesse por serviços de consultoria de estilo, imagem pessoal e mentorias relacionadas.</p>
-        <ul class="list">
-          <li>Estruturação e gestão de campanha de pesquisa.</li>
-          <li>Pesquisa e seleção de palavras-chave.</li>
-          <li>Testes de anúncios, termos de busca e páginas de destino.</li>
-          <li>Otimização para geração de oportunidades comerciais.</li>
-        </ul>
-        <div class="field chan-field" data-mode="in" data-sx=".5" data-sy=".5" aria-hidden="true"></div>
-        <div class="vol"><span class="vol-n">01</span><span class="label vol-l">1 campanha<br>ativa</span></div>
-      </article>
-      <article class="channel">
-        <div class="chan-top"><span class="label">Alcance e descoberta</span></div>
-        <h3 class="chan-name">TikTok Ads<small>Conteúdos em vídeo</small></h3>
-        <p class="chan-desc">Ampliação de alcance, descoberta de marca e construção de novas audiências a partir de conteúdos em vídeo.</p>
-        <ul class="list">
-          <li>Patrocínio de conteúdos selecionados.</li>
-          <li>Testes de formatos, segmentações e abordagens.</li>
-          <li>Construção de audiências para ações posteriores de conversão.</li>
-        </ul>
-        <div class="field chan-field" data-mode="out" data-sx=".5" data-sy="1" aria-hidden="true"></div>
-        <div class="vol"><span class="vol-n">10</span><span class="label vol-l">Até 10<br>patrocínios/mês</span></div>
-      </article>
-    </div>
-
-    <footer class="strip strip--foot"><span class="label">Gestão e execução de tráfego pago</span><span class="pg">04</span></footer>
-  </div>
-</section>
-
-<!-- 05 · 03 AUDIÊNCIAS -->
-<section class="plate plate--dark" id="audiencias" aria-labelledby="t03">
-  <div class="inner">
-    <header class="strip"><span class="label">03 — Audiências</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="cells ch-head">
-      <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">03</span></div>
-      <div class="ch-title"><h2 id="t03">Inteligência de audiências, Lookalike e Remarketing</h2></div>
-      <div class="ch-lead"><p>Construção e evolução de públicos para melhorar a eficiência da aquisição e reduzir desperdícios no investimento.</p></div>
-    </div>
-
-    <div class="cells cells--2 grow">
-      <div class="aud">
-        <span class="label">Expandir alcance</span>
-        <h3>Prospecção e públicos semelhantes (Lookalike)</h3>
-        <ul class="list">
-          <li>Públicos por interesses, comportamentos e características demográficas.</li>
-          <li>Públicos semelhantes aos seguidores e pessoas que interagem com os perfis sociais, conforme os dados disponíveis.</li>
-          <li>Públicos semelhantes às pessoas que assistem ou interagem com vídeos.</li>
-          <li>Públicos semelhantes aos visitantes do site.</li>
-          <li>Públicos semelhantes a leads e clientes, quando houver base suficiente.</li>
-        </ul>
-        <div class="field" data-mode="out" data-sx="0" data-sy=".5" aria-hidden="true"></div>
-      </div>
-      <div class="aud">
-        <span class="label">Recuperar interesse</span>
-        <h3>Remarketing e Retargeting</h3>
-        <ul class="list">
-          <li>Pessoas que interagiram com conteúdos ou perfis sociais.</li>
-          <li>Visitantes do site e de páginas específicas.</li>
-          <li>Pessoas que iniciaram uma conversão, mas não concluíram.</li>
-          <li>Leads que demonstraram interesse, mas não avançaram comercialmente.</li>
-          <li>Audiências de reengajamento e recuperação de oportunidades.</li>
-        </ul>
-        <div class="field" data-mode="in" data-sx="1" data-sy=".5" aria-hidden="true"></div>
-      </div>
-    </div>
-
-    <div class="note"><span class="label">Dados e privacidade</span><p>A ativação dessas audiências considera a disponibilidade de dados, os requisitos de cada plataforma e as regras de privacidade aplicáveis.</p></div>
-
-    <footer class="strip strip--foot"><span class="label">Inteligência de audiências, Lookalike e Remarketing</span><span class="pg">05</span></footer>
-  </div>
-</section>
-
-<!-- 06 · 04 JORNADA + 05 INBOUND -->
-<section class="plate plate--light" aria-label="Jornada e Inbound">
-  <div class="inner">
-    <header class="strip"><span class="label">04 — Conversão / 05 — Inbound</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="half grow" id="jornada">
-      <div class="cells ch-head">
-        <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">04</span></div>
-        <div class="ch-title"><h2>Otimização da jornada de aquisição e conversão</h2></div>
-        <div class="ch-lead"><p class="pull">O trabalho não termina no clique.</p><p>Acompanharemos a experiência da potencial cliente desde o primeiro contato com a Sara até a oportunidade comercial e a venda.</p></div>
-      </div>
-      <ul class="cells cells--3 items grow">
-        <li class="tile item"><span class="idx">4.1</span><p>Avaliação dos conteúdos e anúncios que melhor conduzem visitantes ao site.</p></li>
-        <li class="tile item"><span class="idx">4.2</span><p>Análise da experiência nas páginas de destino.</p></li>
-        <li class="tile item"><span class="idx">4.3</span><p>Identificação de barreiras, atritos e oportunidades de melhoria de conversão.</p></li>
-        <li class="tile item"><span class="idx">4.4</span><p>Recomendações para formulários, chamadas, argumentos de venda e agendamento de reuniões.</p></li>
-        <li class="tile item"><span class="idx">4.5</span><p>Análise do desempenho das etapas do funil e identificação dos principais pontos de perda.</p></li>
-        <li class="tile item"><span class="idx">4.6</span><p>Proposição de testes e melhorias contínuas na jornada.</p></li>
+      <div class="vol end"><span class="vol-n">20</span><span class="vol-l"><i class="cap" aria-hidden="true"></i><span class="mono">Até 20 patrocínios/mês</span></span></div>
+    </article>
+    <article class="card c-paper chan" style="--a:goo">
+      <div class="ct"><span class="tag">Demanda qualificada</span><i class="ico"></i></div>
+      <h3>Google Ads<small>Rede de pesquisa</small></h3>
+      <p class="small">Captação de demanda qualificada de pessoas que já demonstram interesse por serviços de consultoria de estilo, imagem pessoal e mentorias relacionadas.</p>
+      <ul class="rows fill">
+        <li><span class="i">—</span><span>Estruturação e gestão de campanha de pesquisa.</span></li>
+        <li><span class="i">—</span><span>Pesquisa e seleção de palavras-chave.</span></li>
+        <li><span class="i">—</span><span>Testes de anúncios, termos de busca e páginas de destino.</span></li>
+        <li><span class="i">—</span><span>Otimização para geração de oportunidades comerciais.</span></li>
       </ul>
-    </div>
-
-    <div class="half grow" id="inbound">
-      <div class="cells ch-head">
-        <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">05</span></div>
-        <div class="ch-title"><h2>Inbound Marketing e materiais interativos</h2></div>
-        <div class="ch-lead"><p>Apoio estratégico na criação de novas oportunidades de captação de leads qualificados, especialmente no meio do funil de aquisição.</p></div>
-      </div>
-      <ul class="cells cells--3 items grow">
-        <li class="tile item"><span class="idx">5.1</span><p>Testes e diagnósticos de estilo e imagem pessoal.</p></li>
-        <li class="tile item"><span class="idx">5.2</span><p>Questionários de autoconhecimento e necessidades de imagem.</p></li>
-        <li class="tile item"><span class="idx">5.3</span><p>Experiências interativas que conectem o perfil da visitante às soluções da Sara.</p></li>
-        <li class="tile item"><span class="idx">5.4</span><p>Estratégias de materiais ricos e conteúdos de conversão.</p></li>
-        <li class="tile item"><span class="idx">5.5</span><p>Réguas e propostas de nutrição e qualificação de leads.</p></li>
-        <li class="tile item item--scope"><span class="idx">Escopo</span><p>O escopo contempla concepção estratégica, recomendações de conteúdo e estruturação da lógica de aquisição. Desenvolvimento técnico integral de ferramentas ou páginas poderá ser orçado separadamente.</p></li>
+      <div class="vol end"><span class="vol-n">01</span><span class="vol-l"><i class="cap" aria-hidden="true"></i><span class="mono">1 campanha ativa</span></span></div>
+    </article>
+    <article class="card c-stone chan" style="--a:tik">
+      <div class="ct"><span class="tag">Alcance e descoberta</span><i class="ico"></i></div>
+      <h3>TikTok Ads<small>Conteúdos em vídeo</small></h3>
+      <p class="small">Ampliação de alcance, descoberta de marca e construção de novas audiências a partir de conteúdos em vídeo.</p>
+      <ul class="rows fill">
+        <li><span class="i">—</span><span>Patrocínio de conteúdos selecionados.</span></li>
+        <li><span class="i">—</span><span>Testes de formatos, segmentações e abordagens.</span></li>
+        <li><span class="i">—</span><span>Construção de audiências para ações posteriores de conversão.</span></li>
       </ul>
-    </div>
-
-    <footer class="strip strip--foot"><span class="label">Jornada de conversão e Inbound Marketing</span><span class="pg">06</span></footer>
+      <div class="vol end"><span class="vol-n">10</span><span class="vol-l"><i class="cap" aria-hidden="true"></i><span class="mono">Até 10 patrocínios/mês</span></span></div>
+    </article>
   </div>
 </section>
 
-<!-- 07 · 06 INDICADORES -->
-<section class="plate plate--dark" id="indicadores" aria-labelledby="t06">
-  <div class="inner">
-    <header class="strip"><span class="label">06 — Mensuração</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="cells ch-head">
-      <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">06</span></div>
-      <div class="ch-title"><h2 id="t06">Indicadores, mensuração e otimização</h2></div>
-      <div class="ch-lead"><p>Acompanhamento contínuo das campanhas e dos indicadores, orientado à eficiência do investimento e à geração de receita.</p></div>
-    </div>
-
-    <div class="flow-wrap">
-      <div class="field flow" data-mode="in" data-sx="1" data-sy=".5" aria-hidden="true"></div>
-      <div class="flow-labels"><span class="label">Do anúncio</span><span class="label">Ao retorno</span></div>
-    </div>
-
-    <ol class="cells cells--3 kpis">
-      <li class="tile kpi"><span class="idx">01 — Anúncio</span><div><strong>CPC e CTR</strong><p>Avaliar eficiência de anúncios e mensagens</p></div></li>
-      <li class="tile kpi"><span class="idx">02 — Página</span><div><strong>Taxa de conversão</strong><p>Melhorar o aproveitamento do tráfego</p></div></li>
-      <li class="tile kpi"><span class="idx">03 — Lead</span><div><strong>CPL</strong><p>Reduzir custo de aquisição de leads</p></div></li>
-      <li class="tile kpi"><span class="idx">04 — Reunião</span><div><strong>Custo por reunião</strong><p>Aumentar a eficiência comercial</p></div></li>
-      <li class="tile kpi"><span class="idx">05 — Venda</span><div><strong>Custo por fechamento / CAC</strong><p>Mensurar o investimento para conquistar clientes</p></div></li>
-      <li class="tile kpi"><span class="idx">06 — Retorno</span><div><strong>ROAS</strong><p>Avaliar retorno sobre investimento em publicidade</p></div></li>
-    </ol>
-
-    <div class="note"><span class="label">Atribuição</span><p>Os indicadores de vendas e ROAS serão acompanhados conforme a disponibilidade dos dados comerciais e a capacidade de atribuição das conversões. A análise alimentará decisões recorrentes de investimento, segmentação, conteúdos, canais e otimização da jornada.</p></div>
-
-    <footer class="strip strip--foot"><span class="label">Indicadores, mensuração e otimização</span><span class="pg">07</span></footer>
+<!-- 5 · 03 Audiências -->
+<section class="page p-03" id="audiencias" aria-labelledby="t03">
+  <div class="board">
+    <figure class="card c-photo" style="--a:ph"><img src="img/audiencias-cidade.jpg" alt="Mulher caminhando na cidade olhando o celular"></figure>
+    <article class="card c-dark head" style="--a:head">
+      <div class="ct"><span class="tag">Capítulo 03 — Audiências</span><i class="ico"></i></div>
+      <h2 id="t03">Inteligência de audiências, Lookalike e Remarketing</h2>
+      <div class="head-end end">
+        <p class="lead">Construção e evolução de públicos para melhorar a eficiência da aquisição e reduzir desperdícios no investimento.</p>
+        <span class="cnum">03</span>
+      </div>
+    </article>
+    <article class="card c-paper" style="--a:look">
+      <div class="ct"><span class="tag">Expandir alcance</span><i class="ico"></i></div>
+      <h3>Prospecção e públicos semelhantes <span class="pill">Lookalike</span></h3>
+      <ol class="rows fill end">
+        <li><span class="i">A</span><span>Públicos por interesses, comportamentos e características demográficas.</span></li>
+        <li><span class="i">B</span><span>Públicos semelhantes aos seguidores e pessoas que interagem com os perfis sociais, conforme os dados disponíveis.</span></li>
+        <li><span class="i">C</span><span>Públicos semelhantes às pessoas que assistem ou interagem com vídeos.</span></li>
+        <li><span class="i">D</span><span>Públicos semelhantes aos visitantes do site.</span></li>
+        <li><span class="i">E</span><span>Públicos semelhantes a leads e clientes, quando houver base suficiente.</span></li>
+      </ol>
+    </article>
+    <article class="card c-grad" style="--a:rem">
+      <div class="ct"><span class="tag">Recuperar interesse</span><i class="ico ico--bk"></i></div>
+      <h3>Remarketing e <span class="pill">Retargeting</span></h3>
+      <ol class="rows fill end">
+        <li><span class="i">A</span><span>Pessoas que interagiram com conteúdos ou perfis sociais.</span></li>
+        <li><span class="i">B</span><span>Visitantes do site e de páginas específicas.</span></li>
+        <li><span class="i">C</span><span>Pessoas que iniciaram uma conversão, mas não concluíram.</span></li>
+        <li><span class="i">D</span><span>Leads que demonstraram interesse, mas não avançaram comercialmente.</span></li>
+        <li><span class="i">E</span><span>Audiências de reengajamento e recuperação de oportunidades.</span></li>
+      </ol>
+    </article>
+    <article class="card c-black note" style="--a:note">
+      <span class="tag">Dados e privacidade</span>
+      <p class="small">A ativação dessas audiências considera a disponibilidade de dados, os requisitos de cada plataforma e as regras de privacidade aplicáveis.</p>
+    </article>
   </div>
 </section>
 
-<!-- 08 · 07 ENTREGÁVEIS -->
-<section class="plate plate--light" id="entregaveis" aria-labelledby="t07">
-  <div class="inner">
-    <header class="strip"><span class="label">07 — Entregas</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="cells ch-head">
-      <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">07</span></div>
-      <div class="ch-title"><h2 id="t07">Entregáveis mensais</h2></div>
-      <div class="ch-lead"><p>Os patrocínios representam ativações de conteúdos, não a produção de novas peças. O volume será distribuído conforme a estratégia, os resultados e a verba disponível.</p></div>
-    </div>
-
-    <ul class="cells cells--5 sums">
-      <li class="tile sum"><span class="label">Meta Ads<br>patrocínios/mês</span><span class="sum-n"><small>Até</small>20</span></li>
-      <li class="tile sum"><span class="label">TikTok Ads<br>patrocínios/mês</span><span class="sum-n"><small>Até</small>10</span></li>
-      <li class="tile sum"><span class="label">Google Ads<br>campanha ativa</span><span class="sum-n"><small>Ativa</small>1</span></li>
-      <li class="tile sum"><span class="label">Reuniões<br>por mês</span><span class="sum-n"><small>Agenda</small>2</span></li>
-      <li class="tile sum"><span class="label">Relatório<br>por mês</span><span class="sum-n"><small>Resultados</small>1</span></li>
-    </ul>
-
-    <div class="sheet-wrap grow">
-      <table class="sheet">
-        <thead><tr><th class="label" scope="col">Ref.</th><th class="label" scope="col">Entregável</th><th class="label" scope="col">Volume</th></tr></thead>
-        <tbody>
-          <tr class="group"><th class="label" colspan="3" scope="colgroup">Ativação de mídia</th></tr>
-          <tr><td class="idx">7.1</td><td>Patrocínios de conteúdos em Meta Ads (Instagram/Facebook)</td><td>Até 20/mês</td></tr>
-          <tr><td class="idx">7.2</td><td>Gestão de campanha no Google Ads</td><td>1 campanha ativa</td></tr>
-          <tr><td class="idx">7.3</td><td>Patrocínios de conteúdos no TikTok</td><td>Até 10/mês</td></tr>
-          <tr class="group"><th class="label" colspan="3" scope="colgroup">Estratégia e otimização</th></tr>
-          <tr><td class="idx">7.4</td><td>Estratégia, segmentações e testes de audiências</td><td>Contínuos</td></tr>
-          <tr><td class="idx">7.5</td><td>Remarketing e otimização de campanhas</td><td>Contínuos</td></tr>
-          <tr><td class="idx">7.6</td><td>Análise da jornada e recomendações de conversão</td><td>Contínuas</td></tr>
-          <tr><td class="idx">7.7</td><td>Apoio estratégico em produtos, ofertas e inbound marketing</td><td>Conforme oportunidades</td></tr>
-          <tr class="group"><th class="label" colspan="3" scope="colgroup">Acompanhamento</th></tr>
-          <tr><td class="idx">7.8</td><td>Relatório de desempenho e resultados</td><td>1/mês</td></tr>
-          <tr><td class="idx">7.9</td><td>Reuniões de acompanhamento e planejamento</td><td>2/mês</td></tr>
-          <tr><td class="idx">7.10</td><td>Contato e alinhamento operacional</td><td>Contínuo</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <footer class="strip strip--foot"><span class="label">Entregáveis mensais</span><span class="pg">08</span></footer>
+<!-- 6 · 04 Jornada + 05 Inbound -->
+<section class="page p-0405" aria-label="Jornada e Inbound">
+  <div class="board">
+    <article class="card c-grad h4" style="--a:h4" id="jornada">
+      <div class="ct"><span class="tag">Capítulo 04 — Conversão</span><span class="cnum" style="font-size:var(--t-h2)">04</span></div>
+      <h2>Otimização da jornada de aquisição e conversão</h2>
+      <p class="statement end">O trabalho não termina no <span class="pill">clique.</span></p>
+    </article>
+    <article class="card c-paper" style="--a:i4">
+      <div class="ct"><span class="tag">Frentes de atuação</span><i class="ico"></i></div>
+      <p class="lead">Acompanharemos a experiência da potencial cliente desde o primeiro contato com a Sara até a oportunidade comercial e a venda.</p>
+      <ol class="rows fill end">
+        <li><span class="i">4.1</span><span>Avaliação dos conteúdos e anúncios que melhor conduzem visitantes ao site.</span></li>
+        <li><span class="i">4.2</span><span>Análise da experiência nas páginas de destino.</span></li>
+        <li><span class="i">4.3</span><span>Identificação de barreiras, atritos e oportunidades de melhoria de conversão.</span></li>
+        <li><span class="i">4.4</span><span>Recomendações para formulários, chamadas, argumentos de venda e agendamento de reuniões.</span></li>
+        <li><span class="i">4.5</span><span>Análise do desempenho das etapas do funil e identificação dos principais pontos de perda.</span></li>
+        <li><span class="i">4.6</span><span>Proposição de testes e melhorias contínuas na jornada.</span></li>
+      </ol>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/jornada-prova.jpg" alt="Consultora ajustando uma roupa em uma cliente"></figure>
+    <article class="card c-dark" style="--a:h5" id="inbound">
+      <div class="ct"><span class="tag">Capítulo 05 — Inbound</span><span class="cnum" style="font-size:var(--t-h2)">05</span></div>
+      <div class="h5-grid">
+        <h2>Inbound Marketing e materiais interativos</h2>
+        <p class="lead">Apoio estratégico na criação de novas oportunidades de captação de leads qualificados, especialmente no meio do funil de aquisição.</p>
+      </div>
+      <span class="tag">Possibilidades de desenvolvimento</span>
+      <ol class="rows end">
+        <li><span class="i">5.1</span><span>Testes e diagnósticos de estilo e imagem pessoal.</span></li>
+        <li><span class="i">5.2</span><span>Questionários de autoconhecimento e necessidades de imagem.</span></li>
+        <li><span class="i">5.3</span><span>Experiências interativas que conectem o perfil da visitante às soluções da Sara.</span></li>
+        <li><span class="i">5.4</span><span>Estratégias de materiais ricos e conteúdos de conversão.</span></li>
+        <li><span class="i">5.5</span><span>Réguas e propostas de nutrição e qualificação de leads.</span></li>
+      </ol>
+    </article>
+    <article class="card c-stone note" style="--a:scope">
+      <span class="tag">Escopo</span>
+      <p class="small">O escopo contempla concepção estratégica, recomendações de conteúdo e estruturação da lógica de aquisição. Desenvolvimento técnico integral de ferramentas ou páginas poderá ser orçado separadamente.</p>
+    </article>
   </div>
 </section>
 
-<!-- 09 · 08 EQUIPE + 09 INVESTIMENTO -->
-<section class="plate plate--dark" aria-label="Equipe e investimento">
-  <div class="inner">
-    <header class="strip"><span class="label">08 — Equipe / 09 — Investimento</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <div class="half" id="equipe">
-      <div class="cells ch-head ch-head--2">
-        <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">08</span></div>
-        <div class="ch-title"><h2>Equipe responsável</h2></div>
+<!-- 7 · 06 Indicadores -->
+<section class="page p-06" id="indicadores" aria-labelledby="t06">
+  <div class="board">
+    <article class="card c-paper head" style="--a:head">
+      <div class="ct"><span class="tag">Capítulo 06 — Mensuração</span><i class="ico"></i></div>
+      <h2 id="t06">Indicadores, mensuração e otimização</h2>
+      <p class="lead">Acompanhamento contínuo das campanhas e dos indicadores, orientado à eficiência do investimento e à geração de receita.</p>
+      <div class="head-end end">
+        <p class="flow" aria-label="Etapas da jornada">Anúncio <i class="cap"></i> Página <i class="cap"></i> Lead <i class="cap"></i> Reunião <i class="cap"></i> Venda <i class="cap"></i> Retorno</p>
+        <span class="cnum">06</span>
       </div>
-      <div class="cells cells--2">
-        <article class="person">
-          <div class="portrait"><div class="field" data-sx="0" data-sy="0" aria-hidden="true"></div><b aria-hidden="true">BC</b></div>
-          <div class="person-txt">
-            <span class="label">Estratégia e Gestão de Aquisição</span>
-            <h3>Bernardo Costa</h3>
-            <p>Responsável pelo planejamento estratégico, definição de canais e audiências, execução e otimização de mídia, inteligência de resultados, evolução da jornada de aquisição e relacionamento estratégico com a Sara.</p>
-          </div>
-        </article>
-        <article class="person">
-          <div class="portrait"><div class="field" data-sx="0" data-sy="0" aria-hidden="true"></div><b aria-hidden="true">F</b></div>
-          <div class="person-txt">
-            <span class="label">Operação e Tecnologia de Mídia</span>
-            <h3>Felipe</h3>
-            <p>Responsável pelo suporte à execução das campanhas, configurações técnicas, implementação de estruturas de mídia, acompanhamento operacional e apoio às otimizações.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="half grow" id="investimento">
-      <div class="cells ch-head">
-        <div class="ch-tile"><span class="label">Capítulo</span><span class="ch-num">09</span></div>
-        <div class="ch-title"><h2>Investimento</h2></div>
-        <div class="ch-lead"><p>O investimento contempla a estratégia, gestão e execução da mídia, acompanhamento de indicadores, análises de conversão, reuniões e relacionamento contínuo com a equipe.</p></div>
-      </div>
-      <div class="cells invest grow">
-        <div class="price-tile">
-          <span class="label">Honorários mensais</span>
-          <p class="price"><small>R$</small>2.500</p>
-          <p class="price-sub"><span>Por mês</span><span class="label">Verba de mídia à parte</span></p>
-        </div>
-        <ul class="conds">
-          <li><span class="cond-n">01</span>O investimento nas plataformas de publicidade (Meta, Google e TikTok) é separado dos honorários.</li>
-          <li><span class="cond-n">02</span>A distribuição da verba será recomendada e ajustada conforme o desempenho e as prioridades de aquisição.</li>
-          <li><span class="cond-n">03</span>A produção de vídeos, fotografias, peças criativas e o desenvolvimento integral de sites ou ferramentas não estão incluídos.</li>
-          <li><span class="cond-n">04</span>A execução depende de acesso às contas, às ferramentas de mensuração e aos materiais necessários.</li>
-        </ul>
-      </div>
-    </div>
-
-    <footer class="strip strip--foot"><span class="label">Equipe responsável e investimento</span><span class="pg">09</span></footer>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/indicadores-arquitetura.jpg" alt="Fachada de edifício moderno em preto e branco"></figure>
+    <article class="card c-dark kpi" style="--a:k1"><div class="ct"><span class="tag">01 · Anúncio</span><i class="ico"></i></div><h3>CPC e CTR</h3><p class="small end">Avaliar eficiência de anúncios e mensagens</p></article>
+    <article class="card c-stone kpi" style="--a:k2"><div class="ct"><span class="tag">02 · Página</span><i class="ico"></i></div><h3>Taxa de conversão</h3><p class="small end">Melhorar o aproveitamento do tráfego</p></article>
+    <article class="card c-dark kpi" style="--a:k3"><div class="ct"><span class="tag">03 · Lead</span><i class="ico"></i></div><h3>CPL</h3><p class="small end">Reduzir custo de aquisição de leads</p></article>
+    <article class="card c-paper kpi" style="--a:k4"><div class="ct"><span class="tag">04 · Reunião</span><i class="ico"></i></div><h3>Custo por reunião</h3><p class="small end">Aumentar a eficiência comercial</p></article>
+    <article class="card c-dark kpi" style="--a:k5"><div class="ct"><span class="tag">05 · Venda</span><i class="ico"></i></div><h3>Custo por fechamento / CAC</h3><p class="small end">Mensurar o investimento para conquistar clientes</p></article>
+    <article class="card c-orange kpi" style="--a:k6"><div class="ct"><span class="tag">06 · Retorno</span><i class="ico"></i></div><h3>ROAS</h3><p class="small end">Avaliar retorno sobre investimento em publicidade</p></article>
+    <article class="card c-black note" style="--a:note">
+      <span class="tag">Atribuição</span>
+      <p class="small">Os indicadores de vendas e ROAS serão acompanhados conforme a disponibilidade dos dados comerciais e a capacidade de atribuição das conversões. A análise alimentará decisões recorrentes de investimento, segmentação, conteúdos, canais e otimização da jornada.</p>
+    </article>
   </div>
 </section>
 
-<!-- 10 · NOSSA ABORDAGEM -->
-<section class="plate plate--orange" id="abordagem" aria-labelledby="t10">
-  <div class="inner">
-    <header class="strip"><span class="label" id="t10">Nossa abordagem</span><span class="wide">Sara Meireles<br>Aquisição Digital</span></header>
-
-    <blockquote class="manifesto">Mais do que anunciar conteúdos, queremos construir uma operação de aquisição que aprenda, evolua e gere negócios.</blockquote>
-
-    <div class="cells closing-grid grow">
-      <div class="closing-text">
-      <p>Cada campanha, audiência e ponto de contato será observado como parte de uma jornada integrada: da descoberta da Sara ao interesse, da oportunidade comercial à contratação de suas consultorias e mentorias.</p>
-      <p>A proposta é combinar execução consistente com inteligência estratégica para transformar a presença digital em crescimento comercial sustentável.</p>
-      <div class="sign"><span class="label">Preparada por</span><strong>Bernardo Costa</strong><span class="label">Estratégia e Gestão de Aquisição</span></div>
+<!-- 8 · 07 Entregáveis -->
+<section class="page p-07" id="entregaveis" aria-labelledby="t07">
+  <div class="board">
+    <article class="card c-paper head" style="--a:head">
+      <div class="ct"><span class="tag">Capítulo 07 — Entregas</span><i class="ico"></i></div>
+      <h2 id="t07">Entregáveis mensais</h2>
+      <div class="head-end end">
+        <p class="lead">Os patrocínios representam ativações de conteúdos, não a produção de novas peças. O volume será distribuído conforme a estratégia, os resultados e a verba disponível.</p>
+        <span class="cnum">07</span>
       </div>
-      <div class="field closing-field" data-sx="1" data-sy="1" data-animate="1" aria-hidden="true"></div>
-    </div>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/entregas-arara.jpg" alt="Arara com roupas em tons neutros"></figure>
+    <article class="card c-dark" style="--a:sums">
+      <span class="tag">Por mês</span>
+      <ul class="sums-grid end">
+        <li class="sum"><span class="mono">Meta Ads · patrocínios</span><b><small>até</small>20</b></li>
+        <li class="sum"><span class="mono">TikTok Ads · patrocínios</span><b><small>até</small>10</b></li>
+        <li class="sum"><span class="mono">Google Ads · campanha ativa</span><b>1</b></li>
+        <li class="sum"><span class="mono">Reuniões de acompanhamento</span><b>2</b></li>
+        <li class="sum"><span class="mono">Relatório de resultados</span><b>1</b></li>
+      </ul>
+    </article>
+    <article class="card c-paper" style="--a:table">
+      <div class="ct"><span class="tag">Entregáveis e volumes</span><i class="ico"></i></div>
+      <div class="sheet-wrap end">
+        <table class="sheet">
+          <thead><tr><th scope="col">Ref.</th><th scope="col">Entregável</th><th scope="col">Volume</th></tr></thead>
+          <tbody>
+            <tr class="group"><th colspan="3" scope="colgroup">Ativação de mídia</th></tr>
+            <tr><td>7.1</td><td>Patrocínios de conteúdos em Meta Ads (Instagram/Facebook)</td><td>Até 20/mês</td></tr>
+            <tr><td>7.2</td><td>Gestão de campanha no Google Ads</td><td>1 campanha ativa</td></tr>
+            <tr><td>7.3</td><td>Patrocínios de conteúdos no TikTok</td><td>Até 10/mês</td></tr>
+            <tr class="group"><th colspan="3" scope="colgroup">Estratégia e otimização</th></tr>
+            <tr><td>7.4</td><td>Estratégia, segmentações e testes de audiências</td><td>Contínuos</td></tr>
+            <tr><td>7.5</td><td>Remarketing e otimização de campanhas</td><td>Contínuos</td></tr>
+            <tr><td>7.6</td><td>Análise da jornada e recomendações de conversão</td><td>Contínuas</td></tr>
+            <tr><td>7.7</td><td>Apoio estratégico em produtos, ofertas e inbound marketing</td><td>Conforme oportunidades</td></tr>
+            <tr class="group"><th colspan="3" scope="colgroup">Acompanhamento</th></tr>
+            <tr><td>7.8</td><td>Relatório de desempenho e resultados</td><td>1/mês</td></tr>
+            <tr><td>7.9</td><td>Reuniões de acompanhamento e planejamento</td><td>2/mês</td></tr>
+            <tr><td>7.10</td><td>Contato e alinhamento operacional</td><td>Contínuo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>
 
-    <footer class="strip strip--foot strip--keep">
-      <span class="label">Proposta preparada para Sara Meireles — Outubro 2026</span>
-      <span class="pg">10</span>
-    </footer>
+<!-- 9 · 08 Equipe + 09 Investimento -->
+<section class="page p-0809" aria-label="Equipe e investimento">
+  <div class="board">
+    <article class="card c-stone h8" style="--a:h8" id="equipe">
+      <div class="ct"><span class="tag">Capítulo 08 — Equipe</span><span class="cnum" style="font-size:var(--t-h2)">08</span></div>
+      <h2>Equipe responsável</h2>
+      <i class="ast end" aria-hidden="true"></i>
+    </article>
+    <article class="card c-dark person" style="--a:p1">
+      <div class="ct"><span class="initials" aria-hidden="true">BC</span><i class="ico"></i></div>
+      <h3>Bernardo Costa</h3>
+      <span class="chip">Estratégia e Gestão de Aquisição</span>
+      <p class="small end">Responsável pelo planejamento estratégico, definição de canais e audiências, execução e otimização de mídia, inteligência de resultados, evolução da jornada de aquisição e relacionamento estratégico com a Sara.</p>
+    </article>
+    <article class="card c-dark person" style="--a:p2">
+      <div class="ct"><span class="initials" aria-hidden="true">F</span><i class="ico"></i></div>
+      <h3>Felipe</h3>
+      <span class="chip">Operação e Tecnologia de Mídia</span>
+      <p class="small end">Responsável pelo suporte à execução das campanhas, configurações técnicas, implementação de estruturas de mídia, acompanhamento operacional e apoio às otimizações.</p>
+    </article>
+    <article class="card c-paper head" style="--a:h9" id="investimento">
+      <div class="ct"><span class="tag">Capítulo 09 — Investimento</span><span class="cnum" style="font-size:var(--t-h2)">09</span></div>
+      <h2>Investimento</h2>
+      <p class="lead end">O investimento contempla a estratégia, gestão e execução da mídia, acompanhamento de indicadores, análises de conversão, reuniões e relacionamento contínuo com a equipe.</p>
+    </article>
+    <article class="card c-grad price" style="--a:price">
+      <div class="ct"><span class="tag">Honorários mensais</span><i class="ico ico--dn"></i></div>
+      <div class="end">
+        <p class="price-n"><small>R$</small>2.500</p>
+        <p class="per">por mês</p>
+      </div>
+      <p><span class="pill">verba de mídia à parte</span></p>
+    </article>
+    <article class="card c-dark conds" style="--a:conds">
+      <span class="tag">Condições e premissas</span>
+      <ol class="rows fill end">
+        <li><span class="i">01</span><span>O investimento nas plataformas de publicidade (Meta, Google e TikTok) é separado dos honorários.</span></li>
+        <li><span class="i">02</span><span>A distribuição da verba será recomendada e ajustada conforme o desempenho e as prioridades de aquisição.</span></li>
+        <li><span class="i">03</span><span>A produção de vídeos, fotografias, peças criativas e o desenvolvimento integral de sites ou ferramentas não estão incluídos.</span></li>
+        <li><span class="i">04</span><span>A execução depende de acesso às contas, às ferramentas de mensuração e aos materiais necessários.</span></li>
+      </ol>
+    </article>
+  </div>
+</section>
+
+<!-- 10 · Nossa abordagem -->
+<section class="page p-close" id="abordagem" aria-labelledby="t10">
+  <div class="board">
+    <article class="card c-grad man" style="--a:man">
+      <div class="ct"><span class="tag" id="t10">Nossa abordagem</span><i class="ico ico--dn"></i></div>
+      <blockquote class="manifesto">Mais do que anunciar conteúdos, queremos construir uma operação de aquisição que <span class="it">aprenda, evolua e gere negócios.</span></blockquote>
+      <i class="ast end" aria-hidden="true"></i>
+    </article>
+    <figure class="card c-photo" style="--a:ph"><img src="img/abordagem-retrato.jpg" alt="Mulher de blazer preto em retrato de estúdio"></figure>
+    <article class="card c-paper" style="--a:t1">
+      <span class="tag">Jornada integrada</span>
+      <p class="small end">Cada campanha, audiência e ponto de contato será observado como parte de uma jornada integrada: da descoberta da Sara ao interesse, da oportunidade comercial à contratação de suas consultorias e mentorias.</p>
+    </article>
+    <article class="card c-stone" style="--a:t2">
+      <span class="tag">Crescimento sustentável</span>
+      <p class="small end">A proposta é combinar execução consistente com inteligência estratégica para transformar a presença digital em crescimento comercial sustentável.</p>
+    </article>
+    <article class="card c-black sig" style="--a:sig">
+      <div class="ct"><span class="tag">Preparada por</span><span class="mono">Out 2026</span></div>
+      <div class="end"><strong>Bernardo Costa</strong><p class="mono">Estratégia e Gestão de Aquisição</p></div>
+    </article>
   </div>
 </section>
 
 </div>
-
-<script>
-(() => {
-  const NS = 'http://www.w3.org/2000/svg';
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fields = [...document.querySelectorAll('.field')];
-  const fits = [...document.querySelectorAll('.fit')];
-
-  // Campo de traços: cada traço aponta para (ou parte de) um ponto de origem.
-  function drawField(box) {
-    const w = box.clientWidth, h = box.clientHeight;
-    if (!w || !h) return;
-    let svg = box.querySelector('svg');
-    if (!svg) { svg = document.createElementNS(NS, 'svg'); box.appendChild(svg); }
-    const step = parseFloat(getComputedStyle(box).getPropertyValue('--step')) || 36;
-    const cols = Math.max(2, Math.round(w / step)), rows = Math.max(1, Math.round(h / step));
-    const cw = w / cols, ch = h / rows;
-    const sx = parseFloat(box.dataset.sx || 0) * w, sy = parseFloat(box.dataset.sy || 0) * h;
-    const mode = box.dataset.mode || 'radial';
-    const len = Math.min(cw, ch) * .52, sw = Math.min(cw, ch) * .11;
-    const far = Math.max(Math.hypot(sx, sy), Math.hypot(w - sx, sy), Math.hypot(sx, h - sy), Math.hypot(w - sx, h - sy)) || 1;
-    const dashes = [];
-    let lines = '';
-    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-      const x = (c + .5) * cw, y = (r + .5) * ch, d = Math.hypot(x - sx, y - sy);
-      const a = d < 1 ? Math.PI / 4 : Math.atan2(y - sy, x - sx);
-      const t = d / far;
-      const o = mode === 'out' ? 1 - .78 * t : mode === 'in' ? .22 + .78 * (1 - t) : 1;
-      dashes.push({ x, y, a, d });
-      const ux = Math.cos(a) * len / 2, uy = Math.sin(a) * len / 2;
-      lines += `<line x1="${(x - ux).toFixed(1)}" y1="${(y - uy).toFixed(1)}" x2="${(x + ux).toFixed(1)}" y2="${(y + uy).toFixed(1)}" opacity="${o.toFixed(2)}"/>`;
-    }
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.setAttribute('preserveAspectRatio', 'none');
-    svg.innerHTML = `<g stroke="currentColor" stroke-width="${sw.toFixed(1)}">${lines}</g>` +
-      (mode === 'in' ? `<circle cx="${sx}" cy="${sy}" r="${(sw * 2.2).toFixed(1)}" fill="currentColor"/>` : '');
-    box._dash = { dashes, len, els: svg.querySelectorAll('line') };
-  }
-
-  // Título da capa: cada linha ocupa a largura inteira da coluna.
-  function fit(el) {
-    const box = el.parentElement.clientWidth;
-    el.style.fontSize = '100px';
-    const w = el.getBoundingClientRect().width;
-    if (w) el.style.fontSize = (100 * box / w * .995).toFixed(2) + 'px';
-  }
-
-  function layout() { fits.forEach(fit); fields.forEach(drawField); }
-  window.__layout = layout;
-
-  // Movimento sutil: os traços oscilam em onda a partir da origem.
-  const live = fields.filter(f => f.dataset.animate);
-  const visible = new Set();
-  if (!reduce && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
-    live.forEach(f => io.observe(f));
-    const tick = now => {
-      const t = now / 1000;
-      visible.forEach(box => {
-        const s = box._dash; if (!s) return;
-        s.dashes.forEach((p, i) => {
-          const a = p.a + Math.sin(t * 1.1 - p.d / 70) * .22;
-          const ux = Math.cos(a) * s.len / 2, uy = Math.sin(a) * s.len / 2, el = s.els[i];
-          el.setAttribute('x1', (p.x - ux).toFixed(1)); el.setAttribute('y1', (p.y - uy).toFixed(1));
-          el.setAttribute('x2', (p.x + ux).toFixed(1)); el.setAttribute('y2', (p.y + uy).toFixed(1));
-        });
-      });
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  layout();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
-  let raf = 0;
-  const ro = new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); });
-  ro.observe(document.documentElement);
-  window.addEventListener('beforeprint', layout);
-  window.addEventListener('afterprint', layout);
-})();
-</script>
