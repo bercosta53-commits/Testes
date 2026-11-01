@@ -118,19 +118,15 @@ function comoTrabalhamos(ctx) {
     </div>`);
 }
 
-// 05 · Velora Radar — abre com uma faixa fotográfica; o Radar é desenhado como um radar.
+// 05 · Velora Radar — o Radar é desenhado como um radar.
 function radarSecao(ctx) {
   const itens = [
     ['Menos dispersão', 'priorização de contas com critérios claros.'],
     ['Mais contexto', 'informação para adaptar a abordagem a cada empresa.'],
     ['Mais coordenação', 'marketing e vendas trabalham a partir da mesma visão das contas.'],
   ];
-  return secaoLivre({ tema: 'escuro', id: 'velora-radar', classe: 'radar-secao' }, html`
-    <figure class="faixa foto foto--escuro">
-      ${foto(ctx, 'faixa', { sizes: '100vw' })}
-      <div class="wrap faixa__rotulo">${rotulo('Velora Radar', '05')}</div>
-    </figure>
-    <div class="wrap">
+  return secao({ tema: 'escuro', id: 'velora-radar', classe: 'radar-secao' }, html`
+      ${rotulo('Velora Radar', '05')}
       <h2 class="titulo-2 titulo-2--grande cabeca">Antes de abordar mais empresas, entenda quais merecem atenção agora.</h2>
       <div class="radar-secao__grade">
         <div class="radar-secao__texto revelar">
@@ -142,14 +138,13 @@ function radarSecao(ctx) {
           ${pendente(ctx, 'Captura de tela real do Velora Radar, com dados sensíveis ocultados (validar funcionalidades efetivamente disponíveis)', { classe: 'pendente--midia' })}
         </div>
       </div>
-      ${ponte('Esse tipo de trabalho tem mais impacto quando há uma oferta validada e espaço real para abrir novos mercados.')}
-    </div>`);
+      ${ponte('Esse tipo de trabalho tem mais impacto quando há uma oferta validada e espaço real para abrir novos mercados.')}`);
 }
 
-// 06 · Para quem — cartões com foto; tecnologia B2B com o dobro da largura.
+// 06 · Para quem — Tecnologia B2B em destaque (largura inteira, com foto); os outros perfis só com texto.
 function paraQuem(ctx) {
   const card = (chave, segmento, texto, destaque) => html`<article class="card-icp${destaque ? ' card-icp--destaque' : ''} revelar">
-    <figure class="card-icp__foto foto foto--claro">${foto(ctx, chave, { sizes: destaque ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 100vw' })}</figure>
+    ${destaque ? html`<figure class="card-icp__foto foto foto--claro">${foto(ctx, chave, { sizes: '(min-width: 768px) 52vw, 100vw' })}</figure>` : ''}
     <div class="card-icp__corpo">
       <h3 class="card-icp__segmento">${segmento}${destaque ? html` <span class="ri__dp">·</span> <span class="marca-texto card-icp__foco">Nosso principal foco</span>` : ''}</h3>
       <p class="card-icp__texto">${texto}</p>
@@ -160,8 +155,8 @@ function paraQuem(ctx) {
     <h2 class="titulo-2 titulo-2--grande cabeca">Para empresas que já provaram seu valor e agora precisam encontrar novos caminhos de crescimento.</h2>
     <div class="cards-icp">
       ${card('icp-tecnologia', 'Tecnologia B2B', 'Sua empresa vende software ou serviços de tecnologia, tem clientes satisfeitos e quer ir além das indicações. Podemos ajudar a definir mercados, priorizar contas, acessar decisores e criar uma forma mais consistente de transformar conversas em contratos.', true)}
-      ${card('icp-profissionais', 'Serviços profissionais', 'Em mercados como jurídico, contábil e tributário, a decisão de compra depende de confiança, contexto e várias pessoas. Ajudamos a organizar a aquisição sem reduzir uma venda consultiva a volume de contatos.')}
-      ${card('icp-financeiros', 'Serviços financeiros', 'Quando a oferta é complexa e o ciclo comercial exige acompanhamento, conectamos inteligência, abordagem e operação comercial para dar mais clareza ao pipeline e às decisões.')}
+      ${card(null, 'Serviços profissionais', 'Em mercados como jurídico, contábil e tributário, a decisão de compra depende de confiança, contexto e várias pessoas. Ajudamos a organizar a aquisição sem reduzir uma venda consultiva a volume de contatos.')}
+      ${card(null, 'Serviços financeiros', 'Quando a oferta é complexa e o ciclo comercial exige acompanhamento, conectamos inteligência, abordagem e operação comercial para dar mais clareza ao pipeline e às decisões.')}
     </div>
     ${ponte('O método precisa se traduzir em mudanças observáveis — e comprováveis.')}`);
 }

@@ -20,25 +20,10 @@ export const FOTOS = {
     alt: 'Sessão de trabalho em frente a um quadro branco com curvas desenhadas: uma pessoa escreve enquanto outras acompanham.',
     fonte: 'https://www.pexels.com/photo/5439478/',
   },
-  faixa: {
-    arquivo: 'faixa', larguras: [1200, 2400], proporcao: [2000, 800],
-    alt: 'Mãos apontam com lápis para relatórios e gráficos impressos sobre uma mesa.',
-    fonte: 'https://www.pexels.com/photo/7869003/',
-  },
   'icp-tecnologia': {
     arquivo: 'icp-tec', larguras: [800, 1600], proporcao: [2000, 1125],
     alt: 'Equipe trabalhando com notebooks em uma mesa compartilhada de empresa de tecnologia.',
     fonte: 'https://www.pexels.com/photo/16323454/',
-  },
-  'icp-profissionais': {
-    arquivo: 'icp-prof', larguras: [600, 1200], proporcao: [1500, 1125],
-    alt: 'Três profissionais sentados a uma mesa redonda em uma sala de reunião executiva.',
-    fonte: 'https://www.pexels.com/photo/8463151/',
-  },
-  'icp-financeiros': {
-    arquivo: 'icp-fin', larguras: [600, 1200], proporcao: [2000, 1500],
-    alt: 'Dois executivos analisam juntos dados em um tablet.',
-    fonte: 'https://www.pexels.com/photo/8353818/',
   },
   agendar: {
     arquivo: 'agendar', larguras: [600, 1200], proporcao: [1066, 1333],

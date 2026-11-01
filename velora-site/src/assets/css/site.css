@@ -858,12 +858,6 @@ p, li, dd { text-wrap: pretty; }
 /* =========================================================================
    Home · 05 Velora Radar
    ========================================================================= */
-.radar-secao { padding-top: 0; }
-.faixa { position: relative; margin: 0; height: clamp(260px, 36vw, 560px); }
-.faixa img { object-position: 50% 40%; }
-.faixa::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, var(--ink) 0%, rgb(11 11 12 / .35) 45%, rgb(11 11 12 / .15) 100%); }
-.faixa__rotulo { position: absolute; left: 0; right: 0; bottom: 8px; z-index: 1; }
-.radar-secao > .wrap { padding-top: 40px; }
 .radar-secao__grade { display: grid; gap: 56px; }
 @media (min-width: 1024px) {
   .radar-secao__grade { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
@@ -912,17 +906,20 @@ p, li, dd { text-wrap: pretty; }
    ========================================================================= */
 .cards-icp { display: grid; gap: var(--gutter); }
 @media (min-width: 768px) { .cards-icp { grid-template-columns: 1fr 1fr; } .card-icp--destaque { grid-column: 1 / -1; } }
-@media (min-width: 1024px) { .cards-icp { grid-template-columns: 2fr 1fr 1fr; } .card-icp--destaque { grid-column: auto; } }
 .card-icp { display: flex; flex-direction: column; overflow: hidden; background: var(--paper); border-radius: 2px; }
-.card-icp__foto { margin: 0; aspect-ratio: 4 / 3; }
-.card-icp--destaque .card-icp__foto { aspect-ratio: 16 / 9; }
-.card-icp__corpo { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 26px 28px 32px; }
-.card-icp--destaque .card-icp__corpo { padding: 32px 40px 40px; }
+.card-icp__foto { margin: 0; aspect-ratio: 16 / 9; }
+.card-icp__corpo { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 32px; }
 .card-icp__segmento { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.25rem, 1.15rem + .35vw, 1.5rem); line-height: 1.25; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .card-icp__foco { font-size: 11px; padding: .45em .6em; }
-.card-icp__texto { color: var(--fg-2); }
+.card-icp__texto { color: var(--fg-2); max-width: 34em; }
 .card-icp--destaque .card-icp__segmento { flex-direction: column-reverse; align-items: flex-start; gap: 18px; font-size: clamp(2rem, 1.5rem + 1.6vw, 3rem); line-height: 1.05; letter-spacing: -.02em; }
-.card-icp--destaque .card-icp__texto { margin-top: auto; padding-top: 20px; font-size: clamp(1.0625rem, 1rem + .25vw, 1.1875rem); line-height: 1.5; color: var(--fg); max-width: 34em; }
+.card-icp--destaque .card-icp__texto { margin-top: auto; padding-top: 20px; font-size: clamp(1.0625rem, 1rem + .25vw, 1.1875rem); line-height: 1.5; color: var(--fg); }
+@media (min-width: 768px) {
+  .card-icp--destaque { flex-direction: row; }
+  .card-icp--destaque .card-icp__foto { flex: 0 0 50%; aspect-ratio: auto; min-height: 360px; }
+  .card-icp--destaque .card-icp__corpo { padding: 40px; }
+}
+@media (min-width: 1024px) { .card-icp--destaque .card-icp__corpo { padding: 48px 56px; } .card-icp:not(.card-icp--destaque) .card-icp__corpo { padding: 40px; } }
 
 /* =========================================================================
    Home · 07 Evidências — exhibit em formato de página de relatório

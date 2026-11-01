@@ -27,8 +27,8 @@ export default {
   ],
 
   // Fotos de produção própria, quando houver. Cada posição preenchida aqui substitui a foto
-  // provisória (Pexels) de src/conteudo/fotos.mjs. Posições: 'hero', 'onde-trava', 'como', 'faixa',
-  // 'icp-tecnologia', 'icp-profissionais', 'icp-financeiros', 'agendar'. Ex.:
+  // provisória (Pexels) de src/conteudo/fotos.mjs. Posições: 'hero', 'onde-trava', 'como',
+  // 'icp-tecnologia', 'agendar'. Ex.:
   //   'onde-trava': { src: 'assets/img/onde-trava-proprio.webp', alt: '…', largura: 1600, altura: 1067 }
   fotos: {},
 

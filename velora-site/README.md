@@ -70,10 +70,11 @@ scripts/servidor.mjs       servidor local de pré-visualização
 - Acessibilidade: *Pular para o conteúdo*, *Menu* / *Fechar* e descrições dos diagramas para leitor de tela.
 
 **Fotografia (provisória)**
-- As 8 fotos são do banco **Pexels** (licença Pexels: uso comercial livre, sem atribuição obrigatória, edição permitida), escolhidas pela direção do briefing §8: gente real trabalhando, flagrante e não pose, quadro, papel e tela; nada de aperto de mão, gráfico subindo ou grupo posado.
+- As 5 fotos são do banco **Pexels** (licença Pexels: uso comercial livre, sem atribuição obrigatória, edição permitida), escolhidas pela direção do briefing §8: gente real trabalhando, flagrante e não pose, quadro, papel e tela; nada de aperto de mão, gráfico subindo ou grupo posado.
 - Todas tratadas no mesmo padrão: P&B, contraste suave, grão leve; mais escuras nas seções Ink e levemente quentes nas seções Bone. A foto do hero foi espelhada para a composição.
 - As pessoas nas fotos **não** são da Velora nem clientes, e nenhuma legenda sugere isso. Os retratos dos sócios continuam pendentes: só com produção própria.
-- Fontes: hero [18999479](https://www.pexels.com/photo/18999479/) · 02 [7433869](https://www.pexels.com/photo/7433869/) · 04 [5439478](https://www.pexels.com/photo/5439478/) · faixa do Radar [7869003](https://www.pexels.com/photo/7869003/) · 06 [16323454](https://www.pexels.com/photo/16323454/), [8463151](https://www.pexels.com/photo/8463151/), [8353818](https://www.pexels.com/photo/8353818/) · 09 [5668492](https://www.pexels.com/photo/5668492/).
+- Fontes: hero [18999479](https://www.pexels.com/photo/18999479/) · 02 [7433869](https://www.pexels.com/photo/7433869/) · 04 [5439478](https://www.pexels.com/photo/5439478/) · 06 Tecnologia B2B [16323454](https://www.pexels.com/photo/16323454/) · 09 [5668492](https://www.pexels.com/photo/5668492/).
+- Ritmo: foto nas seções claras de pessoas e raciocínio (02, 04, 06) e na abertura e no fechamento (hero, 09); as seções escuras de sistema e dados (03, 05, 07) ficam com os diagramas.
 - Para trocar por produção própria: `config.mjs → fotos` (mesmas chaves de `src/conteudo/fotos.mjs`).
 
 **Elementos visuais**
@@ -81,8 +82,8 @@ scripts/servidor.mjs       servidor local de pré-visualização
 - **02:** foto sangrando à esquerda; o diagrama *desconectado × conectado* mostra o antes em Paper (ligações interrompidas) e o depois em Ink, com o retorno em Acid se desenhando por último.
 - **03:** numeração monumental das etapas e ciclo fixo que acompanha a rolagem; a cada troca de etapa, um pulso Acid percorre a entrega que sai dela.
 - **04:** foto sangrando à direita e as letras R H O I em escala de cartaz.
-- **05:** faixa fotográfica de abertura; o Velora Radar desenhado como um radar (anéis, varredura única, contas, contas prioritárias em Acid, sinais, comitê de compra) com legenda numerada ligando cada item à etapa. É um diagrama do papel do Radar, **não uma tela do produto**: sem dados, nomes ou números.
-- **06:** cartões com foto; Tecnologia B2B com o dobro da largura.
+- **05:** o Velora Radar desenhado como um radar (anéis, varredura única, contas, contas prioritárias em Acid, sinais, comitê de compra) com legenda numerada ligando cada item à etapa. É um diagrama do papel do Radar, **não uma tela do produto**: sem dados, nomes ou números.
+- **06:** Tecnologia B2B em destaque, na largura inteira, com foto; Serviços profissionais e Serviços financeiros só com texto, lado a lado.
 - **08:** numeração grande; o 01 (ponto de partida) em bloco Acid.
 - **09:** foto da conversa sangrando à esquerda, na altura da seção inteira.
 - **Rodapé:** assinatura *Velora* em escala de cartaz, cortada pela borda (desenho decorativo, não texto).
@@ -101,7 +102,7 @@ scripts/servidor.mjs       servidor local de pré-visualização
 
 - Copy literal: 161/161 trechos.
 - axe-core (WCAG 2.1 AA + boas práticas): 0 violações no desktop e no celular.
-- 35 testes de interação (Playwright): pulso do trilho, carregamento das 8 fotos, ciclo (rolagem, pulso, mouse), radar, CTA em contorno, navegação marcando a seção, âncoras, validação e sucesso do formulário, menu do celular (abrir, Esc, fechar ao escolher), sem rolagem horizontal, áreas de toque, movimento reduzido, página sem JavaScript.
+- 35 testes de interação (Playwright): pulso do trilho, carregamento das 5 fotos, ciclo (rolagem, pulso, mouse), radar, CTA em contorno, navegação marcando a seção, âncoras, validação e sucesso do formulário, menu do celular (abrir, Esc, fechar ao escolher), sem rolagem horizontal, áreas de toque, movimento reduzido, página sem JavaScript.
 - Larguras conferidas: 320, 390, 768, 834, 1024, 1200, 1280, 1366, 1440 e 1920 px, sem rolagem horizontal.
 - Briefing de design: nenhum glow, neon, sombra, emoji ou canto ≥ 16 px; só as cores da paleta. Os únicos degradês são as vinhetas que fundem as fotos ao Ink (briefing §8).
 
