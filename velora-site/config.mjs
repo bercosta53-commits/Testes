@@ -26,10 +26,10 @@ export default {
     'Acima de R$ 100 milhões',
   ],
 
-  // Fotos aprovadas, por posição. Posições: 'onde-trava', 'como-trabalhamos', 'radar-tela',
-  // 'icp-tecnologia', 'icp-profissionais', 'icp-financeiros'. Ex.:
-  //   'onde-trava': { src: 'assets/img/onde-trava.webp', alt: '…', largura: 1200, altura: 1500 }
-  // Posições sem foto não aparecem na versão publicável (aparecem marcadas na versão de revisão).
+  // Fotos de produção própria, quando houver. Cada posição preenchida aqui substitui a foto
+  // provisória (Pexels) de src/conteudo/fotos.mjs. Posições: 'hero', 'onde-trava', 'como', 'faixa',
+  // 'icp-tecnologia', 'icp-profissionais', 'icp-financeiros', 'agendar'. Ex.:
+  //   'onde-trava': { src: 'assets/img/onde-trava-proprio.webp', alt: '…', largura: 1600, altura: 1067 }
   fotos: {},
 
   // Casos validados (com autorização, números verificáveis e período). Vazio = bloco de casos não é publicado.

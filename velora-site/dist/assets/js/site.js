@@ -123,21 +123,22 @@
         }
       });
 
-      // Abertura: as linhas se desenham em sequência (Inteligência → … → Medição → Inteligência)
-      // e só então a etapa 01 acende. Sem repetição automática.
-      if (modo === 'abertura' && temIO && !reduzMovimento.matches) {
-        aplicar('');
-        ciclo.addEventListener('velora:visivel', function () {
-          window.setTimeout(function () { if (!emFoco) aplicar(atual); }, 1750);
-        }, { once: true });
-      }
-
       // Rolagem: a etapa ativa acompanha o bloco de texto que está no centro da tela.
       if (modo === 'rolagem') {
         var grupo = ciclo.closest('[data-sistema]');
         var blocos = grupo ? grupo.querySelectorAll('[data-etapa-bloco]') : [];
         if (!blocos.length || !temIO) return;
+        var pulsar = function (n) {
+          if (reduzMovimento.matches) return;
+          var bola = ciclo.querySelector('.ciclo__pulso[data-de="' + n + '"]');
+          var mov = bola && bola.querySelector('animateMotion');
+          if (!mov || typeof mov.beginElement !== 'function' || !bola.getBoundingClientRect().width) return;
+          bola.classList.add('is-ativo');
+          mov.beginElement();
+          window.setTimeout(function () { bola.classList.remove('is-ativo'); }, 1150);
+        };
         var marcar = function (n) {
+          if (n !== atual) pulsar(n);
           atual = n;
           blocos.forEach(function (b) { b.classList.toggle('is-ativa', b.getAttribute('data-etapa-bloco') === n); });
           repousar();
@@ -148,9 +149,27 @@
           });
         }, { rootMargin: '-48% 0px -48% 0px' });
         blocos.forEach(function (b) { io.observe(b); });
-        marcar('1');
+        atual = '1';
+        blocos[0].classList.add('is-ativa');
       }
     });
+  }
+
+  /* ---------- Trilho do hero: o pulso percorre o sistema uma vez (5 s) e a etapa 01 acende ---------- */
+  function iniciarTrilho() {
+    var trilho = doc.querySelector('[data-trilho]');
+    if (!trilho || !temIO || reduzMovimento.matches) { if (trilho) trilho.setAttribute('data-ativa', '1'); return; }
+    trilho.addEventListener('velora:visivel', function () {
+      trilho.removeAttribute('data-ativa');
+      trilho.classList.add('is-percorrendo');
+      var pulso = trilho.querySelector('.trilho__pulso');
+      var fim = function () {
+        trilho.classList.remove('is-percorrendo');
+        trilho.setAttribute('data-ativa', '1');
+      };
+      pulso.addEventListener('animationend', fim, { once: true });
+      window.setTimeout(function () { if (trilho.classList.contains('is-percorrendo')) fim(); }, 6000);
+    }, { once: true });
   }
 
   /* ---------- Formulários ---------- */
@@ -221,6 +240,7 @@
     iniciarMenu();
     iniciarCtaDiscreto();
     iniciarSecaoAtual();
+    iniciarTrilho();
     iniciarEntradas();
     iniciarCiclos();
     iniciarFormularios();

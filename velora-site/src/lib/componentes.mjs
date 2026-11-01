@@ -1,5 +1,6 @@
 // Componentes reutilizáveis (seção 9 do briefing de design).
 import { html, raw, md } from './html.mjs';
+import { FOTOS } from '../conteudo/fotos.mjs';
 
 export const seta = raw(
   '<svg class="seta" viewBox="0 0 16 16" aria-hidden="true" focusable="false">' +
@@ -32,6 +33,22 @@ export function secao({ tema, id, classe = '', topo = false }, conteudo) {
   return html`<section class="secao tema-${tema}${topo ? ' secao--topo' : ''} ${classe}"${id ? html` id="${id}"` : ''}>
   <div class="wrap">${conteudo}</div>
 </section>`;
+}
+
+// Seção sem o .wrap automático: para composições que sangram até a borda da tela.
+export function secaoLivre({ tema, id, classe = '', topo = false }, conteudo) {
+  return html`<section class="secao tema-${tema}${topo ? ' secao--topo' : ''} ${classe}"${id ? html` id="${id}"` : ''}>${conteudo}</section>`;
+}
+
+// Foto editorial. Usa a foto aprovada em config.fotos[chave] se houver; senão, a provisória de FOTOS.
+export function foto(ctx, chave, { sizes = '100vw', classe = '', prioridade = false } = {}) {
+  const aprovada = ctx.config.fotos[chave];
+  if (aprovada) {
+    return html`<img class="${classe}" src="${aprovada.src}" alt="${aprovada.alt}" width="${aprovada.largura}" height="${aprovada.altura}"${prioridade ? raw(' fetchpriority="high"') : raw(' loading="lazy"')} decoding="async">`;
+  }
+  const f = FOTOS[chave];
+  const srcset = f.larguras.map((w) => `assets/img/${f.arquivo}-${w}.webp ${w}w`).join(', ');
+  return html`<img class="${classe}" src="assets/img/${f.arquivo}-${f.larguras.at(-1)}.webp" srcset="${srcset}" sizes="${sizes}" alt="${f.alt}" width="${f.proporcao[0]}" height="${f.proporcao[1]}"${prioridade ? raw(' fetchpriority="high"') : raw(' loading="lazy"')} decoding="async">`;
 }
 
 // Frase-ponte: fecha a seção e puxa a próxima.
