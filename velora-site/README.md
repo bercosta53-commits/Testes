@@ -17,6 +17,7 @@ Precisa só de Node 18+. Não há dependências para instalar.
 npm run preview            # gera dist/ e abre em http://localhost:4173
 npm run preview:revisao    # gera dist-revisao/ (pendências marcadas) em http://localhost:4173
 npm run build              # só gera dist/
+npm run arquivo-unico      # gera arquivo-unico/velora-site.html: um só HTML com CSS, JS, fontes e fotos embutidos (~1 MB)
 node scripts/verificar.mjs caminho/para/velora-copy-site-v1.md   # confere a copy (ver abaixo)
 ```
 
@@ -47,6 +48,7 @@ src/assets/img/            fotos tratadas (WebP, 2 tamanhos cada)
 scripts/verificar.mjs      confere o texto da página contra o MD da copy
 scripts/tratar-fotos.py    recorte e tratamento P&B das fotos (Python + Pillow; originais fora do repositório)
 scripts/servidor.mjs       servidor local de pré-visualização
+scripts/arquivo-unico.mjs  empacota dist/ num HTML único e autocontido (para abrir direto ou enviar como anexo)
 ```
 
 ## Conferência da copy

@@ -12,6 +12,7 @@
     "build:revisao": "node build.mjs --revisao",
     "preview": "node build.mjs && node scripts/servidor.mjs dist",
     "preview:revisao": "node build.mjs --revisao && node scripts/servidor.mjs dist-revisao",
-    "verificar": "node build.mjs && node scripts/verificar.mjs"
+    "verificar": "node build.mjs && node scripts/verificar.mjs",
+    "arquivo-unico": "node build.mjs && node scripts/arquivo-unico.mjs"
   }
 }
