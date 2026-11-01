@@ -34,9 +34,12 @@ async function main() {
   console.log(`Página gerada em ${path.relative(raiz, saida)}/index.html${revisao ? ' (versão de revisão, com pendências marcadas)' : ''}`);
   const avisos = [];
   if (!config.indexavel) avisos.push('indexavel: false → noindex na página e robots.txt bloqueando rastreamento.');
-  if (!config.formularios.diagnostico) avisos.push('formularios.diagnostico vazio → formulário em modo demonstração (NÃO envia dados).');
-  if (!config.casos.length) avisos.push('casos vazio → casos não publicados (a seção 07 mostra só a estrutura de cada caso).');
-  if (!config.socios.length) avisos.push('socios vazio → retratos dos sócios não publicados.');
+  if (!config.formularios.conversa) avisos.push('formularios.conversa vazio → formulário em modo demonstração (NÃO envia dados).');
+  if (!config.agendaUrl) avisos.push('agendaUrl vazio → CTAs dizem "Solicitar conversa" (regra da copy v2: "Agendar" só com agenda real).');
+  else if (!config.formularios.conversa) avisos.push('agendaUrl definido sem formularios.conversa → a agenda abre, mas os dados do formulário não são enviados.');
+  if (!config.privacidade.texto) avisos.push('privacidade.texto vazio → aviso de privacidade/LGPD ainda não publicado (obrigatório antes de publicar).');
+  if (!config.casos.length) avisos.push('casos vazio → nenhum caso publicado (espaço reservado, sem nada visível).');
+  if (!config.equipe.length) avisos.push('equipe vazio → equipe não publicada (espaço reservado, sem nada visível).');
   for (const a of avisos) console.warn(`  aviso: ${a}`);
 }
 

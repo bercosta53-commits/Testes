@@ -1,13 +1,13 @@
-# Velora — site v1 (one page)
+# Velora — site (one page) · copy editorial v2
 
-Primeira versão do novo site da Velora, construída a partir de dois documentos:
+Novo site da Velora, construído a partir de dois documentos:
 
-- **Copy:** `velora-copy-site-v1.md` (v1.0 · 01/11/2026) — home, seções 01 a 09.
+- **Copy:** `velora-copy-site-v2-editorial.md` (v2.0 · 01/11/2026) — bloco de publicação, seções 00 a 07, e as regras de implementação (§C) e critérios de aceite (§D). Substitui a copy v1.
 - **Design:** `briefing-design-site-velora.md` (v1.0 · 01/11/2026) — paleta, tipografia, grid, diagramas, movimento.
 
 Os dois documentos **não estão neste repositório** (o repositório é público e eles têm notas internas de validação).
 
-Nesta primeira fase o site é **uma página só**: a home da copy, com a navegação levando às seções.
+Nesta fase o site é **uma página só**, com a navegação levando às seções.
 
 ## Como rodar
 
@@ -17,113 +17,122 @@ Precisa só de Node 18+. Não há dependências para instalar.
 npm run preview            # gera dist/ e abre em http://localhost:4173
 npm run preview:revisao    # gera dist-revisao/ (pendências marcadas) em http://localhost:4173
 npm run build              # só gera dist/
-npm run arquivo-unico      # gera arquivo-unico/velora-site.html: um só HTML com CSS, JS, fontes e fotos embutidos (~1 MB)
-node scripts/verificar.mjs caminho/para/velora-copy-site-v1.md   # confere a copy (ver abaixo)
+npm run arquivo-unico      # gera arquivo-unico/velora-site.html: um só HTML com CSS, JS, fontes e fotos embutidos (~1,3 MB)
+node scripts/verificar.mjs caminho/para/velora-copy-site-v2-editorial.md   # confere copy e regras editoriais (ver abaixo)
 ```
 
 `dist/` é o site pronto: um `index.html`, os assets e o `robots.txt`. Pode ir para qualquer hospedagem estática (Netlify, Vercel, Cloudflare Pages, GitHub Pages, servidor próprio), na raiz ou em subpasta.
 
-### Duas versões
-
 | Pasta | Para quê |
 |---|---|
 | `dist/` | Versão publicável. Nenhuma nota, placeholder ou pendência aparece. |
-| `dist-revisao/` | A mesma página com caixas tracejadas **PENDENTE** onde entram casos, credenciais, retratos dos sócios, tela real do Radar e contatos. Só para revisão interna (não versionada). |
+| `dist-revisao/` | A mesma página com caixas tracejadas **PENDENTE** onde entram casos, equipe, tela real do Radar e aviso de privacidade. Só para revisão interna (não versionada). |
 
 ## Estrutura
 
 ```
-config.mjs                 decisões em aberto num só lugar (formulário, faixas, fotos, casos, sócios, contatos, indexação)
-build.mjs                  gera dist/ ou dist-revisao/
-src/paginas/home.mjs       as 9 seções da home, com a copy transcrita
-src/conteudo/etapas.mjs    as 5 etapas do sistema (usadas no texto e nos diagramas)
+config.mjs                 decisões em aberto num só lugar (formulário, agenda, faixas, privacidade, fotos, casos, equipe, indexação)
+build.mjs                  gera dist/ ou dist-revisao/ e avisa o que falta para publicar
+src/paginas/home.mjs       as seções 00–07, com a copy transcrita
+src/conteudo/etapas.mjs    as 5 etapas do sistema (faixa do hero e seção 02)
 src/conteudo/fotos.mjs     fotos editoriais: arquivo, proporção e texto alternativo
-src/lib/diagramas.mjs      trilho do hero, ciclo do sistema, desconectado × conectado, RHOI, radar
-src/lib/componentes.mjs    botões, rótulos, frase-ponte, formulário, exhibit de caso
-src/lib/layout.mjs         <head>, navegação e rodapé
+src/lib/diagramas.mjs      linha do RHOI e ilustração do Velora Radar
+src/lib/componentes.mjs    botões, rótulos, formulário, regra do CTA, exhibit de caso
+src/lib/layout.mjs         <head> (OG, favicon), navegação e rodapé
 src/assets/css/site.css    tokens e componentes do Velora Design System
-src/assets/js/site.js      menu, ciclo interativo, entrada das seções, formulário
+src/assets/js/site.js      menu, circuito do sistema, entrada das seções, formulário e medição
 src/assets/fonts/          Space Grotesk 700, Manrope 400–600, JetBrains Mono 500 (woff2, subset latino, licença OFL)
-src/assets/img/            fotos tratadas (WebP, 2 tamanhos cada)
-scripts/verificar.mjs      confere o texto da página contra o MD da copy
+src/assets/img/            fotos tratadas (WebP, 2 tamanhos cada), favicon, ícone e imagem de compartilhamento (og.jpg)
+scripts/verificar.mjs      confere a página contra a copy v2 e mede as regras editoriais
 scripts/tratar-fotos.py    recorte e tratamento P&B das fotos (Python + Pillow; originais fora do repositório)
 scripts/servidor.mjs       servidor local de pré-visualização
-scripts/arquivo-unico.mjs  empacota dist/ num HTML único e autocontido (para abrir direto ou enviar como anexo)
+scripts/arquivo-unico.mjs  empacota dist/ num HTML único e autocontido
 ```
 
-## Conferência da copy
+## Arquitetura da página (copy v2, §A)
 
-`scripts/verificar.mjs` lê o MD da copy e confere, frase por frase, se cada trecho da home, da navegação e das mensagens do formulário está na página **exatamente** como foi escrito (pontuação incluída; só maiúsculas/minúsculas ficam livres, porque o CSS controla a caixa dos rótulos). Depois lista todo texto visível que **não** vem da copy, para revisão humana. Resultado atual: 161 trechos conferidos, nenhum divergente.
+Uma seção, uma função. Fundos alternados Ink / Bone.
+
+| # | Seção | Fundo | O que tem |
+|---|---|---|---|
+| 00 | Hero | Ink | Promessa, dois CTAs e a faixa *Inteligência · Acesso · Demanda · Conversão · Medição* |
+| 01 | Onde a aquisição trava | Bone | Quatro dores e a **única** faixa de evidências (painel Ink, 4 dados com fonte e ano) |
+| 02 | O sistema | Ink | A **única** representação das cinco etapas: um circuito 01 → 05 com o retorno para 01 |
+| 03 | O que entregamos | Bone | Quatro frentes com entregáveis; o **Velora Radar** dentro de Inteligência comercial; Liderança de crescimento (GLaaS) como faixa transversal |
+| 04 | Como trabalhamos | Ink | RHOI: só ritmo, sequência e decisão |
+| 05 | Para quem | Bone | Tecnologia B2B em destaque; espaço reservado (invisível) para dois casos |
+| 06 | Formas de trabalhar | Ink | Só a relação de contratação; o ponto de partida em Acid |
+| 07 | Conversa inicial | Bone | Formulário; espaço reservado (invisível) para a equipe |
+
+Saíram da v1: frases-ponte, diagrama desconectado × conectado, trilho do hero, ciclo fixo da seção 03, seção própria do Radar, seção de evidências com a estrutura de caso vazia, lista das etapas no rodapé.
+
+## Conferência da copy e das regras
+
+`scripts/verificar.mjs` lê o bloco de publicação do MD (entre `PUBLICACAO_INICIO` e `PUBLICACAO_FIM`) e confere:
+
+1. **Copy → página:** cada trecho está na página exatamente como escrito (pontuação incluída; só maiúsculas/minúsculas ficam livres, porque o CSS controla a caixa dos rótulos). Resultado atual: **134/134**.
+2. **Página → copy:** lista todo texto visível que não vem da copy. Resultado atual: **nenhum**, além de marca, numeração, *Menu* e *Pular para o conteúdo*; as faixas de faturamento aparecem à parte, como sugestão a validar.
+3. **Regras editoriais (§C e §D):** os cinco nomes do sistema só no hero e na seção 02; cada dado uma única vez e nenhum outro percentual; os quatro dados na mesma faixa, com fonte e ano; Velora Radar uma única vez, junto de Inteligência comercial; subtítulo do hero com até 25 palavras (19); nenhuma das expressões vetadas; nenhum "Agendar" sem agenda real; nenhuma seção de caso ou equipe sem conteúdo; campos obrigatórios. Resultado atual: todas ok.
+
+Texto visível: **978 palavras na v2 contra 1.515 na v1 (−35%)**.
 
 ## Decisões tomadas nesta versão
 
-**One page**
-- Menu: *O sistema · Como trabalhamos · Para quem · Velora Radar* levam às seções. **Insights** e **Sobre** saíram por não terem seção na home; voltam quando houver páginas internas.
-- Todos os CTAs de diagnóstico (menu, hero, seção 08, rodapé) levam ao formulário da seção 09 (`#agendar`).
-- Saíram os CTAs de apoio que apontavam para páginas internas: *Conheça as cinco etapas*, *Entenda o nosso método*, *Conheça o Velora Radar*, *Veja onde podemos atuar*. *Começar pelo diagnóstico* (seção 08) ficou e leva ao formulário.
-- Os nós dos diagramas do ciclo e do Radar levam ao bloco da etapa correspondente na seção 03.
+**CTA e agenda (regra da copy v2, §C)**
+- A copy pede *Agendar conversa de diagnóstico*, mas também que "Agendar" só apareça se abrir uma agenda real. Como ainda não há agenda configurada, os CTAs do hero e do formulário dizem **Solicitar conversa**. Ao preencher `config.mjs → agendaUrl`, voltam a *Agendar conversa de diagnóstico* e o envio validado do formulário abre a agenda.
+- No cabeçalho, o botão é **Conversar** (o quinto item da navegação da copy): curto, e não promete agenda.
 
-**Texto que não vem literalmente da copy** (a lista completa sai do `verificar.mjs`)
-- Rótulos de ligação no ciclo, tirados da linha "Entrega" de cada etapa: *Contas priorizadas · Conversas iniciadas · Familiaridade e argumentos · Motivos de ganho ou perda · Informações que voltam à Inteligência*.
-- *Desconectado* / *Conectado* no diagrama da seção 02 (nome do diagrama no briefing de design).
-- Seção 07: enquanto não houver casos validados, aparece a **estrutura de cada caso** (Contexto, Trava, O que conectamos, Resultado), com os campos do modelo de card da copy, **sem nome e sem número**. Quando houver casos em `config.mjs → casos`, os exhibits reais entram no lugar.
-- Faixas de faturamento do formulário (sugestão de trabalho, ver pendências).
-- Rodapé: *© 2026 Velora · Growth & Beyond*; manifesto reaproveitado do título da página Sobre (*Estratégia faz diferença quando encontra a operação.*).
-- Acessibilidade: *Pular para o conteúdo*, *Menu* / *Fechar* e descrições dos diagramas para leitor de tela.
+**Formulário**
+- Campos e opções da copy v2. Obrigatórios: nome, e-mail corporativo, empresa, cargo e principal desafio. Faixa de faturamento em seleção, opcional por enquanto (`config.mjs → faturamentoObrigatorio`); WhatsApp profissional opcional.
+- Mensagens de validação, erro e sucesso: as da copy v1 (a v2 não as redefine).
+- Medição sem dados pessoais: eventos em `window.dataLayer` (Google Tag Manager ou equivalente) com só o nome do evento e o id do formulário — `velora_form_visualizacao`, `velora_form_inicio`, `velora_form_envio_valido` e `velora_agenda_aberta`. O **agendamento efetivado** acontece na ferramenta de agenda e deve ser medido lá (ou pelo evento de confirmação que ela oferecer).
 
-**Fotografia**
-- 5 fotos fornecidas pela Velora (01/11/2026), tratadas no mesmo padrão: P&B, contraste suave, um pouco mais escuras nas seções Ink e levemente quentes nas seções Bone (`scripts/tratar-fotos.py`; originais fora do repositório).
-- Distribuição pelo sentido de cada seção: hero, a mulher segurando os óculos (liderança pensativa); 02, três pessoas analisando papéis (reunião diante de números); 04, a conversa vista de cima (trabalho em conjunto); 06, o homem com notebook no escritório (empresa de tecnologia); 09, a pessoa sob o feixe de luz, fixa na altura da tela enquanto o formulário rola.
-- Ritmo: foto nas seções claras de pessoas e raciocínio (02, 04, 06) e na abertura e no fechamento (hero, 09); as seções escuras de sistema e dados (03, 05, 07) ficam com os diagramas.
-- A sexta foto enviada (homem de casaco no átrio, olhando para a câmera) ficou de fora: é um retrato posado e, no site, seria lido como alguém da Velora. Se for um dos sócios, entra como retrato na seção 09 (`config.mjs → socios`).
-- As pessoas nas fotos não são identificadas e nenhuma legenda sugere que sejam sócios ou clientes.
-- Para trocar uma foto: `config.mjs → fotos` (mesmas chaves de `src/conteudo/fotos.mjs`) ou reprocessar com `scripts/tratar-fotos.py`.
+**Texto que não vem literalmente da copy**
+- Rótulos das seções 01–07: os títulos das seções no próprio MD (*Onde a aquisição trava*, *O sistema*…), com a numeração.
+- *© 2026 Velora · Growth & Beyond* no rodapé; *Pular para o conteúdo* e *Menu* / *Fechar* para acessibilidade.
+- Faixas de faturamento (sugestão de trabalho, ver pendências).
+- SEO title e meta description: os da copy v1 (a v2 não os redefine).
 
 **Elementos visuais**
-- **Hero:** foto editorial sangrando à direita com vinheta que funde ao Ink; o título atravessa a imagem. Na base, o **trilho do sistema** (01 → 05 com o retorno de Medição para Inteligência): um pulso Acid percorre o caminho uma vez (5 s) e a etapa 01 acende.
-- **02:** foto sangrando à esquerda; o diagrama *desconectado × conectado* mostra o antes em Paper (ligações interrompidas) e o depois em Ink, com o retorno em Acid se desenhando por último.
-- **03:** numeração monumental das etapas e ciclo fixo que acompanha a rolagem; a cada troca de etapa, um pulso Acid percorre a entrega que sai dela.
+- **Hero:** foto editorial sangrando à direita com vinheta; a primeira frase do título em cinza, a segunda em branco; a faixa das cinco etapas na base.
+- **01:** foto fixa à esquerda enquanto as quatro dores rolam; faixa de evidências em painel Ink com ~80% em Acid; cada fonte leva à pesquisa original.
+- **02:** circuito das cinco etapas com numeração grande. Ao entrar na tela, a luz percorre 01 → 05 e o retorno uma vez (menos de 5 s) e volta a 01; depois, a etapa sob o mouse acende. No celular, vira lista vertical com o retorno pela esquerda. Todo o texto fica sempre visível.
+- **03:** o Velora Radar desenhado como um radar (anéis, varredura única, contas, prioridades em Acid, sinais, pessoas ligadas a uma conta). É um diagrama do papel do Radar, **não uma tela do produto**: sem dados, nomes ou números, e sem prometer previsão de intenção de compra.
 - **04:** foto sangrando à direita e as letras R H O I em escala de cartaz.
-- **05:** o Velora Radar desenhado como um radar (anéis, varredura única, contas, contas prioritárias em Acid, sinais, comitê de compra) com legenda numerada ligando cada item à etapa. É um diagrama do papel do Radar, **não uma tela do produto**: sem dados, nomes ou números.
-- **06:** Tecnologia B2B em destaque, na largura inteira, com foto ao lado do texto; Serviços profissionais e Serviços financeiros só com texto, lado a lado.
-- **08:** numeração grande; o 01 (ponto de partida) em bloco Acid.
-- **09:** foto do feixe de luz sangrando à esquerda, fixa na altura da tela enquanto o formulário rola ao lado.
-- **Rodapé:** assinatura *Velora* em escala de cartaz, cortada pela borda (desenho decorativo, não texto).
+- **06:** numeração grande; o 01 (Diagnóstico de Aquisição, o ponto de partida) em bloco Acid.
+- **07:** foto do feixe de luz fixa à esquerda; formulário em fundo Bone (foco em Ink, nunca linha Acid no claro).
+- **Rodapé:** manifesto da copy, cinco links e a assinatura *Velora* em escala de cartaz.
+
+**Fotografia**
+- 5 fotos fornecidas pela Velora (01/11/2026), tratadas em P&B (`scripts/tratar-fotos.py`). A foto da seção 04 foi reprocessada no tratamento escuro, porque a seção agora é Ink.
+- As pessoas nas fotos não são identificadas e nenhuma legenda sugere que sejam sócios ou clientes.
 
 **Design**
-- Tons de apoio ajustados para passar em contraste AA: texto terciário a 48% sobre escuro (briefing: 44%) e 60% sobre claro (briefing: 48%); linhas de diagrama a 40% sobre escuro (32%) e 52% sobre claro (40%).
-- Um ponto Acid por tela: enquanto o CTA do hero está visível, o botão da navegação fica em contorno; nos diagramas o Acid marca só a etapa ativa, a entrega que sai dela, o retorno do ciclo ou as contas prioritárias.
-- Numerais grandes inativos (seção 03) e índices do exhibit (07) a 36% de opacidade: o mínimo que passa em contraste para texto grande.
-- O título do hero ocupa 3 linhas no desktop (o briefing pede até 2): a primeira frase numa linha, a segunda em duas. Com o texto atual não cabe em 2 no tamanho Display XL.
-- O tamanho do título e os espaços do hero se ajustam à altura da tela: o hero inteiro (com o trilho) cabe em 1440 × 900.
-- Nenhuma animação em repetição: o pulso do hero dura 5 s (limite da WCAG 2.2.2 para movimento sem botão de pausa) e a varredura do radar, 2,2 s.
-- Com `prefers-reduced-motion`, nada anima: diagramas já completos.
-- As perguntas do formulário aparecem como dica visível sob cada rótulo (não como placeholder), para não sumirem ao digitar nem serem cortadas no celular.
+- Um ponto Acid por tela: o botão da navegação fica em contorno enquanto outro foco Acid está visível (CTA do hero e do formulário, dado em destaque, circuito, Radar, ponto de partida).
+- Tons de apoio ajustados para contraste AA (texto terciário 48% / 60%, linhas de diagrama 40% / 52%); numerais inativos a 36%.
+- Nenhuma animação em repetição; com `prefers-reduced-motion`, nada anima.
+- Favicon e ícone provisórios: o "V" da assinatura tipográfica em Acid sobre Ink (não havia arquivo de logo nos briefings). Imagem de compartilhamento (`og.jpg`, 1200 × 630) com o título do hero; as tags `og:image` e `og:url` saem quando `urlBase` estiver preenchido.
 
 ## Verificações feitas
 
-- Copy literal: 161/161 trechos.
-- axe-core (WCAG 2.1 AA + boas práticas): 0 violações no desktop e no celular.
-- 35 testes de interação (Playwright): pulso do trilho, carregamento das 5 fotos, ciclo (rolagem, pulso, mouse), radar, CTA em contorno, navegação marcando a seção, âncoras, validação e sucesso do formulário, menu do celular (abrir, Esc, fechar ao escolher), sem rolagem horizontal, áreas de toque, movimento reduzido, página sem JavaScript.
-- Larguras conferidas: 320, 390, 768, 834, 1024, 1200, 1280, 1366, 1440 e 1920 px, sem rolagem horizontal.
-- Briefing de design: nenhum glow, neon, sombra, emoji ou canto ≥ 16 px; só as cores da paleta. Os únicos degradês são as vinhetas que fundem as fotos ao Ink (briefing §8).
+- Copy e regras editoriais: 134/134 trechos, nenhum texto fora da copy, todas as regras ok (`scripts/verificar.mjs`; também testado contra uma página adulterada, que ele reprova).
+- axe-core (WCAG 2.2 AA + boas práticas): 0 violações no desktop e no celular.
+- 42 testes de interação (Playwright): fotos, CTAs coerentes com a agenda, circuito (percurso, mouse, retorno), radar, navegação marcando a seção, âncoras, validação e sucesso do formulário, eventos de medição sem dados pessoais, abertura da agenda após envio válido, menu do celular, áreas de toque, movimento reduzido e página sem JavaScript.
+- Larguras de 320 a 1920 px sem rolagem horizontal nem texto estourando.
+- HTML único aberto direto do disco, sem rede: fontes, 5 fotos e ícone embutidos, sem erros.
 
 ## Pendências antes de publicar
 
 Bloqueiam a publicação:
-- [ ] **Destino do formulário.** Hoje está em modo demonstração: valida, mostra a mensagem de sucesso e **não envia nada** (aviso no console). Definir o fluxo (Calendly, CRM, e-mail) e configurar em `config.mjs → formularios.diagnostico`. Ajustar a mensagem de sucesso se o agendamento for direto.
-- [ ] **Contato do lead.** Os 5 campos da copy (nome, empresa, cargo, faturamento, origem) **não incluem e-mail nem telefone**. Sem isso, ou sem um agendamento que capture o contato, não há como retornar.
-- [ ] **Faixas de faturamento** (`config.mjs → faixasFaturamento`): confirmar.
-- [ ] **Política de privacidade e consentimento (LGPD)** do formulário.
-- [ ] **Indexação:** `config.mjs → indexavel` está `false` (noindex + robots bloqueando). Trocar para `true` e preencher `urlBase` na publicação.
+- [ ] **Destino do formulário** (`config.mjs → formularios.conversa`), de preferência HubSpot. Hoje está em modo demonstração: valida, mostra a mensagem de sucesso e **não envia nada** (aviso no console). Fazer um teste real de criação de contato com a origem do lead.
+- [ ] **Agenda real** (`config.mjs → agendaUrl`), se a conversa for agendada direto. Sem ela, o site continua com *Solicitar conversa*.
+- [ ] **Aviso de privacidade / LGPD** e link da política de dados (`config.mjs → privacidade`). O texto não faz parte da copy aprovada.
+- [ ] **Faixas de faturamento** (`config.mjs → faixasFaturamento`) e se o campo deve ser obrigatório para triagem.
+- [ ] **Medição:** instalar o Google Tag Manager (ou equivalente) para receber os eventos do `dataLayer`.
+- [ ] **Indexação:** trocar `config.mjs → indexavel` para `true` (remove o noindex e libera o robots.txt) e preencher `urlBase` (canonical, og:url, og:image).
 
-Conteúdo a validar ou produzir (checklist da copy e do design):
-- [ ] Headline do hero com os sócios.
-- [ ] Política do diagnóstico (gratuito, pago ou híbrido) — o texto atual não anuncia gratuidade.
-- [ ] 2 ou 3 casos com autorização, indicador, variação, período e base de comparação (`config.mjs → casos`).
-- [ ] Credenciais verificadas dos sócios e retratos de produção própria (`config.mjs → socios`).
-- [ ] Captura real do Velora Radar, com recursos validados; o desenho do radar não substitui a tela do produto.
-- [ ] Validar os recursos que o desenho do Radar ilustra (contas prioritárias, sinais, comitê de compra) — os mesmos que a copy já afirma.
-- [ ] Contatos e LinkedIn do rodapé (`config.mjs → contato`).
-- [ ] Proporção escuro/claro e tons de apoio derivados.
-- [ ] Logotipo: a v1 usa a assinatura tipográfica *Velora · Growth & Beyond* (não havia arquivo de logo nos briefings).
+Conteúdo a validar ou produzir:
+- [ ] Dois casos com números, período, atribuição e autorização (`config.mjs → casos`): contexto, obstáculo, ações, indicador e comparação.
+- [ ] Equipe: retrato e duas linhas de senioridade por pessoa, com papel no projeto (`config.mjs → equipe`). Validar composição e títulos.
+- [ ] Captura real do Velora Radar e confirmação dos recursos que o desenho ilustra.
+- [ ] Favicon e logotipo definitivos.

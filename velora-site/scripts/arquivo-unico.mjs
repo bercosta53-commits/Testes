@@ -44,6 +44,12 @@ for (const tag of imgs) {
   html = html.replace(tag, () => nova);
 }
 
+// Ícones (favicon e apple-touch-icon) embutidos.
+for (const [tag, href] of [...html.matchAll(/<link rel="(?:icon|apple-touch-icon)" href="(assets\/[^"]+)"[^>]*>/g)]) {
+  const uri = await dataUri(path.join(dist, href));
+  html = html.replace(tag, () => tag.replace(href, uri));
+}
+
 const restantes = [...html.matchAll(/(?:src|href)="(assets\/[^"]+)"/g)].map((m) => m[1]);
 if (restantes.length) throw new Error(`Referências não embutidas: ${restantes.join(', ')}`);
 

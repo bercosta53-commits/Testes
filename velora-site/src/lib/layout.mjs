@@ -1,19 +1,17 @@
-// Estrutura da página: <head>, navegação global e rodapé.
-// v1 é one page: a navegação leva às seções da própria home.
+// Estrutura da página: <head>, navegação global e rodapé. One page: os links levam às seções.
 import { html, raw } from './html.mjs';
-import { botao, seta, pendente } from './componentes.mjs';
-import { etapas } from '../conteudo/etapas.mjs';
+import { botao, seta } from './componentes.mjs';
 
-// Navegação global (copy §1), adaptada para página única: ficam os itens que têm seção na home.
-// "Insights" e "Sobre" voltam quando as páginas internas forem publicadas.
+// Navegação (copy v2, Rodapé · Navegação). No cabeçalho, "Conversar" vira o botão de CTA:
+// curto e sem prometer agenda (a regra "Agendar só com agenda real" vale para os CTAs da página).
 const NAV = [
   { texto: 'O sistema', href: '#sistema' },
+  { texto: 'O que entregamos', href: '#entregas' },
   { texto: 'Como trabalhamos', href: '#como-trabalhamos' },
   { texto: 'Para quem', href: '#para-quem' },
-  { texto: 'Velora Radar', href: '#velora-radar' },
 ];
-
-const ancoraCta = '#agendar';
+const CONVERSAR = { texto: 'Conversar', href: '#conversa' };
+const ancoraCta = CONVERSAR.href;
 
 // Assinatura "Velora" em escala de cartaz no rodapé: contorno das letras em Space Grotesk 700
 // convertido em desenho (logotipo decorativo; não é texto).
@@ -30,13 +28,14 @@ function marca() {
 }
 
 function cabecalho() {
+  const cta = CONVERSAR.texto;
   return html`<header class="cabecalho" data-cabecalho>
   <div class="wrap cabecalho__barra">
     ${marca()}
     <nav class="nav" aria-label="Principal">
       <ul class="nav__lista">${itensNav('nav__link')}</ul>
     </nav>
-    <a class="botao botao--primario cabecalho__cta" href="${ancoraCta}"><span>Agendar diagnóstico</span>${seta}</a>
+    <a class="botao botao--primario cabecalho__cta" href="${ancoraCta}"><span>${cta}</span>${seta}</a>
     <button class="cabecalho__menu" type="button" aria-expanded="false" aria-controls="menu-movel" data-menu-botao>
       <span class="cabecalho__menu-icone" aria-hidden="true"></span><span data-menu-texto>Menu</span>
     </button>
@@ -46,42 +45,23 @@ function cabecalho() {
       <nav aria-label="Principal, celular">
         <ul class="menu-movel__lista">${itensNav('menu-movel__link')}</ul>
       </nav>
-      ${botao('Agendar diagnóstico', ancoraCta, { classe: 'menu-movel__cta' })}
+      ${botao(cta, ancoraCta, { classe: 'menu-movel__cta' })}
     </div>
   </div>
 </header>`;
 }
 
-function rodape(ctx) {
-  const { email, linkedin } = ctx.config.contato;
-  const contato = email || linkedin;
+// Rodapé (copy v2): assinatura e cinco links, sem replicar o sistema.
+function rodape() {
   return html`<footer class="rodape tema-escuro">
   <div class="wrap">
     <div class="rodape__grade">
       <div class="rodape__marca">
         ${marca()}
         <p class="rodape__manifesto">Estratégia faz diferença quando encontra a operação.</p>
-        ${botao('Agendar diagnóstico', ancoraCta)}
       </div>
       <nav class="rodape__nav" aria-label="Rodapé">
-        <div>
-          <p class="rodape__titulo"><a href="#sistema">O sistema</a></p>
-          <ul>${etapas.map((e) => html`<li><a href="#${e.id}"><span class="rodape__n">${e.n}</span>${e.nome}</a></li>`)}</ul>
-        </div>
-        <div>
-          <p class="rodape__titulo">Velora</p>
-          <ul>
-            ${NAV.slice(1).map((i) => html`<li><a href="${i.href}">${i.texto}</a></li>`)}
-            <li><a href="${ancoraCta}">Diagnóstico de Aquisição</a></li>
-          </ul>
-        </div>
-        ${contato ? html`<div>
-          <p class="rodape__titulo">Contato</p>
-          <ul>
-            ${email ? html`<li><a href="mailto:${email}">${email}</a></li>` : ''}
-            ${linkedin ? html`<li><a href="${linkedin}" rel="noopener">LinkedIn</a></li>` : ''}
-          </ul>
-        </div>` : pendente(ctx, 'Contatos e LinkedIn da Velora')}
+        <ul class="rodape__links">${[...NAV, CONVERSAR].map((i) => html`<li><a href="${i.href}">${i.texto}</a></li>`)}</ul>
       </nav>
     </div>
     <div class="rodape__base">
@@ -109,13 +89,19 @@ ${canonical ? html`<link rel="canonical" href="${canonical}">` : ''}
 <meta property="og:site_name" content="Velora">
 <meta property="og:title" content="${titulo}">
 <meta property="og:description" content="${descricao}">
-${canonical ? html`<meta property="og:url" content="${canonical}">` : ''}
+${canonical ? html`<meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${canonical}assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Velora: Crescimento não trava por falta de esforço. Trava por falta de sistema.">` : ''}
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B0B0C">
-<link rel="icon" href="data:,">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope-400-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-500.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/hero-1400.webp" imagesrcset="assets/img/hero-700.webp 700w, assets/img/hero-1400.webp 1400w" imagesizes="(min-width: 1200px) 46vw, 100vw" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-1400.webp" imagesrcset="assets/img/hero-700.webp 700w, assets/img/hero-1400.webp 1400w" imagesizes="(min-width: 1200px) 50vw, 100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/site.css?v=${ctx.versao}">
 <script>document.documentElement.classList.add('js')</script>
 <script src="assets/js/site.js?v=${ctx.versao}" defer></script>
@@ -126,7 +112,7 @@ ${cabecalho()}
 <main id="conteudo">
 ${corpo}
 </main>
-${rodape(ctx)}
+${rodape()}
 </body>
 </html>`}
 `;

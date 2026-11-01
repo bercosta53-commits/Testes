@@ -1,4 +1,4 @@
-/* Velora — site v1. Sem dependências. */
+/* Velora — site (one page) · copy editorial v2. Sem dependências. */
 (function () {
   'use strict';
 
@@ -42,10 +42,11 @@
     });
   }
 
-  /* ---------- Um ponto Acid por tela: CTA da navegação recua enquanto o CTA principal está visível ---------- */
+  /* ---------- Um ponto Acid por tela: o CTA da navegação recua para contorno enquanto outro foco Acid
+     (CTA principal, dado em destaque, etapa acesa, Radar, ponto de partida) está visível ---------- */
   function iniciarCtaDiscreto() {
     var cab = doc.querySelector('[data-cabecalho]');
-    var principais = doc.querySelectorAll('[data-cta-principal]');
+    var principais = doc.querySelectorAll('[data-cta-principal], [data-foco-acid]');
     if (!cab || !principais.length || !temIO) return;
     var visiveis = new Set();
     var io = new IntersectionObserver(function (entradas) {
@@ -97,79 +98,48 @@
     alvos.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- Ciclo do sistema ---------- */
-  function iniciarCiclos() {
-    doc.querySelectorAll('[data-ciclo]').forEach(function (ciclo) {
-      var modo = ciclo.getAttribute('data-modo');
-      var padrao = ciclo.getAttribute('data-padrao') || '1';
-      var atual = padrao; // etapa "de repouso": a da página ou a da rolagem
-      var emFoco = null;
+  /* ---------- Circuito do sistema ----------
+     Ao entrar na tela, a luz percorre as cinco etapas uma vez (menos de 5 s) e volta a 01.
+     Depois, a etapa sob o mouse acende. Todo o texto fica sempre visível: o movimento só mostra o fluxo. */
+  function iniciarCircuito() {
+    var circuito = doc.querySelector('[data-circuito]');
+    if (!circuito) return;
+    var etapas = Array.prototype.slice.call(circuito.querySelectorAll('[data-etapa]'));
+    var timers = [];
+    var PADRAO = '1';
 
-      function aplicar(n) {
-        ciclo.setAttribute('data-ativa', n || '');
-      }
-      function repousar() {
-        if (!emFoco) aplicar(atual);
-      }
+    function acender(n) {
+      circuito.setAttribute('data-ativa', n);
+      etapas.forEach(function (e) { e.classList.toggle('is-ativa', e.getAttribute('data-etapa') === n); });
+    }
+    function parar() {
+      timers.forEach(window.clearTimeout);
+      timers = [];
+    }
 
-      ciclo.querySelectorAll('[data-no]').forEach(function (no) {
-        var n = no.getAttribute('data-no');
-        var alvo = no.matches('a') ? no : no.querySelector('a');
-        no.addEventListener('mouseenter', function () { aplicar(n); });
-        no.addEventListener('mouseleave', repousar);
-        if (alvo) {
-          alvo.addEventListener('focus', function () { emFoco = n; aplicar(n); });
-          alvo.addEventListener('blur', function () { emFoco = null; repousar(); });
-        }
-      });
-
-      // Rolagem: a etapa ativa acompanha o bloco de texto que está no centro da tela.
-      if (modo === 'rolagem') {
-        var grupo = ciclo.closest('[data-sistema]');
-        var blocos = grupo ? grupo.querySelectorAll('[data-etapa-bloco]') : [];
-        if (!blocos.length || !temIO) return;
-        var pulsar = function (n) {
-          if (reduzMovimento.matches) return;
-          var bola = ciclo.querySelector('.ciclo__pulso[data-de="' + n + '"]');
-          var mov = bola && bola.querySelector('animateMotion');
-          if (!mov || typeof mov.beginElement !== 'function' || !bola.getBoundingClientRect().width) return;
-          bola.classList.add('is-ativo');
-          mov.beginElement();
-          window.setTimeout(function () { bola.classList.remove('is-ativo'); }, 1150);
-        };
-        var marcar = function (n) {
-          if (n !== atual) pulsar(n);
-          atual = n;
-          blocos.forEach(function (b) { b.classList.toggle('is-ativa', b.getAttribute('data-etapa-bloco') === n); });
-          repousar();
-        };
-        var io = new IntersectionObserver(function (entradas) {
-          entradas.forEach(function (en) {
-            if (en.isIntersecting) marcar(en.target.getAttribute('data-etapa-bloco'));
-          });
-        }, { rootMargin: '-48% 0px -48% 0px' });
-        blocos.forEach(function (b) { io.observe(b); });
-        atual = '1';
-        blocos[0].classList.add('is-ativa');
-      }
+    etapas.forEach(function (e) {
+      e.addEventListener('mouseenter', function () { parar(); acender(e.getAttribute('data-etapa')); });
+      e.addEventListener('mouseleave', function () { acender(PADRAO); });
     });
+
+    if (!temIO || reduzMovimento.matches) return;
+    circuito.addEventListener('velora:visivel', function () {
+      parar();
+      acender('');
+      for (var i = 1; i <= etapas.length + 1; i++) {
+        (function (k) {
+          timers.push(window.setTimeout(function () { acender(String(k > etapas.length ? PADRAO : k)); }, 700 + (k - 1) * 760));
+        })(i);
+      }
+    }, { once: true });
   }
 
-  /* ---------- Trilho do hero: o pulso percorre o sistema uma vez (5 s) e a etapa 01 acende ---------- */
-  function iniciarTrilho() {
-    var trilho = doc.querySelector('[data-trilho]');
-    if (!trilho || !temIO || reduzMovimento.matches) { if (trilho) trilho.setAttribute('data-ativa', '1'); return; }
-    trilho.addEventListener('velora:visivel', function () {
-      trilho.removeAttribute('data-ativa');
-      trilho.classList.add('is-percorrendo');
-      var pulso = trilho.querySelector('.trilho__pulso');
-      var fim = function () {
-        trilho.classList.remove('is-percorrendo');
-        trilho.setAttribute('data-ativa', '1');
-      };
-      pulso.addEventListener('animationend', fim, { once: true });
-      window.setTimeout(function () { if (trilho.classList.contains('is-percorrendo')) fim(); }, 6000);
-    }, { once: true });
+  /* ---------- Medição sem dados pessoais (copy v2, §C: visualização, início, envio válido e agenda) ----------
+     Eventos vão para window.dataLayer (Google Tag Manager ou equivalente). Só o nome do evento e o id do
+     formulário: nunca nome, e-mail, empresa, cargo, telefone ou respostas. */
+  function registrar(evento, form) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: evento, form_id: form.id });
   }
 
   /* ---------- Formulários ---------- */
@@ -188,6 +158,21 @@
       }
       function mostrar(msg) {
         status.textContent = msg;
+      }
+
+      var iniciado = false;
+      form.addEventListener('focusin', function () {
+        if (iniciado) return;
+        iniciado = true;
+        registrar('velora_form_inicio', form);
+      });
+      if (temIO) {
+        var vista = new IntersectionObserver(function (entradas) {
+          if (!entradas.some(function (en) { return en.isIntersecting; })) return;
+          registrar('velora_form_visualizacao', form);
+          vista.disconnect();
+        }, { threshold: 0.3 });
+        vista.observe(form);
       }
 
       campos.forEach(function (c) {
@@ -223,9 +208,16 @@
         }
 
         envio.then(function () {
+          registrar('velora_form_envio_valido', form);
           form.classList.add('is-enviado');
           mostrar(form.dataset.msgSucesso);
           status.focus();
+          // "Agendar" só quando há agenda real: depois do envio validado, a agenda abre (copy v2, §C).
+          var agenda = form.getAttribute('data-agenda');
+          if (agenda) {
+            registrar('velora_agenda_aberta', form);
+            window.setTimeout(function () { window.location.assign(agenda); }, 1200);
+          }
         }).catch(function () {
           mostrar(form.dataset.msgErro);
           botao.disabled = false;
@@ -240,9 +232,8 @@
     iniciarMenu();
     iniciarCtaDiscreto();
     iniciarSecaoAtual();
-    iniciarTrilho();
+    iniciarCircuito();
     iniciarEntradas();
-    iniciarCiclos();
     iniciarFormularios();
   }
 

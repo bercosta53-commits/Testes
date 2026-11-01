@@ -2,7 +2,7 @@
   "name": "velora-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Site da Velora — v1 (one page). Gerador estático sem dependências.",
+  "description": "Site da Velora (one page) · copy editorial v2. Gerador estático sem dependências.",
   "type": "module",
   "engines": {
     "node": ">=18"

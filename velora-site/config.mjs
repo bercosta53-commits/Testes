@@ -1,22 +1,27 @@
-// Configuração do site da Velora — v1.
+// Configuração do site da Velora.
 // Tudo o que depende de decisão ou validação do time fica aqui, num só lugar.
 
 export default {
-  // Enquanto false, todas as páginas saem com <meta name="robots" content="noindex, nofollow">
+  // Enquanto false, a página sai com <meta name="robots" content="noindex, nofollow">
   // e o robots.txt bloqueia rastreamento. Trocar para true só na publicação.
   indexavel: false,
 
   // URL pública definitiva (ex.: 'https://www.dominio.com.br'). Vazio = sem canonical/og:url.
   urlBase: '',
 
-  // Destino do formulário de diagnóstico (URL que recebe POST com FormData).
+  // Destino do formulário (URL que recebe POST com FormData; ex.: endpoint do HubSpot ou de um webhook).
   // Vazio = modo demonstração: valida os campos e mostra a mensagem de sucesso,
   // mas NÃO envia os dados para lugar nenhum. Configurar antes de publicar.
   formularios: {
-    diagnostico: '',
+    conversa: '',
   },
 
-  // PENDENTE (checklist da copy): "Confirmar faixas de faturamento do formulário".
+  // Agenda real (ex.: link de agendamento do HubSpot ou Calendly). Regra da copy v2:
+  // com agenda, os CTAs dizem "Agendar conversa de diagnóstico" e o envio validado abre a agenda;
+  // sem agenda, os CTAs dizem "Solicitar conversa".
+  agendaUrl: '',
+
+  // PENDENTE: confirmar faixas e se o campo deve ser obrigatório para triagem (copy v2, §C).
   // Faixas abaixo são sugestão de trabalho, não texto aprovado.
   faixasFaturamento: [
     'Até R$ 5 milhões',
@@ -25,23 +30,24 @@ export default {
     'R$ 50 milhões a R$ 100 milhões',
     'Acima de R$ 100 milhões',
   ],
+  faturamentoObrigatorio: false,
+
+  // PENDENTE: aviso de privacidade / LGPD exigido pela copy v2 (§C · Implementação de conversão).
+  // O texto não faz parte da copy aprovada: preencher com a redação validada. Vazio = nada aparece.
+  // Ex.: { texto: '…', url: '/privacidade', rotuloLink: 'Política de privacidade' }
+  privacidade: { texto: '', url: '', rotuloLink: '' },
 
   // Para trocar uma foto sem reprocessar: cada posição preenchida aqui substitui a foto
   // de src/conteudo/fotos.mjs. Posições: 'hero', 'onde-trava', 'como', 'icp-tecnologia', 'agendar'. Ex.:
   //   'onde-trava': { src: 'assets/img/onde-trava-proprio.webp', alt: '…', largura: 1600, altura: 1067 }
   fotos: {},
 
-  // Casos validados (com autorização, números verificáveis e período). Vazio = bloco de casos não é publicado.
-  // Ex.: { segmento: 'Tecnologia B2B', nome: '…', contexto: '…', trava: '…', conectamos: '…',
-  //        resultado: { numero: '…', legenda: '…' }, link: '…' }
+  // Casos validados (números, período, atribuição e autorização de divulgação). Vazio = nada aparece.
+  // Ex.: { segmento: 'Tecnologia B2B', nome: '…', contexto: '…', obstaculo: '…', acoes: '…',
+  //        resultado: { numero: '…', comparacao: '…' } }
   casos: [],
 
-  // Sócios validados (retratos na seção 09). Ex.: { nome: '…', papel: '…', foto: { src, alt, largura, altura } }
-  socios: [],
-
-  // Contatos do rodapé. Vazio = não aparece.
-  contato: {
-    email: '',
-    linkedin: '',
-  },
+  // Equipe validada (retrato e duas linhas de senioridade). Vazio = nada aparece.
+  // Ex.: { nome: '…', papel: '…', senioridade: '…', foto: { src, alt, largura, altura } }
+  equipe: [],
 };

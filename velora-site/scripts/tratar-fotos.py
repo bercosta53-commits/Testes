@@ -1,5 +1,5 @@
 # Tratamento das fotos do site (briefing de design §8): P&B, contraste suave.
-# escuro: um pouco mais escuro (seções Ink). claro: tom levemente quente (seções Bone).
+# escuro: um pouco mais escuro (seções Ink e a foto do formulário). claro: tom levemente quente (seções Bone).
 # Uso: python scripts/tratar-fotos.py <pasta-com-os-originais> src/assets/img   (requer Pillow)
 # Originais (fornecidos pela Velora em 01/11/2026) ficam fora do repositório.
 import sys
@@ -19,7 +19,7 @@ ORIGINAIS = {
 FOTOS = {
     'hero':       ('oculos',   (0.00, 0.00, 1.00, 1.00),     None,    'escuro', [700, 1400]),
     'onde-trava': ('mesa',     (0.00, 0.00, 1.00, 1.00),     (3, 2),  'claro',  [800, 1600]),
-    'como':       ('conversa', (0.00, 0.15, 1.00, 0.715),    (16, 9), 'claro',  [900, 1800]),
+    'como':       ('conversa', (0.00, 0.15, 1.00, 0.715),    (16, 9), 'escuro', [900, 1800]),
     'icp-tec':    ('notebook', (0.00, 0.10, 1.00, 0.72),     (3, 2),  'claro',  [800, 1600]),
     'agendar':    ('feixe',    (0.025, 0.020, 0.975, 0.982), None,    'escuro', [700, 1400]),
 }
