@@ -109,6 +109,7 @@ ${canonical ? html`<meta property="og:url" content="${canonical}">` : ''}
 <link rel="icon" href="data:,">
 <link rel="preload" href="assets/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope-400-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css?v=${ctx.versao}">
 <script>document.documentElement.classList.add('js')</script>
 <script src="assets/js/site.js?v=${ctx.versao}" defer></script>

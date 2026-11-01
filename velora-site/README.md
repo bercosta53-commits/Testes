@@ -69,7 +69,8 @@ scripts/servidor.mjs       servidor local de pré-visualização
 **Design**
 - Tons de apoio ajustados para passar em contraste AA: texto terciário a 48% sobre escuro (briefing: 44%) e 60% sobre claro (briefing: 48%); linhas de diagrama a 40% sobre escuro (32%) e 52% sobre claro (40%).
 - Um ponto Acid por tela: enquanto o CTA do hero está visível, o botão da navegação fica em contorno; o número central do ciclo fica em branco, e o Acid marca só a etapa ativa e a entrega que sai dela.
-- O título do hero ocupa 3 linhas no desktop (o briefing pede até 2). Com o texto atual não cabe em 2 no tamanho Display XL.
+- O título do hero ocupa 3 linhas no desktop (o briefing pede até 2): a primeira frase numa linha, a segunda em duas. Com o texto atual não cabe em 2 no tamanho Display XL.
+- O tamanho do título e os espaços do hero também se ajustam à altura da tela, para o hero inteiro (com o diagrama) caber em 1440 × 900 e os CTAs ficarem visíveis em notebooks de 1366 × 768.
 - O hero desenha o ciclo uma vez (Inteligência → … → Medição → Inteligência) e acende a etapa 01. Não há animação em repetição. Na seção 03, a etapa ativa acompanha a rolagem.
 - Com `prefers-reduced-motion`, nada anima: diagramas já completos.
 - As perguntas do formulário aparecem como dica visível sob cada rótulo (não como placeholder), para não sumirem ao digitar nem serem cortadas no celular.
@@ -79,6 +80,7 @@ scripts/servidor.mjs       servidor local de pré-visualização
 - Copy literal: 161/161 trechos.
 - axe-core (WCAG 2.1 AA + boas práticas): 0 violações no desktop e no celular.
 - Testes de interação (Playwright): ciclo (abertura, mouse, rolagem), CTA em contorno, navegação marcando a seção, âncoras, validação e sucesso do formulário, menu do celular (abrir, Esc, fechar ao escolher), sem rolagem horizontal a 390 px, áreas de toque, movimento reduzido, página sem JavaScript.
+- Larguras conferidas: 320, 390, 834, 1024, 1200, 1280, 1366 e 1440 px, sem rolagem horizontal.
 - Briefing de design: nenhum gradiente, glow, sombra, emoji ou canto ≥ 16 px; só as cores da paleta.
 
 ## Pendências antes de publicar

@@ -82,13 +82,13 @@ function sistema() {
 
 function comoTrabalhamos(ctx) {
   const passos = [
-    { letra: 'R', nome: 'Review', verbo: 'Entender', quando: md('Quando: no início do trabalho.'),
+    { letra: 'R', nome: 'Review', verbo: 'Entender', quando: emLinha('Quando', 'no início do trabalho.'),
       corpo: html`<p>${emLinha('O que fazemos', 'analisamos mercado, clientes, operação e dados disponíveis.')}</p><p>${emLinha('O que entregamos', 'uma leitura das principais travas da aquisição.')}</p>` },
-    { letra: 'H', nome: 'Hypothesis', verbo: 'Priorizar', quando: md('Quando: após a análise inicial.'),
+    { letra: 'H', nome: 'Hypothesis', verbo: 'Priorizar', quando: emLinha('Quando', 'após a análise inicial.'),
       corpo: html`<p>${emLinha('O que fazemos', 'formulamos hipóteses e definimos o que testar primeiro.')}</p><p>${emLinha('O que entregamos', 'prioridades ligadas a resultados de negócio.')}</p>` },
-    { letra: 'O', nome: 'Operationalize', verbo: 'Executar', quando: md('Quando: em ciclos de 2 a 3 semanas.'), destaque: true,
+    { letra: 'O', nome: 'Operationalize', verbo: 'Executar', quando: emLinha('Quando', html`<span class="marca-texto">em ciclos de 2 a 3 semanas.</span>`),
       corpo: html`<p>${emLinha('O que fazemos', 'colocamos as ações prioritárias em prática com marketing e vendas.')}</p><p>${emLinha('O que entregamos', 'mudanças concretas no processo, nas abordagens ou nos materiais.')}</p>` },
-    { letra: 'I', nome: 'Inspection', verbo: 'Aprender', quando: md('Quando: ao fim de cada ciclo.'),
+    { letra: 'I', nome: 'Inspection', verbo: 'Aprender', quando: emLinha('Quando', 'ao fim de cada ciclo.'),
       corpo: html`<p>${emLinha('O que fazemos', 'acompanhamos as respostas do mercado e os resultados.')}</p><p>${emLinha('O que entregamos', 'decisões sobre manter, ajustar ou mudar a próxima ação.')}</p>` },
   ];
   const foto = temMidia(ctx, 'como-trabalhamos');

@@ -142,15 +142,15 @@ export function desconectadoConectado() {
 // 3. Linha do tempo RHOI
 // ---------------------------------------------------------------------------
 
-// passos: [{ letra, nome (en), verbo, quando, corpo (html), destaque }]
+// passos: [{ letra, nome (en), verbo, quando (html), corpo (html) }]
 export function linhaRhoi(passos) {
   return html`<div class="rhoi desenhar">
     <ol class="rhoi__lista">
-      ${passos.map((p, i) => html`<li class="rhoi__passo${p.destaque ? ' rhoi__passo--ciclo' : ''}" style="--i:${i}">
+      ${passos.map((p, i) => html`<li class="rhoi__passo" style="--i:${i}">
         <span class="rhoi__marco" aria-hidden="true"></span>
         <p class="rhoi__letra" aria-hidden="true">${p.letra}</p>
         <h3 class="rhoi__nome"><span lang="en">${p.nome}</span> <span class="rhoi__sep" aria-hidden="true">·</span> ${p.verbo}</h3>
-        <p class="rhoi__quando">${p.destaque ? html`<span class="marca-texto">${p.quando}</span>` : p.quando}</p>
+        <p class="rhoi__quando">${p.quando}</p>
         <div class="rhoi__corpo">${p.corpo}</div>
       </li>`)}
     </ol>
