@@ -1,0 +1,17 @@
+{
+  "name": "velora-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site da Velora — v1 (one page). Gerador estático sem dependências.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "build:revisao": "node build.mjs --revisao",
+    "preview": "node build.mjs && node scripts/servidor.mjs dist",
+    "preview:revisao": "node build.mjs --revisao && node scripts/servidor.mjs dist-revisao",
+    "verificar": "node build.mjs && node scripts/verificar.mjs"
+  }
+}
