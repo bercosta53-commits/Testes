@@ -1,33 +1,26 @@
-// Fotos editoriais da v1 — PROVISÓRIAS.
-// Banco de imagens Pexels (licença Pexels: uso comercial livre, sem atribuição obrigatória,
-// edição permitida). Escolhidas pela direção do briefing de design §8 e tratadas em P&B com grão
-// (scripts de tratamento fora do repositório). Substituir pela produção própria quando houver.
-// As pessoas nas fotos NÃO são da Velora nem clientes: nenhuma legenda pode sugerir isso.
+// Fotos editoriais do site, fornecidas pela Velora (01/11/2026) e tratadas em P&B
+// (scripts/tratar-fotos.py; originais fora do repositório).
+// As pessoas nas fotos não são identificadas: nenhuma legenda pode sugerir que sejam sócios ou clientes.
 
 export const FOTOS = {
   hero: {
-    arquivo: 'hero', larguras: [700, 1400], proporcao: [1460, 2370],
-    alt: 'Reunião em uma sala de escritório: duas mulheres acompanham a conversa diante de notebooks, com um homem fora de foco em primeiro plano.',
-    fonte: 'https://www.pexels.com/photo/18999479/',
+    arquivo: 'hero', larguras: [700, 1400], proporcao: [2048, 2048],
+    alt: 'Mulher de blazer segura os óculos e olha para baixo, pensativa, com um colega fora de foco ao fundo.',
   },
   'onde-trava': {
-    arquivo: 'onde-trava', larguras: [800, 1600], proporcao: [1999, 1333],
-    alt: 'Três executivos debruçados sobre relatórios impressos discutem números em uma mesa de reunião.',
-    fonte: 'https://www.pexels.com/photo/7433869/',
+    arquivo: 'onde-trava', larguras: [800, 1600], proporcao: [2304, 1536],
+    alt: 'Três pessoas debruçadas sobre uma mesa de concreto analisam juntas plantas e documentos impressos.',
   },
   como: {
-    arquivo: 'como', larguras: [900, 1800], proporcao: [2000, 1125],
-    alt: 'Sessão de trabalho em frente a um quadro branco com curvas desenhadas: uma pessoa escreve enquanto outras acompanham.',
-    fonte: 'https://www.pexels.com/photo/5439478/',
+    arquivo: 'como', larguras: [900, 1800], proporcao: [2048, 1152],
+    alt: 'Vista de cima de uma conversa em um espaço de trabalho: duas pessoas conversam entre um notebook, papéis e cafés.',
   },
   'icp-tecnologia': {
-    arquivo: 'icp-tec', larguras: [800, 1600], proporcao: [2000, 1125],
-    alt: 'Equipe trabalhando com notebooks em uma mesa compartilhada de empresa de tecnologia.',
-    fonte: 'https://www.pexels.com/photo/16323454/',
+    arquivo: 'icp-tec', larguras: [800, 1600], proporcao: [1856, 1237],
+    alt: 'Homem com um notebook nas mãos conversa com colegas em um escritório de empresa de tecnologia.',
   },
   agendar: {
-    arquivo: 'agendar', larguras: [600, 1200], proporcao: [1066, 1333],
-    alt: 'Conversa entre duas pessoas sentadas a uma mesa de reunião, com documentos e café.',
-    fonte: 'https://www.pexels.com/photo/5668492/',
+    arquivo: 'agendar', larguras: [700, 1400], proporcao: [1764, 2217],
+    alt: 'Uma pessoa de casaco olha para cima, sob um feixe de luz que atravessa um grande vão de concreto.',
   },
 };

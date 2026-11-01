@@ -37,7 +37,7 @@ config.mjs                 decisões em aberto num só lugar (formulário, faixa
 build.mjs                  gera dist/ ou dist-revisao/
 src/paginas/home.mjs       as 9 seções da home, com a copy transcrita
 src/conteudo/etapas.mjs    as 5 etapas do sistema (usadas no texto e nos diagramas)
-src/conteudo/fotos.mjs     fotos editoriais provisórias: arquivo, texto alternativo e fonte
+src/conteudo/fotos.mjs     fotos editoriais: arquivo, proporção e texto alternativo
 src/lib/diagramas.mjs      trilho do hero, ciclo do sistema, desconectado × conectado, RHOI, radar
 src/lib/componentes.mjs    botões, rótulos, frase-ponte, formulário, exhibit de caso
 src/lib/layout.mjs         <head>, navegação e rodapé
@@ -71,13 +71,13 @@ scripts/arquivo-unico.mjs  empacota dist/ num HTML único e autocontido (para ab
 - Rodapé: *© 2026 Velora · Growth & Beyond*; manifesto reaproveitado do título da página Sobre (*Estratégia faz diferença quando encontra a operação.*).
 - Acessibilidade: *Pular para o conteúdo*, *Menu* / *Fechar* e descrições dos diagramas para leitor de tela.
 
-**Fotografia (provisória)**
-- As 5 fotos são do banco **Pexels** (licença Pexels: uso comercial livre, sem atribuição obrigatória, edição permitida), escolhidas pela direção do briefing §8: gente real trabalhando, flagrante e não pose, quadro, papel e tela; nada de aperto de mão, gráfico subindo ou grupo posado.
-- Todas tratadas no mesmo padrão: P&B, contraste suave, grão leve; mais escuras nas seções Ink e levemente quentes nas seções Bone. A foto do hero foi espelhada para a composição.
-- As pessoas nas fotos **não** são da Velora nem clientes, e nenhuma legenda sugere isso. Os retratos dos sócios continuam pendentes: só com produção própria.
-- Fontes: hero [18999479](https://www.pexels.com/photo/18999479/) · 02 [7433869](https://www.pexels.com/photo/7433869/) · 04 [5439478](https://www.pexels.com/photo/5439478/) · 06 Tecnologia B2B [16323454](https://www.pexels.com/photo/16323454/) · 09 [5668492](https://www.pexels.com/photo/5668492/).
+**Fotografia**
+- 5 fotos fornecidas pela Velora (01/11/2026), tratadas no mesmo padrão: P&B, contraste suave, um pouco mais escuras nas seções Ink e levemente quentes nas seções Bone (`scripts/tratar-fotos.py`; originais fora do repositório).
+- Distribuição pelo sentido de cada seção: hero, a mulher segurando os óculos (liderança pensativa); 02, três pessoas analisando papéis (reunião diante de números); 04, a conversa vista de cima (trabalho em conjunto); 06, o homem com notebook no escritório (empresa de tecnologia); 09, a pessoa sob o feixe de luz, fixa na altura da tela enquanto o formulário rola.
 - Ritmo: foto nas seções claras de pessoas e raciocínio (02, 04, 06) e na abertura e no fechamento (hero, 09); as seções escuras de sistema e dados (03, 05, 07) ficam com os diagramas.
-- Para trocar por produção própria: `config.mjs → fotos` (mesmas chaves de `src/conteudo/fotos.mjs`).
+- A sexta foto enviada (homem de casaco no átrio, olhando para a câmera) ficou de fora: é um retrato posado e, no site, seria lido como alguém da Velora. Se for um dos sócios, entra como retrato na seção 09 (`config.mjs → socios`).
+- As pessoas nas fotos não são identificadas e nenhuma legenda sugere que sejam sócios ou clientes.
+- Para trocar uma foto: `config.mjs → fotos` (mesmas chaves de `src/conteudo/fotos.mjs`) ou reprocessar com `scripts/tratar-fotos.py`.
 
 **Elementos visuais**
 - **Hero:** foto editorial sangrando à direita com vinheta que funde ao Ink; o título atravessa a imagem. Na base, o **trilho do sistema** (01 → 05 com o retorno de Medição para Inteligência): um pulso Acid percorre o caminho uma vez (5 s) e a etapa 01 acende.
@@ -85,9 +85,9 @@ scripts/arquivo-unico.mjs  empacota dist/ num HTML único e autocontido (para ab
 - **03:** numeração monumental das etapas e ciclo fixo que acompanha a rolagem; a cada troca de etapa, um pulso Acid percorre a entrega que sai dela.
 - **04:** foto sangrando à direita e as letras R H O I em escala de cartaz.
 - **05:** o Velora Radar desenhado como um radar (anéis, varredura única, contas, contas prioritárias em Acid, sinais, comitê de compra) com legenda numerada ligando cada item à etapa. É um diagrama do papel do Radar, **não uma tela do produto**: sem dados, nomes ou números.
-- **06:** Tecnologia B2B em destaque, na largura inteira, com foto; Serviços profissionais e Serviços financeiros só com texto, lado a lado.
+- **06:** Tecnologia B2B em destaque, na largura inteira, com foto ao lado do texto; Serviços profissionais e Serviços financeiros só com texto, lado a lado.
 - **08:** numeração grande; o 01 (ponto de partida) em bloco Acid.
-- **09:** foto da conversa sangrando à esquerda, na altura da seção inteira.
+- **09:** foto do feixe de luz sangrando à esquerda, fixa na altura da tela enquanto o formulário rola ao lado.
 - **Rodapé:** assinatura *Velora* em escala de cartaz, cortada pela borda (desenho decorativo, não texto).
 
 **Design**
@@ -123,7 +123,6 @@ Conteúdo a validar ou produzir (checklist da copy e do design):
 - [ ] 2 ou 3 casos com autorização, indicador, variação, período e base de comparação (`config.mjs → casos`).
 - [ ] Credenciais verificadas dos sócios e retratos de produção própria (`config.mjs → socios`).
 - [ ] Captura real do Velora Radar, com recursos validados; o desenho do radar não substitui a tela do produto.
-- [ ] Aprovar as fotos provisórias ou substituí-las por produção própria (briefing de fotos à parte).
 - [ ] Validar os recursos que o desenho do Radar ilustra (contas prioritárias, sinais, comitê de compra) — os mesmos que a copy já afirma.
 - [ ] Contatos e LinkedIn do rodapé (`config.mjs → contato`).
 - [ ] Proporção escuro/claro e tons de apoio derivados.

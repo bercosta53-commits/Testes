@@ -459,7 +459,7 @@ p, li, dd { text-wrap: pretty; }
    ========================================================================= */
 .hero { position: relative; overflow: hidden; isolation: isolate; padding-bottom: 48px; }
 .hero__foto { position: absolute; inset: 0; z-index: -1; }
-.hero__foto img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 70% 30%; }
+.hero__foto img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 40% 35%; }
 /* Vinheta que funde a foto ao Ink (briefing §8, seções escuras). No celular, a foto vira fundo escurecido. */
 .hero__foto::after { content: ''; position: absolute; inset: 0; background: rgb(11 11 12 / .82); }
 .hero__titulo { max-width: 15em; }
@@ -475,6 +475,7 @@ p, li, dd { text-wrap: pretty; }
 @media (min-width: 1200px) {
   .hero { min-height: min(100vh, 1040px); display: flex; flex-direction: column; }
   .hero__foto { left: auto; width: 50%; }
+  .hero__foto img { object-position: 0% 30%; }
   .hero__foto::after {
     background:
       linear-gradient(90deg, var(--ink) 0%, rgb(11 11 12 / .78) 20%, rgb(11 11 12 / .25) 58%, rgb(11 11 12 / .1) 100%),
@@ -730,7 +731,6 @@ p, li, dd { text-wrap: pretty; }
    Home · 02 Onde o crescimento trava
    ========================================================================= */
 .onde-trava .sangra__foto--esq { aspect-ratio: 3 / 2; }
-@media (min-width: 1024px) { .onde-trava .sangra__foto--esq { aspect-ratio: auto; height: clamp(520px, 52vw, 760px); } }
 .onde-trava .sangra__texto .lead { margin-bottom: 40px; }
 .sintomas { display: grid; gap: 0; }
 .sintoma { display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 16px; padding-block: 26px; border-top: 1px solid var(--linha); }
@@ -968,14 +968,22 @@ p, li, dd { text-wrap: pretty; }
    ========================================================================= */
 .agendar { padding-block: 0; }
 .agendar__foto { aspect-ratio: 4 / 3; }
-.agendar__foto img { object-position: 35% 40%; }
+.agendar__foto img { object-position: 50% 60%; }
 .agendar__coluna { padding-block: 64px var(--secao-y); }
 .agendar__lead { margin-top: 24px; }
 .agendar__lead strong { color: var(--fg); }
 .agendar__form { margin-top: 48px; }
 @media (min-width: 1024px) {
   .sangra--agendar { align-items: stretch; }
-  .sangra--agendar .sangra__foto--esq { grid-column: 1 / 7; aspect-ratio: auto; min-height: 640px; }
+  .sangra--agendar .sangra__foto--esq {
+    grid-column: 1 / 7;
+    aspect-ratio: auto;
+    position: sticky;
+    top: var(--cab-h);
+    align-self: start;
+    height: calc(100vh - var(--cab-h));
+    min-height: 560px;
+  }
   .sangra--agendar .sangra__foto--esq::after { content: ''; position: absolute; inset: 0; background: linear-gradient(270deg, var(--ink) 0%, rgb(11 11 12 / 0) 28%); }
   .sangra--agendar .sangra__texto--dir { grid-column: 8 / 14; padding-block: var(--secao-y); }
 }
