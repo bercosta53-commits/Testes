@@ -1,0 +1,18 @@
+{
+  "name": "gnu-lp-associados",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page de novos associados do Grêmio Náutico União (7 dobras).",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "imagens": "node scripts/build-images.mjs",
+    "verificar": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

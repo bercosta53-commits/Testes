@@ -1,0 +1,4 @@
+node_modules/
+# Masters em alta resolução ficam fora do Git (guardar no acervo do GNU).
+assets/img/originais/
+.DS_Store

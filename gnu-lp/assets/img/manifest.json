@@ -1,0 +1,29 @@
+{
+  "_comentario": "Lista das fotografias da LP (briefing §3). Fonte para `npm run imagens` e `npm run verificar`. O master de cada foto vai em assets/img/originais/<id>.jpg (ou .png/.tif/.webp).",
+  "presets": {
+    "padrao": { "larguras": [640, 1024, 1600], "fallbackJpg": 1024 },
+    "hero": { "larguras": [1200, 1800, 2400], "fallbackJpg": 1800 },
+    "heroMobile": { "larguras": [720, 1080], "fallbackJpg": 1080 }
+  },
+  "fotos": [
+    { "id": "GNU_01_HERO_AP", "dobra": "01", "preset": "hero", "proporcao": "21:9 ou 16:9", "obrigatoria": true, "og": true, "briefing": "Panorama das piscinas e área verde da Alto Petrópolis, preferencialmente com pessoas em escala. Espaço negativo para texto. Mínimo 2400 px de largura." },
+    { "id": "GNU_01_HERO_AP_MOBILE", "dobra": "01", "preset": "heroMobile", "proporcao": "4:5 (1080 × 1350) ou 3:4 (1080 × 1440)", "obrigatoria": true, "briefing": "Corte vertical próprio do hero para celular — não é a versão desktop reduzida." },
+    { "id": "GNU_02_AP_SEDE", "dobra": "02", "preset": "padrao", "proporcao": "4:3", "obrigatoria": true, "briefing": "Vista aberta da Alto Petrópolis mostrando a dimensão do espaço." },
+    { "id": "GNU_03_MV_SEDE", "dobra": "02", "preset": "padrao", "proporcao": "4:3", "obrigatoria": true, "briefing": "Moinhos de Vento com piscinas/ambiente, contexto urbano reconhecível." },
+    { "id": "GNU_04_IP_SEDE", "dobra": "02", "preset": "padrao", "proporcao": "4:3", "obrigatoria": true, "briefing": "Paisagem da Ilha do Pavão: natureza + Guaíba/área de lazer. Ampla, sem virar foto de detalhe." },
+    { "id": "GNU_05_UP_SEDE", "dobra": "02", "preset": "padrao", "proporcao": "4:3", "obrigatoria": true, "briefing": "União Petrópole: quadras de tênis e ambiente social ou piscinas." },
+    { "id": "GNU_06_CONVIVIO", "dobra": "03", "preset": "padrao", "proporcao": "3:2", "obrigatoria": true, "briefing": "Amigos conversando em área externa/restaurante real do clube." },
+    { "id": "GNU_07_ENCONTRO", "dobra": "03", "preset": "padrao", "proporcao": "4:5", "obrigatoria": false, "briefing": "Família/amigos compartilhando refeição ou encontro cotidiano. (Recomendada — já está no layout.)" },
+    { "id": "GNU_09_FAMILIA", "dobra": "04", "preset": "padrao", "proporcao": "3:2", "obrigatoria": true, "menores": true, "briefing": "Pais/responsáveis com crianças em ambiente de lazer amplo." },
+    { "id": "GNU_10_INFANTIL", "dobra": "04", "preset": "padrao", "proporcao": "4:5", "obrigatoria": true, "menores": true, "briefing": "Piscina infantil ou playground em uso, com ambiente visível." },
+    { "id": "GNU_12_PISCINA", "dobra": "05", "preset": "padrao", "proporcao": "16:9", "obrigatoria": true, "briefing": "Piscina de lazer com água, vegetação e pessoas — não uma prova de natação." },
+    { "id": "GNU_13_TENIS", "dobra": "05", "preset": "padrao", "proporcao": "16:9", "obrigatoria": true, "briefing": "Quadras de saibro/cobertas com 1–2 praticantes, enquadramento aberto." },
+    { "id": "GNU_14_HISTORIA", "dobra": "06", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Elemento arquitetônico, acervo histórico ou sede reconhecível. Discreta. (Recomendada — já está no layout.)" },
+    { "id": "GNU_15_FECHAMENTO", "dobra": "07", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Família/amigos aproveitando um ambiente de convivência, com área limpa. (Recomendada — já está no layout.)" },
+    { "id": "GNU_16_GAL_AP_01", "dobra": "lightbox", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Galeria Alto Petrópolis — detalhe real (sugestão: piscinas)." },
+    { "id": "GNU_16_GAL_AP_02", "dobra": "lightbox", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Galeria Alto Petrópolis — detalhe real (sugestão: área verde)." },
+    { "id": "GNU_16_GAL_MV_01", "dobra": "lightbox", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Galeria Moinhos de Vento — detalhe real (sugestão: ambiente de convivência)." },
+    { "id": "GNU_16_GAL_IP_01", "dobra": "lightbox", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Galeria Ilha do Pavão — detalhe real (sugestão: área de lazer)." },
+    { "id": "GNU_16_GAL_UP_01", "dobra": "lightbox", "preset": "padrao", "proporcao": "3:2", "obrigatoria": false, "briefing": "Galeria União Petrópole — detalhe real (sugestão: piscinas)." }
+  ]
+}
