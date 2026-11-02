@@ -5,7 +5,7 @@ A evolução entra por partes, sobre a estrutura que já existe. Cada etapa pode
 ## Etapa 1 · Correções rápidas (1 a 2 semanas)
 
 - Consentimento de privacidade desmarcado no formulário.
-- `font-feature-settings: "lnum"` na Raleway para alinhar os números.
+- Raleway atualizada pelo Google Fonts, com `font-feature-settings: "lnum"`, para alinhar os números.
 - Ciano fora do texto corrido; destaque em peso 600.
 - Um botão de WhatsApp só, sem cobrir conteúdo.
 

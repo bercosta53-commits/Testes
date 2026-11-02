@@ -48,7 +48,7 @@ O clube é apresentado como lugar de viver bem em Porto Alegre: encontrar amigos
 
 ## Tipografia
 
-**Raleway** (Google Fonts, licença OFL), a mesma fonte de hoje, em pesos 300 a 700. Carregue com `https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&display=swap` e ative sempre `font-feature-settings: "lnum"`: a Raleway vem com algarismos de estilo antigo, que hoje deixam "300" e "500" desalinhados nos endereços.
+**Raleway** (Google Fonts, licença OFL), a mesma fonte de hoje, em pesos 300 a 700. Carregue com `https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&display=swap` e mantenha `font-feature-settings: "lnum"`. A versão da Raleway usada hoje no site mostra algarismos de estilo antigo, que deixam "300" e "500" desalinhados nos endereços; a versão atual do Google Fonts já usa algarismos alinhados.
 
 - Títulos (`display`, `titulo-1`, `titulo-2`): peso 300, com a segunda parte em 600 e em `azul`. É a assinatura do site, mais leve.
 - Texto (`lead`, `corpo`, `corpo-p`, `legenda`): peso 400, alinhado à esquerda, até 60 caracteres por linha.
