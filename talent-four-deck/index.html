@@ -313,7 +313,7 @@ img, svg { display: block; }
 .ponteio__seta { position: relative; height: 1px; background: var(--linha-diag); }
 .ponteio__seta::after { content: ''; position: absolute; right: 1px; top: -4px; width: 9px; height: 9px; border-top: 1.5px solid var(--fg); border-right: 1.5px solid var(--fg); transform: rotate(45deg); }
 .ponteio__portao { position: absolute; left: calc(600px + 160px - 1px); top: 40px; bottom: 0; width: 2px; background: var(--fg); }
-.ponteio__portao i { position: absolute; left: -8px; top: 50%; width: 18px; height: 18px; background: var(--acid); outline: 1px solid var(--ink); }
+.ponteio__portao i { position: absolute; left: -8px; top: 50%; width: 18px; height: 18px; background: var(--ink); }
 
 /* Fase 2 · preparação do mercado */
 .perguntas { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
@@ -589,18 +589,11 @@ img, svg { display: block; }
 .contato .mono { color: var(--fg-3); font-size: 14px; }
 .contato .txt { margin-top: 2px; font-size: 21px; }
 
-/* Toques de limão: marcadores atuais e nós de destaque */
-.escuro .partes li.on::before { background: var(--acid); border-color: var(--acid); }
+/* Toques de limão: fios dos marcadores atuais e marca-texto (sem quadradinhos) */
 .escuro .fases li.on { border-bottom-color: var(--acid); }
 .indice li.on { border-top-color: var(--acid); }
-.claro .no--acid { background: var(--acid); border-color: var(--ink); }
-.claro .circuito .no { background: var(--acid); border-color: var(--ink); }
-.claro .lentes__no, .claro .raias__no { background: var(--acid); outline: 1px solid var(--ink); }
-.claro .gantt__barra:not(.gantt__barra--futuro)::before { background: var(--acid); outline: 1px solid var(--ink); }
-.claro .evolucao li:last-child::before { background: var(--acid); border-color: var(--ink); }
 .passo4__n { display: inline-block; padding: .06em .1em .02em; margin-left: -.1em; }
 .passo4:first-child .passo4__n { background: var(--acid); color: var(--ink); }
-.lp__col--depois > .mono::before { content: ''; width: 12px; height: 12px; background: var(--acid); outline: 1px solid var(--ink); }
 
 /* =========================================================================
    Visão geral (tecla G) e impressão
@@ -650,7 +643,7 @@ body.visao { overflow: auto; background: #000; }
         <li><span>Fase 3 · Operação e ajustes</span><span class="mono">Meses 3 a 6</span></li>
       </ol>
     </li>
-    <li><span class="mono">04</span><span class="t3">Time e investimento</span></li>
+    <li><span class="mono">04</span><span class="t3">Investimento e projeções</span></li>
   </ol>
 </section>
 
@@ -796,7 +789,7 @@ body.visao { overflow: auto; background: #000; }
     <p class="rotulo"><span class="n">Parte 03</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">03</p>
     <h2 class="divisor__titulo">A proposta</h2>
-    <p class="mono divisor__sub">Visão do projeto · Fase 1 Diagnóstico · Fase 2 Preparação · Fase 3 Operação</p>
+    <p class="mono divisor__sub">Visão do projeto · Fase 1 Diagnóstico · Fase 2 Preparação · Fase 3 Operação · Time</p>
   </div>
 </section>
 
@@ -1199,10 +1192,11 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 
+
 <!-- ===================================================== Time -->
-<section class="slide claro" data-nome="Time e colaboração" data-parte="4">
+<section class="slide claro" data-nome="Time e colaboração" data-parte="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Time e colaboração</span></p>
+    <p class="rotulo"><span class="n">03</span><span class="barra">/</span><span>Time e colaboração</span></p>
     <h2 class="t2">Um trabalho conjunto, com responsabilidades claras entre Velora e Talent.</h2>
   </div>
   <div class="time">
@@ -1224,6 +1218,16 @@ body.visao { overflow: auto; background: #000; }
       <div class="pessoa"><p class="t4">Hunter e gerentes de conta</p><p class="txt">Relacionamento, reuniões, negociação e expansão.</p></div>
       <div class="pessoa"><p class="t4">Agência atual</p><p class="txt">Produção e desdobramentos de conteúdo, conforme alinhamento de escopo.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- ===================================================== Parte 04 -->
+<section class="slide escuro divisor" data-nome="Parte 4 · Investimento e projeções" data-parte="4">
+  <div class="divisor__txt">
+    <p class="rotulo"><span class="n">Parte 04</span><span class="barra">/</span><span>de 04</span></p>
+    <p class="divisor__n">04</p>
+    <h2 class="divisor__titulo">Investimento e projeções</h2>
+    <p class="mono divisor__sub">Investimento · Custo por etapa · Retorno projetado · Próximos passos</p>
   </div>
 </section>
 
@@ -1354,7 +1358,7 @@ body.visao { overflow: auto; background: #000; }
   var params = new URLSearchParams(location.search);
   var pad = function (n) { return String(n).padStart(2, '0'); };
   var FASES = ['Diagnóstico', 'Preparação', 'Operação'];
-  var PARTES = ['A Velora', 'A Talent Four', 'A proposta', 'Time e investimento'];
+  var PARTES = ['A Velora', 'A Talent Four', 'A proposta', 'Investimento e projeções'];
 
   if (params.has('render')) body.classList.add('sem-anim');
 

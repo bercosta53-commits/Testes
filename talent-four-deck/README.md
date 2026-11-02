@@ -1,11 +1,11 @@
 # Velora × Talent Four · Desenvolvimento de sistema de aquisição
 
-Apresentação da proposta da Velora para a Talent Four Consulting: 38 slides em HTML (1920×1080), com navegação por teclado e exportação em PDF. A copy segue o documento de correção editorial de novembro de 2026.
+Apresentação da proposta da Velora para a Talent Four Consulting: 39 slides em HTML (1920×1080), com navegação por teclado e exportação em PDF. A copy segue o documento de correção editorial de novembro de 2026.
 
-![Visão geral dos 38 slides](preview.jpg)
+![Visão geral dos 39 slides](preview.jpg)
 
 - **Apresentar:** abra `index.html` no Chrome, Edge ou Safari. A pasta inteira precisa ir junto, porque as fontes e as fotos são arquivos locais. Funciona sem internet.
-- **PDF pronto:** [`talent-four-velora.pdf`](talent-four-velora.pdf) (38 páginas, 3,6 MB).
+- **PDF pronto:** [`talent-four-velora.pdf`](talent-four-velora.pdf) (39 páginas, 3,6 MB).
 
 ## Navegação
 
@@ -37,22 +37,22 @@ node render.mjs            # → render/slide-NN.png e talent-four-velora.pdf
 | 1–2 | Abertura | Capa e roteiro |
 | 3–7 | **01 · A Velora** | Abertura · como contribuímos · contexto de mercado · cinco etapas · princípios |
 | 8–11 | **02 · A Talent Four** | Abertura com os números da Talent · como cresceu · três oportunidades · transição |
-| 12–32 | **03 · A proposta** | Abertura · visão do projeto e as três fases abaixo |
+| 12–33 | **03 · A proposta** | Abertura · visão do projeto · as três fases abaixo · time e colaboração (33) |
 | 14–17 | Fase 1 · Diagnóstico | Abertura · quatro lentes · respostas que o diagnóstico entrega · passagem do plano de ação para o setup |
 | 18–26 | Fase 2 · Preparação e implementação | Abertura · preparação do mercado · ~500 contas · frentes · radar de sinais · geração de demanda · prospecção · abordagem por grupo · indicadores |
 | 27–32 | Fase 3 · Operação e ajustes | Abertura · página de conversão · mídia e conteúdo · projeção de referência · RHOI · o que fica com a Talent |
-| 33–37 | **04 · Time e investimento** | Time · investimento · custo por etapa · retorno projetado · próximos passos |
-| 38 | Encerramento | Contatos |
+| 34–38 | **04 · Investimento e projeções** | Abertura · investimento · custo por etapa · retorno projetado · próximos passos |
+| 39 | Encerramento | Contatos |
 
 ## Fundos, capítulos e limão
 
 - **Fundo claro (Bone) como padrão** nos slides de conteúdo.
-- **Fundo preto (Ink) marca os capítulos:** capa, aberturas das partes 1 a 3, as três aberturas de fase e o encerramento. A Parte 4 entra direto no slide do time; o rodapé indica a mudança de parte.
-- **Quatro momentos-chave em preto:** contexto de mercado (5), três oportunidades (10), radar de sinais (22) e retorno projetado (36).
+- **Fundo preto (Ink) marca os capítulos:** capa, as quatro aberturas de parte, as três aberturas de fase e o encerramento.
+- **Quatro momentos-chave em preto:** contexto de mercado (5), três oportunidades (10), radar de sinais (22) e retorno projetado (37).
 - **Aberturas de parte:** numeral gigante e índice das quatro partes, com a atual marcada por um fio limão.
 - **Aberturas de fase:** numeral em marca-texto limão, foto P&B, duração e trilho dos seis meses.
-- **Em todo slide:** o rodapé mostra as quatro partes, com a atual destacada (limão nos slides escuros). Dentro da proposta, o topo mostra `01 Diagnóstico · 02 Preparação · 03 Operação`, com a fase atual sublinhada.
-- **Limão:** só como marca-texto ou nó de destaque, nunca como cor de texto no fundo claro. Aparece em um ponto por slide: tag e "×" da capa, nós das etapas, chegada dos diagramas, primeiro passo, valor do investimento, posição alocada e resposta-chave do diagnóstico.
+- **Em todo slide:** o rodapé mostra as quatro partes, com a atual destacada. Dentro da proposta, o topo mostra `01 Diagnóstico · 02 Preparação · 03 Operação`, com a fase atual sublinhada.
+- **Limão:** só em destaques de tamanho real, nunca em quadradinhos ou nós de diagrama e nunca como cor de texto no fundo claro. Aparece na etiqueta e no "×" da capa, nos numerais das fases, nos fios dos marcadores atuais e como marca-texto nos pontos-chave: princípio 04, resposta 05 do diagnóstico, primeiro passo da prospecção, A1, valor do investimento, posição alocada e retorno.
 
 ## Linguagem visual (do site da Velora)
 
@@ -63,7 +63,7 @@ node render.mjs            # → render/slide-NN.png e talent-four-velora.pdf
 
 ## Investimento, custo por etapa e retorno
 
-Premissas usadas nos slides 30, 34, 35 e 36:
+Premissas usadas nos slides 30, 35, 36 e 37:
 
 | Item | Valor |
 |---|---|
@@ -106,8 +106,8 @@ Retorno (LTV de 5 anos, churn de 8% ao ano aplicado à receita a partir do ano 2
 | 14 · Fase 1 | `mesa.jpg` | Análise conjunta, sobre a mesa |
 | 18 · Fase 2 | `apresentacao.jpg` | Definir junto com o time |
 | 27 · Fase 3 | `movimento.jpg` | Operação, em movimento |
-| 37 · Próximos passos | `chegada.jpg` | Início do trabalho |
-| 38 · Encerramento | `elevador.jpg` | Parceria que sobe junto |
+| 38 · Próximos passos | `chegada.jpg` | Início do trabalho |
+| 39 · Encerramento | `elevador.jpg` | Parceria que sobe junto |
 
 ## A validar antes de apresentar
 
@@ -119,8 +119,8 @@ Do documento de correção (seção 3):
 - **Slide 30:** total padronizado em ~60 a 65 reuniões (40 + 10 a 15 + 10). Falta definir atribuição e deduplicação entre frentes.
 - **Slides 23, 29 e 33:** confirmar a divisão de trabalho entre o squad da Velora, a agência atual e o time da Talent.
 - **Slide 33:** confirmar o papel de Leonardo Wartha (advisor ou sócio).
-- **Slide 34:** formalizar em contrato o que conta como conta nova e como primeira alocação para a parcela por resultado.
-- **Slide 37:** data de início.
+- **Slide 35:** formalizar em contrato o que conta como conta nova e como primeira alocação para a parcela por resultado.
+- **Slide 38:** data de início.
 - **Slides 20 e 25:** os tiers seguem A1/B2/B3. O documento sugere A/B/C como alternativa.
 
 Interpretações dos valores, a confirmar:
@@ -130,11 +130,11 @@ Interpretações dos valores, a confirmar:
 - Ferramentas e conectores de IA: R$ 2 mil por mês durante os 6 meses.
 - "R$ 20 mil por posição" é o faturamento mensal da Talent por consultor alocado.
 - As 6 posições por conta valem desde o primeiro ano, sem rampa de entrada.
-- A margem bruta de 14% é a estimativa do briefing. O slide 36 mostra a margem da Talent; avalie se quer exibi-la ao cliente.
+- A margem bruta de 14% é a estimativa do briefing. O slide 37 mostra a margem da Talent; avalie se quer exibi-la ao cliente.
 
 Conteúdo que não vem do documento de correção:
 
 - Capa "Velora × Talent Four · Desenvolvimento de sistema de aquisição", conforme pedido.
 - Slides 16 e 17 (respostas do diagnóstico e passagem para o setup), escritos a partir do roteiro do briefing.
-- Slides 35 e 36 (custo por etapa e retorno projetado), calculados a partir das premissas acima.
-- Roteiro, aberturas, encerramento com contatos e as etiquetas de prazo do slide 37.
+- Slides 36 e 37 (custo por etapa e retorno projetado), calculados a partir das premissas acima.
+- Roteiro, aberturas, encerramento com contatos e as etiquetas de prazo do slide 38.
