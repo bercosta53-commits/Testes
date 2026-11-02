@@ -70,13 +70,13 @@ img, svg { display: block; }
 .marca { display: flex; align-items: baseline; gap: 14px; }
 .marca b { font: 700 30px/1 var(--f-display); letter-spacing: -.02em; }
 .marca span, .topo__dir, .fases, .pe { font-family: var(--f-mono); font-weight: 500; text-transform: uppercase; font-variant-ligatures: none; }
-.marca span { font-size: 13px; letter-spacing: .18em; color: var(--fg-2); }
-.topo__dir { font-size: 14px; letter-spacing: .16em; color: var(--fg-2); }
-.fases { display: flex; align-items: baseline; gap: 18px; font-size: 14px; letter-spacing: .16em; color: var(--fg-3); }
+.marca span { font-size: 14px; letter-spacing: .18em; color: var(--fg-2); }
+.topo__dir { font-size: 15px; letter-spacing: .16em; color: var(--fg-2); }
+.fases { display: flex; align-items: baseline; gap: 18px; font-size: 15px; letter-spacing: .16em; color: var(--fg-3); }
 .fases li { padding-bottom: 9px; border-bottom: 1px solid transparent; }
 .fases li.on { color: var(--fg); border-bottom-color: var(--fg); }
 .fases .sep { color: var(--fg-4); }
-.pe { position: absolute; left: var(--mx); right: var(--mx); bottom: 44px; display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; letter-spacing: .14em; color: var(--fg-4); z-index: 6; }
+.pe { position: absolute; left: var(--mx); right: var(--mx); bottom: 44px; display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; letter-spacing: .14em; color: var(--fg-4); z-index: 6; }
 .partes { display: flex; gap: 26px; }
 .partes li { display: flex; align-items: center; gap: 10px; }
 .partes li::before { content: ''; width: 7px; height: 7px; border: 1px solid currentColor; }
@@ -85,17 +85,17 @@ img, svg { display: block; }
 .pe b { font-weight: 500; color: var(--fg-2); }
 
 /* ---------- Tipografia ---------- */
-.rotulo { display: flex; align-items: center; gap: 14px; margin: 0 0 28px calc(var(--fio) - var(--mx)); font: 500 16px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; font-variant-ligatures: none; color: var(--fg-2); }
+.rotulo { display: flex; align-items: center; gap: 14px; margin: 0 0 28px calc(var(--fio) - var(--mx)); font: 500 17px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; font-variant-ligatures: none; color: var(--fg-2); }
 .rotulo::before { content: ''; flex: none; width: 26px; height: 1px; background: currentColor; }
 .rotulo .n { color: var(--fg); }
 .rotulo .barra { color: var(--fg-4); }
 .t1 { font: 700 132px/1 var(--f-display); letter-spacing: -.035em; }
 .t2 { font: 700 64px/1.08 var(--f-display); letter-spacing: -.026em; text-wrap: balance; max-width: 1560px; }
-.t3 { font: 700 32px/1.2 var(--f-display); letter-spacing: -.012em; }
-.t4 { font: 700 26px/1.25 var(--f-display); letter-spacing: -.008em; }
-.lead { font: 400 28px/1.5 var(--f-corpo); color: var(--fg); text-wrap: pretty; }
-.txt { font: 400 22px/1.5 var(--f-corpo); color: var(--fg-2); text-wrap: pretty; }
-.mono { font: 500 15px/1.45 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; font-variant-ligatures: none; }
+.t3 { font: 700 34px/1.18 var(--f-display); letter-spacing: -.012em; }
+.t4 { font: 700 28px/1.22 var(--f-display); letter-spacing: -.008em; }
+.lead { font: 400 30px/1.45 var(--f-corpo); color: var(--fg); text-wrap: pretty; }
+.txt { font: 400 24px/1.45 var(--f-corpo); color: var(--fg-2); text-wrap: pretty; }
+.mono { font: 500 16px/1.45 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; font-variant-ligatures: none; }
 .fg2 { color: var(--fg-2); }
 .fg3 { color: var(--fg-3); }
 .num { font-family: var(--f-display); font-weight: 700; letter-spacing: -.045em; line-height: .86; font-variant-numeric: tabular-nums; }
@@ -103,14 +103,14 @@ img, svg { display: block; }
 .cab .sub { margin-top: 18px; max-width: 1400px; color: var(--fg-2); }
 
 .lista { border-top: 1px solid var(--linha); }
-.lista li { position: relative; padding: 13px 0 13px 26px; border-bottom: 1px solid var(--linha); font-size: 22px; line-height: 1.45; color: var(--fg); }
+.lista li { position: relative; padding: 13px 0 13px 26px; border-bottom: 1px solid var(--linha); font-size: 24px; line-height: 1.42; color: var(--fg); }
 .lista li::before { content: ''; position: absolute; left: 0; top: calc(13px + .725em - 3px); width: 7px; height: 7px; background: var(--fg); }
 .lista--fraca li { color: var(--fg-2); }
 .lista--fraca li::before { background: transparent; border: 1px solid var(--fg-3); }
 
-.fechamento { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; padding-top: 24px; border-top: 1px solid var(--linha); font: 500 26px/1.45 var(--f-corpo); color: var(--fg); }
+.fechamento { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; padding-top: 24px; border-top: 1px solid var(--linha); font: 500 28px/1.42 var(--f-corpo); color: var(--fg); }
 .fechamento span { color: var(--fg-2); }
-.nota { position: absolute; left: var(--mx); right: var(--mx); bottom: 124px; color: var(--fg-3); font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
+.nota { position: absolute; left: var(--mx); right: var(--mx); bottom: 124px; color: var(--fg-3); font: 500 15px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
 
 .no { display: block; width: 14px; height: 14px; background: var(--bg); border: 1px solid var(--fg-2); }
 .no--acid { background: var(--destaque); border-color: var(--destaque); }
@@ -129,8 +129,8 @@ img, svg { display: block; }
 }
 
 .tabela { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.tabela th { padding: 0 32px 14px 0; text-align: left; vertical-align: bottom; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); border-bottom: 1px solid var(--linha-diag); }
-.tabela td { padding: 20px 32px 20px 0; vertical-align: top; font-size: 22px; line-height: 1.45; color: var(--fg-2); border-bottom: 1px solid var(--linha); }
+.tabela th { padding: 0 32px 14px 0; text-align: left; vertical-align: bottom; font: 500 15px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); border-bottom: 1px solid var(--linha-diag); }
+.tabela td { padding: 20px 32px 20px 0; vertical-align: top; font-size: 24px; line-height: 1.42; color: var(--fg-2); border-bottom: 1px solid var(--linha); }
 .tabela th:last-child, .tabela td:last-child { padding-right: 0; }
 .tabela .dir { text-align: right; }
 .tabela-wrap { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
@@ -154,7 +154,7 @@ img, svg { display: block; }
 .indice li.on { color: var(--fg); border-top: 2px solid var(--fg); padding-top: 21px; }
 .indice .mono { padding-top: 10px; }
 .indice .t3 { font-size: 34px; }
-.indice small { grid-column: 2; margin-top: 6px; font: 500 13px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
+.indice small { grid-column: 2; margin-top: 6px; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
 
 .divisor--fase .divisor__txt { top: 150px; width: 940px; }
 .divisor--fase .divisor__n { margin: 40px 0 0 -6px; font-size: 280px; }
@@ -164,7 +164,7 @@ img, svg { display: block; }
 .divisor__lead { margin-top: 14px; max-width: 820px; }
 .divisor--fase .foto { width: 46%; }
 .trilho { position: absolute; left: var(--mx); width: 900px; bottom: 132px; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 6px; }
-.trilho li { padding-top: 14px; border-top: 1px solid var(--linha-diag); color: var(--fg-3); font: 500 13px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
+.trilho li { padding-top: 14px; border-top: 1px solid var(--linha-diag); color: var(--fg-3); font: 500 15px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
 .trilho li.on { border-top: 5px solid var(--fg); padding-top: 10px; color: var(--fg); }
 
 /* =========================================================================
@@ -173,15 +173,16 @@ img, svg { display: block; }
 
 /* Capa */
 .capa .foto { width: 50%; }
-.capa .foto img { object-position: 78% 30%; }
+.capa .foto img { object-position: 72% 40%; }
 .capa .foto::after { background: linear-gradient(90deg, var(--ink) 0%, rgb(11 11 12 / .9) 24%, rgb(11 11 12 / .45) 58%, rgb(11 11 12 / .12) 100%), linear-gradient(0deg, rgb(11 11 12 / .85) 0%, rgb(11 11 12 / 0) 24%), linear-gradient(180deg, rgb(11 11 12 / .7) 0%, rgb(11 11 12 / 0) 18%); }
-.capa__txt { position: absolute; left: var(--mx); top: 236px; width: 1440px; z-index: 2; }
-.capa__marcas { font: 700 76px/1 var(--f-display); letter-spacing: -.03em; }
-.capa__marcas span { color: var(--fg-3); padding: 0 .18em; }
-.capa__titulo { margin-top: 56px; font-size: 128px; line-height: 1.02; letter-spacing: -.038em; }
+.capa__txt { position: absolute; left: var(--mx); top: 250px; width: 1080px; z-index: 2; }
+.chip-acid { display: inline-block; padding: 9px 14px 8px; background: var(--acid); color: var(--ink); font: 500 15px/1 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; }
+.capa__marcas { margin-top: 40px; font: 700 54px/1 var(--f-display); letter-spacing: -.025em; }
+.capa__marcas span { color: var(--acid); padding: 0 .2em; }
+.capa__titulo { margin-top: 30px; font-size: 92px; line-height: 1.04; letter-spacing: -.035em; }
 .capa__titulo span { display: block; }
-.capa__lead { margin-top: 44px; max-width: 900px; color: var(--fg-2); }
-.faixa { position: absolute; left: var(--mx); right: var(--mx); bottom: 112px; display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--linha-diag); font: 500 15px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); z-index: 2; }
+.capa__lead { margin-top: 36px; max-width: 860px; color: var(--fg-2); }
+.faixa { position: absolute; left: var(--mx); right: var(--mx); bottom: 112px; display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--linha-diag); font: 500 16px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); z-index: 2; }
 
 /* Roteiro */
 .roteiro .cab { right: auto; width: 640px; }
@@ -191,8 +192,8 @@ img, svg { display: block; }
 .roteiro__lista .mono { color: var(--fg-3); padding-top: 9px; }
 .roteiro__lista .t3 { font-size: 34px; }
 .roteiro__fases { grid-column: 2; margin-top: 14px; }
-.roteiro__fases li { display: grid; grid-template-columns: 1fr auto; padding: 10px 0; border-top: 1px solid var(--linha); font-size: 22px; color: var(--fg-2); }
-.roteiro__fases .mono { padding: 0; font-size: 13px; }
+.roteiro__fases li { display: grid; grid-template-columns: 1fr auto; padding: 10px 0; border-top: 1px solid var(--linha); font-size: 24px; color: var(--fg-2); }
+.roteiro__fases .mono { padding: 0; font-size: 15px; }
 
 /* Como contribuímos */
 .frase { position: absolute; left: var(--mx); top: 236px; width: 1500px; }
@@ -222,33 +223,17 @@ img, svg { display: block; }
 /* Contexto de mercado */
 .evid { position: absolute; left: var(--mx); right: var(--mx); top: 420px; display: grid; grid-template-columns: 860px 1fr; column-gap: 96px; }
 .evid__foco .num { font-size: 260px; color: var(--acid); }
-.evid__foco .txt { margin-top: 30px; max-width: 680px; font-size: 26px; color: var(--fg); }
-.fonte { margin-top: 16px; color: var(--fg-3); font: 500 13px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
+.evid__foco .txt { margin-top: 30px; max-width: 700px; font-size: 28px; color: var(--fg); }
+.fonte { margin-top: 16px; color: var(--fg-3); font: 500 14px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
 .evid__lado { border-left: 1px solid var(--linha); padding-left: 56px; display: grid; row-gap: 36px; align-content: start; }
 .evid__lado .dado + .dado { padding-top: 32px; border-top: 1px solid var(--linha); }
 .evid__lado .num { font-size: 104px; }
 .evid__lado .txt { margin-top: 16px; }
 
-/* O que a Talent construiu */
-.marcos { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 48px; }
-.marco .num { font-size: 150px; }
-.marco .txt { margin-top: 18px; max-width: 460px; }
-.faixas { position: absolute; left: var(--mx); right: var(--mx); top: 690px; }
-.faixa-linha { display: grid; grid-template-columns: 240px 1fr; padding: 20px 0; border-top: 1px solid var(--linha); }
-.faixa-linha:last-child { border-bottom: 1px solid var(--linha); }
-.faixa-linha .mono { color: var(--fg-3); padding-top: 6px; }
-.faixa-linha ul { display: flex; flex-wrap: wrap; gap: 6px 32px; }
-.faixa-linha li { font: 700 26px/1.35 var(--f-display); letter-spacing: -.01em; color: var(--fg-2); }
-.faixa-linha--portfolio li { color: var(--fg); }
-
 /* Como a Talent cresceu */
 .trilha { position: absolute; left: var(--mx); top: 470px; width: var(--larg); }
-.trilha .etapa__n { font: 500 15px/1.4 var(--f-mono); letter-spacing: .14em; color: var(--fg-3); }
+.trilha .etapa__n { font: 500 16px/1.4 var(--f-mono); letter-spacing: .14em; color: var(--fg-3); }
 .trilha .t3 { margin-top: 12px; }
-
-/* O que entendemos */
-.entendemos td:first-child { width: 340px; color: var(--fg); font: 700 26px/1.3 var(--f-display); letter-spacing: -.008em; }
-.entendemos td { font-size: 23px; }
 
 /* Três oportunidades */
 .oport { position: absolute; left: var(--mx); right: var(--mx); top: 400px; }
@@ -256,7 +241,7 @@ img, svg { display: block; }
 .oport li:last-child { border-bottom: 1px solid var(--linha); }
 .oport .mono { color: var(--fg-3); align-self: start; padding-top: 40px; }
 .oport__palavra { font: 700 128px/1 var(--f-display); letter-spacing: -.045em; }
-.oport .lead { font-size: 27px; line-height: 1.42; }
+.oport .lead { font-size: 30px; line-height: 1.4; }
 
 /* Transição */
 .ponte__foto { position: absolute; right: 0; top: 120px; bottom: 100px; width: 42%; margin: 0; overflow: hidden; }
@@ -268,7 +253,7 @@ img, svg { display: block; }
 .ponte__frase em { font-style: normal; background: var(--acid); color: var(--ink); padding: 0 .08em; }
 
 /* Visão do projeto (Gantt) */
-.gantt { position: absolute; left: var(--mx); top: 392px; width: var(--larg); height: 570px; }
+.gantt { position: absolute; left: var(--mx); top: 366px; width: var(--larg); height: 600px; }
 .gantt__col { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--linha); }
 .gantt__col .mono { position: absolute; top: 0; left: 14px; color: var(--fg-3); white-space: nowrap; }
 .gantt__col--horizonte { border-left: 1px dashed var(--linha-diag); }
@@ -278,13 +263,13 @@ img, svg { display: block; }
 .gantt__barra--futuro { height: 0; border-top: 2px dashed var(--fg-2); background: none; top: 2px; }
 .gantt__barra--futuro::before { display: none; }
 .gantt__barra--futuro::after { content: ''; position: absolute; right: 0; top: -9px; width: 14px; height: 14px; background: var(--bg); border: 1px solid var(--fg); }
-.gantt__txt { position: absolute; top: 28px; padding: 0 24px 6px 0; background: var(--bg); }
+.gantt__txt { position: absolute; top: 24px; padding: 0 24px 6px 0; background: var(--bg); }
 .gantt__txt .mono { color: var(--fg-3); }
 .gantt__txt .t3 { margin-top: 6px; }
-.gantt__txt .txt { margin-top: 6px; font-size: 21px; }
+.gantt__txt .txt { margin-top: 6px; font-size: 23px; line-height: 1.38; }
 .gantt__horizonte { position: absolute; left: 1076px; right: 0; top: 48px; }
 .gantt__horizonte .mono { color: var(--fg); }
-.gantt__horizonte .txt { margin-top: 10px; font-size: 21px; }
+.gantt__horizonte .txt { margin-top: 10px; font-size: 23px; }
 .gantt__fim { position: absolute; right: 0; top: 24px; color: var(--fg-2); }
 
 /* Fase 1 · quatro lentes */
@@ -302,15 +287,43 @@ img, svg { display: block; }
 .lentes__plano .t3 { margin-top: 8px; font-size: 40px; line-height: 1.05; letter-spacing: -.02em; }
 .lentes__plano .txt { margin-top: 14px; color: var(--fg); }
 
+/* Abertura da Parte 2: fatos em vez de um slide de apresentação da empresa */
+.divisor__fatos { margin-top: 44px; display: grid; grid-template-columns: repeat(3, auto); justify-content: start; column-gap: 72px; }
+.divisor__fatos .num { font-size: 64px; }
+.divisor__fatos .mono { margin-top: 12px; color: var(--fg-3); }
+
+/* Fase 1 · respostas do diagnóstico */
+.respostas { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
+.resposta { display: grid; grid-template-columns: 76px 700px 1fr; align-items: baseline; padding: 20px 0 22px; border-bottom: 1px solid var(--linha); }
+.resposta--cab { padding: 0 0 14px; border-bottom-color: var(--linha-diag); }
+.resposta--cab .mono, .resposta > .mono { color: var(--fg-3); }
+.resposta .t3 { font-size: 32px; padding-right: 40px; }
+.resposta .txt { color: var(--fg); }
+.resposta--foco { border-bottom: 2px solid var(--fg); }
+
+/* Fase 1 · do plano de ação ao setup */
+.ponteio { position: absolute; left: var(--mx); right: var(--mx); top: 392px; }
+.ponteio__linha { position: relative; display: grid; grid-template-columns: 600px 320px 1fr; align-items: center; min-height: 72px; border-bottom: 1px solid var(--linha); }
+.ponteio__linha--cab { min-height: 0; padding-bottom: 14px; border-bottom-color: var(--linha-diag); }
+.ponteio__linha--cab .mono { color: var(--fg-3); }
+.ponteio__linha--cab .mono:last-child { padding-left: 24px; }
+.ponteio__meio { text-align: center; color: var(--fg) !important; }
+.ponteio__de { font-size: 24px; line-height: 1.4; color: var(--fg-2); padding-right: 24px; }
+.ponteio__para { font: 600 24px/1.4 var(--f-corpo); color: var(--fg); padding-left: 24px; }
+.ponteio__seta { position: relative; height: 1px; background: var(--linha-diag); }
+.ponteio__seta::after { content: ''; position: absolute; right: 1px; top: -4px; width: 9px; height: 9px; border-top: 1.5px solid var(--fg); border-right: 1.5px solid var(--fg); transform: rotate(45deg); }
+.ponteio__portao { position: absolute; left: calc(600px + 160px - 1px); top: 40px; bottom: 0; width: 2px; background: var(--fg); }
+.ponteio__portao i { position: absolute; left: -8px; top: 50%; width: 18px; height: 18px; background: var(--acid); outline: 1px solid var(--ink); }
+
 /* Fase 2 · preparação do mercado */
 .perguntas { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
 .pergunta { display: grid; grid-template-columns: 76px 520px 1fr; column-gap: 32px; padding: 28px 0 30px; border-top: 1px solid var(--linha); }
 .pergunta:last-child { border-bottom: 1px solid var(--linha); }
 .pergunta > .mono { color: var(--fg-3); padding-top: 10px; }
 .pergunta__q { font: 700 40px/1.08 var(--f-display); letter-spacing: -.02em; }
-.pergunta__q small { display: block; margin-top: 10px; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
-.pergunta .txt { font-size: 22px; }
-.pergunta dl { display: grid; grid-template-columns: 160px 1fr; row-gap: 6px; margin: 0; font-size: 22px; line-height: 1.45; }
+.pergunta__q small { display: block; margin-top: 10px; font: 500 15px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
+.pergunta .txt { font-size: 24px; }
+.pergunta dl { display: grid; grid-template-columns: 196px 1fr; row-gap: 6px; margin: 0; font-size: 24px; line-height: 1.42; }
 .pergunta dt { color: var(--fg); font-weight: 600; }
 .pergunta dd { margin: 0; color: var(--fg-2); }
 
@@ -318,13 +331,13 @@ img, svg { display: block; }
 .contas__esq { position: absolute; left: var(--mx); top: 150px; width: 700px; }
 .contas__esq .num { font-size: 230px; margin: 36px 0 0 -8px; }
 .contas__esq .lead { margin-top: 28px; }
-.contas__fim { position: absolute; left: var(--mx); width: 700px; bottom: 128px; padding-top: 22px; border-top: 1px solid var(--linha); font: 500 24px/1.45 var(--f-corpo); }
+.contas__fim { position: absolute; left: var(--mx); width: 700px; bottom: 128px; padding-top: 22px; border-top: 1px solid var(--linha); font: 500 26px/1.42 var(--f-corpo); }
 .bandas { position: absolute; left: 976px; right: var(--mx); top: 196px; }
 .banda { padding: 22px 0 26px; border-top: 1px solid var(--linha); }
 .banda:last-child { border-bottom: 1px solid var(--linha); }
 .banda__cab { display: flex; align-items: baseline; gap: 14px; }
 .banda__cab .mono { color: var(--fg-3); }
-.banda .txt { margin-top: 6px; font-size: 20px; }
+.banda .txt { margin-top: 6px; font-size: 22px; }
 .banda__pontos { margin-top: 18px; display: grid; grid-template-columns: repeat(50, 12px); gap: 4px; }
 .banda__pontos i { width: 12px; height: 12px; background: var(--fg-4); }
 .banda--a1 .banda__pontos i { background: var(--destaque); }
@@ -348,10 +361,10 @@ img, svg { display: block; }
 .cadeia li::before { content: ''; width: 9px; height: 9px; border: 1px solid var(--fg-2); }
 .base { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; display: grid; grid-template-columns: 300px 1fr; padding-top: 22px; border-top: 2px solid var(--fg); }
 .base .mono { color: var(--fg); padding-top: 6px; }
-.base p:last-child { font: 500 26px/1.45 var(--f-corpo); }
+.base p:last-child { font: 500 28px/1.42 var(--f-corpo); }
 
 /* Fase 2 · radar de sinais */
-.radar-fig { position: absolute; left: 128px; top: 404px; width: 500px; height: 500px; margin: 0; }
+.radar-fig { position: absolute; left: 124px; top: 420px; width: 440px; height: 440px; margin: 0; }
 .radar-fig svg { width: 100%; height: 100%; overflow: visible; }
 .radar__anel { fill: none; stroke: rgb(255 255 255 / .14); stroke-width: 1; }
 .radar__anel--externo { stroke: rgb(255 255 255 / .4); }
@@ -365,23 +378,25 @@ img, svg { display: block; }
 .radar__varredura { transform: rotate(48deg); transform-origin: 300px 300px; }
 .radar__varredura line { stroke: rgb(255 255 255 / .7); stroke-width: 1.25; }
 .radar__centro { fill: var(--paper); }
-.sinais { position: absolute; left: 740px; right: var(--mx); top: 404px; }
+.sinais { position: absolute; left: 640px; right: var(--mx); top: 400px; }
 .sinais__intro .mono { color: var(--fg); }
-.sinais__intro .txt { margin-top: 8px; font-size: 21px; }
-.sinais .tabela { margin-top: 26px; }
-.sinais .tabela td { padding-top: 13px; padding-bottom: 13px; font-size: 20px; }
-.sinais .tabela td:first-child { width: 46%; color: var(--fg); font-weight: 500; }
+.sinais__intro .txt { margin-top: 8px; font-size: 22px; }
+.sinais .tabela { margin-top: 20px; }
+.sinais .tabela td { padding-top: 12px; padding-bottom: 12px; font-size: 22px; }
+.sinais .tabela td:first-child { width: 44%; color: var(--fg); font-weight: 500; }
 .saida { margin-top: 24px; padding-top: 18px; border-top: 2px solid var(--fg); display: grid; grid-template-columns: 200px 1fr; }
 .saida .mono { padding-top: 5px; }
-.saida p:last-child { font: 500 24px/1.4 var(--f-corpo); }
+.saida p:last-child { font: 500 26px/1.4 var(--f-corpo); }
 
 /* Fase 2 · geração de demanda */
-.divide { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: 1fr 1fr; }
-.divide__lado { padding-right: 72px; }
-.divide__lado + .divide__lado { padding: 0 0 0 72px; border-left: 1px solid var(--linha-diag); }
-.divide__verbo { font: 700 96px/.9 var(--f-display); letter-spacing: -.045em; }
-.divide__sub { margin-top: 16px; color: var(--fg-2); }
-.divide .lista { margin-top: 30px; }
+.divide { position: absolute; left: var(--mx); right: var(--mx); top: 384px; display: grid; grid-template-columns: 1fr 1fr; }
+.divide__lado { padding-right: 56px; }
+.divide__lado + .divide__lado { padding: 0 0 0 56px; border-left: 1px solid var(--linha-diag); }
+.divide__verbo { font: 700 80px/.9 var(--f-display); letter-spacing: -.045em; }
+.divide__sub { margin-top: 12px; color: var(--fg-2); }
+.divide .lista { margin-top: 20px; }
+.divide .lista li { padding-top: 11px; padding-bottom: 11px; font-size: 23px; }
+.divide .lista li::before { top: calc(11px + .71em - 3px); }
 
 /* Fase 2 · prospecção de decisores */
 .passos4 { position: absolute; left: var(--mx); right: var(--mx); top: 410px; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 32px; padding-top: 40px; border-top: 1px solid var(--linha-diag); }
@@ -390,7 +405,7 @@ img, svg { display: block; }
 .passo4 .txt { margin-top: 12px; max-width: 360px; }
 
 /* Fase 2 · abordagem por grupo */
-.grupos td { font-size: 22px; }
+.grupos td { font-size: 24px; }
 .grupos td:first-child { width: 150px; }
 .grupo-nome { font: 700 44px/1 var(--f-display); letter-spacing: -.03em; color: var(--fg); }
 .grupo-nome.a1 span { background: var(--acid); color: var(--ink); padding: 0 .12em; margin-left: -.12em; }
@@ -407,27 +422,10 @@ img, svg { display: block; }
 .degrau { position: absolute; width: 214px; }
 .degrau .no { position: absolute; left: 0; top: -7px; }
 .degrau .mono { padding-top: 24px; color: var(--fg-3); }
-.degrau .t4 { margin-top: 6px; font-size: 25px; }
-.degrau .txt { margin-top: 8px; font-size: 18px; line-height: 1.45; }
+.degrau .t4 { margin-top: 6px; font-size: 26px; }
+.degrau .txt { margin-top: 8px; font-size: 20px; line-height: 1.42; }
 .degrau--fim .no { background: var(--destaque); border-color: var(--destaque); }
 .degrau--fim .t4 span { background: var(--acid); color: var(--ink); padding: 0 .1em; margin-left: -.1em; }
-
-/* Fase 3 · operação mês a mês */
-.ritmo { position: absolute; left: var(--mx); top: 404px; width: var(--larg); }
-.ritmo__linha { display: grid; grid-template-columns: 560px repeat(4, 1fr); align-items: center; min-height: 116px; border-bottom: 1px solid var(--linha); }
-.ritmo__linha--cab { min-height: 0; padding-bottom: 14px; border-bottom-color: var(--linha-diag); }
-.ritmo__linha--cab .mono { color: var(--fg-3); padding-left: 14px; }
-.ritmo__linha--cab .mono:first-child { padding-left: 0; }
-.ritmo__nome { padding: 18px 40px 18px 0; }
-.ritmo__nome .txt { margin-top: 4px; font-size: 19px; line-height: 1.45; }
-.ritmo__faixa { grid-column: 2 / -1; position: relative; align-self: stretch; }
-.ritmo__faixa::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(90deg, var(--linha) 1px, transparent 1px); background-size: 25% 100%; }
-.rb { position: absolute; top: calc(50% - 4px); height: 8px; background: var(--fg); }
-.rb--leve { background: var(--fg-4); }
-.ritmo__total { display: grid; grid-template-columns: 560px repeat(4, 1fr); padding-top: 22px; }
-.ritmo__total .mono { color: var(--fg-3); padding-top: 12px; }
-.ritmo__total .num { font-size: 64px; padding-left: 14px; color: var(--fg-4); }
-.ritmo__total .num.ult { color: var(--fg); }
 
 /* Fase 3 · página de conversão */
 .lp { position: absolute; left: var(--mx); right: var(--mx); top: 410px; display: grid; grid-template-columns: 1fr 112px 1fr; }
@@ -446,12 +444,12 @@ img, svg { display: block; }
 .quad .txt { margin-top: 6px; }
 .verba { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; display: grid; grid-template-columns: 300px 1fr; padding-top: 22px; border-top: 1px solid var(--linha); }
 .verba .mono { color: var(--fg-3); padding-top: 6px; }
-.verba p:last-child { font: 500 24px/1.45 var(--f-corpo); }
+.verba p:last-child { font: 500 26px/1.42 var(--f-corpo); }
 .lacuna { display: inline-block; min-width: 2.6em; border-bottom: 2px solid var(--fg-2); }
 
 /* Fase 3 · projeção de referência */
 .proj .tabela-wrap { top: 400px; }
-.proj td { font-size: 21px; padding-top: 13px; padding-bottom: 13px; }
+.proj td { font-size: 23px; padding-top: 13px; padding-bottom: 13px; }
 .proj td:first-child { color: var(--fg); font-weight: 500; }
 .proj td.reun { font: 700 30px/1.1 var(--f-display); letter-spacing: -.015em; color: var(--fg); text-align: right; white-space: nowrap; }
 .proj tr.total td { border-top: 2px solid var(--fg); border-bottom: 1px solid var(--linha-diag); color: var(--fg); }
@@ -460,7 +458,7 @@ img, svg { display: block; }
 .desdobra > .mono { grid-column: 1 / -1; margin-bottom: 14px; color: var(--fg-3); }
 .desdobra .num { font-size: 64px; }
 .desdobra .num.acid span { background: var(--acid); color: var(--ink); padding: 0 .08em; }
-.desdobra .txt { margin-top: 8px; font-size: 20px; }
+.desdobra .txt { margin-top: 8px; font-size: 22px; }
 
 /* Fase 3 · RHOI */
 .rhoi { position: absolute; left: var(--mx); top: 424px; width: var(--larg); }
@@ -471,18 +469,18 @@ img, svg { display: block; }
 .rhoi__letra { margin-top: 32px; font: 700 150px/.78 var(--f-display); letter-spacing: -.05em; }
 .rhoi__nome { margin-top: 22px; font-size: 28px; }
 .rhoi__nome span { display: block; color: var(--fg-3); font-size: 22px; }
-.rhoi__passo .txt { margin-top: 8px; max-width: 360px; font-size: 21px; }
+.rhoi__passo .txt { margin-top: 8px; max-width: 370px; font-size: 23px; }
 .rhoi__laco { position: absolute; top: -36px; left: calc((100% - 96px) / 2 + 64px + 4px); width: calc((100% - 96px) / 4 + 32px); height: 32px; border: 1px solid var(--linha-diag); border-bottom: 0; }
 .rhoi__laco::after { content: ''; position: absolute; left: -4px; bottom: 2px; width: 7px; height: 7px; border-right: 1px solid var(--linha-diag); border-bottom: 1px solid var(--linha-diag); transform: rotate(45deg); }
-.rhoi__laco .mono { position: absolute; left: 50%; top: -12px; transform: translateX(-50%); padding: 0 12px; background: var(--bg); color: var(--fg-3); font-size: 13px; white-space: nowrap; }
+.rhoi__laco .mono { position: absolute; left: 50%; top: -12px; transform: translateX(-50%); padding: 0 12px; background: var(--bg); color: var(--fg-3); font-size: 14px; white-space: nowrap; }
 .evolucao { position: absolute; left: var(--mx); right: var(--mx); top: 804px; }
 .evolucao > .mono { color: var(--fg-3); }
 .evolucao ol { margin-top: 16px; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 32px; border-top: 1px solid var(--linha-diag); }
 .evolucao li { position: relative; padding-top: 22px; }
 .evolucao li::before { content: ''; position: absolute; left: 0; top: -5px; width: 9px; height: 9px; background: var(--bg); border: 1px solid var(--fg-2); }
 .evolucao li:last-child::before { background: var(--fg); border-color: var(--fg); }
-.evolucao .t4 { font-size: 22px; }
-.evolucao .txt { margin-top: 4px; font-size: 19px; line-height: 1.45; }
+.evolucao .t4 { font-size: 24px; }
+.evolucao .txt { margin-top: 4px; font-size: 21px; line-height: 1.42; }
 
 /* Fase 3 · o que fica com a Talent */
 .fica__lead { position: absolute; left: var(--mx); top: 404px; width: 640px; }
@@ -499,44 +497,45 @@ img, svg { display: block; }
 .time__col + .time__col { padding-left: 48px; border-left: 1px solid var(--linha-diag); }
 .time__cab { padding-bottom: 18px; border-bottom: 1px solid var(--linha-diag); }
 .time__cab .mono { color: var(--fg-3); }
-.time__cab .t3 { margin-top: 6px; font-size: 30px; }
+.time__cab .t3 { margin-top: 6px; font-size: 32px; }
 .pessoa { padding: 20px 0; border-bottom: 1px solid var(--linha); }
-.pessoa .t4 { font-size: 25px; }
-.pessoa .txt { margin-top: 4px; font-size: 20px; }
+.pessoa .t4 { font-size: 27px; }
+.pessoa .txt { margin-top: 4px; font-size: 22px; }
 
 /* Investimento */
-.invest .tabela-wrap { top: 392px; }
-.invest td { padding-top: 13px; padding-bottom: 13px; vertical-align: middle; }
-.invest tr.sub td { padding-top: 10px; padding-bottom: 10px; color: var(--fg-2); }
-.invest tr.sub .t4 { color: var(--fg-2); font-size: 22px; }
-.invest tr.sub td.valor { font-size: 28px; color: var(--fg-2); }
-.invest tr.var td { border-bottom: 0; }
-.invest td:first-child .t4 { color: var(--fg); font-size: 24px; }
-.invest td:first-child .txt { margin-top: 2px; font-size: 19px; }
-.invest td.valor { width: 360px; font: 700 34px/1 var(--f-display); letter-spacing: -.02em; color: var(--fg); text-align: right; white-space: nowrap; }
-.invest td.valor small { font: 500 14px/1 var(--f-mono); letter-spacing: .1em; color: var(--fg-2); margin-left: 6px; }
-.invest tr.total td { border-top: 2px solid var(--fg); border-bottom: 1px solid var(--linha-diag); }
-.invest tr.total td.valor { font-size: 52px; }
-.invest tr.total td.valor span { background: var(--acid); color: var(--ink); padding: 0 .1em; }
+.inv-cols { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; }
+.inv-col__cab { padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
+.inv-linha { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--linha); }
+.inv-linha .t4 { font-size: 26px; }
+.inv-linha .txt { margin-top: 2px; font-size: 21px; }
+.inv-v { font: 700 34px/1 var(--f-display); letter-spacing: -.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.inv-linha--sub { padding: 14px 0; border-bottom: 0; }
+.inv-linha--sub .t4, .inv-linha--sub .inv-v { color: var(--fg-2); }
+.inv-total { position: absolute; left: var(--mx); right: var(--mx); bottom: 120px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; padding-top: 22px; border-top: 2px solid var(--fg); }
+.inv-total .mono { color: var(--fg-3); }
+.inv-total .num { margin-top: 12px; font-size: 76px; }
+.inv-total .num span { background: var(--acid); color: var(--ink); padding: .02em .1em 0; margin-left: -.1em; }
+.inv-total .t3 { margin-top: 10px; }
+.inv-total .txt { margin-top: 6px; font-size: 21px; }
 
 /* Custo por etapa */
 .custo__inv { position: absolute; left: var(--mx); top: 404px; width: 560px; }
 .custo__inv > .mono { color: var(--fg-3); }
 .custo__inv .num { margin-top: 16px; font-size: 104px; letter-spacing: -.05em; }
 .custo__inv dl { margin: 34px 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--linha); }
-.custo__inv dt, .custo__inv dd { margin: 0; padding: 13px 0; border-bottom: 1px solid var(--linha); font-size: 20px; }
+.custo__inv dt, .custo__inv dd { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--linha); font-size: 22px; }
 .custo__inv dt { color: var(--fg-2); }
-.custo__inv dd { padding-left: 24px; font: 700 22px/1.45 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
-.custo__nota { margin-top: 16px; max-width: 520px; font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.custo__inv dd { padding-left: 24px; font: 700 24px/1.42 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
+.custo__nota { margin-top: 16px; max-width: 540px; font: 500 14px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
 .ec-lista { position: absolute; left: 820px; right: var(--mx); top: 404px; }
 .ec { display: grid; grid-template-columns: 1fr 210px 340px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--linha); }
 .ec--cab { padding: 0 0 14px; border-bottom-color: var(--linha-diag); }
 .ec--cab .mono { color: var(--fg-3); }
 .ec .dir { text-align: right; }
-.ec .t3 { font-size: 30px; }
+.ec .t3 { font-size: 32px; }
 .ec__vol { font: 700 32px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .ec__custo { font: 700 40px/1 var(--f-display); letter-spacing: -.025em; text-align: right; font-variant-numeric: tabular-nums; }
-.ec__custo small { display: block; margin-top: 8px; font: 500 13px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.ec__custo small { display: block; margin-top: 8px; font: 500 14px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
 .ec--foco { border-bottom: 2px solid var(--fg); }
 .ec--foco .ec__custo span { background: var(--acid); color: var(--ink); padding: 0 .08em; }
 
@@ -544,10 +543,10 @@ img, svg { display: block; }
 .premissas { position: absolute; left: var(--mx); top: 404px; width: 560px; }
 .premissas > .mono { color: var(--fg-3); }
 .premissas dl { margin: 16px 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--linha-diag); }
-.premissas dt, .premissas dd { margin: 0; padding: 11px 0; border-bottom: 1px solid var(--linha); font-size: 20px; }
+.premissas dt, .premissas dd { margin: 0; padding: 8px 0; border-bottom: 1px solid var(--linha); font-size: 22px; }
 .premissas dt { color: var(--fg-2); }
-.premissas dd { padding-left: 24px; font: 700 22px/1.45 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
-.premissas__nota { margin-top: 14px; font: 500 13px/1.4 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.premissas dd { padding-left: 24px; font: 700 24px/1.42 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
+.premissas__nota { margin-top: 14px; font: 500 14px/1.4 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
 .barras { position: absolute; left: 820px; right: var(--mx); top: 404px; }
 .barras__eixo { color: var(--fg-3); }
 .barras__grade { margin-top: 12px; height: 262px; display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 28px; align-items: end; border-bottom: 1px solid var(--linha-diag); }
@@ -560,7 +559,7 @@ img, svg { display: block; }
 .kpis > div { padding-top: 20px; border-top: 1px solid var(--linha-diag); }
 .kpis .num { font-size: 60px; white-space: nowrap; }
 .kpis .num.acid { color: var(--acid); }
-.kpis .txt { margin-top: 12px; font-size: 18px; line-height: 1.45; }
+.kpis .txt { margin-top: 10px; font-size: 20px; line-height: 1.4; }
 
 /* Próximos passos (linha do tempo vertical) */
 .passos-slide .cab { right: auto; width: 1140px; }
@@ -574,21 +573,34 @@ img, svg { display: block; }
 .proximo__n { grid-column: 2; font: 700 56px/.9 var(--f-display); letter-spacing: -.04em; color: var(--fg-4); }
 .proximo--inicio .proximo__n { color: var(--fg); }
 .proximo > div { grid-column: 3; }
-.proximo .txt { margin-top: 4px; font-size: 20px; }
+.proximo .txt { margin-top: 4px; font-size: 22px; }
 .proximo .quando { grid-column: 4; padding-left: 28px; color: var(--fg-2); white-space: nowrap; }
 
 /* Encerramento */
 .fim .foto { width: 46%; }
 .fim__txt { position: absolute; left: var(--mx); top: 220px; width: 1100px; z-index: 2; }
-.fim__txt .t1 { font-size: 96px; letter-spacing: -.04em; line-height: 1.04; }
+.fim__txt .t1 { margin-top: 36px; font-size: 88px; letter-spacing: -.035em; line-height: 1.04; }
 .fim__txt .t1 span { display: block; color: var(--fg-2); }
 .contatos { position: absolute; left: var(--mx); width: 860px; top: 640px; z-index: 2; }
 .contato { display: grid; grid-template-columns: 260px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--linha); }
 .contato:last-child { border-bottom: 1px solid var(--linha); }
 .contato .t4 { font-size: 26px; }
 .contato .t4 { grid-row: span 2; }
-.contato .mono { color: var(--fg-3); font-size: 13px; }
-.contato .txt { margin-top: 2px; font-size: 19px; }
+.contato .mono { color: var(--fg-3); font-size: 14px; }
+.contato .txt { margin-top: 2px; font-size: 21px; }
+
+/* Toques de limão: marcadores atuais e nós de destaque */
+.escuro .partes li.on::before { background: var(--acid); border-color: var(--acid); }
+.escuro .fases li.on { border-bottom-color: var(--acid); }
+.indice li.on { border-top-color: var(--acid); }
+.claro .no--acid { background: var(--acid); border-color: var(--ink); }
+.claro .circuito .no { background: var(--acid); border-color: var(--ink); }
+.claro .lentes__no, .claro .raias__no { background: var(--acid); outline: 1px solid var(--ink); }
+.claro .gantt__barra:not(.gantt__barra--futuro)::before { background: var(--acid); outline: 1px solid var(--ink); }
+.claro .evolucao li:last-child::before { background: var(--acid); border-color: var(--ink); }
+.passo4__n { display: inline-block; padding: .06em .1em .02em; margin-left: -.1em; }
+.passo4:first-child .passo4__n { background: var(--acid); color: var(--ink); }
+.lp__col--depois > .mono::before { content: ''; width: 12px; height: 12px; background: var(--acid); outline: 1px solid var(--ink); }
 
 /* =========================================================================
    Visão geral (tecla G) e impressão
@@ -611,9 +623,9 @@ body.visao { overflow: auto; background: #000; }
 
 <!-- ===================================================== Capa -->
 <section class="slide escuro capa" data-nome="Capa">
-  <figure class="foto"><img src="img/atrio.jpg" alt=""></figure>
+  <figure class="foto"><img src="img/reuniao.jpg" alt=""></figure>
   <div class="capa__txt">
-    <p class="rotulo"><span class="n">Proposta</span><span class="barra">/</span><span>Novembro 2026</span></p>
+    <p class="chip-acid">Proposta · Novembro 2026</p>
     <p class="capa__marcas">Velora<span>×</span>Talent Four</p>
     <h1 class="t1 capa__titulo"><span class="fg2">Desenvolvimento de</span><span>sistema de aquisição.</span></h1>
     <p class="lead capa__lead">Uma proposta para ampliar a abertura de contas estratégicas na Talent Four, conectando inteligência de mercado, marketing e abordagem comercial.</p>
@@ -731,26 +743,10 @@ body.visao { overflow: auto; background: #000; }
     <p class="rotulo"><span class="n">Parte 02</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">02</p>
     <h2 class="divisor__titulo">A Talent Four</h2>
-    <p class="mono divisor__sub">O que foi construído · Como cresceu · O que entendemos · Oportunidades</p>
+    <div class="divisor__fatos"><div><p class="num">1992</p><p class="mono">Início da operação</p></div><div><p class="num">~350</p><p class="mono">Consultores alocados</p></div><div><p class="num">5 + 1</p><p class="mono">Gerentes de conta e hunter</p></div></div>
   </div>
 </section>
 
-<!-- ===================================================== O que a Talent construiu -->
-<section class="slide claro" data-nome="O que a Talent construiu" data-parte="2">
-  <div class="cab">
-    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que a Talent construiu</span></p>
-    <h2 class="t2">A Talent Four reúne experiência, presença em grandes empresas e um portfólio amplo de TI.</h2>
-  </div>
-  <div class="marcos">
-    <div class="marco"><p class="num">1992</p><p class="txt">Início da operação e de uma trajetória construída em serviços de tecnologia.</p></div>
-    <div class="marco"><p class="num">~350</p><p class="txt">Consultores alocados em clientes.</p></div>
-    <div class="marco"><p class="num">5 + 1</p><p class="txt">Cinco gerentes de conta e um novo profissional dedicado à abertura de contas.</p></div>
-  </div>
-  <div class="faixas">
-    <div class="faixa-linha faixa-linha--portfolio"><p class="mono">Portfólio</p><ul><li>Alocação de profissionais</li><li>Squads</li><li>Testes e QA</li><li>Governança</li><li>Fábrica de software</li><li>IT Hunting</li></ul></div>
-    <div class="faixa-linha"><p class="mono">Alguns clientes</p><ul><li>Santander</li><li>Porto Seguro</li><li>Tokio Marine</li><li>Mapfre</li><li>Allianz</li><li>Brasilprev</li><li>Amil</li><li>Qualicorp</li><li>CVC</li><li>Pão de Açúcar</li><li>Leroy Merlin</li><li>Eli Lilly</li><li>Boehringer</li><li>Honda</li><li>EDP</li></ul></div>
-  </div>
-</section>
 
 <!-- ===================================================== Como a Talent cresceu -->
 <section class="slide claro" data-nome="Como a Talent cresceu" data-parte="2">
@@ -771,25 +767,6 @@ body.visao { overflow: auto; background: #000; }
   <p class="fechamento">É um caminho valioso, construído ao longo dos anos. <span>A oportunidade é complementá-lo com novas fontes de acesso a contas estratégicas.</span></p>
 </section>
 
-<!-- ===================================================== O que entendemos -->
-<section class="slide claro entendemos" data-nome="O que entendemos" data-parte="2">
-  <div class="cab">
-    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que entendemos</span></p>
-    <h2 class="t2">O que entendemos até aqui — e queremos aprofundar juntos.</h2>
-  </div>
-  <div class="tabela-wrap">
-    <table class="tabela">
-      <thead><tr><th>Tema</th><th>Nossa leitura inicial</th></tr></thead>
-      <tbody>
-        <tr><td>Equipe comercial</td><td>Os cinco gerentes estão concentrados no relacionamento e na expansão das contas existentes.</td></tr>
-        <tr><td>Experiências anteriores</td><td>Iniciativas de prospecção não alcançaram os resultados esperados.</td></tr>
-        <tr><td>Novo hunter</td><td>Há espaço para apoiar sua entrada com contas priorizadas, contexto e uma rotina de abertura de mercado.</td></tr>
-        <tr><td>Concentração de receita</td><td>A dependência de um número restrito de contas torna a ampliação da carteira especialmente relevante.</td></tr>
-        <tr><td>Marketing</td><td>A agência já produz conteúdo; podemos integrar melhor a produção às prioridades comerciais e às aprovações.</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
 
 <!-- ===================================================== Três oportunidades -->
 <section class="slide escuro" data-nome="Três oportunidades" data-parte="2">
@@ -839,15 +816,15 @@ body.visao { overflow: auto; background: #000; }
     <div class="gantt__col gantt__col--horizonte" style="left:1060px"><p class="mono">Meses 12 a 18</p></div>
     <div class="gantt__horizonte"><p class="mono">Expectativa</p><p class="txt">Grandes contas costumam exigir maturação. O primeiro semestre cria as condições para aprender, abrir oportunidades e construir referências de custo; o desenvolvimento das contas pode se estender por 12 a 18 meses.</p></div>
 
-    <div class="gantt__fase" style="top:52px">
+    <div class="gantt__fase" style="top:40px">
       <div class="gantt__barra" style="left:0; width:150px"></div>
       <div class="gantt__txt" style="left:0; max-width:1040px"><p class="mono">Fase 1 · Mês 1</p><h3 class="t3">Diagnóstico</h3><p class="txt">Em 3 a 4 semanas, entender a carteira, a atuação comercial, o marketing e as oportunidades de mercado.</p></div>
     </div>
-    <div class="gantt__fase" style="top:230px">
+    <div class="gantt__fase" style="top:228px">
       <div class="gantt__barra" style="left:170px; width:170px"></div>
       <div class="gantt__txt" style="left:170px; max-width:870px"><p class="mono">Fase 2 · Mês 2</p><h3 class="t3">Preparação e implementação</h3><p class="txt">Definir a estratégia de entrada no mercado, classificar cerca de 500 contas e preparar as frentes de atuação.</p></div>
     </div>
-    <div class="gantt__fase" style="top:420px">
+    <div class="gantt__fase" style="top:416px">
       <div class="gantt__barra" style="left:340px; width:680px"></div>
       <div class="gantt__barra gantt__barra--futuro" style="left:1020px; width:612px"></div>
       <div class="gantt__txt" style="left:340px; max-width:700px"><p class="mono">Fase 3 · Meses 3 a 6</p><h3 class="t3">Operação e ajustes</h3><p class="txt">Executar as frentes, gerar conversas com decisores, acompanhar homologações e evoluir a abordagem a partir dos dados.</p></div>
@@ -890,6 +867,40 @@ body.visao { overflow: auto; background: #000; }
     <span class="lentes__no"></span>
     <div class="lentes__plano"><p class="mono">Entregável</p><h3 class="t3">Plano priorizado</h3><p class="txt">Melhorias de curto prazo, ações para as semanas seguintes e iniciativas estruturantes.</p></div>
   </div>
+</section>
+
+<!-- ===================================================== Fase 1 · respostas -->
+<section class="slide claro" data-nome="Diagnóstico · respostas" data-parte="3" data-fase="1">
+  <div class="cab">
+    <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>O que o diagnóstico responde</span></p>
+    <h2 class="t2">Ao final do diagnóstico, teremos respostas claras para cinco perguntas.</h2>
+  </div>
+  <div class="respostas">
+    <div class="resposta resposta--cab"><span></span><p class="mono">Pergunta</p><p class="mono">O que a Talent recebe</p></div>
+    <div class="resposta"><p class="mono">01</p><h3 class="t3">Onde está o potencial da carteira?</h3><p class="txt">Curva ABC de receita e margem, nível de concentração e contas com espaço para expansão.</p></div>
+    <div class="resposta"><p class="mono">02</p><h3 class="t3">Quais empresas priorizar fora da carteira?</h3><p class="txt">Perfil de cliente ideal validado e universo de contas dimensionado.</p></div>
+    <div class="resposta"><p class="mono">03</p><h3 class="t3">Quem decide e como chegar até essas pessoas?</h3><p class="txt">Mapa do comitê de compra por tipo de conta: demanda, homologação e influência.</p></div>
+    <div class="resposta"><p class="mono">04</p><h3 class="t3">O que trava hoje, do contato à alocação?</h3><p class="txt">Leitura do processo comercial, do CRM, do marketing e dos indicadores atuais.</p></div>
+    <div class="resposta resposta--foco"><p class="mono">05</p><h3 class="t3"><span class="marca-acid">Onde investir primeiro?</span></h3><p class="txt">Prioridades, metas de referência e responsáveis para os meses seguintes.</p></div>
+  </div>
+</section>
+
+<!-- ===================================================== Fase 1 · do plano ao setup -->
+<section class="slide claro" data-nome="Diagnóstico · passagem para o setup" data-parte="3" data-fase="1">
+  <div class="cab">
+    <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>Plano de ação</span></p>
+    <h2 class="t2">O plano de ação faz a passagem do diagnóstico para o setup.</h2>
+  </div>
+  <div class="ponteio">
+    <div class="ponteio__linha ponteio__linha--cab"><p class="mono">O diagnóstico entrega</p><p class="mono ponteio__meio">Validação · semana 4</p><p class="mono">O setup começa com</p></div>
+    <div class="ponteio__linha"><p class="ponteio__de">ICP validado e contas dimensionadas</p><span class="ponteio__seta"></span><p class="ponteio__para">Classificação das ~500 contas em A1, B2 e B3</p></div>
+    <div class="ponteio__linha"><p class="ponteio__de">Mapa do comitê de compra</p><span class="ponteio__seta"></span><p class="ponteio__para">Mensagens e ofertas de entrada por papel</p></div>
+    <div class="ponteio__linha"><p class="ponteio__de">Leitura do processo e do CRM</p><span class="ponteio__seta"></span><p class="ponteio__para">Etapas, critérios e prazos de passagem</p></div>
+    <div class="ponteio__linha"><p class="ponteio__de">Diagnóstico de marketing e do site</p><span class="ponteio__seta"></span><p class="ponteio__para">Briefing da página de conversão e do conteúdo</p></div>
+    <div class="ponteio__linha"><p class="ponteio__de">Prioridades e metas de referência</p><span class="ponteio__seta"></span><p class="ponteio__para">Plano dos quatro meses de operação</p></div>
+    <span class="ponteio__portao"><i></i></span>
+  </div>
+  <p class="fechamento">Na semana 4, o plano é apresentado e validado com a liderança da Talent. <span>Ele organiza as ações em três horizontes: melhorias de curto prazo, ações para as semanas seguintes e iniciativas estruturantes.</span></p>
 </section>
 
 <!-- ===================================================== Fase 2 -->
@@ -1005,7 +1016,7 @@ body.visao { overflow: auto; background: #000; }
     <div class="divide__lado">
       <p class="divide__verbo">Construir</p>
       <p class="lead divide__sub">presença e consideração.</p>
-      <ul class="lista"><li>Conteúdo segmentado no LinkedIn e, quando fizer sentido, na Meta.</li><li>Ferramenta de comparação: alocar profissionais ou contratar via CLT.</li><li>Guias, estudos e materiais úteis sobre contratação e terceirização de TI.</li></ul>
+      <ul class="lista"><li>Conteúdo segmentado no LinkedIn e, quando fizer sentido, na Meta.</li><li><span class="marca-acid">Ferramenta de comparação</span>: alocar profissionais ou contratar via CLT.</li><li>Guias, estudos e materiais úteis sobre contratação e terceirização de TI.</li></ul>
     </div>
   </div>
   <p class="fechamento">Trabalho conjunto: <span>Talent, agência atual e Velora alinham temas, entregas e indicadores para que marketing e comercial avancem na mesma direção.</span></p>
@@ -1085,32 +1096,6 @@ body.visao { overflow: auto; background: #000; }
   <ol class="trilho"><li>Mês 1</li><li>Mês 2</li><li class="on">Mês 3</li><li class="on">Mês 4</li><li class="on">Mês 5</li><li class="on">Mês 6</li></ol>
 </section>
 
-<!-- ===================================================== Fase 3 · operação -->
-<section class="slide claro" data-nome="Meses 3 a 6 · operação" data-parte="3" data-fase="3">
-  <div class="cab">
-    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Operação</span></p>
-    <h2 class="t2">Quatro meses para colocar as frentes em prática, aprender e ajustar.</h2>
-  </div>
-  <div class="ritmo">
-    <div class="ritmo__linha ritmo__linha--cab"><p class="mono">Frente</p><p class="mono">Mês 3</p><p class="mono">Mês 4</p><p class="mono">Mês 5</p><p class="mono">Mês 6</p></div>
-    <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">ABM com sinais</p><p class="txt">Acompanhamento próximo das contas A1, com abordagens contextualizadas pelos movimentos identificados.</p></div>
-      <div class="ritmo__faixa"><span class="rb" style="left:0; right:0"></span></div>
-    </div>
-    <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">Geração de demanda</p><p class="txt">Página de conversão, buscas de alta intenção e conteúdo para apoiar a jornada até a conversa comercial.</p></div>
-      <div class="ritmo__faixa"><span class="rb" style="left:0; width:calc(25% - 8px)"></span><span class="rb rb--leve" style="left:25%; right:0"></span></div>
-    </div>
-    <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">Prospecção</p><p class="txt">Referência de operação: 500 contatos por mês.</p></div>
-      <div class="ritmo__faixa"><span class="rb" style="left:0; width:calc(25% - 8px)"></span><span class="rb" style="left:25%; width:calc(25% - 8px)"></span><span class="rb" style="left:50%; width:calc(25% - 8px)"></span><span class="rb" style="left:75%; width:calc(25% - 8px)"></span></div>
-    </div>
-    <div class="ritmo__total">
-      <p class="mono">Contatos trabalhados · acumulado</p>
-      <p class="num">500</p><p class="num">1.000</p><p class="num">1.500</p><p class="num ult">~2.000</p>
-    </div>
-  </div>
-</section>
 
 <!-- ===================================================== Fase 3 · página de conversão -->
 <section class="slide claro" data-nome="Página de conversão" data-parte="3" data-fase="3">
@@ -1143,7 +1128,7 @@ body.visao { overflow: auto; background: #000; }
     <div><p class="mono">03</p><h3 class="t3">Redação</h3><p class="txt">Textos para anúncios, cadências, páginas e materiais por público.</p></div>
     <div><p class="mono">04</p><h3 class="t3">Criativos</h3><p class="txt">Adaptação das mensagens para peças estáticas, carrosséis e vídeos.</p></div>
   </div>
-  <div class="verba"><p class="mono">Investimento em mídia</p><p>Cerca de R$ 10 mil por mês nos quatro meses de operação, pago diretamente pela Talent às plataformas e ajustado em conjunto na fase de preparação.</p></div>
+  <div class="verba"><p class="mono">Investimento em mídia</p><p><span class="marca-acid">Cerca de R$ 10 mil por mês</span> nos quatro meses de operação, pago diretamente pela Talent às plataformas e ajustado em conjunto na fase de preparação.</p></div>
 </section>
 
 <!-- ===================================================== Fase 3 · projeção de referência -->
@@ -1213,15 +1198,6 @@ body.visao { overflow: auto; background: #000; }
   </ol>
 </section>
 
-<!-- ===================================================== Parte 04 -->
-<section class="slide escuro divisor" data-nome="Parte 4 · Time e investimento" data-parte="4">
-  <div class="divisor__txt">
-    <p class="rotulo"><span class="n">Parte 04</span><span class="barra">/</span><span>de 04</span></p>
-    <p class="divisor__n">04</p>
-    <h2 class="divisor__titulo">Time e investimento</h2>
-    <p class="mono divisor__sub">Time · Investimento · Custo e retorno · Próximos passos</p>
-  </div>
-</section>
 
 <!-- ===================================================== Time -->
 <section class="slide claro" data-nome="Time e colaboração" data-parte="4">
@@ -1257,19 +1233,24 @@ body.visao { overflow: auto; background: #000; }
     <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Investimento</span></p>
     <h2 class="t2">Um projeto de seis meses, com uma parcela variável ligada à abertura de novas contas.</h2>
   </div>
-  <div class="tabela-wrap">
-    <table class="tabela">
-      <thead><tr><th>Etapa</th><th class="dir">Valor</th></tr></thead>
-      <tbody>
-        <tr><td><p class="t4">Mês 1 · Diagnóstico</p><p class="txt">Imersão, análise das oportunidades e plano de ação priorizado.</p></td><td class="valor">R$ 15 mil</td></tr>
-        <tr><td><p class="t4">Mês 2 · Preparação e implementação</p><p class="txt">Estratégia de entrada, classificação das contas e preparação das frentes.</p></td><td class="valor">R$ 18 mil</td></tr>
-        <tr><td><p class="t4">Meses 3 a 6 · Operação e ajustes</p><p class="txt">Execução das frentes, equipe de especialistas e acompanhamento dos sócios · 4 × R$ 21 mil = R$ 84 mil.</p></td><td class="valor">R$ 21 mil<small>/mês</small></td></tr>
-        <tr class="sub"><td><p class="t4">Honorários Velora · 6 meses</p></td><td class="valor">R$ 117 mil</td></tr>
-        <tr><td><p class="t4">Verba de mídia</p><p class="txt">Paga diretamente às plataformas, nos quatro meses de operação · 4 × R$ 10 mil.</p></td><td class="valor">R$ 40 mil</td></tr>
-        <tr class="total"><td><p class="t4">Investimento do período</p><p class="txt">Honorários e mídia. Ferramentas de dados à parte.</p></td><td class="valor"><span>R$ 157 mil</span></td></tr>
-        <tr class="var"><td><p class="t4">Parcela por resultado</p><p class="txt">Por conta nova que realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></td><td class="valor">R$ 15 mil<small>/conta</small></td></tr>
-      </tbody>
-    </table>
+  <div class="inv-cols">
+    <div class="inv-col">
+      <p class="mono inv-col__cab">Honorários Velora</p>
+      <div class="inv-linha"><div><p class="t4">Mês 1 · Diagnóstico</p><p class="txt">Imersão, análise das oportunidades e plano de ação.</p></div><p class="inv-v">R$ 15 mil</p></div>
+      <div class="inv-linha"><div><p class="t4">Mês 2 · Preparação e implementação</p><p class="txt">Estratégia de entrada, contas e frentes.</p></div><p class="inv-v">R$ 18 mil</p></div>
+      <div class="inv-linha"><div><p class="t4">Meses 3 a 6 · Operação e ajustes</p><p class="txt">R$ 21 mil por mês, com a equipe de especialistas.</p></div><p class="inv-v">R$ 84 mil</p></div>
+      <div class="inv-linha inv-linha--sub"><p class="t4">Subtotal</p><p class="inv-v">R$ 117 mil</p></div>
+    </div>
+    <div class="inv-col">
+      <p class="mono inv-col__cab">Mídia e ferramentas</p>
+      <div class="inv-linha"><div><p class="t4">Verba de mídia</p><p class="txt">Cerca de R$ 10 mil por mês nos 4 meses de operação.</p></div><p class="inv-v">R$ 40 mil</p></div>
+      <div class="inv-linha"><div><p class="t4">Ferramentas e conectores de IA</p><p class="txt">R$ 2 mil por mês durante os 6 meses.</p></div><p class="inv-v">R$ 12 mil</p></div>
+      <div class="inv-linha inv-linha--sub"><p class="t4">Subtotal</p><p class="inv-v">R$ 52 mil</p></div>
+    </div>
+  </div>
+  <div class="inv-total">
+    <div><p class="mono">Investimento do período · 6 meses</p><p class="num"><span>R$ 169 mil</span></p></div>
+    <div><p class="mono">Parcela por resultado</p><p class="t3">R$ 15 mil por conta nova</p><p class="txt">Quando a conta realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></div>
   </div>
 </section>
 
@@ -1281,24 +1262,24 @@ body.visao { overflow: auto; background: #000; }
   </div>
   <div class="custo__inv">
     <p class="mono">Investimento do período</p>
-    <p class="num">R$ 157 mil</p>
-    <dl><dt>Honorários Velora</dt><dd>R$ 117 mil</dd><dt>Mídia · 4 × R$ 10 mil</dt><dd>R$ 40 mil</dd></dl>
+    <p class="num">R$ 169 mil</p>
+    <dl><dt>Honorários Velora</dt><dd>R$ 117 mil</dd><dt>Mídia · 4 × R$ 10 mil</dt><dd>R$ 40 mil</dd><dt>Ferramentas e IA · 6 × R$ 2 mil</dt><dd>R$ 12 mil</dd></dl>
     <p class="custo__nota">Fora da soma: parcela por resultado de R$ 15 mil por contrato (R$ 60 mil no cenário de 4 contas).</p>
   </div>
   <div class="ec-lista">
     <div class="ec ec--cab"><p class="mono">Etapa</p><p class="mono">Volume do cenário</p><p class="mono dir">Custo de referência</p></div>
-    <div class="ec"><h3 class="t3">Reunião</h3><p class="ec__vol">~60 a 65</p><p class="ec__custo">R$ 2,4 a 2,6 mil</p></div>
-    <div class="ec"><h3 class="t3">Homologação</h3><p class="ec__vol">6 a 8</p><p class="ec__custo">R$ 20 a 26 mil</p></div>
-    <div class="ec"><h3 class="t3">Contrato</h3><p class="ec__vol">4</p><p class="ec__custo">R$ 39 mil<small>R$ 54 mil com a parcela por resultado</small></p></div>
-    <div class="ec ec--foco"><h3 class="t3">Posição alocada</h3><p class="ec__vol">24</p><p class="ec__custo"><span>R$ 6,5 mil</span><small>R$ 9 mil com a parcela por resultado</small></p></div>
+    <div class="ec"><h3 class="t3">Reunião</h3><p class="ec__vol">~60 a 65</p><p class="ec__custo">R$ 2,6 a 2,8 mil</p></div>
+    <div class="ec"><h3 class="t3">Homologação</h3><p class="ec__vol">6 a 8</p><p class="ec__custo">R$ 21 a 28 mil</p></div>
+    <div class="ec"><h3 class="t3">Contrato</h3><p class="ec__vol">4</p><p class="ec__custo">R$ 42 mil<small>R$ 57 mil com a parcela por resultado</small></p></div>
+    <div class="ec ec--foco"><h3 class="t3">Posição alocada</h3><p class="ec__vol">24</p><p class="ec__custo"><span>R$ 7 mil</span><small>R$ 9,5 mil com a parcela por resultado</small></p></div>
   </div>
-  <p class="fechamento">Cada posição alocada custa cerca de um terço do que fatura em um mês. <span>Custo de referência = investimento do período (R$ 157 mil) ÷ volume da etapa no cenário.</span></p>
+  <p class="fechamento">Cada posição alocada custa cerca de um terço do que fatura em um mês. <span>Custo de referência = investimento do período (R$ 169 mil) ÷ volume da etapa no cenário.</span></p>
 </section>
 
 <!-- ===================================================== Retorno projetado -->
 <section class="slide escuro retorno" data-nome="Retorno projetado" data-parte="4">
   <div class="cab">
-    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Retorno projetado · LTV de 5 anos</span></p>
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Retorno projetado · LTV de 5 anos · cenário ilustrativo</span></p>
     <h2 class="t2">Em cinco anos, quatro contas novas podem representar cerca de R$ 24,5 milhões em receita.</h2>
   </div>
   <div class="premissas">
@@ -1311,7 +1292,6 @@ body.visao { overflow: auto; background: #000; }
       <dt>Horizonte</dt><dd>5 anos</dd>
       <dt>Margem bruta de referência</dt><dd>14% (12% a 16%)</dd>
     </dl>
-    <p class="premissas__nota">Cenário ilustrativo, não compromisso de resultado.</p>
   </div>
   <div class="barras" aria-label="Receita anual das quatro contas, em milhões de reais">
     <p class="mono barras__eixo">Receita anual das 4 contas · R$ milhões</p>
@@ -1326,7 +1306,7 @@ body.visao { overflow: auto; background: #000; }
   <div class="kpis">
     <div><p class="num">R$ 24,5 mi</p><p class="txt">de receita em 5 anos nas 4 contas (R$ 6,1 mi por conta).</p></div>
     <div><p class="num">R$ 3,4 mi</p><p class="txt">de margem bruta a 14% (R$ 2,9 a 3,9 mi na faixa de 12% a 16%).</p></div>
-    <div><p class="num acid">~16x</p><p class="txt">margem em 5 anos ÷ investimento total de R$ 217 mil (período + parcela por resultado).</p></div>
+    <div><p class="num acid">~15x</p><p class="txt">margem em 5 anos ÷ investimento total de R$ 229 mil (período + parcela por resultado).</p></div>
     <div><p class="num">3 a 4 meses</p><p class="txt">de margem das 4 contas ativas pagam o investimento total.</p></div>
   </div>
 </section>
@@ -1350,7 +1330,7 @@ body.visao { overflow: auto; background: #000; }
 <section class="slide escuro fim" data-nome="Encerramento">
   <figure class="foto"><img src="img/elevador.jpg" alt="" style="object-position:50% 35%"></figure>
   <div class="fim__txt">
-    <p class="rotulo"><span class="n">Velora</span><span class="barra">/</span><span>Growth &amp; Beyond</span></p>
+    <p class="chip-acid">Velora · Growth &amp; Beyond</p>
     <h2 class="t1"><span>Do relacionamento</span>a novas oportunidades de crescimento.</h2>
   </div>
   <div class="contatos">
