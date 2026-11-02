@@ -1,0 +1,74 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>GNU Em Movimento</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--fundo); color: var(--tinta); font-family: var(--font-sans); overflow: hidden; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; width: 480px; height: 288px; }
+  .noite { fill: var(--noite); }
+  .uniao { fill: var(--uniao); }
+  .agua { fill: var(--agua); }
+  .remo { fill: var(--remo); }
+  .faixa { rx: var(--raio-0); }
+  .boia { rx: 4px; }
+  .words { position: absolute; left: var(--espaco-5); bottom: var(--espaco-5); max-width: 440px; }
+  .name { margin: 0; font-stretch: 78%; font-size: 80px; line-height: 0.92; font-weight: 640; letter-spacing: -0.035em; color: var(--tinta); }
+  .tag { margin: var(--espaco-3) 0 0 2px; font-size: 14px; line-height: 20px; color: var(--tinta-suave); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      noite 480×96 sangrando no topo e na direita (a cor mais lembrada do clube) · uniao 416×64 · agua 320×48 — raias de piscina empilhadas, cerca de 38% de 960×288; remo só nas boias
+  arrangement três raias horizontais em degrau, cada uma recuada à esquerda e sangrando à direita (a parede da piscina), separadas pelas cordas
+  pattern     a Raia, de "boias da corda de raia, raio-boia; as três de cada ponta em remo, como os últimos 5 m de uma piscina de competição": 28 boias de 24×8 em duas cordas
+  scales      alturas espaco-9 / espaco-8 / espaco-7; recuos espaco-8 e espaco-10+espaco-6; passo das boias espaco-6 (32) com vão espaco-2; faixas raio-0, boias raio-boia (rx 4 = metade de 8)
+-->
+<rect class="noite faixa" x="0" y="0" width="480" height="96"/>
+<rect class="uniao boia" x="8" y="108" width="24" height="8"/>
+<rect class="agua boia" x="40" y="108" width="24" height="8"/>
+<rect class="uniao boia" x="72" y="108" width="24" height="8"/>
+<rect class="agua boia" x="104" y="108" width="24" height="8"/>
+<rect class="uniao boia" x="136" y="108" width="24" height="8"/>
+<rect class="agua boia" x="168" y="108" width="24" height="8"/>
+<rect class="uniao boia" x="200" y="108" width="24" height="8"/>
+<rect class="agua boia" x="232" y="108" width="24" height="8"/>
+<rect class="uniao boia" x="264" y="108" width="24" height="8"/>
+<rect class="agua boia" x="296" y="108" width="24" height="8"/>
+<rect class="uniao boia" x="328" y="108" width="24" height="8"/>
+<rect class="agua boia" x="360" y="108" width="24" height="8"/>
+<rect class="remo boia" x="392" y="108" width="24" height="8"/>
+<rect class="remo boia" x="424" y="108" width="24" height="8"/>
+<rect class="remo boia" x="456" y="108" width="24" height="8"/>
+<rect class="uniao faixa" x="64" y="128" width="416" height="64"/>
+<rect class="uniao boia" x="72" y="204" width="24" height="8"/>
+<rect class="agua boia" x="104" y="204" width="24" height="8"/>
+<rect class="uniao boia" x="136" y="204" width="24" height="8"/>
+<rect class="agua boia" x="168" y="204" width="24" height="8"/>
+<rect class="uniao boia" x="200" y="204" width="24" height="8"/>
+<rect class="agua boia" x="232" y="204" width="24" height="8"/>
+<rect class="uniao boia" x="264" y="204" width="24" height="8"/>
+<rect class="agua boia" x="296" y="204" width="24" height="8"/>
+<rect class="uniao boia" x="328" y="204" width="24" height="8"/>
+<rect class="agua boia" x="360" y="204" width="24" height="8"/>
+<rect class="remo boia" x="392" y="204" width="24" height="8"/>
+<rect class="remo boia" x="424" y="204" width="24" height="8"/>
+<rect class="remo boia" x="456" y="204" width="24" height="8"/>
+<rect class="agua faixa" x="160" y="224" width="320" height="48"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">GNU Em Movimento</h1>
+<p class="tag">A linguagem do clube para os próximos 120 anos.</p>
+</div>
+</div>
+</body>
+</html>

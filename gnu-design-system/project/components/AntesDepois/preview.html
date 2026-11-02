@@ -1,0 +1,49 @@
+<!-- @dsCard group="Composições" height=880 width=1200 -->
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Antes e depois</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap"><style>
+.ad { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--espaco-6); padding: var(--espaco-6) var(--espaco-5); }
+.ad__par { display:grid; grid-template-columns: 200px minmax(0,1fr); gap: var(--espaco-4); align-items:start; }
+.ad__antes { display:grid; gap: var(--espaco-2); }
+.ad__antes img { width:100%; height: 300px; object-fit: cover; object-position: top; border: 1px solid var(--linha); display:block; filter: saturate(.9); }
+.ad__depois { display:grid; gap: var(--espaco-3); align-content:start; }
+.ad__nota { display:grid; gap: 4px; padding-top: var(--espaco-3); border-top: 1px solid var(--linha); }
+</style></head>
+<body class="gnu">
+
+<div class="ad">
+  <div class="ad__par">
+    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/f0e8908b953a2979684891766c603b0d" alt="Tela atual: foto em polaroide inclinada com tachinha"></div>
+    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
+      <a class="gnu-sede" href="#" style="border:1px solid var(--linha)"><figure class="gnu-imagem gnu-imagem--16x9"><img src="/_blob/aeea61a419fd732b430228f6069b72b3" alt="Piscina vista de cima"><figcaption class="gnu-imagem__agua"><span class="gnu-rotulo-p">Piscinas térmicas</span><span class="gnu-rotulo-p">Petrópolis</span></figcaption></figure>
+        <div class="gnu-sede__corpo" style="padding: var(--espaco-4)"><h3 class="gnu-sede__nome" style="font-size:30px">Alto Petrópolis</h3><p class="gnu-corpo-p gnu-suave gnu-num">Av. João Obino, 300 · Petrópolis</p></div></a>
+      <div class="ad__nota"><p class="gnu-titulo-3">Foto reta, aérea, com linha d'água</p><p class="gnu-corpo-p gnu-suave">A polaroide com tachinha lembra mural escolar. A foto reta dá escala e deixa a sede falar.</p></div></div>
+  </div>
+  <div class="ad__par">
+    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/008ad0c5d8864d660028fb3741e2d175" alt="Tela atual: cartões brancos centralizados só com um rótulo"></div>
+    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
+      <div class="gnu-dados gnu-dados--p" style="grid-template-columns: 1fr 1fr">
+        <div class="gnu-dado"><span class="gnu-dado__valor">10</span><span class="gnu-dado__rotulo">salões sociais e corporativos</span></div>
+        <div class="gnu-dado"><span class="gnu-dado__valor">4</span><span class="gnu-dado__rotulo">sedes em Porto Alegre</span></div></div>
+      <ul class="gnu-sede__lista"><li>Piscinas térmicas</li><li>Tênis e beach tennis</li><li>Espaço kids</li><li>Área verde</li></ul>
+      <div class="ad__nota"><p class="gnu-titulo-3">Números e chips, não caixas</p><p class="gnu-corpo-p gnu-suave">Seis caixas que pareciam botões viram dois fatos e uma lista que se lê em um segundo.</p></div></div>
+  </div>
+  <div class="ad__par">
+    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/55d6e2982d528026db011ce736906986" alt="Tela atual: texto centralizado com várias palavras destacadas em ciano"></div>
+    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
+      <p class="gnu-display-l" style="font-size:40px">Quatro sedes. Um só clube.</p>
+      <p class="gnu-corpo-p">Três nos bairros onde você já vive e uma na Ilha do Pavão, de frente para o pôr do sol no Guaíba.</p>
+      <div class="ad__nota"><p class="gnu-titulo-3">Uma ideia por frase, alinhada à esquerda</p><p class="gnu-corpo-p gnu-suave">O ciano sobre azul-gelo tem contraste de 2,3:1 e reprova na WCAG. A ênfase passa a vir do tamanho, não da cor.</p></div></div>
+  </div>
+  <div class="ad__par">
+    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/6f719cb08cbf67852b994ed741b214b3" alt="Tela atual: formulário com rótulos dentro dos campos e consentimento pré-marcado"></div>
+    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
+      <div class="gnu-form" style="gap: var(--espaco-3)">
+        <div class="gnu-campo"><label for="ad-nome">Nome completo</label><input id="ad-nome" autocomplete="name"></div>
+        <label class="gnu-consentimento" for="ad-ok"><input id="ad-ok" type="checkbox"><span>Autorizo o GNU a falar comigo sobre a associação.</span></label>
+        <button class="gnu-btn gnu-btn--primario" type="button">Agendar visita <svg class="gnu-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button></div>
+      <div class="ad__nota"><p class="gnu-titulo-3">Rótulo fora, consentimento desmarcado</p><p class="gnu-corpo-p gnu-suave">"Quero ser associado" pede um compromisso cedo demais. "Agendar visita" convida para conhecer.</p></div></div>
+  </div>
+</div>
+</body>
+</html>

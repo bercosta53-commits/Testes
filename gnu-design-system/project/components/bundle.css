@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap");
+
+/* GNU Em Movimento — componentes. Todas as cores, espaços, raios, curvas e tempos vêm de tokens.css. */
+
+/* ---------- base ---------- */
+body { margin: 0; font-family: var(--font-sans); background: var(--fundo); color: var(--tinta); font-size: 17px; line-height: 27px; -webkit-font-smoothing: antialiased; font-variant-numeric: lining-nums; }
+.gnu { font-family: var(--font-sans); color: var(--tinta); }
+.gnu *, .gnu *::before, .gnu *::after { box-sizing: border-box; }
+.gnu-num { font-variant-numeric: tabular-nums lining-nums; }
+.gnu-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- tipografia ---------- */
+.gnu-display-xxl, .gnu-display-xl, .gnu-display-l { margin: 0; font-stretch: 78%; text-wrap: balance; }
+.gnu-display-xxl { font-size: 120px; line-height: 0.9; font-weight: 640; letter-spacing: -0.035em; }
+.gnu-display-xl { font-size: 80px; line-height: 0.92; font-weight: 640; letter-spacing: -0.03em; }
+.gnu-display-l { font-size: 56px; line-height: 0.96; font-weight: 620; letter-spacing: -0.025em; }
+.gnu-titulo-1, .gnu-titulo-2, .gnu-titulo-3 { margin: 0; font-weight: 600; text-wrap: balance; }
+.gnu-titulo-1 { font-size: 40px; line-height: 44px; letter-spacing: -0.02em; }
+.gnu-titulo-2 { font-size: 28px; line-height: 32px; letter-spacing: -0.015em; }
+.gnu-titulo-3 { font-size: 20px; line-height: 26px; letter-spacing: -0.01em; }
+.gnu-lead { margin: 0; font-size: 20px; line-height: 30px; letter-spacing: -0.005em; max-width: var(--coluna-texto); text-wrap: pretty; }
+.gnu-corpo { margin: 0; font-size: 17px; line-height: 27px; max-width: var(--coluna-texto); text-wrap: pretty; }
+.gnu-corpo-p { margin: 0; font-size: 15px; line-height: 23px; }
+.gnu-legenda { margin: 0; font-size: 13px; line-height: 18px; letter-spacing: 0.01em; color: var(--tinta-suave); }
+.gnu-rotulo { margin: 0; font-stretch: 125%; font-size: 12px; line-height: 16px; font-weight: 560; letter-spacing: 0.08em; text-transform: uppercase; }
+.gnu-rotulo-p { margin: 0; font-stretch: 125%; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.gnu-suave { color: var(--tinta-suave); }
+/* a única ênfase permitida num título: itálico, inclinado para frente */
+.gnu-enfase { font-style: italic; }
+/* o × dos remos cruzados */
+.gnu-x { color: var(--remo); font-style: normal; font-weight: 300; font-stretch: 100%; padding: 0 0.06em; }
+
+/* ---------- botões ---------- */
+.gnu-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--espaco-3); height: 48px; padding: 0 var(--espaco-5); border: 1px solid transparent; border-radius: var(--raio-1); font: inherit; font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: 0.005em; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--tempo-1) var(--curva-deslize), color var(--tempo-1) var(--curva-deslize), border-color var(--tempo-1) var(--curva-deslize); }
+.gnu-btn:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--fundo), 0 0 0 4px var(--foco); }
+.gnu-btn .gnu-seta { width: 18px; height: 18px; flex: none; transition: transform var(--tempo-2) var(--curva-deslize); }
+.gnu-btn:hover .gnu-seta { transform: translateX(4px); }
+.gnu-btn--primario { background: var(--acao); color: var(--sobre-acao); }
+.gnu-btn--primario:hover { background: var(--acao-hover); }
+.gnu-btn--secundario { background: transparent; color: var(--tinta); border-color: var(--tinta); }
+.gnu-btn--secundario:hover { background: var(--tinta); color: var(--fundo); }
+.gnu-btn--claro { background: var(--sobre-noite); color: var(--noite); }
+.gnu-btn--claro:hover { background: var(--fundo-recuado); }
+.gnu-btn--contorno-claro { background: transparent; color: var(--sobre-noite); border-color: var(--sobre-noite); }
+.gnu-btn--contorno-claro:hover { background: var(--sobre-noite); color: var(--noite); }
+.gnu-btn--texto { height: auto; padding: 0 0 2px; border: 0; border-bottom: 1px solid currentColor; border-radius: 0; background: none; color: inherit; }
+.gnu-btn--p { height: 40px; padding: 0 var(--espaco-4); font-size: 14px; }
+.gnu-btn--bloco { width: 100%; }
+.gnu-btn[disabled], .gnu-btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
+
+/* ---------- etiquetas, chips, status ---------- */
+.gnu-tag { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--espaco-3); border-radius: var(--raio-1); background: var(--uniao-suave); color: var(--uniao-profundo); font-stretch: 125%; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+.gnu-tag--noite { background: var(--sobre-noite); color: var(--noite); }
+.gnu-chip { display: inline-flex; align-items: center; gap: var(--espaco-2); height: 36px; padding: 0 var(--espaco-4); border: 1px solid var(--linha-forte); border-radius: var(--raio-boia); background: var(--fundo-elevado); color: var(--tinta); font: inherit; font-size: 14px; line-height: 20px; font-weight: 500; cursor: pointer; transition: background-color var(--tempo-2) var(--curva-deslize), color var(--tempo-2) var(--curva-deslize); }
+.gnu-chip:hover { border-color: var(--tinta); }
+.gnu-chip[aria-pressed="true"] { background: var(--tinta); border-color: var(--tinta); color: var(--fundo); }
+.gnu-chip:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--fundo), 0 0 0 4px var(--foco); }
+.gnu-status { display: inline-flex; align-items: center; gap: var(--espaco-2); font-size: 14px; line-height: 20px; font-weight: 500; }
+.gnu-status__ponto { position: relative; width: 8px; height: 8px; border-radius: var(--raio-boia); background: var(--sucesso); flex: none; }
+.gnu-status__ponto::after { content: ""; position: absolute; inset: -4px; border-radius: var(--raio-boia); border: 2px solid var(--sucesso); opacity: 0; animation: gnu-pulso var(--tempo-remada) var(--curva-deslize) infinite; }
+.gnu-status--alerta .gnu-status__ponto, .gnu-status--alerta .gnu-status__ponto::after { background: var(--alerta); border-color: var(--alerta); }
+.gnu-status--alerta .gnu-status__ponto::after { background: none; }
+@keyframes gnu-pulso { 0% { opacity: 0.7; transform: scale(0.6); } 66% { opacity: 0; transform: scale(1.6); } 100% { opacity: 0; transform: scale(1.6); } }
+
+/* ---------- a Raia (corda de raia) ---------- */
+.gnu-raia { display: flex; gap: var(--espaco-1); height: 8px; width: 100%; }
+.gnu-raia > i { flex: 1 1 0; min-width: 6px; border-radius: var(--raio-boia); background: var(--uniao); }
+.gnu-raia > i:nth-child(even) { background: var(--agua); }
+.gnu-raia > i:nth-child(-n+3), .gnu-raia > i:nth-last-child(-n+3) { background: var(--remo); }
+.gnu-raia--noite > i { background: var(--sobre-noite); }
+.gnu-raia--noite > i:nth-child(even) { background: var(--agua); }
+.gnu-raia--progresso > i, .gnu-raia--progresso > i:nth-child(even), .gnu-raia--progresso > i:nth-child(-n+3), .gnu-raia--progresso > i:nth-last-child(-n+3) { background: var(--linha); transition: background-color var(--tempo-3) var(--curva-deslize); }
+.gnu-raia--progresso > i.on, .gnu-raia--progresso > i.on:nth-child(even), .gnu-raia--progresso > i.on:nth-child(-n+3), .gnu-raia--progresso > i.on:nth-last-child(-n+3) { background: var(--uniao); }
+.gnu-raia--carregando > i { animation: gnu-boia var(--tempo-remada) var(--curva-puxada) infinite; animation-delay: calc(var(--n, 0) * 50ms); }
+@keyframes gnu-boia { 0% { opacity: 0.25; } 33% { opacity: 1; } 100% { opacity: 0.25; } }
+
+/* ---------- dado (número como prova) ---------- */
+.gnu-dados { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--espaco-6) var(--espaco-5); }
+.gnu-dado { display: grid; align-content: start; gap: var(--espaco-2); padding-top: var(--espaco-4); border-top: 1px solid var(--tinta); }
+.gnu-dado__valor { font-stretch: 78%; font-size: 72px; line-height: 0.9; font-weight: 620; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; }
+.gnu-dado__valor small { font-size: 0.42em; font-weight: 560; letter-spacing: 0; margin-left: 0.08em; }
+.gnu-dado__rotulo { font-size: 15px; line-height: 22px; color: var(--tinta-suave); max-width: 24ch; }
+.gnu-dados--p .gnu-dado__valor { font-size: 44px; }
+.gnu-dados--noite .gnu-dado { border-top-color: var(--sobre-noite); }
+.gnu-dados--noite .gnu-dado__rotulo { color: var(--sobre-noite-suave); }
+
+/* ---------- Hoje no clube ---------- */
+.gnu-hoje { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; background: var(--noite); color: var(--sobre-noite); }
+.gnu-hoje__titulo { display: flex; align-items: center; gap: var(--espaco-3); padding: var(--espaco-4) var(--espaco-5); color: var(--sobre-noite); }
+.gnu-hoje__item { display: grid; gap: 2px; padding: var(--espaco-4) var(--espaco-5); border-left: 1px solid var(--linha-noite); min-width: 0; }
+.gnu-hoje__item .gnu-rotulo-p { color: var(--sobre-noite-suave); }
+.gnu-hoje__valor { font-stretch: 78%; font-size: 26px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+.gnu-hoje .gnu-status__ponto { background: var(--agua); }
+.gnu-hoje .gnu-status__ponto::after { border-color: var(--agua); }
+
+/* ---------- imagem com linha d'água ---------- */
+.gnu-imagem { position: relative; margin: 0; overflow: hidden; background: var(--fundo-recuado); }
+.gnu-imagem img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gnu-imagem--4x3 { aspect-ratio: 4 / 3; }
+.gnu-imagem--4x5 { aspect-ratio: 4 / 5; }
+.gnu-imagem--16x9 { aspect-ratio: 16 / 9; }
+.gnu-imagem--1x1 { aspect-ratio: 1 / 1; }
+.gnu-imagem--9x16 { aspect-ratio: 9 / 16; }
+.gnu-imagem__agua { position: absolute; left: 0; right: 0; top: 78%; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--espaco-3); padding: 0 var(--espaco-4) var(--espaco-2); transform: translateY(-100%); color: var(--sobre-noite); }
+.gnu-imagem__agua::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; border-bottom: 1px solid var(--sobre-noite); opacity: 0.7; }
+.gnu-imagem__agua .gnu-rotulo-p { text-shadow: 0 1px 12px rgba(7, 22, 46, 0.45); }
+
+/* ---------- cartão de sede ---------- */
+.gnu-sede { display: grid; grid-template-rows: auto 1fr; background: var(--fundo-elevado); color: var(--tinta); text-decoration: none; overflow: hidden; border-radius: var(--raio-1); transition: box-shadow var(--tempo-3) var(--curva-deslize); }
+.gnu-sede:hover { box-shadow: var(--sombra-1); }
+.gnu-sede .gnu-imagem img { transition: transform var(--tempo-4) var(--curva-deslize); }
+.gnu-sede:hover .gnu-imagem img { transform: scale(1.04); }
+.gnu-sede:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--fundo), 0 0 0 4px var(--foco); }
+.gnu-sede__corpo { display: flex; flex-direction: column; gap: var(--espaco-3); padding: var(--espaco-5); }
+.gnu-sede__nome { margin: 0; font-stretch: 78%; font-size: 36px; line-height: 0.96; font-weight: 620; letter-spacing: -0.02em; }
+.gnu-sede__lista { display: flex; flex-wrap: wrap; gap: var(--espaco-2); margin: var(--espaco-2) 0 0; padding: 0; list-style: none; }
+.gnu-sede__lista li { font-size: 13px; line-height: 18px; padding: var(--espaco-1) var(--espaco-3); border: 1px solid var(--linha); border-radius: var(--raio-boia); color: var(--tinta-suave); }
+.gnu-sede__rodape { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: var(--espaco-4); border-top: 1px solid var(--linha); font-size: 15px; font-weight: 600; }
+.gnu-sede__rodape .gnu-seta { width: 20px; height: 20px; transition: transform var(--tempo-2) var(--curva-deslize); }
+.gnu-sede:hover .gnu-sede__rodape .gnu-seta { transform: translateX(4px); }
+
+/* ---------- cartão de título (plano) ---------- */
+.gnu-plano { display: grid; align-content: start; min-width: 0; gap: var(--espaco-5); padding: var(--espaco-6); background: var(--fundo-elevado); color: var(--tinta); border: 1px solid var(--linha); border-radius: var(--raio-1); }
+.gnu-plano__topo { display: flex; flex-wrap: wrap-reverse; align-items: flex-start; justify-content: space-between; gap: var(--espaco-3) var(--espaco-4); }
+.gnu-plano__nome { margin: 0; font-stretch: 78%; font-size: 44px; line-height: 0.94; font-weight: 640; letter-spacing: -0.025em; }
+.gnu-plano__nome span { display: block; font-stretch: 125%; font-size: 12px; line-height: 16px; font-weight: 560; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--espaco-3); color: var(--tinta-suave); }
+.gnu-plano__lista { display: grid; margin: 0; padding: 0; list-style: none; }
+.gnu-plano__lista li { display: grid; grid-template-columns: 20px 1fr; gap: var(--espaco-3); padding: var(--espaco-3) 0; border-top: 1px solid var(--linha); font-size: 15px; line-height: 22px; }
+.gnu-plano__lista svg { width: 20px; height: 20px; color: var(--uniao); margin-top: 1px; }
+.gnu-plano--destaque { background: var(--noite); color: var(--sobre-noite); border-color: var(--noite); }
+.gnu-plano--destaque .gnu-plano__nome span { color: var(--sobre-noite-suave); }
+.gnu-plano--destaque .gnu-plano__lista li { border-top-color: var(--linha-noite); }
+.gnu-plano--destaque .gnu-plano__lista svg { color: var(--agua); }
+.gnu-plano--destaque .gnu-suave { color: var(--sobre-noite-suave); }
+
+/* ---------- formulário ---------- */
+.gnu-form { display: grid; gap: var(--espaco-5); }
+.gnu-campo { display: grid; gap: var(--espaco-2); }
+.gnu-campo > label, .gnu-campo__rotulo { font-size: 14px; line-height: 20px; font-weight: 560; color: var(--tinta); }
+.gnu-campo input, .gnu-campo select, .gnu-campo textarea { width: 100%; height: 52px; padding: 0 var(--espaco-4); border: 1px solid var(--linha-forte); border-radius: var(--raio-1); background: var(--fundo-elevado); color: var(--tinta); font: inherit; font-size: 16px; line-height: 24px; transition: border-color var(--tempo-1) var(--curva-deslize), box-shadow var(--tempo-1) var(--curva-deslize); }
+.gnu-campo select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 22px) 23px, calc(100% - 17px) 23px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: var(--espaco-7); }
+.gnu-campo input::placeholder { color: var(--tinta-suave); opacity: 0.8; }
+.gnu-campo input:hover, .gnu-campo select:hover { border-color: var(--tinta); }
+.gnu-campo input:focus, .gnu-campo select:focus { outline: none; border-color: var(--foco); box-shadow: 0 0 0 1px var(--foco); }
+.gnu-campo__ajuda { font-size: 13px; line-height: 18px; color: var(--tinta-suave); }
+.gnu-campo--erro input, .gnu-campo--erro select { border-color: var(--erro); box-shadow: 0 0 0 1px var(--erro); }
+.gnu-campo__erro { display: flex; gap: var(--espaco-2); align-items: center; font-size: 13px; line-height: 18px; color: var(--erro); font-weight: 500; }
+.gnu-consentimento { display: grid; grid-template-columns: 20px 1fr; gap: var(--espaco-3); align-items: start; font-size: 14px; line-height: 20px; color: var(--tinta-suave); }
+.gnu-consentimento input { width: 20px; height: 20px; margin: 0; accent-color: var(--uniao); }
+.gnu-consentimento a { color: var(--tinta); }
+.gnu-escolha { display: flex; flex-wrap: wrap; gap: var(--espaco-2); border: 0; margin: 0; padding: 0; }
+.gnu-escolha legend { font-size: 14px; line-height: 20px; font-weight: 560; margin-bottom: var(--espaco-2); padding: 0; }
+
+/* ---------- cabeçalho ---------- */
+.gnu-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-5); height: 72px; padding: 0 var(--espaco-5); background: var(--fundo); color: var(--tinta); border-bottom: 1px solid var(--linha); }
+.gnu-cabecalho--sobre-foto { background: transparent; color: var(--sobre-noite); border-bottom-color: transparent; }
+.gnu-marca { display: grid; gap: 2px; color: inherit; text-decoration: none; font-stretch: 125%; text-transform: uppercase; }
+.gnu-marca__linha1 { font-size: 9px; line-height: 10px; font-weight: 560; letter-spacing: 0.16em; opacity: 0.75; }
+.gnu-marca__linha2 { font-size: 17px; line-height: 18px; font-weight: 700; letter-spacing: 0.12em; }
+.gnu-nav { display: flex; align-items: center; gap: var(--espaco-6); margin: 0; padding: 0; list-style: none; }
+.gnu-nav a { color: inherit; text-decoration: none; font-size: 15px; line-height: 20px; font-weight: 500; padding: var(--espaco-2) 0; background-image: linear-gradient(currentColor, currentColor); background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size var(--tempo-3) var(--curva-deslize); }
+.gnu-nav a:hover, .gnu-nav a[aria-current="page"] { background-size: 100% 1px; }
+.gnu-nav a:focus-visible, .gnu-marca:focus-visible, .gnu-menu:focus-visible { outline: 2px solid var(--foco); outline-offset: 4px; }
+.gnu-menu { display: inline-flex; align-items: center; gap: var(--espaco-2); background: none; border: 0; color: inherit; font: inherit; font-size: 15px; font-weight: 500; cursor: pointer; padding: var(--espaco-2) 0; }
+.gnu-menu svg { width: 22px; height: 22px; }
+
+/* ---------- hero ---------- */
+.gnu-hero { position: relative; display: grid; align-items: end; overflow: hidden; background: var(--noite); color: var(--sobre-noite); }
+.gnu-hero__img { position: absolute; inset: 0; }
+.gnu-hero__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gnu-hero__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--noite) 0%, rgba(7, 22, 46, 0.35) 45%, rgba(7, 22, 46, 0) 75%); }
+.gnu-hero__conteudo { position: relative; display: grid; gap: var(--espaco-5); padding: var(--espaco-10) var(--espaco-5) var(--espaco-7); }
+.gnu-hero__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espaco-5); }
+.gnu-hero .gnu-lead { color: var(--sobre-noite); opacity: 0.88; }
+
+/* ---------- conversa (substitui o balão verde flutuante) ---------- */
+.gnu-conversa { display: inline-flex; align-items: center; gap: var(--espaco-3); height: 48px; padding: 0 var(--espaco-5) 0 var(--espaco-4); border-radius: var(--raio-boia); background: var(--noite); color: var(--sobre-noite); border: 1px solid var(--linha-noite); box-shadow: var(--sombra-2); font-size: 14px; line-height: 18px; font-weight: 600; text-decoration: none; }
+.gnu-conversa svg { width: 20px; height: 20px; color: var(--agua); }
+.gnu-conversa small { display: block; font-size: 12px; line-height: 14px; font-weight: 400; color: var(--sobre-noite-suave); }
+
+/* ---------- movimento ---------- */
+.gnu-entra { animation: gnu-entrada var(--tempo-4) var(--curva-deslize) both; }
+@keyframes gnu-entrada { from { opacity: 0.001; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .gnu *, .gnu *::before, .gnu *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+
+/* ---------- utilitário das prévias ---------- */
+.gnu-previa { padding: var(--espaco-5); display: grid; gap: var(--espaco-5); }
+.gnu-linha { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espaco-4); }
+.gnu-faixa-noite { background: var(--noite); color: var(--sobre-noite); }

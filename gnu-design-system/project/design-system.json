@@ -1,0 +1,42 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": { "v": 1, "at": "2026-11-02T23:10:00Z" },
+  "title": "GNU Em Movimento",
+  "namespace": "GNU",
+  "libraries": [],
+  "sections": {},
+  "groups": ["Vista aerea", "Antes"],
+  "assetGroups": {
+    "Vista aerea": {
+      "name": "Vista aerea",
+      "tile": "l",
+      "order": ["guaiba.svg", "piscina.svg", "quadra.svg", "gramado.svg", "salao.svg"],
+      "files": {
+        "guaiba.svg": { "name": "guaiba.svg", "blob": "5e4110ab52c28d8a5c0b03329a67d282", "size": 18419, "type": "image/svg+xml" },
+        "piscina.svg": { "name": "piscina.svg", "blob": "aeea61a419fd732b430228f6069b72b3", "size": 8684, "type": "image/svg+xml" },
+        "quadra.svg": { "name": "quadra.svg", "blob": "4dc7475029eb621ab9594794d12000e7", "size": 2387, "type": "image/svg+xml" },
+        "gramado.svg": { "name": "gramado.svg", "blob": "7a6a34fc2803fa4f5cc9b4c18b5d592d", "size": 7140, "type": "image/svg+xml" },
+        "salao.svg": { "name": "salao.svg", "blob": "3f41587e2468c42a1868e1252ebaaf70", "size": 16741, "type": "image/svg+xml" }
+      }
+    },
+    "Antes": {
+      "name": "Antes",
+      "tile": "m",
+      "order": ["antes-polaroid.jpg", "antes-cards-rotulo.jpg", "antes-destaques-ciano.jpg", "antes-formulario.jpg", "antes-banco-de-imagens.jpg", "antes-texto-textura.jpg", "antes-cta-caixa-alta.jpg", "antes-site-institucional.jpg"],
+      "files": {
+        "antes-polaroid.jpg": { "name": "antes-polaroid.jpg", "blob": "f0e8908b953a2979684891766c603b0d", "size": 37067, "type": "image/jpeg" },
+        "antes-cards-rotulo.jpg": { "name": "antes-cards-rotulo.jpg", "blob": "008ad0c5d8864d660028fb3741e2d175", "size": 34241, "type": "image/jpeg" },
+        "antes-destaques-ciano.jpg": { "name": "antes-destaques-ciano.jpg", "blob": "55d6e2982d528026db011ce736906986", "size": 41202, "type": "image/jpeg" },
+        "antes-formulario.jpg": { "name": "antes-formulario.jpg", "blob": "6f719cb08cbf67852b994ed741b214b3", "size": 43399, "type": "image/jpeg" },
+        "antes-banco-de-imagens.jpg": { "name": "antes-banco-de-imagens.jpg", "blob": "3fa10579e72ace571a9adadebea580d0", "size": 33811, "type": "image/jpeg" },
+        "antes-texto-textura.jpg": { "name": "antes-texto-textura.jpg", "blob": "acfad631c9a0b02f233f623e0e9299eb", "size": 20232, "type": "image/jpeg" },
+        "antes-cta-caixa-alta.jpg": { "name": "antes-cta-caixa-alta.jpg", "blob": "6aa14f7e4343adbdc476fd91ead9c625", "size": 40969, "type": "image/jpeg" },
+        "antes-site-institucional.jpg": { "name": "antes-site-institucional.jpg", "blob": "a707caf46f61a25e17903273156aed48", "size": 40282, "type": "image/jpeg" }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": { "sections": [] },
+  "lastChange": { "by": "Claude", "via": "Claude Code", "at": "2026-11-02T23:10:00Z", "note": "Primeira versão da proposta evolutiva" }
+}
