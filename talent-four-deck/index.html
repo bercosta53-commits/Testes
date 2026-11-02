@@ -172,8 +172,9 @@ img, svg { display: block; }
    ========================================================================= */
 
 /* Capa */
-.capa .foto { width: 54%; }
-.capa .foto img { object-position: 50% 40%; }
+.capa .foto { width: 50%; }
+.capa .foto img { object-position: 78% 30%; }
+.capa .foto::after { background: linear-gradient(90deg, var(--ink) 0%, rgb(11 11 12 / .9) 24%, rgb(11 11 12 / .45) 58%, rgb(11 11 12 / .12) 100%), linear-gradient(0deg, rgb(11 11 12 / .85) 0%, rgb(11 11 12 / 0) 24%), linear-gradient(180deg, rgb(11 11 12 / .7) 0%, rgb(11 11 12 / 0) 18%); }
 .capa__txt { position: absolute; left: var(--mx); top: 236px; width: 1440px; z-index: 2; }
 .capa__marcas { font: 700 76px/1 var(--f-display); letter-spacing: -.03em; }
 .capa__marcas span { color: var(--fg-3); padding: 0 .18em; }
@@ -259,7 +260,7 @@ img, svg { display: block; }
 
 /* Transição */
 .ponte__foto { position: absolute; right: 0; top: 120px; bottom: 100px; width: 42%; margin: 0; overflow: hidden; }
-.ponte__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; }
+.ponte__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; }
 .ponte__txt { position: absolute; left: var(--mx); top: 236px; width: 940px; z-index: 2; }
 .ponte__frase { font: 700 76px/1.08 var(--f-display); letter-spacing: -.03em; }
 .ponte__frase span { display: block; }
@@ -458,7 +459,7 @@ img, svg { display: block; }
 .desdobra { position: absolute; left: var(--mx); right: var(--mx); top: 690px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
 .desdobra > .mono { grid-column: 1 / -1; margin-bottom: 14px; color: var(--fg-3); }
 .desdobra .num { font-size: 64px; }
-.desdobra .num.acid { color: var(--acid); }
+.desdobra .num.acid span { background: var(--acid); color: var(--ink); padding: 0 .08em; }
 .desdobra .txt { margin-top: 8px; font-size: 20px; }
 
 /* Fase 3 · RHOI */
@@ -504,38 +505,90 @@ img, svg { display: block; }
 .pessoa .txt { margin-top: 4px; font-size: 20px; }
 
 /* Investimento */
-.invest .tabela-wrap { top: 400px; }
-.invest td { padding-top: 22px; padding-bottom: 22px; vertical-align: middle; }
-.invest td:first-child .t4 { color: var(--fg); }
-.invest td:first-child .txt { margin-top: 4px; font-size: 20px; }
-.invest td.valor { width: 360px; font: 700 40px/1 var(--f-display); letter-spacing: -.02em; color: var(--fg); text-align: right; white-space: nowrap; }
+.invest .tabela-wrap { top: 392px; }
+.invest td { padding-top: 13px; padding-bottom: 13px; vertical-align: middle; }
+.invest tr.sub td { padding-top: 10px; padding-bottom: 10px; color: var(--fg-2); }
+.invest tr.sub .t4 { color: var(--fg-2); font-size: 22px; }
+.invest tr.sub td.valor { font-size: 28px; color: var(--fg-2); }
+.invest tr.var td { border-bottom: 0; }
+.invest td:first-child .t4 { color: var(--fg); font-size: 24px; }
+.invest td:first-child .txt { margin-top: 2px; font-size: 19px; }
+.invest td.valor { width: 360px; font: 700 34px/1 var(--f-display); letter-spacing: -.02em; color: var(--fg); text-align: right; white-space: nowrap; }
 .invest td.valor small { font: 500 14px/1 var(--f-mono); letter-spacing: .1em; color: var(--fg-2); margin-left: 6px; }
 .invest tr.total td { border-top: 2px solid var(--fg); border-bottom: 1px solid var(--linha-diag); }
-.invest tr.total td.valor { font-size: 64px; }
+.invest tr.total td.valor { font-size: 52px; }
 .invest tr.total td.valor span { background: var(--acid); color: var(--ink); padding: 0 .1em; }
 
+/* Custo por etapa */
+.custo__inv { position: absolute; left: var(--mx); top: 404px; width: 560px; }
+.custo__inv > .mono { color: var(--fg-3); }
+.custo__inv .num { margin-top: 16px; font-size: 104px; letter-spacing: -.05em; }
+.custo__inv dl { margin: 34px 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--linha); }
+.custo__inv dt, .custo__inv dd { margin: 0; padding: 13px 0; border-bottom: 1px solid var(--linha); font-size: 20px; }
+.custo__inv dt { color: var(--fg-2); }
+.custo__inv dd { padding-left: 24px; font: 700 22px/1.45 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
+.custo__nota { margin-top: 16px; max-width: 520px; font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.ec-lista { position: absolute; left: 820px; right: var(--mx); top: 404px; }
+.ec { display: grid; grid-template-columns: 1fr 210px 340px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--linha); }
+.ec--cab { padding: 0 0 14px; border-bottom-color: var(--linha-diag); }
+.ec--cab .mono { color: var(--fg-3); }
+.ec .dir { text-align: right; }
+.ec .t3 { font-size: 30px; }
+.ec__vol { font: 700 32px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.ec__custo { font: 700 40px/1 var(--f-display); letter-spacing: -.025em; text-align: right; font-variant-numeric: tabular-nums; }
+.ec__custo small { display: block; margin-top: 8px; font: 500 13px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.ec--foco { border-bottom: 2px solid var(--fg); }
+.ec--foco .ec__custo span { background: var(--acid); color: var(--ink); padding: 0 .08em; }
+
+/* Retorno projetado */
+.premissas { position: absolute; left: var(--mx); top: 404px; width: 560px; }
+.premissas > .mono { color: var(--fg-3); }
+.premissas dl { margin: 16px 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--linha-diag); }
+.premissas dt, .premissas dd { margin: 0; padding: 11px 0; border-bottom: 1px solid var(--linha); font-size: 20px; }
+.premissas dt { color: var(--fg-2); }
+.premissas dd { padding-left: 24px; font: 700 22px/1.45 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
+.premissas__nota { margin-top: 14px; font: 500 13px/1.4 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.barras { position: absolute; left: 820px; right: var(--mx); top: 404px; }
+.barras__eixo { color: var(--fg-3); }
+.barras__grade { margin-top: 12px; height: 262px; display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 28px; align-items: end; border-bottom: 1px solid var(--linha-diag); }
+.barra-ano { display: flex; flex-direction: column; justify-content: flex-end; }
+.barra-ano__v { font: 700 30px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; margin-bottom: 12px; }
+.barra-ano span { display: block; background: var(--fg); }
+.barra-ano + .barra-ano span { background: rgb(255 255 255 / .62); }
+.barra-ano .mono { position: relative; top: 34px; height: 0; color: var(--fg-3); }
+.kpis { position: absolute; left: var(--mx); right: var(--mx); bottom: 120px; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 40px; }
+.kpis > div { padding-top: 20px; border-top: 1px solid var(--linha-diag); }
+.kpis .num { font-size: 60px; white-space: nowrap; }
+.kpis .num.acid { color: var(--acid); }
+.kpis .txt { margin-top: 12px; font-size: 18px; line-height: 1.45; }
+
 /* Próximos passos (linha do tempo vertical) */
-.proximos { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
+.passos-slide .cab { right: auto; width: 1140px; }
+.lado-foto { position: absolute; right: 0; top: 120px; bottom: 100px; width: 31%; margin: 0; overflow: hidden; }
+.lado-foto img { width: 100%; height: 100%; object-fit: cover; }
+.proximos { position: absolute; left: var(--mx); width: 1120px; top: 404px; }
 .proximos::before { content: ''; position: absolute; left: 6px; top: 40px; bottom: 40px; width: 1px; background: var(--linha-diag); }
-.proximo { position: relative; display: grid; grid-template-columns: 76px 120px 500px 1fr auto; align-items: baseline; padding: 26px 0 28px; border-bottom: 1px solid var(--linha); }
+.proximo { position: relative; display: grid; grid-template-columns: 56px 100px 1fr auto; align-items: baseline; padding: 22px 0 24px; border-bottom: 1px solid var(--linha); }
 .proximo:first-child { border-top: 1px solid var(--linha); }
-.proximo > .no { position: absolute; left: 0; top: 40px; }
+.proximo > .no { position: absolute; left: 0; top: 36px; }
 .proximo__n { grid-column: 2; font: 700 56px/.9 var(--f-display); letter-spacing: -.04em; color: var(--fg-4); }
 .proximo--inicio .proximo__n { color: var(--fg); }
-.proximo .t3 { grid-column: 3; }
-.proximo .txt { grid-column: 4; }
-.proximo .quando { grid-column: 5; padding-left: 32px; color: var(--fg-2); white-space: nowrap; }
+.proximo > div { grid-column: 3; }
+.proximo .txt { margin-top: 4px; font-size: 20px; }
+.proximo .quando { grid-column: 4; padding-left: 28px; color: var(--fg-2); white-space: nowrap; }
 
 /* Encerramento */
-.fim__txt { position: absolute; left: var(--mx); top: 236px; width: 1560px; }
-.fim__txt .t1 { font-size: 112px; letter-spacing: -.04em; line-height: 1.02; }
+.fim .foto { width: 46%; }
+.fim__txt { position: absolute; left: var(--mx); top: 220px; width: 1100px; z-index: 2; }
+.fim__txt .t1 { font-size: 96px; letter-spacing: -.04em; line-height: 1.04; }
 .fim__txt .t1 span { display: block; color: var(--fg-2); }
-.contatos { position: absolute; left: var(--mx); right: var(--mx); top: 712px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
-.contato { padding-top: 20px; border-top: 1px solid var(--linha); }
+.contatos { position: absolute; left: var(--mx); width: 860px; top: 640px; z-index: 2; }
+.contato { display: grid; grid-template-columns: 260px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--linha); }
+.contato:last-child { border-bottom: 1px solid var(--linha); }
 .contato .t4 { font-size: 26px; }
-.contato .mono { margin-top: 6px; color: var(--fg-3); font-size: 13px; }
-.contato .txt { margin-top: 10px; font-size: 19px; }
-.assinatura { position: absolute; left: var(--mx); right: var(--mx); bottom: -64px; fill: rgb(255 255 255 / .07); }
+.contato .t4 { grid-row: span 2; }
+.contato .mono { color: var(--fg-3); font-size: 13px; }
+.contato .txt { margin-top: 2px; font-size: 19px; }
 
 /* =========================================================================
    Visão geral (tecla G) e impressão
@@ -558,7 +611,7 @@ body.visao { overflow: auto; background: #000; }
 
 <!-- ===================================================== Capa -->
 <section class="slide escuro capa" data-nome="Capa">
-  <figure class="foto"><img src="img/arquitetura.jpg" alt=""></figure>
+  <figure class="foto"><img src="img/atrio.jpg" alt=""></figure>
   <div class="capa__txt">
     <p class="rotulo"><span class="n">Proposta</span><span class="barra">/</span><span>Novembro 2026</span></p>
     <p class="capa__marcas">Velora<span>×</span>Talent Four</p>
@@ -753,7 +806,7 @@ body.visao { overflow: auto; background: #000; }
 
 <!-- ===================================================== Transição -->
 <section class="slide claro ponte" data-nome="Transição" data-parte="2">
-  <figure class="ponte__foto"><img src="img/conversa.jpg" alt=""></figure>
+  <figure class="ponte__foto"><img src="img/porta.jpg" alt=""></figure>
   <div class="ponte__txt">
     <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Daqui em diante</span></p>
     <p class="ponte__frase"><span class="a">O relacionamento trouxe a Talent até aqui.</span><span>Nossa proposta é <em>ampliar esse alcance</em> com novas formas de abrir contas.</span></p>
@@ -841,7 +894,7 @@ body.visao { overflow: auto; background: #000; }
 
 <!-- ===================================================== Fase 2 -->
 <section class="slide escuro divisor divisor--fase" data-nome="Fase 2 · Preparação e implementação" data-parte="3" data-fase="2">
-  <figure class="foto"><img src="img/equipe.jpg" alt="" style="object-position:62% 50%"></figure>
+  <figure class="foto"><img src="img/apresentacao.jpg" alt="" style="object-position:40% 45%"></figure>
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>de 3</span></p>
     <p class="divisor__n"><span>02</span></p>
@@ -1021,7 +1074,7 @@ body.visao { overflow: auto; background: #000; }
 
 <!-- ===================================================== Fase 3 -->
 <section class="slide escuro divisor divisor--fase" data-nome="Fase 3 · Operação e ajustes" data-parte="3" data-fase="3">
-  <figure class="foto"><img src="img/executiva.jpg" alt="" style="object-position:30% 40%"></figure>
+  <figure class="foto"><img src="img/movimento.jpg" alt="" style="object-position:55% 35%"></figure>
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>de 3</span></p>
     <p class="divisor__n"><span>03</span></p>
@@ -1090,11 +1143,11 @@ body.visao { overflow: auto; background: #000; }
     <div><p class="mono">03</p><h3 class="t3">Redação</h3><p class="txt">Textos para anúncios, cadências, páginas e materiais por público.</p></div>
     <div><p class="mono">04</p><h3 class="t3">Criativos</h3><p class="txt">Adaptação das mensagens para peças estáticas, carrosséis e vídeos.</p></div>
   </div>
-  <div class="verba"><p class="mono">Investimento em mídia</p><p>Pago diretamente pela Talent às plataformas e definido em conjunto na fase de preparação: R$ <span class="lacuna">&nbsp;</span>/mês.</p></div>
+  <div class="verba"><p class="mono">Investimento em mídia</p><p>Cerca de R$ 10 mil por mês nos quatro meses de operação, pago diretamente pela Talent às plataformas e ajustado em conjunto na fase de preparação.</p></div>
 </section>
 
 <!-- ===================================================== Fase 3 · projeção de referência -->
-<section class="slide escuro proj" data-nome="Projeção de referência" data-parte="3" data-fase="3">
+<section class="slide claro proj" data-nome="Projeção de referência" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Projeção de referência</span></p>
     <h2 class="t2">Um cenário inicial para orientar metas — e ajustar com dados reais.</h2>
@@ -1114,7 +1167,7 @@ body.visao { overflow: auto; background: #000; }
     <p class="mono">Possíveis desdobramentos do cenário</p>
     <div><p class="num">15–20</p><p class="txt">oportunidades</p></div>
     <div><p class="num">6–8</p><p class="txt">homologações iniciadas</p></div>
-    <div><p class="num acid">2–3</p><p class="txt">contas com primeira alocação</p></div>
+    <div><p class="num acid"><span>4</span></p><p class="txt">contas novas, com cerca de 6 posições cada</p></div>
   </div>
   <p class="fechamento">Estimativas preliminares, não compromissos de resultado. <span>Premissas, taxas e prazos serão validados no diagnóstico e revistos durante a execução.</span></p>
 </section>
@@ -1166,7 +1219,7 @@ body.visao { overflow: auto; background: #000; }
     <p class="rotulo"><span class="n">Parte 04</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">04</p>
     <h2 class="divisor__titulo">Time e investimento</h2>
-    <p class="mono divisor__sub">Time e colaboração · Investimento · Próximos passos</p>
+    <p class="mono divisor__sub">Time · Investimento · Custo e retorno · Próximos passos</p>
   </div>
 </section>
 
@@ -1208,31 +1261,94 @@ body.visao { overflow: auto; background: #000; }
     <table class="tabela">
       <thead><tr><th>Etapa</th><th class="dir">Valor</th></tr></thead>
       <tbody>
-        <tr><td><p class="t4">Mês 1 · Diagnóstico</p><p class="txt">Imersão, análise das oportunidades e plano de ação priorizado.</p></td><td class="valor">R$ 35 mil</td></tr>
-        <tr><td><p class="t4">Meses 2 a 6 · Implementação e operação</p><p class="txt">Preparação do mercado, execução das frentes, equipe de especialistas e acompanhamento dos sócios.</p></td><td class="valor">R$ 24 mil<small>/mês</small></td></tr>
-        <tr class="total"><td><p class="t4">Investimento fixo total</p><p class="txt">Verba de mídia e ferramentas de dados são contratadas à parte.</p></td><td class="valor"><span>R$ 155 mil</span></td></tr>
-        <tr><td><p class="t4">Parcela por resultado</p><p class="txt">Por conta nova que realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></td><td class="valor">R$ 15 mil<small>/conta</small></td></tr>
+        <tr><td><p class="t4">Mês 1 · Diagnóstico</p><p class="txt">Imersão, análise das oportunidades e plano de ação priorizado.</p></td><td class="valor">R$ 15 mil</td></tr>
+        <tr><td><p class="t4">Mês 2 · Preparação e implementação</p><p class="txt">Estratégia de entrada, classificação das contas e preparação das frentes.</p></td><td class="valor">R$ 18 mil</td></tr>
+        <tr><td><p class="t4">Meses 3 a 6 · Operação e ajustes</p><p class="txt">Execução das frentes, equipe de especialistas e acompanhamento dos sócios · 4 × R$ 21 mil = R$ 84 mil.</p></td><td class="valor">R$ 21 mil<small>/mês</small></td></tr>
+        <tr class="sub"><td><p class="t4">Honorários Velora · 6 meses</p></td><td class="valor">R$ 117 mil</td></tr>
+        <tr><td><p class="t4">Verba de mídia</p><p class="txt">Paga diretamente às plataformas, nos quatro meses de operação · 4 × R$ 10 mil.</p></td><td class="valor">R$ 40 mil</td></tr>
+        <tr class="total"><td><p class="t4">Investimento do período</p><p class="txt">Honorários e mídia. Ferramentas de dados à parte.</p></td><td class="valor"><span>R$ 157 mil</span></td></tr>
+        <tr class="var"><td><p class="t4">Parcela por resultado</p><p class="txt">Por conta nova que realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></td><td class="valor">R$ 15 mil<small>/conta</small></td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
+<!-- ===================================================== Custo por etapa -->
+<section class="slide claro custo" data-nome="Custo por etapa" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Custo por etapa</span></p>
+    <h2 class="t2">Com o investimento do período, este é o custo de referência de cada etapa.</h2>
+  </div>
+  <div class="custo__inv">
+    <p class="mono">Investimento do período</p>
+    <p class="num">R$ 157 mil</p>
+    <dl><dt>Honorários Velora</dt><dd>R$ 117 mil</dd><dt>Mídia · 4 × R$ 10 mil</dt><dd>R$ 40 mil</dd></dl>
+    <p class="custo__nota">Fora da soma: parcela por resultado de R$ 15 mil por contrato (R$ 60 mil no cenário de 4 contas).</p>
+  </div>
+  <div class="ec-lista">
+    <div class="ec ec--cab"><p class="mono">Etapa</p><p class="mono">Volume do cenário</p><p class="mono dir">Custo de referência</p></div>
+    <div class="ec"><h3 class="t3">Reunião</h3><p class="ec__vol">~60 a 65</p><p class="ec__custo">R$ 2,4 a 2,6 mil</p></div>
+    <div class="ec"><h3 class="t3">Homologação</h3><p class="ec__vol">6 a 8</p><p class="ec__custo">R$ 20 a 26 mil</p></div>
+    <div class="ec"><h3 class="t3">Contrato</h3><p class="ec__vol">4</p><p class="ec__custo">R$ 39 mil<small>R$ 54 mil com a parcela por resultado</small></p></div>
+    <div class="ec ec--foco"><h3 class="t3">Posição alocada</h3><p class="ec__vol">24</p><p class="ec__custo"><span>R$ 6,5 mil</span><small>R$ 9 mil com a parcela por resultado</small></p></div>
+  </div>
+  <p class="fechamento">Cada posição alocada custa cerca de um terço do que fatura em um mês. <span>Custo de referência = investimento do período (R$ 157 mil) ÷ volume da etapa no cenário.</span></p>
+</section>
+
+<!-- ===================================================== Retorno projetado -->
+<section class="slide escuro retorno" data-nome="Retorno projetado" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Retorno projetado · LTV de 5 anos</span></p>
+    <h2 class="t2">Em cinco anos, quatro contas novas podem representar cerca de R$ 24,5 milhões em receita.</h2>
+  </div>
+  <div class="premissas">
+    <p class="mono">Premissas do cenário</p>
+    <dl>
+      <dt>Contas novas</dt><dd>4</dd>
+      <dt>Posições por conta</dt><dd>6 em média</dd>
+      <dt>Faturamento por posição</dt><dd>R$ 20 mil/mês</dd>
+      <dt>Churn da receita</dt><dd>8% ao ano</dd>
+      <dt>Horizonte</dt><dd>5 anos</dd>
+      <dt>Margem bruta de referência</dt><dd>14% (12% a 16%)</dd>
+    </dl>
+    <p class="premissas__nota">Cenário ilustrativo, não compromisso de resultado.</p>
+  </div>
+  <div class="barras" aria-label="Receita anual das quatro contas, em milhões de reais">
+    <p class="mono barras__eixo">Receita anual das 4 contas · R$ milhões</p>
+    <div class="barras__grade">
+      <div class="barra-ano"><p class="barra-ano__v">5,76</p><span style="height:210px"></span><p class="mono">Ano 1</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">5,30</p><span style="height:193px"></span><p class="mono">Ano 2</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,88</p><span style="height:178px"></span><p class="mono">Ano 3</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,49</p><span style="height:164px"></span><p class="mono">Ano 4</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,13</p><span style="height:151px"></span><p class="mono">Ano 5</p></div>
+    </div>
+  </div>
+  <div class="kpis">
+    <div><p class="num">R$ 24,5 mi</p><p class="txt">de receita em 5 anos nas 4 contas (R$ 6,1 mi por conta).</p></div>
+    <div><p class="num">R$ 3,4 mi</p><p class="txt">de margem bruta a 14% (R$ 2,9 a 3,9 mi na faixa de 12% a 16%).</p></div>
+    <div><p class="num acid">~16x</p><p class="txt">margem em 5 anos ÷ investimento total de R$ 217 mil (período + parcela por resultado).</p></div>
+    <div><p class="num">3 a 4 meses</p><p class="txt">de margem das 4 contas ativas pagam o investimento total.</p></div>
+  </div>
+</section>
+
 <!-- ===================================================== Próximos passos -->
-<section class="slide claro" data-nome="Próximos passos" data-parte="4">
+<section class="slide claro passos-slide" data-nome="Próximos passos" data-parte="4">
+  <figure class="lado-foto"><img src="img/chegada.jpg" alt="" style="object-position:50% 40%"></figure>
   <div class="cab">
     <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Próximos passos</span></p>
-    <h2 class="t2">Se a direção fizer sentido, podemos avançar por estas etapas.</h2>
+    <h2 class="t2">Se a direção fizer sentido,<br>podemos avançar por estas etapas.</h2>
   </div>
   <ol class="proximos">
-    <li class="proximo proximo--inicio"><span class="no no--acid"></span><p class="proximo__n">01</p><h3 class="t3">Ajustes finais</h3><p class="txt">Alinhar prioridades, escopo e expectativas da proposta.</p><p class="mono quando">A seguir</p></li>
-    <li class="proximo"><span class="no"></span><p class="proximo__n">02</p><h3 class="t3">Informações iniciais</h3><p class="txt">Aplicar o questionário de diagnóstico e organizar o acesso necessário à carteira e ao CRM.</p><p class="mono quando">Antes do início</p></li>
-    <li class="proximo"><span class="no"></span><p class="proximo__n">03</p><h3 class="t3">Início do trabalho</h3><p class="txt">Definir juntos a data de início do diagnóstico.</p><p class="mono quando">[data a confirmar]</p></li>
-    <li class="proximo"><span class="no"></span><p class="proximo__n">04</p><h3 class="t3">Primeiras recomendações</h3><p class="txt">Apresentar o diagnóstico e o plano de ação.</p><p class="mono quando">Em 3 a 4 semanas</p></li>
+    <li class="proximo proximo--inicio"><span class="no no--acid"></span><p class="proximo__n">01</p><div><h3 class="t3">Ajustes finais</h3><p class="txt">Alinhar prioridades, escopo e expectativas da proposta.</p></div><p class="mono quando">A seguir</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">02</p><div><h3 class="t3">Informações iniciais</h3><p class="txt">Aplicar o questionário de diagnóstico e organizar o acesso necessário à carteira e ao CRM.</p></div><p class="mono quando">Antes do início</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">03</p><div><h3 class="t3">Início do trabalho</h3><p class="txt">Definir juntos a data de início do diagnóstico.</p></div><p class="mono quando">[data a confirmar]</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">04</p><div><h3 class="t3">Primeiras recomendações</h3><p class="txt">Apresentar o diagnóstico e o plano de ação.</p></div><p class="mono quando">Em 3 a 4 semanas</p></li>
   </ol>
 </section>
 
 <!-- ===================================================== Encerramento -->
-<section class="slide escuro" data-nome="Encerramento">
+<section class="slide escuro fim" data-nome="Encerramento">
+  <figure class="foto"><img src="img/elevador.jpg" alt="" style="object-position:50% 35%"></figure>
   <div class="fim__txt">
     <p class="rotulo"><span class="n">Velora</span><span class="barra">/</span><span>Growth &amp; Beyond</span></p>
     <h2 class="t1"><span>Do relacionamento</span>a novas oportunidades de crescimento.</h2>
@@ -1242,7 +1358,6 @@ body.visao { overflow: auto; background: #000; }
     <div class="contato"><p class="t4">Everton Henke</p><p class="mono">Metodologia e aquisição</p><p class="txt">everton.henke@veloraconsulting.com.br</p></div>
     <div class="contato"><p class="t4">Leonardo Wartha</p><p class="mono">Processos comerciais e vendas</p><p class="txt">leonardo.wartha@veloraconsulting.com.br</p></div>
   </div>
-  <svg class="assinatura" viewBox="18 -700 2807 714" aria-hidden="true"><path d="M196 0 18 -700H154L302 -85H316L464 -700H600L422 0ZM874 14Q800 14 743.5 -17.5Q687 -49 655.5 -106.5Q624 -164 624 -242V-254Q624 -332 655 -389.5Q686 -447 742 -478.5Q798 -510 872 -510Q945 -510 999 -477.5Q1053 -445 1083 -387.5Q1113 -330 1113 -254V-211H752Q754 -160 790 -128Q826 -96 878 -96Q931 -96 956 -119Q981 -142 994 -170L1097 -116Q1083 -90 1056.5 -59.5Q1030 -29 986 -7.5Q942 14 874 14ZM753 -305H985Q981 -348 950.5 -374Q920 -400 871 -400Q820 -400 790 -374Q760 -348 753 -305ZM1185 0V-700H1311V0ZM1647 14Q1573 14 1514 -16Q1455 -46 1421 -103Q1387 -160 1387 -240V-256Q1387 -336 1421 -393Q1455 -450 1514 -480Q1573 -510 1647 -510Q1721 -510 1780 -480Q1839 -450 1873 -393Q1907 -336 1907 -256V-240Q1907 -160 1873 -103Q1839 -46 1780 -16Q1721 14 1647 14ZM1647 -98Q1705 -98 1743 -135.5Q1781 -173 1781 -243V-253Q1781 -323 1743.5 -360.5Q1706 -398 1647 -398Q1589 -398 1551 -360.5Q1513 -323 1513 -253V-243Q1513 -173 1551 -135.5Q1589 -98 1647 -98ZM1983 0V-496H2107V-440H2125Q2136 -470 2161.5 -484Q2187 -498 2221 -498H2281V-386H2219Q2171 -386 2140 -360.5Q2109 -335 2109 -282V0ZM2493 14Q2440 14 2398 -4.5Q2356 -23 2331.5 -58.5Q2307 -94 2307 -145Q2307 -196 2331.5 -230.5Q2356 -265 2399.5 -282.5Q2443 -300 2499 -300H2635V-328Q2635 -363 2613 -385.5Q2591 -408 2543 -408Q2496 -408 2473 -386.5Q2450 -365 2443 -331L2327 -370Q2339 -408 2365.5 -439.5Q2392 -471 2436.5 -490.5Q2481 -510 2545 -510Q2643 -510 2700 -461Q2757 -412 2757 -319V-134Q2757 -104 2785 -104H2825V0H2741Q2704 0 2680 -18Q2656 -36 2656 -66V-67H2637Q2633 -55 2619 -35.5Q2605 -16 2575 -1Q2545 14 2493 14ZM2515 -88Q2568 -88 2601.5 -117.5Q2635 -147 2635 -196V-206H2508Q2473 -206 2453 -191Q2433 -176 2433 -149Q2433 -122 2454 -105Q2475 -88 2515 -88Z"/></svg>
 </section>
 
 </main>
