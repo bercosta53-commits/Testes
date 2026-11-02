@@ -1,11 +1,50 @@
 # Velora × Talent Four · Desenvolvimento de sistema de aquisição
 
-Apresentação da proposta da Velora para a Talent Four Consulting: 42 slides em HTML (1920×1080), com navegação por teclado e exportação em PDF. A copy segue o documento de correção editorial e as correções v7 de novembro de 2026.
+Proposta da Velora para a Talent Four Consulting em duas versões, ambas em HTML (1920×1080), com navegação por teclado e exportação em PDF. A copy segue o documento de correção editorial e as correções v7 de novembro de 2026.
 
-![Visão geral dos 42 slides](preview.jpg)
+| Versão | Arquivo | PDF | Para quê |
+|---|---|---|---|
+| **Executiva** | `executivo.html` | [`talent-four-velora-executivo.pdf`](talent-four-velora-executivo.pdf) (25 páginas, 2,1 MB) | A reunião de decisão: 22 slides até o encerramento e um capítulo de anexos (3 slides) |
+| **Master** | `index.html` | [`talent-four-velora.pdf`](talent-four-velora.pdf) (42 páginas, 3,7 MB) | O detalhamento completo, para consulta e aprofundamento |
 
-- **Apresentar:** abra `index.html` no Chrome, Edge ou Safari. A pasta inteira precisa ir junto, porque as fontes e as fotos são arquivos locais. Funciona sem internet.
-- **PDF pronto:** [`talent-four-velora.pdf`](talent-four-velora.pdf) (42 páginas, 3,7 MB).
+- **Apresentar:** abra o HTML no Chrome, Edge ou Safari. A pasta inteira precisa ir junto, porque as fontes, as fotos, `deck.css` e `deck.js` são arquivos locais. Funciona sem internet.
+- **Design compartilhado:** as duas versões usam o mesmo `deck.css` e o mesmo `deck.js`. Um ajuste visual vale para as duas.
+
+## Versão executiva
+
+![Visão geral dos 25 slides da versão executiva](preview-executivo.jpg)
+
+| Slides | Parte | Conteúdo |
+|---|---|---|
+| 1–2 | Abertura | Capa · resumo executivo (a proposta em uma página) |
+| 3–7 | **01 · Contexto** | Abertura · como trabalhamos · contexto de mercado · o que ouvimos · oportunidades |
+| 8–16 | **02 · A proposta** | Abertura · visão do projeto · Fase 1 · Fase 2 (contas e frentes) · Fase 3 (operação e RHOI) · projeção · o que fica · time |
+| 17–21 | **03 · Investimento e projeções** | Abertura · investimento · custo por etapa · retorno (ponto de equilíbrio) · próximos passos |
+| 22 | Encerramento | Contatos |
+| 23–25 | **Anexos** | Abertura · A1 Condições comerciais · A2 Cenários com rampa |
+
+**Onde está o resto.** Os slides que resumem conteúdo têm, no canto superior direito, uma etiqueta com seta que aponta para o detalhe:
+
+| Etiqueta | Onde aparece | Aponta para |
+|---|---|---|
+| `↗ Detalhes · Apresentação master e anexos` | 2 · Resumo executivo | As duas fontes de detalhe |
+| `↗ Master · 4 e 7` | 4 · Como trabalhamos | Como contribuímos e princípios |
+| `↗ Master · 10` | 6 · O que ouvimos | Como a Talent cresceu |
+| `↗ Master · 15 a 33` | 9 · Visão do projeto | As três fases em detalhe |
+| `↗ Master · 16 e 18` | 10 · Fase 1 | Quatro lentes e passagem para o setup |
+| `↗ Master · 20 e 26` | 11 · Fase 2 | ICP, comitê de compra e abordagem por tier |
+| `↗ Master · 23 a 25 e 27` | 12 · Fase 2 | Radar, demanda, prospecção e indicadores |
+| `↗ Master · 29, 30 e 32` | 13 · Fase 3 | Página de conversão, mídia e RHOI |
+| `↗ Anexo A2` | 14 · Projeção e 20 · Retorno | Três cenários e premissas |
+| `↗ Anexo A1` | 18 · Investimento | Condições comerciais e regras da parcela |
+
+As etiquetas de anexo têm borda cheia; as de master, borda mais leve. Os anexos ficam depois do encerramento, como um capítulo próprio, e o rodapé de todo slide mostra "04 Anexos" como a última parte. Os números da master se referem à versão atual de 42 slides; se a master mudar, as etiquetas precisam ser revistas.
+
+## Apresentação master
+
+![Visão geral dos 42 slides da master](preview.jpg)
+
+O detalhamento completo: estrutura, premissas e pendências estão nas seções abaixo, a partir de "Estrutura da master".
 
 ## Navegação
 
@@ -18,19 +57,21 @@ Apresentação da proposta da Velora para a Talent Four Consulting: 42 slides em
 | `G` | Visão geral; clique num slide para abri-lo |
 | `F` | Tela cheia |
 
-Também dá para clicar (metade direita avança, metade esquerda volta), deslizar no celular ou abrir direto num slide com `index.html#16`.
+Também dá para clicar (metade direita avança, metade esquerda volta), deslizar no celular ou abrir direto num slide com `index.html#16` ou `executivo.html#10`.
 
 ## Exportar
 
 - **Pelo navegador:** Ctrl/Cmd + P → "Salvar como PDF". As margens já vêm zeradas e cada slide ocupa uma página.
-- **Pelo script:** gera um PNG por slide e o PDF.
+- **Pelo script:** gera um PNG por slide e o PDF de cada versão.
 
 ```sh
 npm i -D playwright && npx playwright install chromium   # uma vez
-node render.mjs            # → render/slide-NN.png e talent-four-velora.pdf
+node render.mjs              # as duas versões → render/<versão>/slide-NN.png e os dois PDFs
+node render.mjs executivo    # só a executiva
+node render.mjs master       # só a master
 ```
 
-## Estrutura
+## Estrutura da master
 
 | Slides | Parte | Conteúdo |
 |---|---|---|
