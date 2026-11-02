@@ -196,8 +196,8 @@ img, svg { display: block; }
 .roteiro__fases .mono { padding: 0; font-size: 15px; }
 
 /* Como contribuímos */
-.frase { position: absolute; left: var(--mx); top: 236px; width: 1500px; }
-.frase__t { font: 700 104px/1.04 var(--f-display); letter-spacing: -.035em; }
+.frase { position: absolute; left: var(--mx); top: 236px; width: var(--larg); }
+.frase__t { font: 700 88px/1.06 var(--f-display); letter-spacing: -.035em; }
 .frase__t span { display: block; }
 .frase .lead { margin-top: 44px; max-width: 1100px; color: var(--fg-2); }
 
@@ -273,16 +273,16 @@ img, svg { display: block; }
 .gantt__fim { position: absolute; right: 0; top: 24px; color: var(--fg-2); }
 
 /* Fase 1 · quatro lentes */
-.lentes { position: absolute; left: var(--mx); top: 400px; width: var(--larg); height: 520px; }
-.lente { position: absolute; left: 0; width: 820px; height: 130px; display: grid; grid-template-columns: 76px 1fr; align-content: center; border-top: 1px solid var(--linha); }
+.lentes { position: absolute; left: var(--mx); top: 384px; width: var(--larg); height: 576px; }
+.lente { position: absolute; left: 0; width: 820px; height: 144px; display: grid; grid-template-columns: 76px 1fr; align-content: center; border-top: 1px solid var(--linha); }
 .lente:last-of-type { border-bottom: 1px solid var(--linha); }
 .lente .mono { color: var(--fg-3); padding-top: 8px; grid-row: span 2; }
 .lente .txt { margin-top: 4px; }
 .lentes svg { position: absolute; left: 0; top: 0; overflow: visible; }
 .lentes svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1.25; }
 .lentes svg .forte { stroke: var(--fg); stroke-width: 1.5; }
-.lentes__no { position: absolute; left: 1182px; top: 251px; width: 18px; height: 18px; background: var(--destaque); }
-.lentes__plano { position: absolute; left: 1272px; top: 150px; width: 360px; }
+.lentes__no { position: absolute; left: 1182px; top: 279px; width: 18px; height: 18px; background: var(--destaque); }
+.lentes__plano { position: absolute; left: 1272px; top: 178px; width: 360px; }
 .lentes__plano .mono { color: var(--fg-3); }
 .lentes__plano .t3 { margin-top: 8px; font-size: 40px; line-height: 1.05; letter-spacing: -.02em; }
 .lentes__plano .txt { margin-top: 14px; color: var(--fg); }
@@ -449,14 +449,15 @@ img, svg { display: block; }
 
 /* Fase 3 · projeção de referência */
 .proj .tabela-wrap { top: 400px; }
-.proj td { font-size: 23px; padding-top: 13px; padding-bottom: 13px; }
+.proj td { font-size: 23px; padding-top: 11px; padding-bottom: 11px; }
 .proj td:first-child { color: var(--fg); font-weight: 500; }
 .proj td.reun { font: 700 30px/1.1 var(--f-display); letter-spacing: -.015em; color: var(--fg); text-align: right; white-space: nowrap; }
 .proj tr.total td { border-top: 2px solid var(--fg); border-bottom: 1px solid var(--linha-diag); color: var(--fg); }
 .proj tr.total td.reun { font-size: 36px; }
-.desdobra { position: absolute; left: var(--mx); right: var(--mx); top: 690px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
+.desdobra { position: absolute; left: var(--mx); right: var(--mx); top: 682px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
 .desdobra > .mono { grid-column: 1 / -1; margin-bottom: 14px; color: var(--fg-3); }
-.desdobra .num { font-size: 64px; }
+.desdobra .num { margin-top: 6px; font-size: 64px; }
+.desdobra .quando { margin-left: 8px; font-size: 14px; color: var(--fg-3); white-space: nowrap; }
 .desdobra .num.acid span { background: var(--acid); color: var(--ink); padding: 0 .08em; }
 .desdobra .txt { margin-top: 8px; font-size: 22px; }
 
@@ -492,26 +493,26 @@ img, svg { display: block; }
 .fica__lista .txt { margin-top: 6px; }
 
 /* Time */
-.time { position: absolute; left: var(--mx); right: var(--mx); top: 410px; display: grid; grid-template-columns: repeat(3, 1fr); }
+.time { position: absolute; left: var(--mx); right: var(--mx); top: 388px; display: grid; grid-template-columns: repeat(3, 1fr); }
 .time__col { padding-right: 48px; }
 .time__col + .time__col { padding-left: 48px; border-left: 1px solid var(--linha-diag); }
 .time__cab { padding-bottom: 18px; border-bottom: 1px solid var(--linha-diag); }
 .time__cab .mono { color: var(--fg-3); }
 .time__cab .t3 { margin-top: 6px; font-size: 32px; }
-.pessoa { padding: 20px 0; border-bottom: 1px solid var(--linha); }
+.pessoa { padding: 14px 0; border-bottom: 1px solid var(--linha); }
 .pessoa .t4 { font-size: 27px; }
 .pessoa .txt { margin-top: 4px; font-size: 22px; }
 
 /* Investimento */
-.inv-cols { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; }
+.inv-cols { position: absolute; left: var(--mx); right: var(--mx); top: 392px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; }
 .inv-col__cab { padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
-.inv-linha { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--linha); }
+.inv-linha { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 24px; padding: 12px 0; border-bottom: 1px solid var(--linha); }
 .inv-linha .t4 { font-size: 26px; }
 .inv-linha .txt { margin-top: 2px; font-size: 21px; }
 .inv-v { font: 700 34px/1 var(--f-display); letter-spacing: -.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.inv-linha--sub { padding: 14px 0; border-bottom: 0; }
+.inv-linha--sub { padding: 10px 0; border-bottom: 0; }
 .inv-linha--sub .t4, .inv-linha--sub .inv-v { color: var(--fg-2); }
-.inv-total { position: absolute; left: var(--mx); right: var(--mx); bottom: 120px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; padding-top: 22px; border-top: 2px solid var(--fg); }
+.inv-total { position: absolute; left: var(--mx); right: var(--mx); bottom: 112px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; padding-top: 22px; border-top: 2px solid var(--fg); }
 .inv-total .mono { color: var(--fg-3); }
 .inv-total .num { margin-top: 12px; font-size: 76px; }
 .inv-total .num span { background: var(--acid); color: var(--ink); padding: .02em .1em 0; margin-left: -.1em; }
@@ -519,7 +520,7 @@ img, svg { display: block; }
 .inv-total .txt { margin-top: 6px; font-size: 21px; }
 
 /* Custo por etapa */
-.custo__inv { position: absolute; left: var(--mx); top: 404px; width: 560px; }
+.custo__inv { position: absolute; left: var(--mx); top: 404px; width: 500px; }
 .custo__inv > .mono { color: var(--fg-3); }
 .custo__inv .num { margin-top: 16px; font-size: 104px; letter-spacing: -.05em; }
 .custo__inv dl { margin: 34px 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--linha); }
@@ -527,19 +528,30 @@ img, svg { display: block; }
 .custo__inv dt { color: var(--fg-2); }
 .custo__inv dd { padding-left: 24px; font: 700 24px/1.42 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
 .custo__nota { margin-top: 16px; max-width: 540px; font: 500 14px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
-.ec-lista { position: absolute; left: 820px; right: var(--mx); top: 404px; }
-.ec { display: grid; grid-template-columns: 1fr 210px 340px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--linha); }
+.ec-lista { position: absolute; left: 740px; right: var(--mx); top: 404px; }
+.ec { display: grid; grid-template-columns: 1fr 140px 300px 230px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--linha); }
 .ec--cab { padding: 0 0 14px; border-bottom-color: var(--linha-diag); }
 .ec--cab .mono { color: var(--fg-3); }
 .ec .dir { text-align: right; }
 .ec .t3 { font-size: 32px; }
 .ec__vol { font: 700 32px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.ec__custo { font: 700 40px/1 var(--f-display); letter-spacing: -.025em; text-align: right; font-variant-numeric: tabular-nums; }
+.ec__meses { font: 700 36px/1 var(--f-display); letter-spacing: -.02em; text-align: right; font-variant-numeric: tabular-nums; color: var(--fg-4); }
+.ec__meses small { display: block; margin-top: 8px; font: 500 14px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.ec--foco .ec__meses { color: var(--fg); }
+.ec--foco .ec__meses span { background: var(--acid); color: var(--ink); padding: 0 .1em; }
+.ec__custo { font: 700 36px/1 var(--f-display); letter-spacing: -.025em; text-align: right; font-variant-numeric: tabular-nums; }
 .ec__custo small { display: block; margin-top: 8px; font: 500 14px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
 .ec--foco { border-bottom: 2px solid var(--fg); }
-.ec--foco .ec__custo span { background: var(--acid); color: var(--ink); padding: 0 .08em; }
 
 /* Retorno projetado */
+.equilibrio { position: absolute; left: var(--mx); top: 404px; width: 640px; }
+.equilibrio > .mono { color: var(--fg-3); }
+.equilibrio .num { margin-top: 18px; font-size: 64px; line-height: 1; white-space: nowrap; }
+.equilibrio .num span { background: var(--acid); color: var(--ink); padding: .06em .12em .02em; margin-left: -.12em; }
+.equilibrio .lead { margin-top: 24px; font-size: 26px; color: var(--fg-2); }
+.barras__eixo b { font-weight: 500; color: var(--fg); }
+.barras__linha { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.barras__linha polyline { fill: none; stroke: var(--acid); stroke-width: 3; stroke-dasharray: 10 8; vector-effect: non-scaling-stroke; }
 .premissas { position: absolute; left: var(--mx); top: 404px; width: 560px; }
 .premissas > .mono { color: var(--fg-3); }
 .premissas dl { margin: 16px 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--linha-diag); }
@@ -547,9 +559,9 @@ img, svg { display: block; }
 .premissas dt { color: var(--fg-2); }
 .premissas dd { padding-left: 24px; font: 700 24px/1.42 var(--f-display); text-align: right; font-variant-numeric: tabular-nums; }
 .premissas__nota { margin-top: 14px; font: 500 14px/1.4 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
-.barras { position: absolute; left: 820px; right: var(--mx); top: 404px; }
+.barras { position: absolute; left: 880px; right: var(--mx); top: 404px; margin: 0; }
 .barras__eixo { color: var(--fg-3); }
-.barras__grade { margin-top: 12px; height: 262px; display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 28px; align-items: end; border-bottom: 1px solid var(--linha-diag); }
+.barras__grade { position: relative; margin-top: 12px; height: 262px; display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 28px; align-items: end; border-bottom: 1px solid var(--linha-diag); }
 .barra-ano { display: flex; flex-direction: column; justify-content: flex-end; }
 .barra-ano__v { font: 700 30px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; margin-bottom: 12px; }
 .barra-ano span { display: block; background: var(--fg); }
@@ -560,6 +572,51 @@ img, svg { display: block; }
 .kpis .num { font-size: 60px; white-space: nowrap; }
 .kpis .num.acid { color: var(--acid); }
 .kpis .txt { margin-top: 10px; font-size: 20px; line-height: 1.4; }
+
+/* Três cenários */
+.cen td { padding-top: 9px; padding-bottom: 9px; color: var(--fg); }
+.cen td:first-child { color: var(--fg-2); }
+.cen td small { display: block; margin-top: 2px; font: 500 13px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); }
+.cen td.dir { width: 250px; font: 700 28px/1.2 var(--f-display); letter-spacing: -.015em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--fg-2); }
+.cen td.cen-base, .cen th.cen-base { color: var(--fg); }
+.cen th.cen-base { color: var(--fg); }
+.cen tr.cen__total td { border-top: 2px solid var(--fg); border-bottom: 0; }
+.cen tr.cen__total td.dir { font-size: 34px; }
+.cen tr.cen__total td.cen-base span { background: var(--acid); color: var(--ink); padding: 0 .1em; }
+.cenarios .tabela-wrap { top: 356px; }
+.cen__nota { bottom: 112px; padding-top: 18px; font-size: 21px; line-height: 1.4; }
+
+/* Condições comerciais */
+.cond { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; }
+.cond__cab { padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
+.cond dl { margin: 0; display: grid; grid-template-columns: 220px 1fr; }
+.cond dt, .cond dd { margin: 0; padding: 16px 0; border-bottom: 1px solid var(--linha); font-size: 23px; line-height: 1.42; }
+.cond dt { font: 700 24px/1.4 var(--f-display); }
+.cond dd { color: var(--fg-2); }
+.marco-v { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--linha); font-size: 23px; }
+.marco-v__v { font: 700 30px/1 var(--f-display); letter-spacing: -.02em; }
+.cond__sub { margin-top: 28px; color: var(--fg-3); }
+.cond .lista { margin-top: 8px; }
+.cond .lista li { padding-top: 9px; padding-bottom: 9px; font-size: 21px; color: var(--fg-2); }
+.cond .lista li::before { top: calc(9px + .7em - 3px); background: var(--fg-3); }
+
+/* O que ouvimos */
+.ouv { position: absolute; left: var(--mx); right: var(--mx); top: 380px; display: grid; grid-template-columns: 1fr 96px 1fr; }
+.ouv__cab { padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
+.ouv__cab--forte { color: var(--fg); border-bottom: 2px solid var(--fg); }
+.ouv .lista { border-top: 0; }
+.ouv .lista li { padding-top: 12px; padding-bottom: 12px; font-size: 23px; }
+.ouv .lista li::before { top: calc(12px + .71em - 3px); }
+.ouv__col:first-child .lista li { color: var(--fg-2); }
+.ouv__col:first-child .lista li::before { background: transparent; border: 1px solid var(--fg-3); }
+.ouv__seta { display: flex; justify-content: center; padding-top: 104px; }
+.ouv__seta svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1.5; }
+.custo-nao { position: absolute; left: var(--mx); right: var(--mx); bottom: 120px; display: grid; grid-template-columns: 300px 1fr; padding-top: 22px; border-top: 2px solid var(--fg); }
+.custo-nao .mono { padding-top: 6px; color: var(--fg); }
+.custo-nao p:last-child { font: 500 26px/1.45 var(--f-corpo); }
+
+/* Campo a preencher com dado da Talent */
+.ph { font-family: var(--f-mono); font-size: .82em; letter-spacing: .02em; color: var(--fg-3); border-bottom: 1px dashed currentColor; }
 
 /* Próximos passos (linha do tempo vertical) */
 .passos-slide .cab { right: auto; width: 1140px; }
@@ -661,8 +718,8 @@ body.visao { overflow: auto; background: #000; }
 <section class="slide claro" data-nome="Como a Velora contribui" data-parte="1">
   <div class="frase">
     <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Como contribuímos</span></p>
-    <h2 class="frase__t"><span class="fg2">Crescer fica mais consistente</span><span>quando as oportunidades têm um caminho claro.</span></h2>
-    <p class="lead">Ajudamos empresas a conectar inteligência de mercado, marketing e vendas para definir onde atuar, como se aproximar das contas certas e o que acompanhar em cada etapa.</p>
+    <h2 class="frase__t"><span class="fg2">Crescimento consistente exige</span><span>um caminho claro até cada conta.</span></h2>
+    <p class="lead">Conectamos inteligência de mercado, marketing e vendas para definir onde atuar, como se aproximar das contas certas e o que acompanhar em cada etapa.</p>
   </div>
   <p class="faixa"><span>Inteligência</span><span>Acesso</span><span>Demanda</span><span>Conversão</span><span>Medição</span></p>
 </section>
@@ -741,12 +798,45 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 
+<!-- ===================================================== O que ouvimos -->
+<section class="slide claro ouvimos" data-nome="O que ouvimos" data-parte="2">
+  <div class="cab">
+    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que ouvimos</span></p>
+    <h2 class="t2">O que ouvimos da Talent.</h2>
+  </div>
+  <div class="ouv">
+    <div class="ouv__col">
+      <p class="mono ouv__cab">Onde a Talent está</p>
+      <ul class="lista">
+        <li>Crescimento construído por relacionamento e indicação desde 1992, com ~350 consultores alocados.</li>
+        <li>Carteira concentrada: <span class="ph">[X]%</span> da receita em <span class="ph">[N]</span> contas.</li>
+        <li>Novas contas chegam sobretudo quando alguém conhecido muda de empresa, num ritmo que a Talent não controla.</li>
+        <li>Um hunter recém-contratado, que precisa de contas, contexto e mensagem para render rápido.</li>
+      </ul>
+    </div>
+    <div class="ouv__seta"><svg width="64" height="16" viewBox="0 0 64 16"><path d="M0 8 H62 M55 1 L62 8 L55 15"/></svg></div>
+    <div class="ouv__col">
+      <p class="mono ouv__cab ouv__cab--forte">Onde a Talent quer chegar</p>
+      <ul class="lista">
+        <li><span class="ph">[N]</span> contas novas por ano em setores como bancos, seguros e saúde.</li>
+        <li>Ser homologada antes da demanda aparecer, não depois.</li>
+        <li>Ofertas de entrada que abram portas em grandes contas, como squads de QA e perfis escassos.</li>
+        <li>Previsibilidade: saber quanto custa abrir uma conta e onde investir.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="custo-nao">
+    <p class="mono">O custo de não mudar</p>
+    <p>Cada conta grande que homologa um concorrente antes da Talent fica fechada por anos. <span class="marca-acid">Com 6 posições, uma conta representa cerca de R$ 1,4 mi por ano de faturamento.</span></p>
+  </div>
+</section>
+
 <!-- ===================================================== Como a Talent cresceu -->
 <section class="slide claro" data-nome="Como a Talent cresceu" data-parte="2">
   <div class="cab">
     <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Como a Talent cresceu</span></p>
     <h2 class="t2">O relacionamento abre portas.</h2>
-    <p class="lead sub">A capacidade de entrega ajuda a transformar acesso em contratos.</p>
+    <p class="lead sub">A capacidade de entrega transforma acesso em contratos.</p>
   </div>
   <div class="trilha">
     <ol class="etapas">
@@ -807,7 +897,7 @@ body.visao { overflow: auto; background: #000; }
     <div class="gantt__col" style="left:680px"><p class="mono">Mês 5</p></div>
     <div class="gantt__col" style="left:850px"><p class="mono">Mês 6</p></div>
     <div class="gantt__col gantt__col--horizonte" style="left:1060px"><p class="mono">Meses 12 a 18</p></div>
-    <div class="gantt__horizonte"><p class="mono">Expectativa</p><p class="txt">Grandes contas costumam exigir maturação. O primeiro semestre cria as condições para aprender, abrir oportunidades e construir referências de custo; o desenvolvimento das contas pode se estender por 12 a 18 meses.</p></div>
+    <div class="gantt__horizonte"><p class="mono">Expectativa</p><p class="txt">Grandes contas costumam exigir maturação. O primeiro semestre cria as condições para aprender, abrir oportunidades e construir referências de custo; o desenvolvimento das contas pode se estender por 12 a 18 meses. As projeções de retorno da parte 04 seguem essa rampa.</p></div>
 
     <div class="gantt__fase" style="top:40px">
       <div class="gantt__barra" style="left:0; width:150px"></div>
@@ -846,17 +936,17 @@ body.visao { overflow: auto; background: #000; }
     <h2 class="t2">Começamos entendendo a operação e identificando onde atuar primeiro.</h2>
   </div>
   <div class="lentes">
-    <svg width="1632" height="520" viewBox="0 0 1632 520" aria-hidden="true">
-      <path d="M860 65 C1040 65 1060 260 1182 260"/>
-      <path d="M860 195 C1020 195 1060 260 1182 260"/>
-      <path d="M860 325 C1020 325 1060 260 1182 260"/>
-      <path d="M860 455 C1040 455 1060 260 1182 260"/>
-      <path class="forte" d="M1200 260 H1246 M1239 253 L1246 260 L1239 267"/>
+    <svg width="1632" height="576" viewBox="0 0 1632 576" aria-hidden="true">
+      <path d="M860 72 C1040 72 1060 288 1182 288"/>
+      <path d="M860 216 C1020 216 1060 288 1182 288"/>
+      <path d="M860 360 C1020 360 1060 288 1182 288"/>
+      <path d="M860 504 C1040 504 1060 288 1182 288"/>
+      <path class="forte" d="M1200 288 H1246 M1239 281 L1246 288 L1239 295"/>
     </svg>
     <div class="lente" style="top:0"><p class="mono">01</p><h3 class="t3">Carteira</h3><p class="txt">Analisar concentração, perfil das contas e oportunidades de expansão.</p></div>
-    <div class="lente" style="top:130px"><p class="mono">02</p><h3 class="t3">Comercial</h3><p class="txt">Entender fluxos de trabalho, CRM, indicadores e a atuação dos gerentes e do novo hunter.</p></div>
-    <div class="lente" style="top:260px"><p class="mono">03</p><h3 class="t3">Marketing</h3><p class="txt">Avaliar site, conteúdo e presença nos canais em que os clientes pesquisam fornecedores.</p></div>
-    <div class="lente" style="top:390px"><p class="mono">04</p><h3 class="t3">Mercado</h3><p class="txt">Definir o perfil de cliente ideal e dimensionar as contas com maior potencial.</p></div>
+    <div class="lente" style="top:144px"><p class="mono">02</p><h3 class="t3">Comercial</h3><p class="txt">Mapear o fluxo comercial, o CRM e os indicadores para dar ao hunter e aos gerentes mais contas, mais contexto e menos trabalho manual.</p></div>
+    <div class="lente" style="top:288px"><p class="mono">03</p><h3 class="t3">Marketing</h3><p class="txt">Avaliar site, conteúdo e presença nos canais em que os clientes pesquisam fornecedores.</p></div>
+    <div class="lente" style="top:432px"><p class="mono">04</p><h3 class="t3">Mercado</h3><p class="txt">Definir o perfil de cliente ideal e dimensionar as contas com maior potencial.</p></div>
     <span class="lentes__no"></span>
     <div class="lentes__plano"><p class="mono">Entregável</p><h3 class="t3">Plano priorizado</h3><p class="txt">Melhorias de curto prazo, ações para as semanas seguintes e iniciativas estruturantes.</p></div>
   </div>
@@ -886,7 +976,7 @@ body.visao { overflow: auto; background: #000; }
   </div>
   <div class="ponteio">
     <div class="ponteio__linha ponteio__linha--cab"><p class="mono">O diagnóstico entrega</p><p class="mono ponteio__meio">Validação · semana 4</p><p class="mono">O setup começa com</p></div>
-    <div class="ponteio__linha"><p class="ponteio__de">ICP validado e contas dimensionadas</p><span class="ponteio__seta"></span><p class="ponteio__para">Classificação das ~500 contas em A1, B2 e B3</p></div>
+    <div class="ponteio__linha"><p class="ponteio__de">ICP validado e contas dimensionadas</p><span class="ponteio__seta"></span><p class="ponteio__para">Classificação das ~500 contas em Tier 1, 2 e 3</p></div>
     <div class="ponteio__linha"><p class="ponteio__de">Mapa do comitê de compra</p><span class="ponteio__seta"></span><p class="ponteio__para">Mensagens e ofertas de entrada por papel</p></div>
     <div class="ponteio__linha"><p class="ponteio__de">Leitura do processo e do CRM</p><span class="ponteio__seta"></span><p class="ponteio__para">Etapas, critérios e prazos de passagem</p></div>
     <div class="ponteio__linha"><p class="ponteio__de">Diagnóstico de marketing e do site</p><span class="ponteio__seta"></span><p class="ponteio__para">Briefing da página de conversão e do conteúdo</p></div>
@@ -919,7 +1009,7 @@ body.visao { overflow: auto; background: #000; }
     <li class="pergunta"><p class="mono">01</p><h3 class="pergunta__q">Onde concentrar esforços<small>Perfil de empresa (ICP)</small></h3><p class="txt">Porte da operação de TI e uso de terceiros; setores como bancos, seguros, saúde, farma, varejo e energia; região e modelo de contratação; lista de contas desejadas pela Talent.</p></li>
     <li class="pergunta"><p class="mono">02</p><h3 class="pergunta__q">Quem participa da decisão<small>Pessoas envolvidas</small></h3>
       <dl><dt>Demanda</dt><dd>CIOs, CTOs e lideranças de desenvolvimento, dados e qualidade.</dd><dt>Homologação</dt><dd>Compras e suprimentos.</dd><dt>Influência</dt><dd>PMOs, líderes de squad e contatos com histórico de relacionamento.</dd></dl></li>
-    <li class="pergunta"><p class="mono">03</p><h3 class="pergunta__q">Como iniciar a conversa<small>Mensagens e ofertas</small></h3><p class="txt">Mensagens por setor e perfil; ofertas de entrada, como squads de testes e alocação de perfis escassos; evidências de experiência e capacidade de atendimento.</p></li>
+    <li class="pergunta"><p class="mono">03</p><h3 class="pergunta__q">Como iniciar a conversa<small>Mensagens e ofertas</small></h3><p class="txt">Mensagens por setor e perfil; ofertas de entrada, como squads de testes e alocação de perfis escassos; evidências de experiência e capacidade de atendimento. Ofertas desenhadas em conjunto com <span class="ph">[Nome]</span>, de produto e comercial.</p></li>
   </ol>
 </section>
 
@@ -932,9 +1022,9 @@ body.visao { overflow: auto; background: #000; }
   </div>
   <p class="contas__fim">Ao final da preparação, definimos juntos as frentes e contas que terão prioridade nos quatro meses seguintes.</p>
   <div class="bandas">
-    <div class="banda banda--a1"><div class="banda__cab"><h3 class="t4">A1 · ~50</h3><p class="mono">Contas estratégicas</p></div><p class="txt">Maior potencial de relacionamento e expansão. Abordagem individual, com apoio da diretoria e dos gerentes de conta.</p><div class="banda__pontos" data-pontos="50"></div></div>
-    <div class="banda banda--b2"><div class="banda__cab"><h3 class="t4">B2 · ~150</h3><p class="mono">Contas prioritárias</p></div><p class="txt">Oportunidades relevantes para abordagens personalizadas por segmento.</p><div class="banda__pontos" data-pontos="150"></div></div>
-    <div class="banda banda--b3"><div class="banda__cab"><h3 class="t4">B3 · ~300</h3><p class="mono">Desenvolvimento de mercado</p></div><p class="txt">Cadências escaláveis de prospecção, apoiadas por conteúdo e segmentação.</p><div class="banda__pontos" data-pontos="300"></div></div>
+    <div class="banda banda--a1"><div class="banda__cab"><h3 class="t4">Tier 1 · ~50</h3><p class="mono">Contas estratégicas</p></div><p class="txt">Maior potencial de relacionamento e expansão. Abordagem individual, com apoio da diretoria e dos gerentes de conta.</p><div class="banda__pontos" data-pontos="50"></div></div>
+    <div class="banda banda--b2"><div class="banda__cab"><h3 class="t4">Tier 2 · ~150</h3><p class="mono">Contas prioritárias</p></div><p class="txt">Oportunidades relevantes para abordagens personalizadas por segmento.</p><div class="banda__pontos" data-pontos="150"></div></div>
+    <div class="banda banda--b3"><div class="banda__cab"><h3 class="t4">Tier 3 · ~300</h3><p class="mono">Desenvolvimento de mercado</p></div><p class="txt">Cadências escaláveis de prospecção, apoiadas por conteúdo e segmentação.</p><div class="banda__pontos" data-pontos="300"></div></div>
   </div>
 </section>
 
@@ -979,7 +1069,7 @@ body.visao { overflow: auto; background: #000; }
 <circle class="radar__centro" cx="300" cy="300" r="3"/>
 </svg></figure>
   <div class="sinais">
-    <div class="sinais__intro"><p class="mono">Velora Radar</p><p class="txt">Monitoramento de informações públicas e fontes de dados, com apoio de IA, para acompanhar contas A1 e B2. A proposta é reunir indícios de mudança, oportunidade ou necessidade e dar contexto à abordagem do hunter e dos gerentes.</p></div>
+    <div class="sinais__intro"><p class="mono">Velora Radar</p><p class="txt">Monitoramento de informações públicas e fontes de dados, com apoio de IA, para acompanhar as contas Tier 1 e Tier 2. A proposta é reunir indícios de mudança, oportunidade ou necessidade e dar contexto à abordagem do hunter e dos gerentes.</p></div>
     <table class="tabela">
       <thead><tr><th>Sinal</th><th>O que pode indicar</th></tr></thead>
       <tbody>
@@ -1009,7 +1099,7 @@ body.visao { overflow: auto; background: #000; }
     <div class="divide__lado">
       <p class="divide__verbo">Construir</p>
       <p class="lead divide__sub">presença e consideração.</p>
-      <ul class="lista"><li>Conteúdo segmentado no LinkedIn e, quando fizer sentido, na Meta.</li><li><span class="marca-acid">Ferramenta de comparação</span>: alocar profissionais ou contratar via CLT.</li><li>Guias, estudos e materiais úteis sobre contratação e terceirização de TI.</li></ul>
+      <ul class="lista"><li>Conteúdo segmentado no LinkedIn para as contas Tier 1 e Tier 2.</li><li><span class="marca-acid">Ferramenta de comparação</span>: alocar profissionais ou contratar via CLT.</li><li>Guias, estudos e materiais úteis sobre contratação e terceirização de TI.</li></ul>
     </div>
   </div>
   <p class="fechamento">Trabalho conjunto: <span>Talent, agência atual e Velora alinham temas, entregas e indicadores para que marketing e comercial avancem na mesma direção.</span></p>
@@ -1040,9 +1130,9 @@ body.visao { overflow: auto; background: #000; }
     <table class="tabela">
       <thead><tr><th>Grupo</th><th>Como nos aproximamos</th><th>Canais prioritários</th><th>Quem participa</th></tr></thead>
       <tbody>
-        <tr><td><span class="grupo-nome a1"><span>A1</span></span></td><td>Relacionamento individual e abordagem executiva</td><td>LinkedIn, telefone e encontros</td><td>Diretoria e gerentes de conta</td></tr>
-        <tr><td><span class="grupo-nome">B2</span></td><td>Conversas personalizadas por segmento</td><td>E-mail e LinkedIn</td><td>Hunter</td></tr>
-        <tr><td><span class="grupo-nome">B3</span></td><td>Prospecção em escala, com segmentação e conteúdo</td><td>E-mail, LinkedIn e mídia</td><td>Operação de prospecção e hunter</td></tr>
+        <tr><td><span class="grupo-nome a1"><span>Tier 1</span></span></td><td>Relacionamento individual e abordagem executiva</td><td>LinkedIn, telefone e encontros</td><td>Diretoria e gerentes de conta</td></tr>
+        <tr><td><span class="grupo-nome">Tier 2</span></td><td>Conversas personalizadas por segmento</td><td>E-mail e LinkedIn</td><td>Hunter</td></tr>
+        <tr><td><span class="grupo-nome">Tier 3</span></td><td>Prospecção em escala, com segmentação e conteúdo</td><td>E-mail, LinkedIn e mídia</td><td>Operação de prospecção e hunter</td></tr>
       </tbody>
     </table>
   </div>
@@ -1117,11 +1207,11 @@ body.visao { overflow: auto; background: #000; }
   </div>
   <div class="quad">
     <div><p class="mono">01</p><h3 class="t3">Design</h3><p class="txt">Peças, página de conversão e materiais de apoio, como guias e comparativos.</p></div>
-    <div><p class="mono">02</p><h3 class="t3">Mídia</h3><p class="txt">Gestão de campanhas em Google, LinkedIn e Meta, com otimização orientada a resultados.</p></div>
+    <div><p class="mono">02</p><h3 class="t3">Mídia</h3><p class="txt">Google para buscas por marca e alocação; LinkedIn para as contas Tier 1 e Tier 2.</p></div>
     <div><p class="mono">03</p><h3 class="t3">Redação</h3><p class="txt">Textos para anúncios, cadências, páginas e materiais por público.</p></div>
     <div><p class="mono">04</p><h3 class="t3">Criativos</h3><p class="txt">Adaptação das mensagens para peças estáticas, carrosséis e vídeos.</p></div>
   </div>
-  <div class="verba"><p class="mono">Investimento em mídia</p><p><span class="marca-acid">Cerca de R$ 10 mil por mês</span> nos quatro meses de operação, pago diretamente pela Talent às plataformas e ajustado em conjunto na fase de preparação.</p></div>
+  <div class="verba"><p class="mono">Investimento em mídia</p><p><span class="marca-acid">Cerca de R$ 10 mil por mês</span> nos quatro meses de operação, concentrado em Google e LinkedIn e pago diretamente pela Talent às plataformas e ajustado em conjunto na fase de preparação.</p></div>
 </section>
 
 <!-- ===================================================== Fase 3 · projeção de referência -->
@@ -1132,10 +1222,10 @@ body.visao { overflow: auto; background: #000; }
   </div>
   <div class="tabela-wrap">
     <table class="tabela">
-      <thead><tr><th>Frente</th><th>Base de referência</th><th>Hipótese inicial</th><th class="dir">Reuniões estimadas</th></tr></thead>
+      <thead><tr><th>Frente</th><th>Base de referência</th><th>Hipótese inicial</th><th class="dir">Reuniões · meses 3 a 6</th></tr></thead>
       <tbody>
         <tr><td>Prospecção</td><td>2.000 contatos trabalhados</td><td>~2% de conversão em reunião</td><td class="reun">~40</td></tr>
-        <tr><td>ABM A1</td><td>~50 contas</td><td>~20% a 30% de conversão em reunião</td><td class="reun">~10 a 15</td></tr>
+        <tr><td>ABM Tier 1</td><td>~50 contas</td><td>~20% a 30% de conversão em reunião</td><td class="reun">~10 a 15</td></tr>
         <tr><td>Geração de demanda</td><td>Google, página e conteúdo</td><td>A medir</td><td class="reun">Meta de ~10</td></tr>
         <tr class="total"><td>Total de referência</td><td>—</td><td>—</td><td class="reun">~60 a 65</td></tr>
       </tbody>
@@ -1143,11 +1233,11 @@ body.visao { overflow: auto; background: #000; }
   </div>
   <div class="desdobra">
     <p class="mono">Possíveis desdobramentos do cenário</p>
-    <div><p class="num">15–20</p><p class="txt">oportunidades</p></div>
-    <div><p class="num">6–8</p><p class="txt">homologações iniciadas</p></div>
-    <div><p class="num acid"><span>4</span></p><p class="txt">contas novas, com cerca de 6 posições cada</p></div>
+    <div><p class="num">15–20</p><p class="txt">oportunidades <span class="mono quando">até o mês 6</span></p></div>
+    <div><p class="num">6–8</p><p class="txt">homologações iniciadas <span class="mono quando">meses 5 a 9</span></p></div>
+    <div><p class="num acid"><span>4</span></p><p class="txt">contas com a primeira alocação <span class="mono quando">meses 6 a 12</span></p></div>
   </div>
-  <p class="fechamento">Estimativas preliminares, não compromissos de resultado. <span>Premissas, taxas e prazos serão validados no diagnóstico e revistos durante a execução.</span></p>
+  <p class="fechamento">Homologação não garante requisição: supomos que metade das homologadas gere uma primeira alocação em até 12 meses. <span>Estimativas preliminares, não compromissos de resultado. Prazos a validar com o ciclo de compras da Talent.</span></p>
 </section>
 
 <!-- ===================================================== Fase 3 · RHOI -->
@@ -1209,12 +1299,13 @@ body.visao { overflow: auto; background: #000; }
     <div class="time__col">
       <div class="time__cab"><p class="mono">Velora</p><h3 class="t3">Especialistas de execução</h3></div>
       <div class="pessoa"><p class="t4">Design</p><p class="txt">Peças, páginas e materiais.</p></div>
-      <div class="pessoa"><p class="t4">Mídia</p><p class="txt">Campanhas em Google, LinkedIn e Meta.</p></div>
+      <div class="pessoa"><p class="t4">Mídia</p><p class="txt">Campanhas em Google e LinkedIn.</p></div>
       <div class="pessoa"><p class="t4">Redação e criação</p><p class="txt">Textos e formatos para diferentes públicos.</p></div>
     </div>
     <div class="time__col">
       <div class="time__cab"><p class="mono">Talent Four</p><h3 class="t3">Negócio e relacionamento</h3></div>
       <div class="pessoa"><p class="t4">Marcelo Magalhães</p><p class="txt">Patrocínio executivo e alinhamento das prioridades.</p></div>
+      <div class="pessoa"><p class="t4"><span class="ph">[Nome]</span> · Produto e comercial</p><p class="txt">Ofertas de entrada, critérios de passagem e condução do pipeline.</p></div>
       <div class="pessoa"><p class="t4">Hunter e gerentes de conta</p><p class="txt">Relacionamento, reuniões, negociação e expansão.</p></div>
       <div class="pessoa"><p class="t4">Agência atual</p><p class="txt">Produção e desdobramentos de conteúdo, conforme alinhamento de escopo.</p></div>
     </div>
@@ -1227,7 +1318,7 @@ body.visao { overflow: auto; background: #000; }
     <p class="rotulo"><span class="n">Parte 04</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">04</p>
     <h2 class="divisor__titulo">Investimento e projeções</h2>
-    <p class="mono divisor__sub">Investimento · Custo por etapa · Retorno projetado · Próximos passos</p>
+    <p class="mono divisor__sub">Investimento · Condições · Custo por etapa · Retorno e cenários · Próximos passos</p>
   </div>
 </section>
 
@@ -1247,14 +1338,46 @@ body.visao { overflow: auto; background: #000; }
     </div>
     <div class="inv-col">
       <p class="mono inv-col__cab">Mídia e ferramentas</p>
-      <div class="inv-linha"><div><p class="t4">Verba de mídia</p><p class="txt">Cerca de R$ 10 mil por mês nos 4 meses de operação.</p></div><p class="inv-v">R$ 40 mil</p></div>
-      <div class="inv-linha"><div><p class="t4">Ferramentas e conectores de IA</p><p class="txt">R$ 2 mil por mês durante os 6 meses.</p></div><p class="inv-v">R$ 12 mil</p></div>
+      <div class="inv-linha"><div><p class="t4">Verba de mídia</p><p class="txt">~R$ 10 mil/mês na operação, em Google e LinkedIn.</p></div><p class="inv-v">R$ 40 mil</p></div>
+      <div class="inv-linha"><div><p class="t4">Ferramentas e conectores de IA</p><p class="txt">R$ 2 mil/mês desde o diagnóstico, para mapear o mercado.</p></div><p class="inv-v">R$ 12 mil</p></div>
       <div class="inv-linha inv-linha--sub"><p class="t4">Subtotal</p><p class="inv-v">R$ 52 mil</p></div>
     </div>
   </div>
   <div class="inv-total">
     <div><p class="mono">Investimento do período · 6 meses</p><p class="num"><span>R$ 169 mil</span></p></div>
-    <div><p class="mono">Parcela por resultado</p><p class="t3">R$ 15 mil por conta nova</p><p class="txt">Quando a conta realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></div>
+    <div><p class="mono">Parcela por resultado</p><p class="t3">R$ 15 mil por conta nova, em duas etapas</p><p class="txt">R$ 7,5 mil na primeira alocação e R$ 7,5 mil quando a conta chegar a 3 posições ativas. Regras de elegibilidade no slide seguinte.</p></div>
+  </div>
+</section>
+
+<!-- ===================================================== Condições comerciais -->
+<section class="slide claro condicoes" data-nome="Condições comerciais" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Condições comerciais</span></p>
+    <h2 class="t2">Condições combinadas antes do início, com um ponto de decisão na semana 4.</h2>
+  </div>
+  <div class="cond">
+    <div class="cond__col">
+      <p class="mono cond__cab">Condições</p>
+      <dl>
+        <dt>Pagamento</dt><dd>Mensal, com vencimento em 15 dias.</dd>
+        <dt>Ponto de decisão</dt><dd><span class="marca-acid">Semana 4:</span> as fases 2 e 3 são confirmadas após o diagnóstico, com preço travado.</dd>
+        <dt>Aviso prévio</dt><dd>30 dias, a partir do mês 3.</dd>
+        <dt>Mídia e ferramentas</dt><dd>Pagas diretamente pela Talent às plataformas.</dd>
+        <dt>Validade</dt><dd>Proposta válida por 30 dias.</dd>
+      </dl>
+    </div>
+    <div class="cond__col">
+      <p class="mono cond__cab">Parcela por resultado · R$ 15 mil por conta</p>
+      <div class="marco-v"><p>Primeira alocação na conta</p><p class="marco-v__v">R$ 7,5 mil</p></div>
+      <div class="marco-v"><p>Conta atinge 3 posições ativas simultâneas</p><p class="marco-v__v">R$ 7,5 mil</p></div>
+      <p class="mono cond__sub">Uma conta é nova quando</p>
+      <ul class="lista">
+        <li>está na lista das ~500 classificadas na fase 2, validada e assinada pelas duas partes;</li>
+        <li>não teve faturamento com a Talent nos últimos 24 meses;</li>
+        <li>não estava em negociação ativa no CRM no início (lista de exclusão anexada ao contrato);</li>
+        <li>tem a primeira alocação em até 12 meses após o fim do projeto.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -1271,48 +1394,66 @@ body.visao { overflow: auto; background: #000; }
     <p class="custo__nota">Fora da soma: parcela por resultado de R$ 15 mil por contrato (R$ 60 mil no cenário de 4 contas).</p>
   </div>
   <div class="ec-lista">
-    <div class="ec ec--cab"><p class="mono">Etapa</p><p class="mono">Volume do cenário</p><p class="mono dir">Custo de referência</p></div>
-    <div class="ec"><h3 class="t3">Reunião</h3><p class="ec__vol">~60 a 65</p><p class="ec__custo">R$ 2,6 a 2,8 mil</p></div>
-    <div class="ec"><h3 class="t3">Homologação</h3><p class="ec__vol">6 a 8</p><p class="ec__custo">R$ 21 a 28 mil</p></div>
-    <div class="ec"><h3 class="t3">Contrato</h3><p class="ec__vol">4</p><p class="ec__custo">R$ 42 mil<small>R$ 57 mil com a parcela por resultado</small></p></div>
-    <div class="ec ec--foco"><h3 class="t3">Posição alocada</h3><p class="ec__vol">24</p><p class="ec__custo"><span>R$ 7 mil</span><small>R$ 9,5 mil com a parcela por resultado</small></p></div>
+    <div class="ec ec--cab"><p class="mono">Etapa</p><p class="mono">Volume</p><p class="mono dir">Custo de referência</p><p class="mono dir">Meses de margem</p></div>
+    <div class="ec"><h3 class="t3">Reunião</h3><p class="ec__vol">~60 a 65</p><p class="ec__custo">R$ 2,6 a 2,8 mil</p><p class="ec__meses">—</p></div>
+    <div class="ec"><h3 class="t3">Homologação</h3><p class="ec__vol">6 a 8</p><p class="ec__custo">R$ 21 a 28 mil</p><p class="ec__meses">—</p></div>
+    <div class="ec"><h3 class="t3">Contrato</h3><p class="ec__vol">4</p><p class="ec__custo">R$ 42 mil<small>R$ 57 mil com a parcela por resultado</small></p><p class="ec__meses">—</p></div>
+    <div class="ec ec--foco"><h3 class="t3">Posição alocada</h3><p class="ec__vol">24</p><p class="ec__custo">R$ 7 mil<small>R$ 9,5 mil com a parcela</small></p><p class="ec__meses"><span>~2,5</span><small>~3,4 com a parcela</small></p></div>
   </div>
-  <p class="fechamento">Cada posição alocada custa cerca de um terço do que fatura em um mês. <span>Custo de referência = investimento do período (R$ 169 mil) ÷ volume da etapa no cenário.</span></p>
+  <p class="fechamento">Cada posição alocada se paga em cerca de 2,5 meses de margem bruta (3,4 meses com a parcela por resultado), num contrato que tende a durar anos. <span>Custo de referência = investimento do período ÷ volume da etapa no cenário.</span></p>
 </section>
 
 <!-- ===================================================== Retorno projetado -->
 <section class="slide escuro retorno" data-nome="Retorno projetado" data-parte="4">
   <div class="cab">
-    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Retorno projetado · LTV de 5 anos · cenário ilustrativo</span></p>
-    <h2 class="t2">Em cinco anos, quatro contas novas podem representar cerca de R$ 24,5 milhões em receita.</h2>
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Retorno projetado · cenário ilustrativo</span></p>
+    <h2 class="t2">Cinco consultores alocados por um ano pagam o projeto.</h2>
   </div>
-  <div class="premissas">
-    <p class="mono">Premissas do cenário</p>
-    <dl>
-      <dt>Contas novas</dt><dd>4</dd>
-      <dt>Posições por conta</dt><dd>6 em média</dd>
-      <dt>Faturamento por posição</dt><dd>R$ 20 mil/mês</dd>
-      <dt>Churn da receita</dt><dd>8% ao ano</dd>
-      <dt>Horizonte</dt><dd>5 anos</dd>
-      <dt>Margem bruta de referência</dt><dd>14% (12% a 16%)</dd>
-    </dl>
+  <div class="equilibrio">
+    <p class="mono">Ponto de equilíbrio</p>
+    <p class="num"><span>~5 posições × 12 meses</span></p>
+    <p class="lead">é o ponto de equilíbrio dos R$ 169 mil, com R$ 20 mil de faturamento e 14% de margem por posição. Com a parcela por resultado de 4 contas, são cerca de 7.</p>
   </div>
-  <div class="barras" aria-label="Receita anual das quatro contas, em milhões de reais">
-    <p class="mono barras__eixo">Receita anual das 4 contas · R$ milhões</p>
+  <figure class="barras" aria-label="Receita anual do cenário base, com a linha do cenário conservador, em milhões de reais">
+    <p class="mono barras__eixo">Receita anual · R$ milhões · <b>barras: cenário base</b> · tracejado: conservador</p>
     <div class="barras__grade">
-      <div class="barra-ano"><p class="barra-ano__v">5,76</p><span style="height:210px"></span><p class="mono">Ano 1</p></div>
-      <div class="barra-ano"><p class="barra-ano__v">5,30</p><span style="height:193px"></span><p class="mono">Ano 2</p></div>
-      <div class="barra-ano"><p class="barra-ano__v">4,88</p><span style="height:178px"></span><p class="mono">Ano 3</p></div>
-      <div class="barra-ano"><p class="barra-ano__v">4,49</p><span style="height:164px"></span><p class="mono">Ano 4</p></div>
-      <div class="barra-ano"><p class="barra-ano__v">4,13</p><span style="height:151px"></span><p class="mono">Ano 5</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">2,40</p><span style="height:103px"></span><p class="mono">Ano 1</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,42</p><span style="height:190px"></span><p class="mono">Ano 2</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,88</p><span style="height:210px"></span><p class="mono">Ano 3</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,49</p><span style="height:193px"></span><p class="mono">Ano 4</p></div>
+      <div class="barra-ano"><p class="barra-ano__v">4,13</p><span style="height:178px"></span><p class="mono">Ano 5</p></div>
+      <svg class="barras__linha" viewBox="0 0 1000 262" preserveAspectRatio="none" aria-hidden="true"><polyline points="100,231 300,215 500,210 700,214 900,218"/></svg>
     </div>
-  </div>
+  </figure>
   <div class="kpis">
-    <div><p class="num">R$ 24,5 mi</p><p class="txt">de receita em 5 anos nas 4 contas (R$ 6,1 mi por conta).</p></div>
-    <div><p class="num">R$ 3,4 mi</p><p class="txt">de margem bruta a 14% (R$ 2,9 a 3,9 mi na faixa de 12% a 16%).</p></div>
-    <div><p class="num acid">~15x</p><p class="txt">margem em 5 anos ÷ investimento total de R$ 229 mil (período + parcela por resultado).</p></div>
-    <div><p class="num">3 a 4 meses</p><p class="txt">de margem das 4 contas ativas pagam o investimento total.</p></div>
+    <div><p class="num">R$ 20,3 mi</p><p class="txt">de receita em 5 anos no cenário base, com 4 contas (~R$ 5,1 mi por conta).</p></div>
+    <div><p class="num">R$ 2,8 mi</p><p class="txt">de margem bruta a 14%.</p></div>
+    <div><p class="num acid">~12x</p><p class="txt">margem em 5 anos ÷ investimento total de R$ 229 mil.</p></div>
+    <div><p class="num">~3,7x</p><p class="txt">mesmo no cenário conservador (2 contas, até 3 posições cada).</p></div>
   </div>
+</section>
+
+<!-- ===================================================== Cenários -->
+<section class="slide claro cenarios" data-nome="Três cenários" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Cenários com rampa · 5 anos</span></p>
+    <h2 class="t2">Três cenários, com as contas entrando de forma gradual.</h2>
+  </div>
+  <div class="tabela-wrap">
+    <table class="tabela cen">
+      <thead><tr><th></th><th class="dir">Conservador</th><th class="dir cen-base">Base</th><th class="dir">Otimista</th></tr></thead>
+      <tbody>
+        <tr><td>Contas novas</td><td class="dir">2</td><td class="dir cen-base">4</td><td class="dir">6</td></tr>
+        <tr><td>Posições médias por conta <small>ano 1 → ano 2 → anos 3 a 5</small></td><td class="dir">1,5 → 2,5 → 3</td><td class="dir cen-base">2,5 → 5 → 6</td><td class="dir">3 → 6 → 7</td></tr>
+        <tr><td>Receita no ano 1</td><td class="dir">R$ 0,72 mi</td><td class="dir cen-base">R$ 2,40 mi</td><td class="dir">R$ 4,32 mi</td></tr>
+        <tr><td>Receita em 5 anos</td><td class="dir">R$ 5,2 mi</td><td class="dir cen-base">R$ 20,3 mi</td><td class="dir">R$ 35,9 mi</td></tr>
+        <tr><td>Margem bruta em 5 anos <small>14%, a substituir pela margem real</small></td><td class="dir">R$ 0,73 mi</td><td class="dir cen-base">R$ 2,84 mi</td><td class="dir">R$ 5,02 mi</td></tr>
+        <tr><td>Investimento total <small>período + parcela por resultado</small></td><td class="dir">R$ 199 mil</td><td class="dir cen-base">R$ 229 mil</td><td class="dir">R$ 259 mil</td></tr>
+        <tr class="cen__total"><td>Margem ÷ investimento</td><td class="dir">~3,7x</td><td class="dir cen-base"><span>~12x</span></td><td class="dir">~19x</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fechamento cen__nota">As contas entram com 1 a 2 posições e chegam a 6 entre os meses 12 e 18; o ano 1 começa na primeira alocação. <span>R$ 20 mil por posição, margem de 14% e churn de 8% ao ano a partir do ano 2, sem expansão além disso nem contas já em relacionamento. No conservador, a segunda parcela só ocorre no ano 3 (mantivemos R$ 199 mil). Margem e faturamento serão trocados pelos números da Talent no diagnóstico.</span></p>
 </section>
 
 <!-- ===================================================== Próximos passos -->
@@ -1325,7 +1466,7 @@ body.visao { overflow: auto; background: #000; }
   <ol class="proximos">
     <li class="proximo proximo--inicio"><span class="no no--acid"></span><p class="proximo__n">01</p><div><h3 class="t3">Ajustes finais</h3><p class="txt">Alinhar prioridades, escopo e expectativas da proposta.</p></div><p class="mono quando">A seguir</p></li>
     <li class="proximo"><span class="no"></span><p class="proximo__n">02</p><div><h3 class="t3">Informações iniciais</h3><p class="txt">Aplicar o questionário de diagnóstico e organizar o acesso necessário à carteira e ao CRM.</p></div><p class="mono quando">Antes do início</p></li>
-    <li class="proximo"><span class="no"></span><p class="proximo__n">03</p><div><h3 class="t3">Início do trabalho</h3><p class="txt">Definir juntos a data de início do diagnóstico.</p></div><p class="mono quando">[data a confirmar]</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">03</p><div><h3 class="t3">Início do trabalho</h3><p class="txt">Início do diagnóstico na segunda-feira, 16/11.</p></div><p class="mono quando">16/11</p></li>
     <li class="proximo"><span class="no"></span><p class="proximo__n">04</p><div><h3 class="t3">Primeiras recomendações</h3><p class="txt">Apresentar o diagnóstico e o plano de ação.</p></div><p class="mono quando">Em 3 a 4 semanas</p></li>
   </ol>
 </section>
