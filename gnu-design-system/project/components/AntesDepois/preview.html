@@ -1,49 +1,20 @@
-<!-- @dsCard group="Composições" height=880 width=1200 -->
+<!-- @dsCard group="Composições" height=1130 width=1200 -->
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><title>Antes e depois</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap"><style>
-.ad { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--espaco-6); padding: var(--espaco-6) var(--espaco-5); }
-.ad__par { display:grid; grid-template-columns: 200px minmax(0,1fr); gap: var(--espaco-4); align-items:start; }
-.ad__antes { display:grid; gap: var(--espaco-2); }
-.ad__antes img { width:100%; height: 300px; object-fit: cover; object-position: top; border: 1px solid var(--linha); display:block; filter: saturate(.9); }
-.ad__depois { display:grid; gap: var(--espaco-3); align-content:start; }
-.ad__nota { display:grid; gap: 4px; padding-top: var(--espaco-3); border-top: 1px solid var(--linha); }
+<head><meta charset="utf-8"><title>Antes e depois</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&amp;display=swap"><style>
+.ad { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--espaco-7) var(--espaco-6); padding: var(--espaco-6); background: var(--fundo-areia); }
+.ad__par { display:grid; grid-template-columns: 200px minmax(0,1fr); gap: var(--espaco-5); align-items:start; }
+.ad__col { display:grid; gap: var(--espaco-3); align-content:start; }
+.ad__antes { width:100%; height:auto; max-height: 360px; object-fit: cover; object-position: top; border-radius: var(--raio-2); display:block; }
+.ad__depois { background: var(--fundo); border-radius: var(--raio-2); padding: var(--espaco-5); display:grid; gap: var(--espaco-4); align-content:start; }
 </style></head>
 <body class="gnu">
 
 <div class="ad">
-  <div class="ad__par">
-    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/f0e8908b953a2979684891766c603b0d" alt="Tela atual: foto em polaroide inclinada com tachinha"></div>
-    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
-      <a class="gnu-sede" href="#" style="border:1px solid var(--linha)"><figure class="gnu-imagem gnu-imagem--16x9"><img src="/_blob/aeea61a419fd732b430228f6069b72b3" alt="Piscina vista de cima"><figcaption class="gnu-imagem__agua"><span class="gnu-rotulo-p">Piscinas térmicas</span><span class="gnu-rotulo-p">Petrópolis</span></figcaption></figure>
-        <div class="gnu-sede__corpo" style="padding: var(--espaco-4)"><h3 class="gnu-sede__nome" style="font-size:30px">Alto Petrópolis</h3><p class="gnu-corpo-p gnu-suave gnu-num">Av. João Obino, 300 · Petrópolis</p></div></a>
-      <div class="ad__nota"><p class="gnu-titulo-3">Foto reta, aérea, com linha d'água</p><p class="gnu-corpo-p gnu-suave">A polaroide com tachinha lembra mural escolar. A foto reta dá escala e deixa a sede falar.</p></div></div>
-  </div>
-  <div class="ad__par">
-    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/008ad0c5d8864d660028fb3741e2d175" alt="Tela atual: cartões brancos centralizados só com um rótulo"></div>
-    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
-      <div class="gnu-dados gnu-dados--p" style="grid-template-columns: 1fr 1fr">
-        <div class="gnu-dado"><span class="gnu-dado__valor">10</span><span class="gnu-dado__rotulo">salões sociais e corporativos</span></div>
-        <div class="gnu-dado"><span class="gnu-dado__valor">4</span><span class="gnu-dado__rotulo">sedes em Porto Alegre</span></div></div>
-      <ul class="gnu-sede__lista"><li>Piscinas térmicas</li><li>Tênis e beach tennis</li><li>Espaço kids</li><li>Área verde</li></ul>
-      <div class="ad__nota"><p class="gnu-titulo-3">Números e chips, não caixas</p><p class="gnu-corpo-p gnu-suave">Seis caixas que pareciam botões viram dois fatos e uma lista que se lê em um segundo.</p></div></div>
-  </div>
-  <div class="ad__par">
-    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/55d6e2982d528026db011ce736906986" alt="Tela atual: texto centralizado com várias palavras destacadas em ciano"></div>
-    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
-      <p class="gnu-display-l" style="font-size:40px">Quatro sedes. Um só clube.</p>
-      <p class="gnu-corpo-p">Três nos bairros onde você já vive e uma na Ilha do Pavão, de frente para o pôr do sol no Guaíba.</p>
-      <div class="ad__nota"><p class="gnu-titulo-3">Uma ideia por frase, alinhada à esquerda</p><p class="gnu-corpo-p gnu-suave">O ciano sobre azul-gelo tem contraste de 2,3:1 e reprova na WCAG. A ênfase passa a vir do tamanho, não da cor.</p></div></div>
-  </div>
-  <div class="ad__par">
-    <div class="ad__antes"><p class="gnu-rotulo-p gnu-suave">Antes</p><img src="/_blob/6f719cb08cbf67852b994ed741b214b3" alt="Tela atual: formulário com rótulos dentro dos campos e consentimento pré-marcado"></div>
-    <div class="ad__depois"><p class="gnu-rotulo-p" style="color: var(--uniao)">Depois</p>
-      <div class="gnu-form" style="gap: var(--espaco-3)">
-        <div class="gnu-campo"><label for="ad-nome">Nome completo</label><input id="ad-nome" autocomplete="name"></div>
-        <label class="gnu-consentimento" for="ad-ok"><input id="ad-ok" type="checkbox"><span>Autorizo o GNU a falar comigo sobre a associação.</span></label>
-        <button class="gnu-btn gnu-btn--primario" type="button">Agendar visita <svg class="gnu-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button></div>
-      <div class="ad__nota"><p class="gnu-titulo-3">Rótulo fora, consentimento desmarcado</p><p class="gnu-corpo-p gnu-suave">"Quero ser associado" pede um compromisso cedo demais. "Agendar visita" convida para conhecer.</p></div></div>
-  </div>
+<div class="ad__par"><div class="ad__col"><p class="gnu-sobretitulo">Hoje</p><img class="ad__antes" src="/_blob/f0e8908b953a2979684891766c603b0d" alt="Hoje: título em dois pesos e foto em polaroide com tachinha"></div><div class="ad__col"><p class="gnu-sobretitulo" style="color: var(--azul)">Evolução</p><div class="ad__depois"><div class="gnu-sede__cabeca"><h3 class="gnu-sede__nome" style="font-size:26px; line-height:32px">Sede <b>Alto Petrópolis</b></h3><p class="gnu-sede__endereco"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.2"/></svg>Av. João Obino, 300 · Petrópolis</p></div><figure class="gnu-foto gnu-foto--3x2"><img src="/_blob/b51286f637f26b5e6870e3bb53f66c79" alt="Piscina da sede Alto Petrópolis"></figure></div><p class="gnu-legenda">Mesmo título em dois pesos, mais leve. A foto entra reta e maior; o endereço ganha algarismos alinhados.</p></div></div>
+<div class="ad__par"><div class="ad__col"><p class="gnu-sobretitulo">Hoje</p><img class="ad__antes" src="/_blob/008ad0c5d8864d660028fb3741e2d175" alt="Hoje: seis caixas brancas com rótulo centralizado"></div><div class="ad__col"><p class="gnu-sobretitulo" style="color: var(--azul)">Evolução</p><div class="ad__depois"><ul class="gnu-comodidades"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v18M4.5 3v5a2.5 2.5 0 0 0 5 0V3"/><path d="M17 21V3c-2 1.2-3 3.4-3 6.5 0 2.5 1.2 3.5 3 3.5"/></svg><span>Estacionamento e restaurantes</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8l-.6 5.2a3.4 3.4 0 0 1-6.8 0z"/><path d="M12 11.6V20M8.5 20h7"/></svg><span>10 salões de eventos sociais e corporativos</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 14V5.5a2 2 0 0 1 4 0M14 14V5.5a2 2 0 0 1 4 0M8 8.5h6M8 11.5h6"/><path d="M3 18.5c2 0 2.2-1.5 4.5-1.5s2.5 1.5 4.5 1.5 2.2-1.5 4.5-1.5 2.5 1.5 4.5 1.5"/></svg><span>Piscinas térmicas com raias e infantis</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5h16v16"/><path d="M9 5v8.5M15 5v8.5M8 13.5h8"/></svg><span>Espaço kids e playground</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-7"/><path d="M12 14c-3.9 0-6-2.4-6-5.4S8.6 3 12 3s6 2.6 6 5.6-2.1 5.4-6 5.4z"/><path d="M12 17l-2.5-2M12 15.5l2.5-2"/></svg><span>Ampla área verde</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M5.8 6.2c2.6 2.2 2.6 9.4 0 11.6M18.2 6.2c-2.6 2.2-2.6 9.4 0 11.6"/></svg><span>Quadras de tênis e beach tennis</span></li></ul></div><p class="gnu-legenda">Os mesmos seis itens viram uma lista com ícones finos e cabem em meia tela.</p></div></div>
+<div class="ad__par"><div class="ad__col"><p class="gnu-sobretitulo">Hoje</p><img class="ad__antes" src="/_blob/6aa14f7e4343adbdc476fd91ead9c625" alt="Hoje: cartão do Contribuinte Efetivo com botão em caixa alta"></div><div class="ad__col"><p class="gnu-sobretitulo" style="color: var(--azul)">Evolução</p><div class="ad__depois"><article class="gnu-plano" style="padding: var(--espaco-5); border:0"><h3 class="gnu-plano__nome" style="font-size:26px; line-height:30px">Título <b>Contribuinte Efetivo</b></h3><span class="gnu-plano__fio"></span><div class="gnu-plano__texto" style="font-size:15px; line-height:24px"><p>Toda a experiência do GNU com <b>flexibilidade</b> e o <b>menor investimento inicial</b>.</p></div><a class="gnu-btn gnu-btn--contorno gnu-btn--bloco" href="#">Consultar valores</a></article></div><p class="gnu-legenda">Mesmo conteúdo e mesma caixa alta no botão, com rótulo mais curto e tipografia refinada.</p></div></div>
+<div class="ad__par"><div class="ad__col"><p class="gnu-sobretitulo">Hoje</p><img class="ad__antes" src="/_blob/6f719cb08cbf67852b994ed741b214b3" alt="Hoje: formulário com rótulos dentro dos campos e consentimento pré-marcado"></div><div class="ad__col"><p class="gnu-sobretitulo" style="color: var(--azul)">Evolução</p><div class="ad__depois"><p class="gnu-form-cartao__titulo" style="font-size:20px; line-height:26px">Faça parte do <b>Grêmio Náutico União</b></p><div class="gnu-campo"><label for="ad-n">Nome completo</label><input id="ad-n" placeholder="Ex.: Ana Souza"></div><div class="gnu-campo"><label for="ad-e">E-mail</label><input id="ad-e" placeholder="ana@email.com"></div><label class="gnu-consentimento" for="ad-ok"><input id="ad-ok" type="checkbox"><span>Aceito a Política de Privacidade.</span></label><button class="gnu-btn gnu-btn--primario gnu-btn--bloco" type="button">Quero ser associado</button></div><p class="gnu-legenda">Mesmos campos e mesmo botão. O rótulo fica visível acima do campo e o consentimento vem desmarcado (LGPD).</p></div></div>
 </div>
 </body>
 </html>

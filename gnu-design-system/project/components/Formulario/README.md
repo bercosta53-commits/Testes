@@ -1,14 +1,13 @@
 # Formulario
 
-Campos para captar interesse e agendar visitas. Pede pouco, explica por quê e respeita a LGPD.
+O mesmo formulário de hoje, com os mesmos campos (nome, e-mail, telefone, motivo do contato, planos), com acabamento de alto padrão e correções de acessibilidade e LGPD.
 
-**Estrutura:** `form.gnu-form` → `gnu-campo` (rótulo `label` sempre visível acima, campo de 52px, `gnu-campo__ajuda` opcional) → `gnu-escolha` com chips para respostas curtas → `gnu-consentimento` → botão primário em bloco. Erro: `gnu-campo--erro` + `gnu-campo__erro` com ícone e frase que diz como corrigir. Progresso em etapas com a Raia (`gnu-raia--progresso`, boias `.on`).
+**Estrutura:** `div.gnu-form-cartao` (fundo branco, `raio-2`, `sombra-cartao`) → título em dois pesos → `form.gnu-form` com `gnu-campo` (rótulo em caixa alta acima, campo só com fio inferior em `linha-forte`) → `gnu-consentimento` → botão primário em bloco.
 
-**O consumidor fornece:** `id` estável em cada campo, `autocomplete` correto, mensagens de erro específicas e o destino do envio.
+**O que muda em relação a hoje**
+- O rótulo sai de dentro do campo e fica sempre visível acima dele. O exemplo entra como placeholder.
+- Os campos perdem a caixa cinza e ganham só um fio inferior, que engrossa em `foco` ao digitar.
+- O consentimento passa a vir **desmarcado**. Caixa pré-marcada não vale como consentimento pela LGPD.
+- O botão continua "Quero ser associado".
 
-**Regras**
-- Rótulo nunca dentro do campo: placeholder some ao digitar e prejudica a acessibilidade.
-- Consentimento **desmarcado** por padrão. A caixa pré-marcada do formulário atual não vale como consentimento pela LGPD.
-- No máximo 5 campos por etapa; "Motivo do contato" e "Planos" viram chips de escolha, não listas suspensas.
-- Botão diz o que acontece ("Agendar visita"), não "Enviar formulário".
-- Depois do envio: tela de confirmação com o próximo passo e prazo de retorno.
+**O consumidor fornece:** `id` estável e `autocomplete` em cada campo, mensagens de erro específicas (`gnu-campo--erro` + `gnu-campo__erro`) e uma tela de confirmação com o próximo passo.

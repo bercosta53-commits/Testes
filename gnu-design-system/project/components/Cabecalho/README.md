@@ -1,13 +1,9 @@
 # Cabecalho
 
-Barra superior única para o site institucional e a página de associação, que hoje têm cabeçalhos diferentes.
+A faixa azul com o logotipo 120 anos continua. Fica mais limpa: um azul só (`azul-marca`, o #004F91 exato de hoje), menu em caixa alta espaçada, e a barra escura do breadcrumb vira uma linha discreta (`gnu-trilha`) sobre o fundo branco.
 
-**Estrutura:** `header.gnu-cabecalho` → marca à esquerda → `nav` com `ul.gnu-nav` → um botão compacto à direita. Sobre fotografia: `gnu-cabecalho--sobre-foto` (transparente, texto `sobre-noite`, botão `gnu-btn--claro`). No celular, a navegação vira o botão `gnu-menu` (ícone de duas linhas desiguais, rótulo "Menu").
+**Estrutura:** `header.gnu-cabecalho` → `img.gnu-cabecalho__logo` (52px de altura) → `nav` → botão `gnu-btn--claro`. No celular, o `nav` vira `button.gnu-menu`.
 
-**Marca:** o selo oficial (brasão) não foi fornecido nesta versão. Até a entrega dos vetores oficiais, a marca é tipográfica: `gnu-marca` com "Grêmio Náutico · 1906" e "União" em Archivo expandido. O selo entra à esquerda do texto, com 32px de altura.
+**Logotipo:** a prévia usa um recorte da captura de tela do site atual, só como referência. Substitua pelo arquivo vetorial oficial (SVG) com fundo transparente.
 
-**Regras**
-- No máximo 5 itens de navegação, com nomes que o sócio reconhece.
-- O link atual ganha o sublinhado (`aria-current="page"`); o hover desenha o sublinhado da esquerda para a direita em `tempo-3`.
-- Ao rolar, o cabeçalho sobre foto vira `fundo` com `sombra-1`.
-- Sem breadcrumb em faixa escura separada: se necessário, entra como `gnu-rotulo` acima do título da página.
+**Regras:** no máximo 5 itens. O item atual ganha um fio `ciano` embaixo. A faixa azul é o único lugar onde `azul-marca` vira fundo.

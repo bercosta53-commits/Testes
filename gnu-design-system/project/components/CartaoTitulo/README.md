@@ -1,13 +1,12 @@
 # CartaoTitulo
 
-Apresenta uma modalidade de associação lado a lado com a outra, para comparar em segundos.
+A seção "Títulos e valores" com os dois cartões de hoje (Patrimonial, Mais buscado; Contribuinte Efetivo), lado a lado no desktop e empilhados no celular.
 
-**Estrutura:** `article.gnu-plano` → `gnu-plano__topo` (nome em `gnu-plano__nome` com sobretítulo em `span`, etiqueta opcional) → frase-resumo → `gnu-plano__lista` com ícone de check em `uniao` → botão. O plano recomendado usa `gnu-plano--destaque` (fundo `noite`, check em `agua`, botão `gnu-btn--claro`).
+**Estrutura:** `div.gnu-planos` → `article.gnu-plano` → etiqueta opcional (`gnu-plano__etiqueta`) → nome em dois pesos (`gnu-plano__nome`) → fio `ciano` de 48px → `gnu-plano__texto` → botão. O título recomendado usa `gnu-plano--destaque` (fundo `marinho`, segunda linha em `ciano`, botão `gnu-btn--claro`).
 
-**O consumidor fornece:** nome, uma frase-resumo de até 12 palavras, de 3 a 5 benefícios com o mesmo formato e o link de consulta.
+**O que muda em relação a hoje**
+- O Patrimonial ganha o fundo `marinho`: a escolha recomendada se destaca pela superfície, não só pela etiqueta.
+- Mesmos argumentos, sem exclamação: "Mais que um clube, um legado para a sua vida inteira!" vira "Um legado para a vida inteira."
+- Botão "Consultar valores" com a mesma altura nos dois cartões.
 
-**Regras**
-- Sempre em pares ou trios, mesma altura, benefícios na mesma ordem.
-- Só um plano em destaque.
-- Sem exclamação ("Mais que um clube, um legado para a sua vida inteira!" vira "Um bem que fica na família").
-- Valor não aparece no cartão enquanto a política for de consulta personalizada; o botão diz "Consultar valores".
+**Regras:** um cartão em destaque. Textos com o mesmo tamanho nos dois. Valores continuam sob consulta.

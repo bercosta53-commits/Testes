@@ -1,38 +1,29 @@
 # Implantação
 
-O sistema é evolutivo: entra por etapas, sem uma troca de marca de uma vez. Cada etapa melhora uma parte que o sócio ou o futuro sócio já usa.
+A evolução entra por partes, sobre a estrutura que já existe. Cada etapa pode ir ao ar sozinha.
 
-## Etapa 1 · Associação (0 a 3 meses)
+## Etapa 1 · Correções rápidas (1 a 2 semanas)
 
-- Refazer associado.gnu.com.br com Hero, HojeNoClube, CartaoSede, CartaoTitulo e Formulario.
-- Trocar "Quero ser associado" por "Agendar visita" e medir agendamentos, não só formulários enviados.
-- Consentimento desmarcado e política de privacidade linkada (correção imediata, independente do redesenho).
-- Substituir o balão verde pelo componente Conversa.
-- Publicar `tokens.css` e `bundle.css` como base comum.
+- Consentimento de privacidade desmarcado no formulário.
+- `font-feature-settings: "lnum"` na Raleway para alinhar os números.
+- Ciano fora do texto corrido; destaque em peso 600.
+- Um botão de WhatsApp só, sem cobrir conteúdo.
 
-## Etapa 2 · Site institucional (3 a 6 meses)
+## Etapa 2 · Página de associação (1 a 2 meses)
 
-- Aplicar Cabecalho, tipografia e cores em gnu.com.br, unificando as duas experiências.
-- Uma página por sede com fatos, horários e Hoje no clube.
-- Sessão de fotos: drone nas quatro sedes e retratos de sócios em atividade, no fim da tarde, com autorização de uso de imagem.
+- Aplicar tokens e componentes: Cabecalho, Hero + Formulario, CartaoTitulo, Video, TituloSecao, Sede + Comodidades.
+- Trocar a polaroide por fotos retas e a foto de abertura por uma imagem de convívio.
+- Alternar `fundo` e `fundo-areia` entre as seções.
 
-## Etapa 3 · Ecossistema (6 a 12 meses)
+## Etapa 3 · Site institucional e fotografia (2 a 4 meses)
 
-- App e carteirinha digital com os mesmos tokens no tema Noite.
-- Modelos de redes sociais (story, feed, capa de destaque) com Raia e Cruzamento.
-- Sinalização das sedes: rótulos expandidos, setas e a Raia como faixa de orientação.
-- E-mail marketing e comunicados em modelo único.
-
-## Governança
-
-- Um responsável pelo sistema no marketing, com revisão mensal das peças novas.
-- Mudança de token só por versão (1.0, 1.1…), registrada neste documento.
-- Peça nova começa pelos componentes existentes. Se nenhum serve, o componente novo entra no sistema antes de ir ao ar.
+- Levar o mesmo cabeçalho, botões e formulário para gnu.com.br, unificando os dois sites.
+- Transformar a lista de fotos da página Associe-se na grade de Experiências.
+- Sessão de fotos de estilo de vida nas quatro sedes, com a pauta do componente Fotografia e autorização de uso de imagem.
 
 ## O que validar com o clube
 
-- **Selo oficial em vetor** (SVG ou PDF) para substituir a marca tipográfica provisória.
-- **Situação da sede da Ilha do Pavão** antes de usar a sede náutica como argumento: a sede foi interditada após as cheias do Guaíba de 2023 e 2024.
-- **Endereços e estruturas** de Moinhos de Vento e União Petrópole para completar os cartões de sede.
-- **Fontes de dados** para Hoje no clube (temperatura das piscinas, horários, ocupação de quadras). Os valores das prévias são exemplos.
-- **Números de prova** além dos já confirmados (1906, 4 sedes, 10 salões): quantidade de associados, modalidades, títulos esportivos.
+- **Logotipo em vetor** (SVG, fundo transparente) para substituir o recorte de referência.
+- **Fotos originais** em alta resolução das imagens usadas hoje.
+- **Situação da sede da Ilha do Pavão** antes de usar o pôr do sol na sede náutica como argumento: a sede foi interditada após as cheias do Guaíba de 2023 e 2024.
+- **Conteúdo das sedes** Moinhos de Vento e União Petrópole (texto, comodidades e fotos), para completar o bloco Sede.

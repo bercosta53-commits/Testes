@@ -3,23 +3,25 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>GNU Em Movimento</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap">
+<title>GNU Sistema Visual</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&amp;display=swap">
 <style>
   html, body { margin: 0; height: 100%; }
-  body { background: var(--fundo); color: var(--tinta); font-family: var(--font-sans); overflow: hidden; }
+  body { background: var(--fundo); color: var(--tinta); font-family: var(--font-raleway); overflow: hidden; }
   .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
   .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
   .art svg { display: block; width: 480px; height: 288px; }
-  .noite { fill: var(--noite); }
-  .uniao { fill: var(--uniao); }
-  .agua { fill: var(--agua); }
-  .remo { fill: var(--remo); }
-  .faixa { rx: var(--raio-0); }
-  .boia { rx: 4px; }
-  .words { position: absolute; left: var(--espaco-5); bottom: var(--espaco-5); max-width: 440px; }
-  .name { margin: 0; font-stretch: 78%; font-size: 80px; line-height: 0.92; font-weight: 640; letter-spacing: -0.035em; color: var(--tinta); }
-  .tag { margin: var(--espaco-3) 0 0 2px; font-size: 14px; line-height: 20px; color: var(--tinta-suave); }
+  .marca { fill: var(--azul-marca); }
+  .marinho { fill: var(--marinho); }
+  .areia { fill: var(--fundo-areia); }
+  .tint { fill: var(--ciano-claro); }
+  .ciano { fill: var(--ciano); }
+  .fio { fill: var(--fundo); }
+  .r2 { rx: var(--raio-2); }
+  .words { position: absolute; left: var(--espaco-6); bottom: var(--espaco-6); max-width: 440px; }
+  .name { margin: 0; font-size: 64px; line-height: 0.95; font-weight: 300; letter-spacing: -0.01em; color: var(--tinta); }
+  .name b { font-weight: 600; color: var(--azul); }
+  .tag { margin: var(--espaco-4) 0 0 2px; font-size: 14px; line-height: 20px; color: var(--tinta-suave); }
 </style>
 </head>
 <body>
@@ -27,47 +29,25 @@
 <div class="art" aria-hidden="true">
 <svg viewBox="0 0 480 288" width="480" height="288">
 <!--
-  blocks      noite 480×96 sangrando no topo e na direita (a cor mais lembrada do clube) · uniao 416×64 · agua 320×48 — raias de piscina empilhadas, cerca de 38% de 960×288; remo só nas boias
-  arrangement três raias horizontais em degrau, cada uma recuada à esquerda e sangrando à direita (a parede da piscina), separadas pelas cordas
-  pattern     a Raia, de "boias da corda de raia, raio-boia; as três de cada ponta em remo, como os últimos 5 m de uma piscina de competição": 28 boias de 24×8 em duas cordas
-  scales      alturas espaco-9 / espaco-8 / espaco-7; recuos espaco-8 e espaco-10+espaco-6; passo das boias espaco-6 (32) com vão espaco-2; faixas raio-0, boias raio-boia (rx 4 = metade de 8)
+  blocks      azul-marca 192×222 sangrando no topo (o azul exato do clube, a maior área) · marinho 224×216 sangrando à direita e embaixo · ciano-claro 112×48 (o tom da etiqueta Mais buscado) · fundo-areia 232×48 como respiro — cerca de 40% de 960×288; ciano só nos fios curtos
+  arrangement uma lâmina alta de azul com um bloco marinho deslocado, em degrau, como as faixas de cabeçalho e de seção do site
+  pattern     fios finos, de "campos só com fio inferior e sobretítulo com fio curto em ciano": três fios de 1px recortados no fundo atravessando os blocos e dois fios curtos de ciano
+  scales      lados em múltiplos de espaco-2 (8) e espaco-6 (32); afastamentos espaco-4 (16) e espaco-7 (48); cantos raio-2 (6)
 -->
-<rect class="noite faixa" x="0" y="0" width="480" height="96"/>
-<rect class="uniao boia" x="8" y="108" width="24" height="8"/>
-<rect class="agua boia" x="40" y="108" width="24" height="8"/>
-<rect class="uniao boia" x="72" y="108" width="24" height="8"/>
-<rect class="agua boia" x="104" y="108" width="24" height="8"/>
-<rect class="uniao boia" x="136" y="108" width="24" height="8"/>
-<rect class="agua boia" x="168" y="108" width="24" height="8"/>
-<rect class="uniao boia" x="200" y="108" width="24" height="8"/>
-<rect class="agua boia" x="232" y="108" width="24" height="8"/>
-<rect class="uniao boia" x="264" y="108" width="24" height="8"/>
-<rect class="agua boia" x="296" y="108" width="24" height="8"/>
-<rect class="uniao boia" x="328" y="108" width="24" height="8"/>
-<rect class="agua boia" x="360" y="108" width="24" height="8"/>
-<rect class="remo boia" x="392" y="108" width="24" height="8"/>
-<rect class="remo boia" x="424" y="108" width="24" height="8"/>
-<rect class="remo boia" x="456" y="108" width="24" height="8"/>
-<rect class="uniao faixa" x="64" y="128" width="416" height="64"/>
-<rect class="uniao boia" x="72" y="204" width="24" height="8"/>
-<rect class="agua boia" x="104" y="204" width="24" height="8"/>
-<rect class="uniao boia" x="136" y="204" width="24" height="8"/>
-<rect class="agua boia" x="168" y="204" width="24" height="8"/>
-<rect class="uniao boia" x="200" y="204" width="24" height="8"/>
-<rect class="agua boia" x="232" y="204" width="24" height="8"/>
-<rect class="uniao boia" x="264" y="204" width="24" height="8"/>
-<rect class="agua boia" x="296" y="204" width="24" height="8"/>
-<rect class="uniao boia" x="328" y="204" width="24" height="8"/>
-<rect class="agua boia" x="360" y="204" width="24" height="8"/>
-<rect class="remo boia" x="392" y="204" width="24" height="8"/>
-<rect class="remo boia" x="424" y="204" width="24" height="8"/>
-<rect class="remo boia" x="456" y="204" width="24" height="8"/>
-<rect class="agua faixa" x="160" y="224" width="320" height="48"/>
+<rect class="marca r2" x="48" y="-6" width="192" height="222"/>
+<rect class="tint r2" x="256" y="0" width="112" height="48"/>
+<rect class="marinho r2" x="256" y="72" width="224" height="222"/>
+<rect class="areia r2" x="48" y="232" width="192" height="62"/>
+<rect class="fio" x="48" y="120" width="432" height="1"/>
+<rect class="fio" x="48" y="152" width="432" height="1"/>
+<rect class="fio" x="48" y="184" width="432" height="1"/>
+<rect class="ciano" x="80" y="56" width="24" height="2"/>
+<rect class="ciano" x="288" y="232" width="24" height="2"/>
 </svg>
 </div>
 <div class="words">
-<h1 class="name">GNU Em Movimento</h1>
-<p class="tag">A linguagem do clube para os próximos 120 anos.</p>
+<h1 class="name">GNU Sistema <b>Visual</b></h1>
+<p class="tag">A estrutura de hoje, com acabamento de clube de alto padrão.</p>
 </div>
 </div>
 </body>

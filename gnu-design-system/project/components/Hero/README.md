@@ -1,14 +1,12 @@
 # Hero
 
-Abertura de página: uma imagem que ocupa a tela, um título que afirma e uma ação.
+A abertura "Seja associado" com o formulário, na mesma ordem de hoje: título, texto, formulário.
 
-**Estrutura:** `section.gnu-hero` (fundo `noite`) → `gnu-hero__img` (foto + degradê de `noite` de baixo para cima) → cabeçalho sobre foto → `gnu-hero__conteudo` com sobretítulo, `gnu-display-xxl`, `gnu-lead` e `gnu-hero__acoes`. Logo abaixo, a faixa HojeNoClube.
+**Desktop:** duas colunas. À esquerda, sobretitulo, `gnu-display` em dois pesos, `gnu-lead` e o cartão de formulário (`gnu-form-cartao`); à direita, a foto em altura total. **Celular:** a foto vira fundo da abertura com degradê de `marinho` (`gnu-hero`) e o cartão de formulário sobe 48px por cima dela (ver Aplicacoes).
 
-**O consumidor fornece:** uma foto com área calma no terço inferior esquerdo, título de até 7 palavras com no máximo uma ênfase em itálico (`gnu-enfase`), um parágrafo e no máximo duas ações (uma `gnu-btn--claro`, outra `gnu-btn--texto`).
+**O consumidor fornece:** uma foto de convívio ou de paisagem do clube (pessoas, piscina com verde, fim de tarde), o título em duas partes e no máximo duas linhas de texto.
 
-**Movimento:** o conteúdo entra da esquerda para a direita (`gnu-entra`, `tempo-4`, `curva-deslize`), como o barco. A foto pode ter zoom de 1,00 a 1,04 em 8s, uma vez.
-
-**Regras**
-- Texto sempre à esquerda e embaixo; nunca centralizado sobre o meio da foto.
-- Altura pelo conteúdo, até 88% da tela; o próximo bloco precisa aparecer.
-- No celular, o display desce para 56px.
+**O que muda em relação a hoje**
+- Sai o "Seja Associado" com textura de água; o título fica limpo, em Raleway leve.
+- Sai a foto de nadador em treino; entra uma imagem de lazer e convívio.
+- O texto é o mesmo de hoje, mais curto: "Seja para relaxar, se exercitar ou socializar…" vira "Para relaxar, conviver ou se exercitar…".

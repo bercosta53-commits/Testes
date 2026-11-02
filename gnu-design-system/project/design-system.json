@@ -2,22 +2,33 @@
   "v": 3,
   "layout": "files",
   "createdOnFiles": { "v": 1, "at": "2026-11-02T23:10:00Z" },
-  "title": "GNU Em Movimento",
+  "title": "GNU Sistema Visual",
   "namespace": "GNU",
   "libraries": [],
   "sections": {},
-  "groups": ["Vista aerea", "Antes"],
+  "groups": ["Fotos do clube", "Marca", "Antes"],
   "assetGroups": {
-    "Vista aerea": {
-      "name": "Vista aerea",
+    "Fotos do clube": {
+      "name": "Fotos do clube",
       "tile": "l",
-      "order": ["guaiba.svg", "piscina.svg", "quadra.svg", "gramado.svg", "salao.svg"],
+      "order": ["piscina-alto-petropolis.jpg", "retrato-associada.jpg", "gastronomia.jpg", "eventos-show.jpg", "familia-piscina.jpg", "por-do-sol-guaiba.jpg", "piscina-jardim.jpg", "area-verde.jpg"],
       "files": {
-        "guaiba.svg": { "name": "guaiba.svg", "blob": "5e4110ab52c28d8a5c0b03329a67d282", "size": 18419, "type": "image/svg+xml" },
-        "piscina.svg": { "name": "piscina.svg", "blob": "aeea61a419fd732b430228f6069b72b3", "size": 8684, "type": "image/svg+xml" },
-        "quadra.svg": { "name": "quadra.svg", "blob": "4dc7475029eb621ab9594794d12000e7", "size": 2387, "type": "image/svg+xml" },
-        "gramado.svg": { "name": "gramado.svg", "blob": "7a6a34fc2803fa4f5cc9b4c18b5d592d", "size": 7140, "type": "image/svg+xml" },
-        "salao.svg": { "name": "salao.svg", "blob": "3f41587e2468c42a1868e1252ebaaf70", "size": 16741, "type": "image/svg+xml" }
+        "piscina-alto-petropolis.jpg": { "name": "piscina-alto-petropolis.jpg", "blob": "b51286f637f26b5e6870e3bb53f66c79", "size": 68522, "type": "image/jpeg" },
+        "retrato-associada.jpg": { "name": "retrato-associada.jpg", "blob": "b2a9cecb4ab736f86997277a7525aa21", "size": 25509, "type": "image/jpeg" },
+        "gastronomia.jpg": { "name": "gastronomia.jpg", "blob": "82b7a40562a3e7b0fdab2d4ac3c6e32e", "size": 33850, "type": "image/jpeg" },
+        "eventos-show.jpg": { "name": "eventos-show.jpg", "blob": "b592f05f2de140627530d304185f3fc2", "size": 25508, "type": "image/jpeg" },
+        "familia-piscina.jpg": { "name": "familia-piscina.jpg", "blob": "df5a1cff0dc3b5178a6ed5d4aa5330c0", "size": 54907, "type": "image/jpeg" },
+        "por-do-sol-guaiba.jpg": { "name": "por-do-sol-guaiba.jpg", "blob": "c475de7c7feaa280f0f167292cbfc011", "size": 54283, "type": "image/jpeg" },
+        "piscina-jardim.jpg": { "name": "piscina-jardim.jpg", "blob": "7d34bc280c658cf0b99370fd2c11be61", "size": 93786, "type": "image/jpeg" },
+        "area-verde.jpg": { "name": "area-verde.jpg", "blob": "783f5fe4e12076ee4531006c28db7135", "size": 55694, "type": "image/jpeg" }
+      }
+    },
+    "Marca": {
+      "name": "Marca",
+      "tile": "m",
+      "order": ["gnu-120-anos-referencia.png"],
+      "files": {
+        "gnu-120-anos-referencia.png": { "name": "gnu-120-anos-referencia.png", "blob": "a7e40450e78d29c8a771809fc5dbb036", "size": 39559, "type": "image/png" }
       }
     },
     "Antes": {
@@ -38,5 +49,5 @@
   },
   "blobs": {},
   "docs": { "sections": [] },
-  "lastChange": { "by": "Claude", "via": "Claude Code", "at": "2026-11-02T23:10:00Z", "note": "Primeira versão da proposta evolutiva" }
+  "lastChange": { "by": "Claude", "via": "Claude Code", "at": "2026-11-02T23:55:00Z", "note": "Refeito como evolução da estrutura atual, com foco em estilo de vida" }
 }

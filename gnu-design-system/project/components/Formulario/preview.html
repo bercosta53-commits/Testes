@@ -1,31 +1,22 @@
-<!-- @dsCard group="Formulários" height=830 width=560 -->
+<!-- @dsCard group="Formulários" height=840 width=560 -->
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><title>Formulário</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap"></head>
+<head><meta charset="utf-8"><title>Formulário</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&amp;display=swap"></head>
 <body class="gnu">
 
-<div class="gnu-previa" style="max-width: 520px">
-  <div style="display:grid; gap: var(--espaco-3)">
-    <div class="gnu-raia gnu-raia--progresso" role="presentation"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <p class="gnu-rotulo gnu-suave">Etapa 1 de 2</p>
-    <h2 class="gnu-titulo-2">Agende sua visita</h2>
+<div class="gnu-previa gnu-faixa-areia" style="justify-items: center">
+  <div class="gnu-form-cartao" style="width: 100%; max-width: 440px">
+    <p class="gnu-form-cartao__titulo">Faça parte do <b>Grêmio Náutico União</b></p>
+    <form class="gnu-form" novalidate onsubmit="event.preventDefault()">
+  <div class="gnu-campo"><label for="f-nome">Nome completo</label><input id="f-nome" autocomplete="name" placeholder="Ex.: Ana Souza"></div>
+  <div class="gnu-campo"><label for="f-email">E-mail</label><input id="f-email" type="email" autocomplete="email" placeholder="ana@email.com"></div>
+  <div class="gnu-campo"><label for="f-tel">Telefone</label><input id="f-tel" type="tel" autocomplete="tel" placeholder="(51) 90000-0000"></div>
+  <div class="gnu-campo"><label for="f-motivo">Motivo do contato</label><select id="f-motivo"><option>Quero ser associado</option><option>Conhecer as sedes</option><option>Outro assunto</option></select></div>
+  <div class="gnu-campo"><label for="f-plano">Planos</label><select id="f-plano"><option>Título Patrimonial</option><option>Contribuinte Efetivo</option><option>Ainda não sei</option></select></div>
+  <label class="gnu-consentimento" for="f-ok"><input id="f-ok" type="checkbox"><span>Aceito a <a href="#">Política de Privacidade</a> e autorizo o contato do GNU.</span></label>
+  <button class="gnu-btn gnu-btn--primario gnu-btn--bloco" type="submit">Quero ser associado</button>
+</form>
   </div>
-  <form class="gnu-form" novalidate>
-    <div class="gnu-campo"><label for="f-nome">Nome completo</label><input id="f-nome" autocomplete="name" value="Mariana Costa"></div>
-    <div class="gnu-campo gnu-campo--erro"><label for="f-email">E-mail</label><input id="f-email" type="email" value="mariana.costa@" aria-invalid="true" aria-describedby="f-email-erro">
-      <span class="gnu-campo__erro" id="f-email-erro"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5.5M12 16v.5"/></svg>Falta o domínio do e-mail, como @gmail.com.</span></div>
-    <div class="gnu-campo"><label for="f-tel">Telefone ou WhatsApp</label><input id="f-tel" type="tel" autocomplete="tel" placeholder="(51) 90000-0000" aria-describedby="f-tel-ajuda">
-      <span class="gnu-campo__ajuda" id="f-tel-ajuda">Usamos só para combinar o dia da visita.</span></div>
-    <div class="gnu-campo"><label for="f-sede">Sede que quer conhecer</label>
-      <select id="f-sede"><option>Alto Petrópolis</option><option>Moinhos de Vento</option><option>União Petrópole</option><option>Sede Náutica (Ilha do Pavão)</option></select></div>
-    <fieldset class="gnu-escolha"><legend>Interesse</legend>
-      <button class="gnu-chip" type="button" aria-pressed="true">Título Patrimonial</button>
-      <button class="gnu-chip" type="button" aria-pressed="false">Contribuinte Efetivo</button>
-      <button class="gnu-chip" type="button" aria-pressed="false">Ainda não sei</button></fieldset>
-    <label class="gnu-consentimento" for="f-ok"><input id="f-ok" type="checkbox"><span>Autorizo o GNU a usar estes dados para falar comigo sobre a associação. <a href="#">Política de privacidade</a></span></label>
-    <button class="gnu-btn gnu-btn--primario gnu-btn--bloco" type="submit">Agendar visita <svg class="gnu-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
-  </form>
 </div>
-<script>document.querySelector('form').addEventListener('submit', function (e) { e.preventDefault(); });</script>
 </body>
 </html>

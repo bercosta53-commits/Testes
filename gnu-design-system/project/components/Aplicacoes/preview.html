@@ -1,87 +1,45 @@
 <!-- @dsCard group="Composições" height=700 width=1200 -->
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><title>Aplicações</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap"><style>
-.apps { display:flex; gap: 28px; padding: var(--espaco-6) var(--espaco-5); align-items:flex-start; justify-content:center; background: var(--fundo-recuado); }
+<head><meta charset="utf-8"><title>Aplicações</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&amp;display=swap"><style>
+.apps { display:flex; gap: 28px; padding: var(--espaco-6) var(--espaco-5); align-items:flex-start; justify-content:center; background: var(--fundo-areia); }
 .apps__item { display:grid; gap: var(--espaco-3); justify-items:center; }
-.fone { width: 259px; height: 562px; border-radius: var(--raio-2); overflow:hidden; box-shadow: var(--sombra-2); background: var(--fundo); position:relative; }
+.fone { width: 259px; height: 562px; border-radius: 14px; overflow:hidden; box-shadow: var(--sombra-cartao); background: var(--fundo); }
 .fone__tela { width: 360px; height: 780px; transform: scale(.72); transform-origin: 0 0; overflow:hidden; background: var(--fundo); color: var(--tinta); position:relative; }
-.m-cab { display:flex; align-items:center; justify-content:space-between; height:64px; padding: 0 var(--espaco-4); }
-.m-hero { position:relative; height: 560px; display:grid; align-items:end; background: var(--noite); color: var(--sobre-noite); }
+.m-hero { position:relative; height: 470px; display:grid; align-content:end; color: var(--sobre-marinho); }
 .m-hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-.m-hero::after { content:""; position:absolute; inset:0; background: linear-gradient(to top, var(--noite) 8%, rgba(7,22,46,.2) 55%, rgba(7,22,46,0) 80%); }
-.m-hero__cab { position:absolute; top:0; left:0; right:0; z-index:2; color: var(--sobre-noite); }
-.m-hero__txt { position:relative; z-index:1; display:grid; gap: var(--espaco-4); padding: 0 var(--espaco-4) var(--espaco-6); }
-.m-d { font-stretch:78%; font-size:56px; line-height:.9; font-weight:640; letter-spacing:-.035em; margin:0; }
-.m-d2 { font-stretch:78%; font-size:40px; line-height:.94; font-weight:630; letter-spacing:-.03em; margin:0; }
-.m-pad { padding: var(--espaco-5) var(--espaco-4); display:grid; gap: var(--espaco-4); }
-.m-hoje { display:grid; grid-template-columns: repeat(3, 1fr); background: var(--noite); color: var(--sobre-noite); }
-.m-hoje > div { padding: var(--espaco-3); white-space: nowrap; display:grid; gap:2px; border-left:1px solid var(--linha-noite); }
-.m-hoje > div:first-child { border-left:0; }
-.m-hoje b { font-stretch:78%; font-size:22px; line-height:24px; font-weight:600; }
-.m-hoje span { color: var(--sobre-noite-suave); }
-.story { position:relative; width:360px; height:780px; background: var(--noite); color: var(--sobre-noite); }
-.story img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-.story::after { content:""; position:absolute; inset:0; background: linear-gradient(to top, rgba(7,22,46,.92) 10%, rgba(7,22,46,0) 55%); }
-.story__txt { position:absolute; left: var(--espaco-5); right: var(--espaco-5); bottom: var(--espaco-7); z-index:1; display:grid; gap: var(--espaco-4); }
-.story__top { position:absolute; left: var(--espaco-5); right: var(--espaco-5); top: var(--espaco-6); z-index:1; display:flex; justify-content:space-between; align-items:center; }
+.m-hero::after { content:""; position:absolute; inset:0; background: linear-gradient(to top, rgba(10,35,66,.94) 0%, rgba(10,35,66,.78) 42%, rgba(10,35,66,.2) 72%, rgba(10,35,66,0) 88%); }
+.m-hero__txt { position:relative; z-index:1; display:grid; gap: var(--espaco-4); padding: 0 var(--espaco-5) 72px; }
+.m-hero .gnu-sobretitulo { color: var(--sobre-marinho-suave); }
+.m-d { font-size:42px; line-height:46px; font-weight:300; }
+.m-d b { font-weight:600; display:block; }
+.m-cartao { position:relative; z-index:2; margin: -48px var(--espaco-4) 0; }
+.m-pad { padding: var(--espaco-7) var(--espaco-5) var(--espaco-6); display:grid; gap: var(--espaco-5); }
+.m-pad .gnu-secao-titulo h2 { font-size: 32px; line-height: 38px; }
+.m-wa { position:absolute; right: 16px; bottom: 16px; z-index:5; }
 </style></head>
 <body class="gnu">
 
-<div class="apps">
-  <div class="apps__item"><div class="fone"><div class="fone__tela">
-    <section class="m-hero"><img src="/_blob/5e4110ab52c28d8a5c0b03329a67d282" alt="Remo no Guaíba ao pôr do sol"><div class="m-hero__cab"><div class="m-cab"><a class="gnu-marca" href="#" aria-label="Grêmio Náutico União, início"><span class="gnu-marca__linha1">Grêmio Náutico · 1906</span><span class="gnu-marca__linha2">União</span></a><button class="gnu-menu" type="button">Menu<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h18M3 16h12"/></svg></button></div></div>
-      <div class="m-hero__txt"><p class="gnu-rotulo-p" style="color: var(--sobre-noite-suave)">Associe-se · 120 anos</p>
-        <h1 class="m-d">Faça parte dos próximos <span class="gnu-enfase">120</span>.</h1>
-        <p class="gnu-corpo" style="color: var(--sobre-noite-suave)">Quatro sedes em Porto Alegre, da raia aquecida ao pôr do sol no Guaíba.</p>
-        <a class="gnu-btn gnu-btn--claro gnu-btn--bloco" href="#">Agendar visita <svg class="gnu-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div></section>
-    <div class="m-hoje"><div><span class="gnu-rotulo-p">Piscina</span><b>28 °C</b></div><div><span class="gnu-rotulo-p">Pôr do sol</span><b>19h31</b></div><div><span class="gnu-rotulo-p">Academia</span><b>até 22h</b></div></div>
-    <div class="m-pad"><div class="gnu-raia " role="presentation"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="gnu-rotulo gnu-suave">Sedes</p><p class="m-d2">Quatro sedes. Um só clube.</p><p class="gnu-corpo-p gnu-suave">Moinhos de Vento, Alto Petrópolis, União Petrópole e a Sede Náutica, na Ilha do Pavão.</p></div>
-  </div></div><p class="gnu-legenda">Página de associação</p></div>
-
-  <div class="apps__item"><div class="fone"><div class="fone__tela">
-    <div class="m-cab"><a class="gnu-marca" href="#" aria-label="Grêmio Náutico União, início"><span class="gnu-marca__linha1">Grêmio Náutico · 1906</span><span class="gnu-marca__linha2">União</span></a><button class="gnu-menu" type="button">Menu<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h18M3 16h12"/></svg></button></div>
-    <figure class="gnu-imagem gnu-imagem--4x3"><img src="/_blob/aeea61a419fd732b430228f6069b72b3" alt="Piscina vista de cima"><figcaption class="gnu-imagem__agua"><span class="gnu-rotulo-p">Piscinas térmicas</span><span class="gnu-rotulo-p">Petrópolis</span></figcaption></figure>
-    <div class="m-pad">
-      <p class="gnu-rotulo gnu-suave">Sede</p>
-      <h1 class="m-d2">Alto Petrópolis</h1>
-      <p class="gnu-corpo-p gnu-suave gnu-num">Av. João Obino, 300 · Petrópolis</p>
-      <div class="gnu-dados gnu-dados--p" style="grid-template-columns: 1fr 1fr; gap: var(--espaco-5) var(--espaco-4)">
-        <div class="gnu-dado"><span class="gnu-dado__valor">10</span><span class="gnu-dado__rotulo">salões de eventos</span></div>
-        <div class="gnu-dado"><span class="gnu-dado__valor">28<small>°C</small></span><span class="gnu-dado__rotulo">piscina térmica</span></div>
-      </div>
-      <ul class="gnu-sede__lista"><li>Tênis e beach tennis</li><li>Espaço kids</li><li>Área verde</li><li>Restaurantes</li></ul>
-      <a class="gnu-btn gnu-btn--primario gnu-btn--bloco" href="#">Agendar visita <svg class="gnu-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </div></div><p class="gnu-legenda">Página de sede</p></div>
-
-  <div class="apps__item"><div class="fone"><div class="fone__tela">
-    <div class="m-cab"><a class="gnu-marca" href="#" aria-label="Grêmio Náutico União, início"><span class="gnu-marca__linha1">Grêmio Náutico · 1906</span><span class="gnu-marca__linha2">União</span></a><button class="gnu-menu" type="button">Menu<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h18M3 16h12"/></svg></button></div>
-    <div class="m-pad" style="gap: var(--espaco-3)">
-      <p class="gnu-rotulo gnu-suave">Títulos</p>
-      <h1 class="m-d2">Escolha como fazer parte.</h1>
-    </div>
-    <div style="display:grid; gap: var(--espaco-3); padding: 0 var(--espaco-4)">
-      <article class="gnu-plano gnu-plano--destaque" style="padding: var(--espaco-5); gap: var(--espaco-4)">
-        <div class="gnu-plano__topo"><h3 class="gnu-plano__nome" style="font-size:36px"><span>Título</span>Patrimonial</h3><span class="gnu-tag gnu-tag--noite">Mais procurado</span></div>
-        <ul class="gnu-plano__lista"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Transferível e herdável</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Menor mensalidade</span></li></ul>
-        <a class="gnu-btn gnu-btn--claro gnu-btn--bloco" href="#">Consultar valores</a>
-      </article>
-      <article class="gnu-plano" style="padding: var(--espaco-5); gap: var(--espaco-4)">
-        <h3 class="gnu-plano__nome" style="font-size:36px"><span>Título</span>Contribuinte Efetivo</h3>
-        <ul class="gnu-plano__lista"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Menor investimento inicial</span></li></ul>
-      </article>
-    </div>
-  </div></div><p class="gnu-legenda">Comparação de títulos</p></div>
-
-  <div class="apps__item"><div class="fone"><div class="fone__tela">
-    <div class="story"><img src="/_blob/4dc7475029eb621ab9594794d12000e7" alt="Quadra de tênis vista de cima">
-      <div class="story__top"><span class="gnu-marca" style="color: var(--sobre-noite)"><span class="gnu-marca__linha1">Grêmio Náutico · 1906</span><span class="gnu-marca__linha2">União</span></span><span class="gnu-rotulo-p">Sexta · 18h</span></div>
-      <div class="story__txt"><p class="gnu-rotulo" style="color: var(--sobre-noite-suave)">Alto Petrópolis</p>
-        <p class="m-d">Saque <span class="gnu-x">×</span> Pôr do sol</p>
-        <p class="gnu-corpo" style="color: var(--sobre-noite-suave)">Clínica aberta de beach tennis para sócios e convidados.</p>
-        <div class="gnu-raia gnu-raia--noite" role="presentation"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
-  </div></div><p class="gnu-legenda">Story · exemplo de pauta</p></div>
-</div>
+<div class="apps"><div class="apps__item"><div class="fone"><div class="fone__tela"><header class="gnu-cabecalho"><img class="gnu-cabecalho__logo" src="/_blob/a7e40450e78d29c8a771809fc5dbb036" alt="Grêmio Náutico União, 120 anos em movimento"><button class="gnu-menu" type="button">Menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h12"/></svg></button></header>
+<section class="m-hero"><img src="/_blob/b51286f637f26b5e6870e3bb53f66c79" alt="Piscina da sede Alto Petrópolis"><div class="m-hero__txt"><p class="gnu-sobretitulo">120 anos em movimento</p><h1 class="m-d">Seja <b>associado</b></h1><p class="gnu-corpo-p" style="color: var(--sobre-marinho-suave)">Para relaxar, conviver ou se exercitar: quatro sedes pensadas para você e sua família.</p></div></section>
+<div class="m-cartao gnu-form-cartao" style="padding: var(--espaco-5)"><p class="gnu-form-cartao__titulo" style="font-size:22px; line-height:28px">Faça parte do <b>Grêmio Náutico União</b></p><form class="gnu-form" style="gap: var(--espaco-4)" novalidate onsubmit="event.preventDefault()">
+  <div class="gnu-campo"><label for="m1-nome">Nome completo</label><input id="m1-nome" autocomplete="name" placeholder="Ex.: Ana Souza"></div>
+  <div class="gnu-campo"><label for="m1-email">E-mail</label><input id="m1-email" type="email" autocomplete="email" placeholder="ana@email.com"></div>
+  <div class="gnu-campo"><label for="m1-tel">Telefone</label><input id="m1-tel" type="tel" autocomplete="tel" placeholder="(51) 90000-0000"></div>
+  <div class="gnu-campo"><label for="m1-motivo">Motivo do contato</label><select id="m1-motivo"><option>Quero ser associado</option><option>Conhecer as sedes</option><option>Outro assunto</option></select></div>
+  <div class="gnu-campo"><label for="m1-plano">Planos</label><select id="m1-plano"><option>Título Patrimonial</option><option>Contribuinte Efetivo</option><option>Ainda não sei</option></select></div>
+  <label class="gnu-consentimento" for="m1-ok"><input id="m1-ok" type="checkbox"><span>Aceito a <a href="#">Política de Privacidade</a> e autorizo o contato do GNU.</span></label>
+  <button class="gnu-btn gnu-btn--primario gnu-btn--bloco" type="submit">Quero ser associado</button>
+</form></div></div></div><p class="gnu-legenda">1 · Seja associado</p></div><div class="apps__item"><div class="fone"><div class="fone__tela"><div class="m-pad gnu-faixa-areia" style="min-height:780px">
+<div class="gnu-secao-titulo gnu-secao-titulo--centro"><p class="gnu-sobretitulo">Associação</p><h2>Títulos e valores <b>Grêmio Náutico União</b></h2><p class="gnu-corpo-p gnu-suave">Valores apresentados de forma personalizada, para indicar a melhor opção para o seu perfil.</p></div>
+<article class="gnu-plano gnu-plano--destaque" style="padding: var(--espaco-7) var(--espaco-5) var(--espaco-5)"><span class="gnu-plano__etiqueta">Mais buscado</span><h3 class="gnu-plano__nome" style="font-size:28px; line-height:32px">Título <b>Patrimonial</b></h3><span class="gnu-plano__fio"></span><div class="gnu-plano__texto" style="font-size:15px; line-height:24px"><p><b>Um legado para a vida inteira.</b> Um bem real, que pode ser deixado como <b>herança</b> ou <b>transferido</b>, com a menor mensalidade.</p></div><a class="gnu-btn gnu-btn--claro gnu-btn--bloco" href="#">Consultar valores</a></article>
+<article class="gnu-plano" style="padding: var(--espaco-5)"><h3 class="gnu-plano__nome" style="font-size:28px; line-height:32px">Título <b>Contribuinte Efetivo</b></h3></article></div></div></div><p class="gnu-legenda">2 · Títulos e valores</p></div><div class="apps__item"><div class="fone"><div class="fone__tela"><div class="m-pad" style="gap: var(--espaco-6)">
+<div class="gnu-secao-titulo gnu-secao-titulo--centro"><p class="gnu-sobretitulo">Sedes</p><h2>Conheça <b>nossas sedes</b></h2></div>
+<div class="gnu-sede" style="gap: var(--espaco-5)"><div class="gnu-sede__cabeca"><h3 class="gnu-sede__nome" style="font-size:28px; line-height:34px">Sede <b>Alto Petrópolis</b></h3><p class="gnu-sede__endereco"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.2"/></svg>Av. João Obino, 300 · Petrópolis</p></div>
+<figure class="gnu-foto gnu-foto--4x5"><img src="/_blob/b51286f637f26b5e6870e3bb53f66c79" alt="Piscina da sede Alto Petrópolis"></figure>
+<p class="gnu-corpo-p">Um verdadeiro oásis no coração de Petrópolis, com salões, quadras e lazer para todas as idades. <b>Tudo em um único lugar.</b></p></div></div></div></div><p class="gnu-legenda">3 · Conheça nossas sedes</p></div><div class="apps__item"><div class="fone"><div class="fone__tela"><div class="m-pad" style="gap: var(--espaco-6)"><ul class="gnu-comodidades"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v18M4.5 3v5a2.5 2.5 0 0 0 5 0V3"/><path d="M17 21V3c-2 1.2-3 3.4-3 6.5 0 2.5 1.2 3.5 3 3.5"/></svg><span>Estacionamento e restaurantes</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8l-.6 5.2a3.4 3.4 0 0 1-6.8 0z"/><path d="M12 11.6V20M8.5 20h7"/></svg><span>10 salões de eventos sociais e corporativos</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 14V5.5a2 2 0 0 1 4 0M14 14V5.5a2 2 0 0 1 4 0M8 8.5h6M8 11.5h6"/><path d="M3 18.5c2 0 2.2-1.5 4.5-1.5s2.5 1.5 4.5 1.5 2.2-1.5 4.5-1.5 2.5 1.5 4.5 1.5"/></svg><span>Piscinas térmicas com raias e infantis</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5h16v16"/><path d="M9 5v8.5M15 5v8.5M8 13.5h8"/></svg><span>Espaço kids e playground</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-7"/><path d="M12 14c-3.9 0-6-2.4-6-5.4S8.6 3 12 3s6 2.6 6 5.6-2.1 5.4-6 5.4z"/><path d="M12 17l-2.5-2M12 15.5l2.5-2"/></svg><span>Ampla área verde</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M5.8 6.2c2.6 2.2 2.6 9.4 0 11.6M18.2 6.2c-2.6 2.2-2.6 9.4 0 11.6"/></svg><span>Quadras de tênis e beach tennis</span></li></ul>
+<div class="gnu-secao-titulo gnu-secao-titulo--centro" style="margin-top: var(--espaco-5)"><p class="gnu-sobretitulo">Experiências</p><h2>Para cada pessoa, <b>momentos únicos</b></h2></div>
+<div class="gnu-experiencias" style="grid-template-columns: 1fr"><a class="gnu-experiencia" href="#"><figure class="gnu-foto gnu-foto--3x2"><img src="/_blob/b592f05f2de140627530d304185f3fc2" alt="Eventos" style="object-position:72% 40%"></figure><span class="gnu-experiencia__texto"><span class="gnu-experiencia__titulo">Eventos<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></span><span class="gnu-corpo-p gnu-suave">Shows, festas, jantares e festivais, com opções para todos os gostos.</span></span></a></div></div>
+<a class="gnu-whatsapp gnu-whatsapp--icone m-wa" href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M8.5 10.5h7M8.5 13.5h4.5"/></svg></a></div></div><p class="gnu-legenda">4 · Comodidades e experiências</p></div></div>
 </body>
 </html>

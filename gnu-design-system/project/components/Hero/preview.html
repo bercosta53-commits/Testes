@@ -1,24 +1,36 @@
-<!-- @dsCard group="Composições" height=640 width=1200 -->
+<!-- @dsCard group="Seções" height=880 width=1200 -->
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><title>Hero</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&amp;display=swap"></head>
+<head><meta charset="utf-8"><title>Seja associado</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300..700;1,300..700&amp;display=swap"><style>
+.h { display:grid; grid-template-columns: 1.05fr 1fr; min-height: 620px; background: var(--fundo-areia); }
+.h__texto { display:grid; align-content:center; gap: var(--espaco-6); padding: var(--espaco-7) var(--espaco-7); }
+.h__foto { position:relative; }
+.h__foto img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.h .gnu-form-cartao { max-width: 520px; }
+.h .gnu-form { grid-template-columns: 1fr 1fr; column-gap: var(--espaco-5); }
+.h .gnu-form > :nth-child(1), .h .gnu-form > :nth-child(n+6) { grid-column: 1 / -1; }
+</style></head>
 <body class="gnu">
 
-<section class="gnu-hero" style="min-height: 560px">
-  <div class="gnu-hero__img"><img src="/_blob/5e4110ab52c28d8a5c0b03329a67d282" alt="Barco de remo no Guaíba ao pôr do sol, visto de cima"></div>
-  <header class="gnu-cabecalho gnu-cabecalho--sobre-foto" style="position:absolute; top:0; left:0; right:0; z-index:1"><a class="gnu-marca" href="#" aria-label="Grêmio Náutico União, início"><span class="gnu-marca__linha1">Grêmio Náutico · 1906</span><span class="gnu-marca__linha2">União</span></a><nav aria-label="Principal"><ul class="gnu-nav"><li><a href="#" aria-current="page">Sedes</a></li><li><a href="#">Esportes</a></li><li><a href="#">Eventos</a></li><li><a href="#">Títulos</a></li><li><a href="#">O clube</a></li></ul></nav><a class="gnu-btn gnu-btn--claro gnu-btn--p" href="#">Agendar visita</a></header>
-  <div class="gnu-hero__conteudo gnu-entra">
-    <p class="gnu-rotulo" style="color: var(--sobre-noite-suave)">Associe-se · 120 anos em movimento</p>
-    <h1 class="gnu-display-xxl">Faça parte dos próximos <span class="gnu-enfase">120</span>.</h1>
-    <p class="gnu-lead">Quatro sedes em Porto Alegre, da raia aquecida ao pôr do sol no Guaíba.</p>
-    <div class="gnu-hero__acoes"><a class="gnu-btn gnu-btn--claro" href="#">Agendar visita <svg class="gnu-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><a class="gnu-btn gnu-btn--texto" href="#">Ver títulos</a></div>
+<section class="h">
+  <div class="h__texto">
+    <p class="gnu-sobretitulo">120 anos em movimento</p>
+    <h1 class="gnu-display">Seja <b style="color: var(--azul)">associado</b></h1>
+    <p class="gnu-lead gnu-suave">Para relaxar, conviver ou se exercitar: quatro sedes em Porto Alegre pensadas para você e sua família viverem bons momentos.</p>
+    <div class="gnu-form-cartao">
+      <p class="gnu-form-cartao__titulo">Faça parte do <b>Grêmio Náutico União</b></p>
+      <form class="gnu-form" novalidate onsubmit="event.preventDefault()">
+  <div class="gnu-campo"><label for="h-nome">Nome completo</label><input id="h-nome" autocomplete="name" placeholder="Ex.: Ana Souza"></div>
+  <div class="gnu-campo"><label for="h-email">E-mail</label><input id="h-email" type="email" autocomplete="email" placeholder="ana@email.com"></div>
+  <div class="gnu-campo"><label for="h-tel">Telefone</label><input id="h-tel" type="tel" autocomplete="tel" placeholder="(51) 90000-0000"></div>
+  <div class="gnu-campo"><label for="h-motivo">Motivo do contato</label><select id="h-motivo"><option>Quero ser associado</option><option>Conhecer as sedes</option><option>Outro assunto</option></select></div>
+  <div class="gnu-campo"><label for="h-plano">Planos</label><select id="h-plano"><option>Título Patrimonial</option><option>Contribuinte Efetivo</option><option>Ainda não sei</option></select></div>
+  <label class="gnu-consentimento" for="h-ok"><input id="h-ok" type="checkbox"><span>Aceito a <a href="#">Política de Privacidade</a> e autorizo o contato do GNU.</span></label>
+  <button class="gnu-btn gnu-btn--primario gnu-btn--bloco" type="submit">Quero ser associado</button>
+</form>
+    </div>
   </div>
+  <div class="h__foto"><img src="/_blob/b51286f637f26b5e6870e3bb53f66c79" alt="Piscina da sede Alto Petrópolis entre as árvores, em dia de sol"></div>
 </section>
-<div class="gnu-hoje" aria-label="Hoje no clube">
-  <div class="gnu-hoje__titulo"><span class="gnu-status"><span class="gnu-status__ponto"></span><span class="gnu-rotulo">Hoje no clube</span></span></div>
-  <div class="gnu-hoje__item"><span class="gnu-rotulo-p">Piscina coberta</span><span class="gnu-hoje__valor">28 °C</span></div>
-  <div class="gnu-hoje__item"><span class="gnu-rotulo-p">Pôr do sol</span><span class="gnu-hoje__valor">19h31</span></div>
-  <div class="gnu-hoje__item"><span class="gnu-rotulo-p">Academia</span><span class="gnu-hoje__valor">até 22h</span></div>
-</div>
 </body>
 </html>
