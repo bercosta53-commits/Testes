@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Talent Four × Velora · Do relacionamento ao sistema</title>
+<title>Talent Four × Velora · Proposta</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
 /* =========================================================================
    Talent Four × Velora · apresentação 1920×1080
-   Linguagem visual do site da Velora: Ink, Bone e um ponto Acid por tela.
-   Sem gradientes decorativos, sem sombras, sem glow. Profundidade por contraste e linha.
+   Linguagem visual do site da Velora. Conteúdo sempre em Ink; Bone só nas
+   aberturas de parte e de fase, para que a troca de fundo marque a mudança.
    Navegação: ← → espaço, Home/End, número + Enter, G (visão geral), F (tela cheia).
    PDF: imprimir (Ctrl/Cmd+P) ou node render.mjs.
    ========================================================================= */
@@ -24,48 +24,32 @@
   --acid: #CCFF00;
   --bone: #F7F1ED;
   --paper: #FFFFFF;
-
   --f-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --f-corpo: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   --f-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-
   --mx: 144px;      /* margem do conteúdo */
-  --fio: 104px;     /* fio condutor: linha vertical com os rótulos pendurados */
+  --fio: 104px;     /* fio condutor */
   --larg: 1632px;   /* 1920 - 2 × 144 */
   --curva: cubic-bezier(.2, .7, .2, 1);
 }
-
 .escuro {
-  --bg: var(--ink);
-  --bg-2: var(--raise);
-  --fg: var(--paper);
-  --fg-2: rgb(255 255 255 / .64);
-  --fg-3: rgb(255 255 255 / .48);
-  --fg-4: rgb(255 255 255 / .36);
-  --linha: rgb(255 255 255 / .12);
-  --linha-diag: rgb(255 255 255 / .40);
-  --destaque: var(--acid);
+  --bg: var(--ink); --bg-2: var(--raise); --fg: var(--paper);
+  --fg-2: rgb(255 255 255 / .64); --fg-3: rgb(255 255 255 / .48); --fg-4: rgb(255 255 255 / .32);
+  --linha: rgb(255 255 255 / .12); --linha-diag: rgb(255 255 255 / .40);
 }
 .claro {
-  --bg: var(--bone);
-  --bg-2: var(--paper);
-  --fg: var(--ink);
-  --fg-2: rgb(11 11 12 / .64);
-  --fg-3: rgb(11 11 12 / .60);
-  --fg-4: rgb(11 11 12 / .30);
-  --linha: rgb(11 11 12 / .12);
-  --linha-diag: rgb(11 11 12 / .52);
-  --destaque: var(--ink);
+  --bg: var(--bone); --bg-2: var(--paper); --fg: var(--ink);
+  --fg-2: rgb(11 11 12 / .64); --fg-3: rgb(11 11 12 / .60); --fg-4: rgb(11 11 12 / .28);
+  --linha: rgb(11 11 12 / .12); --linha-diag: rgb(11 11 12 / .52);
 }
 
 /* ---------- Palco ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; background: #000; }
 body { overflow: hidden; font-family: var(--f-corpo); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-h1, h2, h3, p, ol, ul, li, figure, table, dl, dd, dt { margin: 0; padding: 0; }
+h1, h2, h3, p, ol, ul, li, figure, table { margin: 0; padding: 0; }
 ol, ul { list-style: none; }
 img, svg { display: block; }
-strong { font-weight: 600; }
 
 .deck { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform: translate(-50%, -50%) scale(var(--escala, 1)); }
 .slide {
@@ -76,37 +60,34 @@ strong { font-weight: 600; }
 }
 .slide.atual { opacity: 1; visibility: visible; transition: opacity .35s var(--curva); }
 .sem-anim .slide { transition: none !important; }
-
-/* Fio condutor */
 .slide::before { content: ''; position: absolute; left: var(--fio); top: 0; bottom: 0; width: 1px; background: var(--linha); z-index: 4; }
 
 /* ---------- Cabeçalho e rodapé (gerados pelo script) ---------- */
 .topo { position: absolute; left: var(--mx); right: var(--mx); top: 52px; display: flex; align-items: baseline; justify-content: space-between; z-index: 6; }
 .marca { display: flex; align-items: baseline; gap: 14px; }
 .marca b { font: 700 30px/1 var(--f-display); letter-spacing: -.02em; }
-.marca span, .topo__dir, .fases, .pe {
-  font-family: var(--f-mono); font-weight: 500; text-transform: uppercase; font-variant-ligatures: none;
-}
+.marca span, .topo__dir, .fases, .pe { font-family: var(--f-mono); font-weight: 500; text-transform: uppercase; font-variant-ligatures: none; }
 .marca span { font-size: 13px; letter-spacing: .18em; color: var(--fg-2); }
 .topo__dir { font-size: 14px; letter-spacing: .16em; color: var(--fg-2); }
 .fases { display: flex; align-items: baseline; gap: 18px; font-size: 14px; letter-spacing: .16em; color: var(--fg-3); }
 .fases li { padding-bottom: 9px; border-bottom: 1px solid transparent; }
 .fases li.on { color: var(--fg); border-bottom-color: var(--fg); }
-.fases .sep { color: var(--fg-4); padding: 0; border: 0; }
-.pe { position: absolute; left: var(--mx); right: var(--mx); bottom: 44px; display: flex; justify-content: space-between; font-size: 13px; letter-spacing: .16em; color: var(--fg-3); z-index: 6; }
+.fases .sep { color: var(--fg-4); }
+.pe { position: absolute; left: var(--mx); right: var(--mx); bottom: 44px; display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; letter-spacing: .14em; color: var(--fg-4); z-index: 6; }
+.partes { display: flex; gap: 26px; }
+.partes li { display: flex; align-items: center; gap: 10px; }
+.partes li::before { content: ''; width: 7px; height: 7px; border: 1px solid currentColor; }
+.partes li.on { color: var(--fg); }
+.partes li.on::before { background: currentColor; }
 .pe b { font-weight: 500; color: var(--fg-2); }
 
 /* ---------- Tipografia ---------- */
-.rotulo {
-  display: flex; align-items: center; gap: 14px; margin: 0 0 28px calc(var(--fio) - var(--mx));
-  font: 500 16px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; font-variant-ligatures: none; color: var(--fg-2);
-}
+.rotulo { display: flex; align-items: center; gap: 14px; margin: 0 0 28px calc(var(--fio) - var(--mx)); font: 500 16px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; font-variant-ligatures: none; color: var(--fg-2); }
 .rotulo::before { content: ''; flex: none; width: 26px; height: 1px; background: currentColor; }
 .rotulo .n { color: var(--fg); }
 .rotulo .barra { color: var(--fg-4); }
-
 .t1 { font: 700 132px/1 var(--f-display); letter-spacing: -.035em; }
-.t2 { font: 700 72px/1.06 var(--f-display); letter-spacing: -.028em; text-wrap: balance; max-width: 1500px; }
+.t2 { font: 700 64px/1.08 var(--f-display); letter-spacing: -.026em; text-wrap: balance; max-width: 1560px; }
 .t3 { font: 700 32px/1.2 var(--f-display); letter-spacing: -.012em; }
 .t4 { font: 700 26px/1.25 var(--f-display); letter-spacing: -.008em; }
 .lead { font: 400 28px/1.5 var(--f-corpo); color: var(--fg); text-wrap: pretty; }
@@ -115,32 +96,25 @@ strong { font-weight: 600; }
 .fg2 { color: var(--fg-2); }
 .fg3 { color: var(--fg-3); }
 .num { font-family: var(--f-display); font-weight: 700; letter-spacing: -.045em; line-height: .86; font-variant-numeric: tabular-nums; }
-.tab { font-variant-numeric: tabular-nums; }
-
 .cab { position: absolute; left: var(--mx); right: var(--mx); top: 150px; }
-.cab .lead { margin-top: 24px; max-width: 1080px; color: var(--fg-2); }
+.cab .sub { margin-top: 18px; max-width: 1400px; color: var(--fg-2); }
 
-/* Lista curta com marcador quadrado (entregáveis do site) */
 .lista { border-top: 1px solid var(--linha); }
 .lista li { position: relative; padding: 13px 0 13px 26px; border-bottom: 1px solid var(--linha); font-size: 22px; line-height: 1.45; color: var(--fg); }
 .lista li::before { content: ''; position: absolute; left: 0; top: calc(13px + .725em - 3px); width: 7px; height: 7px; background: var(--fg); }
 .lista--fraca li { color: var(--fg-2); }
 .lista--fraca li::before { background: transparent; border: 1px solid var(--fg-3); }
 
-/* Frase de fechamento: afirmação curta, sobre um fio */
 .fechamento { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; padding-top: 24px; border-top: 1px solid var(--linha); font: 500 26px/1.45 var(--f-corpo); color: var(--fg); }
 .fechamento span { color: var(--fg-2); }
+.nota { position: absolute; left: var(--mx); right: var(--mx); bottom: 124px; color: var(--fg-3); font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
 
-/* Nó quadrado dos diagramas */
 .no { display: block; width: 14px; height: 14px; background: var(--bg); border: 1px solid var(--fg-2); }
-.no--cheio { background: var(--fg); border-color: var(--fg); }
-.no--destaque { background: var(--destaque); border-color: var(--destaque); }
+.no--acid { background: var(--acid); border-color: var(--acid); }
+.marca-acid { background: var(--acid); color: var(--ink); padding: 0 .12em; margin-left: -.12em; }
+.liga { position: absolute; left: 24px; top: 7px; width: calc(100% + 32px - 48px); height: 1px; background: var(--linha-diag); }
+.liga::after { content: ''; position: absolute; right: 1px; top: -3px; width: 7px; height: 7px; border-top: 1px solid var(--linha-diag); border-right: 1px solid var(--linha-diag); transform: rotate(45deg); }
 
-/* Marca-texto Acid: só como fundo, com texto Ink (vale para fundo claro e escuro) */
-.marca-acid { background: var(--acid); color: var(--ink); padding: 0 .14em; }
-.chip { display: inline-block; padding: 5px 10px 4px; font: 500 13px/1.3 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; background: var(--acid); color: var(--ink); vertical-align: middle; }
-
-/* Fotografia P&B do site, fundida ao Ink */
 .foto { position: absolute; top: 0; bottom: 0; right: 0; margin: 0; overflow: hidden; background: var(--raise); }
 .foto img { width: 100%; height: 100%; object-fit: cover; }
 .foto::after {
@@ -151,449 +125,407 @@ strong { font-weight: 600; }
     linear-gradient(180deg, rgb(11 11 12 / .7) 0%, rgb(11 11 12 / 0) 18%);
 }
 
-/* ---------- Tabelas: mono no cabeçalho, fios finos, números tabulares ---------- */
 .tabela { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.tabela th { padding: 0 32px 16px 0; text-align: left; vertical-align: bottom; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); border-bottom: 1px solid var(--linha-diag); }
-.tabela td { padding: 22px 32px 22px 0; vertical-align: top; font-size: 22px; line-height: 1.45; color: var(--fg-2); border-bottom: 1px solid var(--linha); }
+.tabela th { padding: 0 32px 14px 0; text-align: left; vertical-align: bottom; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); border-bottom: 1px solid var(--linha-diag); }
+.tabela td { padding: 20px 32px 20px 0; vertical-align: top; font-size: 22px; line-height: 1.45; color: var(--fg-2); border-bottom: 1px solid var(--linha); }
 .tabela th:last-child, .tabela td:last-child { padding-right: 0; }
 .tabela .dir { text-align: right; }
+.tabela-wrap { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
+
+.etapas { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: 32px; }
+.etapa { position: relative; padding-top: 44px; }
+.etapa > .no { position: absolute; left: 0; top: 0; }
+.etapa .t3 { margin-top: 14px; }
+.etapa .txt { margin-top: 10px; max-width: 300px; }
 
 /* =========================================================================
-   Slides
+   Aberturas de parte e de fase (fundo Bone)
+   ========================================================================= */
+.divisor__txt { position: absolute; left: var(--mx); top: 150px; width: 980px; z-index: 2; }
+.divisor__n { margin: 44px 0 0 -16px; font: 700 400px/.8 var(--f-display); letter-spacing: -.065em; }
+.divisor__titulo { margin-top: 48px; font: 700 112px/1 var(--f-display); letter-spacing: -.04em; text-wrap: balance; }
+.divisor__sub { margin-top: 30px; color: var(--fg-2); }
+.indice { position: absolute; left: 1180px; right: var(--mx); top: 392px; }
+.indice li { display: grid; grid-template-columns: 64px 1fr; padding: 22px 0 24px; border-top: 1px solid var(--linha); color: var(--fg-4); }
+.indice li:last-child { border-bottom: 1px solid var(--linha); }
+.indice li.on { color: var(--fg); border-top: 2px solid var(--fg); padding-top: 21px; }
+.indice .mono { padding-top: 10px; }
+.indice .t3 { font-size: 34px; }
+.indice small { grid-column: 2; margin-top: 6px; font: 500 13px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
+
+.divisor--fase .divisor__txt { top: 150px; width: 940px; }
+.divisor--fase .divisor__n { margin: 40px 0 0 -6px; font-size: 280px; }
+.divisor--fase .divisor__n span { display: inline-block; padding: .08em .1em .03em; line-height: .78; background: var(--acid); color: var(--ink); }
+.divisor--fase .divisor__titulo { margin-top: 44px; font-size: 100px; }
+.divisor__quando { margin-top: 26px; color: var(--fg-2); }
+.divisor__lead { margin-top: 14px; max-width: 820px; }
+.divisor__foto { position: absolute; right: 0; top: 120px; bottom: 100px; width: 44%; margin: 0; overflow: hidden; background: var(--raise); }
+.divisor__foto img { width: 100%; height: 100%; object-fit: cover; }
+.trilho { position: absolute; left: var(--mx); width: 900px; bottom: 132px; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 6px; }
+.trilho li { padding-top: 14px; border-top: 1px solid var(--linha-diag); color: var(--fg-3); font: 500 13px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
+.trilho li.on { border-top: 5px solid var(--ink); padding-top: 10px; color: var(--fg); }
+
+/* =========================================================================
+   Slides de conteúdo (fundo Ink)
    ========================================================================= */
 
-/* 01 · Capa */
+/* Capa */
 .capa .foto { width: 54%; }
 .capa .foto img { object-position: 50% 40%; }
-.capa__txt { position: absolute; left: var(--mx); top: 288px; width: 1500px; z-index: 2; }
-.capa__titulo { font-size: 168px; line-height: .98; letter-spacing: -.04em; }
+.capa__txt { position: absolute; left: var(--mx); top: 258px; width: 1440px; z-index: 2; }
+.capa__titulo { font-size: 124px; line-height: 1.02; letter-spacing: -.038em; }
 .capa__titulo span { display: block; }
-.capa__lead { margin-top: 44px; max-width: 760px; color: var(--fg-2); }
+.capa__lead { margin-top: 44px; max-width: 900px; color: var(--fg-2); }
 .faixa { position: absolute; left: var(--mx); right: var(--mx); bottom: 112px; display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--linha-diag); font: 500 15px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); z-index: 2; }
 
-/* 02 · Roteiro */
-.roteiro .cab { right: auto; width: 620px; }
-.roteiro__lista { position: absolute; left: 860px; right: var(--mx); top: 196px; border-top: 1px solid var(--linha); }
-.roteiro__lista li { display: grid; grid-template-columns: 72px 1fr auto; align-items: baseline; padding: 21px 0 20px; border-bottom: 1px solid var(--linha); }
-.roteiro__lista .mono { color: var(--fg-3); }
-.roteiro__lista .quando { color: var(--fg-2); }
-.roteiro__lista .t4 { font-size: 30px; }
+/* Roteiro */
+.roteiro .cab { right: auto; width: 640px; }
+.roteiro__lista { position: absolute; left: 880px; right: var(--mx); top: 196px; }
+.roteiro__lista > li { display: grid; grid-template-columns: 72px 1fr; padding: 24px 0 26px; border-top: 1px solid var(--linha); }
+.roteiro__lista > li:last-child { border-bottom: 1px solid var(--linha); }
+.roteiro__lista .mono { color: var(--fg-3); padding-top: 9px; }
+.roteiro__lista .t3 { font-size: 34px; }
+.roteiro__fases { grid-column: 2; margin-top: 14px; }
+.roteiro__fases li { display: grid; grid-template-columns: 1fr auto; padding: 10px 0; border-top: 1px solid var(--linha); font-size: 22px; color: var(--fg-2); }
+.roteiro__fases .mono { padding: 0; font-size: 13px; }
 
-/* 03 · Tese */
-.tese { position: absolute; left: var(--mx); top: 236px; width: 1560px; }
-.tese__t { font-size: 128px; line-height: 1.02; letter-spacing: -.035em; }
-.tese__t span { display: block; }
+/* Como contribuímos */
+.frase { position: absolute; left: var(--mx); top: 236px; width: 1500px; }
+.frase__t { font: 700 104px/1.04 var(--f-display); letter-spacing: -.035em; }
+.frase__t span { display: block; }
+.frase .lead { margin-top: 44px; max-width: 1100px; color: var(--fg-2); }
 
-/* 04 · O sistema (circuito) */
+/* Cinco etapas */
 .circuito { position: absolute; left: var(--mx); top: 404px; width: var(--larg); }
 .circuito__laco { position: absolute; left: 0; top: 0; overflow: visible; }
-.circuito__laco path { fill: none; stroke: var(--destaque); stroke-width: 1.5; }
+.circuito__laco path { fill: none; stroke: var(--acid); stroke-width: 1.5; }
 .circuito__rotulo { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); padding: 0 18px; background: var(--bg); color: var(--fg-2); white-space: nowrap; }
-.etapas { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: 32px; margin-top: 64px; }
-.etapa { position: relative; padding-top: 44px; }
-.etapa .no { position: absolute; left: 0; top: 0; }
-.liga { position: absolute; left: 24px; top: 7px; width: calc(100% + 32px - 48px); height: 1px; background: var(--linha-diag); }
-.liga::after { content: ''; position: absolute; right: 1px; top: -3px; width: 7px; height: 7px; border-top: 1px solid var(--linha-diag); border-right: 1px solid var(--linha-diag); transform: rotate(45deg); }
-.etapa__n { font-size: 112px; color: var(--fg-4); }
-.etapa .t3 { margin-top: 22px; }
-.etapa .txt { margin-top: 10px; max-width: 290px; }
+.circuito .etapas { margin-top: 64px; }
+.etapa__n { font-size: 104px; color: var(--fg-4); }
+.circuito .t3 { margin-top: 22px; }
 
-/* 05 · O que acreditamos */
-.crencas .cab { right: auto; width: 620px; }
-.crencas__lista { position: absolute; left: 860px; right: var(--mx); top: 196px; }
+/* Princípios */
+.crencas .cab { right: auto; width: 640px; }
+.crencas__lista { position: absolute; left: 880px; right: var(--mx); top: 196px; }
 .crenca { display: grid; grid-template-columns: 76px 1fr; padding: 28px 0 30px; border-top: 1px solid var(--linha); }
 .crenca:last-child { border-bottom: 1px solid var(--linha); }
 .crenca .mono { color: var(--fg-3); padding-top: 9px; }
 .crenca .txt { grid-column: 2; margin-top: 8px; max-width: 760px; }
 .crenca--foco { border-top: 2px solid var(--fg); }
 .crenca--foco .mono { color: var(--fg); }
-.crenca--foco .t3 span { padding: 0 .12em; margin-left: -.12em; background: var(--acid); }
-.crenca--foco .txt { color: var(--fg); }
 
-/* 06 · Evidências */
+/* Contexto de mercado */
 .evid { position: absolute; left: var(--mx); right: var(--mx); top: 420px; display: grid; grid-template-columns: 860px 1fr; column-gap: 96px; }
 .evid__foco .num { font-size: 260px; color: var(--acid); }
-.evid__foco .txt { margin-top: 28px; max-width: 640px; font-size: 26px; color: var(--fg); }
+.evid__foco .txt { margin-top: 30px; max-width: 680px; font-size: 26px; color: var(--fg); }
 .fonte { margin-top: 16px; color: var(--fg-3); font: 500 13px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
 .evid__lado { border-left: 1px solid var(--linha); padding-left: 56px; display: grid; row-gap: 36px; align-content: start; }
 .evid__lado .dado + .dado { padding-top: 32px; border-top: 1px solid var(--linha); }
 .evid__lado .num { font-size: 104px; }
 .evid__lado .txt { margin-top: 16px; }
 
-/* 07 · A Talent hoje */
-.hoje__esq { position: absolute; left: var(--mx); top: 420px; width: 760px; }
-.hoje__esq .lista { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; border-top: 0; }
-.hoje__esq .lista li:nth-child(-n+2) { border-top: 1px solid var(--linha); }
-.hoje__dir { position: absolute; left: 1000px; right: var(--mx); top: 412px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
-.hoje__dir .num { font-size: 168px; }
-.hoje__dir .txt { margin-top: 18px; }
-.clientes { position: absolute; left: var(--mx); right: var(--mx); bottom: 120px; padding-top: 22px; border-top: 1px solid var(--linha); display: grid; grid-template-columns: 200px 1fr; }
-.clientes .mono { color: var(--fg-3); padding-top: 6px; }
-.clientes ul { display: flex; flex-wrap: wrap; gap: 10px 34px; }
-.clientes li { font: 700 27px/1.3 var(--f-display); letter-spacing: -.01em; color: var(--fg-2); }
+/* O que a Talent construiu */
+.marcos { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 48px; }
+.marco .num { font-size: 150px; }
+.marco .txt { margin-top: 18px; max-width: 460px; }
+.faixas { position: absolute; left: var(--mx); right: var(--mx); top: 690px; }
+.faixa-linha { display: grid; grid-template-columns: 240px 1fr; padding: 20px 0; border-top: 1px solid var(--linha); }
+.faixa-linha:last-child { border-bottom: 1px solid var(--linha); }
+.faixa-linha .mono { color: var(--fg-3); padding-top: 6px; }
+.faixa-linha ul { display: flex; flex-wrap: wrap; gap: 6px 32px; }
+.faixa-linha li { font: 700 26px/1.35 var(--f-display); letter-spacing: -.01em; color: var(--fg-2); }
+.faixa-linha--portfolio li { color: var(--fg); }
 
-/* 08 · Como a Talent cresce (trilha com chaves) */
-.trilha { position: absolute; left: var(--mx); top: 548px; width: var(--larg); }
-.chaves { position: absolute; left: 0; top: -60px; width: 100%; height: 40px; }
-.chave { position: absolute; top: 0; height: 40px; }
-.chave::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; border: 1px solid var(--linha-diag); border-bottom: 0; }
-.chave .mono { position: absolute; left: 0; top: -14px; color: var(--fg-2); }
-.chave--foco::before { border-color: var(--acid); border-width: 2px 2px 0 2px; }
-.chave--foco .mono { color: var(--acid); }
-.trilha .etapa__n { font-size: 15px; letter-spacing: .14em; color: var(--fg-3); font-family: var(--f-mono); font-weight: 500; line-height: 1.4; }
+/* Como a Talent cresceu */
+.trilha { position: absolute; left: var(--mx); top: 470px; width: var(--larg); }
+.trilha .etapa__n { font: 500 15px/1.4 var(--f-mono); letter-spacing: .14em; color: var(--fg-3); }
 .trilha .t3 { margin-top: 12px; }
 
-/* 09 · Concentração */
-.conc__esq { position: absolute; left: var(--mx); top: 150px; width: 700px; }
-.conc__esq .num { font-size: 220px; margin-top: 40px; }
-.conc__esq .t3 { margin-top: 36px; font-size: 38px; line-height: 1.15; letter-spacing: -.018em; }
-.conc__esq .txt { margin-top: 20px; max-width: 600px; }
-.grafico { position: absolute; left: 920px; top: 236px; width: 856px; height: 600px; }
-.grafico svg { overflow: visible; }
-.grafico .eixo { stroke: var(--linha); stroke-width: 1; }
-.grafico .ref { stroke: var(--linha-diag); stroke-width: 1; stroke-dasharray: 6 6; }
-.grafico .serie { fill: none; stroke: var(--ink); stroke-width: 3; }
-.grafico .ponto { fill: var(--bone); stroke: var(--ink); stroke-width: 2; }
-.grafico .ponto--fim { fill: var(--ink); }
-.grafico .gap { stroke: var(--ink); stroke-width: 1.5; fill: none; }
-.g-rot { position: absolute; font: 500 14px/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); white-space: nowrap; }
-.g-val { position: absolute; font: 700 40px/1 var(--f-display); letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.g-val small { display: block; margin-top: 6px; font: 500 13px/1 var(--f-mono); letter-spacing: .12em; color: var(--fg-2); }
-.nota { position: absolute; left: var(--mx); right: var(--mx); bottom: 120px; color: var(--fg-3); font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
+/* O que entendemos */
+.entendemos td:first-child { width: 340px; color: var(--fg); font: 700 26px/1.3 var(--f-display); letter-spacing: -.008em; }
+.entendemos td { font-size: 23px; }
 
-/* 10 · O que ouvimos */
-.ouvimos .tabela-wrap { position: absolute; left: var(--mx); right: var(--mx); top: 300px; }
-.ouvimos td:first-child { color: var(--fg); font-weight: 500; font-size: 23px; width: 46%; }
-.ouvimos td:nth-child(2) { width: 38%; }
-.ouvimos td:last-child { font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg); padding-top: 28px; }
+/* Três oportunidades */
+.oport { position: absolute; left: var(--mx); right: var(--mx); top: 400px; }
+.oport li { display: grid; grid-template-columns: 96px 820px 1fr; align-items: center; height: 172px; border-top: 1px solid var(--linha); }
+.oport li:last-child { border-bottom: 1px solid var(--linha); }
+.oport .mono { color: var(--fg-3); align-self: start; padding-top: 40px; }
+.oport__palavra { font: 700 128px/1 var(--f-display); letter-spacing: -.045em; }
+.oport .lead { font-size: 27px; line-height: 1.42; }
 
-/* 11 · Três desafios */
-.desafios { position: absolute; left: var(--mx); right: var(--mx); top: 214px; }
-.desafio { display: grid; grid-template-columns: 96px 1fr 600px; align-items: center; height: 236px; border-top: 1px solid var(--linha); }
-.desafio:last-child { border-bottom: 1px solid var(--linha); }
-.desafio .mono { color: var(--fg-3); align-self: start; padding-top: 52px; }
-.desafio__palavra { font: 700 156px/1 var(--f-display); letter-spacing: -.045em; }
-.desafio .lead { font-size: 29px; line-height: 1.4; }
-
-/* 12 · Hoje × com o sistema */
-.antes { position: absolute; left: var(--mx); right: var(--mx); top: 330px; }
-.antes__linha { display: grid; grid-template-columns: 320px 560px 112px 1fr; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--linha); }
-.antes__linha--cab { padding: 0 0 16px; border-bottom-color: var(--linha-diag); }
-.antes__linha--cab .mono { color: var(--fg-3); display: flex; align-items: center; gap: 12px; }
-.antes__linha--cab .mono .no { width: 10px; height: 10px; }
-.antes__linha .txt { font-size: 23px; }
-.antes__linha .depois { font-size: 23px; line-height: 1.5; color: var(--fg); }
-.seta-h { width: 64px; height: 16px; margin-top: 10px; }
-.seta-h path { fill: none; stroke: var(--linha-diag); stroke-width: 1.5; }
-
-/* 13 · Frase-ponte */
+/* Transição */
 .ponte .foto { width: 44%; }
 .ponte .foto img { object-position: 40% 50%; }
 .ponte__txt { position: absolute; left: var(--mx); top: 236px; width: 1180px; z-index: 2; }
-.ponte__frase { font: 700 92px/1.06 var(--f-display); letter-spacing: -.032em; }
+.ponte__frase { font: 700 88px/1.08 var(--f-display); letter-spacing: -.032em; }
 .ponte__frase span { display: block; }
-.ponte__frase .a { color: var(--fg-2); margin-bottom: 36px; }
+.ponte__frase .a { color: var(--fg-2); margin-bottom: 40px; }
 .ponte__frase em { font-style: normal; color: var(--acid); }
 
-/* 14 · Estrutura em seis meses (Gantt) */
-.gantt { position: absolute; left: var(--mx); top: 404px; width: var(--larg); height: 530px; }
+/* Visão do projeto (Gantt) */
+.gantt { position: absolute; left: var(--mx); top: 392px; width: var(--larg); height: 570px; }
 .gantt__col { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--linha); }
 .gantt__col .mono { position: absolute; top: 0; left: 14px; color: var(--fg-3); white-space: nowrap; }
 .gantt__col--horizonte { border-left: 1px dashed var(--linha-diag); }
-.gantt__fase { position: absolute; left: 0; }
+.gantt__fase { position: absolute; left: 0; right: 0; }
 .gantt__barra { position: absolute; top: 0; height: 6px; background: var(--fg); }
-.gantt__barra::before { content: ''; position: absolute; left: 0; top: -4px; width: 14px; height: 14px; background: var(--fg); }
+.gantt__barra::before { content: ''; position: absolute; left: 0; top: -4px; width: 14px; height: 14px; background: inherit; }
 .gantt__barra--futuro { height: 0; border-top: 2px dashed var(--fg-2); background: none; top: 2px; }
 .gantt__barra--futuro::before { display: none; }
-.gantt__barra--futuro::after { content: ''; position: absolute; right: -7px; top: -9px; width: 14px; height: 14px; background: var(--bone); border: 1px solid var(--fg); }
-.gantt__txt { position: absolute; top: 28px; width: max-content; max-width: 760px; padding: 0 24px 4px 0; background: var(--bg); }
+.gantt__barra--futuro::after { content: ''; position: absolute; right: 0; top: -9px; width: 14px; height: 14px; background: var(--bg); border: 1px solid var(--fg); }
+.gantt__txt { position: absolute; top: 28px; padding: 0 24px 6px 0; background: var(--bg); }
 .gantt__txt .mono { color: var(--fg-3); }
 .gantt__txt .t3 { margin-top: 6px; }
-.gantt__txt .txt { margin-top: 6px; }
-.gantt__horizonte { position: absolute; width: 436px; padding-bottom: 4px; background: var(--bg); }
-.gantt__horizonte .mono { color: var(--fg-2); }
-.gantt__horizonte .t3 { margin-top: 6px; }
-.gantt__horizonte .txt { margin-top: 6px; }
+.gantt__txt .txt { margin-top: 6px; font-size: 21px; }
+.gantt__horizonte { position: absolute; left: 1076px; right: 0; top: 48px; }
+.gantt__horizonte .mono { color: var(--fg); }
+.gantt__horizonte .txt { margin-top: 10px; font-size: 21px; }
+.gantt__fim { position: absolute; right: 0; top: 24px; color: var(--fg-2); }
 
-/* Aberturas de fase */
-.fase .foto { width: 46%; }
-.fase__txt { position: absolute; left: var(--mx); top: 168px; width: 960px; z-index: 2; }
-.fase__n { font: 700 300px/.8 var(--f-display); letter-spacing: -.06em; margin-top: 28px; margin-left: -12px; }
-.fase__nome { margin-top: 36px; font: 700 104px/1 var(--f-display); letter-spacing: -.035em; }
-.fase__quando { margin-top: 28px; color: var(--fg-2); }
-.fase__pergunta { margin-top: 18px; max-width: 820px; }
-.trilho { position: absolute; left: var(--mx); width: 900px; bottom: 120px; z-index: 2; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 6px; }
-.trilho li { padding-top: 14px; border-top: 1px solid var(--linha-diag); color: var(--fg-3); font: 500 13px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
-.trilho li.on { border-top: 4px solid var(--acid); padding-top: 11px; color: var(--fg); }
-
-/* 16 · Quatro lentes */
-.lentes { position: absolute; left: var(--mx); top: 344px; width: var(--larg); height: 560px; }
-.lente { position: absolute; left: 0; width: 820px; height: 140px; display: grid; grid-template-columns: 76px 1fr; align-content: center; border-top: 1px solid var(--linha); }
+/* Fase 1 · quatro lentes */
+.lentes { position: absolute; left: var(--mx); top: 400px; width: var(--larg); height: 520px; }
+.lente { position: absolute; left: 0; width: 820px; height: 130px; display: grid; grid-template-columns: 76px 1fr; align-content: center; border-top: 1px solid var(--linha); }
 .lente:last-of-type { border-bottom: 1px solid var(--linha); }
 .lente .mono { color: var(--fg-3); padding-top: 8px; grid-row: span 2; }
-.lente .txt { margin-top: 6px; }
+.lente .txt { margin-top: 4px; }
 .lentes svg { position: absolute; left: 0; top: 0; overflow: visible; }
 .lentes svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1.25; }
-.lentes svg .forte { stroke: var(--ink); stroke-width: 1.5; }
-.lentes__no { position: absolute; left: 1182px; top: 271px; width: 18px; height: 18px; background: var(--ink); }
-.lentes__plano { position: absolute; left: 1272px; top: 196px; width: 360px; }
+.lentes svg .forte { stroke: var(--fg); stroke-width: 1.5; }
+.lentes__no { position: absolute; left: 1182px; top: 251px; width: 18px; height: 18px; background: var(--acid); }
+.lentes__plano { position: absolute; left: 1272px; top: 150px; width: 360px; }
 .lentes__plano .mono { color: var(--fg-3); }
 .lentes__plano .t3 { margin-top: 8px; font-size: 40px; line-height: 1.05; letter-spacing: -.02em; }
-.lentes__plano .txt { margin-top: 14px; }
+.lentes__plano .txt { margin-top: 14px; color: var(--fg); }
 
-/* 17 · Plano de ação em três horizontes (barras proporcionais ao prazo) */
-.horiz { position: absolute; left: var(--mx); top: 352px; width: var(--larg); }
-.horiz__eixo { display: grid; grid-template-columns: 380px 1fr; padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
-.horiz__eixo span:last-child { display: flex; justify-content: space-between; }
-.horiz__linha { display: grid; grid-template-columns: 380px 1fr; align-items: start; padding: 40px 0 42px; border-bottom: 1px solid var(--linha); }
-.horiz__nome .mono { color: var(--fg-3); }
-.horiz__nome .t3 { margin-top: 6px; }
-.horiz__trilha { position: relative; padding-top: 12px; }
-.horiz__barra { display: block; height: 6px; background: var(--fg); position: relative; }
-.horiz__barra::before { content: ''; position: absolute; left: 0; top: -4px; width: 14px; height: 14px; background: inherit; }
-.horiz__barra--agora { background: var(--acid); }
-.horiz__itens { display: flex; flex-wrap: wrap; gap: 10px 44px; margin-top: 26px; }
-.horiz__itens li { position: relative; padding-left: 22px; font-size: 22px; line-height: 1.4; color: var(--fg); }
-.horiz__itens li::before { content: ''; position: absolute; left: 0; top: calc(.7em - 3px); width: 7px; height: 7px; background: var(--fg-2); }
+/* Fase 2 · preparação do mercado */
+.perguntas { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
+.pergunta { display: grid; grid-template-columns: 76px 520px 1fr; column-gap: 32px; padding: 28px 0 30px; border-top: 1px solid var(--linha); }
+.pergunta:last-child { border-bottom: 1px solid var(--linha); }
+.pergunta > .mono { color: var(--fg-3); padding-top: 10px; }
+.pergunta__q { font: 700 40px/1.08 var(--f-display); letter-spacing: -.02em; }
+.pergunta__q small { display: block; margin-top: 10px; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
+.pergunta .txt { font-size: 22px; }
+.pergunta dl { display: grid; grid-template-columns: 160px 1fr; row-gap: 6px; margin: 0; font-size: 22px; line-height: 1.45; }
+.pergunta dt { color: var(--fg); font-weight: 600; }
+.pergunta dd { margin: 0; color: var(--fg-2); }
 
-/* 19 · Comitê de compra */
-.comite__radar { position: absolute; left: 112px; top: 330px; width: 560px; height: 560px; }
-.comite__radar svg { overflow: visible; }
-.comite__radar .anel { fill: none; stroke: var(--linha); }
-.comite__radar .anel--ext { stroke: var(--linha-diag); }
-.comite__radar .elo { stroke: var(--ink); stroke-width: 1.25; }
-.comite__radar .conta { fill: var(--fg-4); }
-.comite__radar .alvo { fill: var(--ink); }
-.comite__radar .pessoa { fill: var(--bone); stroke: var(--ink); stroke-width: 2; }
-.radar-rot { position: absolute; font: 500 14px/1.2 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg); white-space: nowrap; }
-.papeis { position: absolute; left: 780px; right: var(--mx); top: 330px; }
-.papeis__cab, .papel { display: grid; grid-template-columns: 290px 1fr 1fr; column-gap: 40px; }
-.papeis__cab { padding-bottom: 16px; border-bottom: 1px solid var(--linha-diag); }
-.papeis__cab .mono { color: var(--fg-3); }
-.papel { padding: 28px 0; border-bottom: 1px solid var(--linha); }
-.papel .t3 { font-size: 30px; }
-.papel .quem { margin-top: 6px; font-size: 18px; line-height: 1.4; color: var(--fg-3); }
-.papel .txt { font-size: 21px; }
-.papel .entrada { font-size: 21px; line-height: 1.5; color: var(--fg); }
+/* Fase 2 · ~500 contas */
+.contas__esq { position: absolute; left: var(--mx); top: 150px; width: 700px; }
+.contas__esq .num { font-size: 230px; margin: 36px 0 0 -8px; }
+.contas__esq .lead { margin-top: 28px; }
+.contas__fim { position: absolute; left: var(--mx); width: 700px; bottom: 128px; padding-top: 22px; border-top: 1px solid var(--linha); font: 500 24px/1.45 var(--f-corpo); }
+.bandas { position: absolute; left: 976px; right: var(--mx); top: 196px; }
+.banda { padding: 22px 0 26px; border-top: 1px solid var(--linha); }
+.banda:last-child { border-bottom: 1px solid var(--linha); }
+.banda__cab { display: flex; align-items: baseline; gap: 14px; }
+.banda__cab .mono { color: var(--fg-3); }
+.banda .txt { margin-top: 6px; font-size: 20px; }
+.banda__pontos { margin-top: 18px; display: grid; grid-template-columns: repeat(50, 12px); gap: 4px; }
+.banda__pontos i { width: 12px; height: 12px; background: rgb(255 255 255 / .22); }
+.banda--a1 .banda__pontos i { background: var(--acid); }
+.banda--b2 .banda__pontos i { background: rgb(255 255 255 / .82); }
 
-/* 20 · 500 contas */
-.contas__esq { position: absolute; left: var(--mx); top: 150px; width: 640px; }
-.contas__esq .num { font-size: 240px; margin-top: 36px; margin-left: -8px; }
-.contas__esq .lead { margin-top: 24px; }
-.contas__esq .lista { margin-top: 32px; }
-.contas__esq .lista li { font-size: 20px; }
-.contas__esq .mono.fg3 { margin-top: 36px; }
-.matriz { position: absolute; left: 1010px; top: 196px; display: grid; grid-template-columns: repeat(25, 22px); gap: 9px; }
-.matriz i { width: 22px; height: 22px; background: rgb(255 255 255 / .2); }
-.matriz i.a1 { background: var(--acid); }
-.matriz i.b2 { background: rgb(255 255 255 / .82); }
-.tiers { position: absolute; left: 1010px; right: var(--mx); top: 838px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
-.tier { padding-top: 18px; border-top: 1px solid var(--linha); }
-.tier__cab { display: flex; align-items: center; gap: 12px; }
-.tier__cab i { width: 14px; height: 14px; }
-.tier .t3 { font-size: 30px; }
-.tier .txt { margin-top: 6px; font-size: 19px; line-height: 1.45; }
-
-/* 21 · Três frentes (raias que convergem) */
-.raias { position: absolute; left: var(--mx); top: 352px; width: var(--larg); height: 540px; }
-.raia { position: absolute; left: 0; width: 1000px; height: 180px; display: grid; grid-template-columns: 76px 1fr; align-content: center; border-top: 1px solid var(--linha); }
+/* Fase 2 · três frentes */
+.raias { position: absolute; left: var(--mx); top: 400px; width: var(--larg); height: 420px; }
+.raia { position: absolute; left: 0; width: 1000px; height: 140px; display: grid; grid-template-columns: 76px 1fr; align-content: center; border-top: 1px solid var(--linha); }
 .raia:last-of-type { border-bottom: 1px solid var(--linha); }
-.raia .mono.n { color: var(--fg-3); padding-top: 8px; grid-row: span 3; }
-.raia__cab { display: flex; align-items: baseline; gap: 18px; }
-.raia__cab .mono { color: var(--fg-2); }
-.raia .txt { margin-top: 8px; max-width: 880px; }
+.raia .mono { color: var(--fg-3); padding-top: 8px; grid-row: span 2; }
+.raia .txt { margin-top: 6px; }
 .raias svg { position: absolute; left: 0; top: 0; overflow: visible; }
 .raias svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1.25; }
-.raias__no { position: absolute; left: 1230px; top: 261px; width: 18px; height: 18px; background: var(--ink); }
-.raias__fim { position: absolute; left: 1290px; top: 196px; width: 342px; }
+.raias svg .forte { stroke: var(--fg); stroke-width: 1.5; }
+.raias__no { position: absolute; left: 1230px; top: 201px; width: 18px; height: 18px; background: var(--fg); }
+.raias__fim { position: absolute; left: 1290px; top: 128px; width: 342px; }
 .raias__fim .mono { color: var(--fg-3); }
 .raias__fim .t3 { margin-top: 8px; font-size: 38px; line-height: 1.05; letter-spacing: -.02em; }
-.raias__fim .txt { margin-top: 14px; }
-.cadeia { margin-top: 22px; display: grid; row-gap: 8px; }
+.cadeia { margin-top: 18px; display: grid; row-gap: 8px; }
 .cadeia li { display: flex; align-items: center; gap: 12px; color: var(--fg-2); }
 .cadeia li::before { content: ''; width: 9px; height: 9px; border: 1px solid var(--fg-2); }
+.base { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; display: grid; grid-template-columns: 300px 1fr; padding-top: 22px; border-top: 2px solid var(--fg); }
+.base .mono { color: var(--fg); padding-top: 6px; }
+.base p:last-child { font: 500 26px/1.45 var(--f-corpo); }
 
-/* 22 · Capturar × provocar */
-.divide { position: absolute; left: var(--mx); right: var(--mx); top: 352px; display: grid; grid-template-columns: 1fr 1fr; }
+/* Fase 2 · radar de sinais */
+.radar-fig { position: absolute; left: 128px; top: 404px; width: 500px; height: 500px; margin: 0; }
+.radar-fig svg { width: 100%; height: 100%; overflow: visible; }
+.radar__anel { fill: none; stroke: rgb(255 255 255 / .14); stroke-width: 1; }
+.radar__anel--externo { stroke: rgb(255 255 255 / .4); }
+.radar__cruz { fill: none; stroke: rgb(255 255 255 / .08); stroke-width: 1; }
+.radar__conta { fill: rgb(255 255 255 / .5); }
+.radar__elo { stroke: rgb(255 255 255 / .55); stroke-width: 1; }
+.radar__pessoa { fill: var(--paper); }
+.radar__prioritaria { fill: var(--acid); }
+.radar__sinal { fill: none; stroke: var(--acid); stroke-width: 1.25; }
+.radar__sinal--2 { stroke-opacity: .45; }
+.radar__varredura { transform: rotate(48deg); transform-origin: 300px 300px; }
+.radar__varredura line { stroke: rgb(255 255 255 / .7); stroke-width: 1.25; }
+.radar__centro { fill: var(--paper); }
+.sinais { position: absolute; left: 740px; right: var(--mx); top: 404px; }
+.sinais__intro .mono { color: var(--fg); }
+.sinais__intro .txt { margin-top: 8px; font-size: 21px; }
+.sinais .tabela { margin-top: 26px; }
+.sinais .tabela td { padding-top: 13px; padding-bottom: 13px; font-size: 20px; }
+.sinais .tabela td:first-child { width: 46%; color: var(--fg); font-weight: 500; }
+.saida { margin-top: 24px; padding-top: 18px; border-top: 2px solid var(--fg); display: grid; grid-template-columns: 200px 1fr; }
+.saida .mono { padding-top: 5px; }
+.saida p:last-child { font: 500 24px/1.4 var(--f-corpo); }
+
+/* Fase 2 · geração de demanda */
+.divide { position: absolute; left: var(--mx); right: var(--mx); top: 404px; display: grid; grid-template-columns: 1fr 1fr; }
 .divide__lado { padding-right: 72px; }
 .divide__lado + .divide__lado { padding: 0 0 0 72px; border-left: 1px solid var(--linha-diag); }
-.divide__verbo { font: 700 104px/.9 var(--f-display); letter-spacing: -.045em; }
-.divide__sub { margin-top: 18px; color: var(--fg-2); }
-.divide .lista { margin-top: 40px; }
-.divide .lista li { font-size: 23px; }
-.divide .lista small { display: block; font-size: 19px; color: var(--fg-2); margin-top: 2px; }
-.divide .lista .chip { margin-left: 10px; }
+.divide__verbo { font: 700 96px/.9 var(--f-display); letter-spacing: -.045em; }
+.divide__sub { margin-top: 16px; color: var(--fg-2); }
+.divide .lista { margin-top: 30px; }
 
-/* 23 · Processo por tier */
-.processo .tabela-wrap { position: absolute; left: var(--mx); right: var(--mx); top: 408px; }
-.processo td { font-size: 21px; }
-.processo td:first-child { width: 190px; }
-.processo .tier-nome { font: 700 44px/1 var(--f-display); letter-spacing: -.03em; color: var(--fg); }
-.processo .tier-nome.a1 span { background: var(--acid); padding: 0 .12em; margin-left: -.12em; }
-.processo .tier-qtd { display: block; margin-top: 10px; font: 500 14px/1 var(--f-mono); letter-spacing: .14em; color: var(--fg-3); }
-.processo td:nth-child(2) { color: var(--fg); width: 26%; }
-.processo td:last-child { width: 18%; }
+/* Fase 2 · prospecção de decisores */
+.passos4 { position: absolute; left: var(--mx); right: var(--mx); top: 410px; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 32px; padding-top: 40px; border-top: 1px solid var(--linha-diag); }
+.passo4__n { font: 700 132px/.82 var(--f-display); letter-spacing: -.05em; color: var(--fg-4); }
+.passo4 .t3 { margin-top: 28px; }
+.passo4 .txt { margin-top: 12px; max-width: 360px; }
 
-/* 24 · RevOps (escada) */
-.escada { position: absolute; left: var(--mx); top: 412px; width: var(--larg); height: 520px; }
+/* Fase 2 · abordagem por grupo */
+.grupos td { font-size: 22px; }
+.grupos td:first-child { width: 150px; }
+.grupo-nome { font: 700 44px/1 var(--f-display); letter-spacing: -.03em; color: var(--fg); }
+.grupo-nome.a1 span { background: var(--acid); color: var(--ink); padding: 0 .12em; margin-left: -.12em; }
+.grupos td:nth-child(2) { color: var(--fg); width: 34%; }
+.dupla { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px; }
+.dupla > div { padding-top: 20px; border-top: 1px solid var(--linha-diag); }
+.dupla .mono { color: var(--fg-3); }
+.dupla .txt { margin-top: 8px; color: var(--fg); }
+
+/* Fase 2 · indicadores (escada) */
+.escada { position: absolute; left: var(--mx); top: 404px; width: var(--larg); height: 380px; }
 .escada svg { position: absolute; left: 0; top: 0; overflow: visible; }
 .escada svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1; }
-.degrau { position: absolute; width: 248px; }
+.degrau { position: absolute; width: 214px; }
 .degrau .no { position: absolute; left: 0; top: -7px; }
-.degrau .mono.n { padding-top: 26px; color: var(--fg-3); }
-.degrau .t3 { margin-top: 6px; font-size: 30px; }
-.degrau .txt { margin-top: 10px; font-size: 19px; line-height: 1.45; }
-.degrau .dono { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--linha); color: var(--fg); font-size: 13px; }
-.degrau--fim .t3 { color: var(--acid); }
+.degrau .mono { padding-top: 24px; color: var(--fg-3); }
+.degrau .t4 { margin-top: 6px; font-size: 25px; }
+.degrau .txt { margin-top: 8px; font-size: 18px; line-height: 1.45; }
+.degrau--fim .t4 { color: var(--acid); }
 .degrau--fim .no { background: var(--acid); border-color: var(--acid); }
 
-/* 26 · Execução mês a mês */
-.ritmo { position: absolute; left: var(--mx); top: 332px; width: var(--larg); }
-.ritmo__linha { display: grid; grid-template-columns: 400px repeat(4, 1fr); align-items: center; min-height: 92px; border-bottom: 1px solid var(--linha); }
+/* Fase 3 · operação mês a mês */
+.ritmo { position: absolute; left: var(--mx); top: 404px; width: var(--larg); }
+.ritmo__linha { display: grid; grid-template-columns: 560px repeat(4, 1fr); align-items: center; min-height: 116px; border-bottom: 1px solid var(--linha); }
 .ritmo__linha--cab { min-height: 0; padding-bottom: 14px; border-bottom-color: var(--linha-diag); }
 .ritmo__linha--cab .mono { color: var(--fg-3); padding-left: 14px; }
 .ritmo__linha--cab .mono:first-child { padding-left: 0; }
-.ritmo__nome .t4 { font-size: 26px; }
-.ritmo__nome .mono { margin-top: 4px; color: var(--fg-3); font-size: 13px; }
-.ritmo__faixa { grid-column: 2 / -1; position: relative; height: 92px; }
+.ritmo__nome { padding: 18px 40px 18px 0; }
+.ritmo__nome .txt { margin-top: 4px; font-size: 19px; line-height: 1.45; }
+.ritmo__faixa { grid-column: 2 / -1; position: relative; align-self: stretch; }
 .ritmo__faixa::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(90deg, var(--linha) 1px, transparent 1px); background-size: 25% 100%; }
-.rb { position: absolute; top: 42px; height: 8px; background: var(--ink); }
+.rb { position: absolute; top: calc(50% - 4px); height: 8px; background: var(--fg); }
 .rb--leve { background: var(--fg-4); }
-.tick { position: absolute; top: 37px; width: 14px; height: 14px; border: 1.5px solid var(--ink); background: var(--bone); }
-.ritmo__total { display: grid; grid-template-columns: 400px repeat(4, 1fr); padding-top: 24px; }
-.ritmo__total .mono { color: var(--fg-3); padding-top: 14px; }
-.ritmo__total .num { font-size: 72px; padding-left: 14px; color: var(--fg-4); }
+.ritmo__total { display: grid; grid-template-columns: 560px repeat(4, 1fr); padding-top: 22px; }
+.ritmo__total .mono { color: var(--fg-3); padding-top: 12px; }
+.ritmo__total .num { font-size: 64px; padding-left: 14px; color: var(--fg-4); }
 .ritmo__total .num.ult { color: var(--fg); }
-.ritmo__total small { display: block; padding-left: 16px; margin-top: 10px; font: 500 13px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
 
-/* 27 · Site hoje × nova LP */
-.lp { position: absolute; left: var(--mx); right: var(--mx); top: 416px; display: grid; grid-template-columns: 1fr 112px 1fr; }
-.lp__col .mono { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
-.lp__col--depois .mono { color: var(--fg); }
-.lp__col--depois .mono .no { width: 12px; height: 12px; background: var(--acid); border-color: var(--acid); }
-.lp__col .t3 { margin-top: 28px; font-size: 40px; line-height: 1.08; letter-spacing: -.02em; }
-.lp__col--antes .t3 { color: var(--fg-2); }
-.lp__col .lista { margin-top: 28px; }
-.lp__col--antes .lista li { color: var(--fg-2); }
-.lp__seta { display: flex; justify-content: center; padding-top: 104px; }
+/* Fase 3 · página de conversão */
+.lp { position: absolute; left: var(--mx); right: var(--mx); top: 410px; display: grid; grid-template-columns: 1fr 112px 1fr; }
+.lp__col > .mono { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
+.lp__col--depois > .mono { color: var(--fg); }
+.lp__col .lista { margin-top: 10px; border-top: 0; }
+.lp__seta { display: flex; justify-content: center; padding-top: 120px; }
 .lp__seta svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1.5; }
 
-/* 28 · Squad de mídia */
-.fluxo { position: absolute; left: var(--mx); top: 424px; width: var(--larg); display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 32px; }
-.fluxo__passo { position: relative; padding-top: 40px; }
-.fluxo__passo .no { position: absolute; left: 0; top: 0; }
-.fluxo__passo .liga { background: var(--linha-diag); }
-.fluxo__passo .mono { color: var(--fg-3); }
-.fluxo__passo .t3 { margin-top: 6px; }
-.fluxo__passo .txt { margin-top: 8px; font-size: 20px; max-width: 280px; }
-.fluxo__passo--foco .no { background: var(--ink); border-color: var(--ink); width: 18px; height: 18px; top: -2px; }
-.fluxo__passo--foco .t3 span { background: var(--acid); padding: 0 .12em; margin-left: -.12em; }
-.squad { position: absolute; left: var(--mx); right: var(--mx); top: 736px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 96px; }
-.squad__col .mono { padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
-.squad__itens { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 24px; padding-top: 22px; }
-.squad__itens .t4 { font-size: 28px; }
-.squad__itens .txt { margin-top: 6px; font-size: 19px; line-height: 1.45; }
+/* Fase 3 · mídia e conteúdo (quadrantes) */
+.quad { position: absolute; left: var(--mx); right: var(--mx); top: 404px; height: 400px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.quad > div { display: grid; grid-template-columns: 76px 1fr; align-content: center; padding-right: 56px; }
+.quad > div:nth-child(2n) { padding: 0 0 0 56px; border-left: 1px solid var(--linha-diag); }
+.quad > div:nth-child(-n+2) { border-bottom: 1px solid var(--linha-diag); }
+.quad .mono { color: var(--fg-3); padding-top: 9px; grid-row: span 2; }
+.quad .txt { margin-top: 6px; }
+.verba { position: absolute; left: var(--mx); right: var(--mx); bottom: 128px; display: grid; grid-template-columns: 300px 1fr; padding-top: 22px; border-top: 1px solid var(--linha); }
+.verba .mono { color: var(--fg-3); padding-top: 6px; }
+.verba p:last-child { font: 500 24px/1.45 var(--f-corpo); }
+.lacuna { display: inline-block; min-width: 2.6em; border-bottom: 2px solid var(--fg-2); }
 
-/* 29 · Projeção de referência */
-.funil { position: absolute; left: var(--mx); top: 470px; width: var(--larg); display: grid; grid-template-columns: repeat(5, 1fr); }
-.funil__etapa { position: relative; padding-right: 40px; }
-.funil__etapa .num { font-size: 92px; white-space: nowrap; }
-.funil__etapa .t4 { margin-top: 22px; font-size: 26px; }
-.funil__etapa .txt { margin-top: 8px; font-size: 19px; line-height: 1.45; max-width: 270px; }
-.funil__etapa--fim .num { color: var(--acid); }
-.funil__liga { position: absolute; left: 0; right: 40px; top: -44px; height: 1px; }
-.funil__liga--base { background: var(--linha-diag); }
-.funil__liga--real { background: var(--fg); height: 2px; top: -45px; }
-.funil__liga--est { background-image: linear-gradient(90deg, var(--linha-diag) 50%, transparent 50%); background-size: 12px 1px; }
-.funil__taxa { position: absolute; left: 0; top: -80px; white-space: nowrap; color: var(--fg-2); }
-.funil__taxa--real { color: var(--fg); }
-.legenda { position: absolute; left: var(--mx); top: 800px; display: flex; gap: 48px; color: var(--fg-2); }
-.legenda span { display: inline-flex; align-items: center; gap: 12px; }
-.legenda i { display: inline-block; width: 40px; height: 2px; background: var(--fg); }
-.legenda i.est { background: none; background-image: linear-gradient(90deg, var(--linha-diag) 50%, transparent 50%); background-size: 12px 1px; }
+/* Fase 3 · projeção de referência */
+.proj .tabela-wrap { top: 400px; }
+.proj td { font-size: 21px; padding-top: 13px; padding-bottom: 13px; }
+.proj td:first-child { color: var(--fg); font-weight: 500; }
+.proj td.reun { font: 700 30px/1.1 var(--f-display); letter-spacing: -.015em; color: var(--fg); text-align: right; white-space: nowrap; }
+.proj tr.total td { border-top: 2px solid var(--fg); border-bottom: 1px solid var(--linha-diag); color: var(--fg); }
+.proj tr.total td.reun { font-size: 36px; }
+.desdobra { position: absolute; left: var(--mx); right: var(--mx); top: 690px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
+.desdobra > .mono { grid-column: 1 / -1; margin-bottom: 14px; color: var(--fg-3); }
+.desdobra .num { font-size: 64px; }
+.desdobra .num.acid { color: var(--acid); }
+.desdobra .txt { margin-top: 8px; font-size: 20px; }
 
-/* 30 · RHOI */
-.rhoi { position: absolute; left: var(--mx); top: 352px; width: var(--larg); }
+/* Fase 3 · RHOI */
+.rhoi { position: absolute; left: var(--mx); top: 424px; width: var(--larg); }
 .rhoi__lista { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 32px; }
 .rhoi__lista::before { content: ''; position: absolute; left: 0; right: 0; top: 4px; height: 1px; background: var(--linha-diag); }
 .rhoi__passo { position: relative; }
 .rhoi__marco { position: absolute; left: 0; top: 0; width: 9px; height: 9px; background: var(--bg); border: 1px solid var(--fg-2); }
-.rhoi__letra { margin-top: 40px; font: 700 216px/.78 var(--f-display); letter-spacing: -.05em; }
-.rhoi__nome { margin-top: 26px; }
-.rhoi__nome span { color: var(--fg-3); font-weight: 700; }
-.rhoi__passo .txt { margin-top: 10px; max-width: 360px; font-size: 21px; }
+.rhoi__letra { margin-top: 32px; font: 700 150px/.78 var(--f-display); letter-spacing: -.05em; }
+.rhoi__nome { margin-top: 22px; font-size: 28px; }
+.rhoi__nome span { display: block; color: var(--fg-3); font-size: 22px; }
+.rhoi__passo .txt { margin-top: 8px; max-width: 360px; font-size: 21px; }
 .rhoi__laco { position: absolute; top: -36px; left: calc((100% - 96px) / 2 + 64px + 4px); width: calc((100% - 96px) / 4 + 32px); height: 32px; border: 1px solid var(--linha-diag); border-bottom: 0; }
 .rhoi__laco::after { content: ''; position: absolute; left: -4px; bottom: 2px; width: 7px; height: 7px; border-right: 1px solid var(--linha-diag); border-bottom: 1px solid var(--linha-diag); transform: rotate(45deg); }
 .rhoi__laco .mono { position: absolute; left: 50%; top: -12px; transform: translateX(-50%); padding: 0 12px; background: var(--bg); color: var(--fg-3); font-size: 13px; white-space: nowrap; }
-.ciclos { position: absolute; left: var(--mx); right: var(--mx); top: 842px; }
-.ciclos__linha { position: relative; height: 1px; background: var(--linha-diag); }
-.ciclos__linha i { position: absolute; top: -5px; width: 10px; height: 10px; background: var(--bone); border: 1px solid var(--fg-2); }
-.ciclos__linha i.fim { top: -9px; width: 18px; height: 18px; background: var(--ink); border-color: var(--ink); }
-.ciclos__meses { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; }
-.ciclos__meses .mono { color: var(--fg-3); }
-.ciclos__fim { position: absolute; right: 0; top: -58px; text-align: right; }
-.ciclos__fim .mono { color: var(--fg); }
+.evolucao { position: absolute; left: var(--mx); right: var(--mx); top: 804px; }
+.evolucao > .mono { color: var(--fg-3); }
+.evolucao ol { margin-top: 16px; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 32px; border-top: 1px solid var(--linha-diag); }
+.evolucao li { position: relative; padding-top: 22px; }
+.evolucao li::before { content: ''; position: absolute; left: 0; top: -5px; width: 9px; height: 9px; background: var(--bg); border: 1px solid var(--fg-2); }
+.evolucao li:last-child::before { background: var(--fg); border-color: var(--fg); }
+.evolucao .t4 { font-size: 22px; }
+.evolucao .txt { margin-top: 4px; font-size: 19px; line-height: 1.45; }
 
-/* 31 · Grande entregável */
-.entrega .cab .t2 { font-size: 80px; max-width: 1400px; }
-.entrega .tabela-wrap { position: absolute; left: var(--mx); right: var(--mx); top: 468px; }
-.entrega td { font: 500 26px/1 var(--f-mono); letter-spacing: .04em; color: var(--fg-3); padding-top: 26px; padding-bottom: 26px; }
-.entrega td:first-child { font: 700 30px/1.1 var(--f-display); letter-spacing: -.01em; color: var(--fg); }
-.entrega td:first-child small { display: block; margin-top: 6px; font: 500 13px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
-.entrega .fechamento { display: flex; align-items: center; gap: 16px; }
-.entrega .fechamento .no { width: 12px; height: 12px; }
+/* Fase 3 · o que fica com a Talent */
+.fica__lead { position: absolute; left: var(--mx); top: 404px; width: 640px; }
+.fica__lead .lead { color: var(--fg-2); }
+.fica__lista { position: absolute; left: 880px; right: var(--mx); top: 404px; }
+.fica__lista li { display: grid; grid-template-columns: 76px 1fr; padding: 24px 0 26px; border-top: 1px solid var(--linha); }
+.fica__lista li:last-child { border-bottom: 1px solid var(--linha); }
+.fica__lista .mono { color: var(--fg-3); padding-top: 8px; grid-row: span 2; }
+.fica__lista .txt { margin-top: 6px; }
 
-/* 32 · Time */
-.time { position: absolute; left: var(--mx); right: var(--mx); top: 352px; display: grid; grid-template-columns: 1fr 1fr; }
-.time__lado { padding-right: 72px; }
-.time__lado + .time__lado { padding: 0 0 0 72px; border-left: 1px solid var(--linha-diag); }
-.time__cab { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid var(--linha-diag); }
-.time__cab .t3 { font-size: 40px; letter-spacing: -.02em; }
+/* Time */
+.time { position: absolute; left: var(--mx); right: var(--mx); top: 410px; display: grid; grid-template-columns: repeat(3, 1fr); }
+.time__col { padding-right: 48px; }
+.time__col + .time__col { padding-left: 48px; border-left: 1px solid var(--linha-diag); }
+.time__cab { padding-bottom: 18px; border-bottom: 1px solid var(--linha-diag); }
 .time__cab .mono { color: var(--fg-3); }
-.pessoa { display: grid; grid-template-columns: 280px 1fr; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--linha); }
-.pessoa .t4 { font-size: 28px; }
-.pessoa .txt { font-size: 21px; }
+.time__cab .t3 { margin-top: 6px; font-size: 30px; }
+.pessoa { padding: 20px 0; border-bottom: 1px solid var(--linha); }
+.pessoa .t4 { font-size: 25px; }
+.pessoa .txt { margin-top: 4px; font-size: 20px; }
 
-/* 33 · Investimento */
-.invest .tabela-wrap { position: absolute; left: var(--mx); right: var(--mx); top: 408px; }
-.invest .tabela td { padding-top: 18px; padding-bottom: 18px; }
-.invest td small.sub { display: block; margin-top: 4px; font: 500 14px/1.3 var(--f-mono); letter-spacing: .08em; color: var(--fg-3); }
-.invest td { font-size: 23px; color: var(--fg-2); }
-.invest td:first-child { color: var(--fg); font-weight: 500; }
-.invest td.valor { font: 700 36px/1 var(--f-display); letter-spacing: -.02em; color: var(--fg); text-align: right; white-space: nowrap; }
+/* Investimento */
+.invest .tabela-wrap { top: 400px; }
+.invest td { padding-top: 22px; padding-bottom: 22px; vertical-align: middle; }
+.invest td:first-child .t4 { color: var(--fg); }
+.invest td:first-child .txt { margin-top: 4px; font-size: 20px; }
+.invest td.valor { width: 360px; font: 700 40px/1 var(--f-display); letter-spacing: -.02em; color: var(--fg); text-align: right; white-space: nowrap; }
 .invest td.valor small { font: 500 14px/1 var(--f-mono); letter-spacing: .1em; color: var(--fg-2); margin-left: 6px; }
-.invest tr.total td { border-top: 2px solid var(--acid); border-bottom: 1px solid var(--linha-diag); padding-top: 22px; padding-bottom: 22px; vertical-align: middle; }
-.invest tr.total td:first-child { font: 700 32px/1 var(--f-display); letter-spacing: -.015em; }
+.invest tr.total td { border-top: 2px solid var(--acid); border-bottom: 1px solid var(--linha-diag); }
 .invest tr.total td.valor { font-size: 64px; color: var(--acid); }
-.invest tr.secao td { padding: 36px 0 14px; font: 500 14px/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); border-bottom: 1px solid var(--linha-diag); }
-.lacuna { display: inline-block; min-width: 2.6em; border-bottom: 2px solid var(--fg-2); }
 
-/* 34 · Conta de referência */
-.payback__esq { position: absolute; left: var(--mx); top: 150px; width: 820px; }
-.payback__esq .num { margin-top: 56px; font-size: 240px; line-height: 1; letter-spacing: -.055em; }
-.payback__esq .num span { display: inline-block; line-height: .76; padding: .1em .1em .05em; margin-left: -.1em; background: var(--acid); }
-.payback__esq .lead { margin-top: 28px; max-width: 640px; }
-.payback__esq .t3 { margin-top: 40px; font-size: 40px; line-height: 1.12; letter-spacing: -.02em; max-width: 720px; }
-.conta { position: absolute; left: 1060px; right: var(--mx); top: 300px; }
-.conta__cab { padding-bottom: 14px; border-bottom: 1px solid var(--linha-diag); color: var(--fg-3); }
-.conta__linha { display: grid; grid-template-columns: 1fr auto; align-items: baseline; column-gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--linha); }
-.conta__linha .txt { font-size: 21px; }
-.conta__linha .v { font: 700 32px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.conta__linha--res { border-top: 2px solid var(--ink); border-bottom: 0; margin-top: -1px; }
-.conta__linha--res .txt { color: var(--fg); font-weight: 500; }
+/* Próximos passos (linha do tempo vertical) */
+.proximos { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
+.proximos::before { content: ''; position: absolute; left: 6px; top: 40px; bottom: 40px; width: 1px; background: var(--linha-diag); }
+.proximo { position: relative; display: grid; grid-template-columns: 76px 120px 500px 1fr auto; align-items: baseline; padding: 26px 0 28px; border-bottom: 1px solid var(--linha); }
+.proximo:first-child { border-top: 1px solid var(--linha); }
+.proximo > .no { position: absolute; left: 0; top: 40px; }
+.proximo__n { grid-column: 2; font: 700 56px/.9 var(--f-display); letter-spacing: -.04em; color: var(--fg-4); }
+.proximo--inicio .proximo__n { color: var(--fg); }
+.proximo .t3 { grid-column: 3; }
+.proximo .txt { grid-column: 4; }
+.proximo .quando { grid-column: 5; padding-left: 32px; color: var(--fg-2); white-space: nowrap; }
 
-/* 35 · Próximos passos */
-.passos { position: absolute; left: var(--mx); right: var(--mx); top: 400px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; padding-top: 44px; border-top: 1px solid var(--linha-diag); }
-.passo__n { display: inline-block; padding: .1em 0 .04em; font: 700 168px/.82 var(--f-display); letter-spacing: -.05em; }
-.passo__n--inicio { padding-inline: .12em; background: var(--acid); color: var(--ink); margin-left: -.12em; }
-.passo .t3 { margin-top: 32px; }
-.passo .txt { margin-top: 12px; max-width: 440px; }
-
-/* 36 · Encerramento */
-.fim__txt { position: absolute; left: var(--mx); top: 236px; width: 1500px; }
-.fim__txt .t1 { font-size: 150px; letter-spacing: -.04em; }
+/* Encerramento */
+.fim__txt { position: absolute; left: var(--mx); top: 236px; width: 1560px; }
+.fim__txt .t1 { font-size: 112px; letter-spacing: -.04em; line-height: 1.02; }
 .fim__txt .t1 span { display: block; color: var(--fg-2); }
-.contatos { position: absolute; left: var(--mx); right: var(--mx); top: 640px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
+.contatos { position: absolute; left: var(--mx); right: var(--mx); top: 712px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
 .contato { padding-top: 20px; border-top: 1px solid var(--linha); }
 .contato .t4 { font-size: 26px; }
 .contato .mono { margin-top: 6px; color: var(--fg-3); font-size: 13px; }
@@ -619,738 +551,690 @@ body.visao { overflow: auto; background: #000; }
 <body>
 <main class="deck" id="deck">
 
-<!-- ===================================================== 01 · Capa -->
+<!-- ===================================================== Capa -->
 <section class="slide escuro capa" data-nome="Capa">
   <figure class="foto"><img src="img/arquitetura.jpg" alt=""></figure>
   <div class="capa__txt">
-    <p class="rotulo"><span class="n">Talent Four Consulting</span><span class="barra">/</span><span>Proposta de crescimento</span></p>
-    <h1 class="t1 capa__titulo"><span class="fg2">Do relacionamento</span><span>ao sistema.</span></h1>
-    <p class="lead capa__lead">Estratégia e plano de seis meses para abrir novas contas protagonistas.</p>
+    <p class="rotulo"><span class="n">Talent Four Consulting × Velora</span><span class="barra">/</span><span>Growth &amp; Beyond</span></p>
+    <h1 class="t1 capa__titulo"><span>Mais oportunidades</span><span class="fg2">a partir de relações que já abrem portas.</span></h1>
+    <p class="lead capa__lead">Uma proposta para ampliar a abertura de contas estratégicas na Talent Four, conectando inteligência de mercado, marketing e abordagem comercial.</p>
   </div>
-  <p class="faixa"><span>Inteligência</span><span>Acesso</span><span>Demanda</span><span>Conversão</span><span>Medição</span></p>
+  <p class="faixa"><span>Inteligência</span><span>Relacionamento</span><span>Demanda</span><span>Conversão</span><span>Aprendizado</span></p>
 </section>
 
-<!-- ===================================================== 02 · Roteiro -->
-<section class="slide claro roteiro" data-nome="Roteiro">
+<!-- ===================================================== Roteiro -->
+<section class="slide escuro roteiro" data-nome="Roteiro">
   <div class="cab">
     <p class="rotulo"><span class="n">Roteiro</span></p>
     <h2 class="t2">O que vamos percorrer.</h2>
-    <p class="lead">Da leitura do momento da Talent ao plano de seis meses, ao time e ao investimento.</p>
+    <p class="lead sub">Quatro partes: quem somos, o que entendemos da Talent, a proposta em três fases e os próximos passos.</p>
   </div>
   <ol class="roteiro__lista">
-    <li><span class="mono">01</span><span class="t4">A Velora e o que acreditamos</span><span></span></li>
-    <li><span class="mono">02</span><span class="t4">O que entendemos da Talent</span><span></span></li>
-    <li><span class="mono">03</span><span class="t4">Os três desafios</span><span></span></li>
-    <li><span class="mono">04</span><span class="t4">A estrutura em seis meses</span><span></span></li>
-    <li><span class="mono">05</span><span class="t4">Fase 1 · Diagnóstico</span><span class="mono quando">Mês 1</span></li>
-    <li><span class="mono">06</span><span class="t4">Fase 2 · Setup e implementação</span><span class="mono quando">Mês 2</span></li>
-    <li><span class="mono">07</span><span class="t4">Fase 3 · Execução</span><span class="mono quando">Meses 3 a 6</span></li>
-    <li><span class="mono">08</span><span class="t4">Time, investimento e próximos passos</span><span></span></li>
+    <li><span class="mono">01</span><span class="t3">A Velora</span></li>
+    <li><span class="mono">02</span><span class="t3">A Talent Four</span></li>
+    <li><span class="mono">03</span><span class="t3">A proposta</span>
+      <ol class="roteiro__fases">
+        <li><span>Fase 1 · Diagnóstico</span><span class="mono">Mês 1</span></li>
+        <li><span>Fase 2 · Preparação e implementação</span><span class="mono">Mês 2</span></li>
+        <li><span>Fase 3 · Operação e ajustes</span><span class="mono">Meses 3 a 6</span></li>
+      </ol>
+    </li>
+    <li><span class="mono">04</span><span class="t3">Time e investimento</span></li>
   </ol>
 </section>
 
-<!-- ===================================================== 03 · Tese -->
-<section class="slide escuro" data-nome="Tese">
-  <div class="tese">
-    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>A Velora</span></p>
-    <h2 class="t1 tese__t"><span class="fg2">Crescimento não trava por falta de esforço.</span><span>Trava por falta de sistema.</span></h2>
+<!-- ===================================================== Parte 01 -->
+<section class="slide claro divisor" data-nome="Parte 1 · A Velora" data-parte="1">
+  <div class="divisor__txt">
+    <p class="rotulo"><span class="n">Parte 01</span><span class="barra">/</span><span>de 04</span></p>
+    <p class="divisor__n">01</p>
+    <h2 class="divisor__titulo">A Velora</h2>
+    <p class="mono divisor__sub">Como contribuímos · Forma de trabalhar · Princípios · Contexto de mercado</p>
+  </div>
+</section>
+
+<!-- ===================================================== Como contribuímos -->
+<section class="slide escuro" data-nome="Como a Velora contribui" data-parte="1">
+  <div class="frase">
+    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Como contribuímos</span></p>
+    <h2 class="frase__t"><span class="fg2">Crescer fica mais consistente</span><span>quando as oportunidades têm um caminho claro.</span></h2>
+    <p class="lead">Ajudamos empresas a conectar inteligência de mercado, marketing e vendas para definir onde atuar, como se aproximar das contas certas e o que acompanhar em cada etapa.</p>
   </div>
   <p class="faixa"><span>Inteligência</span><span>Acesso</span><span>Demanda</span><span>Conversão</span><span>Medição</span></p>
 </section>
 
-<!-- ===================================================== 04 · O sistema -->
-<section class="slide escuro" data-nome="O sistema em 5 etapas">
+<!-- ===================================================== Cinco etapas -->
+<section class="slide escuro" data-nome="Cinco etapas" data-parte="1">
   <div class="cab">
-    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>O sistema</span></p>
-    <h2 class="t2">Cinco etapas conectadas.<br>Do mercado certo ao contrato.</h2>
+    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Forma de trabalhar</span></p>
+    <h2 class="t2">Cinco etapas conectam a escolha das contas à evolução das oportunidades.</h2>
   </div>
   <div class="circuito">
     <svg class="circuito__laco" width="1632" height="64" viewBox="0 0 1632 64" aria-hidden="true">
       <path d="M1338.2 62 V1 H7 V58"/><path d="M1.5 52.5 L7 58 L12.5 52.5"/>
     </svg>
-    <p class="mono circuito__rotulo">O próximo ciclo começa do que a medição ensinou</p>
+    <p class="mono circuito__rotulo">Cada ciclo parte do que aprendemos no anterior</p>
     <ol class="etapas">
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">01</p><h3 class="t3">Inteligência</h3><p class="txt">Escolher mercados, segmentos e contas com maior relevância para o negócio.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">02</p><h3 class="t3">Acesso</h3><p class="txt">Identificar quem participa da decisão e criar oportunidades de conversa.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">03</p><h3 class="t3">Demanda</h3><p class="txt">Construir familiaridade e interesse antes e durante o processo comercial.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">04</p><h3 class="t3">Conversão</h3><p class="txt">Dar continuidade às oportunidades até que virem negócio.</p></li>
-      <li class="etapa"><span class="no"></span><p class="num etapa__n">05</p><h3 class="t3">Medição</h3><p class="txt">Entender o que funcionou, o que travou e onde melhorar o próximo ciclo.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">01</p><h3 class="t3">Inteligência</h3><p class="txt">Identificar segmentos, empresas e oportunidades com maior potencial.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">02</p><h3 class="t3">Acesso</h3><p class="txt">Mapear os decisores e encontrar caminhos para iniciar boas conversas.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">03</p><h3 class="t3">Demanda</h3><p class="txt">Fortalecer a presença da marca e despertar interesse ao longo da jornada de compra.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">04</p><h3 class="t3">Conversão</h3><p class="txt">Apoiar o avanço das conversas, da primeira reunião à contratação.</p></li>
+      <li class="etapa"><span class="no"></span><p class="num etapa__n">05</p><h3 class="t3">Medição</h3><p class="txt">Entender o que avança, o que precisa mudar e onde vale investir mais.</p></li>
     </ol>
   </div>
-  <p class="fechamento">Não é preciso redesenhar toda a operação. <span>Começamos pelo ponto de maior impacto.</span></p>
+  <p class="fechamento">Não é preciso mudar tudo de uma vez. <span>Começamos pelas oportunidades de maior impacto.</span></p>
 </section>
 
-<!-- ===================================================== 05 · O que acreditamos -->
-<section class="slide claro crencas" data-nome="O que acreditamos">
+<!-- ===================================================== Princípios -->
+<section class="slide escuro crencas" data-nome="Princípios" data-parte="1">
   <div class="cab">
-    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>O que acreditamos</span></p>
-    <h2 class="t2">Quatro princípios que guiam o projeto.</h2>
+    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Princípios</span></p>
+    <h2 class="t2">Quatro princípios orientam nosso trabalho.</h2>
   </div>
   <ol class="crencas__lista">
-    <li class="crenca"><p class="mono">01</p><h3 class="t3">Sistema antes de campanha</h3><p class="txt">Uma ação isolada gera atividade. Etapas conectadas geram pipeline.</p></li>
-    <li class="crenca"><p class="mono">02</p><h3 class="t3">Hipótese antes de escala</h3><p class="txt">Testamos pequeno, medimos e só então investimos mais no que funcionou.</p></li>
-    <li class="crenca"><p class="mono">03</p><h3 class="t3">Sênior na operação</h3><p class="txt">Quem desenha a estratégia acompanha a execução, toda semana, ao lado do time.</p></li>
-    <li class="crenca crenca--foco"><p class="mono">04</p><h3 class="t3"><span>O ativo fica com o cliente</span></h3><p class="txt">Contas mapeadas, dados, conteúdos e playbooks ficam no CRM e nas ferramentas da Talent. Se a parceria terminar, o sistema continua funcionando.</p></li>
+    <li class="crenca"><p class="mono">01</p><h3 class="t3">O relacionamento é um ponto de partida</h3><p class="txt">A experiência e as conexões existentes ganham alcance com novas formas de identificar oportunidades.</p></li>
+    <li class="crenca"><p class="mono">02</p><h3 class="t3">Marketing e vendas seguem a mesma direção</h3><p class="txt">Contas prioritárias, mensagens e indicadores definidos em conjunto.</p></li>
+    <li class="crenca"><p class="mono">03</p><h3 class="t3">Primeiro aprender, depois ampliar</h3><p class="txt">Ciclos curtos para testar abordagens, entender os resultados e ajustar prioridades.</p></li>
+    <li class="crenca crenca--foco"><p class="mono">04</p><h3 class="t3"><span class="marca-acid">O conhecimento fica com a Talent</span></h3><p class="txt">Bases, processos, materiais e aprendizados passam a fazer parte da operação.</p></li>
   </ol>
 </section>
 
-<!-- ===================================================== 06 · Evidências -->
-<section class="slide escuro" data-nome="Por que agora">
+<!-- ===================================================== Contexto de mercado -->
+<section class="slide escuro" data-nome="Contexto de mercado" data-parte="1">
   <div class="cab">
-    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Por que agora</span></p>
-    <h2 class="t2">A decisão de compra começa antes da conversa comercial.</h2>
+    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Contexto de mercado</span></p>
+    <h2 class="t2">Quando uma conversa comercial começa, parte da decisão já pode ter sido tomada.</h2>
   </div>
   <div class="evid">
     <div class="evid__foco dado">
       <p class="num">~80%</p>
-      <p class="txt">das compras B2B estudadas foram vencidas pelo fornecedor preferido antes do contato com vendas.</p>
+      <p class="txt">Das compras B2B analisadas, o fornecedor escolhido já era o preferido antes do primeiro contato com vendas.</p>
       <p class="fonte">6sense · Buyer Experience Research, 2025</p>
     </div>
     <div class="evid__lado">
       <div class="dado">
         <p class="num">5–16</p>
-        <p class="txt">pessoas podem integrar um grupo de decisão B2B complexo.</p>
+        <p class="txt">Profissionais podem participar de decisões de compra B2B mais complexas.</p>
         <p class="fonte">Gartner · Sales Survey, 2025</p>
       </div>
       <div class="dado">
         <p class="num">49%</p>
-        <p class="txt">dos líderes comerciais dizem que vendas e marketing definem de forma muito diferente um lead qualificado.</p>
+        <p class="txt">Dos líderes de vendas relatam diferenças importantes entre marketing e comercial na definição de um lead qualificado.</p>
         <p class="fonte">Gartner · CSO Survey, 2025</p>
       </div>
     </div>
   </div>
-  <p class="fechamento">Para a Talent: <span>quando a vaga chega a compras, a lista de fornecedores já está feita. Quem não aparece antes não entra no bid.</span></p>
 </section>
 
-<!-- ===================================================== 07 · A Talent hoje -->
-<section class="slide claro" data-nome="A Talent hoje">
-  <div class="cab">
-    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que entendemos</span></p>
-    <h2 class="t2">Uma operação madura, construída sobre confiança.</h2>
-  </div>
-  <div class="hoje__esq">
-    <p class="lead">Desde 1992, em São Paulo, a Talent Four aloca profissionais de TI em grandes empresas de finanças, seguros, saúde, varejo e indústria.</p>
-    <ul class="lista">
-      <li>Alocação de TI</li><li>Squads</li>
-      <li>Testes e QA</li><li>Governança</li>
-      <li>Fábrica de software</li><li>IT Hunting</li>
-    </ul>
-  </div>
-  <div class="hoje__dir">
-    <div><p class="num">34</p><p class="txt">anos de operação, desde 1992</p></div>
-    <div><p class="num">~350</p><p class="txt">consultores alocados hoje</p></div>
-  </div>
-  <div class="clientes">
-    <p class="mono">Clientes</p>
-    <ul>
-      <li>Santander</li><li>Porto Seguro</li><li>Tokio Marine</li><li>Mapfre</li><li>Allianz</li><li>Brasilprev</li><li>Amil</li><li>Qualicorp</li>
-      <li>CVC</li><li>Pão de Açúcar</li><li>Leroy Merlin</li><li>Eli Lilly</li><li>Boehringer</li><li>Honda</li><li>EDP</li>
-    </ul>
+<!-- ===================================================== Parte 02 -->
+<section class="slide claro divisor" data-nome="Parte 2 · A Talent Four" data-parte="2">
+  <div class="divisor__txt">
+    <p class="rotulo"><span class="n">Parte 02</span><span class="barra">/</span><span>de 04</span></p>
+    <p class="divisor__n">02</p>
+    <h2 class="divisor__titulo">A Talent Four</h2>
+    <p class="mono divisor__sub">O que foi construído · Como cresceu · O que entendemos · Oportunidades</p>
   </div>
 </section>
 
-<!-- ===================================================== 08 · Como a Talent cresce -->
-<section class="slide escuro" data-nome="Como a Talent cresce">
+<!-- ===================================================== O que a Talent construiu -->
+<section class="slide escuro" data-nome="O que a Talent construiu" data-parte="2">
   <div class="cab">
-    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Como a Talent vende hoje</span></p>
-    <h2 class="t2" style="max-width:none">A Talent vence da homologação em diante.<br><span class="fg2">A porta de entrada ainda depende de pessoas.</span></h2>
+    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que a Talent construiu</span></p>
+    <h2 class="t2">A Talent Four reúne experiência, presença em grandes empresas e um portfólio amplo de TI.</h2>
+  </div>
+  <div class="marcos">
+    <div class="marco"><p class="num">1992</p><p class="txt">Início da operação e de uma trajetória construída em serviços de tecnologia.</p></div>
+    <div class="marco"><p class="num">~350</p><p class="txt">Consultores alocados em clientes.</p></div>
+    <div class="marco"><p class="num">5 + 1</p><p class="txt">Cinco gerentes de conta e um novo profissional dedicado à abertura de contas.</p></div>
+  </div>
+  <div class="faixas">
+    <div class="faixa-linha faixa-linha--portfolio"><p class="mono">Portfólio</p><ul><li>Alocação de profissionais</li><li>Squads</li><li>Testes e QA</li><li>Governança</li><li>Fábrica de software</li><li>IT Hunting</li></ul></div>
+    <div class="faixa-linha"><p class="mono">Alguns clientes</p><ul><li>Santander</li><li>Porto Seguro</li><li>Tokio Marine</li><li>Mapfre</li><li>Allianz</li><li>Brasilprev</li><li>Amil</li><li>Qualicorp</li><li>CVC</li><li>Pão de Açúcar</li><li>Leroy Merlin</li><li>Eli Lilly</li><li>Boehringer</li><li>Honda</li><li>EDP</li></ul></div>
+  </div>
+</section>
+
+<!-- ===================================================== Como a Talent cresceu -->
+<section class="slide escuro" data-nome="Como a Talent cresceu" data-parte="2">
+  <div class="cab">
+    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Como a Talent cresceu</span></p>
+    <h2 class="t2">O relacionamento abre portas.</h2>
+    <p class="lead sub">A capacidade de entrega ajuda a transformar acesso em contratos.</p>
   </div>
   <div class="trilha">
-    <div class="chaves">
-      <div class="chave chave--foco" style="left:0; width:633px"><p class="mono">Depende de quem a Talent conhece</p></div>
-      <div class="chave" style="left:665.6px; width:966.4px"><p class="mono">Onde a Talent já é forte</p></div>
-    </div>
-    <ol class="etapas" style="margin-top:0">
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">01</p><h3 class="t3">Relacionamento</h3><p class="txt">Executivos que conhecem a Talent mudam de empresa e levam a relação.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">02</p><h3 class="t3">Indicação</h3><p class="txt">Quem já trabalhou com a Talent indica para outras áreas e empresas.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">03</p><h3 class="t3">Homologação</h3><p class="txt">Cadastro em compras e rate card aprovado.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">04</p><h3 class="t3">Bid</h3><p class="txt">Concorrência por vaga, squad ou projeto.</p></li>
-      <li class="etapa"><span class="no"></span><p class="etapa__n">05</p><h3 class="t3">Seleção</h3><p class="txt">Velocidade para apresentar o profissional certo.</p></li>
+    <ol class="etapas">
+      <li class="etapa"><span class="no no--acid"></span><span class="liga"></span><p class="etapa__n">01</p><h3 class="t3">Relacionamento</h3><p class="txt">Profissionais que já conhecem a Talent levam essa referência a novas empresas.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">02</p><h3 class="t3">Indicação</h3><p class="txt">A área de TI apresenta a Talent ao processo de compras.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">03</p><h3 class="t3">Homologação</h3><p class="txt">Cadastro, documentação e definição de condições por perfil.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="etapa__n">04</p><h3 class="t3">Concorrência</h3><p class="txt">A empresa convida fornecedores homologados a atender às demandas.</p></li>
+      <li class="etapa"><span class="no"></span><p class="etapa__n">05</p><h3 class="t3">Alocação</h3><p class="txt">A capacidade de encontrar o perfil adequado com agilidade faz diferença.</p></li>
     </ol>
   </div>
-  <p class="fechamento">O relacionamento segue como o ativo mais valioso. <span>O que falta é um caminho repetível até ele.</span></p>
+  <p class="fechamento">É um caminho valioso, construído ao longo dos anos. <span>A oportunidade é complementá-lo com novas fontes de acesso a contas estratégicas.</span></p>
 </section>
 
-<!-- ===================================================== 09 · Concentração -->
-<section class="slide claro" data-nome="Concentração">
-  <div class="conc__esq">
-    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Concentração</span></p>
-    <p class="num">−6,5%</p>
-    <h2 class="t3">Mesmo com a alta de 2026, o faturamento segue abaixo de 2024.</h2>
-    <p class="txt">Com poucas contas concentrando a receita, o orçamento delas decide o ano da Talent.</p>
-  </div>
-  <div class="grafico">
-    <svg width="856" height="600" viewBox="0 0 856 600" aria-hidden="true">
-      <line class="eixo" x1="0" y1="560" x2="856" y2="560"/>
-      <line class="ref" x1="0" y1="90" x2="782" y2="90"/>
-      <polyline class="serie" points="90,90 420,390 750,220"/>
-      <path class="gap" d="M770 90 H782 V220 H770"/>
-      <circle class="ponto" cx="90" cy="90" r="9"/>
-      <circle class="ponto" cx="420" cy="390" r="9"/>
-      <circle class="ponto ponto--fim" cx="750" cy="220" r="10"/>
-    </svg>
-    <p class="g-rot" style="left:0; top:56px">Patamar de 2024</p>
-    <p class="g-val" style="left:0; top:112px">100</p>
-    <p class="g-val" style="left:384px; top:414px">85<small>−15% em 2025</small></p>
-    <p class="g-val" style="left:648px; top:116px">93,5<small>+10% em 2026</small></p>
-    <p class="g-val" style="left:794px; top:140px; font-size:26px">−6,5</p>
-    <p class="g-rot" style="left:66px; top:578px">2024</p>
-    <p class="g-rot" style="left:396px; top:578px">2025</p>
-    <p class="g-rot" style="left:726px; top:578px">2026</p>
-  </div>
-  <p class="nota">Índice de faturamento, 2024 = 100. Base: recuo de ~15% em 2025 e alta de ~10% em 2026, conforme a conversa com a Talent.</p>
-</section>
-
-<!-- ===================================================== 10 · O que ouvimos -->
-<section class="slide escuro ouvimos" data-nome="O que ouvimos">
+<!-- ===================================================== O que entendemos -->
+<section class="slide escuro entendemos" data-nome="O que entendemos" data-parte="2">
   <div class="cab">
-    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que ouvimos</span></p>
-    <h2 class="t2">O que ouvimos e o que isso causa.</h2>
+    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que entendemos</span></p>
+    <h2 class="t2">O que entendemos até aqui — e queremos aprofundar juntos.</h2>
   </div>
   <div class="tabela-wrap">
     <table class="tabela">
-      <thead><tr><th>O que ouvimos</th><th>O que isso causa</th><th>Desafio</th></tr></thead>
+      <thead><tr><th>Tema</th><th>Nossa leitura inicial</th></tr></thead>
       <tbody>
-        <tr><td>Cinco gerentes de conta farmers, sem tempo nem vocação para prospectar.</td><td>A carteira é bem cuidada, mas ninguém abre porta nova com constância.</td><td>Acesso</td></tr>
-        <tr><td>Um SDR que não funcionou.</td><td>Ficou a impressão de que prospecção ativa não serve para a Talent.</td><td>Aproximação</td></tr>
-        <tr><td>Um hunter chegando sem carteira.</td><td>Sem lista, mensagem e cadência, a primeira reunião pode levar meses.</td><td>Acesso</td></tr>
-        <tr><td>Receita concentrada em poucas contas: −15% em 2025, +10% em 2026.</td><td>O ano da Talent depende do orçamento de poucos clientes.</td><td>Acesso</td></tr>
-        <tr><td>Marketing feito por agência, com aprovação concentrada no Marcelo.</td><td>Pouca produção e nenhuma ligação clara com o pipeline.</td><td>Visibilidade</td></tr>
-        <tr><td>Meta para 2027: mais contas protagonistas.</td><td>Exige oportunidades novas todo mês, sem depender só do relacionamento.</td><td>Os três</td></tr>
+        <tr><td>Equipe comercial</td><td>Os cinco gerentes estão concentrados no relacionamento e na expansão das contas existentes.</td></tr>
+        <tr><td>Experiências anteriores</td><td>Iniciativas de prospecção não alcançaram os resultados esperados.</td></tr>
+        <tr><td>Novo hunter</td><td>Há espaço para apoiar sua entrada com contas priorizadas, contexto e uma rotina de abertura de mercado.</td></tr>
+        <tr><td>Concentração de receita</td><td>A dependência de um número restrito de contas torna a ampliação da carteira especialmente relevante.</td></tr>
+        <tr><td>Marketing</td><td>A agência já produz conteúdo; podemos integrar melhor a produção às prioridades comerciais e às aprovações.</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- ===================================================== 11 · Três desafios -->
-<section class="slide claro" data-nome="Os três desafios">
-  <div class="cab"><p class="rotulo"><span class="n">03</span><span class="barra">/</span><span>Os três desafios</span></p></div>
-  <ol class="desafios">
-    <li class="desafio"><p class="mono">01</p><p class="desafio__palavra">Acesso</p><p class="lead">Como chegar às contas certas e a quem decide nelas?</p></li>
-    <li class="desafio"><p class="mono">02</p><p class="desafio__palavra">Aproximação</p><p class="lead">Como transformar contato em conversa, e conversa em homologação?</p></li>
-    <li class="desafio"><p class="mono">03</p><p class="desafio__palavra">Visibilidade</p><p class="lead">Como ser lembrada antes de o bid existir?</p></li>
+<!-- ===================================================== Três oportunidades -->
+<section class="slide escuro" data-nome="Três oportunidades" data-parte="2">
+  <div class="cab">
+    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Oportunidades</span></p>
+    <h2 class="t2">Vemos três oportunidades para ampliar a presença em grandes contas.</h2>
+  </div>
+  <ol class="oport">
+    <li><p class="mono">01</p><p class="oport__palavra">Acesso</p><p class="lead">Chegar aos profissionais de TI e compras que participam da escolha de novos fornecedores.</p></li>
+    <li><p class="mono">02</p><p class="oport__palavra">Aproximação</p><p class="lead">Construir conversas relevantes e entender o caminho até a homologação.</p></li>
+    <li><p class="mono">03</p><p class="oport__palavra">Presença</p><p class="lead">Ampliar o conhecimento sobre a Talent e seu portfólio antes de uma demanda formal.</p></li>
   </ol>
 </section>
 
-<!-- ===================================================== 12 · Hoje × com o sistema -->
-<section class="slide escuro" data-nome="Hoje e com o sistema">
-  <div class="cab">
-    <p class="rotulo"><span class="n">03</span><span class="barra">/</span><span>Hoje e com o sistema</span></p>
-    <h2 class="t2">O mesmo time, com outro ponto de partida.</h2>
-  </div>
-  <div class="antes">
-    <div class="antes__linha antes__linha--cab"><p class="mono">Desafio</p><p class="mono">Hoje</p><span></span><p class="mono" style="color:var(--fg)"><span class="no no--destaque"></span>Com o sistema</p></div>
-    <div class="antes__linha"><h3 class="t3">Acesso</h3><p class="txt">A entrada em novas contas depende de executivos conhecidos que mudam de empresa.</p><svg class="seta-h" viewBox="0 0 64 16"><path d="M0 8 H62 M55 1 L62 8 L55 15"/></svg><p class="depois">500 contas priorizadas, comitê de compra mapeado e sinais monitorados toda semana.</p></div>
-    <div class="antes__linha"><h3 class="t3">Aproximação</h3><p class="txt">SDR não vingou, farmers sem tempo para prospectar e hunter começando sem carteira.</p><svg class="seta-h" viewBox="0 0 64 16"><path d="M0 8 H62 M55 1 L62 8 L55 15"/></svg><p class="depois">Mensagens por papel, cadência por tier e um processo que o hunter recebe pronto para rodar.</p></div>
-    <div class="antes__linha"><h3 class="t3">Visibilidade</h3><p class="txt">Site sem cases, números ou blog. Marketing parado na fila de aprovação.</p><svg class="seta-h" viewBox="0 0 64 16"><path d="M0 8 H62 M55 1 L62 8 L55 15"/></svg><p class="depois">Nova LP, conteúdo útil para quem compra e mídia contínua com squad dedicado.</p></div>
-  </div>
-</section>
-
-<!-- ===================================================== 13 · Frase-ponte -->
-<section class="slide escuro ponte" data-nome="Frase-ponte">
+<!-- ===================================================== Transição -->
+<section class="slide escuro ponte" data-nome="Transição" data-parte="2">
   <figure class="foto"><img src="img/conversa.jpg" alt=""></figure>
   <div class="ponte__txt">
-    <p class="rotulo"><span class="n">03</span><span class="barra">/</span><span>O próximo ciclo</span></p>
-    <p class="ponte__frase"><span class="a">O que trouxe a Talent até aqui foi o relacionamento.</span><span>O próximo ciclo é transformá-lo em <em>sistema</em>.</span></p>
+    <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Daqui em diante</span></p>
+    <p class="ponte__frase"><span class="a">O relacionamento trouxe a Talent até aqui.</span><span>Nossa proposta é <em>ampliar esse alcance</em> com novas formas de abrir contas.</span></p>
   </div>
 </section>
 
-<!-- ===================================================== 14 · Estrutura em seis meses -->
-<section class="slide claro" data-nome="Estrutura em 6 meses">
+<!-- ===================================================== Parte 03 -->
+<section class="slide claro divisor" data-nome="Parte 3 · A proposta" data-parte="3">
+  <div class="divisor__txt">
+    <p class="rotulo"><span class="n">Parte 03</span><span class="barra">/</span><span>de 04</span></p>
+    <p class="divisor__n">03</p>
+    <h2 class="divisor__titulo">A proposta</h2>
+    <p class="mono divisor__sub">Visão do projeto · Fase 1 Diagnóstico · Fase 2 Preparação · Fase 3 Operação</p>
+  </div>
+</section>
+
+<!-- ===================================================== Visão do projeto -->
+<section class="slide escuro" data-nome="Visão do projeto" data-parte="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>A estrutura</span></p>
-    <h2 class="t2">Seis meses em três fases. Contas protagonistas em 12 a 18.</h2>
+    <p class="rotulo"><span class="n">03</span><span class="barra">/</span><span>Visão do projeto</span></p>
+    <h2 class="t2">Seis meses para construir, colocar em prática e avaliar um novo modelo de aquisição.</h2>
   </div>
   <div class="gantt">
     <div class="gantt__col" style="left:0"><p class="mono">Mês 1</p></div>
-    <div class="gantt__col" style="left:190px"><p class="mono">Mês 2</p></div>
-    <div class="gantt__col" style="left:380px"><p class="mono">Mês 3</p></div>
-    <div class="gantt__col" style="left:570px"><p class="mono">Mês 4</p></div>
-    <div class="gantt__col" style="left:760px"><p class="mono">Mês 5</p></div>
-    <div class="gantt__col" style="left:950px"><p class="mono">Mês 6</p></div>
-    <div class="gantt__col gantt__col--horizonte" style="left:1180px"><p class="mono">Meses 12 a 18</p></div>
+    <div class="gantt__col" style="left:170px"><p class="mono">Mês 2</p></div>
+    <div class="gantt__col" style="left:340px"><p class="mono">Mês 3</p></div>
+    <div class="gantt__col" style="left:510px"><p class="mono">Mês 4</p></div>
+    <div class="gantt__col" style="left:680px"><p class="mono">Mês 5</p></div>
+    <div class="gantt__col" style="left:850px"><p class="mono">Mês 6</p></div>
+    <div class="gantt__col gantt__col--horizonte" style="left:1060px"><p class="mono">Meses 12 a 18</p></div>
+    <div class="gantt__horizonte"><p class="mono">Expectativa</p><p class="txt">Grandes contas costumam exigir maturação. O primeiro semestre cria as condições para aprender, abrir oportunidades e construir referências de custo; o desenvolvimento das contas pode se estender por 12 a 18 meses.</p></div>
 
-    <div class="gantt__fase" style="top:64px">
-      <div class="gantt__barra" style="left:0; width:166px"></div>
-      <div class="gantt__txt" style="left:0"><p class="mono">01 · 3 a 4 semanas</p><h3 class="t3">Diagnóstico</h3><p class="txt">Plano de ação com correções rápidas, ações e projetos.</p></div>
+    <div class="gantt__fase" style="top:52px">
+      <div class="gantt__barra" style="left:0; width:150px"></div>
+      <div class="gantt__txt" style="left:0; max-width:1040px"><p class="mono">Fase 1 · Mês 1</p><h3 class="t3">Diagnóstico</h3><p class="txt">Em 3 a 4 semanas, entender a carteira, a atuação comercial, o marketing e as oportunidades de mercado.</p></div>
     </div>
-    <div class="gantt__fase" style="top:214px">
-      <div class="gantt__barra" style="left:190px; width:190px"></div>
-      <div class="gantt__txt" style="left:190px"><p class="mono">02 · Mês 2</p><h3 class="t3">Setup e implementação</h3><p class="txt">Go-to-market, 500 contas, processo comercial e RevOps prontos.</p></div>
+    <div class="gantt__fase" style="top:230px">
+      <div class="gantt__barra" style="left:170px; width:170px"></div>
+      <div class="gantt__txt" style="left:170px; max-width:870px"><p class="mono">Fase 2 · Mês 2</p><h3 class="t3">Preparação e implementação</h3><p class="txt">Definir a estratégia de entrada no mercado, classificar cerca de 500 contas e preparar as frentes de atuação.</p></div>
     </div>
-    <div class="gantt__fase" style="top:364px">
-      <div class="gantt__barra" style="left:380px; width:760px"></div>
-      <div class="gantt__barra gantt__barra--futuro" style="left:1140px; width:478px"></div>
-      <div class="gantt__txt" style="left:380px"><p class="mono">03 · Meses 3 a 6</p><h3 class="t3">Execução</h3><p class="txt">Canais rodando, com o custo de cada etapa conhecido.</p></div>
-      <div class="gantt__horizonte" style="left:1196px; top:28px"><p class="mono">Expectativa</p><h3 class="t3">Contas protagonistas</h3><p class="txt">Levam de 12 a 18 meses para se formar.</p></div>
+    <div class="gantt__fase" style="top:420px">
+      <div class="gantt__barra" style="left:340px; width:680px"></div>
+      <div class="gantt__barra gantt__barra--futuro" style="left:1020px; width:612px"></div>
+      <div class="gantt__txt" style="left:340px; max-width:700px"><p class="mono">Fase 3 · Meses 3 a 6</p><h3 class="t3">Operação e ajustes</h3><p class="txt">Executar as frentes, gerar conversas com decisores, acompanhar homologações e evoluir a abordagem a partir dos dados.</p></div>
+      <p class="mono gantt__fim">Desenvolvimento das contas</p>
     </div>
   </div>
 </section>
 
-<!-- ===================================================== 15 · Fase 1 -->
-<section class="slide escuro fase" data-nome="Fase 1 · Diagnóstico" data-fase="1">
-  <figure class="foto"><img src="img/mesa.jpg" alt="" style="object-position:48% 50%"></figure>
-  <div class="fase__txt">
+<!-- ===================================================== Fase 1 -->
+<section class="slide claro divisor divisor--fase" data-nome="Fase 1 · Diagnóstico" data-parte="3" data-fase="1">
+  <figure class="divisor__foto"><img src="img/mesa.jpg" alt="" style="object-position:48% 50%"></figure>
+  <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>de 3</span></p>
-    <p class="fase__n">01</p>
-    <h2 class="fase__nome">Diagnóstico</h2>
-    <p class="mono fase__quando">Mês 1 · 3 a 4 semanas</p>
-    <p class="lead fase__pergunta">Entender onde a Talent ganha, onde perde e onde está a próxima conta.</p>
+    <p class="divisor__n"><span>01</span></p>
+    <h2 class="divisor__titulo">Diagnóstico</h2>
+    <p class="mono divisor__quando">Mês 1 · 3 a 4 semanas</p>
+    <p class="lead divisor__lead">Entender a operação e identificar onde atuar primeiro.</p>
   </div>
   <ol class="trilho"><li class="on">Mês 1</li><li>Mês 2</li><li>Mês 3</li><li>Mês 4</li><li>Mês 5</li><li>Mês 6</li></ol>
 </section>
 
-<!-- ===================================================== 16 · Quatro lentes -->
-<section class="slide claro" data-nome="Quatro lentes" data-fase="1">
+<!-- ===================================================== Fase 1 · quatro lentes -->
+<section class="slide escuro" data-nome="Diagnóstico · quatro lentes" data-parte="3" data-fase="1">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>Diagnóstico</span></p>
-    <h2 class="t2">Quatro lentes, um plano.</h2>
+    <h2 class="t2">Começamos entendendo a operação e identificando onde atuar primeiro.</h2>
   </div>
   <div class="lentes">
-    <svg width="1632" height="560" viewBox="0 0 1632 560" aria-hidden="true">
-      <path d="M860 70 C1040 70 1060 280 1182 280"/>
-      <path d="M860 210 C1020 210 1060 280 1182 280"/>
-      <path d="M860 350 C1020 350 1060 280 1182 280"/>
-      <path d="M860 490 C1040 490 1060 280 1182 280"/>
-      <path class="forte" d="M1200 280 H1246 M1239 273 L1246 280 L1239 287"/>
+    <svg width="1632" height="520" viewBox="0 0 1632 520" aria-hidden="true">
+      <path d="M860 65 C1040 65 1060 260 1182 260"/>
+      <path d="M860 195 C1020 195 1060 260 1182 260"/>
+      <path d="M860 325 C1020 325 1060 260 1182 260"/>
+      <path d="M860 455 C1040 455 1060 260 1182 260"/>
+      <path class="forte" d="M1200 260 H1246 M1239 253 L1246 260 L1239 267"/>
     </svg>
-    <div class="lente" style="top:0"><p class="mono">01</p><h3 class="t3">Carteira</h3><p class="txt">BI e curva ABC: quem concentra receita e margem, e onde há espaço para crescer.</p></div>
-    <div class="lente" style="top:140px"><p class="mono">02</p><h3 class="t3">Comercial</h3><p class="txt">Processo, CRM e papéis, do primeiro contato à alocação.</p></div>
-    <div class="lente" style="top:280px"><p class="mono">03</p><h3 class="t3">Marketing</h3><p class="txt">Site, conteúdo, mídia, agência e o fluxo de aprovação.</p></div>
-    <div class="lente" style="top:420px"><p class="mono">04</p><h3 class="t3">Mercado e ICP</h3><p class="txt">Setores, contas parecidas com as melhores clientes e quem decide nelas.</p></div>
+    <div class="lente" style="top:0"><p class="mono">01</p><h3 class="t3">Carteira</h3><p class="txt">Analisar concentração, perfil das contas e oportunidades de expansão.</p></div>
+    <div class="lente" style="top:130px"><p class="mono">02</p><h3 class="t3">Comercial</h3><p class="txt">Entender fluxos de trabalho, CRM, indicadores e a atuação dos gerentes e do novo hunter.</p></div>
+    <div class="lente" style="top:260px"><p class="mono">03</p><h3 class="t3">Marketing</h3><p class="txt">Avaliar site, conteúdo e presença nos canais em que os clientes pesquisam fornecedores.</p></div>
+    <div class="lente" style="top:390px"><p class="mono">04</p><h3 class="t3">Mercado</h3><p class="txt">Definir o perfil de cliente ideal e dimensionar as contas com maior potencial.</p></div>
     <span class="lentes__no"></span>
-    <div class="lentes__plano"><p class="mono">Entregável</p><h3 class="t3">Plano de ação</h3><p class="txt">Correções rápidas, ações de 2 a 3 semanas e projetos, em ordem de impacto.</p></div>
+    <div class="lentes__plano"><p class="mono">Entregável</p><h3 class="t3">Plano priorizado</h3><p class="txt">Melhorias de curto prazo, ações para as semanas seguintes e iniciativas estruturantes.</p></div>
   </div>
 </section>
 
-<!-- ===================================================== 17 · Plano de ação -->
-<section class="slide escuro" data-nome="Plano de ação" data-fase="1">
-  <div class="cab">
-    <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>Entregável</span></p>
-    <h2 class="t2">Um plano de ação em três horizontes.</h2>
-  </div>
-  <div class="horiz">
-    <p class="mono horiz__eixo"><span>Horizonte</span><span><span>Entrega do plano</span><span>Meses</span></span></p>
-    <div class="horiz__linha">
-      <div class="horiz__nome"><p class="mono">Dias</p><h3 class="t3">Correções rápidas</h3></div>
-      <div class="horiz__trilha"><span class="horiz__barra horiz__barra--agora" style="width:7%"></span>
-        <ul class="horiz__itens"><li>Página de vagas sem texto de exemplo</li><li>Clientes e números no site</li><li>Etapas e campos mínimos no CRM</li></ul></div>
-    </div>
-    <div class="horiz__linha">
-      <div class="horiz__nome"><p class="mono">2 a 3 semanas</p><h3 class="t3">Ações</h3></div>
-      <div class="horiz__trilha"><span class="horiz__barra" style="width:26%"></span>
-        <ul class="horiz__itens"><li>Primeira lista de contas A1 para o hunter</li><li>Mensagens de entrada por papel do comitê</li><li>Rito semanal de aprovação</li></ul></div>
-    </div>
-    <div class="horiz__linha">
-      <div class="horiz__nome"><p class="mono">Meses</p><h3 class="t3">Projetos</h3></div>
-      <div class="horiz__trilha"><span class="horiz__barra" style="width:100%"></span>
-        <ul class="horiz__itens"><li>Nova LP com cases e calculadora</li><li>Radar de sinais nas contas-alvo</li><li>RevOps e painel de funil</li></ul></div>
-    </div>
-  </div>
-  <p class="nota">Exemplos a partir do que já vimos. A lista final sai do diagnóstico.</p>
-</section>
-
-<!-- ===================================================== 18 · Fase 2 -->
-<section class="slide escuro fase" data-nome="Fase 2 · Setup e implementação" data-fase="2">
-  <figure class="foto"><img src="img/equipe.jpg" alt="" style="object-position:62% 50%"></figure>
-  <div class="fase__txt">
+<!-- ===================================================== Fase 2 -->
+<section class="slide claro divisor divisor--fase" data-nome="Fase 2 · Preparação e implementação" data-parte="3" data-fase="2">
+  <figure class="divisor__foto"><img src="img/equipe.jpg" alt="" style="object-position:62% 50%"></figure>
+  <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>de 3</span></p>
-    <p class="fase__n">02</p>
-    <h2 class="fase__nome">Setup e implementação</h2>
-    <p class="mono fase__quando">Mês 2</p>
-    <p class="lead fase__pergunta">Montar a máquina: para quem falar, o que dizer, por onde e com que regras.</p>
+    <p class="divisor__n"><span>02</span></p>
+    <h2 class="divisor__titulo">Preparação e implementação</h2>
+    <p class="mono divisor__quando">Mês 2</p>
+    <p class="lead divisor__lead">Definir a estratégia de entrada no mercado, classificar cerca de 500 contas e preparar as frentes de atuação.</p>
   </div>
   <ol class="trilho"><li>Mês 1</li><li class="on">Mês 2</li><li>Mês 3</li><li>Mês 4</li><li>Mês 5</li><li>Mês 6</li></ol>
 </section>
 
-<!-- ===================================================== 19 · Comitê de compra -->
-<section class="slide claro" data-nome="Go-to-market · comitê" data-fase="2">
+<!-- ===================================================== Fase 2 · preparação do mercado -->
+<section class="slide escuro" data-nome="Preparação do mercado" data-parte="3" data-fase="2">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Go-to-market</span></p>
-    <h2 class="t2">Uma conta, várias pessoas decidindo.</h2>
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Preparação do mercado</span></p>
+    <h2 class="t2">Definimos juntos quais empresas priorizar, com quem conversar e como gerar interesse.</h2>
   </div>
-  <div class="comite__radar">
-    <svg width="560" height="560" viewBox="0 0 560 560" aria-hidden="true">
-      <circle class="anel" cx="280" cy="280" r="80"/><circle class="anel" cx="280" cy="280" r="160"/><circle class="anel anel--ext" cx="280" cy="280" r="250"/>
-      <circle class="conta" cx="120" cy="140" r="4"/><circle class="conta" cx="430" cy="120" r="4"/><circle class="conta" cx="470" cy="330" r="4"/><circle class="conta" cx="128" cy="452" r="4"/><circle class="conta" cx="200" cy="470" r="4"/><circle class="conta" cx="360" cy="470" r="4"/><circle class="conta" cx="60" cy="260" r="4"/><circle class="conta" cx="300" cy="60" r="4"/><circle class="conta" cx="500" cy="230" r="4"/>
-      <line class="elo" x1="280" y1="280" x2="280" y2="128"/><line class="elo" x1="280" y1="280" x2="148" y2="356"/><line class="elo" x1="280" y1="280" x2="412" y2="356"/>
-      <rect class="alvo" x="268" y="268" width="24" height="24"/>
-      <circle class="pessoa" cx="280" cy="128" r="9"/><circle class="pessoa" cx="148" cy="356" r="9"/><circle class="pessoa" cx="412" cy="356" r="9"/>
-    </svg>
-    <p class="radar-rot" style="left:302px; top:116px">TI</p>
-    <p class="radar-rot" style="left:52px; top:384px">Compras</p>
-    <p class="radar-rot" style="left:340px; top:384px">Influenciadores</p>
-    <p class="radar-rot" style="left:306px; top:270px; color:var(--fg-3)">Conta A1</p>
-  </div>
-  <div class="papeis">
-    <div class="papeis__cab"><p class="mono">Papel</p><p class="mono">O que pesa</p><p class="mono">Mensagem e oferta de entrada</p></div>
-    <div class="papel"><div><h3 class="t3">TI</h3><p class="quem">Gestores e diretores de tecnologia</p></div><p class="txt">Senioridade, aderência técnica e velocidade de reposição.</p><p class="entrada">Shortlist de perfis para uma demanda real, no prazo do projeto.</p></div>
-    <div class="papel"><div><h3 class="t3">Compras</h3><p class="quem">Suprimentos e homologação</p></div><p class="txt">Rate card, conformidade e risco trabalhista.</p><p class="entrada">Calculadora alocar × CLT e homologação descomplicada.</p></div>
-    <div class="papel"><div><h3 class="t3">Influenciadores</h3><p class="quem">PMOs, RH, líderes de projeto, ex-clientes</p></div><p class="txt">Confiança e histórico de entrega.</p><p class="entrada">Cases, indicação e briefings de mercado.</p></div>
-  </div>
+  <ol class="perguntas">
+    <li class="pergunta"><p class="mono">01</p><h3 class="pergunta__q">Onde concentrar esforços<small>Perfil de empresa (ICP)</small></h3><p class="txt">Porte da operação de TI e uso de terceiros; setores como bancos, seguros, saúde, farma, varejo e energia; região e modelo de contratação; lista de contas desejadas pela Talent.</p></li>
+    <li class="pergunta"><p class="mono">02</p><h3 class="pergunta__q">Quem participa da decisão<small>Pessoas envolvidas</small></h3>
+      <dl><dt>Demanda</dt><dd>CIOs, CTOs e lideranças de desenvolvimento, dados e qualidade.</dd><dt>Homologação</dt><dd>Compras e suprimentos.</dd><dt>Influência</dt><dd>PMOs, líderes de squad e contatos com histórico de relacionamento.</dd></dl></li>
+    <li class="pergunta"><p class="mono">03</p><h3 class="pergunta__q">Como iniciar a conversa<small>Mensagens e ofertas</small></h3><p class="txt">Mensagens por setor e perfil; ofertas de entrada, como squads de testes e alocação de perfis escassos; evidências de experiência e capacidade de atendimento.</p></li>
+  </ol>
 </section>
 
-<!-- ===================================================== 20 · 500 contas -->
-<section class="slide escuro" data-nome="500 contas" data-fase="2">
+<!-- ===================================================== Fase 2 · ~500 contas -->
+<section class="slide escuro" data-nome="Classificação de contas" data-parte="3" data-fase="2">
   <div class="contas__esq">
-    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Contas-alvo</span></p>
-    <p class="num">500</p>
-    <p class="lead">contas classificadas com o time da Talent, a partir do ICP.</p>
-    <ul class="lista">
-      <li>Setores em que a Talent já tem prova: finanças, seguros, saúde, varejo e indústria</li>
-      <li>Grandes empresas que terceirizam TI</li>
-      <li>Sinais ativos: projetos, trocas de executivos, vagas abertas</li>
-    </ul>
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Classificação de contas</span></p>
+    <p class="num">~500</p>
+    <p class="lead">contas priorizadas com o time da Talent, de acordo com seu potencial e a abordagem necessária.</p>
   </div>
-  <div class="matriz" data-matriz></div>
-  <div class="tiers">
-    <div class="tier"><div class="tier__cab"><i style="background:var(--acid)"></i><h3 class="t3">A1 · ~50</h3></div><p class="txt">ABM conta a conta, com plano próprio.</p></div>
-    <div class="tier"><div class="tier__cab"><i style="background:rgb(255 255 255 / .82)"></i><h3 class="t3">B2 · ~150</h3></div><p class="txt">ABM por grupo de contas do mesmo setor.</p></div>
-    <div class="tier"><div class="tier__cab"><i style="background:rgb(255 255 255 / .2)"></i><h3 class="t3">B3 · ~300</h3></div><p class="txt">Outbound e mídia em escala.</p></div>
+  <p class="contas__fim">Ao final da preparação, definimos juntos as frentes e contas que terão prioridade nos quatro meses seguintes.</p>
+  <div class="bandas">
+    <div class="banda banda--a1"><div class="banda__cab"><h3 class="t4">A1 · ~50</h3><p class="mono">Contas estratégicas</p></div><p class="txt">Maior potencial de relacionamento e expansão. Abordagem individual, com apoio da diretoria e dos gerentes de conta.</p><div class="banda__pontos" data-pontos="50"></div></div>
+    <div class="banda banda--b2"><div class="banda__cab"><h3 class="t4">B2 · ~150</h3><p class="mono">Contas prioritárias</p></div><p class="txt">Oportunidades relevantes para abordagens personalizadas por segmento.</p><div class="banda__pontos" data-pontos="150"></div></div>
+    <div class="banda banda--b3"><div class="banda__cab"><h3 class="t4">B3 · ~300</h3><p class="mono">Desenvolvimento de mercado</p></div><p class="txt">Cadências escaláveis de prospecção, apoiadas por conteúdo e segmentação.</p><div class="banda__pontos" data-pontos="300"></div></div>
   </div>
 </section>
 
-<!-- ===================================================== 21 · Três frentes -->
-<section class="slide claro" data-nome="Três frentes" data-fase="2">
+<!-- ===================================================== Fase 2 · três frentes -->
+<section class="slide escuro" data-nome="Frentes de aquisição" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frentes de aquisição</span></p>
-    <h2 class="t2">Três frentes, um mesmo destino.</h2>
+    <h2 class="t2">Três frentes complementares para gerar oportunidades e acompanhar sua evolução.</h2>
   </div>
   <div class="raias">
-    <svg width="1632" height="540" viewBox="0 0 1632 540" aria-hidden="true">
-      <path d="M1040 90 C1150 90 1140 270 1230 270"/>
-      <path d="M1040 270 H1230"/>
-      <path d="M1040 450 C1150 450 1140 270 1230 270"/>
-      <path d="M1248 270 H1270 M1264 264 L1270 270 L1264 276" style="stroke:var(--ink); stroke-width:1.5"/>
+    <svg width="1632" height="420" viewBox="0 0 1632 420" aria-hidden="true">
+      <path d="M1040 70 C1150 70 1140 210 1230 210"/>
+      <path d="M1040 210 H1230"/>
+      <path d="M1040 350 C1150 350 1140 210 1230 210"/>
+      <path class="forte" d="M1248 210 H1270 M1264 204 L1270 210 L1264 216"/>
     </svg>
-    <div class="raia" style="top:0"><p class="mono n">01</p><div class="raia__cab"><h3 class="t3">ABM com radar de sinais</h3><p class="mono">Contas A1</p></div><p class="txt">Apollo e outros conectores monitoram trocas de executivos, projetos, vagas e expansão. Cada sinal vira uma abordagem com contexto.</p></div>
-    <div class="raia" style="top:180px"><p class="mono n">02</p><div class="raia__cab"><h3 class="t3">Demand gen</h3><p class="mono">A1, B2 e B3</p></div><p class="txt">Capturar a demanda que já existe e provocar a que ainda não existe.</p></div>
-    <div class="raia" style="top:360px"><p class="mono n">03</p><div class="raia__cab"><h3 class="t3">Outbound de decisores</h3><p class="mono">B2 e B3</p></div><p class="txt">Cadências multicanal para TI e compras, em blocos de 500 contatos por mês.</p></div>
+    <div class="raia" style="top:0"><p class="mono">01</p><h3 class="t3">ABM e radar de sinais</h3><p class="txt">Identificar o contexto e o melhor momento para abordar contas prioritárias.</p></div>
+    <div class="raia" style="top:140px"><p class="mono">02</p><h3 class="t3">Geração de demanda</h3><p class="txt">Ampliar a presença da Talent e facilitar a chegada de novas oportunidades.</p></div>
+    <div class="raia" style="top:280px"><p class="mono">03</p><h3 class="t3">Prospecção de decisores</h3><p class="txt">Mapear pessoas relevantes e iniciar conversas com abordagens adequadas a cada conta.</p></div>
     <span class="raias__no"></span>
-    <div class="raias__fim">
-      <p class="mono">Destino</p>
-      <h3 class="t3">Reunião qualificada</h3>
-      <ol class="cadeia mono"><li>Oportunidade</li><li>Homologação</li><li>Alocação</li></ol>
-    </div>
+    <div class="raias__fim"><p class="mono">Destino comum</p><h3 class="t3">Novas oportunidades</h3><ol class="cadeia mono"><li>Conversa qualificada</li><li>Homologação</li><li>Primeira alocação</li></ol></div>
+  </div>
+  <div class="base"><p class="mono">Base compartilhada</p><p>Critérios comerciais, responsabilidades, CRM e indicadores combinados entre os times.</p></div>
+</section>
+
+<!-- ===================================================== Fase 2 · radar de sinais -->
+<section class="slide escuro" data-nome="Frente 1 · radar de sinais" data-parte="3" data-fase="2">
+  <div class="cab">
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frente 1 · Radar de sinais</span></p>
+    <h2 class="t2">Sinais de mercado ajudam a identificar quando vale iniciar uma conversa.</h2>
+  </div>
+  <figure class="radar-fig"><svg class="radar__svg" viewBox="0 0 600 600" aria-hidden="true">
+<circle class="radar__anel" cx="300" cy="300" r="72"/><circle class="radar__anel" cx="300" cy="300" r="144"/><circle class="radar__anel" cx="300" cy="300" r="216"/><circle class="radar__anel radar__anel--externo" cx="300" cy="300" r="280"/>
+<path class="radar__cruz" d="M300 14V586M14 300H586M497.99 102.01L102.01 497.99M497.99 497.99L102.01 102.01"/>
+<circle class="radar__conta" cx="284.92" cy="506.71" r="3.4"/><circle class="radar__conta" cx="163.77" cy="468.7" r="3.4"/><circle class="radar__conta" cx="131.86" cy="176.58" r="3.4"/><circle class="radar__conta" cx="399.92" cy="118.31" r="3.4"/><circle class="radar__conta" cx="178.66" cy="451" r="3.4"/><circle class="radar__conta" cx="331.59" cy="550.6" r="3.4"/><circle class="radar__conta" cx="410.28" cy="500.52" r="3.4"/><circle class="radar__conta" cx="182.35" cy="353.99" r="3.4"/><circle class="radar__conta" cx="443.28" cy="230.94" r="3.4"/><circle class="radar__conta" cx="409.58" cy="442.96" r="3.4"/><circle class="radar__conta" cx="241.05" cy="403.34" r="3.4"/><circle class="radar__conta" cx="423.93" cy="520.21" r="3.4"/><circle class="radar__conta" cx="71.86" cy="217.24" r="3.4"/><circle class="radar__conta" cx="502.15" cy="391.44" r="3.4"/><circle class="radar__conta" cx="390.43" cy="300.95" r="3.4"/><circle class="radar__conta" cx="31.11" cy="315.37" r="3.4"/><circle class="radar__conta" cx="419.73" cy="336.29" r="3.4"/><circle class="radar__conta" cx="125.9" cy="307.06" r="3.4"/><circle class="radar__conta" cx="229.24" cy="502.74" r="3.4"/><circle class="radar__conta" cx="97.84" cy="153.69" r="3.4"/><circle class="radar__conta" cx="347.68" cy="353.88" r="3.4"/><circle class="radar__conta" cx="416.97" cy="76.45" r="3.4"/><circle class="radar__conta" cx="303.56" cy="506.6" r="3.4"/><circle class="radar__conta" cx="500.96" cy="325.94" r="3.4"/><circle class="radar__conta" cx="195.55" cy="310.39" r="3.4"/><circle class="radar__conta" cx="233.49" cy="352.2" r="3.4"/><circle class="radar__conta" cx="376.36" cy="510.18" r="3.4"/><circle class="radar__conta" cx="281.4" cy="111.18" r="3.4"/><circle class="radar__conta" cx="337" cy="471.44" r="3.4"/><circle class="radar__conta" cx="371.04" cy="73.04" r="3.4"/><circle class="radar__conta" cx="500.78" cy="365.77" r="3.4"/><circle class="radar__conta" cx="506.24" cy="445.58" r="3.4"/><circle class="radar__conta" cx="397.97" cy="237.97" r="3.4"/><circle class="radar__conta" cx="137.99" cy="451.7" r="3.4"/><circle class="radar__conta" cx="483.87" cy="490.02" r="3.4"/><circle class="radar__conta" cx="200.58" cy="463.02" r="3.4"/><circle class="radar__conta" cx="313.89" cy="43.02" r="3.4"/><circle class="radar__conta" cx="476.36" cy="359.26" r="3.4"/><circle class="radar__conta" cx="370.89" cy="227.75" r="3.4"/><circle class="radar__conta" cx="90.48" cy="306.45" r="3.4"/><circle class="radar__conta" cx="290.23" cy="410.08" r="3.4"/><circle class="radar__conta" cx="122.45" cy="100.11" r="3.4"/>
+<line class="radar__elo" x1="212.31" y1="221.04" x2="178.31" y2="199.04"/><line class="radar__elo" x1="212.31" y1="221.04" x2="242.31" y2="191.04"/><line class="radar__elo" x1="212.31" y1="221.04" x2="204.31" y2="255.04"/>
+<circle class="radar__pessoa" cx="178.31" cy="199.04" r="4.5"/><circle class="radar__pessoa" cx="242.31" cy="191.04" r="4.5"/><circle class="radar__pessoa" cx="204.31" cy="255.04" r="4.5"/>
+<circle class="radar__sinal" cx="432.28" cy="180.89" r="16"/>
+<circle class="radar__sinal radar__sinal--2" cx="432.28" cy="180.89" r="27"/>
+<circle class="radar__prioritaria" cx="212.31" cy="221.04" r="7"/><circle class="radar__prioritaria" cx="432.28" cy="180.89" r="7"/><circle class="radar__prioritaria" cx="320.38" cy="395.86" r="7"/>
+<g class="radar__varredura"><line x1="300" y1="300" x2="300" y2="20"/></g>
+<circle class="radar__centro" cx="300" cy="300" r="3"/>
+</svg></figure>
+  <div class="sinais">
+    <div class="sinais__intro"><p class="mono">Velora Radar</p><p class="txt">Monitoramento de informações públicas e fontes de dados, com apoio de IA, para acompanhar contas A1 e B2. A proposta é reunir indícios de mudança, oportunidade ou necessidade e dar contexto à abordagem do hunter e dos gerentes.</p></div>
+    <table class="tabela">
+      <thead><tr><th>Sinal</th><th>O que pode indicar</th></tr></thead>
+      <tbody>
+        <tr><td>Aumento de vagas de TI</td><td>Expansão de equipe ou necessidade de capacidade adicional.</td></tr>
+        <tr><td>Chegada de um novo CIO ou CTO</td><td>Momento favorável para apresentar novas alternativas.</td></tr>
+        <tr><td>Contato conhecido em outra empresa</td><td>Possibilidade de reabrir uma relação de confiança.</td></tr>
+        <tr><td>Novo projeto, aquisição ou expansão</td><td>Potencial demanda por profissionais ou squads.</td></tr>
+        <tr><td>Mudança na política de trabalho presencial</td><td>Alterações na disponibilidade e na composição das equipes.</td></tr>
+      </tbody>
+    </table>
+    <div class="saida"><p class="mono">Saída esperada</p><p>Um alerta com contexto, pessoas relevantes e sugestão de próximo passo.</p></div>
   </div>
 </section>
 
-<!-- ===================================================== 22 · Capturar × provocar -->
-<section class="slide escuro" data-nome="Demand gen" data-fase="2">
+<!-- ===================================================== Fase 2 · geração de demanda -->
+<section class="slide escuro" data-nome="Frente 2 · geração de demanda" data-parte="3" data-fase="2">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Demand gen</span></p>
-    <h2 class="t2">Duas formas de gerar demanda.</h2>
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frente 2 · Geração de demanda</span></p>
+    <h2 class="t2">Estar presente quando existe uma necessidade — e ser lembrada antes dela surgir.</h2>
   </div>
   <div class="divide">
     <div class="divide__lado">
-      <p class="divide__verbo">Capturar</p>
-      <p class="lead divide__sub">a demanda que já existe.</p>
-      <ul class="lista">
-        <li>Google no fundo do funil<small>Buscas como “alocação de profissionais de TI” e “outsourcing de TI”.</small></li>
-        <li>Nova LP<small>Prova, clareza de oferta e conversão medida até a reunião.</small></li>
-      </ul>
+      <p class="divide__verbo">Captar</p>
+      <p class="lead divide__sub">oportunidades em busca de solução.</p>
+      <ul class="lista"><li>Google Ads para buscas por alocação de TI, squads e serviços de QA.</li><li>Presença nas pesquisas pela marca Talent Four.</li><li>Página de conversão com ofertas e caminho claro para contato.</li></ul>
     </div>
     <div class="divide__lado">
-      <p class="divide__verbo">Provocar</p>
-      <p class="lead divide__sub">a demanda que ainda não existe.</p>
-      <ul class="lista">
-        <li>LinkedIn e Meta<small>Mídia segmentada para o comitê de compra das contas-alvo.</small></li>
-        <li>Calculadora alocar × CLT <span class="chip">Isca principal</span><small>Fala com TI e com compras ao mesmo tempo.</small></li>
-        <li>E-book, white paper e briefings de mercado</li>
-        <li>Playbooks para gestores de TI</li>
-      </ul>
+      <p class="divide__verbo">Construir</p>
+      <p class="lead divide__sub">presença e consideração.</p>
+      <ul class="lista"><li>Conteúdo segmentado no LinkedIn e, quando fizer sentido, na Meta.</li><li>Ferramenta de comparação: alocar profissionais ou contratar via CLT.</li><li>Guias, estudos e materiais úteis sobre contratação e terceirização de TI.</li></ul>
     </div>
   </div>
+  <p class="fechamento">Trabalho conjunto: <span>Talent, agência atual e Velora alinham temas, entregas e indicadores para que marketing e comercial avancem na mesma direção.</span></p>
 </section>
 
-<!-- ===================================================== 23 · Processo por tier -->
-<section class="slide claro processo" data-nome="Processo comercial por tier" data-fase="2">
+<!-- ===================================================== Fase 2 · prospecção de decisores -->
+<section class="slide escuro" data-nome="Frente 3 · prospecção de decisores" data-parte="3" data-fase="2">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Processo comercial</span></p>
-    <h2 class="t2">Cada tier com sua abordagem, sua cadência e seu dono.</h2>
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frente 3 · Prospecção de decisores</span></p>
+    <h2 class="t2">Abordagens relevantes começam com uma boa leitura da conta.</h2>
+  </div>
+  <ol class="passos4">
+    <li class="passo4"><p class="passo4__n">01</p><h3 class="t3">Mapear</h3><p class="txt">Identificar quem participa da demanda, da influência e da homologação em cada empresa.</p></li>
+    <li class="passo4"><p class="passo4__n">02</p><h3 class="t3">Personalizar</h3><p class="txt">Preparar contatos por e-mail, LinkedIn e, nas contas prioritárias, ligação, considerando o perfil de cada decisor.</p></li>
+    <li class="passo4"><p class="passo4__n">03</p><h3 class="t3">Contextualizar</h3><p class="txt">Usar sinais de mercado e conteúdos relevantes para escolher o momento e a mensagem.</p></li>
+    <li class="passo4"><p class="passo4__n">04</p><h3 class="t3">Conectar ao comercial</h3><p class="txt">Encaminhar as conversas qualificadas ao hunter ou gerente de conta, com contexto e próximos passos.</p></li>
+  </ol>
+  <p class="fechamento">Infraestrutura: <span>domínios dedicados, configuração técnica de envios e acompanhamento da entregabilidade.</span></p>
+</section>
+
+<!-- ===================================================== Fase 2 · abordagem por grupo -->
+<section class="slide escuro grupos" data-nome="Abordagem por grupo" data-parte="3" data-fase="2">
+  <div class="cab">
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Abordagem por grupo</span></p>
+    <h2 class="t2">A intensidade da abordagem acompanha o potencial de cada conta.</h2>
   </div>
   <div class="tabela-wrap">
     <table class="tabela">
-      <thead><tr><th>Tier</th><th>Abordagem</th><th>Canais</th><th>Cadência</th><th>Responsável</th></tr></thead>
+      <thead><tr><th>Grupo</th><th>Como nos aproximamos</th><th>Canais prioritários</th><th>Quem participa</th></tr></thead>
       <tbody>
-        <tr><td><span class="tier-nome a1"><span>A1</span></span><span class="tier-qtd">~50 contas</span></td><td>Conta a conta, com plano próprio para cada uma.</td><td>LinkedIn dos executivos, e-mail pessoal, indicação e briefing executivo.</td><td>Contínua, com toque semanal por conta.</td><td>Hunter e Marcelo, com a Velora.</td></tr>
-        <tr><td><span class="tier-nome">B2</span><span class="tier-qtd">~150 contas</span></td><td>Por grupo de contas do mesmo setor.</td><td>LinkedIn Ads segmentado, outbound multicanal e conteúdo setorial.</td><td>Sequência de 4 semanas, depois nutrição.</td><td>Hunter, com listas e mensagens da Velora.</td></tr>
-        <tr><td><span class="tier-nome">B3</span><span class="tier-qtd">~300 contas</span></td><td>Em escala.</td><td>Outbound automatizado, mídia e nutrição por e-mail.</td><td>Sequência de 3 semanas, depois nutrição mensal.</td><td>Velora opera. O hunter assume no SQL.</td></tr>
+        <tr><td><span class="grupo-nome a1"><span>A1</span></span></td><td>Relacionamento individual e abordagem executiva</td><td>LinkedIn, telefone e encontros</td><td>Diretoria e gerentes de conta</td></tr>
+        <tr><td><span class="grupo-nome">B2</span></td><td>Conversas personalizadas por segmento</td><td>E-mail e LinkedIn</td><td>Hunter</td></tr>
+        <tr><td><span class="grupo-nome">B3</span></td><td>Prospecção em escala, com segmentação e conteúdo</td><td>E-mail, LinkedIn e mídia</td><td>Operação de prospecção e hunter</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="nota">Proposta inicial, ajustada no setup. Os gerentes de conta seguem na carteira e indicam contatos nas contas atuais.</p>
+  <div class="dupla">
+    <div><p class="mono">Roteiros</p><p class="txt">Mensagens de abertura, descoberta, acompanhamento e evolução até a homologação.</p></div>
+    <div><p class="mono">Responsabilidades</p><p class="txt">Definição conjunta de quem inicia a conversa, conduz a reunião e acompanha o processo de compras.</p></div>
+  </div>
 </section>
 
-<!-- ===================================================== 24 · RevOps -->
-<section class="slide escuro" data-nome="RevOps" data-fase="2">
+<!-- ===================================================== Fase 2 · indicadores -->
+<section class="slide escuro" data-nome="Indicadores e passagem entre etapas" data-parte="3" data-fase="2">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>RevOps</span></p>
-    <h2 class="t2">Uma régua única, do primeiro sinal à conta protagonista.</h2>
+    <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Indicadores</span></p>
+    <h2 class="t2">Critérios compartilhados ajudam a acompanhar cada oportunidade sem perder contexto.</h2>
   </div>
   <div class="escada">
-    <svg width="1632" height="200" viewBox="0 0 1632 200" aria-hidden="true">
-      <path d="M0 175 H248 V140 H276.8 V140 H524.8 V105 H553.6 V105 H801.6 V70 H830.4 V70 H1078.4 V35 H1107.2 V35 H1355.2 V0 H1632"/>
+    <svg width="1632" height="150" viewBox="0 0 1632 150" aria-hidden="true">
+      <path d="M0 144 H214 V120 H233 H447 V96 H466 H680 V72 H699 H913 V48 H932 H1146 V24 H1165 H1379 V0 H1632"/>
     </svg>
-    <div class="degrau" style="left:0; top:175px"><span class="no"></span><p class="mono n">01</p><h3 class="t3">MQL</h3><p class="txt">Pessoa de conta ICP que demonstrou interesse: respondeu, baixou um material ou voltou ao site.</p><p class="mono dono">Dono: Velora</p></div>
-    <div class="degrau" style="left:276.8px; top:140px"><span class="no"></span><p class="mono n">02</p><h3 class="t3">SQL</h3><p class="txt">Decisor validado, com demanda e momento identificados. Reunião aceita.</p><p class="mono dono">Dono: hunter</p></div>
-    <div class="degrau" style="left:553.6px; top:105px"><span class="no"></span><p class="mono n">03</p><h3 class="t3">Oportunidade</h3><p class="txt">Demanda concreta: vaga, squad ou projeto, com escopo e prazo.</p><p class="mono dono">Dono: hunter e seleção</p></div>
-    <div class="degrau" style="left:830.4px; top:70px"><span class="no"></span><p class="mono n">04</p><h3 class="t3">Homologação</h3><p class="txt">Talent cadastrada como fornecedora, com rate card aprovado em compras.</p><p class="mono dono">Dono: comercial</p></div>
-    <div class="degrau" style="left:1107.2px; top:35px"><span class="no"></span><p class="mono n">05</p><h3 class="t3">Alocação</h3><p class="txt">Primeiro consultor alocado e faturando.</p><p class="mono dono">Dono: seleção</p></div>
-    <div class="degrau degrau--fim" style="left:1384px; top:0"><span class="no"></span><p class="mono n">06</p><h3 class="t3">Protagonista</h3><p class="txt">Conta com alocações em mais de uma área, entre as maiores da carteira.</p><p class="mono dono">Dono: gerente de conta</p></div>
+    <div class="degrau" style="left:0; top:144px"><span class="no"></span><p class="mono">01</p><h3 class="t4">Conta-alvo</h3><p class="txt">Empresa alinhada ao perfil buscado e classificada por prioridade.</p></div>
+    <div class="degrau" style="left:233px; top:120px"><span class="no"></span><p class="mono">02</p><h3 class="t4">MQL</h3><p class="txt">Contato com perfil aderente que demonstrou interesse ou engajamento.</p></div>
+    <div class="degrau" style="left:466px; top:96px"><span class="no"></span><p class="mono">03</p><h3 class="t4">SQL</h3><p class="txt">Reunião qualificada com decisor e necessidade identificada.</p></div>
+    <div class="degrau" style="left:699px; top:72px"><span class="no"></span><p class="mono">04</p><h3 class="t4">Oportunidade</h3><p class="txt">Demanda com perfil, quantidade e prazo definidos.</p></div>
+    <div class="degrau" style="left:932px; top:48px"><span class="no"></span><p class="mono">05</p><h3 class="t4">Homologação</h3><p class="txt">Cadastro em compras e condições comerciais encaminhados.</p></div>
+    <div class="degrau" style="left:1165px; top:24px"><span class="no"></span><p class="mono">06</p><h3 class="t4">Alocação</h3><p class="txt">Primeiro profissional ou squad contratado e iniciado.</p></div>
+    <div class="degrau degrau--fim" style="left:1398px; top:0"><span class="no"></span><p class="mono">07</p><h3 class="t4">Conta estratégica</h3><p class="txt">Conta que atingiu o volume de consultores definido em conjunto.</p></div>
   </div>
-  <p class="fechamento">SLAs de passagem entre as etapas, com dono e prazo. <span>Cada etapa ganha um valor: quanto custa chegar a ela e quanto ela vale.</span></p>
+  <div class="dupla">
+    <div><p class="mono">Prazos de referência · a combinar com a Talent</p><p class="txt">Contato com MQL em até 24 horas; passagem de SQL com resumo da conta; acompanhamento em até 48 horas; atualização semanal do CRM.</p></div>
+    <div><p class="mono">O que vamos medir</p><p class="txt">Volume e conversão por etapa, tempo de avanço e origem das oportunidades.</p></div>
+  </div>
 </section>
 
-<!-- ===================================================== 25 · Fase 3 -->
-<section class="slide escuro fase" data-nome="Fase 3 · Execução" data-fase="3">
-  <figure class="foto"><img src="img/executiva.jpg" alt="" style="object-position:30% 40%"></figure>
-  <div class="fase__txt">
+<!-- ===================================================== Fase 3 -->
+<section class="slide claro divisor divisor--fase" data-nome="Fase 3 · Operação e ajustes" data-parte="3" data-fase="3">
+  <figure class="divisor__foto"><img src="img/executiva.jpg" alt="" style="object-position:30% 40%"></figure>
+  <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>de 3</span></p>
-    <p class="fase__n">03</p>
-    <h2 class="fase__nome">Execução</h2>
-    <p class="mono fase__quando">Meses 3 a 6 · 4 meses</p>
-    <p class="lead fase__pergunta">Rodar, medir e ajustar até conhecer o custo de cada etapa.</p>
+    <p class="divisor__n"><span>03</span></p>
+    <h2 class="divisor__titulo">Operação e ajustes</h2>
+    <p class="mono divisor__quando">Meses 3 a 6</p>
+    <p class="lead divisor__lead">Colocar as frentes em prática, aprender e ajustar a partir dos dados.</p>
   </div>
   <ol class="trilho"><li>Mês 1</li><li>Mês 2</li><li class="on">Mês 3</li><li class="on">Mês 4</li><li class="on">Mês 5</li><li class="on">Mês 6</li></ol>
 </section>
 
-<!-- ===================================================== 26 · Ritmo da execução -->
-<section class="slide claro" data-nome="Ritmo da execução" data-fase="3">
+<!-- ===================================================== Fase 3 · operação -->
+<section class="slide escuro" data-nome="Meses 3 a 6 · operação" data-parte="3" data-fase="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Ritmo</span></p>
-    <h2 class="t2">Quatro meses de operação contínua.</h2>
+    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Operação</span></p>
+    <h2 class="t2">Quatro meses para colocar as frentes em prática, aprender e ajustar.</h2>
   </div>
   <div class="ritmo">
     <div class="ritmo__linha ritmo__linha--cab"><p class="mono">Frente</p><p class="mono">Mês 3</p><p class="mono">Mês 4</p><p class="mono">Mês 5</p><p class="mono">Mês 6</p></div>
     <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">ABM nas contas A1</p><p class="mono">Refinado a cada ciclo</p></div>
+      <div class="ritmo__nome"><p class="t4">ABM com sinais</p><p class="txt">Acompanhamento próximo das contas A1, com abordagens contextualizadas pelos movimentos identificados.</p></div>
       <div class="ritmo__faixa"><span class="rb" style="left:0; right:0"></span></div>
     </div>
     <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">Outbound de decisores</p><p class="mono">500 contatos por mês</p></div>
-      <div class="ritmo__faixa">
-        <span class="rb" style="left:0; width:calc(25% - 8px)"></span><span class="rb" style="left:25%; width:calc(25% - 8px)"></span><span class="rb" style="left:50%; width:calc(25% - 8px)"></span><span class="rb" style="left:75%; width:calc(25% - 8px)"></span>
-      </div>
-    </div>
-    <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">Nova LP</p><p class="mono">No ar, depois otimização</p></div>
+      <div class="ritmo__nome"><p class="t4">Geração de demanda</p><p class="txt">Página de conversão, buscas de alta intenção e conteúdo para apoiar a jornada até a conversa comercial.</p></div>
       <div class="ritmo__faixa"><span class="rb" style="left:0; width:calc(25% - 8px)"></span><span class="rb rb--leve" style="left:25%; right:0"></span></div>
     </div>
     <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">Squad de mídia</p><p class="mono">Estáticos, carrosséis, vídeo</p></div>
-      <div class="ritmo__faixa"><span class="rb" style="left:0; right:0"></span></div>
-    </div>
-    <div class="ritmo__linha">
-      <div class="ritmo__nome"><p class="t4">Ciclos RHOI</p><p class="mono">A cada 2 a 3 semanas</p></div>
-      <div class="ritmo__faixa"><span class="tick" style="left:calc(14% - 7px)"></span><span class="tick" style="left:calc(28% - 7px)"></span><span class="tick" style="left:calc(42% - 7px)"></span><span class="tick" style="left:calc(57% - 7px)"></span><span class="tick" style="left:calc(71% - 7px)"></span><span class="tick" style="left:calc(85% - 7px)"></span><span class="tick" style="left:calc(99% - 14px); background:var(--ink)"></span></div>
+      <div class="ritmo__nome"><p class="t4">Prospecção</p><p class="txt">Referência de operação: 500 contatos por mês.</p></div>
+      <div class="ritmo__faixa"><span class="rb" style="left:0; width:calc(25% - 8px)"></span><span class="rb" style="left:25%; width:calc(25% - 8px)"></span><span class="rb" style="left:50%; width:calc(25% - 8px)"></span><span class="rb" style="left:75%; width:calc(25% - 8px)"></span></div>
     </div>
     <div class="ritmo__total">
-      <p class="mono">Contatos acumulados</p>
-      <p class="num tab">500</p><p class="num tab">1.000</p><p class="num tab">1.500</p><p class="num tab ult">2.000</p>
+      <p class="mono">Contatos trabalhados · acumulado</p>
+      <p class="num">500</p><p class="num">1.000</p><p class="num">1.500</p><p class="num ult">~2.000</p>
     </div>
   </div>
 </section>
 
-<!-- ===================================================== 27 · Site hoje × nova LP -->
-<section class="slide escuro" data-nome="Nova LP" data-fase="3">
+<!-- ===================================================== Fase 3 · página de conversão -->
+<section class="slide escuro" data-nome="Página de conversão" data-parte="3" data-fase="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Nova LP</span></p>
-    <h2 class="t2">O site precisa provar o que a Talent já entrega.</h2>
+    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Página de conversão</span></p>
+    <h2 class="t2">Uma página que mostre com clareza por que conversar com a Talent.</h2>
   </div>
   <div class="lp">
-    <div class="lp__col lp__col--antes">
-      <p class="mono">O site hoje</p>
-      <h3 class="t3">Institucional, sem prova.</h3>
-      <ul class="lista lista--fraca"><li>Sem cases</li><li>Sem números da operação</li><li>Sem blog ou conteúdo</li><li>Página de vagas ainda com texto de exemplo</li></ul>
+    <div class="lp__col">
+      <p class="mono">Oportunidades de melhoria identificadas</p>
+      <ul class="lista lista--fraca"><li>Dar mais destaque a experiências, resultados e depoimentos disponíveis.</li><li>Apresentar serviços e soluções com mensagens mais específicas.</li><li>Organizar conteúdos de apoio às decisões de contratação.</li><li>Revisar páginas e informações ainda em desenvolvimento.</li></ul>
     </div>
     <div class="lp__seta"><svg width="64" height="16" viewBox="0 0 64 16"><path d="M0 8 H62 M55 1 L62 8 L55 15"/></svg></div>
     <div class="lp__col lp__col--depois">
-      <p class="mono"><span class="no"></span>A nova LP</p>
-      <h3 class="t3">Feita para gerar a conversa.</h3>
-      <ul class="lista"><li>Cases com cliente e resultado</li><li>34 anos, ~350 consultores e os clientes atendidos</li><li>Calculadora alocar × CLT</li><li>Conteúdo para cada papel do comitê</li><li>Conversão medida até a reunião</li></ul>
+      <p class="mono">O que propomos para a nova página</p>
+      <ul class="lista"><li>Provas de experiência, como clientes autorizados e indicadores verificáveis.</li><li>Ofertas de entrada orientadas às necessidades de cada empresa.</li><li>Comparativo entre alocação e contratação direta.</li><li>Convite claro para conversar, com acompanhamento das conversões.</li></ul>
     </div>
   </div>
 </section>
 
-<!-- ===================================================== 28 · Squad de mídia -->
-<section class="slide claro" data-nome="Squad de mídia" data-fase="3">
+<!-- ===================================================== Fase 3 · mídia e conteúdo -->
+<section class="slide escuro" data-nome="Mídia e conteúdo" data-parte="3" data-fase="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Squad de mídia</span></p>
-    <h2 class="t2">Produção contínua, com um ponto de aprovação.</h2>
+    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Mídia e conteúdo</span></p>
+    <h2 class="t2">Uma equipe de apoio para transformar a estratégia em campanhas e materiais.</h2>
   </div>
-  <ol class="fluxo">
-    <li class="fluxo__passo"><span class="no"></span><span class="liga"></span><p class="mono">01</p><h3 class="t3">Pauta</h3><p class="txt">Sai dos sinais, das contas e do que o ciclo anterior ensinou.</p></li>
-    <li class="fluxo__passo"><span class="no"></span><span class="liga"></span><p class="mono">02</p><h3 class="t3">Criação</h3><p class="txt">Redação e design produzem em lote.</p></li>
-    <li class="fluxo__passo fluxo__passo--foco"><span class="no"></span><span class="liga"></span><p class="mono">03</p><h3 class="t3"><span>Aprovação</span></h3><p class="txt">Um rito semanal com o Marcelo, no lugar da aprovação peça a peça.</p></li>
-    <li class="fluxo__passo"><span class="no"></span><span class="liga"></span><p class="mono">04</p><h3 class="t3">Publicação</h3><p class="txt">Mídia e orgânico, por tier e por papel.</p></li>
-    <li class="fluxo__passo"><span class="no"></span><p class="mono">05</p><h3 class="t3">Leitura</h3><p class="txt">O que gerou reunião volta para a pauta.</p></li>
-  </ol>
-  <div class="squad">
-    <div class="squad__col">
-      <p class="mono">Quem</p>
-      <div class="squad__itens">
-        <div><p class="t4">Designer</p><p class="txt">Peças e LP</p></div>
-        <div><p class="t4">Tráfego</p><p class="txt">Google, LinkedIn e Meta</p></div>
-        <div><p class="t4">Redação</p><p class="txt">Mensagens e conteúdo</p></div>
-      </div>
-    </div>
-    <div class="squad__col">
-      <p class="mono">O quê</p>
-      <div class="squad__itens">
-        <div><p class="t4">Estáticos</p><p class="txt">Anúncios e posts</p></div>
-        <div><p class="t4">Carrosséis</p><p class="txt">Ideias e dados</p></div>
-        <div><p class="t4">Vídeo</p><p class="txt">Cortes curtos</p></div>
-      </div>
-    </div>
+  <div class="quad">
+    <div><p class="mono">01</p><h3 class="t3">Design</h3><p class="txt">Peças, página de conversão e materiais de apoio, como guias e comparativos.</p></div>
+    <div><p class="mono">02</p><h3 class="t3">Mídia</h3><p class="txt">Gestão de campanhas em Google, LinkedIn e Meta, com otimização orientada a resultados.</p></div>
+    <div><p class="mono">03</p><h3 class="t3">Redação</h3><p class="txt">Textos para anúncios, cadências, páginas e materiais por público.</p></div>
+    <div><p class="mono">04</p><h3 class="t3">Criativos</h3><p class="txt">Adaptação das mensagens para peças estáticas, carrosséis e vídeos.</p></div>
   </div>
+  <div class="verba"><p class="mono">Investimento em mídia</p><p>Pago diretamente pela Talent às plataformas e definido em conjunto na fase de preparação: R$ <span class="lacuna">&nbsp;</span>/mês.</p></div>
 </section>
 
-<!-- ===================================================== 29 · Projeção de referência -->
-<section class="slide escuro" data-nome="Projeção de referência" data-fase="3">
+<!-- ===================================================== Fase 3 · projeção de referência -->
+<section class="slide escuro proj" data-nome="Projeção de referência" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Projeção de referência</span></p>
-    <h2 class="t2">O que esperar até o fim do mês 6.</h2>
+    <h2 class="t2">Um cenário inicial para orientar metas — e ajustar com dados reais.</h2>
   </div>
-  <p class="mono legenda"><span><i></i>Dado real da Velora</span><span><i class="est"></i>Estimativa</span></p>
-  <div class="funil">
-    <div class="funil__etapa"><span class="funil__liga funil__liga--base"></span><p class="mono funil__taxa">Plano</p><p class="num">2.000</p><p class="t4">contatos</p><p class="txt">4 blocos de 500 decisores.</p></div>
-    <div class="funil__etapa"><span class="funil__liga funil__liga--real"></span><p class="mono funil__taxa funil__taxa--real">~2% no outbound</p><p class="num">55–65</p><p class="t4">reuniões</p><p class="txt">~40 do outbound e 15 a 25 de ABM e mídia.</p></div>
-    <div class="funil__etapa"><span class="funil__liga funil__liga--est"></span><p class="num">15–20</p><p class="t4">oportunidades</p><p class="txt">Demandas com escopo e prazo.</p></div>
-    <div class="funil__etapa"><span class="funil__liga funil__liga--est"></span><p class="num">6–8</p><p class="t4">homologações</p><p class="txt">Talent cadastrada e com rate card aprovado.</p></div>
-    <div class="funil__etapa funil__etapa--fim"><span class="funil__liga funil__liga--est"></span><p class="num">2–3</p><p class="t4">contas novas</p><p class="txt">Com consultores alocados.</p></div>
+  <div class="tabela-wrap">
+    <table class="tabela">
+      <thead><tr><th>Frente</th><th>Base de referência</th><th>Hipótese inicial</th><th class="dir">Reuniões estimadas</th></tr></thead>
+      <tbody>
+        <tr><td>Prospecção</td><td>2.000 contatos trabalhados</td><td>~2% de conversão em reunião</td><td class="reun">~40</td></tr>
+        <tr><td>ABM A1</td><td>~50 contas</td><td>~20% a 30% de conversão em reunião</td><td class="reun">~10 a 15</td></tr>
+        <tr><td>Geração de demanda</td><td>Google, página e conteúdo</td><td>A medir</td><td class="reun">Meta de ~10</td></tr>
+        <tr class="total"><td>Total de referência</td><td>—</td><td>—</td><td class="reun">~60 a 65</td></tr>
+      </tbody>
+    </table>
   </div>
-  <p class="fechamento">Só a taxa do outbound vem de dado real da Velora. <span>As outras são estimativas que os ciclos RHOI vão trocar pelos números da Talent.</span></p>
+  <div class="desdobra">
+    <p class="mono">Possíveis desdobramentos do cenário</p>
+    <div><p class="num">15–20</p><p class="txt">oportunidades</p></div>
+    <div><p class="num">6–8</p><p class="txt">homologações iniciadas</p></div>
+    <div><p class="num acid">2–3</p><p class="txt">contas com primeira alocação</p></div>
+  </div>
+  <p class="fechamento">Estimativas preliminares, não compromissos de resultado. <span>Premissas, taxas e prazos serão validados no diagnóstico e revistos durante a execução.</span></p>
 </section>
 
-<!-- ===================================================== 30 · RHOI -->
-<section class="slide claro" data-nome="Ciclos RHOI" data-fase="3">
+<!-- ===================================================== Fase 3 · RHOI -->
+<section class="slide escuro" data-nome="Aprendizado contínuo · RHOI" data-parte="3" data-fase="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Como ajustamos</span></p>
-    <h2 class="t2">Ciclos de duas a três semanas.</h2>
+    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Aprendizado contínuo · Método RHOI</span></p>
+    <h2 class="t2">A cada ciclo, usamos os dados para decidir o que manter, melhorar ou mudar.</h2>
   </div>
   <div class="rhoi">
     <span class="rhoi__laco"><span class="mono">A cada ciclo</span></span>
     <ol class="rhoi__lista">
-      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">R</p><h3 class="t3 rhoi__nome">Review <span>· Entender</span></h3><p class="txt">Lemos funil, canais e contas para localizar o que travou.</p></li>
-      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">H</p><h3 class="t3 rhoi__nome">Hypothesis <span>· Priorizar</span></h3><p class="txt">Definimos hipóteses e escolhemos o que testar primeiro.</p></li>
-      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">O</p><h3 class="t3 rhoi__nome">Operationalize <span>· Executar</span></h3><p class="txt">Colocamos no ar com os responsáveis da Talent.</p></li>
-      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">I</p><h3 class="t3 rhoi__nome">Inspection <span>· Aprender</span></h3><p class="txt">Decidimos o que manter, ajustar ou interromper.</p></li>
+      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">R</p><h3 class="t3 rhoi__nome">Review <span>Revisar</span></h3><p class="txt">Analisar os resultados das frentes e os avanços das oportunidades.</p></li>
+      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">H</p><h3 class="t3 rhoi__nome">Hypothesis <span>Formular hipóteses</span></h3><p class="txt">Identificar o ajuste com maior potencial de impacto.</p></li>
+      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">O</p><h3 class="t3 rhoi__nome">Operationalize <span>Colocar em prática</span></h3><p class="txt">Executar as mudanças com responsáveis e prazos definidos.</p></li>
+      <li class="rhoi__passo"><span class="rhoi__marco"></span><p class="rhoi__letra">I</p><h3 class="t3 rhoi__nome">Inspection <span>Avaliar</span></h3><p class="txt">Verificar os efeitos e decidir o próximo ciclo.</p></li>
     </ol>
   </div>
-  <div class="ciclos">
-    <div class="ciclos__fim"><p class="mono">Custo por homologação conhecido</p></div>
-    <div class="ciclos__linha"><i style="left:0"></i><i style="left:15.5%"></i><i style="left:31%"></i><i style="left:46.5%"></i><i style="left:62%"></i><i style="left:77.5%"></i><i class="fim" style="left:calc(100% - 18px)"></i></div>
-    <div class="ciclos__meses"><p class="mono">Mês 3</p><p class="mono">Mês 4</p><p class="mono">Mês 5</p><p class="mono">Mês 6 · 4º mês de execução</p></div>
+  <div class="evolucao">
+    <p class="mono">Evolução esperada nos quatro meses de operação</p>
+    <ol>
+      <li><p class="t4">Mês 1</p><p class="txt">Primeiros dados de resposta e conversão.</p></li>
+      <li><p class="t4">Mês 2</p><p class="txt">Mensagens, canais e prioridades ajustados.</p></li>
+      <li><p class="t4">Mês 3</p><p class="txt">Primeiras referências de custo e desempenho por etapa.</p></li>
+      <li><p class="t4">Mês 4</p><p class="txt">Leitura consolidada dos resultados e próximos testes.</p></li>
+    </ol>
   </div>
 </section>
 
-<!-- ===================================================== 31 · Grande entregável -->
-<section class="slide escuro entrega" data-nome="Grande entregável" data-fase="3">
+<!-- ===================================================== Fase 3 · o que fica com a Talent -->
+<section class="slide escuro" data-nome="O que fica com a Talent" data-parte="3" data-fase="3">
   <div class="cab">
-    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Grande entregável</span></p>
-    <h2 class="t2">Canais formatados, com o custo de cada etapa conhecido.</h2>
+    <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>O que fica com a Talent</span></p>
+    <h2 class="t2">Ao final, a Talent terá uma estrutura mais clara para continuar abrindo oportunidades.</h2>
   </div>
-  <div class="tabela-wrap">
-    <table class="tabela">
-      <thead><tr><th>Canal</th><th class="dir">Custo por reunião</th><th class="dir">Por oportunidade</th><th class="dir">Por homologação</th><th class="dir">Por conta nova</th></tr></thead>
-      <tbody>
-        <tr><td>ABM<small>Contas A1</small></td><td class="dir">R$ —</td><td class="dir">R$ —</td><td class="dir">R$ —</td><td class="dir">R$ —</td></tr>
-        <tr><td>Demand gen<small>Google, LinkedIn, Meta</small></td><td class="dir">R$ —</td><td class="dir">R$ —</td><td class="dir">R$ —</td><td class="dir">R$ —</td></tr>
-        <tr><td>Outbound<small>Contas B2 e B3</small></td><td class="dir">R$ —</td><td class="dir">R$ —</td><td class="dir">R$ —</td><td class="dir">R$ —</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="fechamento"><span class="no no--destaque"></span>No fim do mês 6, esta tabela estará preenchida com os números da Talent.</p>
-</section>
-
-<!-- ===================================================== 32 · Time -->
-<section class="slide claro" data-nome="Time">
-  <div class="cab">
-    <p class="rotulo"><span class="n">05</span><span class="barra">/</span><span>Time</span></p>
-    <h2 class="t2">Um time só, com papéis claros.</h2>
-  </div>
-  <div class="time">
-    <div class="time__lado">
-      <div class="time__cab"><h3 class="t3">Velora</h3><p class="mono">Estratégia e execução</p></div>
-      <div class="pessoa"><p class="t4">Bernardo Costa</p><p class="txt">Estratégia, growth e dados</p></div>
-      <div class="pessoa"><p class="t4">Everton Henke</p><p class="txt">Metodologia e aquisição</p></div>
-      <div class="pessoa"><p class="t4">Leonardo Wartha</p><p class="txt">Comercial</p></div>
-      <div class="pessoa"><p class="t4">Squad de mídia</p><p class="txt">Design, tráfego, redação e criativos</p></div>
-    </div>
-    <div class="time__lado">
-      <div class="time__cab"><h3 class="t3">Talent Four</h3><p class="mono">Decisão e operação</p></div>
-      <div class="pessoa"><p class="t4">Marcelo Magalhães</p><p class="txt">Sponsor. Prioridades e aprovação semanal</p></div>
-      <div class="pessoa"><p class="t4">Hunter</p><p class="txt">Reuniões e oportunidades geradas</p></div>
-      <div class="pessoa"><p class="t4">Gerentes de conta</p><p class="txt">Classificação das contas e indicações na carteira</p></div>
-      <div class="pessoa"><p class="t4">Agência atual</p><p class="txt">Marca e institucional, alinhada ao squad</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================================================== 33 · Investimento -->
-<section class="slide escuro invest" data-nome="Investimento">
-  <div class="cab">
-    <p class="rotulo"><span class="n">06</span><span class="barra">/</span><span>Investimento · a validar</span></p>
-    <h2 class="t2">Um valor fixo para estruturar.<br>Um bônus atrelado a resultado.</h2>
-  </div>
-  <div class="tabela-wrap">
-    <table class="tabela">
-      <thead><tr><th>Item</th><th>Período</th><th class="dir">Valor</th></tr></thead>
-      <tbody>
-        <tr><td>Diagnóstico</td><td>Mês 1</td><td class="valor">R$ 35 mil</td></tr>
-        <tr><td>Setup, implementação e execução</td><td>Meses 2 a 6<small class="sub">5 × R$ 24 mil = R$ 120 mil</small></td><td class="valor">R$ 24 mil<small>/mês</small></td></tr>
-        <tr class="total"><td>Total fixo</td><td>6 meses</td><td class="valor">R$ 155 mil</td></tr>
-        <tr class="secao"><td colspan="3">Variável e à parte</td></tr>
-        <tr><td>Bônus por conta nova com alocação</td><td>Por conta</td><td class="valor">R$ 15 mil</td></tr>
-        <tr><td>Verba de mídia e ferramentas</td><td>Mensal, à parte</td><td class="valor">R$ <span class="lacuna">&nbsp;</span><small>/mês</small></td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ===================================================== 34 · Conta de referência -->
-<section class="slide claro" data-nome="Conta de referência">
-  <div class="payback__esq">
-    <p class="rotulo"><span class="n">06</span><span class="barra">/</span><span>Conta de referência</span></p>
-    <p class="num"><span>4 a 5</span></p>
-    <h2 class="t3">consultores alocados por um ano pagam o investimento fixo.</h2>
-    <p class="lead fg2">A projeção de referência aponta 2 a 3 contas novas.</p>
-  </div>
-  <div class="conta">
-    <p class="mono conta__cab">A conta</p>
-    <div class="conta__linha"><p class="txt">Faturamento anual estimado</p><p class="v">~R$ 86 mi</p></div>
-    <div class="conta__linha"><p class="txt">÷ consultores alocados</p><p class="v">~350</p></div>
-    <div class="conta__linha"><p class="txt">= faturamento por consultor, por ano</p><p class="v">~R$ 246 mil</p></div>
-    <div class="conta__linha"><p class="txt">× margem bruta de 12% a 16%</p><p class="v">R$ 29 a 39 mil</p></div>
-    <div class="conta__linha conta__linha--res"><p class="txt">R$ 155 mil ÷ margem por consultor</p><p class="v">4 a 5</p></div>
-  </div>
-  <p class="nota">Estimativas da Velora, a refazer com o faturamento e a margem por consultor da Talent.</p>
-</section>
-
-<!-- ===================================================== 35 · Próximos passos -->
-<section class="slide escuro" data-nome="Próximos passos">
-  <div class="cab">
-    <p class="rotulo"><span class="n">07</span><span class="barra">/</span><span>Próximos passos</span></p>
-    <h2 class="t2">Um ponto de partida claro.</h2>
-  </div>
-  <ol class="passos">
-    <li class="passo"><p class="passo__n passo__n--inicio">01</p><h3 class="t3">Alinhar o escopo</h3><p class="txt">Validar fases, entregáveis e investimento.</p></li>
-    <li class="passo"><p class="passo__n">02</p><h3 class="t3">Questionário e acessos</h3><p class="txt">Questionário de maturidade e acesso à carteira e ao CRM.</p></li>
-    <li class="passo"><p class="passo__n">03</p><h3 class="t3">Kick-off</h3><p class="txt">Início do diagnóstico em <span class="lacuna">[data]</span>.</p></li>
+  <div class="fica__lead"><p class="lead">O projeto reúne bases, rotinas, canais e indicadores para entender quais abordagens geram avanço comercial, quanto custa cada etapa e onde concentrar os próximos investimentos.</p></div>
+  <ol class="fica__lista">
+    <li><p class="mono">01</p><h3 class="t3">Base e radar</h3><p class="txt">Contas classificadas e acompanhamento dos sinais mais relevantes.</p></li>
+    <li><p class="mono">02</p><h3 class="t3">Abordagens e roteiros</h3><p class="txt">Mensagens, cadências e etapas de aproximação até a homologação.</p></li>
+    <li><p class="mono">03</p><h3 class="t3">Marketing e conteúdo</h3><p class="txt">Página, campanhas e materiais implementados e avaliados.</p></li>
+    <li><p class="mono">04</p><h3 class="t3">Indicadores</h3><p class="txt">CRM e painel para acompanhar oportunidades, conversões e custos por etapa.</p></li>
   </ol>
 </section>
 
-<!-- ===================================================== 36 · Encerramento -->
+<!-- ===================================================== Parte 04 -->
+<section class="slide claro divisor" data-nome="Parte 4 · Time e investimento" data-parte="4">
+  <div class="divisor__txt">
+    <p class="rotulo"><span class="n">Parte 04</span><span class="barra">/</span><span>de 04</span></p>
+    <p class="divisor__n">04</p>
+    <h2 class="divisor__titulo">Time e investimento</h2>
+    <p class="mono divisor__sub">Time e colaboração · Investimento · Próximos passos</p>
+  </div>
+</section>
+
+<!-- ===================================================== Time -->
+<section class="slide escuro" data-nome="Time e colaboração" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Time e colaboração</span></p>
+    <h2 class="t2">Um trabalho conjunto, com responsabilidades claras entre Velora e Talent.</h2>
+  </div>
+  <div class="time">
+    <div class="time__col">
+      <div class="time__cab"><p class="mono">Velora</p><h3 class="t3">Estratégia e acompanhamento</h3></div>
+      <div class="pessoa"><p class="t4">Bernardo Costa</p><p class="txt">Estratégia de crescimento e análise de dados.</p></div>
+      <div class="pessoa"><p class="t4">Everton Henke</p><p class="txt">Metodologia e aquisição.</p></div>
+      <div class="pessoa"><p class="t4">Leonardo Wartha</p><p class="txt">Apoio consultivo em processos comerciais e vendas.</p></div>
+    </div>
+    <div class="time__col">
+      <div class="time__cab"><p class="mono">Velora</p><h3 class="t3">Especialistas de execução</h3></div>
+      <div class="pessoa"><p class="t4">Design</p><p class="txt">Peças, páginas e materiais.</p></div>
+      <div class="pessoa"><p class="t4">Mídia</p><p class="txt">Campanhas em Google, LinkedIn e Meta.</p></div>
+      <div class="pessoa"><p class="t4">Redação e criação</p><p class="txt">Textos e formatos para diferentes públicos.</p></div>
+    </div>
+    <div class="time__col">
+      <div class="time__cab"><p class="mono">Talent Four</p><h3 class="t3">Negócio e relacionamento</h3></div>
+      <div class="pessoa"><p class="t4">Marcelo Magalhães</p><p class="txt">Patrocínio executivo e alinhamento das prioridades.</p></div>
+      <div class="pessoa"><p class="t4">Hunter e gerentes de conta</p><p class="txt">Relacionamento, reuniões, negociação e expansão.</p></div>
+      <div class="pessoa"><p class="t4">Agência atual</p><p class="txt">Produção e desdobramentos de conteúdo, conforme alinhamento de escopo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== Investimento -->
+<section class="slide escuro invest" data-nome="Investimento" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Investimento</span></p>
+    <h2 class="t2">Um projeto de seis meses, com uma parcela variável ligada à abertura de novas contas.</h2>
+  </div>
+  <div class="tabela-wrap">
+    <table class="tabela">
+      <thead><tr><th>Etapa</th><th class="dir">Valor</th></tr></thead>
+      <tbody>
+        <tr><td><p class="t4">Mês 1 · Diagnóstico</p><p class="txt">Imersão, análise das oportunidades e plano de ação priorizado.</p></td><td class="valor">R$ 35 mil</td></tr>
+        <tr><td><p class="t4">Meses 2 a 6 · Implementação e operação</p><p class="txt">Preparação do mercado, execução das frentes, equipe de especialistas e acompanhamento dos sócios.</p></td><td class="valor">R$ 24 mil<small>/mês</small></td></tr>
+        <tr class="total"><td><p class="t4">Investimento fixo total</p><p class="txt">Verba de mídia e ferramentas de dados são contratadas à parte.</p></td><td class="valor">R$ 155 mil</td></tr>
+        <tr><td><p class="t4">Parcela por resultado</p><p class="txt">Por conta nova que realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></td><td class="valor">R$ 15 mil<small>/conta</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================================================== Próximos passos -->
+<section class="slide escuro" data-nome="Próximos passos" data-parte="4">
+  <div class="cab">
+    <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Próximos passos</span></p>
+    <h2 class="t2">Se a direção fizer sentido, podemos avançar por estas etapas.</h2>
+  </div>
+  <ol class="proximos">
+    <li class="proximo proximo--inicio"><span class="no no--acid"></span><p class="proximo__n">01</p><h3 class="t3">Ajustes finais</h3><p class="txt">Alinhar prioridades, escopo e expectativas da proposta.</p><p class="mono quando">A seguir</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">02</p><h3 class="t3">Informações iniciais</h3><p class="txt">Aplicar o questionário de diagnóstico e organizar o acesso necessário à carteira e ao CRM.</p><p class="mono quando">Antes do início</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">03</p><h3 class="t3">Início do trabalho</h3><p class="txt">Definir juntos a data de início do diagnóstico.</p><p class="mono quando">[data a confirmar]</p></li>
+    <li class="proximo"><span class="no"></span><p class="proximo__n">04</p><h3 class="t3">Primeiras recomendações</h3><p class="txt">Apresentar o diagnóstico e o plano de ação.</p><p class="mono quando">Em 3 a 4 semanas</p></li>
+  </ol>
+</section>
+
+<!-- ===================================================== Encerramento -->
 <section class="slide escuro" data-nome="Encerramento">
   <div class="fim__txt">
     <p class="rotulo"><span class="n">Velora</span><span class="barra">/</span><span>Growth &amp; Beyond</span></p>
-    <h2 class="t1"><span>Do relacionamento</span>ao sistema.</h2>
+    <h2 class="t1"><span>Do relacionamento</span>a novas oportunidades de crescimento.</h2>
   </div>
   <div class="contatos">
     <div class="contato"><p class="t4">Bernardo Costa</p><p class="mono">Estratégia e dados</p><p class="txt">bernardo.costa@veloraconsulting.com.br</p></div>
-    <div class="contato"><p class="t4">Everton Henke</p><p class="mono">Growth, CRM e analytics</p><p class="txt">everton.henke@veloraconsulting.com.br</p></div>
-    <div class="contato"><p class="t4">Leonardo Wartha</p><p class="mono">Vendas</p><p class="txt">leonardo.wartha@veloraconsulting.com.br</p></div>
+    <div class="contato"><p class="t4">Everton Henke</p><p class="mono">Metodologia e aquisição</p><p class="txt">everton.henke@veloraconsulting.com.br</p></div>
+    <div class="contato"><p class="t4">Leonardo Wartha</p><p class="mono">Processos comerciais e vendas</p><p class="txt">leonardo.wartha@veloraconsulting.com.br</p></div>
   </div>
   <svg class="assinatura" viewBox="18 -700 2807 714" aria-hidden="true"><path d="M196 0 18 -700H154L302 -85H316L464 -700H600L422 0ZM874 14Q800 14 743.5 -17.5Q687 -49 655.5 -106.5Q624 -164 624 -242V-254Q624 -332 655 -389.5Q686 -447 742 -478.5Q798 -510 872 -510Q945 -510 999 -477.5Q1053 -445 1083 -387.5Q1113 -330 1113 -254V-211H752Q754 -160 790 -128Q826 -96 878 -96Q931 -96 956 -119Q981 -142 994 -170L1097 -116Q1083 -90 1056.5 -59.5Q1030 -29 986 -7.5Q942 14 874 14ZM753 -305H985Q981 -348 950.5 -374Q920 -400 871 -400Q820 -400 790 -374Q760 -348 753 -305ZM1185 0V-700H1311V0ZM1647 14Q1573 14 1514 -16Q1455 -46 1421 -103Q1387 -160 1387 -240V-256Q1387 -336 1421 -393Q1455 -450 1514 -480Q1573 -510 1647 -510Q1721 -510 1780 -480Q1839 -450 1873 -393Q1907 -336 1907 -256V-240Q1907 -160 1873 -103Q1839 -46 1780 -16Q1721 14 1647 14ZM1647 -98Q1705 -98 1743 -135.5Q1781 -173 1781 -243V-253Q1781 -323 1743.5 -360.5Q1706 -398 1647 -398Q1589 -398 1551 -360.5Q1513 -323 1513 -253V-243Q1513 -173 1551 -135.5Q1589 -98 1647 -98ZM1983 0V-496H2107V-440H2125Q2136 -470 2161.5 -484Q2187 -498 2221 -498H2281V-386H2219Q2171 -386 2140 -360.5Q2109 -335 2109 -282V0ZM2493 14Q2440 14 2398 -4.5Q2356 -23 2331.5 -58.5Q2307 -94 2307 -145Q2307 -196 2331.5 -230.5Q2356 -265 2399.5 -282.5Q2443 -300 2499 -300H2635V-328Q2635 -363 2613 -385.5Q2591 -408 2543 -408Q2496 -408 2473 -386.5Q2450 -365 2443 -331L2327 -370Q2339 -408 2365.5 -439.5Q2392 -471 2436.5 -490.5Q2481 -510 2545 -510Q2643 -510 2700 -461Q2757 -412 2757 -319V-134Q2757 -104 2785 -104H2825V0H2741Q2704 0 2680 -18Q2656 -36 2656 -66V-67H2637Q2633 -55 2619 -35.5Q2605 -16 2575 -1Q2545 14 2493 14ZM2515 -88Q2568 -88 2601.5 -117.5Q2635 -147 2635 -196V-206H2508Q2473 -206 2453 -191Q2433 -176 2433 -149Q2433 -122 2454 -105Q2475 -88 2515 -88Z"/></svg>
 </section>
@@ -1368,32 +1252,46 @@ body.visao { overflow: auto; background: #000; }
   var atual = 0;
   var params = new URLSearchParams(location.search);
   var pad = function (n) { return String(n).padStart(2, '0'); };
-  var FASES = ['Diagnóstico', 'Setup', 'Execução'];
+  var FASES = ['Diagnóstico', 'Preparação', 'Operação'];
+  var PARTES = ['A Velora', 'A Talent Four', 'A proposta', 'Time e investimento'];
 
   if (params.has('render')) body.classList.add('sem-anim');
 
-  /* Cabeçalho, marcador de fase e rodapé em todos os slides */
   slides.forEach(function (s, i) {
     var fase = Number(s.dataset.fase || 0);
+    var parte = Number(s.dataset.parte || 0);
+
+    /* Cabeçalho: marcador de fase nos slides da proposta, assinatura nos demais */
     var dir = fase
       ? '<ol class="fases" aria-label="Fases do projeto">' + FASES.map(function (nome, k) {
           return (k ? '<li class="sep" aria-hidden="true">·</li>' : '') +
             '<li' + (k + 1 === fase ? ' class="on" aria-current="step"' : '') + '>' + pad(k + 1) + ' ' + nome + '</li>';
         }).join('') + '</ol>'
-      : '<p class="topo__dir">Talent Four · Proposta</p>';
+      : '<p class="topo__dir">Talent Four × Velora · Novembro 2026</p>';
+
+    /* Rodapé: as quatro partes, com a atual destacada */
+    var partes = '<ol class="partes" aria-label="Partes da apresentação">' + PARTES.map(function (nome, k) {
+      return '<li' + (k + 1 === parte ? ' class="on" aria-current="true"' : '') + '>' + pad(k + 1) + ' ' + nome + '</li>';
+    }).join('') + '</ol>';
+
     s.insertAdjacentHTML('beforeend',
       '<header class="topo"><p class="marca"><b>Velora</b><span>Growth &amp; Beyond</span></p>' + dir + '</header>' +
-      '<footer class="pe"><span>Talent Four × Velora · Novembro 2026</span><span><b>' + pad(i + 1) + '</b> / ' + pad(total) + '</span></footer>');
+      '<footer class="pe">' + partes + '<span><b>' + pad(i + 1) + '</b> / ' + pad(total) + '</span></footer>');
+
+    /* Aberturas de parte: índice com a posição atual */
+    if (s.classList.contains('divisor') && !s.classList.contains('divisor--fase')) {
+      s.insertAdjacentHTML('beforeend', '<ol class="indice">' + PARTES.map(function (nome, k) {
+        var sub = k === 2 ? '<small>Diagnóstico · Preparação · Operação</small>' : '';
+        return '<li' + (k + 1 === parte ? ' class="on"' : '') + '><span class="mono">' + pad(k + 1) + '</span><span class="t3">' + nome + '</span>' + sub + '</li>';
+      }).join('') + '</ol>');
+    }
     s.setAttribute('aria-label', (i + 1) + ' de ' + total + ': ' + (s.dataset.nome || ''));
   });
 
-  /* Matriz das 500 contas: 50 A1, 150 B2, 300 B3 */
-  var matriz = doc.querySelector('[data-matriz]');
-  if (matriz) {
-    var html = '';
-    for (var k = 0; k < 500; k++) html += '<i class="' + (k < 50 ? 'a1' : k < 200 ? 'b2' : 'b3') + '"></i>';
-    matriz.innerHTML = html;
-  }
+  /* Pontos das faixas de contas */
+  doc.querySelectorAll('[data-pontos]').forEach(function (el) {
+    el.innerHTML = new Array(Number(el.dataset.pontos) + 1).join('<i></i>');
+  });
 
   function ajustar() {
     var e = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
@@ -1437,7 +1335,6 @@ body.visao { overflow: auto; background: #000; }
     }
   });
 
-  /* Clique: avança (metade direita) ou volta (metade esquerda). Na visão geral, abre o slide. */
   deck.addEventListener('click', function (e) {
     var alvo = e.target.closest('.slide');
     if (body.classList.contains('visao')) { if (alvo) { ir(slides.indexOf(alvo)); visao(false); } return; }
@@ -1445,7 +1342,6 @@ body.visao { overflow: auto; background: #000; }
     ir(e.clientX > window.innerWidth / 2 ? atual + 1 : atual - 1);
   });
 
-  /* Toque: deslizar para os lados */
   var x0 = null;
   doc.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
   doc.addEventListener('touchend', function (e) {
