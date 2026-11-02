@@ -1,4 +1,4 @@
-# Talent Four × Velora · Proposta
+# Velora × Talent Four · Desenvolvimento de sistema de aquisição
 
 Apresentação da proposta da Velora para a Talent Four Consulting: 38 slides em HTML (1920×1080), com navegação por teclado e exportação em PDF. A copy segue o documento de correção editorial de novembro de 2026.
 
@@ -35,7 +35,7 @@ node render.mjs            # → render/slide-NN.png e talent-four-velora.pdf
 | Slides | Parte | Conteúdo |
 |---|---|---|
 | 1–2 | Abertura | Capa e roteiro |
-| 3–7 | **01 · A Velora** | Como contribuímos · cinco etapas · princípios · contexto de mercado |
+| 3–7 | **01 · A Velora** | Como contribuímos · contexto de mercado · cinco etapas · princípios |
 | 8–13 | **02 · A Talent Four** | O que foi construído · como cresceu · o que entendemos · três oportunidades · transição |
 | 14–33 | **03 · A proposta** | Visão do projeto e as três fases abaixo |
 | 16–17 | Fase 1 · Diagnóstico | Quatro lentes e plano priorizado |
@@ -44,9 +44,11 @@ node render.mjs            # → render/slide-NN.png e talent-four-velora.pdf
 | 34–37 | **04 · Time e investimento** | Time · investimento · próximos passos |
 | 38 | Encerramento | Contatos |
 
-## Como as mudanças de fase ficam visíveis
+## Fundos e mudanças de capítulo
 
-- **Fundo:** todos os slides de conteúdo ficam em Ink. O Bone aparece só nas sete aberturas (quatro partes e três fases). Não há alternância de fundo slide a slide; a troca de fundo sinaliza que a apresentação mudou de parte ou de fase.
+- **Fundo claro (Bone) como padrão:** os slides de conteúdo ficam no claro.
+- **Fundo preto (Ink) marca os capítulos:** a capa, as quatro aberturas de parte, as três aberturas de fase e o encerramento.
+- **Quatro momentos-chave em preto:** dados de mercado (5), três oportunidades (12), radar de sinais (22) e projeção de referência (31). Nenhum fica ao lado de uma abertura, para o preto continuar lendo como sinal de capítulo.
 - **Aberturas de parte:** numeral gigante, nome da parte, o que vem nela e um índice das quatro partes com a atual destacada.
 - **Aberturas de fase:** numeral em marca-texto ácido, foto P&B do site, duração e trilho dos seis meses com os meses da fase marcados.
 - **Em todo slide:** o rodapé mostra as quatro partes com a atual destacada. Dentro da proposta, o topo mostra `01 Diagnóstico · 02 Preparação · 03 Operação` com a fase atual sublinhada, e o rótulo de cada slide começa com "Fase N".
@@ -56,7 +58,7 @@ node render.mjs            # → render/slide-NN.png e talent-four-velora.pdf
 - **Tokens:** Ink `#0B0B0C`, Raise `#141416`, Acid `#CCFF00`, Bone `#F7F1ED` e Paper `#FFFFFF`. O texto secundário fica em 64%.
 - **Fontes:** Space Grotesk 700, Manrope e JetBrains Mono, em `fonts/` (SIL Open Font License).
 - **Estrutura:** uma linha vertical fina à esquerda, com os rótulos pendurados nela; nós quadrados; fios em vez de caixas; tabelas com cabeçalho em mono e números tabulares.
-- **Ácido:** no máximo um ponto por slide. No fundo claro, só como marca-texto atrás de texto Ink.
+- **Ácido:** no máximo um ponto por slide. No fundo claro, só como marca-texto atrás de texto Ink; linhas e nós de destaque passam a Ink.
 
 ## A validar antes de apresentar
 
@@ -74,6 +76,9 @@ Do documento de correção (seção 3):
 - **Slides 20 e 25:** os tiers seguem A1/B2/B3. O documento sugere A/B/C como alternativa.
 
 Escolhas de layout que não vêm do documento:
+
+- Capa "Velora × Talent Four · Desenvolvimento de sistema de aquisição", conforme pedido (o documento sugeria evitar "sistema").
+- Contexto de mercado passou para logo depois de "Como contribuímos" (o porquê antes do como).
 
 - Roteiro (slide 2), as sete aberturas e o encerramento com contatos.
 - Rótulos e subtítulos das aberturas.

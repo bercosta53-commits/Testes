@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Talent Four × Velora · Proposta</title>
+<title>Velora × Talent Four · Proposta</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
 /* =========================================================================
-   Talent Four × Velora · apresentação 1920×1080
-   Linguagem visual do site da Velora. Conteúdo sempre em Ink; Bone só nas
-   aberturas de parte e de fase, para que a troca de fundo marque a mudança.
+   Velora × Talent Four · apresentação 1920×1080
+   Linguagem visual do site da Velora. Conteúdo em Bone (claro); Ink marca os
+   capítulos (capa, aberturas de parte e de fase, encerramento) e alguns
+   momentos-chave de conteúdo.
    Navegação: ← → espaço, Home/End, número + Enter, G (visão geral), F (tela cheia).
    PDF: imprimir (Ctrl/Cmd+P) ou node render.mjs.
    ========================================================================= */
@@ -36,11 +37,13 @@
   --bg: var(--ink); --bg-2: var(--raise); --fg: var(--paper);
   --fg-2: rgb(255 255 255 / .64); --fg-3: rgb(255 255 255 / .48); --fg-4: rgb(255 255 255 / .32);
   --linha: rgb(255 255 255 / .12); --linha-diag: rgb(255 255 255 / .40);
+  --destaque: var(--acid);
 }
 .claro {
   --bg: var(--bone); --bg-2: var(--paper); --fg: var(--ink);
   --fg-2: rgb(11 11 12 / .64); --fg-3: rgb(11 11 12 / .60); --fg-4: rgb(11 11 12 / .28);
   --linha: rgb(11 11 12 / .12); --linha-diag: rgb(11 11 12 / .52);
+  --destaque: var(--ink);
 }
 
 /* ---------- Palco ---------- */
@@ -110,7 +113,7 @@ img, svg { display: block; }
 .nota { position: absolute; left: var(--mx); right: var(--mx); bottom: 124px; color: var(--fg-3); font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
 
 .no { display: block; width: 14px; height: 14px; background: var(--bg); border: 1px solid var(--fg-2); }
-.no--acid { background: var(--acid); border-color: var(--acid); }
+.no--acid { background: var(--destaque); border-color: var(--destaque); }
 .marca-acid { background: var(--acid); color: var(--ink); padding: 0 .12em; margin-left: -.12em; }
 .liga { position: absolute; left: 24px; top: 7px; width: calc(100% + 32px - 48px); height: 1px; background: var(--linha-diag); }
 .liga::after { content: ''; position: absolute; right: 1px; top: -3px; width: 7px; height: 7px; border-top: 1px solid var(--linha-diag); border-right: 1px solid var(--linha-diag); transform: rotate(45deg); }
@@ -159,11 +162,10 @@ img, svg { display: block; }
 .divisor--fase .divisor__titulo { margin-top: 44px; font-size: 100px; }
 .divisor__quando { margin-top: 26px; color: var(--fg-2); }
 .divisor__lead { margin-top: 14px; max-width: 820px; }
-.divisor__foto { position: absolute; right: 0; top: 120px; bottom: 100px; width: 44%; margin: 0; overflow: hidden; background: var(--raise); }
-.divisor__foto img { width: 100%; height: 100%; object-fit: cover; }
+.divisor--fase .foto { width: 46%; }
 .trilho { position: absolute; left: var(--mx); width: 900px; bottom: 132px; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 6px; }
 .trilho li { padding-top: 14px; border-top: 1px solid var(--linha-diag); color: var(--fg-3); font: 500 13px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
-.trilho li.on { border-top: 5px solid var(--ink); padding-top: 10px; color: var(--fg); }
+.trilho li.on { border-top: 5px solid var(--fg); padding-top: 10px; color: var(--fg); }
 
 /* =========================================================================
    Slides de conteúdo (fundo Ink)
@@ -172,8 +174,10 @@ img, svg { display: block; }
 /* Capa */
 .capa .foto { width: 54%; }
 .capa .foto img { object-position: 50% 40%; }
-.capa__txt { position: absolute; left: var(--mx); top: 258px; width: 1440px; z-index: 2; }
-.capa__titulo { font-size: 124px; line-height: 1.02; letter-spacing: -.038em; }
+.capa__txt { position: absolute; left: var(--mx); top: 236px; width: 1440px; z-index: 2; }
+.capa__marcas { font: 700 76px/1 var(--f-display); letter-spacing: -.03em; }
+.capa__marcas span { color: var(--fg-3); padding: 0 .18em; }
+.capa__titulo { margin-top: 56px; font-size: 128px; line-height: 1.02; letter-spacing: -.038em; }
 .capa__titulo span { display: block; }
 .capa__lead { margin-top: 44px; max-width: 900px; color: var(--fg-2); }
 .faixa { position: absolute; left: var(--mx); right: var(--mx); bottom: 112px; display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--linha-diag); font: 500 15px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); z-index: 2; }
@@ -198,7 +202,7 @@ img, svg { display: block; }
 /* Cinco etapas */
 .circuito { position: absolute; left: var(--mx); top: 404px; width: var(--larg); }
 .circuito__laco { position: absolute; left: 0; top: 0; overflow: visible; }
-.circuito__laco path { fill: none; stroke: var(--acid); stroke-width: 1.5; }
+.circuito__laco path { fill: none; stroke: var(--destaque); stroke-width: 1.5; }
 .circuito__rotulo { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); padding: 0 18px; background: var(--bg); color: var(--fg-2); white-space: nowrap; }
 .circuito .etapas { margin-top: 64px; }
 .etapa__n { font-size: 104px; color: var(--fg-4); }
@@ -254,13 +258,13 @@ img, svg { display: block; }
 .oport .lead { font-size: 27px; line-height: 1.42; }
 
 /* Transição */
-.ponte .foto { width: 44%; }
-.ponte .foto img { object-position: 40% 50%; }
-.ponte__txt { position: absolute; left: var(--mx); top: 236px; width: 1180px; z-index: 2; }
-.ponte__frase { font: 700 88px/1.08 var(--f-display); letter-spacing: -.032em; }
+.ponte__foto { position: absolute; right: 0; top: 120px; bottom: 100px; width: 42%; margin: 0; overflow: hidden; }
+.ponte__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; }
+.ponte__txt { position: absolute; left: var(--mx); top: 236px; width: 940px; z-index: 2; }
+.ponte__frase { font: 700 76px/1.08 var(--f-display); letter-spacing: -.03em; }
 .ponte__frase span { display: block; }
 .ponte__frase .a { color: var(--fg-2); margin-bottom: 40px; }
-.ponte__frase em { font-style: normal; color: var(--acid); }
+.ponte__frase em { font-style: normal; background: var(--acid); color: var(--ink); padding: 0 .08em; }
 
 /* Visão do projeto (Gantt) */
 .gantt { position: absolute; left: var(--mx); top: 392px; width: var(--larg); height: 570px; }
@@ -291,7 +295,7 @@ img, svg { display: block; }
 .lentes svg { position: absolute; left: 0; top: 0; overflow: visible; }
 .lentes svg path { fill: none; stroke: var(--linha-diag); stroke-width: 1.25; }
 .lentes svg .forte { stroke: var(--fg); stroke-width: 1.5; }
-.lentes__no { position: absolute; left: 1182px; top: 251px; width: 18px; height: 18px; background: var(--acid); }
+.lentes__no { position: absolute; left: 1182px; top: 251px; width: 18px; height: 18px; background: var(--destaque); }
 .lentes__plano { position: absolute; left: 1272px; top: 150px; width: 360px; }
 .lentes__plano .mono { color: var(--fg-3); }
 .lentes__plano .t3 { margin-top: 8px; font-size: 40px; line-height: 1.05; letter-spacing: -.02em; }
@@ -321,9 +325,9 @@ img, svg { display: block; }
 .banda__cab .mono { color: var(--fg-3); }
 .banda .txt { margin-top: 6px; font-size: 20px; }
 .banda__pontos { margin-top: 18px; display: grid; grid-template-columns: repeat(50, 12px); gap: 4px; }
-.banda__pontos i { width: 12px; height: 12px; background: rgb(255 255 255 / .22); }
-.banda--a1 .banda__pontos i { background: var(--acid); }
-.banda--b2 .banda__pontos i { background: rgb(255 255 255 / .82); }
+.banda__pontos i { width: 12px; height: 12px; background: var(--fg-4); }
+.banda--a1 .banda__pontos i { background: var(--destaque); }
+.banda--b2 .banda__pontos i { background: var(--fg-2); }
 
 /* Fase 2 · três frentes */
 .raias { position: absolute; left: var(--mx); top: 400px; width: var(--larg); height: 420px; }
@@ -404,8 +408,8 @@ img, svg { display: block; }
 .degrau .mono { padding-top: 24px; color: var(--fg-3); }
 .degrau .t4 { margin-top: 6px; font-size: 25px; }
 .degrau .txt { margin-top: 8px; font-size: 18px; line-height: 1.45; }
-.degrau--fim .t4 { color: var(--acid); }
-.degrau--fim .no { background: var(--acid); border-color: var(--acid); }
+.degrau--fim .no { background: var(--destaque); border-color: var(--destaque); }
+.degrau--fim .t4 span { background: var(--acid); color: var(--ink); padding: 0 .1em; margin-left: -.1em; }
 
 /* Fase 3 · operação mês a mês */
 .ritmo { position: absolute; left: var(--mx); top: 404px; width: var(--larg); }
@@ -506,8 +510,9 @@ img, svg { display: block; }
 .invest td:first-child .txt { margin-top: 4px; font-size: 20px; }
 .invest td.valor { width: 360px; font: 700 40px/1 var(--f-display); letter-spacing: -.02em; color: var(--fg); text-align: right; white-space: nowrap; }
 .invest td.valor small { font: 500 14px/1 var(--f-mono); letter-spacing: .1em; color: var(--fg-2); margin-left: 6px; }
-.invest tr.total td { border-top: 2px solid var(--acid); border-bottom: 1px solid var(--linha-diag); }
-.invest tr.total td.valor { font-size: 64px; color: var(--acid); }
+.invest tr.total td { border-top: 2px solid var(--fg); border-bottom: 1px solid var(--linha-diag); }
+.invest tr.total td.valor { font-size: 64px; }
+.invest tr.total td.valor span { background: var(--acid); color: var(--ink); padding: 0 .1em; }
 
 /* Próximos passos (linha do tempo vertical) */
 .proximos { position: absolute; left: var(--mx); right: var(--mx); top: 404px; }
@@ -555,15 +560,16 @@ body.visao { overflow: auto; background: #000; }
 <section class="slide escuro capa" data-nome="Capa">
   <figure class="foto"><img src="img/arquitetura.jpg" alt=""></figure>
   <div class="capa__txt">
-    <p class="rotulo"><span class="n">Talent Four Consulting × Velora</span><span class="barra">/</span><span>Growth &amp; Beyond</span></p>
-    <h1 class="t1 capa__titulo"><span>Mais oportunidades</span><span class="fg2">a partir de relações que já abrem portas.</span></h1>
+    <p class="rotulo"><span class="n">Proposta</span><span class="barra">/</span><span>Novembro 2026</span></p>
+    <p class="capa__marcas">Velora<span>×</span>Talent Four</p>
+    <h1 class="t1 capa__titulo"><span class="fg2">Desenvolvimento de</span><span>sistema de aquisição.</span></h1>
     <p class="lead capa__lead">Uma proposta para ampliar a abertura de contas estratégicas na Talent Four, conectando inteligência de mercado, marketing e abordagem comercial.</p>
   </div>
   <p class="faixa"><span>Inteligência</span><span>Relacionamento</span><span>Demanda</span><span>Conversão</span><span>Aprendizado</span></p>
 </section>
 
 <!-- ===================================================== Roteiro -->
-<section class="slide escuro roteiro" data-nome="Roteiro">
+<section class="slide claro roteiro" data-nome="Roteiro">
   <div class="cab">
     <p class="rotulo"><span class="n">Roteiro</span></p>
     <h2 class="t2">O que vamos percorrer.</h2>
@@ -584,59 +590,23 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Parte 01 -->
-<section class="slide claro divisor" data-nome="Parte 1 · A Velora" data-parte="1">
+<section class="slide escuro divisor" data-nome="Parte 1 · A Velora" data-parte="1">
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Parte 01</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">01</p>
     <h2 class="divisor__titulo">A Velora</h2>
-    <p class="mono divisor__sub">Como contribuímos · Forma de trabalhar · Princípios · Contexto de mercado</p>
+    <p class="mono divisor__sub">Como contribuímos · Contexto de mercado · Forma de trabalhar · Princípios</p>
   </div>
 </section>
 
 <!-- ===================================================== Como contribuímos -->
-<section class="slide escuro" data-nome="Como a Velora contribui" data-parte="1">
+<section class="slide claro" data-nome="Como a Velora contribui" data-parte="1">
   <div class="frase">
     <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Como contribuímos</span></p>
     <h2 class="frase__t"><span class="fg2">Crescer fica mais consistente</span><span>quando as oportunidades têm um caminho claro.</span></h2>
     <p class="lead">Ajudamos empresas a conectar inteligência de mercado, marketing e vendas para definir onde atuar, como se aproximar das contas certas e o que acompanhar em cada etapa.</p>
   </div>
   <p class="faixa"><span>Inteligência</span><span>Acesso</span><span>Demanda</span><span>Conversão</span><span>Medição</span></p>
-</section>
-
-<!-- ===================================================== Cinco etapas -->
-<section class="slide escuro" data-nome="Cinco etapas" data-parte="1">
-  <div class="cab">
-    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Forma de trabalhar</span></p>
-    <h2 class="t2">Cinco etapas conectam a escolha das contas à evolução das oportunidades.</h2>
-  </div>
-  <div class="circuito">
-    <svg class="circuito__laco" width="1632" height="64" viewBox="0 0 1632 64" aria-hidden="true">
-      <path d="M1338.2 62 V1 H7 V58"/><path d="M1.5 52.5 L7 58 L12.5 52.5"/>
-    </svg>
-    <p class="mono circuito__rotulo">Cada ciclo parte do que aprendemos no anterior</p>
-    <ol class="etapas">
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">01</p><h3 class="t3">Inteligência</h3><p class="txt">Identificar segmentos, empresas e oportunidades com maior potencial.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">02</p><h3 class="t3">Acesso</h3><p class="txt">Mapear os decisores e encontrar caminhos para iniciar boas conversas.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">03</p><h3 class="t3">Demanda</h3><p class="txt">Fortalecer a presença da marca e despertar interesse ao longo da jornada de compra.</p></li>
-      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">04</p><h3 class="t3">Conversão</h3><p class="txt">Apoiar o avanço das conversas, da primeira reunião à contratação.</p></li>
-      <li class="etapa"><span class="no"></span><p class="num etapa__n">05</p><h3 class="t3">Medição</h3><p class="txt">Entender o que avança, o que precisa mudar e onde vale investir mais.</p></li>
-    </ol>
-  </div>
-  <p class="fechamento">Não é preciso mudar tudo de uma vez. <span>Começamos pelas oportunidades de maior impacto.</span></p>
-</section>
-
-<!-- ===================================================== Princípios -->
-<section class="slide escuro crencas" data-nome="Princípios" data-parte="1">
-  <div class="cab">
-    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Princípios</span></p>
-    <h2 class="t2">Quatro princípios orientam nosso trabalho.</h2>
-  </div>
-  <ol class="crencas__lista">
-    <li class="crenca"><p class="mono">01</p><h3 class="t3">O relacionamento é um ponto de partida</h3><p class="txt">A experiência e as conexões existentes ganham alcance com novas formas de identificar oportunidades.</p></li>
-    <li class="crenca"><p class="mono">02</p><h3 class="t3">Marketing e vendas seguem a mesma direção</h3><p class="txt">Contas prioritárias, mensagens e indicadores definidos em conjunto.</p></li>
-    <li class="crenca"><p class="mono">03</p><h3 class="t3">Primeiro aprender, depois ampliar</h3><p class="txt">Ciclos curtos para testar abordagens, entender os resultados e ajustar prioridades.</p></li>
-    <li class="crenca crenca--foco"><p class="mono">04</p><h3 class="t3"><span class="marca-acid">O conhecimento fica com a Talent</span></h3><p class="txt">Bases, processos, materiais e aprendizados passam a fazer parte da operação.</p></li>
-  </ol>
 </section>
 
 <!-- ===================================================== Contexto de mercado -->
@@ -666,8 +636,44 @@ body.visao { overflow: auto; background: #000; }
   </div>
 </section>
 
+<!-- ===================================================== Cinco etapas -->
+<section class="slide claro" data-nome="Cinco etapas" data-parte="1">
+  <div class="cab">
+    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Forma de trabalhar</span></p>
+    <h2 class="t2">Cinco etapas conectam a escolha das contas à evolução das oportunidades.</h2>
+  </div>
+  <div class="circuito">
+    <svg class="circuito__laco" width="1632" height="64" viewBox="0 0 1632 64" aria-hidden="true">
+      <path d="M1338.2 62 V1 H7 V58"/><path d="M1.5 52.5 L7 58 L12.5 52.5"/>
+    </svg>
+    <p class="mono circuito__rotulo">Cada ciclo parte do que aprendemos no anterior</p>
+    <ol class="etapas">
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">01</p><h3 class="t3">Inteligência</h3><p class="txt">Identificar segmentos, empresas e oportunidades com maior potencial.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">02</p><h3 class="t3">Acesso</h3><p class="txt">Mapear os decisores e encontrar caminhos para iniciar boas conversas.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">03</p><h3 class="t3">Demanda</h3><p class="txt">Fortalecer a presença da marca e despertar interesse ao longo da jornada de compra.</p></li>
+      <li class="etapa"><span class="no"></span><span class="liga"></span><p class="num etapa__n">04</p><h3 class="t3">Conversão</h3><p class="txt">Apoiar o avanço das conversas, da primeira reunião à contratação.</p></li>
+      <li class="etapa"><span class="no"></span><p class="num etapa__n">05</p><h3 class="t3">Medição</h3><p class="txt">Entender o que avança, o que precisa mudar e onde vale investir mais.</p></li>
+    </ol>
+  </div>
+  <p class="fechamento">Não é preciso mudar tudo de uma vez. <span>Começamos pelas oportunidades de maior impacto.</span></p>
+</section>
+
+<!-- ===================================================== Princípios -->
+<section class="slide claro crencas" data-nome="Princípios" data-parte="1">
+  <div class="cab">
+    <p class="rotulo"><span class="n">01</span><span class="barra">/</span><span>Princípios</span></p>
+    <h2 class="t2">Quatro princípios orientam nosso trabalho.</h2>
+  </div>
+  <ol class="crencas__lista">
+    <li class="crenca"><p class="mono">01</p><h3 class="t3">O relacionamento é um ponto de partida</h3><p class="txt">A experiência e as conexões existentes ganham alcance com novas formas de identificar oportunidades.</p></li>
+    <li class="crenca"><p class="mono">02</p><h3 class="t3">Marketing e vendas seguem a mesma direção</h3><p class="txt">Contas prioritárias, mensagens e indicadores definidos em conjunto.</p></li>
+    <li class="crenca"><p class="mono">03</p><h3 class="t3">Primeiro aprender, depois ampliar</h3><p class="txt">Ciclos curtos para testar abordagens, entender os resultados e ajustar prioridades.</p></li>
+    <li class="crenca crenca--foco"><p class="mono">04</p><h3 class="t3"><span class="marca-acid">O conhecimento fica com a Talent</span></h3><p class="txt">Bases, processos, materiais e aprendizados passam a fazer parte da operação.</p></li>
+  </ol>
+</section>
+
 <!-- ===================================================== Parte 02 -->
-<section class="slide claro divisor" data-nome="Parte 2 · A Talent Four" data-parte="2">
+<section class="slide escuro divisor" data-nome="Parte 2 · A Talent Four" data-parte="2">
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Parte 02</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">02</p>
@@ -677,7 +683,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== O que a Talent construiu -->
-<section class="slide escuro" data-nome="O que a Talent construiu" data-parte="2">
+<section class="slide claro" data-nome="O que a Talent construiu" data-parte="2">
   <div class="cab">
     <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que a Talent construiu</span></p>
     <h2 class="t2">A Talent Four reúne experiência, presença em grandes empresas e um portfólio amplo de TI.</h2>
@@ -694,7 +700,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Como a Talent cresceu -->
-<section class="slide escuro" data-nome="Como a Talent cresceu" data-parte="2">
+<section class="slide claro" data-nome="Como a Talent cresceu" data-parte="2">
   <div class="cab">
     <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Como a Talent cresceu</span></p>
     <h2 class="t2">O relacionamento abre portas.</h2>
@@ -713,7 +719,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== O que entendemos -->
-<section class="slide escuro entendemos" data-nome="O que entendemos" data-parte="2">
+<section class="slide claro entendemos" data-nome="O que entendemos" data-parte="2">
   <div class="cab">
     <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>O que entendemos</span></p>
     <h2 class="t2">O que entendemos até aqui — e queremos aprofundar juntos.</h2>
@@ -746,8 +752,8 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Transição -->
-<section class="slide escuro ponte" data-nome="Transição" data-parte="2">
-  <figure class="foto"><img src="img/conversa.jpg" alt=""></figure>
+<section class="slide claro ponte" data-nome="Transição" data-parte="2">
+  <figure class="ponte__foto"><img src="img/conversa.jpg" alt=""></figure>
   <div class="ponte__txt">
     <p class="rotulo"><span class="n">02</span><span class="barra">/</span><span>Daqui em diante</span></p>
     <p class="ponte__frase"><span class="a">O relacionamento trouxe a Talent até aqui.</span><span>Nossa proposta é <em>ampliar esse alcance</em> com novas formas de abrir contas.</span></p>
@@ -755,7 +761,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Parte 03 -->
-<section class="slide claro divisor" data-nome="Parte 3 · A proposta" data-parte="3">
+<section class="slide escuro divisor" data-nome="Parte 3 · A proposta" data-parte="3">
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Parte 03</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">03</p>
@@ -765,7 +771,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Visão do projeto -->
-<section class="slide escuro" data-nome="Visão do projeto" data-parte="3">
+<section class="slide claro" data-nome="Visão do projeto" data-parte="3">
   <div class="cab">
     <p class="rotulo"><span class="n">03</span><span class="barra">/</span><span>Visão do projeto</span></p>
     <h2 class="t2">Seis meses para construir, colocar em prática e avaliar um novo modelo de aquisição.</h2>
@@ -798,8 +804,8 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 1 -->
-<section class="slide claro divisor divisor--fase" data-nome="Fase 1 · Diagnóstico" data-parte="3" data-fase="1">
-  <figure class="divisor__foto"><img src="img/mesa.jpg" alt="" style="object-position:48% 50%"></figure>
+<section class="slide escuro divisor divisor--fase" data-nome="Fase 1 · Diagnóstico" data-parte="3" data-fase="1">
+  <figure class="foto"><img src="img/mesa.jpg" alt="" style="object-position:48% 50%"></figure>
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>de 3</span></p>
     <p class="divisor__n"><span>01</span></p>
@@ -811,7 +817,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 1 · quatro lentes -->
-<section class="slide escuro" data-nome="Diagnóstico · quatro lentes" data-parte="3" data-fase="1">
+<section class="slide claro" data-nome="Diagnóstico · quatro lentes" data-parte="3" data-fase="1">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 1</span><span class="barra">/</span><span>Diagnóstico</span></p>
     <h2 class="t2">Começamos entendendo a operação e identificando onde atuar primeiro.</h2>
@@ -834,8 +840,8 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 -->
-<section class="slide claro divisor divisor--fase" data-nome="Fase 2 · Preparação e implementação" data-parte="3" data-fase="2">
-  <figure class="divisor__foto"><img src="img/equipe.jpg" alt="" style="object-position:62% 50%"></figure>
+<section class="slide escuro divisor divisor--fase" data-nome="Fase 2 · Preparação e implementação" data-parte="3" data-fase="2">
+  <figure class="foto"><img src="img/equipe.jpg" alt="" style="object-position:62% 50%"></figure>
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>de 3</span></p>
     <p class="divisor__n"><span>02</span></p>
@@ -847,7 +853,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · preparação do mercado -->
-<section class="slide escuro" data-nome="Preparação do mercado" data-parte="3" data-fase="2">
+<section class="slide claro" data-nome="Preparação do mercado" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Preparação do mercado</span></p>
     <h2 class="t2">Definimos juntos quais empresas priorizar, com quem conversar e como gerar interesse.</h2>
@@ -861,7 +867,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · ~500 contas -->
-<section class="slide escuro" data-nome="Classificação de contas" data-parte="3" data-fase="2">
+<section class="slide claro" data-nome="Classificação de contas" data-parte="3" data-fase="2">
   <div class="contas__esq">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Classificação de contas</span></p>
     <p class="num">~500</p>
@@ -876,7 +882,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · três frentes -->
-<section class="slide escuro" data-nome="Frentes de aquisição" data-parte="3" data-fase="2">
+<section class="slide claro" data-nome="Frentes de aquisição" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frentes de aquisição</span></p>
     <h2 class="t2">Três frentes complementares para gerar oportunidades e acompanhar sua evolução.</h2>
@@ -932,7 +938,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · geração de demanda -->
-<section class="slide escuro" data-nome="Frente 2 · geração de demanda" data-parte="3" data-fase="2">
+<section class="slide claro" data-nome="Frente 2 · geração de demanda" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frente 2 · Geração de demanda</span></p>
     <h2 class="t2">Estar presente quando existe uma necessidade — e ser lembrada antes dela surgir.</h2>
@@ -953,7 +959,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · prospecção de decisores -->
-<section class="slide escuro" data-nome="Frente 3 · prospecção de decisores" data-parte="3" data-fase="2">
+<section class="slide claro" data-nome="Frente 3 · prospecção de decisores" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Frente 3 · Prospecção de decisores</span></p>
     <h2 class="t2">Abordagens relevantes começam com uma boa leitura da conta.</h2>
@@ -968,7 +974,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · abordagem por grupo -->
-<section class="slide escuro grupos" data-nome="Abordagem por grupo" data-parte="3" data-fase="2">
+<section class="slide claro grupos" data-nome="Abordagem por grupo" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Abordagem por grupo</span></p>
     <h2 class="t2">A intensidade da abordagem acompanha o potencial de cada conta.</h2>
@@ -990,7 +996,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 2 · indicadores -->
-<section class="slide escuro" data-nome="Indicadores e passagem entre etapas" data-parte="3" data-fase="2">
+<section class="slide claro" data-nome="Indicadores e passagem entre etapas" data-parte="3" data-fase="2">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 2</span><span class="barra">/</span><span>Indicadores</span></p>
     <h2 class="t2">Critérios compartilhados ajudam a acompanhar cada oportunidade sem perder contexto.</h2>
@@ -1005,7 +1011,7 @@ body.visao { overflow: auto; background: #000; }
     <div class="degrau" style="left:699px; top:72px"><span class="no"></span><p class="mono">04</p><h3 class="t4">Oportunidade</h3><p class="txt">Demanda com perfil, quantidade e prazo definidos.</p></div>
     <div class="degrau" style="left:932px; top:48px"><span class="no"></span><p class="mono">05</p><h3 class="t4">Homologação</h3><p class="txt">Cadastro em compras e condições comerciais encaminhados.</p></div>
     <div class="degrau" style="left:1165px; top:24px"><span class="no"></span><p class="mono">06</p><h3 class="t4">Alocação</h3><p class="txt">Primeiro profissional ou squad contratado e iniciado.</p></div>
-    <div class="degrau degrau--fim" style="left:1398px; top:0"><span class="no"></span><p class="mono">07</p><h3 class="t4">Conta estratégica</h3><p class="txt">Conta que atingiu o volume de consultores definido em conjunto.</p></div>
+    <div class="degrau degrau--fim" style="left:1398px; top:0"><span class="no"></span><p class="mono">07</p><h3 class="t4"><span>Conta estratégica</span></h3><p class="txt">Conta que atingiu o volume de consultores definido em conjunto.</p></div>
   </div>
   <div class="dupla">
     <div><p class="mono">Prazos de referência · a combinar com a Talent</p><p class="txt">Contato com MQL em até 24 horas; passagem de SQL com resumo da conta; acompanhamento em até 48 horas; atualização semanal do CRM.</p></div>
@@ -1014,8 +1020,8 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 3 -->
-<section class="slide claro divisor divisor--fase" data-nome="Fase 3 · Operação e ajustes" data-parte="3" data-fase="3">
-  <figure class="divisor__foto"><img src="img/executiva.jpg" alt="" style="object-position:30% 40%"></figure>
+<section class="slide escuro divisor divisor--fase" data-nome="Fase 3 · Operação e ajustes" data-parte="3" data-fase="3">
+  <figure class="foto"><img src="img/executiva.jpg" alt="" style="object-position:30% 40%"></figure>
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>de 3</span></p>
     <p class="divisor__n"><span>03</span></p>
@@ -1027,7 +1033,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 3 · operação -->
-<section class="slide escuro" data-nome="Meses 3 a 6 · operação" data-parte="3" data-fase="3">
+<section class="slide claro" data-nome="Meses 3 a 6 · operação" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Operação</span></p>
     <h2 class="t2">Quatro meses para colocar as frentes em prática, aprender e ajustar.</h2>
@@ -1054,7 +1060,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 3 · página de conversão -->
-<section class="slide escuro" data-nome="Página de conversão" data-parte="3" data-fase="3">
+<section class="slide claro" data-nome="Página de conversão" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Página de conversão</span></p>
     <h2 class="t2">Uma página que mostre com clareza por que conversar com a Talent.</h2>
@@ -1073,7 +1079,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 3 · mídia e conteúdo -->
-<section class="slide escuro" data-nome="Mídia e conteúdo" data-parte="3" data-fase="3">
+<section class="slide claro" data-nome="Mídia e conteúdo" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Mídia e conteúdo</span></p>
     <h2 class="t2">Uma equipe de apoio para transformar a estratégia em campanhas e materiais.</h2>
@@ -1114,7 +1120,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 3 · RHOI -->
-<section class="slide escuro" data-nome="Aprendizado contínuo · RHOI" data-parte="3" data-fase="3">
+<section class="slide claro" data-nome="Aprendizado contínuo · RHOI" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>Aprendizado contínuo · Método RHOI</span></p>
     <h2 class="t2">A cada ciclo, usamos os dados para decidir o que manter, melhorar ou mudar.</h2>
@@ -1140,7 +1146,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Fase 3 · o que fica com a Talent -->
-<section class="slide escuro" data-nome="O que fica com a Talent" data-parte="3" data-fase="3">
+<section class="slide claro" data-nome="O que fica com a Talent" data-parte="3" data-fase="3">
   <div class="cab">
     <p class="rotulo"><span class="n">Fase 3</span><span class="barra">/</span><span>O que fica com a Talent</span></p>
     <h2 class="t2">Ao final, a Talent terá uma estrutura mais clara para continuar abrindo oportunidades.</h2>
@@ -1155,7 +1161,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Parte 04 -->
-<section class="slide claro divisor" data-nome="Parte 4 · Time e investimento" data-parte="4">
+<section class="slide escuro divisor" data-nome="Parte 4 · Time e investimento" data-parte="4">
   <div class="divisor__txt">
     <p class="rotulo"><span class="n">Parte 04</span><span class="barra">/</span><span>de 04</span></p>
     <p class="divisor__n">04</p>
@@ -1165,7 +1171,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Time -->
-<section class="slide escuro" data-nome="Time e colaboração" data-parte="4">
+<section class="slide claro" data-nome="Time e colaboração" data-parte="4">
   <div class="cab">
     <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Time e colaboração</span></p>
     <h2 class="t2">Um trabalho conjunto, com responsabilidades claras entre Velora e Talent.</h2>
@@ -1193,7 +1199,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Investimento -->
-<section class="slide escuro invest" data-nome="Investimento" data-parte="4">
+<section class="slide claro invest" data-nome="Investimento" data-parte="4">
   <div class="cab">
     <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Investimento</span></p>
     <h2 class="t2">Um projeto de seis meses, com uma parcela variável ligada à abertura de novas contas.</h2>
@@ -1204,7 +1210,7 @@ body.visao { overflow: auto; background: #000; }
       <tbody>
         <tr><td><p class="t4">Mês 1 · Diagnóstico</p><p class="txt">Imersão, análise das oportunidades e plano de ação priorizado.</p></td><td class="valor">R$ 35 mil</td></tr>
         <tr><td><p class="t4">Meses 2 a 6 · Implementação e operação</p><p class="txt">Preparação do mercado, execução das frentes, equipe de especialistas e acompanhamento dos sócios.</p></td><td class="valor">R$ 24 mil<small>/mês</small></td></tr>
-        <tr class="total"><td><p class="t4">Investimento fixo total</p><p class="txt">Verba de mídia e ferramentas de dados são contratadas à parte.</p></td><td class="valor">R$ 155 mil</td></tr>
+        <tr class="total"><td><p class="t4">Investimento fixo total</p><p class="txt">Verba de mídia e ferramentas de dados são contratadas à parte.</p></td><td class="valor"><span>R$ 155 mil</span></td></tr>
         <tr><td><p class="t4">Parcela por resultado</p><p class="txt">Por conta nova que realizar sua primeira alocação, conforme os critérios acordados entre as partes.</p></td><td class="valor">R$ 15 mil<small>/conta</small></td></tr>
       </tbody>
     </table>
@@ -1212,7 +1218,7 @@ body.visao { overflow: auto; background: #000; }
 </section>
 
 <!-- ===================================================== Próximos passos -->
-<section class="slide escuro" data-nome="Próximos passos" data-parte="4">
+<section class="slide claro" data-nome="Próximos passos" data-parte="4">
   <div class="cab">
     <p class="rotulo"><span class="n">04</span><span class="barra">/</span><span>Próximos passos</span></p>
     <h2 class="t2">Se a direção fizer sentido, podemos avançar por estas etapas.</h2>
@@ -1267,7 +1273,7 @@ body.visao { overflow: auto; background: #000; }
           return (k ? '<li class="sep" aria-hidden="true">·</li>' : '') +
             '<li' + (k + 1 === fase ? ' class="on" aria-current="step"' : '') + '>' + pad(k + 1) + ' ' + nome + '</li>';
         }).join('') + '</ol>'
-      : '<p class="topo__dir">Talent Four × Velora · Novembro 2026</p>';
+      : '<p class="topo__dir">Velora × Talent Four · Novembro 2026</p>';
 
     /* Rodapé: as quatro partes, com a atual destacada */
     var partes = '<ol class="partes" aria-label="Partes da apresentação">' + PARTES.map(function (nome, k) {
