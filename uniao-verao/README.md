@@ -31,13 +31,13 @@ O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera 
 - **Locução:** voz ElevenLabs "Ana Alice" (`assets/audio/locucao-ana-alice.mp3`), cortada frase a frase e encaixada na janela do roteiro (`build/locucao_timeline.json`). A versão anterior, com a voz Sofia, sai com `python3 audio.py --voz sofia`.
 - **Trilha:** no arranjo original, o acorde final caía em 24,5 s, logo no início do CTA, e a música morria embaixo do "Seja sócio do União". Repeti um compasso (20,41–22,45 s, quase idêntico ao vizinho), com emenda em crossfade sobre o tempo forte. Assim o acorde de resolução cai em 26,54 s, em cima de "sócio", e a cauda dele sustenta o fechamento. No acorde, a foto do CTA ganha um pouco de luz.
 - **Efeitos sonoros:** 5 efeitos do ElevenLabs (`assets/audio/sfx/`) sincronizados em `audio.py` (lista `SFX`):
-  - um whoosh em cada transição, com o pico no meio dela; nos chicotes laterais ele atravessa da direita para a esquerda, e nas janelas e zooms entra mais lento e grave;
+  - um whoosh discreto só em 4 momentos-chave (gancho → "verão", entrada do mural, início das sedes e entrada do "Seja sócio"), com o pico no meio da transição;
   - o swell no zoom que atravessa "verão";
   - o splash no corte para o mergulho;
   - a raquetada na entrada do tênis;
   - o clique no instante em que o cursor clica.
 
-  Os efeitos ficam 3 a 9 dB abaixo do resto da mistura. Para ajustar, use `--sfx-db` (por exemplo, `--sfx-db 3`); para tirar, use `--no-sfx`. Quando só o áudio muda, `node render.mjs --encode-only` remonta o vídeo em segundos.
+  Os efeitos ficam abaixo do resto da mistura; o whoosh, bem abaixo. Para ajustar, use `--sfx-db` (por exemplo, `--sfx-db 3`); para tirar, use `--no-sfx`. Quando só o áudio muda, `node render.mjs --encode-only` remonta o vídeo em segundos.
 - **Mix:** ducking da trilha sob a voz, fade final de 0,6 s e normalização EBU R128 para −14 LUFS, com pico real ≤ −1,5 dBTP.
 - **Trilha original:** `python3 audio.py --no-bar-repeat` gera a versão sem a repetição de compasso.
 

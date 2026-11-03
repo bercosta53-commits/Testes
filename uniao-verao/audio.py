@@ -127,22 +127,14 @@ SFX_FILES = {  # arquivo, âncora (s dentro do arquivo), trecho útil (s)
 }
 L2R, R2L, MID = (-0.7, 0.7), (0.7, -0.7), (0.0, 0.0)
 SFX = [
-    ("whoosh", B(7), -13, 1.00, R2L),          # gancho → "verão" (chicote lateral)
+    # whoosh só nos 4 momentos-chave, discreto; as demais transições ficam com música e voz
+    ("whoosh", B(7), -19, 1.00, R2L),          # gancho → "verão"
     ("swell", 4.30, -6, 1.00, MID),            # zoom atravessando a letra
-    ("whoosh", B(13), -14, 0.80, MID),         # deck → piscina (zoom)
-    ("piscina", B(15) - 0.02, -9, 1.00, MID), # mergulho (chicote vertical)
+    ("piscina", B(15) - 0.02, -9, 1.00, MID),  # mergulho
     ("tenis", B(16) + 0.06, -8, 1.00, (0.25, 0.25)),  # tríptico do tênis
-    ("whoosh", B(18), -11, 1.00, R2L),         # tênis → "Dias ao sol"
-    ("whoosh", B(20), -14, 0.80, MID),         # → escolinha (zoom)
-    ("whoosh", B(22), -15, 0.88, MID),         # → amigos (janela)
-    ("whoosh", B(28), -11, 1.00, R2L),         # → orla
-    ("whoosh", B(30), -13, 0.85, MID),         # → mural (janela)
-    ("whoosh", B(37), -11, 1.00, R2L),         # → Alto Petrópolis
-    ("whoosh", B(39.5), -14, 1.08, MID),       # → Moinhos (vertical)
-    ("whoosh", B(42), -14, 1.04, R2L),         # → Petrópole
-    ("whoosh", B(44.5), -14, 1.08, MID),       # → Ilha do Pavão (vertical)
-    ("whoosh", B(47), -13, 0.85, MID),         # → mural do fechamento (janela)
-    ("whoosh", B(51), -10, 0.95, MID),         # → hero "Seja sócio" (chicote vertical)
+    ("whoosh", B(30), -20, 0.85, MID),         # → mural (janela)
+    ("whoosh", B(37), -20, 1.00, R2L),         # → sedes (Alto Petrópolis)
+    ("whoosh", B(51), -17, 0.95, MID),         # → hero "Seja sócio"
     ("clique", 28.10, -6, 1.00, (0.15, 0.15)), # cursor clica no botão
 ]
 
