@@ -31,9 +31,18 @@ PHRASES = [
     ("E você pode fazer parte de tudo isso.",           12.622, 15.100, 15.70),
     ("Quatro sedes. Muitos jeitos de viver o União.",   15.454, 18.729, 19.00),
     ("O próximo encontro pode ser o seu.",              19.013, 20.778, 24.05),
-    ("Seja sócio do União.",                            21.045, 22.450, 25.95),
-    ("Clique e venha fazer parte!",                     22.674, 24.610, 27.55),
+    ("Seja sócio do União.",                            21.045, 22.450, 26.03),
+    ("Clique e venha fazer parte!",                     22.674, 24.610, 27.56),
 ]
+
+# Trilha (assets/audio/trilha.wav, 117,5 BPM). A grade de tempos é BEAT0 + n·BEAT.
+# O arranjo original resolve no acorde final em 24,5 s, quando o CTA mal começou.
+# Repetimos um compasso inteiro (compasso 11, muito semelhante ao vizinho) para que o
+# acorde de resolução caia em 26,54 s, junto de "Seja sócio do União", e a cauda dele
+# sustente o fechamento até 30 s.
+BEAT, BEAT0 = 0.510839, -0.0232
+REPEAT_BAR = (BEAT0 + 40 * BEAT, BEAT0 + 44 * BEAT)   # 20,41–22,45 s, inserido logo depois dele
+SPLICE_XFADE = 0.02
 PRE, POST = 0.06, 0.14   # respiro antes/depois de cada recorte (s)
 EDGE_FADE = 0.012        # micro-fade nas bordas do recorte
 
@@ -91,8 +100,10 @@ def envelope(x, attack=0.03, release=0.35):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--music-gain-db", type=float, default=-15.0, help="nível da trilha sem voz")
-    ap.add_argument("--duck-db", type=float, default=-7.0, help="redução extra da trilha sob a voz")
+    ap.add_argument("--music-gain-db", type=float, default=-11.0, help="nível da trilha sem voz")
+    ap.add_argument("--duck-db", type=float, default=-6.0, help="redução extra da trilha sob a voz")
+    ap.add_argument("--lufs", type=float, default=-14.0, help="loudness integrado do mix final")
+    ap.add_argument("--no-bar-repeat", action="store_true", help="usa a trilha sem a repetição de compasso")
     ap.add_argument("--music-offset", type=float, default=0.0, help="segundos a pular no início da trilha")
     args = ap.parse_args()
     os.makedirs(os.path.join(HERE, "build"), exist_ok=True)
@@ -108,7 +119,16 @@ def main():
         write_wav(os.path.join(HERE, "build/mix.wav"), np.stack([voice, voice], 1) * 0.9)
         return
 
-    music = decode(tracks[0], 2)[int(args.music_offset * SR):]
+    music = decode(tracks[0], 2)
+    if not args.no_bar_repeat:
+        a, b = (int(x * SR) for x in REPEAT_BAR)
+        head, bar, rest = music[:b], music[a:b].copy(), music[b:]
+        x = int(SPLICE_XFADE * SR)
+        ramp = np.sqrt(np.linspace(0, 1, x, dtype=np.float32))[:, None]
+        for left, right in ((head, bar), (bar, rest)):        # crossfade de potência constante nas emendas
+            right[:x] = right[:x] * ramp + left[-x:] * ramp[::-1]
+        music = np.concatenate([head[:-x], bar[:-x], rest])
+    music = music[int(args.music_offset * SR):]
     n = int(DUR * SR)
     if len(music) < n:
         music = np.pad(music, ((0, n - len(music)), (0, 0)))
@@ -121,11 +141,22 @@ def main():
     nf = int(0.6 * SR)
     tail[-nf:] = np.linspace(1, 0, nf) ** 1.5                         # fade final de 0,6 s
     mix = music * (g * duck * tail)[:, None] + voice[:, None] * 0.92
-    peak = np.abs(mix).max()
-    if peak > 0.97:
-        mix *= 0.97 / peak
-    write_wav(os.path.join(HERE, "build/mix.wav"), mix)
+    raw = os.path.join(HERE, "build/mix_raw.wav")
+    write_wav(raw, mix / max(1.0, np.abs(mix).max()))
+    loudnorm(raw, os.path.join(HERE, "build/mix.wav"), args.lufs)
     print(f"Mix com trilha: {os.path.basename(tracks[0])}")
+
+
+def loudnorm(src, dst, lufs):
+    """Normalização EBU R128 em duas passagens (modo linear, sem compressão)."""
+    f = f"loudnorm=I={lufs}:TP=-1.5:LRA=11"
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-i", src, "-af", f + ":print_format=json", "-f", "null", "-"],
+                         capture_output=True, text=True, check=True).stderr
+    m = json.loads(err[err.rindex("{"):err.rindex("}") + 1])
+    f2 = (f + f":measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}"
+          f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-af", f2, "-ar", str(SR), "-c:a", "pcm_s24le", dst], check=True)
+    print(f"Loudness: {m['input_i']} LUFS -> {lufs} LUFS (pico real ≤ -1,5 dBTP)")
 
 
 if __name__ == "__main__":

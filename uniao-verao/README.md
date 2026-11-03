@@ -1,35 +1,37 @@
 # Verão no União — filme de aquisição, 30 s (V3)
 
-Grêmio Náutico União · 1920 × 1080 · 30 fps · H.264 + AAC · motion com fotografia, tipografia animada e locução.
+Grêmio Náutico União · 1920 × 1080 · 30 fps · H.264 + AAC · −14 LUFS · motion com fotografia, tipografia animada, locução e trilha.
 
-**Assistir:** [`build/uniao-verao-30s.mp4`](build/uniao-verao-30s.mp4). Por enquanto tem só a locução: a trilha ainda vai entrar.
+**Assistir:** [`build/uniao-verao-30s.mp4`](build/uniao-verao-30s.mp4)
 
 ## Montagem
 
-| Tempo | Cena | Foto | Texto em tela |
+A trilha está a 117,5 BPM e todos os cortes caem numa batida (`b(n)` em `film.js`), dentro da janela do roteiro e antes da palavra correspondente na locução.
+
+| Tempo | Cena | Fotos | Texto em tela |
 |---|---|---|---|
-| 0–3,5 | Gancho | Piscinas-lagoa, Alto Petrópolis | Já imaginou ser sócio do União? |
-| 3,5–6,8 | Assinatura (paper + painel) | Piscina, Moinhos de Vento | *O verão tem **encontro** marcado no União.* (Instrument Serif) |
-| 6,8–8,2 | Lazer | Piscina AP (água) | Piscina. |
-| 8,2–9,3 | Lazer | Saibro, União Petrópole | Tênis. |
-| 9,3–11,3 | Lazer | Lago e gazebo, AP | Dias ao sol. |
-| 11,3–12,7 | Convivência (janela que se expande na horizontal) | Remo no Guaíba | Amigos por perto. |
-| 12,7–15,5 | Convivência, a foto toma o quadro | Crianças na piscina | Tempo em família. |
-| 15,5–18,8 | Pertencimento | Retrato | Você também pode fazer parte. / Conheça o União. |
-| 18,8–24 | Mosaico 2×2, as quatro já estão em tela aos 20,5 s | AP · Moinhos · Petrópole · Ilha do Pavão | 4 sedes. / Muitos jeitos de viver o União. |
-| 24–30 | CTA | Piscinas AP | *O próximo encontro pode ser o seu.* → **Seja sócio do União.** → botão "Quero conhecer o União →" + escudo |
+| 0–3,55 | Gancho | Piscinas-lagoa com famílias e amigos | Já imaginou ser sócio do União? |
+| 3,55–6,62 | Assinatura (paper + painel) | Pai e filha na borda da piscina | *O verão tem **encontro** marcado no União.* |
+| 6,62–8,15 | Lazer | Pés na borda da piscina | Piscina. |
+| 8,15–9,17 | Lazer, tríptico | Amigas no saibro · bolas · avô e neto | Tênis. |
+| 9,17–11,22 | Lazer, díptico | Mulher na borda · raquete e drink | Dias ao sol. |
+| 11,22–12,75 | Convivência (janela que se expande) | Amigos à mesa | Amigos por perto. |
+| 12,75–15,30 | Convivência, a foto toma o quadro | Família mergulhando | Tempo em família. |
+| 15,30–18,88 | Pertencimento (foto + faixa deep-ink) | Piquenique em família à sombra | Você também pode fazer parte. / Conheça o União. |
+| 18,88–23,99 | Mosaico 2×2, uma sede por batida, todas em tela aos 20,9 s | AP · Moinhos · Petrópole · Ilha do Pavão (acervo do site) | 4 sedes. / Muitos jeitos de viver o União. |
+| 23,99–30 | CTA | Piscinas-lagoa | *O próximo encontro pode ser o seu.* → **Seja sócio do União.** (26,03) → botão "Quero conhecer o União →" + escudo (27,56) |
 
-A locução (ElevenLabs, Sofia) foi cortada frase a frase e cada frase foi encaixada na janela do roteiro (`audio.py`, `build/locucao_timeline.json`). Os cortes internos caem nas palavras: "piscina", "tênis", "aproveitar" e "e tempo".
+## Áudio (`audio.py`)
 
-## Trilha
-
-1. Salve o arquivo como `assets/audio/trilha.wav` (ou `.mp3`, `.m4a`, `.flac`).
-2. `python3 audio.py`: a trilha entra sob a voz, com ducking automático e fade de 0,6 s no fim. Os ajustes são `--music-gain-db`, `--duck-db` e `--music-offset`.
-3. `node render.mjs`. Se precisar, os tempos de corte em `film.js` (`const T`) podem ser ajustados ao beat.
+- **Locução:** cortada frase a frase e encaixada na janela do roteiro (`build/locucao_timeline.json`).
+- **Trilha:** no arranjo original, o acorde final caía em 24,5 s, logo no início do CTA, e a música morria embaixo do "Seja sócio do União". Repeti um compasso (20,41–22,45 s, quase idêntico ao vizinho), com emenda em crossfade sobre o tempo forte. Assim o acorde de resolução cai em 26,54 s, em cima de "sócio", e a cauda dele sustenta o fechamento. No acorde, a foto do CTA ganha um pouco de luz.
+- **Mix:** ducking da trilha sob a voz, fade final de 0,6 s e normalização EBU R128 para −14 LUFS, com pico real ≤ −1,5 dBTP.
+- **Trilha original:** `python3 audio.py --no-bar-repeat` gera a versão sem a repetição de compasso.
 
 ## Como gerar
 
 ```sh
+python3 prep_photos.py           # assets/photos/novas -> assets/photos/hd (ampliação 2×)
 python3 audio.py                 # build/mix.wav (numpy + ffmpeg)
 node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg)
 node render.mjs --stills 1,10,27 # quadros soltos para conferência
@@ -37,12 +39,14 @@ node render.mjs --stills 1,10,27 # quadros soltos para conferência
 
 Para pré-visualizar com áudio, abra `film.html` num servidor local, por exemplo `python3 -m http.server`.
 
-## Pendências de produção
+## Pendências
 
-- **As fotos são provisórias.** Saíram do PDF da Entrega A, que é o acervo do site em baixa resolução, e foram ampliadas para 1080p. O roteiro pede os arquivos originais. Para trocar, basta substituir os arquivos de `assets/photos/` mantendo os nomes.
-- **Faltam fotos que o roteiro pede:** amigos jogando tênis (hoje a quadra aparece vazia), amigos à mesa e família na borda da piscina. A cena "Amigos por perto" usa o remo ao pôr do sol, que é mais dourado do que o tom solar do roteiro.
-- O CTA vem em frase normal ("Quero conhecer o União →") e o reforço do meio também ("Você também pode fazer parte."), seguindo a regra da LP de não usar caixa alta espaçada. Com isso, os textos diferem da caixa alta do roteiro.
-- O escudo foi recortado do PDF vetorial em alta resolução. Para a versão final, usar o arquivo oficial.
-- A variante sem locução ainda não foi feita.
+- **Resolução das fotos novas:** chegaram com cerca de 1024 px. As verticais entram em dípticos e trípticos e ficam quase na resolução nativa. As horizontais em tela cheia (gancho, CTA, família mergulhando) foram ampliadas cerca de 1,9 a 2,5×. Para trocar pelas originais, basta repor os arquivos em `assets/photos/novas/` com os mesmos nomes.
+- **Imagens ilustrativas:** as fotos novas parecem ilustrativas e não registros das sedes. A diretriz da LP pede "fotografia verdadeira do clube", então vale validar o uso em mídia paga. O mosaico das sedes usa as fotos reais do acervo do site, identificadas na LP.
+- **Fotos não usadas:** beach tennis (a modalidade não está confirmada no roteiro), escolinha de tênis, casal nas espreguiçadeiras, mesa (detalhe), deck e orla do Guaíba, remo.
+- **Caixa alta:** o CTA ("Quero conhecer o União →") e o reforço ("Você também pode fazer parte.") estão em frase normal, seguindo a regra da LP.
+- **Escudo:** recortado do PDF vetorial em alta resolução; na versão final, usar o arquivo oficial.
+- **Licença da trilha:** confirmar a licença para mídia paga.
+- **Variante sem locução:** ainda não foi feita.
 
 Fontes: Instrument Sans e Instrument Serif (SIL OFL), as mesmas da LP.
