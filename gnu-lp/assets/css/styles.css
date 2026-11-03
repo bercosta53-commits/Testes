@@ -662,7 +662,7 @@ html[data-hero="split"] .hero__title { font-size: clamp(2.375rem, 1.4rem + 3vw, 
 .encontros__text h2 { max-width: 14em; }
 .encontros__text .lead { margin-top: 24px; }
 .encontros__a { grid-column: 1 / 9; }
-.encontros__a img { width: 100%; aspect-ratio: 891 / 434; object-fit: cover; }
+.encontros__a img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .encontros__b { grid-column: 10 / 13; margin-top: clamp(48px, 7vw, 120px); }
 .encontros__b img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .encontros figcaption { color: var(--ink); font-size: var(--fs-small); }

@@ -22,7 +22,9 @@ gnu-lp/
 ├── index.html            # 7 blocos + cabeçalho, rodapé e barra fixa
 ├── assets/css/styles.css # tokens + componentes + responsivo
 ├── assets/js/main.js     # WhatsApp, barra, menu, sedes, formulário, analytics
-└── assets/img/           # WebP em várias larguras + escudo PNG + og:image
+├── assets/img/           # WebP em várias larguras + escudo PNG + og:image
+├── tools/importar_foto.py # coloca uma foto nova num espaço F01–F14
+└── PROMPTS-FOTOGRAFIA.md  # prompts de imagem por bloco + banco extra
 ```
 
 ## Blocos
@@ -112,6 +114,20 @@ O HTML já traz os links `wa.me` prontos, então os CTAs funcionam mesmo sem JS.
 | F14 | 07 | Fim de tarde com amigos/família, 16:9 e 4:5 | `fechamento-guaiba` | Remo no Guaíba. Ótima luz, mas é esporte |
 
 Com o acervo atual, quatro fotos se repetem em recortes diferentes (F05, F06, F08 e o tênis). A produção nova deve dar uma foto própria a cada seção. Abra `?pauta` para ver o mapa sobre a página.
+
+### Trocar as fotos
+
+Os prompts para gerar cada imagem (Nano Banana) estão em [`PROMPTS-FOTOGRAFIA.md`](PROMPTS-FOTOGRAFIA.md). Para colocar uma imagem no site, use um comando:
+
+```bash
+pip install pillow                       # uma vez
+python3 tools/importar_foto.py --listar  # espaços F01–F14
+python3 tools/importar_foto.py F05 alto-petropolis.png
+python3 tools/importar_foto.py F03 beach.png --alt "Descrição da cena" --foco 0.5,0.4
+python3 tools/importar_foto.py F01 hero.png --simular   # só mostra o que faria
+```
+
+O script recorta na proporção do espaço, exporta os WebP (até 2048 px no hero, nas sedes e no fechamento), atualiza `src`, `srcset`, preload, `width`/`height` e `alt` no `index.html` e apaga as variantes antigas. No F01, também refaz a imagem de compartilhamento (`og-uniao-verao.jpg`).
 
 ## Qualidade verificada
 
