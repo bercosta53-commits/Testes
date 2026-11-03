@@ -272,6 +272,43 @@
     reveals.forEach(function (el) { el.classList.add('is-in'); });
   }
 
+  /* ---------- Movimento: fotos que acomodam e o "120" que conta ---------- */
+  var motionOk = root.classList.contains('motion');
+  var framed = Array.prototype.map.call(document.querySelectorAll('.frame'), function (f) { return f.parentElement; });
+  if ('IntersectionObserver' in window) {
+    var settleIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-settled');
+          settleIo.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    framed.forEach(function (el) { settleIo.observe(el); });
+
+    var counter = document.querySelector('[data-countup]');
+    if (counter && motionOk) {
+      var countIo = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        countIo.disconnect();
+        var target = parseInt(counter.textContent, 10);
+        if (!target) return;
+        var t0 = null, dur = 1400;
+        counter.textContent = '0';
+        (function tick(ts) {
+          if (t0 === null) t0 = ts;
+          var k = Math.min(1, (ts - t0) / dur);
+          var eased = 1 - Math.pow(1 - k, 3);
+          counter.textContent = String(Math.round(target * eased));
+          if (k < 1) requestAnimationFrame(tick);
+        })(performance.now());
+      }, { threshold: 0.6 });
+      countIo.observe(counter);
+    }
+  } else {
+    framed.forEach(function (el) { el.classList.add('is-settled'); });
+  }
+
   /* ---------- Formulário de contato (bloco final) ---------- */
   var form = document.querySelector('[data-contact-form]');
   if (!form) return;

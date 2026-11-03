@@ -73,6 +73,20 @@ O botão flutuante do canto inferior direito (`flutuante`) e a confirmação do 
   - Celular: uma sede por vez, com foto grande de borda a borda e sem carrossel.
 - **Associação:** foto à esquerda e conversa à direita. As modalidades ocupam duas linhas cada, sem cards de preço nem selo de "mais buscado". Um link leva ao formulário do fim da página.
 
+## Movimento
+
+Animações leves, no clima de fim de tarde de verão. Nenhum texto fica escondido esperando a rolagem: tudo começa visível e só ganha movimento. Com "reduzir movimento" ligado no sistema, a página fica parada.
+
+- **Hero:** a foto assenta num zoom lento ao abrir (2,8 s), como uma câmera parando; linha de cima, título, apoio e botões sobem em sequência; a seta de "Explore o clube" dá dois toques para baixo.
+- **Manifesto do bloco 02:** "Tem dias de piscina. Tem dias de tênis. Tem dias de ficar mais um pouco." acende frase por frase.
+- **Fotos das seções:** acomodam com um zoom suave (6 % → 0) ao entrar na tela, dentro de uma moldura que não altera o layout.
+- **Textos das seções:** sobem 24 px e ganham opacidade total ao aparecer.
+- **História:** o "120" conta de 0 a 120 quando os números entram na tela.
+- **WhatsApp flutuante:** dois pulsos suaves de "chamado" quando aparece.
+- **Links:** as setas andam um pouco ao passar o mouse.
+
+Tudo usa só `transform` e `opacity`: a página não se desloca enquanto anima (CLS 0).
+
 ## Variantes de teste (URL)
 
 | Parâmetro | Efeito | Hipótese do briefing |

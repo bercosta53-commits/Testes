@@ -38,6 +38,7 @@
     (function (d) {
       var h = d.documentElement;
       h.classList.add('js');
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').matches) h.classList.add('motion');
       try {
         var p = new URLSearchParams(location.search);
         var hero = p.get('hero');
@@ -147,14 +148,14 @@
     <!-- ============ BLOCO 02 · A VIDA ACONTECE AQUI ============ -->
     <section class="section vida" id="viver" aria-labelledby="vida-title">
       <div class="container">
-        <h2 id="vida-title" class="manifesto vida__title reveal">Tem dias de piscina. Tem dias de tênis. Tem dias de ficar mais um pouco.</h2>
+        <h2 id="vida-title" class="manifesto vida__title reveal"><span class="m-line">Tem dias de piscina.</span> <span class="m-line">Tem dias de tênis.</span> <span class="m-line">Tem dias de ficar mais um pouco.</span></h2>
 
         <div class="vida__grid">
           <figure class="vida__wide reveal" data-foto="F02" data-pauta="Família na piscina · 21:9 · imagem gerada (IA)">
-            <img src="assets/img/vida-familia-piscina-1600.webp"
+            <span class="frame"><img src="assets/img/vida-familia-piscina-1600.webp"
                  srcset="assets/img/vida-familia-piscina-640.webp 640w, assets/img/vida-familia-piscina-1024.webp 1024w, assets/img/vida-familia-piscina-1600.webp 1600w"
                  sizes="(min-width: 1440px) 1312px, 100vw" width="1600" height="679" loading="lazy" decoding="async"
-                 alt="Pai e três filhos nadam juntos debaixo d’água numa piscina de raias, com prédios refletidos na superfície.">
+                 alt="Pai e três filhos nadam juntos debaixo d’água numa piscina de raias, com prédios refletidos na superfície."></span>
             <figcaption>Verão em família</figcaption>
           </figure>
 
@@ -166,26 +167,26 @@
               Conversar pelo WhatsApp
             </a>
             <figure class="vida__detail" data-foto="X7" data-pauta="Detalhe na borda da piscina · 1:1 · imagem gerada (IA)">
-              <img src="assets/img/vida-detalhe-borda-800.webp"
+              <span class="frame"><img src="assets/img/vida-detalhe-borda-800.webp"
                    srcset="assets/img/vida-detalhe-borda-400.webp 400w, assets/img/vida-detalhe-borda-560.webp 560w, assets/img/vida-detalhe-borda-800.webp 800w"
                    sizes="(min-width: 1024px) 18vw, 1px" width="800" height="800" loading="lazy" decoding="async"
-                   alt="">
+                   alt=""></span>
             </figure>
           </div>
 
           <figure class="vida__portrait vida__portrait--a reveal" data-foto="F03" data-pauta="Tênis/beach tennis entre amigos · 4:5 · imagem gerada (IA)">
-            <img src="assets/img/vida-tenis-petropole-800.webp"
+            <span class="frame"><img src="assets/img/vida-tenis-petropole-800.webp"
                  srcset="assets/img/vida-tenis-petropole-400.webp 400w, assets/img/vida-tenis-petropole-560.webp 560w, assets/img/vida-tenis-petropole-800.webp 800w"
                  sizes="(min-width: 768px) 30vw, 50vw" width="800" height="1000" loading="lazy" decoding="async"
-                 alt="Quatro amigos jogam beach tennis numa quadra de areia ao pôr do sol, enquanto um casal conversa num banco ao fundo.">
+                 alt="Quatro amigos jogam beach tennis numa quadra de areia ao pôr do sol, enquanto um casal conversa num banco ao fundo."></span>
             <figcaption>Beach tennis entre amigos</figcaption>
           </figure>
 
           <figure class="vida__portrait vida__portrait--b reveal" data-foto="F04" data-pauta="Amigos nas espreguiçadeiras · 4:5 · imagem gerada (IA)">
-            <img src="assets/img/vida-convivencia-765.webp"
+            <span class="frame"><img src="assets/img/vida-convivencia-765.webp"
                  srcset="assets/img/vida-convivencia-480.webp 480w, assets/img/vida-convivencia-765.webp 765w"
                  sizes="(min-width: 768px) 30vw, 50vw" width="765" height="956" loading="lazy" decoding="async"
-                 alt="Três amigos riem juntos nas espreguiçadeiras à beira da piscina: uma amiga mostra algo no celular e os outros dois caem na risada.">
+                 alt="Três amigos riem juntos nas espreguiçadeiras à beira da piscina: uma amiga mostra algo no celular e os outros dois caem na risada."></span>
             <figcaption>Mais tempo juntos</figcaption>
           </figure>
         </div>
@@ -290,26 +291,26 @@
         </div>
 
         <figure class="encontros__a reveal" data-foto="F11" data-pauta="Mesa depois do jogo · 16:9 · imagem gerada (IA)">
-          <img src="assets/img/encontro-espaco-cooks-1440.webp"
+          <span class="frame"><img src="assets/img/encontro-espaco-cooks-1440.webp"
                srcset="assets/img/encontro-espaco-cooks-640.webp 640w, assets/img/encontro-espaco-cooks-960.webp 960w, assets/img/encontro-espaco-cooks-1440.webp 1440w"
                sizes="(min-width: 1024px) 62vw, 100vw" width="1440" height="810" loading="lazy" decoding="async"
-               alt="Amigos conversam e riem em volta de uma mesa do café do clube depois do tênis, com raquetes encostadas na janela e as quadras lá fora.">
+               alt="Amigos conversam e riem em volta de uma mesa do café do clube depois do tênis, com raquetes encostadas na janela e as quadras lá fora."></span>
           <figcaption>Depois do jogo, a conversa continua.</figcaption>
         </figure>
 
         <figure class="encontros__b reveal" data-foto="F10" data-pauta="Famílias no gramado · 4:5 · imagem gerada (IA)">
-          <img src="assets/img/encontro-piscina-moinhos-800.webp"
+          <span class="frame"><img src="assets/img/encontro-piscina-moinhos-800.webp"
                srcset="assets/img/encontro-piscina-moinhos-400.webp 400w, assets/img/encontro-piscina-moinhos-560.webp 560w, assets/img/encontro-piscina-moinhos-800.webp 800w"
                sizes="(min-width: 1024px) 26vw, 60vw" width="800" height="1000" loading="lazy" decoding="async"
-               alt="Família faz piquenique no gramado à sombra das árvores: a avó de chapéu e a mãe sentadas na esteira, o pai recebe a filha pequena de braços abertos e crianças jogam bola perto da piscina.">
+               alt="Família faz piquenique no gramado à sombra das árvores: a avó de chapéu e a mãe sentadas na esteira, o pai recebe a filha pequena de braços abertos e crianças jogam bola perto da piscina."></span>
           <figcaption>Uma tarde inteira para estar junto.</figcaption>
         </figure>
 
         <figure class="encontros__c reveal" data-foto="F09" data-pauta="Gerações nas quadras · 4:5 · imagem gerada (IA)">
-          <img src="assets/img/encontro-geracoes-800.webp"
+          <span class="frame"><img src="assets/img/encontro-geracoes-800.webp"
                srcset="assets/img/encontro-geracoes-400.webp 400w, assets/img/encontro-geracoes-560.webp 560w, assets/img/encontro-geracoes-800.webp 800w"
                sizes="(min-width: 1024px) 30vw, 70vw" width="800" height="1000" loading="lazy" decoding="async"
-               alt="Senhor ajoelhado na quadra de saibro ensina um menino a segurar a raquete, ao lado de um cesto de bolinhas.">
+               alt="Senhor ajoelhado na quadra de saibro ensina um menino a segurar a raquete, ao lado de um cesto de bolinhas."></span>
           <figcaption>Novas histórias para contar em família.</figcaption>
         </figure>
 
@@ -321,10 +322,10 @@
     <section class="section historia" aria-labelledby="historia-title">
       <div class="container historia__grid">
         <figure class="historia__media reveal" data-foto="F12" data-pauta="Remo no Guaíba · 3:2 · imagem gerada (IA)">
-          <img src="assets/img/historia-ilha-do-pavao-1200.webp"
+          <span class="frame"><img src="assets/img/historia-ilha-do-pavao-1200.webp"
                srcset="assets/img/historia-ilha-do-pavao-560.webp 560w, assets/img/historia-ilha-do-pavao-800.webp 800w, assets/img/historia-ilha-do-pavao-1200.webp 1200w"
                sizes="(min-width: 1024px) 48vw, 100vw" width="1200" height="800" loading="lazy" decoding="async"
-               alt="Dupla de remo desliza pelo Guaíba ao pôr do sol, com os prédios de Porto Alegre no horizonte.">
+               alt="Dupla de remo desliza pelo Guaíba ao pôr do sol, com os prédios de Porto Alegre no horizonte."></span>
           <figcaption>Remo no Guaíba, com Porto Alegre no horizonte</figcaption>
         </figure>
 
@@ -334,7 +335,7 @@
           <p class="lead">São <span data-club-age>120</span> anos reunindo gerações em torno do esporte, da convivência e da vida em clube. Uma história que continua a cada novo encontro.</p>
 
           <ul class="facts" aria-label="O União em números">
-            <li><span class="facts__value" data-club-age>120</span><span class="facts__label">anos de história</span></li>
+            <li><span class="facts__value" data-club-age data-countup>120</span><span class="facts__label">anos de história</span></li>
             <li><span class="facts__value">4</span><span class="facts__label">sedes</span></li>
             <li><span class="facts__value">1906</span><span class="facts__label">em Porto Alegre</span></li>
           </ul>
@@ -346,10 +347,10 @@
     <section class="section associacao" id="associacao" aria-labelledby="associacao-title" data-associacao>
       <div class="container associacao__grid">
         <figure class="associacao__media" data-foto="F13" data-pauta="Mãe e filha na piscina · 4:5 · imagem gerada (IA)">
-          <img src="assets/img/associacao-area-verde-800.webp"
+          <span class="frame"><img src="assets/img/associacao-area-verde-800.webp"
                srcset="assets/img/associacao-area-verde-400.webp 400w, assets/img/associacao-area-verde-560.webp 560w, assets/img/associacao-area-verde-800.webp 800w"
                sizes="(min-width: 1024px) 36vw, 100vw" width="800" height="1000" loading="lazy" decoding="async"
-               alt="Mãe e filha riem sentadas na borda de uma grande piscina, com espreguiçadeiras, árvores e prédios ao fundo.">
+               alt="Mãe e filha riem sentadas na borda de uma grande piscina, com espreguiçadeiras, árvores e prédios ao fundo."></span>
           <div class="associacao__inset" data-foto="X5" data-pauta="Detalhe: raquete e limonada · 4:5 · imagem gerada (IA)">
             <img src="assets/img/associacao-detalhe-560.webp"
                  srcset="assets/img/associacao-detalhe-280.webp 280w, assets/img/associacao-detalhe-400.webp 400w, assets/img/associacao-detalhe-560.webp 560w"
@@ -397,13 +398,13 @@
     <!-- ============ BLOCO 07 · FECHAMENTO ============ -->
     <section class="fechamento" aria-labelledby="fechamento-title" data-bar-blocker>
       <figure class="fechamento__media" data-foto="F14" data-pauta="Fim de tarde na Ilha do Pavão · 21:9 · imagem gerada (IA)">
-        <picture>
+        <span class="frame"><picture>
           <source media="(max-width: 767px)" srcset="assets/img/fechamento-guaiba-mobile-800.webp" width="800" height="450">
           <img src="assets/img/fechamento-guaiba-2048.webp"
                srcset="assets/img/fechamento-guaiba-640.webp 640w, assets/img/fechamento-guaiba-960.webp 960w, assets/img/fechamento-guaiba-1440.webp 1440w, assets/img/fechamento-guaiba-2048.webp 2048w"
                sizes="100vw" width="2048" height="869" loading="lazy" decoding="async"
                alt="Ao entardecer, dois casais e duas crianças caminham pelo gramado junto à sede náutica, ao trapiche e a um barco a remo, com o Guaíba ao lado.">
-        </picture>
+        </picture></span>
         <figcaption>Fim de tarde à beira do Guaíba</figcaption>
       </figure>
 

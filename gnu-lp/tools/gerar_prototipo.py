@@ -106,8 +106,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .proto-strip__fs:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .proto-strip__fs svg { width: 12px; height: 12px; }
 @media (max-width: 767px) { .proto-strip__fs { display: none; } }
-/* A página fica completa em repouso: sem conteúdo esperando a rolagem para aparecer */
-html.js .reveal { opacity: 1 !important; transform: none !important; }
 .proto-notice {
   position: fixed; inset: 0; z-index: 90;
   display: grid; place-items: center;
