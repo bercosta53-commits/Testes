@@ -148,6 +148,7 @@
   function updateBar() {
     var show = mobileMq.matches && heroCtaPassed && blockers.size === 0 && !menuOpen;
     bar.classList.toggle('is-visible', show);
+    root.classList.toggle('has-wa-bar', show);
     bar.setAttribute('aria-hidden', String(!show));
     if (show) bar.removeAttribute('inert'); else bar.setAttribute('inert', '');
   }

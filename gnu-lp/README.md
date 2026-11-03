@@ -24,7 +24,19 @@ gnu-lp/
 ├── assets/js/main.js     # WhatsApp, barra, menu, sedes, formulário, analytics
 ├── assets/img/           # WebP em várias larguras + escudo PNG + og:image
 ├── tools/importar_foto.py # coloca uma foto nova num espaço F01–F14
+├── tools/gerar_html_unico.py # gera o HTML único para compartilhar
+├── compartilhar/          # gnu-uniao-lp-verao.html (arquivo único, ~3,5 MB)
 └── PROMPTS-FOTOGRAFIA.md  # prompts de imagem por bloco + banco extra
+```
+
+## Compartilhar em um arquivo só
+
+`compartilhar/gnu-uniao-lp-verao.html` é a página inteira num único arquivo: CSS, JS, escudo, ícone do WhatsApp e fotos embutidos. Ele abre com dois cliques, sem servidor, e pode ser enviado por e-mail, WhatsApp ou Drive. As fotos entram numa resolução só (1440–1600 px nas de largura total). Só as fontes vêm da internet; offline, a página usa as fontes do sistema.
+
+Sempre que a página mudar, gere de novo:
+
+```bash
+python3 tools/gerar_html_unico.py
 ```
 
 ## Blocos
@@ -142,6 +154,7 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 - Contraste do texto branco sobre a foto do hero, medido pixel a pixel em 390, 834, 1280×720, 1366×640, 1440 e 1920 px. Medido linha a linha de texto, o menor valor no p95 é 5,3:1, no título grande (que exige 3:1). O texto pequeno fica acima de 6:1 (exige 4,5:1) e a navegação acima de 8:1.
 - Nenhuma rolagem horizontal em 360, 390, 834 e 1440 px. CLS = 0. O LCP é a foto do hero, pré-carregada com `srcset`/`sizes`.
 - O CTA do hero aparece completo na primeira tela em 390×844, 834×1112, 1280×720 e 1440×900.
+- WhatsApp na navegação: o cabeçalho fixo leva o escudo e o ícone oficial do WhatsApp em todos os tamanhos. No celular, o ícone fica no topo e cede lugar à barra fixa quando ela aparece, para nunca haver dois ao mesmo tempo.
 - Barra fixa: entra quando o CTA do hero sai da tela. Some no bloco de associação, no fechamento, no rodapé, com o menu aberto e com o formulário aberto. Respeita a safe area do aparelho.
 - Menu: o foco vai para o primeiro link e `Esc` fecha. Também há link de pular para o conteúdo, `prefers-reduced-motion` é respeitado e os alvos de toque têm ≥ 44 px (botões com 52 px).
 - Formulário: máscara de telefone, erros descritivos (`aria-invalid` + `aria-describedby`), foco no primeiro erro, consentimento sem pré-marcação, campo-armadilha anti-spam e confirmação com foco.
@@ -154,4 +167,4 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 4. Substituir as imagens geradas por fotos reais (F01–F14), com autorização de imagem, ou validar com o clube o uso de imagens ilustrativas. As faixas de sede F05 e F07 precisam mostrar o lugar real antes da publicação. A pauta de prompts serve como roteiro da sessão de fotos.
 5. Confirmar as condições atuais da Ilha do Pavão e o endereço de embarque usado em "Ver localização".
 6. Confirmar se haverá visita guiada. A página não oferece visita até que isso seja validado.
-7. Usar a versão positiva oficial do escudo em vetor. O PNG atual foi rasterizado a partir do PDF.
+7. O escudo já é o arquivo oficial enviado pelo clube (2000 px). Para impressão ou tamanhos maiores, pedir a versão vetorial.

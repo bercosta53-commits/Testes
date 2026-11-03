@@ -317,9 +317,29 @@ html[data-cta="associacao"] .cta-label--b { display: inline; }
 }
 .mobile-menu .btn { margin-top: 16px; }
 
+/* Ícone oficial do WhatsApp nos CTAs que acompanham a navegação */
+.wa-badge { width: 24px; height: 24px; flex: none; }
+.btn--compact .wa-badge { width: 22px; height: 22px; }
+.site-header__wa { display: none; }
+
 @media (max-width: 1023px) {
   .site-nav { display: none; }
   .menu-toggle { display: inline-flex; }
+}
+@media (max-width: 767px) {
+  .site-header__inner { gap: 10px; }
+  .site-header__wa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    transition: opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .site-header__wa .wa-badge { width: 34px; height: 34px; }
+  /* Quando a barra fixa inferior aparece, ela assume o WhatsApp: um só por vez */
+  html.has-wa-bar .site-header__wa { opacity: 0; visibility: hidden; transform: scale(.85); }
 }
 @media (max-width: 767px) {
   /* No celular, a ação fica no hero e na barra fixa inferior */
