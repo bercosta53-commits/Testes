@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Verão no União — 30 s</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; background: #0b1620; height: 100%; }
+  body { display: grid; place-items: center; font: 14px system-ui, sans-serif; color: #cfd8de; }
+  canvas { width: min(100vw, 177.78vh); height: auto; display: block; }
+  #ui { position: fixed; left: 12px; bottom: 10px; display: flex; gap: 10px; align-items: center; }
+  #ui button { font: inherit; padding: 6px 12px; }
+  body.render #ui { display: none; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="ui"><button id="play">▶︎ / ❚❚</button><input id="scrub" type="range" min="0" max="30" step="0.01" value="0" style="width:50vw"><span id="tc">0.00</span></div>
+<audio id="a" src="build/mix.wav" preload="auto"></audio>
+<script src="film.js"></script>
+</body>
+</html>

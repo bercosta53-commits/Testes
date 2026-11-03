@@ -1,0 +1,4 @@
+build/.frames/
+build/stills/
+node_modules/
+build/*.wav

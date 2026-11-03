@@ -1,0 +1,132 @@
+"""Monta o áudio do filme de 30 s.
+
+1. Recorta a locução (assets/audio/locucao-sofia.mp3) frase a frase e
+   reposiciona cada frase na janela de tempo do roteiro V3.
+2. Se existir uma trilha em assets/audio/trilha.(wav|mp3|m4a|aif|aiff|flac),
+   mistura a trilha por baixo da voz com ducking suave e fade final.
+
+Saídas: build/locucao_30s.wav e build/mix.wav (48 kHz, estéreo).
+
+    python3 audio.py [--music-gain-db -16] [--music-offset 0]
+"""
+import argparse
+import glob
+import json
+import os
+import subprocess
+
+import numpy as np
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+SR = 48000
+DUR = 30.0
+
+# Frases da locução: (início da fala no arquivo original, fim da fala, onde a fala começa no filme)
+# Tempos medidos com detecção de silêncio + transcrição com marcação de palavras.
+PHRASES = [
+    ("Já imaginou ser sócio do União?",                 0.000,  2.164,  0.30),
+    ("O verão tem encontro marcado no União.",          3.025,  5.238,  3.75),
+    ("Tem dias de piscina, de tênis, de aproveitar o sol.", 5.594, 8.892, 6.90),
+    ("Tem amigos por perto e tempo de qualidade em família.", 9.224, 12.374, 11.45),
+    ("E você pode fazer parte de tudo isso.",           12.622, 15.100, 15.70),
+    ("Quatro sedes. Muitos jeitos de viver o União.",   15.454, 18.729, 19.00),
+    ("O próximo encontro pode ser o seu.",              19.013, 20.778, 24.05),
+    ("Seja sócio do União.",                            21.045, 22.450, 25.95),
+    ("Clique e venha fazer parte!",                     22.674, 24.610, 27.55),
+]
+PRE, POST = 0.06, 0.14   # respiro antes/depois de cada recorte (s)
+EDGE_FADE = 0.012        # micro-fade nas bordas do recorte
+
+
+def decode(path, channels):
+    raw = subprocess.run(
+        ["ffmpeg", "-v", "error", "-i", path, "-f", "f32le", "-ac", str(channels), "-ar", str(SR), "-"],
+        check=True, capture_output=True).stdout
+    return np.frombuffer(raw, np.float32).reshape(-1, channels).copy()
+
+
+def write_wav(path, x):
+    x = np.clip(x, -1, 1)
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ac", str(x.shape[1]), "-ar", str(SR), "-i", "-",
+         "-c:a", "pcm_s24le", path], input=x.astype(np.float32).tobytes(), check=True)
+
+
+def fade(n, kind):
+    r = np.linspace(0, 1, n, dtype=np.float32)
+    return r if kind == "in" else r[::-1]
+
+
+def build_voice():
+    src = decode(os.path.join(HERE, "assets/audio/locucao-sofia.mp3"), 1)[:, 0]
+    out = np.zeros(int(DUR * SR), np.float32)
+    timeline = []
+    for text, a, b, at in PHRASES:
+        s0, s1 = max(0, a - PRE), min(len(src) / SR, b + POST)
+        seg = src[int(s0 * SR):int(s1 * SR)].copy()
+        nf = int(EDGE_FADE * SR)
+        seg[:nf] *= fade(nf, "in")
+        seg[-nf:] *= fade(nf, "out")
+        start = int((at - (a - s0)) * SR)
+        end = min(len(out), start + len(seg))
+        out[start:end] += seg[:end - start]
+        timeline.append({"text": text, "start": round(at, 3), "end": round(at + (b - a), 3)})
+    with open(os.path.join(HERE, "build/locucao_timeline.json"), "w") as f:
+        json.dump(timeline, f, ensure_ascii=False, indent=2)
+    return out
+
+
+def envelope(x, attack=0.03, release=0.35):
+    """Envelope de amplitude (seguidor de pico) para o ducking."""
+    a, r = np.exp(-1 / (attack * SR)), np.exp(-1 / (release * SR))
+    env = np.zeros_like(x)
+    lvl = 0.0
+    ax = np.abs(x)
+    for i in range(0, len(x), 64):           # bloco de 64 amostras é suficiente
+        v = ax[i:i + 64].max()
+        lvl = a * lvl + (1 - a) * v if v > lvl else r * lvl + (1 - r) * v
+        env[i:i + 64] = lvl
+    return env
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--music-gain-db", type=float, default=-15.0, help="nível da trilha sem voz")
+    ap.add_argument("--duck-db", type=float, default=-7.0, help="redução extra da trilha sob a voz")
+    ap.add_argument("--music-offset", type=float, default=0.0, help="segundos a pular no início da trilha")
+    args = ap.parse_args()
+    os.makedirs(os.path.join(HERE, "build"), exist_ok=True)
+
+    voice = build_voice()
+    voice *= 10 ** (-1.0 / 20) / max(1e-6, np.abs(voice).max())        # pico da voz em -1 dBFS
+    write_wav(os.path.join(HERE, "build/locucao_30s.wav"), np.stack([voice, voice], 1))
+
+    tracks = [p for ext in ("wav", "mp3", "m4a", "aif", "aiff", "flac")
+              for p in glob.glob(os.path.join(HERE, f"assets/audio/trilha*.{ext}"))]
+    if not tracks:
+        print("Sem trilha em assets/audio/trilha.* — mix.wav = só locução.")
+        write_wav(os.path.join(HERE, "build/mix.wav"), np.stack([voice, voice], 1) * 0.9)
+        return
+
+    music = decode(tracks[0], 2)[int(args.music_offset * SR):]
+    n = int(DUR * SR)
+    if len(music) < n:
+        music = np.pad(music, ((0, n - len(music)), (0, 0)))
+    music = music[:n]
+    music /= max(1e-6, np.sqrt((music ** 2).mean()) / 0.25)        # normaliza RMS antes do ganho
+    g = 10 ** (args.music_gain_db / 20)
+    env = envelope(voice)
+    duck = 10 ** (args.duck_db * np.clip(env / 0.08, 0, 1) / 20)
+    tail = np.ones(n, np.float32)
+    nf = int(0.6 * SR)
+    tail[-nf:] = np.linspace(1, 0, nf) ** 1.5                         # fade final de 0,6 s
+    mix = music * (g * duck * tail)[:, None] + voice[:, None] * 0.92
+    peak = np.abs(mix).max()
+    if peak > 0.97:
+        mix *= 0.97 / peak
+    write_wav(os.path.join(HERE, "build/mix.wav"), mix)
+    print(f"Mix com trilha: {os.path.basename(tracks[0])}")
+
+
+if __name__ == "__main__":
+    main()
