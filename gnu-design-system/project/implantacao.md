@@ -25,5 +25,5 @@ A evolução entra por partes, sobre a estrutura que já existe. Cada etapa pode
 
 - **Logotipo em vetor** (SVG, fundo transparente) para substituir o recorte de referência.
 - **Fotos originais** em alta resolução das imagens usadas hoje.
-- **Situação da sede da Ilha do Pavão** antes de usar o pôr do sol na sede náutica como argumento: a sede foi interditada após as cheias do Guaíba de 2023 e 2024.
+- **Ilha do Pavão:** a sede foi totalmente recuperada após a enchente de 2024 (Jornal do Comércio, maio de 2026). Mantenha as quatro sedes como dado institucional e confirme estruturas e acessos de cada foto antes de publicar.
 - **Conteúdo das sedes** Moinhos de Vento e União Petrópole (texto, comodidades e fotos), para completar o bloco Sede.
