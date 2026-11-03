@@ -56,8 +56,8 @@ python3 tools/gerar_html_unico.py
 | 03 | Quatro sedes | `#sedes` | `Quero conhecer o União` (`sedes`) + `Ver localização` por sede |
 | 04 | Encontros | — | `Saiba como fazer parte` (âncora para `#associacao`) |
 | 05 | História: desde 1906 | — | — |
-| 06 | Associação: uma conversa simples | `#associacao` | `Conversar pelo WhatsApp` (`associacao`) + formulário fechado por padrão |
-| 07 | Fechamento | — | `Quero conhecer o União` (`fechamento`) |
+| 06 | Associação: uma conversa simples | `#associacao` | `Conversar pelo WhatsApp` (`associacao`) + link "Prefere que a gente chame você?" para o formulário |
+| 07 | Fechamento + formulário de contato | `#contato` | `Quero conhecer o União` (`fechamento`) + formulário aberto ao lado |
 
 O cabeçalho (`header`), o menu do celular (`menu`), a barra fixa (`barra_fixa`) e a confirmação do formulário (`formulario_confirmacao`) também levam ao WhatsApp, cada um com seu `placement`.
 
@@ -66,12 +66,12 @@ O cabeçalho (`header`), o menu do celular (`menu`), a barra fixa (`barra_fixa`)
 - **Tipografia:** Instrument Sans 400/500/600 em títulos, interface e corpo, como na Entrega A. Instrument Serif itálico aparece **uma única vez**, na frase-manifesto do bloco 02. O briefing sugere DM Sans no corpo: para trocar, carregue a fonte e altere `--font-body` em `styles.css`.
 - **Cor:** `paper #F8F7F3`, `white`, `stone #EBEBE5`, `sand #F1EFE8` (fundo alternado), `deep-ink #102A3B`, `muted-ink #4B5961` e `brand-blue #004F91` (CTA, hover `#003E73`, pressionado `#00335F`). O ciano não aparece em títulos nem em ornamentos.
 - **Hero:**
-  - Desktop: foto de ponta a ponta abaixo de um cabeçalho claro, sem véu azul. Uma sombra neutra e quente, presa ao bloco de texto e esfumada nas bordas, fica só atrás das letras; o resto da foto fica limpo. Título de 32 a 56 px.
+  - Desktop: foto de ponta a ponta abaixo de um cabeçalho claro, sem véu azul. Uma vinheta neutra e quente, contínua, fica forte sob o texto e some suavemente logo depois dele (o ponto de queda acompanha a coluna do texto); no céu ela é mais leve. Título de 32 a 56 px.
   - Celular e tablet: foto limpa no topo e texto escuro sobre fundo claro logo abaixo, com o CTA azul. O texto nunca fica sobre a água ou sobre rostos.
 - **Sedes:**
   - Desktop: quatro faixas empilhadas. A sede em foco abre (hover, foco do teclado ou clique) e as outras continuam visíveis, com nome e frase.
   - Celular: uma sede por vez, com foto grande de borda a borda e sem carrossel.
-- **Associação:** foto à esquerda e conversa à direita. As modalidades ocupam duas linhas cada, sem cards de preço nem selo de "mais buscado". O formulário alternativo fica dentro de um `<details>` e funciona sem JS.
+- **Associação:** foto à esquerda e conversa à direita. As modalidades ocupam duas linhas cada, sem cards de preço nem selo de "mais buscado". Um link leva ao formulário do fim da página.
 
 ## Variantes de teste (URL)
 
@@ -98,7 +98,8 @@ Todo evento leva `campaign`, `hero_variant` e `cta_variant`. **Nenhum dado pesso
 | `sede_view` | Cada sede com ≥ 50% na tela (uma vez) | `sede` |
 | `sede_location_click` | Clique em "Ver localização" | `sede` |
 | `association_section_view` | Chegada ao bloco 06 (uma vez) | — |
-| `contact_form_open` | Abertura do formulário alternativo | `placement` |
+| `contact_form_link_click` | Clique em "Prefere que a gente chame você?" no bloco 06 | `placement` |
+| `contact_form_open` | Primeira interação com o formulário (foco em um campo) | `placement` |
 | `contact_form_submit` | Envio concluído | `placement` |
 
 `qualified_conversation`, `visit_scheduled` e `association_closed` vêm do atendimento e do CRM, não da página.
@@ -162,8 +163,8 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 - Contraste do texto branco sobre a foto do hero no desktop, medido linha a linha de texto (p95) em 1280×720, 1366×640, 1440 e 1920 px: título ≥ 6:1 (exige 3:1) e texto pequeno ≥ 6:1 (exige 4,5:1). No celular e no tablet o texto fica sobre fundo claro.
 - Nenhuma rolagem horizontal em 360, 390, 834 e 1440 px. CLS = 0. O LCP é a foto do hero, pré-carregada com `srcset`/`sizes`.
 - O CTA do hero aparece completo na primeira tela em 390×844, 834×1112, 1280×720 e 1440×900.
-- WhatsApp na navegação: o cabeçalho fixo leva o escudo e o ícone oficial do WhatsApp em todos os tamanhos. No celular, o ícone fica no topo e cede lugar à barra fixa quando ela aparece, para nunca haver dois ao mesmo tempo.
-- Barra fixa: entra quando o CTA do hero sai da tela. Some no bloco de associação, no fechamento, no rodapé, com o menu aberto e com o formulário aberto. Respeita a safe area do aparelho.
+- WhatsApp na navegação: o cabeçalho fixo leva o escudo e o símbolo oficial do WhatsApp. No computador ele vai em branco dentro do botão azul. No celular é um círculo verde ao lado do Menu, que encolhe por inteiro quando a barra inferior aparece (sem deixar vão), para nunca haver dois ao mesmo tempo.
+- Barra fixa: entra quando o CTA do hero sai da tela. Some no bloco de associação, no fechamento (onde está o formulário), no rodapé e com o menu aberto. Respeita a safe area do aparelho.
 - Menu: o foco vai para o primeiro link e `Esc` fecha. Também há link de pular para o conteúdo, `prefers-reduced-motion` é respeitado e os alvos de toque têm ≥ 44 px (botões com 52 px).
 - Formulário: máscara de telefone, erros descritivos (`aria-invalid` + `aria-describedby`), foco no primeiro erro, consentimento sem pré-marcação, campo-armadilha anti-spam e confirmação com foco.
 

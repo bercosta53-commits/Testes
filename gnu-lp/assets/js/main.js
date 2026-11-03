@@ -199,21 +199,6 @@
       updateBar();
     });
     document.querySelectorAll('[data-bar-blocker]').forEach(function (el) { blockerIo.observe(el); });
-    // Com o formulário aberto, a barra também sai (teclado virtual + foco nos campos).
-    var assocSection = document.querySelector('[data-associacao]');
-    var contactDetails = document.querySelector('[data-contact]');
-    if (assocSection && contactDetails) {
-      var assocVisible = false;
-      new IntersectionObserver(function (entries) {
-        assocVisible = entries[0].isIntersecting;
-        if (assocVisible && contactDetails.open) blockers.add(contactDetails); else blockers.delete(contactDetails);
-        updateBar();
-      }).observe(assocSection);
-      contactDetails.addEventListener('toggle', function () {
-        if (contactDetails.open && assocVisible) blockers.add(contactDetails); else blockers.delete(contactDetails);
-        updateBar();
-      });
-    }
   }
   mobileMq.addEventListener('change', updateBar);
   updateBar();
@@ -273,10 +258,9 @@
     reveals.forEach(function (el) { el.classList.add('is-in'); });
   }
 
-  /* ---------- Formulário alternativo ---------- */
-  var details = document.querySelector('[data-contact]');
+  /* ---------- Formulário de contato (bloco final) ---------- */
   var form = document.querySelector('[data-contact-form]');
-  if (!details || !form) return;
+  if (!form) return;
 
   var success = document.querySelector('[data-form-success]');
   var statusEl = form.querySelector('[data-form-status]');
@@ -290,14 +274,11 @@
     empresa: form.elements.empresa
   };
 
-  var trackOpen = once(function () { track('contact_form_open', { placement: 'associacao' }); });
-  details.addEventListener('toggle', function () {
-    if (details.open) {
-      trackOpen();
-      if (!success.hidden) return;
-      setTimeout(function () { fields.nome.focus({ preventScroll: false }); }, 60);
-    }
-  });
+  // "Abertura" = primeira interação com o formulário
+  form.addEventListener('focusin', once(function () { track('contact_form_open', { placement: 'fechamento' }); }));
+  // Link do bloco de associação que leva ao formulário
+  var formLink = document.querySelector('[data-track="form_link"]');
+  if (formLink) formLink.addEventListener('click', function () { track('contact_form_link_click', { placement: 'associacao' }); });
 
   function digitsOf(value) { return value.replace(/\D/g, '').slice(0, 11); }
   function formatPhone(d) {
@@ -421,7 +402,7 @@
     }, utmParams()))
       .then(function () {
         // Sem dados pessoais no dataLayer.
-        track('contact_form_submit', { placement: 'associacao' });
+        track('contact_form_submit', { placement: 'fechamento' });
         showSuccess();
       })
       .catch(function () {

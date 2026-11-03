@@ -93,14 +93,14 @@
 
       <a class="btn btn--primary btn--compact site-header__cta" data-wa data-placement="header"
          href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">
-        <img class="wa-badge" src="assets/img/whatsapp-48.png" srcset="assets/img/whatsapp-48.png 1x, assets/img/whatsapp-96.png 2x" width="24" height="24" alt="">
+        <svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg>
         Conversar pelo WhatsApp
       </a>
 
       <!-- Celular: o WhatsApp acompanha a navegação no cabeçalho fixo -->
       <a class="site-header__wa" data-wa data-placement="header_icone" aria-label="Conversar pelo WhatsApp"
          href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">
-        <img class="wa-badge" src="assets/img/whatsapp-96.png" width="34" height="34" alt="">
+        <span class="site-header__wa-dot"><svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg></span>
       </a>
 
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-mobile" data-menu-toggle>
@@ -117,7 +117,7 @@
         </ul>
         <a class="btn btn--primary btn--block" data-wa data-placement="menu"
            href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">
-          <img class="wa-badge" src="assets/img/whatsapp-48.png" srcset="assets/img/whatsapp-48.png 1x, assets/img/whatsapp-96.png 2x" width="24" height="24" alt="">
+          <svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg>
           Conversar pelo WhatsApp
         </a>
       </nav>
@@ -404,59 +404,9 @@
             </div>
           </div>
 
-          <details class="contato" data-contact>
-            <summary class="contato__toggle">Prefere deixar seu contato?</summary>
-
-            <div class="contato__panel">
-              <form class="form" data-contact-form novalidate>
-                <p class="form__intro">Deixe seu nome e WhatsApp. A equipe de associação entra em contato com você.</p>
-
-                <div class="form__row">
-                  <div class="field">
-                    <label for="f-nome">Nome</label>
-                    <input id="f-nome" name="nome" type="text" autocomplete="name" required aria-describedby="f-nome-erro" maxlength="80">
-                    <p class="field__error" id="f-nome-erro" hidden></p>
-                  </div>
-                  <div class="field">
-                    <label for="f-whats">WhatsApp</label>
-                    <input id="f-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(51) 99999-9999" required aria-describedby="f-whats-dica f-whats-erro" maxlength="16">
-                    <p class="field__hint" id="f-whats-dica">Com DDD.</p>
-                    <p class="field__error" id="f-whats-erro" hidden></p>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label for="f-msg">Como podemos ajudar? <span class="field__optional">(opcional)</span></label>
-                  <textarea id="f-msg" name="mensagem" rows="3" maxlength="600"></textarea>
-                </div>
-
-                <!-- Campo-armadilha anti-spam: invisível para pessoas -->
-                <div class="form__hp" aria-hidden="true">
-                  <label for="f-empresa">Empresa</label>
-                  <input id="f-empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
-                </div>
-
-                <div class="field field--check">
-                  <input id="f-consent" name="consentimento" type="checkbox" required aria-describedby="f-consent-erro">
-                  <label for="f-consent">Autorizo o Grêmio Náutico União a usar estes dados apenas para entrar em contato sobre associação. Saiba mais na <a href="#" data-privacy-link>política de privacidade</a>.</label>
-                  <p class="field__error" id="f-consent-erro" hidden></p>
-                </div>
-
-                <p class="form__status" role="alert" data-form-status hidden></p>
-
-                <button class="btn btn--secondary" type="submit" data-submit>
-                  <span data-submit-label>Quero receber contato</span>
-                </button>
-              </form>
-
-              <div class="form__success" data-form-success tabindex="-1" hidden>
-                <h3>Recebemos seu contato.</h3>
-                <p><span data-success-name>Obrigado</span>, a equipe de associação vai chamar você pelo WhatsApp em breve. Se preferir, já pode começar a conversa agora.</p>
-                <a class="text-link" data-wa data-placement="formulario_confirmacao"
-                   href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">Abrir o WhatsApp</a>
-              </div>
-            </div>
-          </details>
+          <p class="associacao__form-link">
+            <a class="text-link" href="#contato" data-track="form_link">Prefere que a gente chame você? Deixe seu contato <span aria-hidden="true">↓</span></a>
+          </p>
         </div>
       </div>
     </section>
@@ -475,8 +425,8 @@
       </figure>
 
       <div class="container fechamento__grid">
-        <h2 id="fechamento-title" class="reveal">Seu próximo encontro pode ser no União.</h2>
-        <div class="fechamento__body reveal">
+        <div class="fechamento__body">
+          <h2 id="fechamento-title">Seu próximo encontro pode ser no União.</h2>
           <p class="lead">O verão está chegando. As piscinas, as quadras e tantos bons momentos esperam por novos encontros. Que tal conhecer melhor o clube?</p>
           <a class="btn btn--primary" data-wa data-placement="fechamento"
              href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">
@@ -484,6 +434,58 @@
             Quero conhecer o União
           </a>
           <p class="micro">Fale com nossa equipe pelo WhatsApp.</p>
+        </div>
+
+        <!-- Formulário de contato, aberto, quase no fim da página -->
+        <div class="contato-final" id="contato">
+          <h3 id="contato-title" class="contato-final__title">Prefere que a gente chame você?</h3>
+          <form class="form" data-contact-form aria-labelledby="contato-title" novalidate>
+              <p class="form__intro">Deixe seu nome e WhatsApp. A equipe de associação entra em contato com você.</p>
+
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-nome">Nome</label>
+                  <input id="f-nome" name="nome" type="text" autocomplete="name" required aria-describedby="f-nome-erro" maxlength="80">
+                  <p class="field__error" id="f-nome-erro" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="f-whats">WhatsApp</label>
+                  <input id="f-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(51) 99999-9999" required aria-describedby="f-whats-dica f-whats-erro" maxlength="16">
+                  <p class="field__hint" id="f-whats-dica">Com DDD.</p>
+                  <p class="field__error" id="f-whats-erro" hidden></p>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="f-msg">Como podemos ajudar? <span class="field__optional">(opcional)</span></label>
+                <textarea id="f-msg" name="mensagem" rows="3" maxlength="600"></textarea>
+              </div>
+
+              <!-- Campo-armadilha anti-spam: invisível para pessoas -->
+              <div class="form__hp" aria-hidden="true">
+                <label for="f-empresa">Empresa</label>
+                <input id="f-empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="field field--check">
+                <input id="f-consent" name="consentimento" type="checkbox" required aria-describedby="f-consent-erro">
+                <label for="f-consent">Autorizo o Grêmio Náutico União a usar estes dados apenas para entrar em contato sobre associação. Saiba mais na <a href="#" data-privacy-link>política de privacidade</a>.</label>
+                <p class="field__error" id="f-consent-erro" hidden></p>
+              </div>
+
+              <p class="form__status" role="alert" data-form-status hidden></p>
+
+              <button class="btn btn--secondary btn--block" type="submit" data-submit>
+                <span data-submit-label>Quero receber contato</span>
+              </button>
+          </form>
+
+          <div class="form__success" data-form-success tabindex="-1" hidden>
+              <h3>Recebemos seu contato.</h3>
+              <p><span data-success-name>Obrigado</span>, a equipe de associação vai chamar você pelo WhatsApp em breve. Se preferir, já pode começar a conversa agora.</p>
+              <a class="text-link" data-wa data-placement="formulario_confirmacao"
+                 href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">Abrir o WhatsApp</a>
+          </div>
         </div>
       </div>
     </section>
@@ -511,7 +513,7 @@
   <div class="wa-bar" data-wa-bar aria-hidden="true" inert>
     <a class="btn btn--primary btn--block" data-wa data-placement="barra_fixa"
        href="https://wa.me/5551992387668?text=Ol%C3%A1!%20Quero%20conhecer%20melhor%20o%20Gr%C3%AAmio%20N%C3%A1utico%20Uni%C3%A3o%20e%20entender%20as%20op%C3%A7%C3%B5es%20de%20associa%C3%A7%C3%A3o.%20Podem%20me%20orientar%3F">
-      <img class="wa-badge" src="assets/img/whatsapp-48.png" srcset="assets/img/whatsapp-48.png 1x, assets/img/whatsapp-96.png 2x" width="24" height="24" alt="">
+      <svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg>
       Conversar pelo WhatsApp
     </a>
   </div>
