@@ -22,9 +22,9 @@ O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera 
 | 12,75–14,28 | Díptico: pai e filha · piquenique | Painéis verticais | Tempo em família. |
 | 14,28–15,30 | Família na orla | Chicote + travelling | |
 | 15,30–18,88 | Mural infinito de 7 colunas rolando | Zoom-out de 5,25× até o mural, que gira levemente | Você também pode fazer parte. / Conheça o União. |
-| 18,88–20,92 | As 4 sedes, uma por batida | Chicotes alternados (lateral/vertical) | 4 sedes + nome de cada uma |
-| 20,92–23,99 | Mosaico 2×2 | A Ilha recua para o quadrante e as outras chegam de fora | Muitos jeitos de viver o União. |
-| 23,99–30 | Piscinas-lagoa | Janela; câmera chega; no acorde (26,54) passo de câmera + luz | *O próximo encontro pode ser o seu.* → **Seja sócio do União.** → botão + escudo |
+| 18,88–23,99 | As 4 sedes, ~1,3 s cada, em formato de stories (barra de progresso no topo) | Chicotes alternados | "4 sedes." → "Muitos jeitos de viver o União." (com o VO) + nome e descrição de cada sede |
+| 23,99–26,03 | Mural de fotos de volta, girando para o outro lado | Janela; zoom-out e rolagem mais rápida | *O próximo encontro pode ser o seu.* |
+| 26,03–30 | Hero de site: fundo deep-ink com carrosséis de fotos em cima e embaixo | Chicote vertical; "Seja sócio" entra gigante e encolhe no acorde (26,54) | **Seja sócio do União.** + escudo; em "Clique" um cursor clica no botão "Quero conhecer o União →" (onda do clique, carrosséis aceleram) |
 
 ## Áudio (`audio.py`)
 
