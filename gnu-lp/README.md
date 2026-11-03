@@ -39,6 +39,14 @@ Sempre que a página mudar, gere de novo:
 python3 tools/gerar_html_unico.py
 ```
 
+## Protótipo navegável (link de revisão)
+
+`python3 tools/gerar_prototipo.py --saida prototipo.html` gera a versão publicada como link de revisão. Ela tem o mesmo visual e as mesmas interações da LP, com estas diferenças:
+- uma faixa fixa no topo avisa que é um protótipo e não o site oficial;
+- os botões de WhatsApp mostram um aviso em vez de abrir a conversa, e o número não vai no arquivo;
+- o formulário valida os campos, mas não envia nada;
+- a página não tem metadados de compartilhamento nem schema.org e não é indexada.
+
 ## Blocos
 
 | # | Bloco | Âncora | CTA (placement) |

@@ -65,11 +65,8 @@ def inline_tag(tag):
     return re.sub(r'\bsrc="[^"]*"', f'src="{uri}"', tag)
 
 
-def main():
-    ap = argparse.ArgumentParser(description='Gera um HTML único da LP para compartilhar.')
-    ap.add_argument('--saida', default=DEFAULT_OUT, help='arquivo de saída')
-    args = ap.parse_args()
-
+def build():
+    """Devolve a página inteira como um único HTML, com CSS, JS e imagens embutidos."""
     with open(os.path.join(ROOT, 'index.html'), encoding='utf-8') as fh:
         doc = fh.read()
     with open(os.path.join(ROOT, 'assets', 'css', 'styles.css'), encoding='utf-8') as fh:
@@ -94,6 +91,14 @@ def main():
     leftovers = sorted(set(re.findall(r'assets/[\w./-]+', doc)))
     if leftovers:
         raise SystemExit('Referências não embutidas: ' + ', '.join(leftovers))
+    return doc
+
+
+def main():
+    ap = argparse.ArgumentParser(description='Gera um HTML único da LP para compartilhar.')
+    ap.add_argument('--saida', default=DEFAULT_OUT, help='arquivo de saída')
+    args = ap.parse_args()
+    doc = build()
 
     os.makedirs(os.path.dirname(os.path.abspath(args.saida)), exist_ok=True)
     with open(args.saida, 'w', encoding='utf-8') as fh:

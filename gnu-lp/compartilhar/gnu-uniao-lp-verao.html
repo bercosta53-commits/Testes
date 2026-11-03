@@ -1508,6 +1508,8 @@ html[data-pauta] .sede__media::before { top: 12px; }
     // PENDENTE: URL da política de privacidade do clube.
     privacyUrl: '',
     campaign: 'lp_verao_encontros',
+    // Modo protótipo de revisão: botões de WhatsApp mostram um aviso em vez de abrir a conversa.
+    prototipo: false,
     foundingYear: 1906,
     anniversaryMonth: 3, // abril (0 = janeiro)
     debug: /[?&]debug\b/.test(location.search)
@@ -1554,10 +1556,36 @@ html[data-pauta] .sede__media::before { top: 12px; }
   /* ---------- Links do WhatsApp ---------- */
   var waHref = 'https://wa.me/' + CONFIG.whatsappNumber + '?text=' + encodeURIComponent(CONFIG.whatsappMessage);
 
+  // Protótipo: aviso no lugar da conversa real
+  var notice = CONFIG.prototipo ? document.querySelector('[data-proto-notice]') : null;
+  var noticeReturn = null;
+  function openNotice(link) {
+    notice.querySelector('[data-proto-origin]').textContent = link.getAttribute('data-placement') || '';
+    notice.hidden = false;
+    noticeReturn = link;
+    notice.querySelector('[data-proto-close]').focus();
+  }
+  function closeNotice() {
+    notice.hidden = true;
+    if (noticeReturn && noticeReturn.offsetParent !== null) noticeReturn.focus();
+    noticeReturn = null;
+  }
+  if (notice) {
+    notice.querySelector('[data-proto-close]').addEventListener('click', closeNotice);
+    notice.addEventListener('click', function (e) { if (e.target === notice) closeNotice(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !notice.hidden) closeNotice(); });
+  }
+
   document.querySelectorAll('[data-wa]').forEach(function (link) {
-    link.href = waHref;
-    link.target = '_blank';
-    link.rel = 'noopener';
+    if (notice) {
+      link.href = '#whatsapp';
+      link.removeAttribute('target');
+      link.addEventListener('click', function (e) { e.preventDefault(); openNotice(link); });
+    } else {
+      link.href = waHref;
+      link.target = '_blank';
+      link.rel = 'noopener';
+    }
     link.addEventListener('click', function () {
       var placement = link.getAttribute('data-placement') || 'indefinido';
       var label = link.textContent.replace(/\s+/g, ' ').trim();
