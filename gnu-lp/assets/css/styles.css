@@ -305,44 +305,11 @@ html[data-cta="associacao"] .cta-label--b { display: inline; }
   font-weight: 500;
   text-decoration: none;
 }
-.mobile-menu .btn { margin-top: 16px; }
-
-/* WhatsApp no cabeçalho: no celular, um círculo verde ao lado do Menu */
-.site-header__wa { display: none; }
-
 @media (max-width: 1023px) {
   .site-nav { display: none; }
   .menu-toggle { display: inline-flex; }
 }
 @media (max-width: 767px) {
-  .site-header__inner { gap: 6px; }
-  .site-header__wa {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-    width: 44px;
-    height: 44px;
-    overflow: hidden;
-    transition: width .3s var(--ease), margin .3s var(--ease), opacity .2s ease;
-  }
-  .site-header__wa-dot {
-    display: grid;
-    place-items: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--wa-green);
-    color: #fff;
-  }
-  .site-header__wa-dot svg { width: 21px; height: 21px; }
-  .site-header__wa:hover .site-header__wa-dot { background: var(--wa-green-dark); }
-  /* Quando a barra inferior aparece, o ícone encolhe e o Menu volta a encostar na marca, sem vão */
-  html.has-wa-bar .site-header__wa { width: 0; margin-left: -6px; opacity: 0; pointer-events: none; }
-}
-@media (max-width: 767px) {
-  /* No celular, a ação fica no hero e na barra fixa inferior */
-  .site-header__cta { display: none; }
   .brand__mark { width: 34px; }
   .brand__name { font-size: .9375rem; }
   .brand__sub { font-size: .75rem; }
@@ -972,22 +939,60 @@ html[data-hero="split"] .hero__title { font-size: clamp(2rem, 1.4rem + 1.8vw, 3.
   .site-footer__inner { flex-direction: column; align-items: flex-start; }
 }
 
-/* ---------- Barra fixa do WhatsApp (celular) ---------- */
-.wa-bar {
+/* ---------- WhatsApp flutuante (canto inferior direito, todas as larguras) ---------- */
+.wa-float-wrap {
   position: fixed;
-  inset: auto 0 0;
+  right: max(20px, calc(env(safe-area-inset-right, 0px) + 12px));
+  bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 12px));
   z-index: 40;
-  padding: 10px var(--gutter) max(10px, env(safe-area-inset-bottom));
-  background: rgba(248, 247, 243, .96);
-  border-top: 1px solid var(--stone);
-  -webkit-backdrop-filter: saturate(1.4) blur(10px);
-  backdrop-filter: saturate(1.4) blur(10px);
-  transform: translateY(110%);
-  transition: transform .35s var(--ease);
+  opacity: 0;
+  transform: translateY(18px) scale(.96);
+  transform-origin: 100% 100%;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .4s var(--ease);
 }
-.wa-bar.is-visible { transform: none; }
-@media (min-width: 768px) {
-  .wa-bar { display: none; }
+.wa-float-wrap.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.wa-float {
+  display: inline-flex;
+  align-items: center;
+  min-height: 56px;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--ink);
+  font: 500 .9375rem/1.2 var(--font-sans);
+  text-decoration: none;
+  box-shadow: 0 12px 32px -10px rgba(16, 42, 59, .38), 0 2px 8px rgba(16, 42, 59, .12);
+  transition: box-shadow .25s ease, transform .25s var(--ease);
+}
+.wa-float:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -10px rgba(16, 42, 59, .45), 0 3px 10px rgba(16, 42, 59, .14); }
+.wa-float:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+.wa-float__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--wa-green);
+  color: #fff;
+  transition: background-color .2s ease;
+}
+.wa-float__icon svg { width: 24px; height: 24px; }
+.wa-float:hover .wa-float__icon { background: var(--wa-green-dark); }
+.wa-float__label {
+  max-width: 320px;
+  padding: 0 18px 0 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width .45s var(--ease), padding .45s var(--ease), opacity .25s ease;
+}
+/* Celular: enquanto a pessoa rola para baixo, vira só o ícone; ao parar ou subir, a frase volta */
+.wa-float-wrap.is-compact .wa-float__label { max-width: 0; padding: 0; opacity: 0; }
+@media (max-width: 767px) {
+  .wa-float { min-height: 52px; padding: 5px; font-size: .875rem; }
+  .wa-float__icon { width: 42px; height: 42px; }
+  .wa-float__label { padding: 0 14px 0 10px; }
 }
 
 /* ---------- Revelação sutil (só com JS e sem preferência por menos movimento) ---------- */

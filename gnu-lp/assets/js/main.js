@@ -166,7 +166,7 @@
     if (mq.matches && menuOpen) setMenu(false);
   });
 
-  /* ---------- Barra fixa do WhatsApp (celular) ---------- */
+  /* ---------- WhatsApp flutuante (canto inferior direito) ---------- */
   var bar = document.querySelector('[data-wa-bar]');
   var mobileMq = window.matchMedia('(max-width: 767px)');
   var heroCta = document.querySelector('[data-hero-cta]');
@@ -174,7 +174,7 @@
   var blockers = new Set();
 
   function updateBar() {
-    var show = mobileMq.matches && heroCtaPassed && blockers.size === 0 && !menuOpen;
+    var show = heroCtaPassed && blockers.size === 0 && !menuOpen;
     bar.classList.toggle('is-visible', show);
     root.classList.toggle('has-wa-bar', show);
     bar.setAttribute('aria-hidden', String(!show));
@@ -200,8 +200,22 @@
     });
     document.querySelectorAll('[data-bar-blocker]').forEach(function (el) { blockerIo.observe(el); });
   }
-  mobileMq.addEventListener('change', updateBar);
   updateBar();
+
+  // Celular: rolando para baixo, o botão vira só o ícone; ao subir ou parar de rolar, a frase volta.
+  var lastY = window.scrollY;
+  var idleTimer;
+  function setCompact(on) { bar.classList.toggle('is-compact', on); }
+  window.addEventListener('scroll', function () {
+    if (!mobileMq.matches) { setCompact(false); return; }
+    var y = window.scrollY;
+    if (y > lastY + 8) setCompact(true);
+    else if (y < lastY - 8) setCompact(false);
+    lastY = y;
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () { setCompact(false); }, 1400);
+  }, { passive: true });
+  mobileMq.addEventListener('change', function () { setCompact(false); });
 
   /* ---------- Sedes: faixa em foco abre no desktop ---------- */
   var sedeList = document.querySelector('[data-sedes]');

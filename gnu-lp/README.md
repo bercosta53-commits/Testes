@@ -19,7 +19,7 @@ Não tem etapa de build. As fontes vêm do Google Fonts (Instrument Sans e Instr
 
 ```
 gnu-lp/
-├── index.html            # 7 blocos + cabeçalho, rodapé e barra fixa
+├── index.html            # 7 blocos + cabeçalho, rodapé e WhatsApp flutuante
 ├── assets/css/styles.css # tokens + componentes + responsivo
 ├── assets/js/main.js     # WhatsApp, barra, menu, sedes, formulário, analytics
 ├── assets/img/           # WebP em várias larguras + escudo PNG + og:image
@@ -59,7 +59,7 @@ python3 tools/gerar_html_unico.py
 | 06 | Associação: uma conversa simples | `#associacao` | `Conversar pelo WhatsApp` (`associacao`) + link "Prefere que a gente chame você?" para o formulário |
 | 07 | Fechamento + formulário de contato | `#contato` | `Quero conhecer o União` (`fechamento`) + formulário aberto ao lado |
 
-O cabeçalho (`header`), o menu do celular (`menu`), a barra fixa (`barra_fixa`) e a confirmação do formulário (`formulario_confirmacao`) também levam ao WhatsApp, cada um com seu `placement`.
+O botão flutuante do canto inferior direito (`flutuante`) e a confirmação do formulário (`formulario_confirmacao`) também levam ao WhatsApp, cada um com seu `placement`. O cabeçalho e o menu têm só a navegação.
 
 ## Decisões de linguagem
 
@@ -80,7 +80,7 @@ O cabeçalho (`header`), o menu do celular (`menu`), a barra fixa (`barra_fixa`)
 | *(nenhum)* | Hero de sangria total | Recomendação da Entrega A |
 | `?hero=split` | Hero editorial dividido, com a imagem em ~62% da largura (Rota A) | Entregável 1: duas composições do hero |
 | `?cta=associacao` | CTA do hero vira "Conversar sobre associação" | Teste 2 |
-| `?barra=imediata` | A barra do WhatsApp aparece desde o início no celular | Teste 4 |
+| `?barra=imediata` | O WhatsApp flutuante aparece desde o início, sem esperar o hero sair da tela | Teste 4 |
 | `?pauta` | Mostra sobre cada foto o ID da pauta (F01–F14) e a intenção | Entregável 5: mapa de assets |
 | `?debug` | Registra no console os eventos e o envio simulado do formulário | — |
 
@@ -163,8 +163,7 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 - Contraste do texto branco sobre a foto do hero no desktop, medido linha a linha de texto (p95) em 1280×720, 1366×640, 1440 e 1920 px: título ≥ 6:1 (exige 3:1) e texto pequeno ≥ 6:1 (exige 4,5:1). No celular e no tablet o texto fica sobre fundo claro.
 - Nenhuma rolagem horizontal em 360, 390, 834 e 1440 px. CLS = 0. O LCP é a foto do hero, pré-carregada com `srcset`/`sizes`.
 - O CTA do hero aparece completo na primeira tela em 390×844, 834×1112, 1280×720 e 1440×900.
-- WhatsApp na navegação: o cabeçalho fixo leva o escudo e o símbolo oficial do WhatsApp. No computador ele vai em branco dentro do botão azul. No celular é um círculo verde ao lado do Menu, que encolhe por inteiro quando a barra inferior aparece (sem deixar vão), para nunca haver dois ao mesmo tempo.
-- Barra fixa: entra quando o CTA do hero sai da tela. Some no bloco de associação, no fechamento (onde está o formulário), no rodapé e com o menu aberto. Respeita a safe area do aparelho.
+- WhatsApp flutuante: um botão no canto inferior direito, com o símbolo do WhatsApp e a frase "Fale com nosso time e seja sócio", em todas as larguras. Entra quando o CTA do hero sai da tela e some quando outro botão de WhatsApp está à vista (bloco de associação, fechamento com o formulário, rodapé) e com o menu aberto. No celular, vira só o ícone enquanto a pessoa rola para baixo e mostra a frase de novo ao parar ou subir. Respeita a safe area do aparelho. O cabeçalho tem só a marca e a navegação.
 - Menu: o foco vai para o primeiro link e `Esc` fecha. Também há link de pular para o conteúdo, `prefers-reduced-motion` é respeitado e os alvos de toque têm ≥ 44 px (botões com 52 px).
 - Formulário: máscara de telefone, erros descritivos (`aria-invalid` + `aria-describedby`), foco no primeiro erro, consentimento sem pré-marcação, campo-armadilha anti-spam e confirmação com foco.
 
