@@ -66,8 +66,8 @@ O cabeçalho (`header`), o menu do celular (`menu`), a barra fixa (`barra_fixa`)
 - **Tipografia:** Instrument Sans 400/500/600 em títulos, interface e corpo, como na Entrega A. Instrument Serif itálico aparece **uma única vez**, na frase-manifesto do bloco 02. O briefing sugere DM Sans no corpo: para trocar, carregue a fonte e altere `--font-body` em `styles.css`.
 - **Cor:** `paper #F8F7F3`, `white`, `stone #EBEBE5`, `sand #F1EFE8` (fundo alternado), `deep-ink #102A3B`, `muted-ink #4B5961` e `brand-blue #004F91` (CTA, hover `#003E73`, pressionado `#00335F`). O ciano não aparece em títulos nem em ornamentos.
 - **Hero:**
-  - Desktop: foto de ponta a ponta com véu deep-ink à esquerda e no topo, e CTA branco sobre a foto.
-  - Celular e tablet: foto no topo, abaixo de um cabeçalho sólido, e texto sobre um plano deep-ink. O texto nunca fica sobre a água ou sobre rostos.
+  - Desktop: foto de ponta a ponta abaixo de um cabeçalho claro, sem véu azul. Uma sombra neutra e quente, presa ao bloco de texto e esfumada nas bordas, fica só atrás das letras; o resto da foto fica limpo. Título de 32 a 56 px.
+  - Celular e tablet: foto limpa no topo e texto escuro sobre fundo claro logo abaixo, com o CTA azul. O texto nunca fica sobre a água ou sobre rostos.
 - **Sedes:**
   - Desktop: quatro faixas empilhadas. A sede em foco abre (hover, foco do teclado ou clique) e as outras continuam visíveis, com nome e frase.
   - Celular: uma sede por vez, com foto grande de borda a borda e sem carrossel.
@@ -120,10 +120,10 @@ Desde a rodada de 03/11, a página usa imagens **geradas por IA** a partir da pa
 
 | ID | Bloco | Cena | Arquivo | Origem |
 |---|---|---|---|---|
-| F01 | Hero | Fim de tarde na piscina, famílias e amigos | `hero-piscina-alto-petropolis` | IA |
+| F01 | Hero | Fim de tarde dourado na piscina, famílias e amigos | `hero-piscina-alto-petropolis` | IA (cor da versão solar sobre o detalhe da original em 2752 px) |
 | F02 | 02 · Verão em família | Pai e filhos nadando debaixo d'água | `vida-familia-piscina` | IA |
 | F03 | 02 · Beach tennis entre amigos | Duplas na areia ao pôr do sol | `vida-tenis-petropole` | IA |
-| F04 | 02 · Mais tempo juntos | Amigos nas espreguiçadeiras | `vida-convivencia` | IA |
+| F04 | 02 · Mais tempo juntos | Três amigos rindo juntos nas espreguiçadeiras | `vida-convivencia` | IA (765 px) |
 | X7 | 02 · detalhe (desktop) | Pés na borda da piscina, óculos de natação | `vida-detalhe-borda` | IA, decorativa |
 | F05 | 03 · Alto Petrópolis | Deck, quiosque, família e piscina com tobogã | `sede-alto-petropolis` | IA, **validar com a sede real** |
 | F06 | 03 · Moinhos de Vento | Piscina com tobogã | `sede-moinhos-de-vento` | Acervo real |
@@ -159,7 +159,7 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 
 ## Qualidade verificada
 
-- Contraste do texto branco sobre a foto do hero, medido pixel a pixel em 390, 834, 1280×720, 1366×640, 1440 e 1920 px. Medido linha a linha de texto, o menor valor no p95 é 5,3:1, no título grande (que exige 3:1). O texto pequeno fica acima de 6:1 (exige 4,5:1) e a navegação acima de 8:1.
+- Contraste do texto branco sobre a foto do hero no desktop, medido linha a linha de texto (p95) em 1280×720, 1366×640, 1440 e 1920 px: título ≥ 6:1 (exige 3:1) e texto pequeno ≥ 6:1 (exige 4,5:1). No celular e no tablet o texto fica sobre fundo claro.
 - Nenhuma rolagem horizontal em 360, 390, 834 e 1440 px. CLS = 0. O LCP é a foto do hero, pré-carregada com `srcset`/`sizes`.
 - O CTA do hero aparece completo na primeira tela em 390×844, 834×1112, 1280×720 e 1440×900.
 - WhatsApp na navegação: o cabeçalho fixo leva o escudo e o ícone oficial do WhatsApp em todos os tamanhos. No celular, o ícone fica no topo e cede lugar à barra fixa quando ela aparece, para nunca haver dois ao mesmo tempo.
