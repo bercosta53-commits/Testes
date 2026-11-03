@@ -4,22 +4,27 @@ Grêmio Náutico União · 1920 × 1080 · 30 fps · H.264 + AAC · −14 LUFS �
 
 **Assistir:** [`build/uniao-verao-30s.mp4`](build/uniao-verao-30s.mp4)
 
-## Montagem
+## Montagem (v3: motion)
 
-A trilha está a 117,5 BPM e todos os cortes caem numa batida (`b(n)` em `film.js`), dentro da janela do roteiro e antes da palavra correspondente na locução.
+O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera própria, ligados por **transições compostas**. A **tipografia cinética** é uma camada independente por cima. Cada quadro final é a média de 6 amostras dentro do obturador de 180°, o que dá desfoque de movimento real nos chicotes e zooms. O acabamento é um grão leve. Todos os cortes caem numa batida da trilha (117,5 BPM).
 
-| Tempo | Cena | Fotos | Texto em tela |
+| Tempo | Plano | Movimento / transição | Texto |
 |---|---|---|---|
-| 0–3,55 | Gancho | Piscinas-lagoa com famílias e amigos | Já imaginou ser sócio do União? |
-| 3,55–6,62 | Assinatura (paper + painel) | Pai e filha na borda da piscina | *O verão tem **encontro** marcado no União.* |
-| 6,62–8,15 | Lazer | Pés na borda da piscina | Piscina. |
-| 8,15–9,17 | Lazer, tríptico | Amigas no saibro · bolas · avô e neto | Tênis. |
-| 9,17–11,22 | Lazer, díptico | Mulher na borda · raquete e drink | Dias ao sol. |
-| 11,22–12,75 | Convivência (janela que se expande) | Amigos à mesa | Amigos por perto. |
-| 12,75–15,30 | Convivência, a foto toma o quadro | Família mergulhando | Tempo em família. |
-| 15,30–18,88 | Pertencimento (foto + faixa deep-ink) | Piquenique em família à sombra | Você também pode fazer parte. / Conheça o União. |
-| 18,88–23,99 | Mosaico 2×2, uma sede por batida, todas em tela aos 20,9 s | AP · Moinhos · Petrópole · Ilha do Pavão (acervo do site) | 4 sedes. / Muitos jeitos de viver o União. |
-| 23,99–30 | CTA | Piscinas-lagoa | *O próximo encontro pode ser o seu.* → **Seja sócio do União.** (26,03) → botão "Quero conhecer o União →" + escudo (27,56) |
+| 0–3,55 | Piscinas-lagoa | Câmera "chega" (zoom 1,32→1,07 com giro), sem quadro parado | Já imaginou ser *sócio* do União? (palavras sobem da máscara) |
+| 3,55–4,52 | "verão" gigante preenchido com a foto do deck | Chicote lateral; letras sobem uma a uma; zoom atravessa a letra | (o VO diz "O verão tem…") |
+| 4,52–6,62 | Deck no Guaíba | Continuidade do zoom | *O verão tem encontro marcado no União.* + traço ciano em "encontro" |
+| 6,62–7,64 | Pés na borda | Transição em faixas (slats) | **Piscina.** |
+| 7,64–8,15 | Família mergulhando | Chicote vertical | |
+| 8,15–9,17 | Tríptico: amigas · bolas · avô e neto | Painéis deslizam em sentidos opostos | **Tênis.** |
+| 9,17–10,19 | Díptico: mulher · raquete → casal | Chicote; troca vertical no beat | **Dias ao sol.** |
+| 10,19–11,22 | Escolinha | Chicote | |
+| 11,22–12,75 | Amigos à mesa + cartão sobreposto em profundidade | Janela que se expande empurrando a cena anterior para trás | Amigos por perto. |
+| 12,75–14,28 | Díptico: pai e filha · piquenique | Painéis verticais | Tempo em família. |
+| 14,28–15,30 | Família na orla | Chicote + travelling | |
+| 15,30–18,88 | Mural infinito de 7 colunas rolando | Zoom-out de 5,25× até o mural, que gira levemente | Você também pode fazer parte. / Conheça o União. |
+| 18,88–20,92 | As 4 sedes, uma por batida | Chicotes alternados (lateral/vertical) | 4 sedes + nome de cada uma |
+| 20,92–23,99 | Mosaico 2×2 | A Ilha recua para o quadrante e as outras chegam de fora | Muitos jeitos de viver o União. |
+| 23,99–30 | Piscinas-lagoa | Janela; câmera chega; no acorde (26,54) passo de câmera + luz | *O próximo encontro pode ser o seu.* → **Seja sócio do União.** → botão + escudo |
 
 ## Áudio (`audio.py`)
 
@@ -33,7 +38,7 @@ A trilha está a 117,5 BPM e todos os cortes caem numa batida (`b(n)` em `film.j
 ```sh
 python3 prep_photos.py           # assets/photos/novas -> assets/photos/hd (ampliação 2×)
 python3 audio.py                 # build/mix.wav (numpy + ffmpeg)
-node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg)
+node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg, ~5 min)
 node render.mjs --stills 1,10,27 # quadros soltos para conferência
 ```
 

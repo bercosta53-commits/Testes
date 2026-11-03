@@ -1,35 +1,19 @@
 // Grêmio Náutico União — "Verão no União", filme de aquisição, 30 s, 1920×1080.
-// Cada quadro é calculado só a partir do tempo t (s): renderFrame(f) é determinístico,
-// então a renderização pode rodar em paralelo e sempre dá o mesmo resultado.
+//
+// Motor: cada quadro é calculado só a partir do tempo t (determinístico). A montagem é uma
+// linha do tempo de PLANOS (cada um com sua câmera) ligados por TRANSIÇÕES compostas em
+// buffers; a TIPOGRAFIA é uma camada própria por cima. Na renderização final cada quadro é
+// a média de várias amostras dentro do obturador (180°), o que dá desfoque de movimento real
+// nos movimentos rápidos. Acabamento: vinheta e grão leves.
 (() => {
   const W = 1920, H = 1080, FPS = 30, DUR = 30;
-  const SAFE_X = Math.round(W * 0.08);           // 154 px — margem lateral do roteiro
-  const C = {
-    paper: '#F8F7F3', white: '#FFFFFF', stone: '#EBEBE5', ink: '#102A3B',
-    muted: '#4B5961', blue: '#004F91', cyan: '#00BFF3',
-  };
+  const SAFE_X = 154;                               // 8% — margem lateral do roteiro
+  const C = { paper: '#F8F7F3', white: '#FFFFFF', ink: '#102A3B', muted: '#4B5961', blue: '#004F91', cyan: '#00BFF3' };
 
-  // ---------------------------------------------------------------- tempos (roteiro V3)
-  // Trilha a 117,5 BPM: batida n em BEAT0 + n·BEAT. Todo corte cai numa batida, dentro da
-  // janela do roteiro e antes da palavra correspondente na locução.
-  const BEAT = 0.510839, BEAT0 = -0.0232, b = n => +(BEAT0 + n * BEAT).toFixed(3);
-  const T = {
-    hook: 0.0,        // Já imaginou ser sócio do União?
-    mote: b(7),       // 3,55  O verão tem encontro marcado no União.
-    pisc: b(13),      // 6,62  Piscina.
-    tenis: b(16),     // 8,15  Tênis.
-    sol: b(18),       // 9,17  Dias ao sol.
-    amigos: b(22),    // 11,22 Amigos por perto.
-    familia: b(25),   // 12,75 Tempo em família.
-    fill: b(28),      // 14,28 a última foto da convivência preenche o quadro
-    parte: b(30),     // 15,30 Você também pode fazer parte.
-    sedes: b(37),     // 18,88 4 sedes / Muitos jeitos de viver o União.
-    cta: b(47),       // 23,99 O próximo encontro pode ser o seu.
-    seja: b(51),      // 26,03 Seja sócio do União.
-    acorde: b(52),    // 26,54 acorde de resolução da trilha
-    botao: b(54),     // 27,56 Quero conhecer o União →
-    end: 30.0,
-  };
+  // ---------------------------------------------------------------- grade musical
+  // Trilha a 117,5 BPM (com um compasso repetido, ver audio.py). Batida n = BEAT0 + n·BEAT.
+  const BEAT = 0.510839, BEAT0 = -0.0232;
+  const b = n => BEAT0 + n * BEAT;
 
   // ---------------------------------------------------------------- assets
   const HD = 'assets/photos/hd/';
@@ -37,112 +21,132 @@
     // sedes — acervo do site (fotos reais, identificadas na LP)
     apPiscina: 'assets/photos/ap-piscina.jpg',
     moinhos: 'assets/photos/moinhos-piscina.jpg',
-    tenis: 'assets/photos/petropole-tenis.jpg',
+    petropole: 'assets/photos/petropole-tenis.jpg',
     ilha: 'assets/photos/ilha-aerea.jpg',
-    // cenas de vida — fotos novas
+    // vida no clube — fotos novas
     lagoa: HD + 'piscina-lagoa-convivencia-fim-de-tarde.jpg',
+    deck: HD + 'amigos-deck-guaiba-fim-de-tarde.jpg',
     paiFilha: HD + 'pai-filha-picole-borda.jpg',
     pes: HD + 'criancas-pes-borda-piscina.jpg',
+    mergulho: HD + 'familia-mergulho-piscina.jpg',
     amigas: HD + 'amigas-tenis-saibro.jpg',
     bolas: HD + 'bolas-tenis-saibro-detalhe.jpg',
     avoNeto: HD + 'avo-neto-tenis-saibro.jpg',
+    escolinha: HD + 'escolinha-tenis-saibro.jpg',
     mulher: HD + 'mulher-sorrindo-borda-piscina.jpg',
     raquete: HD + 'raquete-drink-espreguicadeira.jpg',
+    casal: HD + 'casal-espreguicadeiras-sombra.jpg',
     mesa: HD + 'amigos-mesa-pos-tenis.jpg',
-    mergulho: HD + 'familia-mergulho-piscina.jpg',
+    mesaDet: HD + 'amigos-mesa-restaurante.jpg',
     piquenique: HD + 'piquenique-familia-gramado.jpg',
+    orla: HD + 'familia-orla-guaiba-ilha.jpg',
+    remo: HD + 'remo-guaiba-entardecer.jpg',
     escudo: 'assets/logo-escudo.png',
   };
   const img = {};
-  const load = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+  const load = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error(src)); i.src = src; });
   const fonts = [
     new FontFace('Inst', 'url(assets/fonts/InstrumentSans.ttf)', { weight: '400 700', stretch: '75% 100%' }),
     new FontFace('InstSerif', 'url(assets/fonts/InstrumentSerif-Italic.ttf)', { style: 'italic' }),
   ];
-  window.filmReady = Promise.all([
-    ...fonts.map(f => f.load().then(ff => document.fonts.add(ff))),
-    ...Object.entries(PHOTOS).map(([k, v]) => load(v).then(i => { img[k] = i; })),
-  ]);
 
-  const cv = document.getElementById('c');
-  const ctx = cv.getContext('2d');
-  ctx.imageSmoothingQuality = 'high';
+  const mk = (w = W, h = H) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+  const out = document.getElementById('c'), octx = out.getContext('2d');
+  const bufA = mk(), bufB = mk(), frame = mk(), maskBuf = mk();
+  const fctx = frame.getContext('2d');
+  for (const c of [out, bufA, bufB, frame, maskBuf]) c.getContext('2d').imageSmoothingQuality = 'high';
+  let ctx = fctx;                                   // contexto de desenho corrente
 
   // ---------------------------------------------------------------- utilidades
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const lerp = (a, b, p) => a + (b - a) * p;
   const prog = (t, a, b) => clamp((t - a) / (b - a));
   const eOutCubic = p => 1 - Math.pow(1 - p, 3);
-  const eOutQuart = p => 1 - Math.pow(1 - p, 4);
-  const eInOut = p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
-  const between = (t, a, b) => t >= a && t < b;
+  const eOutExpo = p => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+  const eInExpo = p => (p <= 0 ? 0 : Math.pow(2, 10 * p - 10));
+  const eInOutExpo = p => (p <= 0 ? 0 : p >= 1 ? 1 : p < 0.5 ? Math.pow(2, 20 * p - 10) / 2 : (2 - Math.pow(2, -20 * p + 10)) / 2);
+  const eInOutCubic = p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+  const FULL = { x: 0, y: 0, w: W, h: H };
+  const GRADE = 'saturate(1.07) contrast(1.04) brightness(1.02)';
 
-  // Foto em "cover" dentro de um retângulo, com zoom e foco (cx, cy normalizados) e pan em px.
+  // Foto em "cover" num retângulo. cx/cy: foco normalizado; zoom ≥ 1; dx/dy: pan em px; rot em graus.
   function photo(im, r, o = {}) {
-    const { cx = 0.5, cy = 0.5, zoom = 1, dx = 0, dy = 0, filter = 'none', alpha = 1 } = o;
+    const { cx = 0.5, cy = 0.5, zoom = 1, dx = 0, dy = 0, rot = 0, filter = GRADE, alpha = 1 } = o;
     const s = Math.max(r.w / im.width, r.h / im.height) * zoom;
     const w = im.width * s, h = im.height * s;
-    let x = r.x + r.w / 2 - cx * w + dx, y = r.y + r.h / 2 - cy * h + dy;
-    x = clamp(x, r.x + r.w - w, r.x); y = clamp(y, r.y + r.h - h, r.y);
+    let x = r.w / 2 - cx * w + dx, y = r.h / 2 - cy * h + dy;
+    // mantém a foto cobrindo o quadro; com rotação, reserva a margem que o giro consome
+    const rad = Math.abs(rot) * Math.PI / 180, m = Math.sin(rad) * Math.max(r.w, r.h) * 0.6;
+    x = r.w - w + m <= -m ? clamp(x, r.w - w + m, -m) : (r.w - w) / 2;
+    y = r.h - h + m <= -m ? clamp(y, r.h - h + m, -m) : (r.h - h) / 2;
     ctx.save();
     ctx.beginPath(); ctx.rect(r.x, r.y, r.w, r.h); ctx.clip();
-    ctx.globalAlpha = alpha;
-    ctx.filter = filter;
-    ctx.drawImage(im, x, y, w, h);
+    ctx.globalAlpha = alpha; ctx.filter = filter;
+    if (rot) { const mx = r.x + r.w / 2, my = r.y + r.h / 2; ctx.translate(mx, my); ctx.rotate(rot * Math.PI / 180); ctx.translate(-mx, -my); }
+    ctx.drawImage(im, r.x + x, r.y + y, w, h);
     ctx.restore();
   }
-
-  function rect(r, color, alpha = 1) { ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.fillRect(r.x, r.y, r.w, r.h); ctx.restore(); }
-
-  // Gradiente linear de deep-ink para legibilidade, sem "apagar o verão".
-  function shade(x0, y0, x1, y1, a0, a1 = 0, color = '16,42,59') {
+  const full = (k, o) => photo(img[k], FULL, o);
+  function fill(color, a = 1, r = FULL) { ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = color; ctx.fillRect(r.x, r.y, r.w, r.h); ctx.restore(); }
+  function grad(x0, y0, x1, y1, a0, a1 = 0, rgb = '12,30,44') {
+    if (a0 <= 0 && a1 <= 0) return;
     const g = ctx.createLinearGradient(x0, y0, x1, y1);
-    g.addColorStop(0, `rgba(${color},${a0})`);
-    g.addColorStop(1, `rgba(${color},${a1})`);
+    g.addColorStop(0, `rgba(${rgb},${a0})`); g.addColorStop(1, `rgba(${rgb},${a1})`);
     ctx.save(); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
   }
+  // Câmera de "chegada": começa mais perto/girada e assenta com desaceleração exponencial.
+  const arrive = (t, t0, d, from, to) => lerp(from, to, eOutExpo(prog(t, t0, t0 + d)));
 
-  const font = (size, weight = 500, fam = 'sans') =>
-    fam === 'serif' ? `italic 400 ${size}px InstSerif` : `${weight} ${size}px Inst`;
-
-  function measure(str, size, weight, fam, track = 0) {
-    ctx.save(); ctx.font = font(size, weight, fam); ctx.letterSpacing = `${track * size}px`;
+  const font = (size, weight = 600, fam = 'sans') => (fam === 'serif' ? `italic 400 ${size}px InstSerif` : `${weight} ${size}px Inst`);
+  function measure(str, size, weight = 600, fam = 'sans', track = -0.03) {
+    ctx.save(); ctx.font = font(size, weight, fam); ctx.letterSpacing = `${fam === 'serif' ? 0 : track * size}px`;
     const w = ctx.measureText(str).width; ctx.restore(); return w;
   }
 
-  // Maior corpo (≤ max) em que todas as linhas cabem em maxW.
-  function fit(lines, max, maxW, weight = 500, fam = 'sans', track = 0) {
-    const widest = Math.max(...lines.map(l => measure(l, 100, weight, fam, track)));
-    return Math.min(max, Math.floor(100 * maxW / widest));
-  }
-
-  // Texto com entrada em fade + deslocamento curto (sem bounce).
-  // runs: [{text, color}] para colorir palavras dentro da mesma linha.
-  function text(str, x, y, o = {}) {
-    const { size = 80, weight = 500, fam = 'sans', color = C.white, alpha = 1, align = 'left',
-      track = fam === 'serif' ? 0 : -0.02, shadow = 0, runs = null } = o;
-    if (alpha <= 0.001) return;
+  // ---------------------------------------------------------------- tipografia cinética
+  // Linha de palavras: cada palavra sobe de dentro de uma máscara (linha de base) com
+  // desaceleração exponencial, em cascata curta; na saída, sobe e sai pela máscara.
+  // words: [{w, fam, weight, color, size}] ou strings.
+  function kline(t, words, x, y, o) {
+    const { size = 120, weight = 600, fam = 'sans', color = C.white, t0, stagger = 0.055, dur = 0.7,
+      tOut = Infinity, outDur = 0.36, align = 'left', shadow = 0.28, track = -0.03 } = o;
+    kline.last = null;
+    if (t < t0) return 0;
+    if (Number.isFinite(tOut) && t > tOut + outDur + stagger * ws_len(words)) return 0;
+    const ws = words.map(w => (typeof w === 'string' ? { w } : w)).map(w => ({
+      ...w, fam: w.fam ?? fam, weight: w.weight ?? weight, color: w.color ?? color, size: w.size ?? size }));
+    const space = measure(' ', size, weight, fam, track);
+    const widths = ws.map(w => measure(w.w, w.size, w.weight, w.fam, track));
+    const total = widths.reduce((s, v) => s + v, 0) + space * (ws.length - 1);
+    let cx = align === 'center' ? x - total / 2 : align === 'right' ? x - total : x;
+    let vis = 0;
     ctx.save();
-    ctx.font = font(size, weight, fam);
-    ctx.letterSpacing = `${track * size}px`;
-    ctx.textBaseline = 'alphabetic';
-    ctx.globalAlpha = alpha;
-    if (shadow) { ctx.shadowColor = `rgba(8,22,32,${shadow})`; ctx.shadowBlur = size * 0.35; ctx.shadowOffsetY = size * 0.04; }
-    const parts = runs ?? [{ text: str, color }];
-    const total = parts.reduce((s, p) => s + ctx.measureText(p.text).width, 0);
-    let cx = align === 'right' ? x - total : align === 'center' ? x - total / 2 : x;
-    for (const p of parts) { ctx.fillStyle = p.color ?? color; ctx.fillText(p.text, cx, y); cx += ctx.measureText(p.text).width; }
+    ctx.beginPath(); ctx.rect(cx - size, y - size * 1.12, total + size * 2, size * 1.46); ctx.clip();
+    ws.forEach((w, i) => {
+      const pi = eOutExpo(prog(t, t0 + i * stagger, t0 + i * stagger + dur));
+      const po = Number.isFinite(tOut) ? eInOutCubic(prog(t, tOut + i * stagger * 0.5, tOut + i * stagger * 0.5 + outDur)) : 0;
+      const dy = (1 - pi) * size * 1.2 - po * size * 1.6;
+      vis = Math.max(vis, pi * (1 - po));
+      if (po >= 0.999 || pi <= 0) { cx += widths[i] + space; return; }
+      ctx.save();
+      ctx.font = font(w.size, w.weight, w.fam);
+      ctx.letterSpacing = `${w.fam === 'serif' ? 0 : track * w.size}px`;
+      ctx.fillStyle = w.color;
+      if (shadow) { ctx.shadowColor = `rgba(6,18,28,${shadow})`; ctx.shadowBlur = w.size * 0.3; ctx.shadowOffsetY = w.size * 0.03; }
+      ctx.fillText(w.w, cx, y + dy);
+      ctx.restore();
+      w.x = cx; w.width = widths[i];
+      cx += widths[i] + space;
+    });
     ctx.restore();
+    kline.last = ws;                                // posições, para sublinhados
+    return vis;
   }
+  const ws_len = w => w.length * 0.5 + 0.05;
+  // Visibilidade de um bloco de texto (para escurecimentos que acompanham o texto).
+  const vis = (t, t0, tOut = Infinity) => eOutCubic(prog(t, t0 - 0.1, t0 + 0.35)) * (Number.isFinite(tOut) ? 1 - prog(t, tOut, tOut + 0.45) : 1);
 
-  // Curva de entrada/saída de um elemento de texto: devolve opacidade e deslocamento.
-  function inOut(t, tin, tout = Infinity, { dur = 0.45, rise = 16, outDur = 0.22 } = {}) {
-    const pi = eOutCubic(prog(t, tin, tin + dur));
-    const po = Number.isFinite(tout) ? prog(t, tout, tout + outDur) : 0;
-    return { a: pi * (1 - po), dy: (1 - pi) * rise - po * 8 };
-  }
-
-  function escudo(x, y, h, alpha = 1, shadow = false) {
+  function escudo(x, y, h, alpha = 1, shadow = true) {
     const im = img.escudo, w = h * im.width / im.height;
     ctx.save(); ctx.globalAlpha = alpha;
     if (shadow) { ctx.shadowColor = 'rgba(8,22,32,.35)'; ctx.shadowBlur = h * 0.18; ctx.shadowOffsetY = h * 0.03; }
@@ -150,236 +154,419 @@
     return w;
   }
 
-  const FULL = { x: 0, y: 0, w: W, h: H };
-  const GRADE = 'saturate(1.06) contrast(1.03) brightness(1.02)';
+  // ---------------------------------------------------------------- planos
+  // Câmera do deck (usada dentro da palavra "verão" e depois em tela cheia — continuidade).
+  const deckCam = t => ({ cx: 0.5, cy: 0.5, zoom: lerp(1.06, 1.16, prog(t, b(7), b(13.5))), dx: lerp(40, -50, eInOutCubic(prog(t, b(7), b(13.5)))) });
 
-  // Painéis lado a lado (dípticos/trípticos) com linhas finas de paper entre eles.
-  // Cada painel entra por expansão horizontal, um por vez, e tem um leve zoom/pan interno.
-  function panels(t, t0, list, { gap = 6, stagger = 0.12, dur = 0.38, end = t0 + 2 } = {}) {
-    rect(FULL, C.paper);
-    const n = list.length, pw = (W - gap * (n - 1)) / n;
-    let covered = 0;
-    list.forEach((s, i) => {
-      const ti = t0 + i * stagger;
-      const o = i === 0 ? 1 : eOutQuart(prog(t, ti, ti + dur));
-      if (o <= 0) return;
-      const x = i * (pw + gap), p = prog(t, t0, end);
-      covered = x + pw * o;
-      photo(img[s.k], { x, y: 0, w: pw * o, h: H },
-        { cx: s.cx ?? 0.5, cy: lerp(s.cy ?? 0.5, (s.cy ?? 0.5) + (i % 2 ? -0.03 : 0.03), p), zoom: lerp(s.zoom ?? 1.04, (s.zoom ?? 1.04) + 0.04, p), filter: GRADE });
-    });
-    return covered;                     // largura já coberta por foto (o degradê do rótulo não passa disso)
+  // Palavra "verão" gigante preenchida com foto; atravessada por zoom no fim.
+  let verao = null;                                 // {bmp, scale, x, y, ax, ay}
+  function prepVerao() {
+    const size = 600, c = mk(W * 2, H * 2), g = c.getContext('2d');
+    ctx = g; const wTxt = measure('verão', size, 700, 'sans', -0.045); ctx = fctx;
+    const fs = Math.min(size, size * (W - 2 * 120) / wTxt);
+    g.scale(2, 2);
+    g.font = font(fs, 700); g.letterSpacing = `${-0.045 * fs}px`; g.fillStyle = '#fff'; g.textBaseline = 'alphabetic';
+    const tw = g.measureText('verão').width, x = (W - tw) / 2, y = H / 2 + fs * 0.27;
+    g.fillText('verão', x, y);
+    // âncora do zoom: ponto mais "fundo" dentro do traço (maior min(run horizontal, run vertical))
+    const D = g.getImageData(0, 0, W * 2, H * 2).data, on = (X, Y) => D[(Y * W * 2 + X) * 4 + 3] > 200;
+    let best = { sc: 0, x: W, y: H };
+    for (let Y = Math.round((y - fs * 0.6) * 2); Y < y * 2; Y += 6) {
+      for (let X = Math.round(x * 2); X < (x + tw) * 2; X += 6) {
+        if (!on(X, Y)) continue;
+        let l = X, r = X, u = Y, d = Y;
+        while (l > 0 && on(l - 1, Y)) l--; while (r < W * 2 - 1 && on(r + 1, Y)) r++;
+        while (u > 0 && on(X, u - 1)) u--; while (d < H * 2 - 1 && on(X, d + 1)) d++;
+        const sc = Math.min(X - l, r - X, Y - u, d - Y);
+        if (sc > best.sc) best = { sc, x: X, y: Y };
+      }
+    }
+    const letters = [...'verão'].map((ch, i) => ({ ch, x: x + g.measureText('verão'.slice(0, i)).width }));
+    verao = { bmp: c, fs, x, y, letters, ax: best.x / 2, ay: best.y / 2 };
   }
-
-  // ---------------------------------------------------------------- cenas
-  // 00:00–00:03.5 — GANCHO: piscinas-lagoa cheias de gente já no primeiro quadro.
-  function sHook(t) {
-    const p = prog(t, T.hook, T.mote);
-    photo(img.lagoa, FULL, { cx: lerp(0.47, 0.5, p), cy: 0.55, zoom: lerp(1.0, 1.03, p), filter: GRADE });
-    // texto no céu, para não cobrir as pessoas na borda da piscina
-    shade(0, 0, 0, H * 0.5, 0.5);
-    shade(0, 0, W * 0.65, 0, 0.22);
-    const lines = ['Já imaginou ser', 'sócio do União?'];
-    const size = fit(lines, 116, W * 0.52);
-    const e = inOut(t, 0.25, Infinity, { dur: 0.42, rise: 16 });
-    text(lines[0], SAFE_X, 108 + size * 1.05 + e.dy, { size, alpha: e.a, shadow: 0.3 });
-    text(lines[1], SAFE_X, 108 + size * 2.07 + e.dy, { size, alpha: e.a, shadow: 0.3 });
-  }
-
-  // 00:03.5–00:06.8 — ASSINATURA: composição editorial; família na borda da piscina no painel.
-  function sMote(t) {
-    rect(FULL, C.paper);
-    const p = prog(t, T.mote, T.pisc);
-    const open = eOutQuart(prog(t, T.mote, T.mote + 0.55));   // a foto cheia recua para o painel
-    const px = lerp(0, 940, open);
-    photo(img.paiFilha, { x: px, y: 0, w: W - px, h: H }, { cx: 0.5, cy: lerp(0.46, 0.5, p), zoom: lerp(1.0, 1.03, p), filter: GRADE });
-    const lines = ['O verão tem', 'encontro marcado', 'no União.'];
-    const size = fit(lines, 112, 940 - SAFE_X - 70, 400, 'serif');
-    const lh = size * 1.06, y0 = 540 + size * 0.3 - lh;
-    const lab = inOut(t, T.mote + 0.2, Infinity, { dur: 0.4, rise: 10 });
-    text('Verão no União', SAFE_X, y0 - size * 1.05 + lab.dy, { size: 26, color: C.muted, alpha: lab.a, track: 0 });
-    lines.forEach((l, i) => {
-      const e = inOut(t, T.mote + 0.2 + i * 0.12, Infinity, { dur: 0.5, rise: 18 });
-      const runs = i === 1 ? [{ text: 'encontro', color: C.blue }, { text: ' marcado', color: C.ink }] : null;
-      text(l, SAFE_X, y0 + i * lh + e.dy, { size, fam: 'serif', color: C.ink, alpha: e.a, runs });
-    });
-    const r = eOutCubic(prog(t, T.mote + 0.9, T.mote + 1.5));
-    rect({ x: SAFE_X, y: y0 + 2 * lh + size * 0.55, w: 120 * r, h: 3 }, C.blue);
-  }
-
-  // 00:06.8–00:11.3 — LAZER E MOVIMENTO: uma palavra por corte, no beat.
-  function sLazer(t) {
-    let label, s0, covered = W;
-    if (t < T.tenis) {
-      const p = prog(t, T.pisc, T.tenis);
-      photo(img.pes, FULL, { cx: lerp(0.46, 0.52, p), cy: 0.55, zoom: lerp(1.0, 1.04, p), filter: GRADE });
-      label = 'Piscina.'; s0 = T.pisc;
-    } else if (t < T.sol) {
-      covered = panels(t, T.tenis, [{ k: 'amigas', cy: 0.48 }, { k: 'bolas', cy: 0.5 }, { k: 'avoNeto', cy: 0.55 }], { stagger: 0.1, dur: 0.32, end: T.sol });
-      label = 'Tênis.'; s0 = T.tenis;
+  function sVerao(t) {
+    fill(C.paper);
+    const tz0 = b(8), tz1 = b(8) + 0.46;                 // zoom através da letra
+    const m = maskBuf.getContext('2d');
+    m.setTransform(1, 0, 0, 1, 0, 0); m.globalCompositeOperation = 'source-over'; m.clearRect(0, 0, W, H);
+    if (t < tz0) {
+      m.font = font(verao.fs, 700); m.letterSpacing = `${-0.045 * verao.fs}px`; m.fillStyle = '#fff';
+      m.save(); m.beginPath(); m.rect(0, verao.y - verao.fs * 1.3, W, verao.fs * 1.6); m.clip();
+      verao.letters.forEach((l, i) => {
+        const p = eOutExpo(prog(t, b(7) + 0.02 + i * 0.045, b(7) + 0.02 + i * 0.045 + 0.75));
+        m.fillText(l.ch, l.x, verao.y + (1 - p) * verao.fs * 1.4);
+      });
+      m.restore();
     } else {
-      covered = panels(t, T.sol, [{ k: 'mulher', cy: 0.45 }, { k: 'raquete', cy: 0.55 }], { stagger: 0.14, dur: 0.4, end: T.amigos });
-      label = 'Dias ao sol.'; s0 = T.sol;
+      const p = eInExpo(prog(t, tz0, tz1)), s = Math.pow(70, p);
+      m.setTransform(s, 0, 0, s, verao.ax * (1 - s), verao.ay * (1 - s));
+      m.drawImage(verao.bmp, 0, 0, W, H);
+      m.setTransform(1, 0, 0, 1, 0, 0);
     }
-    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, covered, H); ctx.clip();
-    shade(0, H, 0, H * 0.45, 0.6);
-    ctx.restore();
-    const e = inOut(t, s0 + 0.04, Infinity, { dur: 0.35, rise: 14 });
-    text(label, SAFE_X, 930 + e.dy, { size: 132, alpha: e.a, shadow: 0.25 });
+    m.globalCompositeOperation = 'source-in';
+    const prev = ctx; ctx = m; full('deck', deckCam(t)); ctx = prev;
+    ctx.drawImage(maskBuf, 0, 0);
   }
 
-  // 00:11.3–00:15.5 — CONVIVÊNCIA: janelas que se expandem na horizontal; a última preenche o quadro.
-  function sConvivencia(t) {
-    rect(FULL, C.paper);
-    const band = { x: 0, y: 300, w: W, h: 560 };
-    // janela 1 — amigos à mesa
-    const o1 = eOutQuart(prog(t, T.amigos, T.amigos + 0.7));
-    const w1 = lerp(W * 0.32, W, o1);
-    photo(img.mesa, { x: (W - w1) / 2, y: band.y, w: w1, h: band.h },
-      { cx: 0.5, cy: 0.5, zoom: lerp(1.0, 1.05, prog(t, T.amigos, T.familia)), filter: GRADE });
-    // janela 2 — família, entra por cima e depois toma o quadro
-    if (t >= T.familia) {
-      const o2 = eOutQuart(prog(t, T.familia, T.familia + 0.6));
-      const w2 = lerp(W * 0.18, W, o2);
-      const f = eInOut(prog(t, T.fill, T.parte - 0.05));
-      const r = { x: (W - w2) / 2, y: lerp(band.y, 0, f), w: w2, h: lerp(band.h, H, f) };
-      photo(img.mergulho, r, { cx: lerp(0.5, 0.48, f), cy: 0.5, zoom: lerp(1.04, 1.0, prog(t, T.familia, T.parte)), filter: GRADE });
-    }
-    const a = inOut(t, T.amigos + 0.15, T.familia - 0.1, { dur: 0.4, rise: 14 });
-    text('Amigos por perto.', SAFE_X, 220 + a.dy, { size: 88, color: C.ink, alpha: a.a });
-    const b = inOut(t, T.familia + 0.12, T.fill - 0.2, { dur: 0.4, rise: 14 });
-    text('Tempo em família.', SAFE_X, 220 + b.dy, { size: 88, color: C.ink, alpha: b.a });
-  }
-
-  // 00:15.5–00:18.8 — PERTENCIMENTO: família à sombra das árvores + reforço de associação.
-  function sParte(t) {
-    const p = prog(t, T.parte, T.sedes);
-    rect(FULL, C.ink);
-    const open = eOutQuart(prog(t, T.parte, T.parte + 0.55));   // a foto cheia recua para a esquerda
-    const pw = lerp(W, 900, open);
-    photo(img.piquenique, { x: 0, y: 0, w: pw, h: H }, { cx: 0.5, cy: lerp(0.6, 0.64, p), zoom: lerp(1.0, 1.04, p), filter: GRADE });
-    const lines = ['Você também', 'pode fazer parte.'];
-    const x = 900 + 100, size = fit(lines, 108, W - SAFE_X - x);
-    const e = inOut(t, T.parte + 0.3, Infinity, { dur: 0.5, rise: 16 });
-    text(lines[0], x, 500 + e.dy, { size, alpha: e.a });
-    text(lines[1], x, 500 + size * 1.04 + e.dy, { size, alpha: e.a });
-    const s = inOut(t, T.parte + 1.0, Infinity, { dur: 0.45, rise: 10 });
-    text('Conheça o União.', x, 500 + size * 1.04 + 90 + s.dy, { size: 40, color: '#BFD3E6', alpha: s.a, track: 0 });
-  }
-
-  // 00:18.8–00:24.0 — GRANDEZA E DIVERSIDADE: mosaico 2×2 das quatro sedes.
-  const SEDES = [
-    { k: 'apPiscina', name: 'Alto Petrópolis', cx: 0.5, cy: 0.62, zoom: 1.0 },
-    { k: 'moinhos', name: 'Moinhos de Vento', cx: 0.55, cy: 0.6, zoom: 1.0 },
-    { k: 'tenis', name: 'União Petrópole', cx: 0.5, cy: 0.6, zoom: 1.0 },
-    { k: 'ilha', name: 'Ilha do Pavão', cx: 0.5, cy: 0.6, zoom: 1.0 },
-  ];
-  function sSedes(t) {
-    rect(FULL, C.paper);
-    const top = 300, gap = 4, cw = (W - gap) / 2, ch = (H - top - gap) / 2;
-    SEDES.forEach((s, i) => {
-      const t0 = T.sedes + i * BEAT;            // uma sede por batida; todas em tela aos 20,9 s
-      if (t < t0) return;
-      const col = i % 2, row = Math.floor(i / 2);
-      const cell = { x: col * (cw + gap), y: top + row * (ch + gap), w: cw, h: ch };
-      const o = eOutQuart(prog(t, t0, t0 + 0.5));
-      const r = { ...cell, w: cell.w * o, x: col === 0 ? cell.x : cell.x };
-      const drift = prog(t, t0, T.cta);
-      photo(img[s.k], r, { cx: s.cx + (i % 2 ? -1 : 1) * 0.04 * drift, cy: s.cy, zoom: s.zoom * lerp(1.1, 1.0, eOutCubic(prog(t, t0, t0 + 1.2))) * lerp(1, 1.03, drift), filter: GRADE });
-      ctx.save(); ctx.beginPath(); ctx.rect(r.x, r.y, r.w, r.h); ctx.clip();
-      const g = ctx.createLinearGradient(0, cell.y, 0, cell.y + 170);
-      g.addColorStop(0, 'rgba(16,42,59,.55)'); g.addColorStop(1, 'rgba(16,42,59,0)');
-      ctx.fillStyle = g; ctx.fillRect(cell.x, cell.y, cell.w, 170);
-      ctx.restore();
-      const e = inOut(t, t0 + 0.25, Infinity, { dur: 0.4, rise: 8 });
-      text(s.name, cell.x + (col === 0 ? SAFE_X : 56), cell.y + 72 + e.dy, { size: 40, alpha: e.a, shadow: 0.25 });
+  // Tríptico / díptico: painéis que entram deslizando em direções alternadas.
+  function slidePanels(t, t0, list, { axis = 'y', stagger = 0.08, dur = 0.62, drift = 0.05, gap = 6 } = {}) {
+    const n = list.length, pw = (W - gap * (n - 1)) / n;
+    list.forEach((s, i) => {
+      const e = eOutExpo(prog(t, t0 + i * stagger, t0 + i * stagger + dur));
+      const sgn = i % 2 ? -1 : 1;
+      const x = i * (pw + gap) + (axis === 'x' ? sgn * -1 * (1 - e) * (pw + 200) * (i === 0 ? 1 : -1) : 0);
+      const y = axis === 'y' ? sgn * (1 - e) * H : 0;
+      const p = prog(t, t0, t0 + 2.2);
+      const k = typeof s.k === 'function' ? s.k(t) : s.k;
+      photo(img[k], { x, y, w: pw, h: H }, { cx: s.cx ?? 0.5, cy: (s.cy ?? 0.5) + sgn * drift * (p - 0.5), zoom: (s.zoom ?? 1.06) + 0.04 * p });
     });
-    const a = inOut(t, T.sedes + 0.2, Infinity, { dur: 0.45, rise: 14 });
-    text('4 sedes.', SAFE_X, 218 + a.dy, { size: 128, color: C.ink, alpha: a.a });
-    const b = inOut(t, T.sedes + 1.4, Infinity, { dur: 0.45, rise: 10 });
-    text('Muitos jeitos de viver o União.', W - SAFE_X, 210 + b.dy, { size: 52, color: C.muted, alpha: b.a, align: 'right', track: -0.01 });
   }
 
-  // 00:24–00:30 — FECHAMENTO / CONVERSÃO.
-  function sCTA(t) {
-    const p = prog(t, T.cta, T.end);
-    // Volta às piscinas-lagoa, mais perto das pessoas; no acorde de resolução a luz abre um pouco.
-    const lum = eOutCubic(prog(t, T.acorde, T.acorde + 0.9));
-    photo(img.lagoa, FULL, { cx: lerp(0.66, 0.7, p), cy: 0.58, zoom: lerp(1.07, 1.12, eOutCubic(p)),
-      filter: `saturate(1.06) contrast(1.03) brightness(${(1.02 + 0.05 * lum).toFixed(3)})` });
-    shade(0, 0, W * 0.72, 0, 0.7 - 0.06 * lum);
-    shade(0, H, 0, H * 0.5, 0.4);
-
-    // 24–26: convite
-    const a = inOut(t, T.cta + 0.1, Infinity, { dur: 0.5, rise: 18 });
-    const dim = lerp(1, 0.86, eOutCubic(prog(t, T.seja, T.seja + 0.5)));
-    text('O próximo encontro pode ser o seu.', SAFE_X, 330 + a.dy, { size: 66, fam: 'serif', alpha: a.a * dim, shadow: 0.25 });
-
-    // 26–28: headline protagonista
-    const lines = ['Seja sócio', 'do União.'];
-    const hs = 140;
-    const b = inOut(t, T.seja, Infinity, { dur: 0.5, rise: 20 });
-    text(lines[0], SAFE_X, 496 + b.dy, { size: hs, weight: 600, alpha: b.a, shadow: 0.25, track: -0.03 });
-    text(lines[1], SAFE_X, 496 + hs * 1.0 + b.dy, { size: hs, weight: 600, alpha: b.a, shadow: 0.25, track: -0.03 });
-
-    // 28–30: botão gráfico (expansão horizontal) + assinatura
-    const label = 'Quero conhecer o União  →';
-    const bs = 40, bw = measure(label, bs, 500, 'sans', 0) + 2 * 48, bh = 96, by = 728;
-    const o = eOutCubic(prog(t, T.botao, T.botao + 0.5));
-    if (o > 0) {
-      ctx.save();
-      ctx.shadowColor = 'rgba(8,22,32,.3)'; ctx.shadowBlur = 30; ctx.shadowOffsetY = 6;
-      ctx.fillStyle = C.white;
-      ctx.beginPath(); ctx.roundRect(SAFE_X, by, Math.max(bh * 0.3, bw * o), bh, 4); ctx.fill();
-      ctx.restore();
-      const l = prog(t, T.botao + 0.22, T.botao + 0.55);
-      text(label, SAFE_X + 48, by + bh / 2 + bs * 0.36, { size: bs, color: C.blue, alpha: l, track: 0,
-        runs: [{ text: 'Quero conhecer o União  ', color: C.blue }, { text: '→', color: C.blue }] });
-    }
-    const lg = inOut(t, T.botao + 0.15, Infinity, { dur: 0.6, rise: 10 });
-    if (lg.a > 0) {
-      const sh = 132, sy = H - 108 - sh + lg.dy, sw = sh * img.escudo.width / img.escudo.height;
-      const sx = W - SAFE_X - sw;
-      escudo(sx, sy, sh, lg.a, true);
-      text('Grêmio Náutico União', sx - 30, sy + sh * 0.5, { size: 40, weight: 600, alpha: lg.a, align: 'right', track: -0.01, shadow: 0.3 });
-      text('Porto Alegre, desde 1906', sx - 30, sy + sh * 0.5 + 44, { size: 28, alpha: lg.a * 0.9, align: 'right', track: 0, shadow: 0.3 });
-    }
+  // "Dias ao sol": díptico; no beat o painel direito troca de foto com um empurrão vertical.
+  function sSol(t) {
+    fill(C.paper);
+    const t0 = b(18) - 0.4, pw = (W - 6) / 2, p = prog(t, t0, t0 + 2.4);
+    photo(img.mulher, { x: 0, y: 0, w: pw, h: H }, { cy: 0.45 + 0.06 * (p - 0.5), zoom: 1.06 + 0.06 * p });
+    const e = eInOutExpo(prog(t, b(19) - 0.18, b(19) + 0.18));
+    photo(img.raquete, { x: pw + 6, y: -e * H, w: pw, h: H }, { cy: 0.52 - 0.06 * (p - 0.5), zoom: 1.08 });
+    if (e > 0) photo(img.casal, { x: pw + 6, y: (1 - e) * H, w: pw, h: H }, { cy: lerp(0.52, 0.46, prog(t, b(19), b(20))), zoom: 1.06 });
   }
 
-  // Escudo discreto no canto, do mote até o fechamento.
-  function bug(t) {
-    const a = prog(t, T.mote + 0.3, T.mote + 0.8) * (1 - prog(t, T.cta - 0.25, T.cta));
-    if (a <= 0) return;
-    const h = 70, w = h * img.escudo.width / img.escudo.height;
-    escudo(W - 72 - w, 56, h, a * 0.96, true);
-  }
-
-  function draw(t) {
+  // Mural infinito de fotos (pertencimento): colunas que rolam em sentidos alternados.
+  const WALL = [
+    ['amigas', 'raquete', 'pes', 'casal', 'escolinha', 'mesaDet'],
+    ['bolas', 'deck', 'paiFilha', 'lagoa', 'avoNeto', 'mergulho'],
+    ['piquenique', 'mesa', 'amigas', 'orla', 'raquete', 'pes'],
+    ['casal', 'paiFilha', 'mulher', 'escolinha', 'mesaDet', 'deck'],
+    ['mergulho', 'avoNeto', 'lagoa', 'bolas', 'piquenique', 'remo'],
+    ['raquete', 'orla', 'pes', 'mesa', 'amigas', 'paiFilha'],
+    ['escolinha', 'casal', 'bolas', 'deck', 'mulher', 'lagoa'],
+  ];
+  function sMural(t) {
+    fill(C.ink);
+    const t0 = b(30), cw = 372, ch = 496, gap = 18, v = 70;
+    const s = arrive(t, t0, 1.5, 5.25, 1.0) * lerp(1, 0.93, prog(t, t0 + 1.5, b(37.5)));
+    const rot = arrive(t, t0, 1.5, 0, -4);
     ctx.save();
-    ctx.clearRect(0, 0, W, H);
-    if (t < T.mote) sHook(t);
-    else if (t < T.pisc) sMote(t);
-    else if (t < T.amigos) sLazer(t);
-    else if (t < T.parte) sConvivencia(t);
-    else if (t < T.sedes) sParte(t);
-    else if (t < T.cta) sSedes(t);
-    else sCTA(t);
-    bug(t);
+    ctx.translate(W / 2, H / 2); ctx.rotate(rot * Math.PI / 180); ctx.scale(s, s); ctx.translate(-W / 2, -H / 2);
+    WALL.forEach((col, c) => {
+      const dir = c % 2 ? 1 : -1, x = W / 2 + (c - 3) * (cw + gap) - cw / 2;
+      const off = (c === 3 ? 0 : (c % 2 ? 0.5 : 0.15) * (ch + gap)) + dir * v * (t - t0);
+      for (let k = -3; k <= 4; k++) {
+        const y = H / 2 - ch / 2 + k * (ch + gap) + off;
+        if (s < 1.6 && (y > H * 1.6 || y + ch < -H * 0.6)) continue;
+        const key = col[((k + 2) % col.length + col.length) % col.length];
+        photo(img[key], { x, y, w: cw, h: ch }, { zoom: 1.04, filter: 'none' });
+      }
+    });
     ctx.restore();
   }
 
-  window.FILM = { W, H, FPS, DUR, T, draw, renderFrame: f => draw(f / FPS) };
+  // Mosaico das sedes: a Ilha (última da sequência) recua para o quadrante; as outras chegam.
+  const SEDES = [
+    { k: 'apPiscina', name: 'Alto Petrópolis', from: [-1, 0], cy: 0.6 },
+    { k: 'moinhos', name: 'Moinhos de Vento', from: [0, -1], cy: 0.6 },
+    { k: 'petropole', name: 'União Petrópole', from: [0, 1], cy: 0.6 },
+    { k: 'ilha', name: 'Ilha do Pavão', from: null, cy: 0.55 },
+  ];
+  function sMosaico(t) {
+    fill(C.paper);
+    const t0 = b(41), gap = 6, cw = (W - gap) / 2, ch = (H - gap) / 2;
+    SEDES.forEach((s, i) => {
+      const col = i % 2, row = i >> 1;
+      const cell = { x: col * (cw + gap), y: row * (ch + gap), w: cw, h: ch };
+      let r = cell;
+      if (s.from) {
+        const e = eOutExpo(prog(t, t0 + 0.04 + i * 0.07, t0 + 0.04 + i * 0.07 + 0.7));
+        r = { ...cell, x: cell.x + s.from[0] * (1 - e) * W * 0.7, y: cell.y + s.from[1] * (1 - e) * H * 0.7 };
+      } else {
+        const e = eInOutExpo(prog(t, t0 - 0.02, t0 + 0.5));
+        r = { x: lerp(0, cell.x, e), y: lerp(0, cell.y, e), w: lerp(W, cw, e), h: lerp(H, ch, e) };
+      }
+      const p = prog(t, t0, b(47));
+      photo(img[s.k], r, { cy: s.cy, zoom: lerp(1.04, 1.12, p), dx: (col ? -1 : 1) * lerp(0, 30, p) });
+    });
+  }
+
+  // Plano do CTA: piscinas-lagoa; no acorde de resolução a câmera dá um passo e a luz abre.
+  function sCTA(t) {
+    const t0 = b(47), lum = eOutCubic(prog(t, b(52), b(52) + 0.9));
+    const z = arrive(t, t0, 1.6, 1.28, 1.08) + 0.02 * lum + 0.03 * prog(t, t0 + 1.6, 30);
+    full('lagoa', { cx: lerp(0.68, 0.72, prog(t, t0, 30)), cy: 0.58, zoom: z, rot: arrive(t, t0, 1.6, 2.2, 0),
+      filter: `saturate(1.07) contrast(1.04) brightness(${(1.02 + 0.05 * lum).toFixed(3)})` });
+  }
+
+  // Linha do tempo: [início, fim, desenho, transição de entrada].
+  // Transições centradas no início do plano: whip (chicote com desfoque), slats (faixas),
+  // window (janela que se expande empurrando a cena anterior para trás), over (o plano entra
+  // por cima por conta própria), cut.
+  const SHOTS = [
+    { a: 0, draw: t => full('lagoa', { cx: arrive(t, 0, 2.2, 0.44, 0.5) + 0.02 * prog(t, 2.2, 4), cy: 0.55,
+        zoom: arrive(t, 0, 2.0, 1.32, 1.07) - 0.02 * prog(t, 2, 4), rot: arrive(t, 0, 2.0, -2.5, 0) }) },
+    { a: b(7), tr: { type: 'whip', d: 0.42, dir: [-1, 0] }, draw: sVerao },
+    { a: b(8) + 0.46, tr: { type: 'cut' }, draw: t => full('deck', deckCam(t)) },
+    { a: b(13), tr: { type: 'slats', d: 0.5, n: 6 }, draw: t => full('pes', {
+        cx: 0.5, cy: 0.55, zoom: arrive(t, b(13), 1.0, 1.22, 1.04), rot: arrive(t, b(13), 1.0, 2, 0), dx: lerp(0, -30, prog(t, b(13), b(15))) }) },
+    { a: b(15), tr: { type: 'whip', d: 0.36, dir: [0, -1] }, draw: t => full('mergulho', {
+        cx: 0.5, cy: 0.5, zoom: 1.02, dx: lerp(-110, 110, prog(t, b(14.5), b(16.6))) }) },
+    { a: b(16), tr: { type: 'over', d: 0.9 }, draw: t => slidePanels(t, b(16) - 0.22, [
+        { k: 'amigas', cy: 0.46 }, { k: 'bolas', cy: 0.5 }, { k: 'avoNeto', cy: 0.55 }], { axis: 'y' }) },
+    { a: b(18), tr: { type: 'whip', d: 0.38, dir: [-1, 0] }, draw: sSol },
+    { a: b(20), tr: { type: 'whip', d: 0.4, dir: [-1, 0] }, draw: t => full('escolinha', {
+        cy: 0.5, zoom: arrive(t, b(20), 1.0, 1.18, 1.06), dx: lerp(60, -60, prog(t, b(19.5), b(22.5))) }) },
+    { a: b(22), tr: { type: 'window', d: 0.62 }, draw: t => {
+        full('mesa', { cy: 0.5, zoom: lerp(1.04, 1.12, prog(t, b(21.4), b(25.5))), dx: lerp(30, -30, prog(t, b(21.4), b(25.5))) });
+        // cartão sobreposto (detalhe da mesa), em profundidade
+        const e = eOutExpo(prog(t, b(23) - 0.1, b(23) + 0.6)), x2 = eInExpo(prog(t, b(25) - 0.45, b(25) - 0.05));
+        if (e > 0) {
+          const cw = 430, ch = 560, x = W - SAFE_X - cw + 40, y = lerp(H + 40, 250, e) + x2 * 700;
+          ctx.save(); ctx.translate(x + cw / 2, y + ch / 2); ctx.rotate((lerp(-9, -3.5, e)) * Math.PI / 180);
+          ctx.shadowColor = 'rgba(6,18,28,.45)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 24;
+          ctx.fillStyle = '#fff'; ctx.fillRect(-cw / 2 - 12, -ch / 2 - 12, cw + 24, ch + 24); ctx.restore();
+          ctx.save(); ctx.translate(x + cw / 2, y + ch / 2); ctx.rotate((lerp(-9, -3.5, e)) * Math.PI / 180); ctx.translate(-(x + cw / 2), -(y + ch / 2));
+          photo(img.mesaDet, { x, y, w: cw, h: ch }, { cy: 0.55, zoom: 1.05 });
+          ctx.restore();
+        }
+      } },
+    { a: b(25), tr: { type: 'over', d: 0.85 }, draw: t => slidePanels(t, b(25) - 0.2, [
+        { k: 'paiFilha', cy: 0.48 }, { k: 'piquenique', cy: 0.6 }], { axis: 'y', stagger: 0.09 }) },
+    { a: b(28), tr: { type: 'whip', d: 0.4, dir: [-1, 0] }, draw: t => full('orla', {
+        cy: 0.5, zoom: 1.03, dx: lerp(-150, 150, prog(t, b(27.6), b(30.4))) }) },
+    { a: b(30), tr: { type: 'window', d: 0.5 }, draw: sMural },
+    { a: b(37), tr: { type: 'whip', d: 0.38, dir: [-1, 0] }, draw: t => full('apPiscina', {
+        cy: 0.6, zoom: arrive(t, b(37), 0.9, 1.2, 1.04), dx: lerp(40, -40, prog(t, b(36.6), b(38.4))) }) },
+    { a: b(38), tr: { type: 'whip', d: 0.34, dir: [0, -1] }, draw: t => full('moinhos', {
+        cx: 0.6, cy: 0.6, zoom: arrive(t, b(38), 0.9, 1.2, 1.04), dx: lerp(40, -40, prog(t, b(37.6), b(39.4))) }) },
+    { a: b(39), tr: { type: 'whip', d: 0.34, dir: [-1, 0] }, draw: t => full('petropole', {
+        cy: 0.6, zoom: arrive(t, b(39), 0.9, 1.2, 1.04), dx: lerp(40, -40, prog(t, b(38.6), b(40.4))) }) },
+    { a: b(40), tr: { type: 'whip', d: 0.34, dir: [0, -1] }, draw: t => full('ilha', {
+        cy: 0.55, zoom: arrive(t, b(40), 0.9, 1.2, 1.04), dx: 0 }) },
+    { a: b(41), tr: { type: 'cut' }, draw: sMosaico },
+    { a: b(47), tr: { type: 'window', d: 0.55 }, draw: sCTA },
+  ];
+  SHOTS.forEach((s, i) => { s.b = SHOTS[i + 1]?.a ?? DUR; });
+
+  function renderShot(i, t, buf) {
+    const g = buf.getContext('2d');
+    g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.filter = 'none'; g.globalCompositeOperation = 'source-over';
+    g.clearRect(0, 0, W, H);
+    const prev = ctx; ctx = g; SHOTS[i].draw(t); ctx = prev;
+    return buf;
+  }
+
+  function composite(t) {
+    // transição ativa?
+    for (let k = 1; k < SHOTS.length; k++) {
+      const s = SHOTS[k], tr = s.tr;
+      if (!tr || tr.type === 'cut' || !tr.d) continue;
+      const t0 = s.a - tr.d / 2, t1 = s.a + tr.d / 2;
+      if (t >= t0 && t < t1) {
+        const p = (t - t0) / tr.d;
+        const A = renderShot(k - 1, t, bufA), B = renderShot(k, t, bufB);
+        transition(tr, p, A, B);
+        return;
+      }
+    }
+    let i = SHOTS.findIndex(s => t >= s.a && t < s.b); if (i < 0) i = SHOTS.length - 1;
+    ctx.drawImage(renderShot(i, t, bufA), 0, 0);
+  }
+
+  function transition(tr, p, A, B) {
+    if (tr.type === 'whip') {
+      const e = eInOutExpo(p), [dx, dy] = tr.dir;
+      ctx.drawImage(A, dx * W * e, dy * H * e);
+      ctx.drawImage(B, -dx * W * (1 - e), -dy * H * (1 - e));
+    } else if (tr.type === 'slats') {
+      ctx.drawImage(A, 0, 0);
+      const n = tr.n, hh = H / n;
+      for (let j = 0; j < n; j++) {
+        const e = eOutExpo(clamp((p - j * 0.05) / 0.62)), sgn = j % 2 ? -1 : 1;
+        ctx.drawImage(B, 0, j * hh, W, hh + 1, sgn * (1 - e) * W, j * hh, W, hh + 1);
+      }
+    } else if (tr.type === 'window') {
+      const e = eInOutExpo(p);
+      const s = lerp(1, 0.86, e);
+      ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(s, s); ctx.translate(-W / 2, -H / 2); ctx.drawImage(A, 0, 0); ctx.restore();
+      fill('#0c1e2c', 0.5 * e);
+      const w = lerp(W * 0.12, W, e), h = lerp(H * 0.2, H, e), x = (W - w) / 2, y = (H - h) / 2;
+      const sb = lerp(1.25, 1, e);
+      ctx.save(); ctx.beginPath(); ctx.roundRect(x, y, w, h, lerp(28, 0, e)); ctx.clip();
+      ctx.translate(W / 2, H / 2); ctx.scale(sb, sb); ctx.translate(-W / 2, -H / 2); ctx.drawImage(B, 0, 0);
+      ctx.restore();
+    } else if (tr.type === 'over') {
+      ctx.drawImage(A, 0, 0); ctx.drawImage(B, 0, 0);
+    }
+  }
+
+  // ---------------------------------------------------------------- camada de tipografia
+  function typeLayer(t) {
+    // GANCHO — Já imaginou ser sócio do União?
+    {
+      const t0 = 0.22, tOut = b(7) - 0.36, s = 150;
+      grad(0, 0, 0, H * 0.62, 0.52 * vis(t, t0, tOut));
+      grad(0, 0, W * 0.6, 0, 0.25 * vis(t, t0, tOut));
+      kline(t, ['Já', 'imaginou'], SAFE_X, 120 + s, { size: s, t0, tOut });
+      kline(t, ['ser', { w: 'sócio', fam: 'serif', size: s * 1.14 }], SAFE_X, 120 + s * 2.02, { size: s, t0: t0 + 0.11, tOut });
+      kline(t, ['do', 'União?'], SAFE_X, 120 + s * 3.04, { size: s, t0: t0 + 0.22, tOut });
+    }
+    // MOTE — assinatura sobre o deck
+    {
+      const t0 = b(8) + 0.5, tOut = b(13) - 0.42, s = 118;
+      grad(0, 0, W * 0.75, H * 0.5, 0.6 * vis(t, t0, tOut));
+      kline(t, ['O', 'verão', 'tem'], SAFE_X, 300, { size: s, fam: 'serif', t0, tOut, shadow: 0.35 });
+      kline(t, ['encontro', 'marcado'], SAFE_X, 300 + s * 1.05, { size: s, fam: 'serif', t0: t0 + 0.12, tOut, shadow: 0.35 });
+      const ws = kline.last;
+      kline(t, ['no', 'União.'], SAFE_X, 300 + s * 2.1, { size: s, fam: 'serif', t0: 5.3, tOut, shadow: 0.35 });
+      if (ws && t > t0) {                                  // sublinhado que "marca" o encontro
+        const e = eOutExpo(prog(t, 4.8, 5.4)) * (1 - prog(t, tOut, tOut + 0.3));
+        fill(C.cyan, 1, { x: ws[0].x, y: 300 + s * 1.05 + 22, w: ws[0].width * e, h: 7 });
+      }
+    }
+    // LAZER — palavras grandes
+    const big = (word, t0, tOut) => {
+      grad(0, H, 0, H * 0.45, 0.62 * vis(t, t0, tOut));
+      kline(t, [word], SAFE_X - 8, 955, { size: 236, t0, tOut, track: -0.045, stagger: 0 });
+    };
+    big('Piscina.', b(13) + 0.25, b(16) - 0.25);
+    big('Tênis.', b(16) + 0.08, b(18) - 0.15);
+    grad(0, H, 0, H * 0.45, 0.62 * vis(t, b(18) + 0.05, b(20) + 0.05));
+    kline(t, ['Dias', 'ao', 'sol.'], SAFE_X - 8, 955, { size: 236, t0: b(18) + 0.05, tOut: b(20) + 0.05, track: -0.045 });
+    // CONVIVÊNCIA
+    {
+      const t0 = b(22) + 0.28, tOut = b(25) - 0.3;
+      grad(0, H, 0, H * 0.42, 0.6 * vis(t, t0, tOut));
+      kline(t, ['Amigos', 'por', 'perto.'], SAFE_X, 950, { size: 150, t0, tOut });
+      const t1 = b(25) + 0.16, tOut1 = b(28) + 0.5;
+      grad(0, H, 0, H * 0.42, 0.6 * vis(t, t1, tOut1));
+      kline(t, ['Tempo', 'em', 'família.'], SAFE_X, 950, { size: 150, t0: t1, tOut: tOut1 });
+    }
+    // PERTENCIMENTO — sobre o mural
+    {
+      const t0 = 15.72, tOut = b(37) - 0.4;
+      fill('#0c1e2c', 0.5 * vis(t, t0 - 0.1, tOut));
+      kline(t, ['Você', 'também'], W / 2, 480, { size: 156, t0, tOut, align: 'center', shadow: 0.3 });
+      kline(t, ['pode', 'fazer', 'parte.'], W / 2, 480 + 165, { size: 156, t0: 16.15, tOut, align: 'center', shadow: 0.3 });
+      kline(t, ['Conheça', 'o', 'União.'], W / 2, 480 + 290, { size: 52, weight: 500, t0: 16.9, tOut, align: 'center', track: -0.01 });
+    }
+    // SEDES — nome de cada sede no beat; depois o mosaico
+    {
+      const names = [['Alto', 'Petrópolis'], ['Moinhos', 'de', 'Vento'], ['União', 'Petrópole'], ['Ilha', 'do', 'Pavão']];
+      const v = vis(t, b(37) + 0.05, b(41) - 0.2);
+      grad(0, H, 0, H * 0.5, 0.58 * v);
+      grad(0, 0, 0, H * 0.3, 0.4 * v);
+      kline(t, [{ w: '4', weight: 700 }, 'sedes'], SAFE_X, 200, { size: 96, t0: b(37) + 0.12, tOut: b(41) - 0.25 });
+      names.forEach((n, i) => kline(t, n, SAFE_X, 940, { size: 150, t0: b(37 + i) + 0.06, tOut: b(38 + i) - 0.4, outDur: 0.32, stagger: 0.04 }));
+      // mosaico: rótulos e frase central
+      const t0 = b(41) + 0.55, tOut = b(47) - 0.35, g = 6, cw = (W - g) / 2, ch = (H - g) / 2;
+      SEDES.forEach((s, i) => {
+        const x = (i % 2) * (cw + g) + (i % 2 ? 48 : SAFE_X - 40), y = (i >> 1) * (ch + g) + 84;
+        kline(t, [s.name], x, y, { size: 44, weight: 600, t0: t0 + i * 0.06, tOut, track: -0.015, shadow: 0.5 });
+      });
+      const vm = vis(t, b(41) + 0.6, tOut);
+      if (vm > 0) {
+        const g2 = ctx.createRadialGradient(W / 2, H / 2, 80, W / 2, H / 2, 900);
+        g2.addColorStop(0, `rgba(12,30,44,${0.66 * vm})`); g2.addColorStop(1, 'rgba(12,30,44,0)');
+        ctx.save(); ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H); ctx.restore();
+      }
+      kline(t, ['Muitos', 'jeitos', 'de'], W / 2, 500, { size: 128, t0: b(41) + 0.6, tOut, align: 'center' });
+      kline(t, ['viver', 'o', 'União.'], W / 2, 500 + 136, { size: 128, t0: b(41) + 0.78, tOut, align: 'center' });
+    }
+    // CTA
+    {
+      const t0 = 24.05, tOut = b(51) - 0.32;
+      const vv = Math.max(vis(t, t0, Infinity), 0);
+      grad(0, 0, W * 0.78, 0, 0.66 * vv);
+      grad(0, H, 0, H * 0.45, 0.42 * vv);
+      kline(t, ['O', 'próximo', 'encontro'], SAFE_X, 420, { size: 132, fam: 'serif', t0, tOut, stagger: 0.07 });
+      kline(t, ['pode', 'ser', 'o', 'seu.'], SAFE_X, 420 + 136, { size: 132, fam: 'serif', t0: 24.9, tOut, stagger: 0.07 });
+      const hs = 176, y1 = 470;
+      kline(t, ['Seja', 'sócio'], SAFE_X - 6, y1, { size: hs, weight: 700, t0: b(51) - 0.02, track: -0.045, stagger: 0.08 });
+      const ws = kline.last;
+      kline(t, ['do', 'União.'], SAFE_X - 6, y1 + hs * 0.98, { size: hs, weight: 700, t0: b(51) + 0.12, track: -0.045, stagger: 0.08 });
+      if (ws && t > b(52) - 0.05) {                        // acorde de resolução: traço sob "Seja sócio"
+        const e = eOutExpo(prog(t, b(52) - 0.04, b(52) + 0.7));
+        fill(C.cyan, 1, { x: ws[0].x + 6, y: y1 + 16, w: (ws[1].x + ws[1].width - ws[0].x - 6) * e, h: 8 });
+      }
+      // botão + assinatura
+      const label = 'Quero conhecer o União  →', bs = 42, bw = measure(label, bs, 500, 'sans', -0.01) + 2 * 52, bh = 104, by = 770;
+      const o = eOutExpo(prog(t, b(54), b(54) + 0.7));
+      if (o > 0) {
+        ctx.save(); ctx.shadowColor = 'rgba(6,18,28,.35)'; ctx.shadowBlur = 34; ctx.shadowOffsetY = 8;
+        ctx.fillStyle = C.white; ctx.beginPath(); ctx.roundRect(SAFE_X, by, Math.max(14, bw * o), bh, 6); ctx.fill(); ctx.restore();
+        ctx.save(); ctx.beginPath(); ctx.rect(SAFE_X, by, bw * o, bh); ctx.clip();
+        kline(t, ['Quero', 'conhecer', 'o', 'União', '→'], SAFE_X + 52, by + bh / 2 + bs * 0.36, { size: bs, weight: 500, color: C.blue, t0: b(54) + 0.18, shadow: 0, track: -0.01, stagger: 0.04, dur: 0.6 });
+        ctx.restore();
+      }
+      const lg = eOutExpo(prog(t, b(54) + 0.25, b(54) + 1.0));
+      if (lg > 0) {
+        const sh = 140, sy = H - 104 - sh + (1 - lg) * 40, sw = sh * img.escudo.width / img.escudo.height, sx = W - SAFE_X - sw;
+        escudo(sx, sy, sh, lg);
+        ctx.save(); ctx.globalAlpha = lg; ctx.textAlign = 'right'; ctx.fillStyle = '#fff';
+        ctx.shadowColor = 'rgba(6,18,28,.5)'; ctx.shadowBlur = 16;
+        ctx.font = font(42, 600); ctx.letterSpacing = '-0.6px'; ctx.fillText('Grêmio Náutico União', sx - 30, sy + sh * 0.52);
+        ctx.font = font(29, 500); ctx.letterSpacing = '0px'; ctx.fillText('Porto Alegre, desde 1906', sx - 30, sy + sh * 0.52 + 44);
+        ctx.restore();
+      }
+    }
+    // Escudo discreto no canto, do mote até o fechamento
+    const a = prog(t, b(8) + 0.5, b(8) + 0.9) * (1 - prog(t, b(47) - 0.3, b(47)));
+    if (a > 0) { const h = 72; escudo(W - 72 - h * img.escudo.width / img.escudo.height, 54, h, a * 0.97); }
+  }
+
+  // ---------------------------------------------------------------- acabamento
+  const grain = [];
+  function prepGrain() {
+    let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    for (let k = 0; k < 6; k++) {
+      const c = mk(960, 540), g = c.getContext('2d'), d = g.createImageData(960, 540);
+      for (let i = 0; i < d.data.length; i += 4) { const v = 128 + (rnd() - 0.5) * 120; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+      g.putImageData(d, 0, 0); grain.push(c);
+    }
+  }
+  function finish(g, f) {
+    g.save();
+    g.globalCompositeOperation = 'overlay'; g.globalAlpha = 0.07; g.drawImage(grain[f % grain.length], 0, 0, W, H);
+    g.restore();
+  }
+
+  function drawFrame(t) {
+    ctx = fctx;
+    fctx.setTransform(1, 0, 0, 1, 0, 0); fctx.globalAlpha = 1; fctx.filter = 'none'; fctx.globalCompositeOperation = 'source-over';
+    fctx.fillStyle = C.paper; fctx.fillRect(0, 0, W, H);
+    composite(t);
+    typeLayer(t);
+  }
+
+  // Quadro final: média de `samples` amostras em meio quadro (obturador de 180°).
+  function renderFrame(f, samples = 6) {
+    const t = f / FPS;
+    octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalCompositeOperation = 'source-over';
+    for (let i = 0; i < samples; i++) {
+      const ts = samples === 1 ? t : t + ((i + 0.5) / samples - 0.5) * 0.5 / FPS;
+      drawFrame(clamp(ts, 0, DUR - 1e-3));
+      octx.globalAlpha = 1 / (i + 1);
+      octx.drawImage(frame, 0, 0);
+    }
+    octx.globalAlpha = 1;
+    finish(octx, f);
+  }
+
+  window.filmReady = Promise.all([
+    ...fonts.map(f => f.load().then(ff => document.fonts.add(ff))),
+    ...Object.entries(PHOTOS).map(([k, v]) => load(v).then(i => { img[k] = i; })),
+  ]).then(() => { prepVerao(); prepGrain(); });
+
+  window.FILM = { W, H, FPS, DUR, b, renderFrame };
 
   // ---------------------------------------------------------------- pré-visualização no navegador
-  const render = new URLSearchParams(location.search).has('render');
-  if (render) { document.body.classList.add('render'); return; }
+  if (new URLSearchParams(location.search).has('render')) { document.body.classList.add('render'); return; }
   const audio = document.getElementById('a'), scrub = document.getElementById('scrub'), tc = document.getElementById('tc');
   let playing = false;
   document.getElementById('play').onclick = () => { playing = !playing; playing ? audio.play() : audio.pause(); };
   scrub.oninput = () => { audio.currentTime = +scrub.value; };
   window.filmReady.then(function loop() {
     const t = Math.min(DUR - 1 / FPS, audio.currentTime || +scrub.value);
-    draw(t); tc.textContent = t.toFixed(2); if (playing) scrub.value = t;
+    renderFrame(Math.round(t * FPS), 1); tc.textContent = t.toFixed(2); if (playing) scrub.value = t;
     requestAnimationFrame(loop);
   });
 })();
