@@ -24,7 +24,40 @@ TITLE = 'Protótipo LP Verão União'
 STRIP = '''
     <div class="proto-strip" role="note">
       <span>Protótipo para revisão</span><span aria-hidden="true">·</span><span>não é o site oficial<span class="proto-strip__long"> do Grêmio Náutico União</span></span>
+      <button class="proto-strip__fs" type="button" data-proto-fs aria-pressed="false" hidden>
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span data-proto-fs-label>Tela cheia</span>
+      </button>
     </div>
+'''
+
+FULLSCREEN_JS = '''
+  <script>
+    (function () {
+      var d = document, el = d.documentElement, btn = d.querySelector('[data-proto-fs]');
+      if (!btn) return;
+      var req = el.requestFullscreen || el.webkitRequestFullscreen;
+      var exit = d.exitFullscreen || d.webkitExitFullscreen;
+      if (!req || !exit || !(d.fullscreenEnabled || d.webkitFullscreenEnabled)) return;
+      var label = btn.querySelector('[data-proto-fs-label]');
+      function isFs() { return !!(d.fullscreenElement || d.webkitFullscreenElement); }
+      function sync() {
+        var on = isFs();
+        label.textContent = on ? 'Sair da tela cheia' : 'Tela cheia';
+        btn.setAttribute('aria-pressed', String(on));
+      }
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        try {
+          var r = isFs() ? exit.call(d) : req.call(el);
+          if (r && r.catch) r.catch(function () { btn.hidden = true; });
+        } catch (e) { btn.hidden = true; }
+      });
+      d.addEventListener('fullscreenchange', sync);
+      d.addEventListener('webkitfullscreenchange', sync);
+      sync();
+    })();
+  </script>
 '''
 
 NOTICE = '''
@@ -56,6 +89,23 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   white-space: nowrap; overflow: hidden;
 }
 @media (max-width: 560px) { .proto-strip__long { display: none; } }
+.proto-strip { position: relative; }
+.proto-strip__fs {
+  position: absolute;
+  top: 50%;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  transform: translateY(-50%);
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 24px; padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, .4); border-radius: 2px;
+  background: rgba(255, 255, 255, .1); color: #fff;
+  font: 500 .75rem/1 var(--font-sans);
+  cursor: pointer;
+}
+.proto-strip__fs:hover { background: rgba(255, 255, 255, .2); }
+.proto-strip__fs:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.proto-strip__fs svg { width: 12px; height: 12px; }
+@media (max-width: 767px) { .proto-strip__fs { display: none; } }
 /* A página fica completa em repouso: sem conteúdo esperando a rolagem para aparecer */
 html.js .reveal { opacity: 1 !important; transform: none !important; }
 .proto-notice {
@@ -123,7 +173,7 @@ def make(doc):
     # Faixa fixa dentro do cabeçalho; aviso do WhatsApp antes do script principal
     sub(r'(<header class="site-header" data-header>)', r'\1' + STRIP.replace('\\', r'\\'), expect=1)
     idx = doc.rindex('<script>')
-    doc = doc[:idx] + NOTICE.lstrip('\n') + doc[idx:]
+    doc = doc[:idx] + NOTICE.lstrip('\n') + FULLSCREEN_JS.lstrip('\n') + doc[idx:]
     sub(r'(</style>)', CSS.replace('\\', r'\\') + r'\1', count=1, expect=1)
 
     # Formulário: deixa claro que nada é enviado
