@@ -1,6 +1,6 @@
 """Monta o áudio do filme de 30 s.
 
-1. Recorta a locução (assets/audio/locucao-sofia.mp3) frase a frase e
+1. Recorta a locução (assets/audio/locucao-*.mp3, ver VOICES) frase a frase e
    reposiciona cada frase na janela de tempo do roteiro V3.
 2. Se existir uma trilha em assets/audio/trilha.(wav|mp3|m4a|aif|aiff|flac),
    mistura a trilha por baixo da voz com ducking suave e fade final.
@@ -21,19 +21,34 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SR = 48000
 DUR = 30.0
 
-# Frases da locução: (início da fala no arquivo original, fim da fala, onde a fala começa no filme)
+# Frases da locução: (texto, início da fala no arquivo, fim da fala, onde a fala começa no filme).
 # Tempos medidos com detecção de silêncio + transcrição com marcação de palavras.
-PHRASES = [
-    ("Já imaginou ser sócio do União?",                 0.000,  2.164,  0.30),
-    ("O verão tem encontro marcado no União.",          3.025,  5.238,  3.75),
-    ("Tem dias de piscina, de tênis, de aproveitar o sol.", 5.594, 8.892, 6.90),
-    ("Tem amigos por perto e tempo de qualidade em família.", 9.224, 12.374, 11.45),
-    ("E você pode fazer parte de tudo isso.",           12.622, 15.100, 15.70),
-    ("Quatro sedes. Muitos jeitos de viver o União.",   15.454, 18.729, 19.00),
-    ("O próximo encontro pode ser o seu.",              19.013, 20.778, 24.05),
-    ("Seja sócio do União.",                            21.045, 22.450, 26.03),
-    ("Clique e venha fazer parte!",                     22.674, 24.610, 27.56),
-]
+VOICES = {
+    # ElevenLabs "Ana Alice — Friendly, Clear" (voz atual)
+    "ana": ("assets/audio/locucao-ana-alice.mp3", [
+        ("Já imaginou ser sócio do União?",                     0.000,  2.077,  0.30),
+        ("O verão tem encontro marcado no União.",              2.479,  4.800,  3.75),
+        ("Tem dias de piscina, de tênis, de aproveitar o sol.", 5.200,  8.708,  6.90),
+        ("Tem amigos por perto e tempo de qualidade em família.", 9.202, 12.378, 11.45),
+        ("E você pode fazer parte de tudo isso.",               12.782, 15.466, 15.70),
+        ("Quatro sedes. Muitos jeitos de viver o União.",       15.941, 19.176, 19.00),
+        ("O próximo encontro pode ser o seu.",                  19.574, 21.652, 23.75),
+        ("Seja sócio do União.",                                21.906, 23.497, 26.03),
+        ("Clique e venha fazer parte!",                         23.827, 25.450, 27.80),
+    ]),
+    # ElevenLabs "Sofia — Natural, Expressive" (versão anterior)
+    "sofia": ("assets/audio/locucao-sofia.mp3", [
+        ("Já imaginou ser sócio do União?",                     0.000,  2.164,  0.30),
+        ("O verão tem encontro marcado no União.",              3.025,  5.238,  3.75),
+        ("Tem dias de piscina, de tênis, de aproveitar o sol.", 5.594,  8.892,  6.90),
+        ("Tem amigos por perto e tempo de qualidade em família.", 9.224, 12.374, 11.45),
+        ("E você pode fazer parte de tudo isso.",               12.622, 15.100, 15.70),
+        ("Quatro sedes. Muitos jeitos de viver o União.",       15.454, 18.729, 19.00),
+        ("O próximo encontro pode ser o seu.",                  19.013, 20.778, 24.05),
+        ("Seja sócio do União.",                                21.045, 22.450, 26.03),
+        ("Clique e venha fazer parte!",                         22.674, 24.610, 27.56),
+    ]),
+}
 
 # Trilha (assets/audio/trilha.wav, 117,5 BPM). A grade de tempos é BEAT0 + n·BEAT.
 # O arranjo original resolve no acorde final em 24,5 s, quando o CTA mal começou.
@@ -66,8 +81,9 @@ def fade(n, kind):
     return r if kind == "in" else r[::-1]
 
 
-def build_voice():
-    src = decode(os.path.join(HERE, "assets/audio/locucao-sofia.mp3"), 1)[:, 0]
+def build_voice(voz):
+    path, PHRASES = VOICES[voz]
+    src = decode(os.path.join(HERE, path), 1)[:, 0]
     out = np.zeros(int(DUR * SR), np.float32)
     timeline = []
     for text, a, b, at in PHRASES:
@@ -100,6 +116,7 @@ def envelope(x, attack=0.03, release=0.35):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--voz", choices=sorted(VOICES), default="ana", help="locução a usar")
     ap.add_argument("--music-gain-db", type=float, default=-11.0, help="nível da trilha sem voz")
     ap.add_argument("--duck-db", type=float, default=-6.0, help="redução extra da trilha sob a voz")
     ap.add_argument("--lufs", type=float, default=-14.0, help="loudness integrado do mix final")
@@ -108,7 +125,7 @@ def main():
     args = ap.parse_args()
     os.makedirs(os.path.join(HERE, "build"), exist_ok=True)
 
-    voice = build_voice()
+    voice = build_voice(args.voz)
     voice *= 10 ** (-1.0 / 20) / max(1e-6, np.abs(voice).max())        # pico da voz em -1 dBFS
     write_wav(os.path.join(HERE, "build/locucao_30s.wav"), np.stack([voice, voice], 1))
 

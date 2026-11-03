@@ -65,6 +65,8 @@
   const eOutExpo = p => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
   const eInExpo = p => (p <= 0 ? 0 : Math.pow(2, 10 * p - 10));
   const eInOutExpo = p => (p <= 0 ? 0 : p >= 1 ? 1 : p < 0.5 ? Math.pow(2, 20 * p - 10) / 2 : (2 - Math.pow(2, -20 * p + 10)) / 2);
+  const eInCubic = p => p * p * p;
+  const eInOutQuint = p => (p < 0.5 ? 16 * p ** 5 : 1 - Math.pow(-2 * p + 2, 5) / 2);
   const eInOutCubic = p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
   const FULL = { x: 0, y: 0, w: W, h: H };
   const GRADE = 'saturate(1.07) contrast(1.04) brightness(1.02)';
@@ -194,7 +196,7 @@
       m.font = font(verao.fs, 700); m.letterSpacing = `${-0.045 * verao.fs}px`; m.fillStyle = '#fff';
       m.save(); m.beginPath(); m.rect(0, verao.y - verao.fs * 1.3, W, verao.fs * 1.6); m.clip();
       verao.letters.forEach((l, i) => {
-        const p = eOutExpo(prog(t, b(7) + 0.02 + i * 0.045, b(7) + 0.02 + i * 0.045 + 0.75));
+        const p = eOutExpo(prog(t, b(7) - 0.12 + i * 0.045, b(7) - 0.12 + i * 0.045 + 0.75));
         m.fillText(l.ch, l.x, verao.y + (1 - p) * verao.fs * 1.4);
       });
       m.restore();
@@ -286,17 +288,19 @@
     { y: 72, dir: -1, list: ['lagoa', 'amigas', 'deck', 'pes', 'mesa', 'paiFilha', 'escolinha', 'mergulho'] },
     { y: H - 72 - 230, dir: 1, list: ['piquenique', 'raquete', 'orla', 'avoNeto', 'mulher', 'bolas', 'casal', 'lagoa'] },
   ];
-  const CLICK = 27.9;                                   // "Clique" na locução: 27,49–27,91
+  const CLICK = 28.1;                                   // "Clique" na locução: 27,71–28,15
   function sEnd(t) {
     fill(C.ink);
     const cw = 320, ch = 230, gap = 22, L = 8 * (cw + gap);
     const e = eOutExpo(prog(t, b(52) - 0.02, b(52) + 0.8));
     const burst = 700 * eOutExpo(prog(t, CLICK + 0.02, CLICK + 1.0));   // o clique acelera os carrosséis
     STRIPS.forEach((st, r) => {
-      const off = st.dir * (170 * (t - b(51)) + burst) + st.dir * -1 * (1 - e) * W * 1.1;
+      const off = st.dir * (170 * (t - b(51)) + burst), enter = -st.dir * (1 - e) * W * 1.4;
       st.list.forEach((k, i) => {
         let x = ((i * (cw + gap) + off) % L + L) % L - (cw + gap);
         if (x > W + cw) x -= L;
+        x += enter;                                     // entrada no acorde, depois da repetição
+        if (x > W || x + cw < 0) return;
         photo(img[k], { x, y: st.y, w: cw, h: ch }, { radius: 18, zoom: 1.05, filter: 'none' });
       });
     });
@@ -311,14 +315,14 @@
         zoom: arrive(t, 0, 2.0, 1.32, 1.07) - 0.02 * prog(t, 2, 4), rot: arrive(t, 0, 2.0, -2.5, 0) }) },
     { a: b(7), tr: { type: 'whip', d: 0.42, dir: [-1, 0] }, draw: sVerao },
     { a: b(8) + 0.46, tr: { type: 'cut' }, draw: t => full('deck', deckCam(t)) },
-    { a: b(13), tr: { type: 'slats', d: 0.5, n: 6 }, draw: t => full('pes', {
+    { a: b(13), tr: { type: 'zoom', d: 0.56 }, draw: t => full('pes', {
         cx: 0.5, cy: 0.55, zoom: arrive(t, b(13), 1.0, 1.22, 1.04), rot: arrive(t, b(13), 1.0, 2, 0), dx: lerp(0, -30, prog(t, b(13), b(15))) }) },
     { a: b(15), tr: { type: 'whip', d: 0.36, dir: [0, -1] }, draw: t => full('mergulho', {
         cx: 0.5, cy: 0.5, zoom: 1.02, dx: lerp(-110, 110, prog(t, b(14.5), b(16.6))) }) },
     { a: b(16), tr: { type: 'over', d: 0.9 }, draw: t => slidePanels(t, b(16) - 0.22, [
         { k: 'amigas', cy: 0.46 }, { k: 'bolas', cy: 0.5 }, { k: 'avoNeto', cy: 0.55 }], { axis: 'y' }) },
     { a: b(18), tr: { type: 'whip', d: 0.38, dir: [-1, 0] }, draw: sSol },
-    { a: b(20), tr: { type: 'whip', d: 0.4, dir: [-1, 0] }, draw: t => full('escolinha', {
+    { a: b(20), tr: { type: 'zoom', d: 0.5 }, draw: t => full('escolinha', {
         cy: 0.5, zoom: arrive(t, b(20), 1.0, 1.18, 1.06), dx: lerp(60, -60, prog(t, b(19.5), b(22.5))) }) },
     { a: b(22), tr: { type: 'window', d: 0.62 }, draw: t => {
         full('mesa', { cy: 0.5, zoom: lerp(1.04, 1.12, prog(t, b(21.4), b(25.5))), dx: lerp(30, -30, prog(t, b(21.4), b(25.5))) });
@@ -375,9 +379,23 @@
 
   function transition(tr, p, A, B) {
     if (tr.type === 'whip') {
-      const e = eInOutExpo(p), [dx, dy] = tr.dir;
-      ctx.drawImage(A, dx * W * e, dy * H * e);
-      ctx.drawImage(B, -dx * W * (1 - e), -dy * H * (1 - e));
+      // empurrão com profundidade: a cena que sai anda mais devagar, recua e escurece (paralaxe);
+      // a que entra cobre por cima, com sombra na borda, e assenta com leve zoom.
+      const e = eInOutQuint(p), [dx, dy] = tr.dir;
+      const sa = lerp(1, 0.9, e), sb = lerp(1.06, 1, eOutCubic(p));
+      ctx.save(); ctx.translate(W / 2 + dx * W * 0.45 * e, H / 2 + dy * H * 0.45 * e); ctx.scale(sa, sa); ctx.translate(-W / 2, -H / 2);
+      ctx.drawImage(A, 0, 0); ctx.restore();
+      fill('#06121c', 0.55 * e);
+      ctx.save();
+      ctx.translate(W / 2 - dx * W * (1 - e), H / 2 - dy * H * (1 - e)); ctx.scale(sb, sb); ctx.translate(-W / 2, -H / 2);
+      ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 80; ctx.shadowOffsetX = dx * 30; ctx.shadowOffsetY = dy * 30;
+      ctx.drawImage(B, 0, 0); ctx.restore();
+    } else if (tr.type === 'zoom') {
+      // mergulho: a cena que sai acelera para dentro, a que entra chega de perto e assenta
+      const sa = lerp(1, 1.7, eInCubic(p)), sb = lerp(1.45, 1, eOutCubic(p)), mix = eInOutCubic(prog(p, 0.4, 0.6));
+      ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(sa, sa); ctx.translate(-W / 2, -H / 2); ctx.drawImage(A, 0, 0); ctx.restore();
+      ctx.save(); ctx.globalAlpha = mix; ctx.translate(W / 2, H / 2); ctx.scale(sb, sb); ctx.translate(-W / 2, -H / 2); ctx.drawImage(B, 0, 0); ctx.restore();
+      fill('#ffffff', 0.12 * Math.sin(Math.PI * mix));
     } else if (tr.type === 'slats') {
       ctx.drawImage(A, 0, 0);
       const n = tr.n, hh = H / n;
@@ -402,10 +420,10 @@
 
   // Cursor de mouse: entra pelo canto, desacelera sobre o botão, clica e sai de cena.
   function cursorPos(t, tx, ty) {
-    const p = eInOutCubic(prog(t, 27.25, CLICK - 0.04));
+    const p = eInOutCubic(prog(t, 27.4, CLICK - 0.04));
     const x = lerp(W * 0.86, tx, p) + Math.sin(Math.PI * p) * 70, y = lerp(H + 60, ty, p) - Math.sin(Math.PI * p) * 40;
-    const leave = eInOutCubic(prog(t, 28.75, 29.35));
-    return { x: x + leave * 160, y: y + leave * 260, a: prog(t, 27.25, 27.4) * (1 - prog(t, 29.0, 29.35)) };
+    const leave = eInOutCubic(prog(t, 28.9, 29.45));
+    return { x: x + leave * 160, y: y + leave * 260, a: prog(t, 27.4, 27.55) * (1 - prog(t, 29.15, 29.45)) };
   }
   function drawCursor(x, y, a, k = 1) {
     if (a <= 0) return;
@@ -481,8 +499,8 @@
           fill('#ffffff', v, { ...r, w: segW * prog(t, S[i], S[i + 1]) });
         }
       }
-      kline(t, [{ w: '4', weight: 700 }, 'sedes.'], SAFE_X, 196, { size: 84, t0: S[0] + 0.12, tOut: 20.0 });
-      kline(t, ['Muitos', 'jeitos', 'de', 'viver', 'o', 'União.'], SAFE_X, 196, { size: 84, t0: 20.28, tOut: S[4] - 0.4, stagger: 0.045 });
+      kline(t, [{ w: '4', weight: 700 }, 'sedes.'], SAFE_X, 196, { size: 84, t0: S[0] + 0.12, tOut: 19.92 });
+      kline(t, ['Muitos', 'jeitos', 'de', 'viver', 'o', 'União.'], SAFE_X, 196, { size: 84, t0: 20.15, tOut: S[4] - 0.4, stagger: 0.045 });
       SEDES.forEach((sd, i) => {
         kline(t, sd.name, SAFE_X - 4, 880, { size: 160, weight: 700, track: -0.045, t0: S[i] + 0.08, tOut: S[i + 1] - 0.34, outDur: 0.3, stagger: 0.05 });
         kline(t, [sd.desc], SAFE_X, 962, { size: 44, weight: 500, track: -0.01, t0: S[i] + 0.2, tOut: S[i + 1] - 0.36, outDur: 0.28 });
@@ -490,10 +508,10 @@
     }
     // FECHAMENTO 1 — sobre o mural
     {
-      const t0 = 24.05, tOut = b(51) - 0.3;
+      const t0 = 23.9, tOut = b(51) - 0.3;
       fill('#0c1e2c', 0.55 * vis(t, t0 - 0.1, tOut));
       kline(t, ['O', 'próximo', 'encontro'], W / 2, 500, { size: 150, fam: 'serif', t0, tOut, align: 'center', stagger: 0.07, shadow: 0.4 });
-      kline(t, ['pode', 'ser', 'o', 'seu.'], W / 2, 500 + 150, { size: 150, fam: 'serif', t0: 24.9, tOut, align: 'center', stagger: 0.07, shadow: 0.4 });
+      kline(t, ['pode', 'ser', 'o', 'seu.'], W / 2, 500 + 150, { size: 150, fam: 'serif', t0: 24.78, tOut, align: 'center', stagger: 0.07, shadow: 0.4 });
     }
     // FECHAMENTO 2 — hero: "Seja sócio" gigante encolhe no acorde e vira título de site
     if (t >= b(51) - 0.1) {
@@ -575,11 +593,15 @@
   }
 
   // Quadro final: média de `samples` amostras em meio quadro (obturador de 180°).
+  const inTransition = t => SHOTS.some(s => s.tr && s.tr.d && s.tr.type !== 'cut' && Math.abs(t - s.a) < s.tr.d / 2 + 0.04);
   function renderFrame(f, samples = 6) {
     const t = f / FPS;
+    const fast = samples > 1 && inTransition(t);           // transições: mais amostras, obturador de 270°
+    const n = fast ? 12 : samples, shutter = fast ? 0.75 : 0.5;
+    samples = n;
     octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalCompositeOperation = 'source-over';
     for (let i = 0; i < samples; i++) {
-      const ts = samples === 1 ? t : t + ((i + 0.5) / samples - 0.5) * 0.5 / FPS;
+      const ts = samples === 1 ? t : t + ((i + 0.5) / samples - 0.5) * shutter / FPS;
       drawFrame(clamp(ts, 0, DUR - 1e-3));
       octx.globalAlpha = 1 / (i + 1);
       octx.drawImage(frame, 0, 0);

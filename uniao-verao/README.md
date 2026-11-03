@@ -6,7 +6,7 @@ Grêmio Náutico União · 1920 × 1080 · 30 fps · H.264 + AAC · −14 LUFS �
 
 ## Montagem (v3: motion)
 
-O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera própria, ligados por **transições compostas**. A **tipografia cinética** é uma camada independente por cima. Cada quadro final é a média de 6 amostras dentro do obturador de 180°, o que dá desfoque de movimento real nos chicotes e zooms. O acabamento é um grão leve. Todos os cortes caem numa batida da trilha (117,5 BPM).
+O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera própria, ligados por **transições compostas**. A **tipografia cinética** é uma camada independente por cima. Cada quadro final é a média de 6 amostras dentro do obturador de 180°, o que dá desfoque de movimento real nos chicotes e zooms. Nas transições sobem para 12 amostras com obturador de 270°. O acabamento é um grão leve. Todos os cortes caem numa batida da trilha (117,5 BPM).
 
 | Tempo | Plano | Movimento / transição | Texto |
 |---|---|---|---|
@@ -28,7 +28,7 @@ O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera 
 
 ## Áudio (`audio.py`)
 
-- **Locução:** cortada frase a frase e encaixada na janela do roteiro (`build/locucao_timeline.json`).
+- **Locução:** voz ElevenLabs "Ana Alice" (`assets/audio/locucao-ana-alice.mp3`), cortada frase a frase e encaixada na janela do roteiro (`build/locucao_timeline.json`). A versão anterior, com a voz Sofia, sai com `python3 audio.py --voz sofia`.
 - **Trilha:** no arranjo original, o acorde final caía em 24,5 s, logo no início do CTA, e a música morria embaixo do "Seja sócio do União". Repeti um compasso (20,41–22,45 s, quase idêntico ao vizinho), com emenda em crossfade sobre o tempo forte. Assim o acorde de resolução cai em 26,54 s, em cima de "sócio", e a cauda dele sustenta o fechamento. No acorde, a foto do CTA ganha um pouco de luz.
 - **Mix:** ducking da trilha sob a voz, fade final de 0,6 s e normalização EBU R128 para −14 LUFS, com pico real ≤ −1,5 dBTP.
 - **Trilha original:** `python3 audio.py --no-bar-repeat` gera a versão sem a repetição de compasso.
