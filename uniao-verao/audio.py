@@ -114,12 +114,71 @@ def envelope(x, attack=0.03, release=0.35):
     return env
 
 
+# Efeitos sonoros (ElevenLabs, assets/audio/sfx). Cada entrada:
+# (arquivo, tempo no filme do ponto de sincronia, ganho dB, velocidade, pan inicial→final).
+# O ponto de sincronia é o pico do som (whoosh/swell) ou o ataque (splash, raquete, clique).
+B = lambda n: BEAT0 + n * BEAT
+SFX_FILES = {  # arquivo, âncora (s dentro do arquivo), trecho útil (s)
+    "whoosh": ("whoosh.mp3", 0.40, 1.15),
+    "swell": ("zoom-verao.mp3", 0.34, 1.10),
+    "piscina": ("piscina.mp3", 0.02, 1.90),
+    "tenis": ("tenis.mp3", 0.07, 0.60),
+    "clique": ("clique.mp3", 0.02, 0.95),
+}
+L2R, R2L, MID = (-0.7, 0.7), (0.7, -0.7), (0.0, 0.0)
+SFX = [
+    ("whoosh", B(7), -13, 1.00, R2L),          # gancho → "verão" (chicote lateral)
+    ("swell", 4.30, -6, 1.00, MID),            # zoom atravessando a letra
+    ("whoosh", B(13), -14, 0.80, MID),         # deck → piscina (zoom)
+    ("piscina", B(15) - 0.02, -9, 1.00, MID), # mergulho (chicote vertical)
+    ("tenis", B(16) + 0.06, -8, 1.00, (0.25, 0.25)),  # tríptico do tênis
+    ("whoosh", B(18), -11, 1.00, R2L),         # tênis → "Dias ao sol"
+    ("whoosh", B(20), -14, 0.80, MID),         # → escolinha (zoom)
+    ("whoosh", B(22), -15, 0.88, MID),         # → amigos (janela)
+    ("whoosh", B(28), -11, 1.00, R2L),         # → orla
+    ("whoosh", B(30), -13, 0.85, MID),         # → mural (janela)
+    ("whoosh", B(37), -11, 1.00, R2L),         # → Alto Petrópolis
+    ("whoosh", B(39.5), -14, 1.08, MID),       # → Moinhos (vertical)
+    ("whoosh", B(42), -14, 1.04, R2L),         # → Petrópole
+    ("whoosh", B(44.5), -14, 1.08, MID),       # → Ilha do Pavão (vertical)
+    ("whoosh", B(47), -13, 0.85, MID),         # → mural do fechamento (janela)
+    ("whoosh", B(51), -10, 0.95, MID),         # → hero "Seja sócio" (chicote vertical)
+    ("clique", 28.10, -6, 1.00, (0.15, 0.15)), # cursor clica no botão
+]
+
+
+def build_sfx():
+    out = np.zeros((int(DUR * SR), 2), np.float32)
+    cache = {}
+    for name, at, gain_db, speed, (p0, p1) in SFX:
+        fname, anchor, length = SFX_FILES[name]
+        if fname not in cache:
+            x = decode(os.path.join(HERE, "assets/audio/sfx", fname), 2)
+            cache[fname] = x / max(1e-6, np.abs(x).max())       # pico em 0 dBFS antes do ganho
+        x = cache[fname][:int(length * SR)]
+        if speed != 1.0:                                         # variação de altura/velocidade
+            n = int(len(x) / speed)
+            idx = np.linspace(0, len(x) - 1, n)
+            x = np.stack([np.interp(idx, np.arange(len(x)), x[:, c]) for c in (0, 1)], 1).astype(np.float32)
+        nf = int(0.12 * SR)
+        x[-nf:] *= np.linspace(1, 0, nf, dtype=np.float32)[:, None] ** 2
+        pan = np.linspace(p0, p1, len(x), dtype=np.float32)      # varredura estéreo (pan de potência constante)
+        ang = (pan + 1) * np.pi / 4
+        x = x * np.stack([np.cos(ang), np.sin(ang)], 1) * np.sqrt(2)
+        start = int((at - anchor / speed) * SR)
+        a, b = max(0, start), min(len(out), start + len(x))
+        out[a:b] += x[a - start:b - start] * 10 ** (gain_db / 20)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--voz", choices=sorted(VOICES), default="ana", help="locução a usar")
     ap.add_argument("--music-gain-db", type=float, default=-11.0, help="nível da trilha sem voz")
     ap.add_argument("--duck-db", type=float, default=-6.0, help="redução extra da trilha sob a voz")
     ap.add_argument("--lufs", type=float, default=-14.0, help="loudness integrado do mix final")
+    ap.add_argument("--no-sfx", action="store_true", help="mix sem efeitos sonoros")
+    ap.add_argument("--sfx-db", type=float, default=0.0, help="ajuste geral dos efeitos (dB)")
     ap.add_argument("--no-bar-repeat", action="store_true", help="usa a trilha sem a repetição de compasso")
     ap.add_argument("--music-offset", type=float, default=0.0, help="segundos a pular no início da trilha")
     args = ap.parse_args()
@@ -158,6 +217,8 @@ def main():
     nf = int(0.6 * SR)
     tail[-nf:] = np.linspace(1, 0, nf) ** 1.5                         # fade final de 0,6 s
     mix = music * (g * duck * tail)[:, None] + voice[:, None] * 0.92
+    if not args.no_sfx:
+        mix = mix + build_sfx() * 10 ** (args.sfx_db / 20)
     raw = os.path.join(HERE, "build/mix_raw.wav")
     write_wav(raw, mix / max(1.0, np.abs(mix).max()))
     loudnorm(raw, os.path.join(HERE, "build/mix.wav"), args.lufs)

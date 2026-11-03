@@ -3,6 +3,7 @@
 //
 //   node render.mjs                          -> build/uniao-verao-30s.mp4
 //   node render.mjs --stills 1,5,9.5,27      -> build/stills/t*.png (conferência)
+//   node render.mjs --encode-only            -> remonta o MP4 com os quadros já renderizados
 //   node render.mjs --workers 4 --out build/x.mp4
 import { createRequire } from 'node:module';
 import http from 'node:http';
@@ -53,6 +54,8 @@ if (args.stills) {
   await browser.close(); server.close(); console.log('stills ->', dir); process.exit();
 }
 
+if (args['encode-only']) { await browser.close(); server.close(); }   // só remonta o vídeo com os quadros existentes (ex.: mudou só o áudio)
+else {
 fs.rmSync(FRAMES, { recursive: true, force: true }); fs.mkdirSync(FRAMES, { recursive: true });
 const queue = Array.from({ length: FPS * DUR }, (_, i) => i);
 const total = queue.length; let done = 0; const t0 = Date.now();
@@ -66,6 +69,7 @@ await Promise.all(Array.from({ length: WORKERS }, async () => {
   await page.close();
 }));
 await browser.close(); server.close(); console.log();
+}
 
 const wav = path.join(here, 'build/mix.wav');
 const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-framerate', String(FPS), '-i', path.join(FRAMES, 'f%04d.png'),
