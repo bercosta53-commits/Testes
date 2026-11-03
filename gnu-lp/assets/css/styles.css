@@ -513,18 +513,21 @@ html[data-hero="split"] .hero__title { font-size: clamp(2.375rem, 1.4rem + 3vw, 
 .vida__wide img { width: 100%; }
 .vida__text { grid-column: 1 / 5; padding-top: 8px; }
 .vida__text .btn { margin-top: 32px; }
+.vida__detail { width: 64%; margin-top: clamp(48px, 6vw, 88px); }
+.vida__detail img { width: 100%; aspect-ratio: 1; object-fit: cover; }
 .vida__portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .vida__portrait--a { grid-column: 6 / 9; }
 .vida__portrait--b { grid-column: 10 / 13; margin-top: clamp(64px, 9vw, 152px); }
 
 @media (max-width: 1023px) {
   .vida__text { grid-column: 1 / -1; max-width: 36em; }
+  .vida__detail { display: none; }
   .vida__portrait--a { grid-column: 1 / 7; }
   .vida__portrait--b { grid-column: 7 / 13; }
 }
 @media (max-width: 767px) {
   .vida__wide { margin-inline: calc(-1 * var(--gutter)); }
-  .vida__wide img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 48% 50%; }
+  .vida__wide img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 10% 50%; }
   .vida__wide figcaption { padding-inline: var(--gutter); }
   .vida__grid { column-gap: 12px; }
   .vida__portrait--b { margin-top: 56px; }
@@ -658,25 +661,33 @@ html[data-hero="split"] .hero__title { font-size: clamp(2.375rem, 1.4rem + 3vw, 
   row-gap: clamp(40px, 5vw, 64px);
   align-items: start;
 }
-.encontros__text { grid-column: 1 / 8; }
+/* Três cenas em ziguezague: mesa (larga) → gramado (retrato à direita) → gerações (retrato ao centro) */
 .encontros__text h2 { max-width: 14em; }
 .encontros__text .lead { margin-top: 24px; }
-.encontros__a { grid-column: 1 / 9; }
 .encontros__a img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-.encontros__b { grid-column: 10 / 13; margin-top: clamp(48px, 7vw, 120px); }
-.encontros__b img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.encontros__b img,
+.encontros__c img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .encontros figcaption { color: var(--ink); font-size: var(--fs-small); }
-.encontros__more { grid-column: 1 / -1; margin-top: -8px; }
 
-@media (max-width: 1023px) {
-  .encontros__text, .encontros__a { grid-column: 1 / -1; }
-  .encontros__b { grid-column: 5 / -1; margin-top: 0; }
+.encontros__text, .encontros__a, .encontros__more { grid-column: 1 / -1; }
+.encontros__b { grid-column: 4 / -1; }
+.encontros__c { grid-column: 1 / 10; }
+
+@media (min-width: 768px) {
+  .encontros__b { grid-column: 6 / -1; }
+  .encontros__c { grid-column: 1 / 8; }
+}
+@media (min-width: 1024px) {
+  .encontros__text { grid-column: 1 / 8; grid-row: 1; }
+  .encontros__a { grid-column: 1 / 9; grid-row: 2; }
+  .encontros__b { grid-column: 10 / 13; grid-row: 2 / span 2; margin-top: clamp(48px, 7vw, 120px); }
+  .encontros__c { grid-column: 5 / 9; grid-row: 3; }
+  .encontros__more { grid-column: 1 / 5; grid-row: 3; align-self: end; }
 }
 @media (max-width: 767px) {
   .encontros__a { margin-inline: calc(-1 * var(--gutter)); }
   .encontros__a img { aspect-ratio: 4 / 3; }
   .encontros__a figcaption { padding-inline: var(--gutter); }
-  .encontros__b { grid-column: 4 / -1; }
 }
 
 /* ---------- BLOCO 05 · História ---------- */
@@ -736,6 +747,16 @@ html[data-hero="split"] .hero__title { font-size: clamp(2.375rem, 1.4rem + 3vw, 
   top: calc(var(--header-h) + 32px);
 }
 .associacao__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+/* Detalhe sobreposto (Rota A): avança sobre a calha entre foto e texto */
+.associacao__inset {
+  position: absolute;
+  right: -19%;
+  bottom: 72px;
+  width: 38%;
+  padding: 8px;
+  background: var(--white);
+}
+.associacao__inset img { aspect-ratio: 4 / 5; }
 .associacao__body { grid-column: 7 / 13; padding-top: 8px; }
 .associacao__body h2 { max-width: 12em; }
 .associacao__body .lead { margin-top: 24px; }
@@ -840,7 +861,8 @@ html[data-hero="split"] .hero__title { font-size: clamp(2.375rem, 1.4rem + 3vw, 
 
 @media (max-width: 1023px) {
   .associacao__media { grid-column: 1 / -1; position: static; }
-  .associacao__media img { aspect-ratio: 16 / 10; object-position: 50% 40%; }
+  .associacao__inset { display: none; }
+  .associacao__media img { aspect-ratio: 16 / 10; object-position: 50% 86%; }
   .associacao__body { grid-column: 1 / -1; }
 }
 @media (max-width: 767px) {
@@ -954,7 +976,8 @@ html[data-hero="split"] .hero__title { font-size: clamp(2.375rem, 1.4rem + 3vw, 
 }
 
 /* ---------- Modo pauta fotográfica (?pauta): mostra ID e intenção de cada foto ---------- */
-html[data-pauta] [data-foto] { position: relative; }
+/* :where() zera a especificidade: não sobrescreve figuras já posicionadas (hero, sedes, detalhes) */
+:where(html[data-pauta] [data-foto]) { position: relative; }
 html[data-pauta] [data-foto]::before {
   content: attr(data-foto) " · " attr(data-pauta);
   position: absolute;

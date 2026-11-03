@@ -44,7 +44,7 @@ SLOTS = {
         'alt': 'Pai brinca com os filhos na parte rasa da piscina do clube enquanto a mãe observa sentada na borda.',
     },
     'F03': {
-        'nome': 'Bloco 02 · Tênis entre amigos (retrato)',
+        'nome': 'Bloco 02 · Tênis/beach tennis entre amigos (retrato)',
         'saidas': [('vida-tenis-petropole', [400, 560, 800], (4, 5))],
         'alt': 'Dois casais jogam tênis em quadra de saibro da sede União Petrópole, rindo entre um ponto e outro.',
     },
@@ -73,6 +73,11 @@ SLOTS = {
         'saidas': [('sede-ilha-do-pavao', [640, 960, 1440, 2048], None)],
         'alt': 'Vista aérea da Ilha do Pavão no Guaíba ao entardecer: sede náutica, trapiche com barcos e mata nativa.',
     },
+    'F09': {
+        'nome': 'Bloco 04 · Novas histórias para contar em família (retrato)',
+        'saidas': [('encontro-geracoes', [400, 560, 800], (4, 5))],
+        'alt': 'Senhor ajoelhado na quadra de saibro ensina um menino a segurar a raquete, ao lado de um cesto de bolinhas.',
+    },
     'F10': {
         'nome': 'Bloco 04 · Uma tarde inteira para estar junto (retrato)',
         'saidas': [('encontro-piscina-moinhos', [400, 560, 800], (4, 5))],
@@ -100,6 +105,17 @@ SLOTS = {
             ('fechamento-guaiba-mobile', [800], (16, 9)),
         ],
         'alt': 'Amigos reunidos no trapiche da Ilha do Pavão ao pôr do sol, com o Guaíba dourado e um barco a remo ao fundo.',
+    },
+    # Detalhes decorativos: alt vazio de propósito (leitor de tela pula)
+    'X5': {
+        'nome': 'Bloco 06 · Detalhe sobreposto à foto da associação (desktop)',
+        'saidas': [('associacao-detalhe', [280, 400, 560], (4, 5))],
+        'alt': '',
+    },
+    'X7': {
+        'nome': 'Bloco 02 · Detalhe sob o texto (desktop)',
+        'saidas': [('vida-detalhe-borda', [400, 560, 800], (1, 1))],
+        'alt': '',
     },
 }
 

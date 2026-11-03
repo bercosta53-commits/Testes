@@ -94,26 +94,34 @@ Os valores ficam em `CONFIG`, no topo do arquivo. Também dá para sobrescrevê-
 
 O HTML já traz os links `wa.me` prontos, então os CTAs funcionam mesmo sem JS.
 
-## Mapa de fotos (pauta × acervo provisório)
+## Mapa de fotos
 
-| ID | Bloco | Pauta do briefing | Arquivo atual | Situação |
+Desde a rodada de 03/11, a página usa imagens **geradas por IA** a partir da pauta em [`PROMPTS-FOTOGRAFIA.md`](PROMPTS-FOTOGRAFIA.md). Só duas faixas de sede seguem com fotos reais do acervo. O rodapé avisa que algumas imagens são ilustrativas.
+
+| ID | Bloco | Cena | Arquivo | Origem |
 |---|---|---|---|---|
-| F01 | Hero | Piscina e entorno com pessoas, 16:9 e 4:5 | `hero-piscina-alto-petropolis` | Acervo. Baixa resolução para sangria total; sem pessoas |
-| F02 | 02 | Família na piscina, 4:5 | `vida-familia-piscina` | Acervo panorâmico, recortado em 4:3 no celular |
-| F03 | 02 | Dupla jogando tênis recreativo, 3:2 | `vida-tenis-petropole` | Quadras sem pessoas. Produzir |
-| F04 | 02 | Amigos em área verde ou deck, 4:5 | `vida-convivencia` | Retrato individual. Produzir cena de grupo |
-| F05 | 03 | Alto Petrópolis, piscinas | `sede-alto-petropolis` | Mostra a área verde/lago, não as piscinas-lago |
-| F06 | 03 | Moinhos de Vento, piscinas | `sede-moinhos-de-vento` | OK |
-| F07 | 03 | União Petrópole, quadras | `sede-uniao-petropole` | OK |
-| F08 | 03 | Ilha do Pavão, Guaíba | `sede-ilha-do-pavao` | Confirmar se a foto é posterior à reconstrução |
-| F09 | 04 | Amigos após o tênis, 4:5 | — | Sem foto no acervo; o bloco usa 2 cenas |
-| F10 | 04 | Família ou crianças em área de lazer, 4:5 | `encontro-piscina-moinhos` | Recorte de F06. Produzir |
-| F11 | 04 | Mesa de café ou almoço no GNU, 4:5 | `encontro-espaco-cooks` | Salão vazio. Produzir com pessoas |
-| F12 | 05 | Arquitetura/área social, 3:2 | `historia-ilha-do-pavao` | Recorte de F08 |
-| F13 | 06 | Área tranquila com pessoas ao fundo, 4:5 | `associacao-area-verde` | Recorte de F05 |
-| F14 | 07 | Fim de tarde com amigos/família, 16:9 e 4:5 | `fechamento-guaiba` | Remo no Guaíba. Ótima luz, mas é esporte |
+| F01 | Hero | Fim de tarde na piscina, famílias e amigos | `hero-piscina-alto-petropolis` | IA |
+| F02 | 02 · Verão em família | Pai e filhos nadando debaixo d'água | `vida-familia-piscina` | IA |
+| F03 | 02 · Beach tennis entre amigos | Duplas na areia ao pôr do sol | `vida-tenis-petropole` | IA |
+| F04 | 02 · Mais tempo juntos | Amigos nas espreguiçadeiras | `vida-convivencia` | IA |
+| X7 | 02 · detalhe (desktop) | Pés na borda da piscina, óculos de natação | `vida-detalhe-borda` | IA, decorativa |
+| F05 | 03 · Alto Petrópolis | Deck, quiosque, família e piscina com tobogã | `sede-alto-petropolis` | IA, **validar com a sede real** |
+| F06 | 03 · Moinhos de Vento | Piscina com tobogã | `sede-moinhos-de-vento` | Acervo real |
+| F07 | 03 · União Petrópole | Quadras de saibro em uso | `sede-uniao-petropole` | IA, **validar com a sede real** |
+| F08 | 03 · Ilha do Pavão | Vista aérea | `sede-ilha-do-pavao` | Acervo real |
+| F11 | 04 · Depois do jogo… | Amigos à mesa do café | `encontro-espaco-cooks` | IA |
+| F10 | 04 · Uma tarde inteira… | Piquenique em família no gramado | `encontro-piscina-moinhos` | IA |
+| F09 | 04 · Novas histórias… | Avô ensina o neto a segurar a raquete | `encontro-geracoes` | IA |
+| F12 | 05 · História | Remo no Guaíba com Porto Alegre no horizonte | `historia-ilha-do-pavao` | IA |
+| F13 | 06 · Associação | Mãe e filha na borda da piscina | `associacao-area-verde` | IA |
+| X5 | 06 · detalhe sobreposto (desktop) | Raquete, limonada e toalha listrada | `associacao-detalhe` | IA, decorativa |
+| F14 | 07 · Fechamento | Amigos e crianças no gramado da sede náutica ao entardecer | `fechamento-guaiba` | IA, **tem letreiro ilegível na fachada** |
 
-Com o acervo atual, quatro fotos se repetem em recortes diferentes (F05, F06, F08 e o tênis). A produção nova deve dar uma foto própria a cada seção. Abra `?pauta` para ver o mapa sobre a página.
+Os nomes dos arquivos são fixos por espaço (o script depende deles) e podem não descrever a cena atual. Abra `?pauta` para ver o mapa sobre a página.
+
+**Correções pendentes nas imagens**
+- **F14:** o letreiro da sede náutica saiu com letras embaralhadas e um brasão inventado. Corrija no Nano Banana, anexando a imagem: `Remove the lettering and the crest from the brick facade of the building; keep the bricks, windows, light and everything else exactly as it is.` Depois rode de novo `python3 tools/importar_foto.py F14 …`.
+- **F04:** há logotipos muito pequenos nos calções e no boné. Não chegam a ser legíveis, mas fogem da regra "sem marcas".
 
 ### Trocar as fotos
 
@@ -131,7 +139,7 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 
 ## Qualidade verificada
 
-- Contraste do texto branco sobre a foto do hero, medido pixel a pixel em 390, 834, 1280×720, 1366×640, 1440 e 1920 px. Todo texto fica em ≥ 5,6:1 no p95, acima dos 4,5:1 exigidos pelo AA; a navegação fica em ≥ 9:1.
+- Contraste do texto branco sobre a foto do hero, medido pixel a pixel em 390, 834, 1280×720, 1366×640, 1440 e 1920 px. Medido linha a linha de texto, o menor valor no p95 é 5,3:1, no título grande (que exige 3:1). O texto pequeno fica acima de 6:1 (exige 4,5:1) e a navegação acima de 8:1.
 - Nenhuma rolagem horizontal em 360, 390, 834 e 1440 px. CLS = 0. O LCP é a foto do hero, pré-carregada com `srcset`/`sizes`.
 - O CTA do hero aparece completo na primeira tela em 390×844, 834×1112, 1280×720 e 1440×900.
 - Barra fixa: entra quando o CTA do hero sai da tela. Some no bloco de associação, no fechamento, no rodapé, com o menu aberto e com o formulário aberto. Respeita a safe area do aparelho.
@@ -143,7 +151,7 @@ O script recorta na proporção do espaço, exporta os WebP (até 2048 px no her
 1. Confirmar o número oficial de WhatsApp da equipe de associação e os horários de atendimento.
 2. Validar com o jurídico e o comercial os nomes e textos das modalidades (Título Patrimonial e Título Contribuinte Efetivo).
 3. Definir a URL da política de privacidade e a base legal do formulário (LGPD). Plugar `formEndpoint` no CRM.
-4. Fazer a produção fotográfica (F01–F14), com autorização de imagem. As fotos atuais têm resolução limitada.
+4. Substituir as imagens geradas por fotos reais (F01–F14), com autorização de imagem, ou validar com o clube o uso de imagens ilustrativas. As faixas de sede F05 e F07 precisam mostrar o lugar real antes da publicação. A pauta de prompts serve como roteiro da sessão de fotos.
 5. Confirmar as condições atuais da Ilha do Pavão e o endereço de embarque usado em "Ver localização".
 6. Confirmar se haverá visita guiada. A página não oferece visita até que isso seja validado.
 7. Usar a versão positiva oficial do escudo em vetor. O PNG atual foi rasterizado a partir do PDF.
