@@ -187,11 +187,43 @@ def make(doc):
     return doc
 
 
+WATERMARK = """
+  <div class="proto-watermark" aria-hidden="true"></div>
+  <style>
+    .proto-watermark {
+      position: fixed; inset: 0; z-index: 95; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='260'%3E%3Ctext x='210' y='130' text-anchor='middle' dominant-baseline='middle' transform='rotate(-24 210 130)' font-family='Helvetica,Arial,sans-serif' font-size='22' font-weight='600' letter-spacing='3' fill='%23102A3B' fill-opacity='0.10'%3EPROT%C3%93TIPO %C2%B7 EM APROVA%C3%87%C3%83O%3C/text%3E%3Ctext x='211' y='131' text-anchor='middle' dominant-baseline='middle' transform='rotate(-24 210 130)' font-family='Helvetica,Arial,sans-serif' font-size='22' font-weight='600' letter-spacing='3' fill='%23FFFFFF' fill-opacity='0.16'%3EPROT%C3%93TIPO %C2%B7 EM APROVA%C3%87%C3%83O%3C/text%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+    @media print { .proto-watermark { position: absolute; } }
+  </style>
+"""
+
+
+def standalone(doc):
+    """Envolve o protótipo num documento completo, com marca d'água, para abrir como arquivo."""
+    head_bits = []
+    for pattern in (r'<title>.*?</title>\s*', r'<meta name="robots"[^>]*>\s*', r'<link rel="icon"[^>]*>\s*'):
+        m = re.search(pattern, doc, flags=re.S)
+        if m:
+            head_bits.append(m.group(0).strip())
+            doc = doc[:m.start()] + doc[m.end():]
+    return ('<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+            + '\n'.join(head_bits) + '\n'
+            '<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n'
+            '</head>\n<body>\n' + doc.lstrip() + WATERMARK + '</body>\n</html>\n')
+
+
 def main():
     ap = argparse.ArgumentParser(description='Gera o protótipo navegável de revisão da LP.')
     ap.add_argument('--saida', required=True, help='arquivo de saída')
+    ap.add_argument('--arquivo', action='store_true',
+                    help='gera um HTML completo, com marca d\'água, para enviar como arquivo')
     args = ap.parse_args()
     doc = make(gerar_html_unico.build())
+    if args.arquivo:
+        doc = standalone(doc)
     with open(args.saida, 'w', encoding='utf-8') as fh:
         fh.write(doc)
     print(f'{args.saida} · {os.path.getsize(args.saida) / 1024 / 1024:.1f} MB')
