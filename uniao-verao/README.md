@@ -2,7 +2,7 @@
 
 Grêmio Náutico União · 1920 × 1080 · 30 fps · H.264 + AAC · −14 LUFS · motion com fotografia, tipografia animada, locução e trilha.
 
-**Assistir:** [`build/uniao-verao-30s.mp4`](build/uniao-verao-30s.mp4)
+**Assistir:** [`build/uniao-verao-30s.mp4`](build/uniao-verao-30s.mp4) · **Antes × depois da camada de IA:** [`build/antes-depois.mp4`](build/antes-depois.mp4)
 
 ## Montagem (v3: motion)
 
@@ -60,7 +60,7 @@ python3 prep_photos.py           # assets/photos/novas -> assets/photos/hd (Real
 python3 prep_photos.py --lanczos # alternativa rápida, sem IA
 python3 profundidade.py          # assets/photos/depth/*.png (já versionados; só rode se trocar fotos)
 python3 audio.py                 # build/mix.wav (numpy + ffmpeg)
-node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg; o parallax deixa ~8× mais lento)
+node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg, ~40 min em 4 núcleos de CPU)
 node render.mjs --stills 1,10,27 # quadros soltos para conferência
 node render.mjs --par 0 --out build/sem-parallax.mp4   # antes/depois
 ```
