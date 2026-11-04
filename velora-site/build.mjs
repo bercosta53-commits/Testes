@@ -38,6 +38,8 @@ async function main() {
   if (!config.agendaUrl) avisos.push('agendaUrl vazio → CTAs dizem "Solicitar conversa" (regra da copy v2: "Agendar" só com agenda real).');
   else if (!config.formularios.conversa) avisos.push('agendaUrl definido sem formularios.conversa → a agenda abre, mas os dados do formulário não são enviados.');
   if (!config.privacidade.texto) avisos.push('privacidade.texto vazio → aviso de privacidade/LGPD ainda não publicado (obrigatório antes de publicar).');
+  if (!Object.values(config.contato).some(Boolean)) avisos.push('contato vazio → rodapé e menu sem e-mail, telefone ou redes (config.mjs → contato).');
+  if (!Object.values(config.empresa).some(Boolean)) avisos.push('empresa vazio → rodapé sem razão social, CNPJ e endereço (config.mjs → empresa).');
   if (!config.casos.length) avisos.push('casos vazio → nenhum caso publicado (espaço reservado, sem nada visível).');
   if (!config.equipe.length) avisos.push('equipe vazio → equipe não publicada (espaço reservado, sem nada visível).');
   for (const a of avisos) console.warn(`  aviso: ${a}`);

@@ -32,7 +32,7 @@ function hero(ctx) {
       </div>
     </div>
     <div class="wrap hero__faixa-wrap">
-      <p class="hero__faixa">${etapas.map((e, i) => html`${i ? html`<span class="hero__faixa-sep"> · </span>` : ''}<span class="hero__faixa-item">${e.nome}</span>`)}</p>
+      <p class="hero__faixa">${etapas.map((e, i) => html`${i ? html`<span class="hero__faixa-sep"> · </span>` : ''}<span class="hero__faixa-item" style="--k:${i}">${e.nome}</span>`)}</p>
     </div>`);
 }
 
@@ -63,7 +63,7 @@ function ondeTrava(ctx) {
       <h2 class="titulo-2 titulo-2--grande cabeca">Sua empresa sabe entregar valor. O desafio é repetir o caminho até o próximo contrato.</h2>
     </div>
     <div class="sangra">
-      <figure class="sangra__foto sangra__foto--esq onde-trava__foto foto revelar">${foto(ctx, 'onde-trava', { sizes: '(min-width: 1024px) 50vw, 100vw' })}</figure>
+      <figure class="sangra__foto sangra__foto--esq onde-trava__foto foto revelar-foto">${foto(ctx, 'onde-trava', { sizes: '(min-width: 1024px) 50vw, 100vw' })}</figure>
       <div class="sangra__texto sangra__texto--dir">
         <p class="lead revelar">Os obstáculos variam. Em muitos casos, estão na passagem entre decisões de mercado, marketing e vendas.</p>
         <ol class="dores">
@@ -178,7 +178,7 @@ function comoTrabalhamos(ctx) {
         <h2 class="titulo-2 titulo-2--grande">Um método para decidir, executar e aprender.</h2>
         <p class="lead como__abertura revelar">O RHOI organiza o trabalho em ciclos curtos, com decisões construídas junto à liderança e às equipes.</p>
       </div>
-      <figure class="sangra__foto sangra__foto--dir como__foto foto revelar">${foto(ctx, 'como', { sizes: '(min-width: 1024px) 50vw, 100vw' })}</figure>
+      <figure class="sangra__foto sangra__foto--dir como__foto foto revelar-foto revelar-foto--dir">${foto(ctx, 'como', { sizes: '(min-width: 1024px) 50vw, 100vw' })}</figure>
     </div>
     <div class="wrap">
       ${linhaRhoi(passos)}
@@ -190,7 +190,7 @@ function comoTrabalhamos(ctx) {
 function paraQuem(ctx) {
   const { casos } = ctx.config;
   const card = (segmento, texto, destaque) => html`<article class="card-icp${destaque ? ' card-icp--destaque' : ''} revelar">
-    ${destaque ? html`<figure class="card-icp__foto foto">${foto(ctx, 'icp-tecnologia', { sizes: '(min-width: 768px) 50vw, 100vw' })}</figure>` : ''}
+    ${destaque ? html`<figure class="card-icp__foto foto revelar-foto">${foto(ctx, 'icp-tecnologia', { sizes: '(min-width: 768px) 50vw, 100vw' })}</figure>` : ''}
     <div class="card-icp__corpo">
       <h3 class="card-icp__segmento">${segmento}</h3>
       <p class="card-icp__texto">${texto}</p>
@@ -236,7 +236,7 @@ function conversa(ctx) {
   const { equipe, privacidade } = ctx.config;
   return secaoLivre({ tema: 'claro', id: 'conversa', classe: 'conversa' }, html`
     <div class="sangra sangra--conversa">
-      <figure class="sangra__foto sangra__foto--esq conversa__foto foto">${foto(ctx, 'agendar', { sizes: '(min-width: 1024px) 43vw, 100vw' })}</figure>
+      <figure class="sangra__foto sangra__foto--esq conversa__foto foto revelar-foto revelar-foto--baixo">${foto(ctx, 'agendar', { sizes: '(min-width: 1024px) 43vw, 100vw' })}</figure>
       <div class="sangra__texto sangra__texto--dir conversa__coluna">
         ${rotulo('Conversa inicial', '07')}
         <h2 class="titulo-2 titulo-2--grande">Onde sua aquisição precisa avançar?</h2>

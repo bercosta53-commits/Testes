@@ -1,74 +1,102 @@
-// Estrutura da página: <head>, navegação global e rodapé. One page: os links levam às seções.
+// Estrutura da página: <head>, cabeçalho, menu do celular e rodapé. One page: os links levam às seções.
 import { html, raw } from './html.mjs';
-import { botao, seta } from './componentes.mjs';
+import { botao, seta, pendente } from './componentes.mjs';
+import { logo } from './logo.mjs';
 
 // Navegação (copy v2, Rodapé · Navegação). No cabeçalho, "Conversar" vira o botão de CTA:
 // curto e sem prometer agenda (a regra "Agendar só com agenda real" vale para os CTAs da página).
+// O número é o da seção na página (design; não é texto da copy).
 const NAV = [
-  { texto: 'O sistema', href: '#sistema' },
-  { texto: 'O que entregamos', href: '#entregas' },
-  { texto: 'Como trabalhamos', href: '#como-trabalhamos' },
-  { texto: 'Para quem', href: '#para-quem' },
+  { n: '02', texto: 'O sistema', href: '#sistema' },
+  { n: '03', texto: 'O que entregamos', href: '#entregas' },
+  { n: '04', texto: 'Como trabalhamos', href: '#como-trabalhamos' },
+  { n: '05', texto: 'Para quem', href: '#para-quem' },
 ];
-const CONVERSAR = { texto: 'Conversar', href: '#conversa' };
-const ancoraCta = CONVERSAR.href;
+const CONVERSAR = { n: '07', texto: 'Conversar', href: '#conversa' };
 
-// Assinatura "Velora" em escala de cartaz no rodapé: contorno das letras em Space Grotesk 700
-// convertido em desenho (logotipo decorativo; não é texto).
-const ASSINATURA = raw('<svg class="rodape__assinatura-grande" viewBox="18 -700 2807 714" aria-hidden="true" focusable="false"><path d="M196 0 18 -700H154L302 -85H316L464 -700H600L422 0ZM874 14Q800 14 743.5 -17.5Q687 -49 655.5 -106.5Q624 -164 624 -242V-254Q624 -332 655 -389.5Q686 -447 742 -478.5Q798 -510 872 -510Q945 -510 999 -477.5Q1053 -445 1083 -387.5Q1113 -330 1113 -254V-211H752Q754 -160 790 -128Q826 -96 878 -96Q931 -96 956 -119Q981 -142 994 -170L1097 -116Q1083 -90 1056.5 -59.5Q1030 -29 986 -7.5Q942 14 874 14ZM753 -305H985Q981 -348 950.5 -374Q920 -400 871 -400Q820 -400 790 -374Q760 -348 753 -305ZM1185 0V-700H1311V0ZM1647 14Q1573 14 1514 -16Q1455 -46 1421 -103Q1387 -160 1387 -240V-256Q1387 -336 1421 -393Q1455 -450 1514 -480Q1573 -510 1647 -510Q1721 -510 1780 -480Q1839 -450 1873 -393Q1907 -336 1907 -256V-240Q1907 -160 1873 -103Q1839 -46 1780 -16Q1721 14 1647 14ZM1647 -98Q1705 -98 1743 -135.5Q1781 -173 1781 -243V-253Q1781 -323 1743.5 -360.5Q1706 -398 1647 -398Q1589 -398 1551 -360.5Q1513 -323 1513 -253V-243Q1513 -173 1551 -135.5Q1589 -98 1647 -98ZM1983 0V-496H2107V-440H2125Q2136 -470 2161.5 -484Q2187 -498 2221 -498H2281V-386H2219Q2171 -386 2140 -360.5Q2109 -335 2109 -282V0ZM2493 14Q2440 14 2398 -4.5Q2356 -23 2331.5 -58.5Q2307 -94 2307 -145Q2307 -196 2331.5 -230.5Q2356 -265 2399.5 -282.5Q2443 -300 2499 -300H2635V-328Q2635 -363 2613 -385.5Q2591 -408 2543 -408Q2496 -408 2473 -386.5Q2450 -365 2443 -331L2327 -370Q2339 -408 2365.5 -439.5Q2392 -471 2436.5 -490.5Q2481 -510 2545 -510Q2643 -510 2700 -461Q2757 -412 2757 -319V-134Q2757 -104 2785 -104H2825V0H2741Q2704 0 2680 -18Q2656 -36 2656 -66V-67H2637Q2633 -55 2619 -35.5Q2605 -16 2575 -1Q2545 14 2493 14ZM2515 -88Q2568 -88 2601.5 -117.5Q2635 -147 2635 -196V-206H2508Q2473 -206 2453 -191Q2433 -176 2433 -149Q2433 -122 2454 -105Q2475 -88 2515 -88Z"/></svg>');
+const setaCima = raw('<svg class="seta seta--cima" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 14.5v-12M3.5 7 8 2.5 12.5 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>');
+const setaFora = raw('<svg class="seta seta--fora" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>');
 
-function itensNav(classeLink) {
-  return NAV.map((item) => html`<li><a class="${classeLink}" href="${item.href}" data-nav-secao="${item.href.slice(1)}">${item.texto}</a></li>`);
-}
-
-function marca() {
-  return html`<a class="marca" href="#inicio" aria-label="Velora · Growth &amp; Beyond, início da página">
-    <span class="marca__nome">Velora</span><span class="marca__assinatura" aria-hidden="true">Growth &amp; Beyond</span>
-  </a>`;
+// Contato e empresa: só o que estiver preenchido em config.mjs.
+function itensContato(contato) {
+  const itens = [];
+  if (contato.email) itens.push(html`<li><a href="mailto:${contato.email}">${contato.email}</a></li>`);
+  if (contato.telefone) itens.push(html`<li><a href="tel:${contato.telefone.replace(/[^\d+]/g, '')}">${contato.telefone}</a></li>`);
+  if (contato.whatsapp) itens.push(html`<li><a href="https://wa.me/${contato.whatsapp.replace(/\D/g, '')}" rel="noopener">WhatsApp ${setaFora}</a></li>`);
+  if (contato.linkedin) itens.push(html`<li><a href="${contato.linkedin}" rel="noopener">LinkedIn ${setaFora}</a></li>`);
+  if (contato.instagram) itens.push(html`<li><a href="${contato.instagram}" rel="noopener">Instagram ${setaFora}</a></li>`);
+  return itens;
 }
 
 function cabecalho() {
-  const cta = CONVERSAR.texto;
   return html`<header class="cabecalho" data-cabecalho>
   <div class="wrap cabecalho__barra">
-    ${marca()}
+    <a class="marca" href="#inicio" aria-label="Velora, início da página">${logo({ variante: 'compacto', classe: 'logo--entrada' })}</a>
     <nav class="nav" aria-label="Principal">
-      <ul class="nav__lista">${itensNav('nav__link')}</ul>
+      <ul class="nav__lista">${NAV.map((i) => html`<li><a class="nav__link" href="${i.href}" data-nav-secao="${i.href.slice(1)}">${i.texto}</a></li>`)}</ul>
+      <span class="nav__indicador" aria-hidden="true" data-nav-indicador></span>
     </nav>
-    <a class="botao botao--primario cabecalho__cta" href="${ancoraCta}"><span>${cta}</span>${seta}</a>
+    <a class="botao botao--primario cabecalho__cta" href="${CONVERSAR.href}"><span>${CONVERSAR.texto}</span>${seta}</a>
     <button class="cabecalho__menu" type="button" aria-expanded="false" aria-controls="menu-movel" data-menu-botao>
-      <span class="cabecalho__menu-icone" aria-hidden="true"></span><span data-menu-texto>Menu</span>
+      <span class="cabecalho__menu-icone" aria-hidden="true"><span></span><span></span></span><span class="cabecalho__menu-texto" data-menu-texto>Menu</span>
     </button>
   </div>
-  <div class="menu-movel" id="menu-movel" data-menu hidden>
-    <div class="wrap">
-      <nav aria-label="Principal, celular">
-        <ul class="menu-movel__lista">${itensNav('menu-movel__link')}</ul>
-      </nav>
-      ${botao(cta, ancoraCta, { classe: 'menu-movel__cta' })}
-    </div>
-  </div>
+  <div class="cabecalho__progresso" aria-hidden="true"><span class="cabecalho__progresso-barra" data-progresso></span></div>
 </header>`;
 }
 
-// Rodapé (copy v2): assinatura e cinco links, sem replicar o sistema.
-function rodape() {
+// Menu do celular: tela inteira, itens numerados como as seções, entrada em sequência.
+function menuMovel(ctx) {
+  const contato = itensContato(ctx.config.contato);
+  return html`<div class="menu-movel tema-escuro" id="menu-movel" data-menu hidden>
+  <div class="wrap menu-movel__conteudo">
+    <nav aria-label="Principal, celular">
+      <ul class="menu-movel__lista">${NAV.map((i, k) => html`<li style="--i:${k}"><a class="menu-movel__link" href="${i.href}" data-nav-secao="${i.href.slice(1)}"><span class="menu-movel__n" aria-hidden="true">${i.n}</span> <span>${i.texto}</span></a></li>`)}</ul>
+    </nav>
+    <div class="menu-movel__rodape" style="--i:${NAV.length}">
+      ${botao(CONVERSAR.texto, CONVERSAR.href, { classe: 'menu-movel__cta' })}
+      ${contato.length ? html`<ul class="menu-movel__contato">${contato}</ul>` : ''}
+    </div>
+  </div>
+</div>`;
+}
+
+// Rodapé: logo completo, manifesto (copy v2, Rodapé · Assinatura), navegação com os cinco links,
+// contato e dados da empresa quando houver, linha legal e a assinatura "velora." em escala de cartaz.
+function rodape(ctx) {
+  const { contato, empresa, privacidade } = ctx.config;
+  const itensDeContato = itensContato(contato);
+  const temEmpresa = empresa.razaoSocial || empresa.endereco;
   return html`<footer class="rodape tema-escuro">
   <div class="wrap">
-    <div class="rodape__grade">
-      <div class="rodape__marca">
-        ${marca()}
-        <p class="rodape__manifesto">Estratégia faz diferença quando encontra a operação.</p>
-      </div>
-      <nav class="rodape__nav" aria-label="Rodapé">
-        <ul class="rodape__links">${[...NAV, CONVERSAR].map((i) => html`<li><a href="${i.href}">${i.texto}</a></li>`)}</ul>
+    <div class="rodape__topo">
+      <a class="rodape__logo" href="#inicio" aria-label="Velora · Growth &amp; Beyond, voltar ao início">${logo({ variante: 'completo', classe: 'logo--entrada desenhar' })}</a>
+      <p class="rodape__manifesto">Estratégia faz diferença quando encontra a operação.</p>
+    </div>
+    <div class="rodape__colunas">
+      <nav class="rodape__coluna rodape__coluna--nav" aria-labelledby="rodape-nav">
+        <p class="rodape__titulo" id="rodape-nav">Navegação</p>
+        <ul class="rodape__links">${[...NAV, CONVERSAR].map((i) => html`<li><a href="${i.href}"><span class="rodape__n" aria-hidden="true">${i.n}</span> <span class="rodape__link-texto">${i.texto}</span></a></li>`)}</ul>
       </nav>
+      ${itensDeContato.length ? html`<div class="rodape__coluna">
+        <p class="rodape__titulo">Contato</p>
+        <ul class="rodape__links rodape__links--contato">${itensDeContato}</ul>
+      </div>` : pendente(ctx, 'Contato: e-mail, telefone/WhatsApp e LinkedIn (config.mjs → contato).', { classe: 'rodape__coluna' })}
+      ${temEmpresa ? html`<div class="rodape__coluna">
+        <p class="rodape__titulo">Empresa</p>
+        <address class="rodape__empresa">${empresa.razaoSocial ? html`<span>${empresa.razaoSocial}</span>` : ''}${empresa.endereco ? html`<span>${empresa.endereco}</span>` : ''}</address>
+      </div>` : pendente(ctx, 'Empresa: razão social, CNPJ e endereço (config.mjs → empresa).', { classe: 'rodape__coluna' })}
     </div>
     <div class="rodape__base">
-      <p>© 2026 Velora · Growth &amp; Beyond</p>
+      <p class="rodape__direitos">© 2026 Velora · Growth &amp; Beyond</p>
+      ${empresa.cnpj || privacidade.url ? html`<ul class="rodape__legal">
+        ${empresa.cnpj ? html`<li>CNPJ ${empresa.cnpj}</li>` : ''}
+        ${privacidade.url ? html`<li><a href="${privacidade.url}">${privacidade.rotuloLink || 'Política de privacidade'}</a></li>` : ''}
+      </ul>` : ''}
+      <a class="rodape__voltar" href="#inicio"><span>Voltar ao topo</span><span class="rodape__voltar-icone">${setaCima}</span></a>
     </div>
-    ${ASSINATURA}
   </div>
+  <div class="rodape__cartaz desenhar" aria-hidden="true" data-foco-acid>${logo({ variante: 'palavra', classe: 'logo--cartaz' })}</div>
 </footer>`;
 }
 
@@ -109,10 +137,11 @@ ${canonical ? html`<meta property="og:url" content="${canonical}">
 <body${ctx.revisao ? raw(' class="modo-revisao"') : ''}>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 ${cabecalho()}
+${menuMovel(ctx)}
 <main id="conteudo">
 ${corpo}
 </main>
-${rodape()}
+${rodape(ctx)}
 </body>
 </html>`}
 `;

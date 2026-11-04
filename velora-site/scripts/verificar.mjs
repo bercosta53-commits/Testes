@@ -94,6 +94,12 @@ const EXTRAS = new Map([
   ['velora growth & beyond', 'marca com assinatura'],
   ['© 2026 velora · growth & beyond', 'linha de direitos do rodapé'],
   ['menu', 'botão do menu no celular'],
+  ['navegação', 'título de coluna do rodapé'],
+  ['contato', 'título de coluna do rodapé'],
+  ['empresa', 'título de coluna do rodapé'],
+  ['voltar ao topo', 'link do rodapé'],
+  ['política de privacidade', 'link legal do rodapé (só com config.privacidade.url)'],
+  ['whatsapp', 'contato (config.contato)'], ['linkedin', 'contato (config.contato)'], ['instagram', 'contato (config.contato)'],
   ['pular para o conteúdo', 'atalho de acessibilidade'],
   ['01', 'numeração'], ['02', 'numeração'], ['03', 'numeração'], ['04', 'numeração'], ['05', 'numeração'], ['06', 'numeração'], ['07', 'numeração'],
   ['/', 'separador do rótulo de seção'],
@@ -101,7 +107,8 @@ const EXTRAS = new Map([
 ]);
 // Linhas compostas na tela: "01/O sistema" (rótulo de seção), "VeloraGrowth & Beyond" (marca + assinatura),
 // "Liderança de crescimento · Growth Leader as a Service" (título em duas linhas).
-const pedacos = (l) => l.replace(/^(\d\d)\/(?=\S)/, '$1 / ').replace(/^Velora(?=Growth)/, 'Velora ').split(/ [·/] /);
+// "02 O sistema" (número da seção antes do link, no rodapé e no menu do celular).
+const pedacos = (l) => l.replace(/^(\d\d)\/(?=\S)/, '$1 / ').replace(/^(\d\d) (?=[^\d/])/, '$1 / ').replace(/^Velora(?=Growth)/, 'Velora ').split(/ [·/] /);
 const naCopy = (t) => copyTudo.includes(norm(t)) || EXTRAS.has(norm(t));
 const faixas = new Set(config.faixasFaturamento.map(norm));
 const foraDaCopy = new Map();

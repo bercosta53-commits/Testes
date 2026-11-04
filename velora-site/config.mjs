@@ -37,6 +37,13 @@ export default {
   // Ex.: { texto: '…', url: '/privacidade', rotuloLink: 'Política de privacidade' }
   privacidade: { texto: '', url: '', rotuloLink: '' },
 
+  // PENDENTE: dados de contato e da empresa para o rodapé (e o menu do celular).
+  // Só aparece o que estiver preenchido; nada é inventado. Ex.:
+  //   contato: { email: 'contato@…', telefone: '+55 11 …', whatsapp: '5511…', linkedin: 'https://www.linkedin.com/company/…', instagram: '' }
+  //   empresa: { razaoSocial: 'Velora … Ltda.', cnpj: '00.000.000/0001-00', endereco: 'Rua …, São Paulo – SP' }
+  contato: { email: '', telefone: '', whatsapp: '', linkedin: '', instagram: '' },
+  empresa: { razaoSocial: '', cnpj: '', endereco: '' },
+
   // Para trocar uma foto sem reprocessar: cada posição preenchida aqui substitui a foto
   // de src/conteudo/fotos.mjs. Posições: 'hero', 'onde-trava', 'como', 'icp-tecnologia', 'agendar'. Ex.:
   //   'onde-trava': { src: 'assets/img/onde-trava-proprio.webp', alt: '…', largura: 1600, altura: 1067 }

@@ -58,15 +58,28 @@
     principais.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- Navegação: marca a seção em que o leitor está (página única) ---------- */
+  /* ---------- Navegação: marca a seção em que o leitor está (página única) ----------
+     No desktop, um único traço desliza até o link da seção atual e acompanha o mouse sobre a navegação. */
   function iniciarSecaoAtual() {
     var links = doc.querySelectorAll('[data-nav-secao]');
     if (!links.length || !temIO) return;
+    var nav = doc.querySelector('.nav');
+    var indicador = doc.querySelector('[data-nav-indicador]');
     var ids = [];
     links.forEach(function (a) {
       var id = a.getAttribute('data-nav-secao');
       if (ids.indexOf(id) === -1) ids.push(id);
     });
+
+    function mover(link) {
+      if (!indicador) return;
+      if (!link || !link.offsetWidth) { indicador.classList.remove('is-ativo'); return; }
+      indicador.style.setProperty('--x', link.offsetLeft + 'px');
+      indicador.style.setProperty('--w', String(link.offsetWidth));
+      indicador.classList.add('is-ativo');
+    }
+    function atual() { return nav && nav.querySelector('.nav__link[data-atual]'); }
+
     var secoes = ids.map(function (id) { return doc.getElementById(id); }).filter(Boolean);
     var io = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (en) {
@@ -76,20 +89,155 @@
           if (en.isIntersecting) a.setAttribute('data-atual', ''); else a.removeAttribute('data-atual');
         });
       });
+      if (!nav || !nav.matches(':hover')) mover(atual());
     }, { rootMargin: '-45% 0px -54% 0px' });
     secoes.forEach(function (s) { io.observe(s); });
+
+    if (nav) {
+      nav.querySelectorAll('.nav__link').forEach(function (a) {
+        a.addEventListener('mouseenter', function () { mover(a); });
+        a.addEventListener('focus', function () { mover(a); });
+      });
+      nav.addEventListener('mouseleave', function () { mover(atual()); });
+      nav.addEventListener('focusout', function () { mover(atual()); });
+      window.addEventListener('resize', function () { mover(atual()); });
+    }
+  }
+
+  /* ---------- Cabeçalho: sólido ao rolar, some ao descer e volta ao subir; progresso de leitura ---------- */
+  function iniciarCabecalho() {
+    var cab = doc.querySelector('[data-cabecalho]');
+    if (!cab) return;
+    var barra = cab.querySelector('[data-progresso]');
+    var ultimoY = window.scrollY;
+    var pedido = false;
+
+    function atualizar() {
+      pedido = false;
+      var y = window.scrollY;
+      var max = root.scrollHeight - window.innerHeight;
+      cab.classList.toggle('cabecalho--rolado', y > 8);
+      if (barra) barra.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, y / max)) : 0) + ')';
+      var podeEsconder = !reduzMovimento.matches && !root.classList.contains('menu-aberto') && !cab.contains(doc.activeElement);
+      if (!podeEsconder || y < 480 || y < ultimoY - 4) cab.classList.remove('cabecalho--oculto');
+      else if (y > ultimoY + 4) cab.classList.add('cabecalho--oculto');
+      ultimoY = y;
+    }
+    window.addEventListener('scroll', function () {
+      if (pedido) return;
+      pedido = true;
+      window.requestAnimationFrame(atualizar);
+    }, { passive: true });
+    window.addEventListener('resize', atualizar);
+    cab.addEventListener('focusin', function () { cab.classList.remove('cabecalho--oculto'); });
+    atualizar();
+  }
+
+  /* ---------- Títulos: cada palavra sobe de trás de uma máscara ----------
+     O leitor de tela continua ouvindo a frase inteira (texto oculto na tela); as palavras animadas ficam fora
+     da árvore de acessibilidade. */
+  function dividirPalavras(el) {
+    var frase = el.textContent.replace(/\s+/g, ' ').trim();
+    var k = 0;
+    (function andar(no) {
+      Array.prototype.slice.call(no.childNodes).forEach(function (f) {
+        if (f.nodeType === 1) { andar(f); return; }
+        if (f.nodeType !== 3) return;
+        var frag = doc.createDocumentFragment();
+        f.textContent.split(/(\s+)/).forEach(function (parte) {
+          if (!parte) return;
+          if (/^\s+$/.test(parte)) { frag.appendChild(doc.createTextNode(' ')); return; }
+          var p = doc.createElement('span');
+          p.className = 'palavra';
+          var i = doc.createElement('span');
+          i.className = 'palavra__i';
+          i.style.setProperty('--w', String(k++));
+          i.textContent = parte;
+          p.appendChild(i);
+          frag.appendChild(p);
+        });
+        f.parentNode.replaceChild(frag, f);
+      });
+    })(el);
+    Array.prototype.slice.call(el.children).forEach(function (c) { c.setAttribute('aria-hidden', 'true'); });
+    var leitor = doc.createElement('span');
+    leitor.className = 'ri__dp';
+    leitor.textContent = frase;
+    el.insertBefore(leitor, el.firstChild);
+    el.classList.add('revelar-titulo');
+  }
+  function iniciarTitulos() {
+    if (reduzMovimento.matches || !temIO) return;
+    doc.querySelectorAll('.hero__titulo, .titulo-2--grande, .rodape__manifesto').forEach(dividirPalavras);
+  }
+
+  /* ---------- Hero: entrada em sequência (título, texto, ações) e a luz percorrendo as cinco etapas ---------- */
+  function iniciarHero() {
+    var hero = doc.querySelector('.hero');
+    var marca = doc.querySelector('.cabecalho .logo--entrada');
+    var faixa = doc.querySelector('.hero__faixa');
+    var titulo = doc.querySelector('.hero__titulo');
+    var comecar = function () {
+      if (marca) marca.classList.add('is-visivel');
+      if (hero) hero.classList.add('is-carregado');
+      if (titulo) titulo.classList.add('is-visivel');
+      if (faixa && !reduzMovimento.matches) {
+        window.setTimeout(function () { faixa.classList.add('is-percorrendo'); }, 1500);
+      }
+    };
+    // Dois quadros: o estado inicial é pintado antes de a transição começar.
+    window.requestAnimationFrame(function () { window.requestAnimationFrame(comecar); });
+  }
+
+  /* ---------- Dados: cada número conta até o valor publicado quando a faixa de evidências aparece ---------- */
+  function iniciarContadores() {
+    var faixa = doc.querySelector('.evidencias');
+    if (!faixa || reduzMovimento.matches || !temIO) return;
+    var numeros = Array.prototype.slice.call(faixa.querySelectorAll('.dado__n'));
+    var finais = numeros.map(function (el) { return el.textContent; });
+    var desenhar = function (el, final, t) {
+      el.textContent = final.replace(/\d+/g, function (n) { return String(Math.round(Number(n) * t)); });
+    };
+    numeros.forEach(function (el, i) { desenhar(el, finais[i], 0); });
+    faixa.addEventListener('velora:visivel', function () {
+      numeros.forEach(function (el, i) {
+        var inicio = null;
+        var DUR = 1500;
+        var passo = function (agora) {
+          if (inicio === null) inicio = agora + i * 140;
+          var t = Math.min(1, Math.max(0, (agora - inicio) / DUR));
+          desenhar(el, finais[i], 1 - Math.pow(1 - t, 4));
+          if (t < 1) window.requestAnimationFrame(passo); else el.textContent = finais[i];
+        };
+        window.requestAnimationFrame(passo);
+      });
+    }, { once: true });
   }
 
   /* ---------- Entrada de seções e desenho de diagramas ---------- */
   function iniciarEntradas() {
-    var alvos = doc.querySelectorAll('.revelar, .desenhar');
+    // Fotos que abrem com recorte: o navegador não antecipa o carregamento de imagem recortada,
+    // então elas começam a baixar bem antes de chegar à tela (1.200 px), e não no meio da animação.
+    var fotos = doc.querySelectorAll('.revelar-foto img[loading="lazy"]');
+    if (temIO && fotos.length) {
+      var antecipa = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          en.target.querySelector('img').loading = 'eager';
+          antecipa.unobserve(en.target);
+        });
+      }, { rootMargin: '1200px 0px 1200px 0px' });
+      fotos.forEach(function (img) { antecipa.observe(img.closest('.revelar-foto')); });
+    }
+    var alvos = doc.querySelectorAll('.revelar, .desenhar, .revelar-foto, .revelar-titulo');
     if (!temIO || reduzMovimento.matches) {
       alvos.forEach(function (el) { el.classList.add('is-visivel'); });
       return;
     }
     var io = new IntersectionObserver(function (entradas) {
-      entradas.forEach(function (en) {
-        if (!en.isIntersecting) return;
+      // O que entra junto na tela entra em sequência (90 ms entre um e outro).
+      entradas.filter(function (en) { return en.isIntersecting; }).forEach(function (en, ordem) {
+        if (en.target.classList.contains('revelar')) en.target.style.setProperty('--d', Math.min(ordem, 5) * 90 + 'ms');
         en.target.classList.add('is-visivel');
         io.unobserve(en.target);
         en.target.dispatchEvent(new CustomEvent('velora:visivel'));
@@ -230,10 +378,14 @@
 
   function iniciar() {
     iniciarMenu();
+    iniciarCabecalho();
     iniciarCtaDiscreto();
     iniciarSecaoAtual();
+    iniciarTitulos();
     iniciarCircuito();
+    iniciarContadores();
     iniciarEntradas();
+    iniciarHero();
     iniciarFormularios();
   }
 

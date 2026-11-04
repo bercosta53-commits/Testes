@@ -38,13 +38,16 @@ src/conteudo/etapas.mjs    as 5 etapas do sistema (faixa do hero e seção 02)
 src/conteudo/fotos.mjs     fotos editoriais: arquivo, proporção e texto alternativo
 src/lib/diagramas.mjs      linha do RHOI e ilustração do Velora Radar
 src/lib/componentes.mjs    botões, rótulos, formulário, regra do CTA, exhibit de caso
-src/lib/layout.mjs         <head> (OG, favicon), navegação e rodapé
+src/lib/layout.mjs         <head> (OG, favicon), cabeçalho, menu do celular e rodapé
+src/lib/logo.mjs           logo oficial em SVG (completo, compacto e só a palavra)
+src/conteudo/logo-velora.mjs  desenho do logo, gerado por scripts/vetorizar-logo.py (não editar à mão)
 src/assets/css/site.css    tokens e componentes do Velora Design System
 src/assets/js/site.js      menu, circuito do sistema, entrada das seções, formulário e medição
 src/assets/fonts/          Space Grotesk 700, Manrope 400–600, JetBrains Mono 500 (woff2, subset latino, licença OFL)
-src/assets/img/            fotos tratadas (WebP, 2 tamanhos cada), favicon, ícone e imagem de compartilhamento (og.jpg)
+src/assets/img/            fotos tratadas (WebP, 2 tamanhos cada), favicon e ícone (emblema), imagem de compartilhamento (og.jpg)
 scripts/verificar.mjs      confere a página contra a copy v2 e mede as regras editoriais
 scripts/tratar-fotos.py    recorte e tratamento P&B das fotos (Python + Pillow; originais fora do repositório)
+scripts/vetorizar-logo.py  vetoriza o PNG oficial do logo (Python + numpy, Pillow e potracer; PNG fora do repositório)
 scripts/servidor.mjs       servidor local de pré-visualização
 scripts/arquivo-unico.mjs  empacota dist/ num HTML único e autocontido
 ```
@@ -101,7 +104,6 @@ Texto visível: **978 palavras na v2 contra 1.515 na v1 (−35%)**.
 - **04:** foto sangrando à direita e as letras R H O I em escala de cartaz.
 - **06:** numeração grande; o 01 (Diagnóstico de Aquisição, o ponto de partida) em bloco Acid.
 - **07:** foto do feixe de luz fixa à esquerda; formulário em fundo Bone (foco em Ink, nunca linha Acid no claro).
-- **Rodapé:** manifesto da copy, cinco links e a assinatura *Velora* em escala de cartaz.
 
 **Fotografia**
 - 5 fotos fornecidas pela Velora (01/11/2026), tratadas em P&B (`scripts/tratar-fotos.py`). A foto da seção 04 foi reprocessada no tratamento escuro, porque a seção agora é Ink.
@@ -111,13 +113,33 @@ Texto visível: **978 palavras na v2 contra 1.515 na v1 (−35%)**.
 - Um ponto Acid por tela: o botão da navegação fica em contorno enquanto outro foco Acid está visível (CTA do hero e do formulário, dado em destaque, circuito, Radar, ponto de partida).
 - Tons de apoio ajustados para contraste AA (texto terciário 48% / 60%, linhas de diagrama 40% / 52%); numerais inativos a 36%.
 - Nenhuma animação em repetição; com `prefers-reduced-motion`, nada anima.
-- Favicon e ícone provisórios: o "V" da assinatura tipográfica em Acid sobre Ink (não havia arquivo de logo nos briefings). Imagem de compartilhamento (`og.jpg`, 1200 × 630) com o título do hero; as tags `og:image` e `og:url` saem quando `urlBase` estiver preenchido.
+- Imagem de compartilhamento (`og.jpg`, 1200 × 630) com o título do hero e o logo; as tags `og:image` e `og:url` saem quando `urlBase` estiver preenchido.
+
+## Logo, cabeçalho, rodapé e animações (04/11/2026)
+
+**Logo.** O PNG oficial (versão escura) foi vetorizado (`scripts/vetorizar-logo.py`) e conferido contra o original: 0,2% de pixels diferentes, só nas bordas suavizadas. Emblema, palavra e *Growth & Beyond* usam a cor do fundo (grafite #282828 no claro, #F2F2F2 no escuro, como nos dois arquivos enviados); o ponto mantém o verde do arquivo (#CFF500). Cada listra do emblema é uma forma própria, para a animação. Três versões: **completo** (rodapé), **compacto** sem *Growth & Beyond* (cabeçalho, onde a assinatura ficaria com 4 px de altura) e **só a palavra** (cartaz do rodapé). Favicon e ícone de toque usam o emblema; o favicon troca de cor com o tema claro/escuro do navegador.
+
+**Cabeçalho.** Transparente sobre o hero; sólido, com desfoque, a partir da primeira rolagem, e um pouco mais baixo. Some ao descer e volta ao subir (nunca some com o menu aberto, com foco do teclado dentro dele ou com movimento reduzido). Um traço único desliza até o link da seção atual e acompanha o mouse. Uma linha fina na base mostra o progresso de leitura. No celular, o menu ocupa a tela, com os itens numerados como as seções e entrada em sequência. Sem JavaScript, fica sólido e fixo.
+
+**Rodapé.** Logo completo e o manifesto da copy; a navegação como índice das seções, em linha (o mesmo desenho da faixa do hero); colunas de **Contato** e **Empresa** que só aparecem quando preenchidas em `config.mjs → contato` e `config.mjs → empresa`; linha legal (© , CNPJ e política de privacidade quando houver) e *Voltar ao topo*; por fim, *velora.* em escala de cartaz, cortada pela borda, com o ponto em Acid.
+
+**Animações.** Cada uma conta algo da página, e nenhuma se repete:
+- o emblema se monta listra a listra, depois entram a palavra e o ponto (cabeçalho ao carregar; rodapé ao chegar);
+- títulos do hero e das seções sobem palavra por palavra de trás de uma máscara (o leitor de tela ouve a frase inteira);
+- no hero, a foto assenta, texto e botões entram em sequência e uma luz percorre a faixa das cinco etapas;
+- os quatro dados contam até o valor publicado quando a faixa de evidências aparece;
+- as fotos abrem a partir da borda de onde sangram (e começam a carregar 1.200 px antes, para não abrirem vazias);
+- no circuito, as ligações se desenham na ordem do fluxo antes de a luz percorrer as etapas;
+- as letras do RHOI sobem de trás da linha; o bloco Acid do ponto de partida (06) se preenche depois do número;
+- no rodapé, *velora.* sobe por trás da borda e o ponto acende por último.
+
+As durações passam das do briefing (até 400 ms) nas entradas de título, foto e logo (até 1,4 s), a pedido, para dar fluidez; continuam só com transformação e opacidade, sem repetição, sem rebote e sem nada que pisque. Com `prefers-reduced-motion`, nada anima e o cabeçalho não some. Sem JavaScript, tudo aparece no estado final.
 
 ## Verificações feitas
 
 - Copy e regras editoriais: 134/134 trechos, nenhum texto fora da copy, todas as regras ok (`scripts/verificar.mjs`; também testado contra uma página adulterada, que ele reprova).
 - axe-core (WCAG 2.2 AA + boas práticas): 0 violações no desktop e no celular.
-- 42 testes de interação (Playwright): fotos, CTAs coerentes com a agenda, circuito (percurso, mouse, retorno), radar, navegação marcando a seção, âncoras, validação e sucesso do formulário, eventos de medição sem dados pessoais, abertura da agenda após envio válido, menu do celular, áreas de toque, movimento reduzido e página sem JavaScript.
+- 70 testes de interação (Playwright): logo, cabeçalho (transparente, sólido, some e volta, progresso, traço da navegação), títulos animados com nome acessível inteiro, contagem dos dados, abertura das fotos, rodapé, fotos, CTAs coerentes com a agenda, circuito (percurso, mouse, retorno), radar, navegação marcando a seção, âncoras, validação e sucesso do formulário, eventos de medição sem dados pessoais, abertura da agenda após envio válido, menu do celular, áreas de toque, movimento reduzido e página sem JavaScript.
 - Larguras de 320 a 1920 px sem rolagem horizontal nem texto estourando.
 - HTML único aberto direto do disco, sem rede: fontes, 5 fotos e ícone embutidos, sem erros.
 
@@ -131,8 +153,9 @@ Bloqueiam a publicação:
 - [ ] **Medição:** instalar o Google Tag Manager (ou equivalente) para receber os eventos do `dataLayer`.
 - [ ] **Indexação:** trocar `config.mjs → indexavel` para `true` (remove o noindex e libera o robots.txt) e preencher `urlBase` (canonical, og:url, og:image).
 
+- [ ] **Dados do rodapé** (`config.mjs → contato` e `config.mjs → empresa`): e-mail, telefone/WhatsApp, LinkedIn, razão social, CNPJ e endereço. Só aparece o que for preenchido.
+
 Conteúdo a validar ou produzir:
 - [ ] Dois casos com números, período, atribuição e autorização (`config.mjs → casos`): contexto, obstáculo, ações, indicador e comparação.
 - [ ] Equipe: retrato e duas linhas de senioridade por pessoa, com papel no projeto (`config.mjs → equipe`). Validar composição e títulos.
 - [ ] Captura real do Velora Radar e confirmação dos recursos que o desenho ilustra.
-- [ ] Favicon e logotipo definitivos.

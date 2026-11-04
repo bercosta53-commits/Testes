@@ -14,7 +14,7 @@ export function linhaRhoi(passos) {
     <ol class="rhoi__lista">
       ${passos.map((p, i) => html`<li class="rhoi__passo" style="--i:${i}">
         <span class="rhoi__marco" aria-hidden="true"></span>
-        <p class="rhoi__letra" aria-hidden="true">${p.letra}</p>
+        <p class="rhoi__letra" aria-hidden="true"><span>${p.letra}</span></p>
         <h3 class="rhoi__nome"><span lang="en">${p.nome}</span> — ${p.verbo}</h3>
         <p class="rhoi__texto">${p.texto}</p>
       </li>`)}
