@@ -220,10 +220,13 @@ def main():
     ap.add_argument('--saida', required=True, help='arquivo de saída')
     ap.add_argument('--arquivo', action='store_true',
                     help='gera um HTML completo, com marca d\'água, para enviar como arquivo')
+    ap.add_argument('--marca', action='store_true', help="inclui a marca d'água também na versão do link")
     args = ap.parse_args()
     doc = make(gerar_html_unico.build())
     if args.arquivo:
         doc = standalone(doc)
+    elif args.marca:
+        doc = doc.rstrip() + '\n' + WATERMARK
     with open(args.saida, 'w', encoding='utf-8') as fh:
         fh.write(doc)
     print(f'{args.saida} · {os.path.getsize(args.saida) / 1024 / 1024:.1f} MB')
