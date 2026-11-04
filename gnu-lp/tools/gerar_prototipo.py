@@ -221,7 +221,11 @@ def main():
     ap.add_argument('--arquivo', action='store_true',
                     help='gera um HTML completo, com marca d\'água, para enviar como arquivo')
     ap.add_argument('--marca', action='store_true', help="inclui a marca d'água também na versão do link")
+    ap.add_argument('--leve', action='store_true', help='fotos em resolução menor (arquivo bem mais leve)')
     args = ap.parse_args()
+    if args.leve:
+        gerar_html_unico.LIMITS.update(full=960, other=640)
+        gerar_html_unico.RECOMPRESS['quality'] = 60
     doc = make(gerar_html_unico.build())
     if args.arquivo:
         doc = standalone(doc)

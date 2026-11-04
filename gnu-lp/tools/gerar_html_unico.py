@@ -20,10 +20,21 @@ DEFAULT_OUT = os.path.join(ROOT, 'compartilhar', 'gnu-uniao-lp-verao.html')
 MIME = {'.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml'}
 
 
+RECOMPRESS = {'quality': None}  # ex.: 62 recomprime as fotos WebP para um arquivo mais leve
+
+
 def data_uri(rel):
     path = os.path.join(ROOT, rel)
     with open(path, 'rb') as fh:
-        b64 = base64.b64encode(fh.read()).decode('ascii')
+        raw = fh.read()
+    if RECOMPRESS['quality'] and rel.lower().endswith('.webp'):
+        import io
+        from PIL import Image
+        buf = io.BytesIO()
+        Image.open(io.BytesIO(raw)).save(buf, 'WEBP', quality=RECOMPRESS['quality'], method=6)
+        if buf.tell() < len(raw):
+            raw = buf.getvalue()
+    b64 = base64.b64encode(raw).decode('ascii')
     return f'data:{MIME[os.path.splitext(rel)[1].lower()]};base64,{b64}'
 
 
@@ -38,12 +49,15 @@ def candidates(srcset):
     return out
 
 
+LIMITS = {'full': 1600, 'other': 960}
+
+
 def pick(srcset, sizes):
     cands = candidates(srcset)
     if all(kind == 'x' for _, _, kind in cands):
         return max(cands, key=lambda c: c[1])[0]  # 2x para logos e ícones nítidos
     full = sizes.strip().endswith('100vw') or sizes.strip() == '100vw'
-    target = 1600 if full else 960
+    target = LIMITS['full'] if full else LIMITS['other']
     fitting = [c for c in cands if c[1] <= target]
     return (max(fitting, key=lambda c: c[1]) if fitting else min(cands, key=lambda c: c[1]))[0]
 
