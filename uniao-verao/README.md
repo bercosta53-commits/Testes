@@ -8,6 +8,15 @@ Grêmio Náutico União · 1920 × 1080 · 30 fps · H.264 + AAC · −14 LUFS �
 
 O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera própria, ligados por **transições compostas**. A **tipografia cinética** é uma camada independente por cima. Cada quadro final é a média de 6 amostras dentro do obturador de 180°, o que dá desfoque de movimento real nos chicotes e zooms. Nas transições sobem para 12 amostras com obturador de 270°. O acabamento é um grão leve. Todos os cortes caem numa batida da trilha (117,5 BPM).
 
+### Camada de IA: fotos ampliadas e parallax 2.5D
+
+- **Ampliação por IA** (`prep_photos.py`): as fotos novas chegaram com cerca de 1024 px. O Real-ESRGAN amplia ×2 as verticais e ×4 as horizontais, que entram em tela cheia. A saída é misturada a 22% de Lanczos e recebe um grão finíssimo, para pele e água não ficarem com cara de pintura. O ganho aparece no gancho, no deck, no mergulho e na orla: o detalhe é recuperado e os artefatos de JPEG somem.
+- **Profundidade por IA** (`profundidade.py`): o Depth Anything V2 Small estima um mapa de profundidade para cada foto, inclusive as 4 fotos reais das sedes, e o grava em `assets/photos/depth/`. O primeiro plano é dilatado e o mapa é suavizado, para o deslocamento não rasgar a silhueta das pessoas.
+- **Parallax 2.5D** (`film.js`, módulo `GL`): um shader WebGL desloca cada pixel conforme a profundidade enquanto a câmera do plano se move. O que está perto anda mais e o que está longe anda menos, como numa câmera de verdade, e o primeiro plano encobre o fundo (parallax occlusion mapping com bisseção). Cada plano tem o próprio movimento (`par`): travelling lateral no deck, na orla e no mergulho, dolly no gancho e nas sedes, e deslocamento vertical nos dípticos e trípticos. O movimento 2D antigo continua valendo para o plano de foco, e o parallax soma por cima.
+  - `node render.mjs --par 0` gera o filme sem parallax, para comparar antes e depois; `--par 3` exagera o efeito, para caçar artefatos.
+  - O parallax não inventa conteúdo: só move a câmera sobre a própria foto. Por isso pode ser usado nas fotos reais das sedes.
+  - Licenças: Real-ESRGAN (BSD-3) e Depth Anything V2 **Small** (Apache-2.0). As versões Base e Large do Depth Anything são CC-BY-NC e não servem para mídia paga.
+
 | Tempo | Plano | Movimento / transição | Texto |
 |---|---|---|---|
 | 0–3,55 | Piscinas-lagoa | Câmera "chega" (zoom 1,32→1,07 com giro), sem quadro parado | Já imaginou ser *sócio* do União? (palavras sobem da máscara) |
@@ -44,17 +53,25 @@ O motor (`film.js`) monta uma linha do tempo de **planos**, cada um com câmera 
 ## Como gerar
 
 ```sh
-python3 prep_photos.py           # assets/photos/novas -> assets/photos/hd (ampliação 2×)
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install spandrel transformers pillow numpy scipy
+
+python3 prep_photos.py           # assets/photos/novas -> assets/photos/hd (Real-ESRGAN, ~1–4 min por foto em CPU)
+python3 prep_photos.py --lanczos # alternativa rápida, sem IA
+python3 profundidade.py          # assets/photos/depth/*.png (já versionados; só rode se trocar fotos)
 python3 audio.py                 # build/mix.wav (numpy + ffmpeg)
-node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg, ~5 min)
+node render.mjs                  # build/uniao-verao-30s.mp4 (Playwright + ffmpeg; o parallax deixa ~8× mais lento)
 node render.mjs --stills 1,10,27 # quadros soltos para conferência
+node render.mjs --par 0 --out build/sem-parallax.mp4   # antes/depois
 ```
+
+Os pesos dos modelos são baixados uma vez (Real-ESRGAN em `build/models/`, Depth Anything no cache do Hugging Face). As fotos ampliadas (`assets/photos/hd/`) não são versionadas; os mapas de profundidade são.
 
 Para pré-visualizar com áudio, abra `film.html` num servidor local, por exemplo `python3 -m http.server`.
 
 ## Pendências
 
-- **Resolução das fotos novas:** chegaram com cerca de 1024 px. As verticais entram em dípticos e trípticos e ficam quase na resolução nativa. As horizontais em tela cheia (gancho, CTA, família mergulhando) foram ampliadas cerca de 1,9 a 2,5×. Para trocar pelas originais, basta repor os arquivos em `assets/photos/novas/` com os mesmos nomes.
+- **Resolução das fotos novas:** chegaram com cerca de 1024 px. A ampliação por IA resolve bem o uso em 1080p, mas as originais em alta continuam sendo melhores. Para trocá-las, reponha os arquivos em `assets/photos/novas/` com os mesmos nomes e rode `prep_photos.py` e `profundidade.py`.
 - **Imagens ilustrativas:** as fotos novas parecem ilustrativas e não registros das sedes. A diretriz da LP pede "fotografia verdadeira do clube", então vale validar o uso em mídia paga. O mosaico das sedes usa as fotos reais do acervo do site, identificadas na LP.
 - **Fotos não usadas:** beach tennis (a modalidade não está confirmada no roteiro), escolinha de tênis, casal nas espreguiçadeiras, mesa (detalhe), deck e orla do Guaíba, remo.
 - **Caixa alta:** o CTA ("Quero conhecer o União →") e o reforço ("Você também pode fazer parte.") estão em frase normal, seguindo a regra da LP.

@@ -43,8 +43,11 @@
     remo: HD + 'remo-guaiba-entardecer.jpg',
     escudo: 'assets/logo-escudo.png',
   };
-  const img = {};
-  const load = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error(src)); i.src = src; });
+  // Mapas de profundidade gerados por IA (profundidade.py): um por foto, mesmo nome, .png.
+  const DEPTH = Object.fromEntries(Object.entries(PHOTOS).filter(([k]) => k !== 'escudo')
+    .map(([k, v]) => [k, 'assets/photos/depth/' + v.split('/').pop().replace(/\.jpg$/, '.png')]));
+  const img = {}, depthOf = new Map();             // imagem da foto -> imagem do mapa de profundidade
+  const load =src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error(src)); i.src = src; });
   const fonts = [
     new FontFace('Inst', 'url(assets/fonts/InstrumentSans.ttf)', { weight: '400 700', stretch: '75% 100%' }),
     new FontFace('InstSerif', 'url(assets/fonts/InstrumentSerif-Italic.ttf)', { style: 'italic' }),
@@ -71,9 +74,107 @@
   const FULL = { x: 0, y: 0, w: W, h: H };
   const GRADE = 'saturate(1.07) contrast(1.04) brightness(1.02)';
 
+  // ---------------------------------------------------------------- parallax 2.5D (WebGL)
+  // A câmera 2D de cada plano (zoom, pan, giro) vale para o plano de foco. Com o mapa de
+  // profundidade, o shader desloca cada pixel em proporção à distância até esse plano:
+  // o que está perto anda mais, o que está longe anda menos (ou no sentido contrário).
+  // Para cada pixel de saída, percorre camadas de profundidade da mais próxima para a mais
+  // distante e fica com a primeira superfície que "acerta" (parallax occlusion mapping), com
+  // refinamento por bisseção entre as duas últimas camadas. Assim o primeiro plano encobre o fundo.
+  //   par = { x, y }: deslocamento lateral, em frações de 1920 px, para a profundidade 1 (perto);
+  //         z: "dolly", expansão relativa a partir do centro; f: profundidade do plano de foco (0–1).
+  // ?par=0 desliga o parallax (comparação antes/depois); ?par=3 exagera (caça a artefatos).
+  const PAR = Number(new URLSearchParams(location.search).get('par') ?? 1);
+  const GL = (() => {
+    const PAD = 80, canvas = mk(W + 2 * PAD, H + 2 * PAD);
+    const gl = canvas.getContext('webgl2', { alpha: false, antialias: false, depth: false, preserveDrawingBuffer: true });
+    if (!gl) { console.warn('WebGL2 indisponível: sem parallax'); return { ok: false }; }
+    const sh = (type, src) => {
+      const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+      return s;
+    };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, `#version 300 es
+      in vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }`));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, `#version 300 es
+      precision highp float;
+      uniform sampler2D uTex, uDep;
+      uniform vec2 uOut, uPos, uSize, uCenter, uPar;
+      uniform float uZoom, uFocus;
+      out vec4 color;
+      const int N = 12;
+      // onde estava, na foto, o pixel que aparece em q se a profundidade dele for d
+      vec2 src(vec2 q, float d) {
+        float k = d - uFocus;
+        return (q - k * (uPar + uZoom * (q - uCenter)) - uPos) / uSize;
+      }
+      void main() {
+        vec2 q = vec2(gl_FragCoord.x, uOut.y - gl_FragCoord.y);
+        vec2 uv0 = (q - uPos) / uSize, gx = dFdx(uv0), gy = dFdy(uv0);
+        vec2 uv = src(q, 0.0);
+        for (int i = 0; i <= N; i++) {
+          float L = 1.0 - float(i) / float(N);
+          vec2 s = src(q, L);
+          if (textureLod(uDep, s, 0.0).r >= L) {
+            uv = s;
+            if (i > 0) {                    // bisseção entre a camada que errou (hi) e a que acertou (lo)
+              float lo = L, hi = L + 1.0 / float(N);
+              for (int j = 0; j < 5; j++) {
+                float m = 0.5 * (lo + hi);
+                if (textureLod(uDep, src(q, m), 0.0).r >= m) lo = m; else hi = m;
+              }
+              uv = src(q, 0.5 * (lo + hi));
+            }
+            break;
+          }
+        }
+        color = vec4(textureGrad(uTex, uv, gx, gy).rgb, 1.0);
+      }`));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const aP = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(aP); gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+    const U = {}; for (const n of ['uTex', 'uDep', 'uOut', 'uPos', 'uSize', 'uCenter', 'uPar', 'uZoom', 'uFocus']) U[n] = gl.getUniformLocation(prog, n);
+    gl.uniform1i(U.uTex, 0); gl.uniform1i(U.uDep, 1);
+    const aniso = gl.getExtension('EXT_texture_filter_anisotropic');
+    const texs = new Map();
+    const tex = (im, mip) => {
+      if (texs.has(im)) return texs.get(im);
+      const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, im);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      if (mip) {
+        gl.generateMipmap(gl.TEXTURE_2D);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, 4);
+      } else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      texs.set(im, t); return t;
+    };
+    // Desenha a foto deformada num retângulo ow×oh (canto inferior esquerdo do buffer GL).
+    // pos/size: onde a foto inteira cairia nesse retângulo sem parallax.
+    function draw(im, dep, ow, oh, pos, size, center, par) {
+      if (ow > canvas.width || oh > canvas.height) throw new Error('parallax: retângulo maior que o buffer GL');
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex(im, true));
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tex(dep, false));
+      gl.viewport(0, 0, ow, oh);
+      gl.uniform2f(U.uOut, ow, oh); gl.uniform2f(U.uPos, ...pos); gl.uniform2f(U.uSize, ...size);
+      gl.uniform2f(U.uCenter, ...center); gl.uniform2f(U.uPar, (par.x ?? 0) * W * PAR, (par.y ?? 0) * W * PAR);
+      gl.uniform1f(U.uZoom, (par.z ?? 0) * PAR); gl.uniform1f(U.uFocus, par.f ?? 0.4);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      return canvas;
+    }
+    return { ok: true, PAD, draw, warm: im => { tex(im, true); if (depthOf.has(im)) tex(depthOf.get(im), false); } };
+  })();
+
   // Foto em "cover" num retângulo. cx/cy: foco normalizado; zoom ≥ 1; dx/dy: pan em px; rot em graus.
+  // par: parallax 2.5D pelo mapa de profundidade (ver GL acima).
   function photo(im, r, o = {}) {
-    const { cx = 0.5, cy = 0.5, zoom = 1, dx = 0, dy = 0, rot = 0, filter = GRADE, alpha = 1, radius = 0 } = o;
+    const { cx = 0.5, cy = 0.5, zoom = 1, dx = 0, dy = 0, rot = 0, filter = GRADE, alpha = 1, radius = 0, par = null } = o;
     const s = Math.max(r.w / im.width, r.h / im.height) * zoom;
     const w = im.width * s, h = im.height * s;
     let x = r.w / 2 - cx * w + dx, y = r.h / 2 - cy * h + dy;
@@ -85,7 +186,12 @@
     ctx.beginPath(); radius ? ctx.roundRect(r.x, r.y, r.w, r.h, radius) : ctx.rect(r.x, r.y, r.w, r.h); ctx.clip();
     ctx.globalAlpha = alpha; ctx.filter = filter;
     if (rot) { const mx = r.x + r.w / 2, my = r.y + r.h / 2; ctx.translate(mx, my); ctx.rotate(rot * Math.PI / 180); ctx.translate(-mx, -my); }
-    ctx.drawImage(im, r.x + x, r.y + y, w, h);
+    if (par && PAR && GL.ok && depthOf.has(im)) {
+      // com giro, desenha uma margem a mais para cobrir os cantos que a rotação expõe
+      const p = rot ? Math.ceil(m) + 2 : 0, ow = Math.ceil(r.w) + 2 * p, oh = Math.ceil(r.h) + 2 * p;
+      const c = GL.draw(im, depthOf.get(im), ow, oh, [x + p, y + p], [w, h], [r.w / 2 + p, r.h / 2 + p], par);
+      ctx.drawImage(c, 0, c.height - oh, ow, oh, r.x - p, r.y - p, ow, oh);
+    } else ctx.drawImage(im, r.x + x, r.y + y, w, h);
     ctx.restore();
   }
   const full = (k, o) => photo(img[k], FULL, o);
@@ -159,7 +265,10 @@
 
   // ---------------------------------------------------------------- planos
   // Câmera do deck (usada dentro da palavra "verão" e depois em tela cheia — continuidade).
-  const deckCam = t => ({ cx: 0.5, cy: 0.5, zoom: lerp(1.06, 1.16, prog(t, b(7), b(13.5))), dx: lerp(40, -50, eInOutCubic(prog(t, b(7), b(13.5)))) });
+  const deckCam = t => {
+    const p = prog(t, b(7), b(13.5)), e = eInOutCubic(p);
+    return { cx: 0.5, cy: 0.5, zoom: lerp(1.08, 1.17, p), dx: lerp(40, -50, e), par: { x: lerp(0.045, -0.045, e), z: lerp(-0.03, 0.07, p), f: 0.3 } };
+  };
 
   // Palavra "verão" gigante preenchida com foto; atravessada por zoom no fim.
   let verao = null;                                 // {bmp, scale, x, y, ax, ay}
@@ -221,7 +330,8 @@
       const y = axis === 'y' ? sgn * (1 - e) * H : 0;
       const p = prog(t, t0, t0 + 2.2);
       const k = typeof s.k === 'function' ? s.k(t) : s.k;
-      photo(img[k], { x, y, w: pw, h: H }, { cx: s.cx ?? 0.5, cy: (s.cy ?? 0.5) + sgn * drift * (p - 0.5), zoom: (s.zoom ?? 1.06) + 0.04 * p });
+      photo(img[k], { x, y, w: pw, h: H }, { cx: s.cx ?? 0.5, cy: (s.cy ?? 0.5) + sgn * drift * (p - 0.5), zoom: (s.zoom ?? 1.08) + 0.04 * p,
+        par: { y: sgn * -0.03 * (p - 0.5), z: lerp(0, 0.08, p), f: 0.45 } });
     });
   }
 
@@ -229,10 +339,11 @@
   function sSol(t) {
     fill(C.paper);
     const t0 = b(18) - 0.4, pw = (W - 6) / 2, p = prog(t, t0, t0 + 2.4);
-    photo(img.mulher, { x: 0, y: 0, w: pw, h: H }, { cy: 0.45 + 0.06 * (p - 0.5), zoom: 1.06 + 0.06 * p });
+    photo(img.mulher, { x: 0, y: 0, w: pw, h: H }, { cy: 0.45 + 0.06 * (p - 0.5), zoom: 1.08 + 0.06 * p, par: { y: -0.025 * (p - 0.5), z: 0.08 * p, f: 0.45 } });
     const e = eInOutExpo(prog(t, b(19) - 0.18, b(19) + 0.18));
     photo(img.raquete, { x: pw + 6, y: -e * H, w: pw, h: H }, { cy: 0.52 - 0.06 * (p - 0.5), zoom: 1.08 });
-    if (e > 0) photo(img.casal, { x: pw + 6, y: (1 - e) * H, w: pw, h: H }, { cy: lerp(0.52, 0.46, prog(t, b(19), b(20))), zoom: 1.06 });
+    if (e > 0) photo(img.casal, { x: pw + 6, y: (1 - e) * H, w: pw, h: H }, { cy: lerp(0.52, 0.46, prog(t, b(19), b(20))), zoom: 1.08,
+      par: { y: lerp(0.02, -0.015, prog(t, b(19), b(20.5))), z: 0.06 * prog(t, b(19), b(20.5)), f: 0.45 } });
   }
 
   // Mural infinito de fotos (pertencimento): colunas que rolam em sentidos alternados.
@@ -277,7 +388,8 @@
   const sedeShot = i => t => {
     const a = SEDE_T[i], z = SEDE_T[i + 1];
     full(SEDES[i].k, { cx: SEDES[i].cx, cy: SEDES[i].cy, zoom: arrive(t, a, 1.0, 1.24, 1.05) + 0.03 * prog(t, a + 1, z + 0.3),
-      dx: lerp(50, -50, prog(t, a - 0.2, z + 0.2)) * (i % 2 ? -1 : 1) });
+      dx: lerp(50, -50, prog(t, a - 0.2, z + 0.2)) * (i % 2 ? -1 : 1),
+      par: { x: lerp(0.04, -0.04, prog(t, a - 0.2, z + 0.2)) * (i % 2 ? -1 : 1), z: arrive(t, a, 1.0, 0.12, 0) + 0.04 * prog(t, a + 1, z + 0.3), f: 0.35 } });
   };
 
   // FECHAMENTO 1 — o mural volta, girando para o outro lado e rolando mais rápido.
@@ -312,20 +424,25 @@
   // por cima por conta própria), cut.
   const SHOTS = [
     { a: 0, draw: t => full('lagoa', { cx: arrive(t, 0, 2.2, 0.44, 0.5) + 0.02 * prog(t, 2.2, 4), cy: 0.55,
-        zoom: arrive(t, 0, 2.0, 1.32, 1.07) - 0.02 * prog(t, 2, 4), rot: arrive(t, 0, 2.0, -2.5, 0) }) },
+        zoom: arrive(t, 0, 2.0, 1.32, 1.09) - 0.02 * prog(t, 2, 4), rot: arrive(t, 0, 2.0, -2.5, 0),
+        par: { x: arrive(t, 0, 2.2, -0.06, 0) + 0.03 * prog(t, 2.2, 4), z: arrive(t, 0, 2.0, 0.16, 0) - 0.03 * prog(t, 2, 4), f: 0.3 } }) },
     { a: b(7), tr: { type: 'whip', d: 0.42, dir: [-1, 0] }, draw: sVerao },
     { a: b(8) + 0.46, tr: { type: 'cut' }, draw: t => full('deck', deckCam(t)) },
     { a: b(13), tr: { type: 'zoom', d: 0.56 }, draw: t => full('pes', {
-        cx: 0.5, cy: 0.55, zoom: arrive(t, b(13), 1.0, 1.22, 1.04), rot: arrive(t, b(13), 1.0, 2, 0), dx: lerp(0, -30, prog(t, b(13), b(15))) }) },
+        cx: 0.5, cy: 0.55, zoom: arrive(t, b(13), 1.0, 1.22, 1.06), rot: arrive(t, b(13), 1.0, 2, 0), dx: lerp(0, -30, prog(t, b(13), b(15))),
+        par: { x: lerp(0.01, -0.04, prog(t, b(13), b(15))), z: arrive(t, b(13), 1.0, 0.14, 0), f: 0.4 } }) },
     { a: b(15), tr: { type: 'whip', d: 0.36, dir: [0, -1] }, draw: t => full('mergulho', {
-        cx: 0.5, cy: 0.5, zoom: 1.02, dx: lerp(-110, 110, prog(t, b(14.5), b(16.6))) }) },
+        cx: 0.5, cy: 0.5, zoom: 1.03, dx: lerp(-110, 110, prog(t, b(14.5), b(16.6))),
+        par: { x: lerp(-0.05, 0.05, prog(t, b(14.5), b(16.6))), z: 0.04 * prog(t, b(14.5), b(16.6)), f: 0.4 } }) },
     { a: b(16), tr: { type: 'over', d: 0.9 }, draw: t => slidePanels(t, b(16) - 0.22, [
         { k: 'amigas', cy: 0.46 }, { k: 'bolas', cy: 0.5 }, { k: 'avoNeto', cy: 0.55 }], { axis: 'y' }) },
     { a: b(18), tr: { type: 'whip', d: 0.38, dir: [-1, 0] }, draw: sSol },
     { a: b(20), tr: { type: 'zoom', d: 0.5 }, draw: t => full('escolinha', {
-        cy: 0.5, zoom: arrive(t, b(20), 1.0, 1.18, 1.06), dx: lerp(60, -60, prog(t, b(19.5), b(22.5))) }) },
+        cy: 0.5, zoom: arrive(t, b(20), 1.0, 1.18, 1.08), dx: lerp(60, -60, prog(t, b(19.5), b(22.5))),
+        par: { x: lerp(0.05, -0.05, prog(t, b(19.5), b(22.5))), z: arrive(t, b(20), 1.0, 0.12, 0), f: 0.35 } }) },
     { a: b(22), tr: { type: 'window', d: 0.62 }, draw: t => {
-        full('mesa', { cy: 0.5, zoom: lerp(1.04, 1.12, prog(t, b(21.4), b(25.5))), dx: lerp(30, -30, prog(t, b(21.4), b(25.5))) });
+        const pm = prog(t, b(21.4), b(25.5));
+        full('mesa', { cy: 0.5, zoom: lerp(1.06, 1.13, pm), dx: lerp(30, -30, pm), par: { x: lerp(0.035, -0.035, pm), z: lerp(0, 0.08, pm), f: 0.4 } });
         // cartão sobreposto (detalhe da mesa), em profundidade
         const e = eOutExpo(prog(t, b(23) - 0.1, b(23) + 0.6)), x2 = eInExpo(prog(t, b(25) - 0.45, b(25) - 0.05));
         if (e > 0) {
@@ -341,7 +458,8 @@
     { a: b(25), tr: { type: 'over', d: 0.85 }, draw: t => slidePanels(t, b(25) - 0.2, [
         { k: 'paiFilha', cy: 0.48 }, { k: 'piquenique', cy: 0.6 }], { axis: 'y', stagger: 0.09 }) },
     { a: b(28), tr: { type: 'whip', d: 0.4, dir: [-1, 0] }, draw: t => full('orla', {
-        cy: 0.5, zoom: 1.03, dx: lerp(-150, 150, prog(t, b(27.6), b(30.4))) }) },
+        cy: 0.5, zoom: 1.04, dx: lerp(-150, 150, prog(t, b(27.6), b(30.4))),
+        par: { x: lerp(-0.06, 0.06, prog(t, b(27.6), b(30.4))), f: 0.35 } }) },
     { a: b(30), tr: { type: 'window', d: 0.5 }, draw: sMural },
     { a: SEDE_T[0], tr: { type: 'whip', d: 0.38, dir: [-1, 0] }, draw: sedeShot(0) },
     { a: SEDE_T[1], tr: { type: 'whip', d: 0.36, dir: [0, -1] }, draw: sedeShot(1) },
@@ -613,7 +731,8 @@
   window.filmReady = Promise.all([
     ...fonts.map(f => f.load().then(ff => document.fonts.add(ff))),
     ...Object.entries(PHOTOS).map(([k, v]) => load(v).then(i => { img[k] = i; })),
-  ]).then(() => { prepVerao(); prepGrain(); });
+  ]).then(() => Promise.all(Object.entries(DEPTH).map(([k, v]) => load(v).then(d => { depthOf.set(img[k], d); }))))
+    .then(() => { prepVerao(); prepGrain(); if (GL.ok) Object.values(img).forEach(GL.warm); });
 
   window.FILM = { W, H, FPS, DUR, b, renderFrame };
 

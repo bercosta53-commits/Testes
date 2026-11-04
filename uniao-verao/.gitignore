@@ -3,3 +3,5 @@ build/stills/
 node_modules/
 build/*.wav
 assets/photos/hd/
+build/models/
+build/clip/

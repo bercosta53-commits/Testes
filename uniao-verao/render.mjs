@@ -5,6 +5,7 @@
 //   node render.mjs --stills 1,5,9.5,27      -> build/stills/t*.png (conferência)
 //   node render.mjs --encode-only            -> remonta o MP4 com os quadros já renderizados
 //   node render.mjs --workers 4 --out build/x.mp4
+//   node render.mjs --par 0 --out build/sem-parallax.mp4   -> sem o parallax 2.5D (antes/depois)
 import { createRequire } from 'node:module';
 import http from 'node:http';
 import fs from 'node:fs';
@@ -30,7 +31,7 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(p).pipe(res);
 });
 await new Promise(r => server.listen(0, r));
-const url = `http://127.0.0.1:${server.address().port}/film.html?render`;
+const url = `http://127.0.0.1:${server.address().port}/film.html?render${args.par !== undefined ? '&par=' + args.par : ''}`;
 const browser = await chromium.launch({ args: ['--force-color-profile=srgb'] });
 
 async function openPage() {
