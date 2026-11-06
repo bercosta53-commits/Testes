@@ -1,0 +1,1030 @@
+<title>Evolução do Velora Radar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: canvas Bone, superfícies de trabalho em Paper, uma única janela Ink por tela (o instrumento); fio condutor do site v10 na margem esquerda. */
+:root {
+  /* Cor — tokens oficiais da Velora (Design System + site v10) */
+  --bone: #F7F1ED;      /* canvas */
+  --bone-2: #EFE7E0;    /* superfície interna sobre Bone */
+  --paper: #FFFFFF;     /* superfície de trabalho: fila, dossiê */
+  --ink: #0B0B0C;       /* texto e o instrumento */
+  --acid: #CCFF00;      /* decisão: só como fundo atrás de preto no claro; tinta no Ink */
+
+  /* Tons de apoio no claro (site v10, ajustados para AA) */
+  --fg: var(--ink);
+  --fg-2: rgb(11 11 12 / .66);
+  --fg-3: rgb(11 11 12 / .58);
+  --linha: rgb(11 11 12 / .12);
+  --linha-forte: rgb(11 11 12 / .52);
+
+  /* Tons de apoio dentro do instrumento (Ink) */
+  --i-bg: var(--ink);
+  --i-fg: #FFFFFF;
+  --i-fg-2: rgb(255 255 255 / .66);
+  --i-fg-3: rgb(255 255 255 / .5);
+  --i-linha: rgb(255 255 255 / .12);
+  --i-linha-forte: rgb(255 255 255 / .4);
+  --i-conta: rgb(255 255 255 / .5);
+
+  /* Tipo — três papéis, nunca mais */
+  --f-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --f-corpo: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --maxw: 1280px;
+  --raio: 2px;
+  --curva: cubic-bezier(.2, .7, .2, 1);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bone); }
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--fg);
+  font-family: var(--f-corpo);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 1024px) { body { font-size: 17px; } }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; }
+strong, b { font-weight: 600; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.instrumento :focus-visible { outline-color: var(--acid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Estrutura do documento ---------- */
+.wrap { max-width: var(--maxw); margin-inline: auto; position: relative; }
+.secao > .wrap { padding-block: 64px; }
+@media (min-width: 1024px) { .secao > .wrap { padding-block: 104px; } }
+/* Fio condutor: a linha vertical do site, com os rótulos pendurados nela */
+@media (min-width: 1100px) {
+  .secao > .wrap { padding-left: 64px; }
+  .secao > .wrap::before { content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; background: var(--linha); }
+}
+.rotulo {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  font-family: var(--f-mono); font-weight: 500; font-size: 12px; line-height: 1.4;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2);
+}
+.rotulo::before { content: ''; flex: none; width: 24px; height: 1px; background: currentColor; }
+@media (min-width: 1100px) { .rotulo { margin-left: -40px; } .rotulo::before { width: 28px; } }
+
+.t1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.25rem, 1.3rem + 3.4vw, 4rem); line-height: 1.02; letter-spacing: -.03em; text-wrap: balance; max-width: 16em; }
+.t2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem); line-height: 1.06; letter-spacing: -.025em; text-wrap: balance; max-width: 20em; }
+.t3 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.125rem, 1.05rem + .3vw, 1.3125rem); line-height: 1.25; letter-spacing: -.01em; text-wrap: balance; }
+.lead { font-size: clamp(1.0625rem, 1rem + .25vw, 1.25rem); line-height: 1.5; max-width: 36em; margin-top: 20px; text-wrap: pretty; }
+.apoio { color: var(--fg-2); max-width: 38em; text-wrap: pretty; }
+.secao + .secao > .wrap { border-top: 1px solid var(--linha); }
+
+/* ---------- Topo do documento ---------- */
+.doc-topo { max-width: var(--maxw); margin-inline: auto; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 24px; border-bottom: 1px solid var(--linha); }
+.marca { font-family: var(--f-display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; line-height: 1; }
+.marca span { color: var(--fg-2); font-weight: 500; }
+.doc-topo__meta { font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; color: var(--fg-2); }
+
+/* ---------- Premissas ---------- */
+.premissas { display: grid; gap: 0; margin-top: 48px; border-top: 1px solid var(--linha-forte); }
+.premissas > div { display: grid; gap: 4px; padding-block: 16px; border-bottom: 1px solid var(--linha); }
+.premissas dt { font-weight: 600; font-size: 15px; }
+.premissas dd { color: var(--fg-2); font-size: 15px; line-height: 1.55; max-width: 44em; }
+.premissas .pendente dd { color: var(--fg); }
+.premissas .pendente { border-bottom: 1px dashed var(--linha-forte); }
+@media (min-width: 768px) {
+  .premissas > div { grid-template-columns: 200px minmax(0, 1fr); column-gap: 24px; }
+}
+
+/* =========================================================================
+   A tela proposta (mock funcional)
+   ========================================================================= */
+.tela { margin-top: 56px; border: 1px solid var(--linha-forte); border-radius: var(--raio); background: var(--bone); overflow: hidden; }
+.tela__legenda { margin-top: 14px; font-size: 14px; color: var(--fg-2); max-width: 60em; }
+
+.app-barra { display: flex; align-items: center; gap: 8px 24px; flex-wrap: wrap; padding: 12px 20px; background: var(--paper); border-bottom: 1px solid var(--linha); }
+.app-barra__marca { font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -.02em; margin-right: 8px; }
+.app-barra__marca span { color: var(--fg-2); font-weight: 500; }
+.app-nav { display: flex; gap: 4px 20px; flex-wrap: wrap; margin-right: auto; }
+.app-nav a { display: inline-flex; align-items: center; min-height: 40px; font-size: 15px; font-weight: 500; color: var(--fg-2); text-decoration: none; border-bottom: 2px solid transparent; }
+.app-nav a[aria-current] { color: var(--fg); border-bottom-color: var(--ink); }
+.app-nav a:hover { color: var(--fg); }
+.app-barra__ctx { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+.seletor { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 6px 12px; background: transparent; border: 1px solid var(--linha-forte); border-radius: var(--raio); cursor: pointer; font-size: 14px; font-weight: 500; }
+.seletor svg { width: 14px; height: 14px; }
+.semana { font-family: var(--f-mono); font-size: 12.5px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+
+.app-resumo { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; padding: 20px 20px 16px; }
+.app-resumo p { font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem); font-weight: 500; line-height: 1.4; }
+.app-resumo b { font-family: var(--f-display); font-weight: 700; }
+.link { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; font-weight: 600; font-size: 15px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; text-decoration-color: var(--linha-forte); background: none; border: 0; padding: 0; cursor: pointer; }
+.link:hover { text-decoration-color: currentColor; }
+
+.app-grade { display: grid; gap: 16px; padding: 0 20px 20px; }
+.app-grade > * { min-width: 0; }
+@media (min-width: 900px) {
+  .app-grade { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .instrumento { grid-column: 1 / 6; }
+  .fila { grid-column: 6 / 13; }
+  .dossie { grid-column: 1 / -1; }
+}
+@media (max-width: 899px) {
+  .fila { order: 1; } .dossie { order: 2; } .instrumento { order: 3; }
+}
+
+.painel__topo { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.painel__rotulo { font-family: var(--f-mono); font-weight: 500; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); }
+
+/* ---------- O instrumento ---------- */
+.instrumento { background: var(--i-bg); color: var(--i-fg); border-radius: var(--raio); padding: 18px 18px 20px; display: flex; flex-direction: column; }
+.instrumento .painel__rotulo { color: var(--i-fg-2); }
+.instrumento__hora { font-family: var(--f-mono); font-size: 12px; color: var(--i-fg-3); font-variant-numeric: tabular-nums; }
+.radar-svg { display: block; width: 100%; max-width: 500px; height: auto; margin: auto; padding-block: 8px; overflow: visible; }
+.r-anel { fill: none; stroke: var(--i-linha); stroke-width: 1; }
+.r-anel--faixa { stroke: var(--i-linha-forte); }
+.r-anel--externo { stroke: var(--i-linha-forte); }
+.r-divisa { stroke: var(--i-linha); stroke-width: 1; }
+.r-faixa-txt { font-family: var(--f-mono); font-size: 13px; fill: var(--i-fg-3); letter-spacing: .02em; }
+.r-faixa-txt--1 { fill: var(--i-fg-2); }
+.r-setor-txt { font-family: var(--f-corpo); font-weight: 600; font-size: 14px; fill: var(--i-fg-2); paint-order: stroke; stroke: var(--ink); stroke-width: 6px; stroke-linejoin: round; }
+.r-conta { fill: var(--i-conta); }
+.r-fila { fill: var(--acid); }
+.r-fila-alvo { fill: transparent; cursor: pointer; }
+.r-sinal { fill: none; stroke: var(--i-fg); stroke-width: 1.25; opacity: .8; }
+.r-sinal--inferido { stroke-dasharray: 3 3; }
+.r-sel { fill: none; stroke: var(--acid); stroke-width: 1.5; }
+.r-hover { fill: none; stroke: var(--i-fg); stroke-width: 1; opacity: 0; transition: opacity 160ms var(--curva); }
+.r-ponto.is-hover .r-hover { opacity: 1; }
+.r-ponto.is-feito .r-fila { opacity: .3; }
+.r-rotulo { font-family: var(--f-corpo); font-weight: 600; font-size: 16px; fill: var(--i-fg); paint-order: stroke; stroke: var(--ink); stroke-width: 6px; stroke-linejoin: round; pointer-events: none; }
+.r-guia { stroke: var(--i-fg-2); stroke-width: 1; }
+.r-centro { fill: var(--i-fg); }
+.r-varredura line { stroke: var(--i-fg); stroke-width: 1.25; stroke-opacity: .7; }
+.r-varredura { opacity: 0; transform-origin: 300px 300px; transform-box: view-box; }
+@media (prefers-reduced-motion: no-preference) {
+  .r-varredura.is-rodando { animation: varrer 2.4s linear 1 both; }
+}
+@keyframes varrer {
+  0% { transform: rotate(0deg); opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 0; }
+}
+.legenda { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--i-linha); font-size: 13px; line-height: 1.35; color: var(--i-fg-2); }
+.legenda li { display: flex; align-items: center; gap: 10px; }
+.legenda svg { flex: none; width: 22px; height: 22px; }
+@media (max-width: 420px) { .legenda { grid-template-columns: 1fr; } }
+
+/* ---------- A fila ---------- */
+.fila, .dossie { background: var(--paper); border-radius: var(--raio); }
+.fila { padding: 18px 0 8px; }
+.fila .painel__topo { padding-inline: 18px; }
+.fila__cab, .linha { display: grid; grid-template-columns: 32px minmax(0, 1fr) minmax(0, 1.35fr) 76px; column-gap: 14px; align-items: start; }
+.fila__cab { padding: 8px 18px; font-size: 12.5px; font-weight: 600; color: var(--fg-2); border-bottom: 1px solid var(--linha); }
+.fila__cab span:last-child { text-align: right; }
+.linha {
+  width: 100%; padding: 14px 18px; text-align: left; background: transparent; border: 0;
+  border-bottom: 1px solid var(--linha); cursor: pointer; transition: background-color 160ms var(--curva);
+}
+.fila li:last-child .linha { border-bottom: 0; }
+.linha:hover { background: var(--bone); }
+.linha[aria-pressed="true"] { background: var(--bone); box-shadow: inset 3px 0 0 var(--ink); }
+.linha__n { display: inline-grid; place-items: center; width: 26px; height: 26px; font-family: var(--f-mono); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; border-radius: var(--raio); color: var(--fg-2); }
+.linha[aria-pressed="true"] .linha__n { background: var(--ink); color: var(--acid); }
+.linha__nome { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-weight: 600; font-size: 15px; line-height: 1.35; }
+.linha__meta { display: block; margin-top: 2px; font-size: 13px; line-height: 1.4; color: var(--fg-2); }
+.linha__motivo { display: block; font-size: 14px; line-height: 1.4; }
+.linha__data { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-family: var(--f-mono); font-size: 12px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.linha__prio { text-align: right; }
+.linha__score { display: block; font-family: var(--f-mono); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+.barra { display: block; height: 4px; margin-top: 8px; margin-left: auto; width: 100%; max-width: 64px; background: var(--linha); position: relative; }
+.barra i { position: absolute; inset: 0 auto 0 0; background: var(--ink); }
+.linha.is-feito .linha__nome, .linha.is-feito .linha__motivo, .linha.is-feito .linha__score { color: var(--fg-3); }
+.linha.is-feito .barra i { background: var(--fg-3); }
+
+.selo { display: inline-flex; align-items: center; min-height: 20px; padding: 0 6px; font-family: var(--f-corpo); font-size: 11.5px; font-weight: 600; line-height: 1; letter-spacing: .01em; border: 1px solid var(--ink); border-radius: var(--raio); color: var(--fg); white-space: nowrap; }
+.selo--inferido { border-style: dashed; border-color: var(--linha-forte); color: var(--fg-2); font-weight: 500; }
+.selo--feito { border-color: var(--linha-forte); color: var(--fg-2); }
+.selo--decisao { background: var(--ink); border-color: var(--ink); color: var(--acid); }
+
+@media (max-width: 560px) {
+  .fila__cab { display: none; }
+  .linha { grid-template-columns: 32px minmax(0, 1fr) 56px; row-gap: 8px; }
+  .linha__quando { grid-column: 2 / 3; grid-row: 2; }
+  .linha__prio { grid-column: 3; grid-row: 1; }
+}
+
+/* ---------- O dossiê ---------- */
+.dossie { padding: 22px 20px 24px; }
+@media (min-width: 768px) { .dossie { padding: 28px 28px 32px; } }
+.dossie__cab { display: grid; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--linha); }
+@media (min-width: 900px) { .dossie__cab { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); align-items: end; column-gap: 40px; } }
+.dossie__nome { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); line-height: 1.04; letter-spacing: -.025em; margin-top: 4px; }
+.dossie__meta { margin-top: 8px; font-size: 14.5px; color: var(--fg-2); }
+.prio__topo { display: flex; align-items: baseline; gap: 12px; }
+.prio__n { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.75rem, 2rem + 2vw, 3.75rem); line-height: .9; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.prio__txt { font-size: 14px; color: var(--fg-2); line-height: 1.35; }
+.composicao { display: flex; height: 10px; margin-top: 14px; background: var(--linha); gap: 2px; }
+.composicao i { display: block; height: 100%; background: var(--ink); }
+.composicao i:nth-child(2) { background: rgb(11 11 12 / .7); }
+.composicao i:nth-child(3) { background: rgb(11 11 12 / .45); }
+.composicao__lista { display: grid; gap: 4px; margin-top: 12px; font-size: 13.5px; }
+.composicao__lista li { display: flex; justify-content: space-between; gap: 12px; color: var(--fg-2); }
+.composicao__lista li span:first-child { display: flex; align-items: center; gap: 8px; }
+.composicao__lista li span:first-child::before { content: ''; width: 8px; height: 8px; background: var(--ink); }
+.composicao__lista li:nth-child(2) span:first-child::before { background: rgb(11 11 12 / .7); }
+.composicao__lista li:nth-child(3) span:first-child::before { background: rgb(11 11 12 / .45); }
+.composicao__lista b { font-family: var(--f-mono); font-weight: 500; color: var(--fg); font-variant-numeric: tabular-nums; }
+
+.dossie__corpo { display: grid; gap: 32px; padding-top: 24px; }
+.dossie__corpo > * { min-width: 0; }
+@media (min-width: 900px) { .dossie__corpo { grid-template-columns: 1.1fr 1fr 1.1fr; column-gap: 36px; } }
+
+.tempo { position: relative; }
+.tempo li { position: relative; padding: 0 0 20px 26px; }
+.tempo li:last-child { padding-bottom: 0; }
+.tempo li::before { content: ''; position: absolute; left: 0; top: 5px; width: 11px; height: 11px; background: var(--ink); border: 1px solid var(--ink); }
+.tempo li::after { content: ''; position: absolute; left: 5px; top: 20px; bottom: 2px; border-left: 1px solid var(--linha-forte); }
+.tempo li:last-child::after { display: none; }
+.tempo li.inferido::before { background: var(--paper); border-style: dashed; border-color: var(--fg-2); }
+.tempo li.inferido::after { border-left-style: dashed; }
+.tempo__data { font-family: var(--f-mono); font-size: 12px; color: var(--fg-2); font-variant-numeric: tabular-nums; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.tempo__tipo { font-weight: 600; font-size: 14.5px; margin-top: 2px; }
+.tempo__texto { font-size: 14.5px; line-height: 1.5; }
+.tempo__fonte { font-size: 13px; color: var(--fg-2); margin-top: 2px; }
+
+.comite li { padding-block: 12px; border-top: 1px solid var(--linha); }
+.comite li:last-child { border-bottom: 1px solid var(--linha); }
+.comite__papel { font-weight: 600; font-size: 14.5px; }
+.comite__pessoa { font-size: 14.5px; }
+.comite__nota { font-size: 13px; color: var(--fg-2); margin-top: 2px; }
+.comite li.vago { border-top-style: dashed; border-top-color: var(--linha-forte); }
+.comite li.vago .comite__pessoa { color: var(--fg-2); }
+
+.angulo__texto { font-size: 16.5px; font-weight: 500; line-height: 1.5; text-wrap: pretty; }
+.angulo__nota { margin-top: 10px; font-size: 13px; color: var(--fg-2); }
+.acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 24px; }
+.botao {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 12px 20px;
+  font-family: var(--f-corpo); font-size: 15.5px; font-weight: 600; line-height: 1.25;
+  background: var(--acid); color: var(--ink); border: 1px solid var(--acid); border-radius: var(--raio); cursor: pointer;
+  transition: background-color 200ms var(--curva), color 200ms var(--curva), border-color 200ms var(--curva);
+}
+.botao:hover { background: var(--ink); color: var(--acid); border-color: var(--ink); }
+.botao[disabled] { cursor: default; background: transparent; color: var(--fg-2); border-color: var(--linha-forte); }
+.seta { width: 16px; height: 16px; flex: none; transition: transform 200ms var(--curva); }
+.botao:hover .seta { transform: translateX(4px); }
+.motivos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.motivos button { min-height: 36px; padding: 6px 12px; background: transparent; border: 1px solid var(--linha-forte); border-radius: var(--raio); font-size: 14px; font-weight: 500; cursor: pointer; }
+.motivos button:hover { border-color: var(--ink); }
+.status { margin-top: 16px; padding-top: 14px; border-top: 2px solid var(--ink); font-weight: 600; font-size: 15px; line-height: 1.45; }
+.status:empty { display: none; }
+.status span { display: block; font-weight: 400; color: var(--fg-2); font-size: 14px; margin-top: 2px; }
+
+/* =========================================================================
+   Seções do plano
+   ========================================================================= */
+.principios { display: grid; margin-top: 48px; border-top: 1px solid var(--linha-forte); }
+.principio { display: grid; gap: 8px; padding-block: 24px; border-bottom: 1px solid var(--linha); }
+.principio p { color: var(--fg-2); max-width: 34em; }
+@media (min-width: 900px) {
+  .principios { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 56px; }
+}
+
+/* Tokens */
+.subtitulo { margin-top: 56px; margin-bottom: 16px; }
+.subtitulo:first-of-type { margin-top: 48px; }
+.cores { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.cor { background: var(--paper); border-radius: var(--raio); overflow: hidden; }
+.cor__amostra { height: 88px; border-bottom: 1px solid var(--linha); position: relative; }
+.cor__info { padding: 12px 14px 16px; }
+.cor__nome { font-weight: 600; font-size: 15px; }
+.cor__hex { font-family: var(--f-mono); font-size: 12px; color: var(--fg-2); margin-top: 2px; }
+.cor__uso { font-size: 13.5px; line-height: 1.45; color: var(--fg-2); margin-top: 8px; }
+.amostra-acid { display: flex; align-items: center; justify-content: center; }
+.amostra-acid span { background: var(--ink); color: var(--acid); font-family: var(--f-mono); font-size: 13px; padding: 4px 8px; border-radius: var(--raio); }
+
+.escala { background: var(--paper); border-radius: var(--raio); }
+.escala__linha { display: grid; gap: 6px 24px; padding: 16px 18px; border-bottom: 1px solid var(--linha); align-items: baseline; }
+.escala__linha:last-child { border-bottom: 0; }
+@media (min-width: 900px) { .escala__linha { grid-template-columns: 170px minmax(0, 1fr) 260px; } }
+.escala__uso { font-weight: 600; font-size: 14px; }
+.escala__spec { font-family: var(--f-mono); font-size: 12px; color: var(--fg-2); line-height: 1.6; }
+.escala__ex { min-width: 0; overflow-wrap: anywhere; }
+.ex-score { font-family: var(--f-display); font-weight: 700; font-size: 56px; line-height: .9; letter-spacing: -.04em; }
+.ex-tela { font-family: var(--f-display); font-weight: 700; font-size: 28px; line-height: 1.1; letter-spacing: -.02em; }
+.ex-conta { font-family: var(--f-display); font-weight: 700; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; }
+.ex-linha { font-weight: 600; font-size: 15px; }
+.ex-corpo { font-size: 15px; line-height: 1.55; max-width: 34em; }
+.ex-coluna { font-weight: 600; font-size: 12.5px; color: var(--fg-2); }
+.ex-dado { font-family: var(--f-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.ex-rotulo { font-family: var(--f-mono); font-weight: 500; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); }
+.nota { margin-top: 14px; font-size: 14.5px; color: var(--fg-2); max-width: 46em; }
+
+.estados { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.estado { background: var(--paper); border-radius: var(--raio); padding: 16px; display: grid; gap: 12px; align-content: start; }
+.estado__demo { min-height: 36px; display: flex; align-items: center; gap: 10px; }
+.estado__txt { font-size: 13.5px; line-height: 1.45; color: var(--fg-2); }
+.estado__txt b { color: var(--fg); }
+.demo-no { width: 11px; height: 11px; background: var(--ink); border: 1px solid var(--ink); }
+.demo-no--inf { background: var(--paper); border-style: dashed; border-color: var(--fg-2); }
+.demo-foco { padding: 6px 12px; border: 1px solid var(--linha-forte); border-radius: var(--raio); outline: 2px solid var(--ink); outline-offset: 3px; font-size: 14px; font-weight: 500; }
+
+.medidas { display: grid; gap: 0; background: var(--paper); border-radius: var(--raio); }
+.medidas > div { display: grid; gap: 4px 24px; padding: 14px 18px; border-bottom: 1px solid var(--linha); }
+.medidas > div:last-child { border-bottom: 0; }
+@media (min-width: 768px) { .medidas > div { grid-template-columns: 220px minmax(0, 1fr); } }
+.medidas dt { font-weight: 600; font-size: 14.5px; }
+.medidas dd { font-size: 14.5px; color: var(--fg-2); }
+
+/* Wireframes */
+.comparar { display: grid; gap: 24px; margin-top: 48px; }
+@media (min-width: 1000px) { .comparar { grid-template-columns: 1fr 1fr; } }
+.wire { min-width: 0; }
+.wire__titulo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wire__texto { margin-top: 8px; font-size: 14.5px; color: var(--fg-2); max-width: 38em; }
+.ascii {
+  margin: 14px 0 0; padding: 18px; overflow-x: auto; background: var(--paper); border-radius: var(--raio);
+  font-family: var(--f-mono); font-size: 12.5px; line-height: 1.45; color: var(--fg); white-space: pre; tab-size: 2;
+}
+.ascii--escolhida { box-shadow: inset 0 0 0 1px var(--ink); }
+.telas { display: grid; gap: 32px; margin-top: 56px; }
+@media (min-width: 1000px) { .telas { grid-template-columns: repeat(2, minmax(0, 1fr)); } .telas .wire--larga { grid-column: 1 / -1; } }
+
+/* Revisão */
+.tabela-wrap { margin-top: 40px; overflow-x: auto; background: var(--paper); border-radius: var(--raio); }
+table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14.5px; line-height: 1.5; }
+th, td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--linha); }
+th { font-size: 12.5px; font-weight: 600; color: var(--fg-2); }
+tbody tr:last-child td { border-bottom: 0; }
+td:first-child { color: var(--fg-2); width: 30%; }
+td:nth-child(2) { font-weight: 600; width: 30%; }
+td:nth-child(3) { color: var(--fg-2); }
+
+/* Texto da interface */
+.copy { display: grid; margin-top: 40px; border-top: 1px solid var(--linha-forte); }
+.copy > div { display: grid; gap: 6px 32px; padding-block: 18px; border-bottom: 1px solid var(--linha); }
+@media (min-width: 900px) { .copy > div { grid-template-columns: 240px minmax(0, 1fr); } }
+.copy dt { font-weight: 600; font-size: 15px; }
+.copy dd { font-size: 15px; }
+.copy q { quotes: none; display: block; background: var(--paper); padding: 10px 14px; border-radius: var(--raio); }
+.copy q + q { margin-top: 6px; }
+
+/* Fases */
+.fases { display: grid; gap: 0; margin-top: 48px; counter-reset: fase; }
+.fase { display: grid; gap: 12px 40px; padding-block: 28px; border-top: 1px solid var(--linha-forte); }
+.fase:last-child { border-bottom: 1px solid var(--linha-forte); }
+@media (min-width: 900px) { .fase { grid-template-columns: 80px minmax(0, 1fr) minmax(0, 1fr); } }
+.fase__n { font-family: var(--f-display); font-weight: 700; font-size: 3rem; line-height: .85; letter-spacing: -.04em; }
+.fase__lista { margin-top: 12px; display: grid; gap: 0; border-top: 1px solid var(--linha); }
+.fase__lista li { position: relative; padding: 9px 0 9px 20px; border-bottom: 1px solid var(--linha); font-size: 15px; line-height: 1.5; }
+.fase__lista li::before { content: ''; position: absolute; left: 0; top: calc(9px + .75em - 3px); width: 6px; height: 6px; background: var(--ink); }
+.fase__medida { font-size: 15px; color: var(--fg-2); }
+.fase__medida b { display: block; color: var(--fg); margin-bottom: 4px; font-size: 14px; }
+
+.perguntas { margin-top: 40px; display: grid; border-top: 1px solid var(--linha-forte); }
+.perguntas li { padding-block: 16px; border-bottom: 1px dashed var(--linha-forte); font-size: 16px; max-width: 46em; }
+
+.doc-rodape { max-width: var(--maxw); margin-inline: auto; padding-block: 32px 48px; border-top: 1px solid var(--linha); display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; font-size: 13.5px; color: var(--fg-2); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="doc-topo">
+  <p class="marca">Velora <span>Radar</span></p>
+  <p class="doc-topo__meta">Plano de UX/UI, base clara. Novembro de 2026</p>
+</header>
+
+<main>
+<!-- ===================== Abertura + tela proposta ===================== -->
+<section class="secao" id="tela" aria-labelledby="titulo-tela">
+  <div class="wrap">
+    <p class="rotulo">A tela proposta</p>
+    <h1 class="t1" id="titulo-tela">As contas para abordar esta semana, e por que agora.</h1>
+    <p class="lead">Esta é a direção para a visão principal do Velora Radar, em base clara, seguindo o Design System e o site v10. Ela já funciona com dados de exemplo: escolha uma conta na fila ou um ponto do radar.</p>
+
+    <div class="tela" id="app">
+      <div class="app-barra">
+        <span class="app-barra__marca">Velora <span>Radar</span></span>
+        <nav class="app-nav" aria-label="Radar, exemplo">
+          <a href="#tela" aria-current="page">Radar</a>
+          <a href="#telas">Contas</a>
+          <a href="#telas">Sinais</a>
+          <a href="#telas">Critérios</a>
+        </nav>
+        <div class="app-barra__ctx">
+          <button class="seletor" type="button" id="seletor-icp">ICP: Software B2B, Sul e Sudeste
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <span class="semana">Semana 45 · 2 a 8 nov</span>
+        </div>
+      </div>
+
+      <div class="app-resumo">
+        <p id="resumo"><b>8 contas</b> na faixa de abordagem. <b>4</b> entraram esta semana.</p>
+        <a class="link" href="#telas">Ver critérios de prioridade</a>
+      </div>
+
+      <div class="app-grade">
+        <section class="instrumento" aria-label="Radar da semana">
+          <div class="painel__topo">
+            <h2 class="painel__rotulo">Radar da semana</h2>
+            <span class="instrumento__hora">Atualizado hoje, 07:40</span>
+          </div>
+          <svg class="radar-svg" id="radar" viewBox="0 0 600 600" role="img" aria-label="Radar: contas posicionadas por prioridade, do centro para fora, e por segmento, em cinco setores."></svg>
+          <ul class="legenda">
+            <li><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="6" fill="#CCFF00"/></svg>Na fila da semana</li>
+            <li><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="3" fill="rgb(255 255 255 / .5)"/></svg>Conta monitorada</li>
+            <li><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="9" fill="none" stroke="#fff" stroke-width="1.25"/><circle cx="11" cy="11" r="3" fill="rgb(255 255 255 / .5)"/></svg>Sinal novo, confirmado</li>
+            <li><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="9" fill="none" stroke="#fff" stroke-width="1.25" stroke-dasharray="3 3"/><circle cx="11" cy="11" r="3" fill="rgb(255 255 255 / .5)"/></svg>Sinal novo, inferido</li>
+          </ul>
+        </section>
+
+        <section class="fila" aria-labelledby="fila-titulo">
+          <div class="painel__topo">
+            <h2 class="painel__rotulo" id="fila-titulo">Fila da semana</h2>
+            <button class="seletor" type="button" id="seletor-segmento">Todos os segmentos
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          </div>
+          <div class="fila__cab" aria-hidden="true"><span>#</span><span>Conta</span><span>Por que agora</span><span>Prioridade</span></div>
+          <ol id="fila"></ol>
+        </section>
+
+        <section class="dossie" id="dossie" aria-live="polite" aria-label="Dossiê da conta selecionada"></section>
+      </div>
+    </div>
+    <p class="tela__legenda">Empresas, pessoas e sinais são fictícios. Na tela real, o radar e a fila mostram sempre a mesma seleção, e o dossiê abre ao lado em telas largas.</p>
+
+    <dl class="premissas" aria-label="Premissas do plano">
+      <div><dt>O que é o Radar</dt><dd>A ferramenta que reúne sinais observáveis sobre empresas e prioriza contas e decisores. No sistema da Velora, é a etapa 01, Inteligência, e entrega contas priorizadas para a etapa Acesso.</dd></div>
+      <div><dt>Quem usa</dt><dd>Consultores e líderes de growth da Velora, e os times de marketing e vendas dos clientes de tecnologia B2B.</dd></div>
+      <div><dt>A pergunta que a tela responde</dt><dd>Toda semana: quais contas abordar, por que agora, com quem falar e com que ângulo.</dd></div>
+      <div class="pendente"><dt>O que ainda não vi</dt><dd>As telas atuais do Radar. Este plano parte do que o site e o Design System dizem que ele faz. Com as telas em mãos, ajusto o diagnóstico e as fases.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ===================== Princípios ===================== -->
+<section class="secao" id="principios" aria-labelledby="titulo-principios">
+  <div class="wrap">
+    <p class="rotulo">Princípios</p>
+    <h2 class="t2" id="titulo-principios">Seis regras que valem para todas as telas do Radar.</h2>
+    <div class="principios">
+      <div class="principio"><h3 class="t3">Toda prioridade vem com o motivo ao lado</h3><p>Uma conta só entra na fila com o sinal que a colocou ali e a data dele. O número sozinho não convence ninguém a abordar.</p></div>
+      <div class="principio"><h3 class="t3">O radar mostra o conjunto, a fila decide</h3><p>O radar dá a leitura de relance: o que está perto do centro, em que segmento. A fila dá a leitura precisa. As duas mostram sempre a mesma seleção.</p></div>
+      <div class="principio"><h3 class="t3">Uma janela Ink por tela, e ela é o instrumento</h3><p>O canvas é Bone, as superfícies de trabalho são Paper. O preto fica reservado ao radar, como no painel do site. Menu, filtros e listas ficam no claro.</p></div>
+      <div class="principio"><h3 class="t3">Acid marca decisão</h3><p>No instrumento, Acid são as contas da fila. No claro, aparece só na ação principal e no número da conta selecionada, sempre como fundo atrás de preto ou sob texto preto.</p></div>
+      <div class="principio"><h3 class="t3">Tracejado é incerteza</h3><p>Sinal inferido, decisor não mapeado e dado desatualizado usam a mesma linha tracejada que o site já usa para campo inválido e pendência. Sólido é confirmado.</p></div>
+      <div class="principio"><h3 class="t3">O Radar termina numa abordagem</h3><p>Cada conta sai da tela com motivo, comitê de compra e ângulo da primeira mensagem, e segue para a etapa Acesso com um clique. Relatório que ninguém usa não é entrega.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Tokens ===================== -->
+<section class="secao" id="tokens" aria-labelledby="titulo-tokens">
+  <div class="wrap">
+    <p class="rotulo">Tokens</p>
+    <h2 class="t2" id="titulo-tokens">A mesma marca, calibrada para uma ferramenta de uso diário.</h2>
+    <p class="lead apoio">Cores e famílias são as oficiais. O que muda é a escala, menor e mais densa que a do site, e o papel de cada elemento numa tela que se opera em vez de se ler de cima a baixo.</p>
+
+    <h3 class="t3 subtitulo">Cor</h3>
+    <div class="cores">
+      <div class="cor"><div class="cor__amostra" style="background:var(--bone)"></div><div class="cor__info"><p class="cor__nome">Bone</p><p class="cor__hex">#F7F1ED</p><p class="cor__uso">Canvas de todas as telas. Tem temperatura, o que tira o ar de planilha.</p></div></div>
+      <div class="cor"><div class="cor__amostra" style="background:var(--paper)"></div><div class="cor__info"><p class="cor__nome">Paper</p><p class="cor__hex">#FFFFFF</p><p class="cor__uso">Superfície de trabalho: fila, dossiê, formulários. Separa do Bone por tom, sem sombra.</p></div></div>
+      <div class="cor"><div class="cor__amostra" style="background:var(--ink)"></div><div class="cor__info"><p class="cor__nome">Ink</p><p class="cor__hex">#0B0B0C</p><p class="cor__uso">Texto, linhas de dado e o fundo do instrumento. Uma área Ink por tela.</p></div></div>
+      <div class="cor"><div class="cor__amostra amostra-acid" style="background:var(--acid)"><span>01</span></div><div class="cor__info"><p class="cor__nome">Acid</p><p class="cor__hex">#CCFF00</p><p class="cor__uso">Decisão. No claro, só como fundo sob texto preto, ou como texto sobre Ink. Nunca como texto sobre Bone ou Paper.</p></div></div>
+      <div class="cor"><div class="cor__amostra" style="background:var(--bone);background-image:linear-gradient(var(--linha-forte),var(--linha-forte)),linear-gradient(var(--linha),var(--linha));background-size:100% 1px,100% 1px;background-position:0 36px,0 60px;background-repeat:no-repeat"></div><div class="cor__info"><p class="cor__nome">Ink em transparência</p><p class="cor__hex">66% · 58% · 52% · 12%</p><p class="cor__uso">Texto secundário, terciário, linha de diagrama e fio. Os mesmos níveis do site, já ajustados para contraste AA.</p></div></div>
+    </div>
+
+    <h3 class="t3 subtitulo">Tipo</h3>
+    <div class="escala">
+      <div class="escala__linha"><span class="escala__uso">Prioridade no dossiê</span><span class="escala__ex ex-score">91</span><span class="escala__spec">Space Grotesk 700 · 56 / 0,9 · −0,04em · algarismos tabulares</span></div>
+      <div class="escala__linha"><span class="escala__uso">Título de tela</span><span class="escala__ex ex-tela">Sinais desta semana</span><span class="escala__spec">Space Grotesk 700 · 28 / 1,1 · −0,02em</span></div>
+      <div class="escala__linha"><span class="escala__uso">Nome da conta</span><span class="escala__ex ex-conta">Tramo Logística</span><span class="escala__spec">Space Grotesk 700 · 22 / 1,15 · só no dossiê</span></div>
+      <div class="escala__linha"><span class="escala__uso">Linha da fila</span><span class="escala__ex ex-linha">Selva Pagamentos</span><span class="escala__spec">Manrope 600 · 15 / 1,35</span></div>
+      <div class="escala__linha"><span class="escala__uso">Corpo</span><span class="escala__ex ex-corpo">Captou Série B de R$ 80 milhões e abriu três vagas de marketing de produto.</span><span class="escala__spec">Manrope 400 · 15 / 1,55 · até 70 caracteres</span></div>
+      <div class="escala__linha"><span class="escala__uso">Cabeçalho de coluna</span><span class="escala__ex ex-coluna">Por que agora</span><span class="escala__spec">Manrope 600 · 12,5 · caixa normal</span></div>
+      <div class="escala__linha"><span class="escala__uso">Dado</span><span class="escala__ex ex-dado">30 out · 88 · R$ 80 mi</span><span class="escala__spec">JetBrains Mono 500 · 13 · tabular · caixa normal</span></div>
+      <div class="escala__linha"><span class="escala__uso">Rótulo de painel</span><span class="escala__ex ex-rotulo">Fila da semana</span><span class="escala__spec">JetBrains Mono 500 · 11,5 · caixa alta · 0,16em</span></div>
+    </div>
+    <p class="nota">Adaptação para o produto: a caixa alta com espaçamento largo fica só no rótulo de painel, um por bloco. Em cabeçalho de coluna e em dado, ela pesa e atrasa a leitura de quem passa pela fila todo dia. Space Grotesk aparece só em título, nome de conta e números grandes.</p>
+
+    <h3 class="t3 subtitulo">Espaço, forma e linha</h3>
+    <dl class="medidas">
+      <div><dt>Base</dt><dd>Múltiplos de 4: 4, 8, 12, 16, 24, 32, 48. Margem interna de painel 18 a 28.</dd></div>
+      <div><dt>Grade</dt><dd>12 colunas, gutter 16 dentro do app. Na tela principal: radar em 5, fila em 7, dossiê em 12.</dd></div>
+      <div><dt>Altura da linha da fila</dt><dd>64 confortável (padrão) e 48 compacta, para quem revisa a carteira inteira.</dd></div>
+      <div><dt>Raio</dt><dd>2 em botão, campo e painel, como no site. Linhas de lista sem raio.</dd></div>
+      <div><dt>Elevação</dt><dd>Nenhuma sombra. Profundidade por tom (Bone, Paper, Ink) e por linha.</dd></div>
+      <div><dt>Movimento</dt><dd>Uma varredura no radar quando os dados da semana chegam, e só então. O resto do movimento responde a uma ação: selecionar, enviar, descartar.</dd></div>
+    </dl>
+
+    <h3 class="t3 subtitulo">Estados</h3>
+    <div class="estados">
+      <div class="estado"><div class="estado__demo"><span class="linha__n" style="background:var(--ink);color:var(--acid)">1</span></div><p class="estado__txt"><b>Selecionada.</b> Número em Acid sobre Ink e fio preto à esquerda da linha.</p></div>
+      <div class="estado"><div class="estado__demo"><span class="selo">Nova</span></div><p class="estado__txt"><b>Nova esta semana.</b> Contorno preto, sem cor. A novidade não compete com a decisão.</p></div>
+      <div class="estado"><div class="estado__demo"><span class="demo-no"></span><span class="selo">Confirmado</span></div><p class="estado__txt"><b>Sinal confirmado.</b> Nó cheio e linha sólida, com a fonte citada.</p></div>
+      <div class="estado"><div class="estado__demo"><span class="demo-no demo-no--inf"></span><span class="selo selo--inferido">Inferido</span></div><p class="estado__txt"><b>Sinal inferido ou desatualizado.</b> Tracejado, com a ação de confirmar ao lado.</p></div>
+      <div class="estado"><div class="estado__demo"><span class="selo selo--feito">Enviada para cadência</span></div><p class="estado__txt"><b>Concluída.</b> A linha recua para o tom terciário e sai da contagem da semana.</p></div>
+      <div class="estado"><div class="estado__demo"><span class="demo-foco">Foco do teclado</span></div><p class="estado__txt"><b>Foco.</b> Contorno preto de 2 no claro, Acid dentro do instrumento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Layout ===================== -->
+<section class="secao" id="telas" aria-labelledby="titulo-telas">
+  <div class="wrap">
+    <p class="rotulo">Layout</p>
+    <h2 class="t2" id="titulo-telas">Duas composições para a tela principal, e as telas que vêm depois.</h2>
+    <p class="lead apoio">Alinhamento à esquerda em tudo, como no site. Textos e números de uma mesma coluna compartilham a mesma borda; a prioridade alinha à direita para que os algarismos fiquem em coluna.</p>
+
+    <div class="comparar">
+      <div class="wire">
+        <h3 class="t3 wire__titulo">Radar dominante</h3>
+        <p class="wire__texto">O radar fica bonito e grande, mas a fila é espremida. Quem decide precisa ler motivo e data, que são texto, e aqui o texto não cabe.</p>
+<pre class="ascii" aria-label="Wireframe: radar em oito colunas, fila estreita em quatro, dossiê abaixo.">┌──────────────────────────────────────────┐
+│ resumo da semana                         │
+├────────────────────────────┬─────────────┤
+│                            │ fila        │
+│                            │ 1 ───────   │
+│           RADAR            │ 2 ───────   │
+│         8 colunas          │ 3 ───────   │
+│                            │ 4 ───────   │
+│                            │             │
+├────────────────────────────┴─────────────┤
+│ dossiê                                   │
+└──────────────────────────────────────────┘</pre>
+      </div>
+      <div class="wire">
+        <h3 class="t3 wire__titulo">Fila e radar em equilíbrio <span class="selo selo--decisao">Escolhida</span></h3>
+        <p class="wire__texto">O radar continua sendo a peça que se reconhece de longe, e a fila ganha espaço para a frase do motivo. O dossiê abre embaixo, em três colunas.</p>
+<pre class="ascii ascii--escolhida" aria-label="Wireframe: radar em cinco colunas, fila em sete com motivo e prioridade, dossiê em três colunas abaixo.">┌──────────────────────────────────────────┐
+│ resumo da semana                         │
+├────────────────┬─────────────────────────┤
+│                │ # conta   motivo    ▮   │
+│     RADAR      │ 1 ───── ───────── 91    │
+│   5 colunas    │ 2 ───── ───────── 88    │
+│                │ 3 ───── ┄┄┄┄┄┄┄┄┄ 84    │
+│                │ 4 ───── ───────── 82    │
+├────────────────┴─────────────────────────┤
+│ por que agora │ comitê │ ângulo + ação   │
+└──────────────────────────────────────────┘</pre>
+      </div>
+    </div>
+
+    <div class="telas">
+      <div class="wire">
+        <h3 class="t3">Celular</h3>
+        <p class="wire__texto">A fila vem primeiro. O radar fica a um toque, porque numa tela de 390 ele vira enfeite. Tocar numa conta abre o dossiê em tela cheia.</p>
+<pre class="ascii" aria-label="Wireframe de celular: resumo, fila com motivo, botão para ver o radar.">┌──────────────────────────┐
+│ Velora Radar       Menu  │
+├──────────────────────────┤
+│ 8 contas para abordar    │
+│ 4 novas esta semana      │
+├──────────────────────────┤
+│ 1  Tramo Logística    91 │
+│    7 vagas de vendas     │
+│ 2  Selva Pagamentos   88 │
+│    Série B, R$ 80 mi     │
+│ 3  Nuvia Saúde        84 │
+│    ┄ troca de CRM        │
+├──────────────────────────┤
+│ [ Ver no radar ]         │
+└──────────────────────────┘</pre>
+      </div>
+      <div class="wire">
+        <h3 class="t3">Sinais</h3>
+        <p class="wire__texto">Linha do tempo de todos os sinais, por dia. Sinais inferidos trazem a ação de confirmar, e confirmar recalcula a prioridade da conta na hora.</p>
+<pre class="ascii" aria-label="Wireframe da tela de sinais: filtros de tipo e confiança, lista por data com a conta afetada.">┌──────────────────────────────────────────┐
+│ Sinais    Tipo ▾   Confiança ▾   7 dias  │
+├──────────────────────────────────────────┤
+│ 5 nov  ■ Engajamento   Lumen Clínicas    │
+│          4 visitas à página de preços    │
+│ 3 nov  ■ Contratação   Selva Pagamentos  │
+│          3 vagas de marketing de produto │
+│ 25 out ┄ Tecnologia    Nuvia Saúde       │
+│          script do HubSpot no site       │
+│          inferido          [ Confirmar ] │
+└──────────────────────────────────────────┘</pre>
+      </div>
+      <div class="wire wire--larga">
+        <h3 class="t3">Critérios de prioridade</h3>
+        <p class="wire__texto">Os pesos ficam à vista e editáveis. Antes de aplicar, a tela mostra quantas contas entram e saem da faixa, para ninguém mexer no critério às cegas.</p>
+<pre class="ascii" aria-label="Wireframe da tela de critérios: pesos por tipo de sinal e prévia do efeito antes de aplicar.">┌──────────────────────────────────────────────────────────────┐
+│ Critérios de prioridade                       ICP: Software  │
+├──────────────────────────────────────────────────────────────┤
+│ Aderência ao ICP            ━━━━━━━━━━━━━━━━━━○──────   50   │
+│ Captação recente            ━━━━━━━━━━○──────────────   30   │
+│ Vagas abertas em vendas     ━━━━━━━━━○───────────────   26   │
+│ Nova liderança comercial    ━━━━━━━○─────────────────   21   │
+│ Visitas à página de preços  ━━━━━━━━━○───────────────   28   │
+├──────────────────────────────────────────────────────────────┤
+│ Com esses pesos, 2 contas entram na faixa e 1 sai.           │
+│ Ver quais                     [ Aplicar a partir de hoje ]   │
+└──────────────────────────────────────────────────────────────┘</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Revisão ===================== -->
+<section class="secao" id="revisao" aria-labelledby="titulo-revisao">
+  <div class="wrap">
+    <p class="rotulo">Revisão contra o genérico</p>
+    <h2 class="t2" id="titulo-revisao">O que saiu do primeiro rascunho, e por quê.</h2>
+    <p class="lead apoio">Cada item abaixo apareceria em qualquer painel de inteligência comercial. Foi trocado por uma escolha que só faz sentido para a Velora e para o Radar.</p>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th scope="col">Primeira ideia</th><th scope="col">O que ficou</th><th scope="col">Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Quatro cards de número no topo: contas, sinais, prioridade média, taxa de resposta.</td><td>Uma frase de resumo com os números dentro.</td><td>Card de número grande é o padrão de qualquer painel. Aqui o número só importa junto da ação que ele pede.</td></tr>
+          <tr><td>Contas como cards arredondados em grade.</td><td>Linhas com fio, como as dores e os entregáveis do site.</td><td>Cards iguais achatam a hierarquia e mostram metade das contas por tela.</td></tr>
+          <tr><td>Radar em Bone, com pontos em Acid.</td><td>Radar dentro de uma janela Ink.</td><td>Acid sobre Bone dá cerca de 1,1:1 de contraste, e o próprio Design System proíbe. O site já mostra o Radar em Ink.</td></tr>
+          <tr><td>Uma cor por tipo de sinal: azul para captação, roxo para contratação.</td><td>Tipo escrito por extenso; confiança em linha sólida ou tracejada.</td><td>Um segundo sistema de cor quebra a regra de um acento só e obriga a decorar uma legenda.</td></tr>
+          <tr><td>Menu lateral escuro.</td><td>Navegação clara no topo; o escuro fica só no instrumento.</td><td>Duas áreas Ink na mesma tela competem, e o olho perde o radar.</td></tr>
+          <tr><td>Varredura girando o tempo todo.</td><td>Uma volta quando os dados da semana chegam, e para.</td><td>Movimento contínuo vira ruído em ferramenta de uso diário. A volta única quer dizer “atualizado”.</td></tr>
+          <tr><td>Rótulos em mono e caixa alta em tudo.</td><td>Caixa alta só no rótulo de painel.</td><td>Em tela densa, caixa alta em todo cabeçalho pesa e atrasa a leitura.</td></tr>
+          <tr><td>Prioridade como pontuação solta, de 0 a 100.</td><td>Prioridade com a composição ao lado: quanto vem do ICP e quanto vem de cada sinal.</td><td>Sem saber de onde vem o 91, o time não confia na fila e volta para a planilha.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Texto da interface ===================== -->
+<section class="secao" id="texto" aria-labelledby="titulo-texto">
+  <div class="wrap">
+    <p class="rotulo">Texto da interface</p>
+    <h2 class="t2" id="titulo-texto">Os momentos em que a tela precisa falar.</h2>
+    <p class="lead apoio">Verbo no ativo, caixa normal, sem pedir desculpa. A ação mantém o mesmo nome do botão até a confirmação.</p>
+    <dl class="copy">
+      <div><dt>Ação principal e confirmação</dt><dd><q>Enviar para cadência</q><q>Enviada para cadência. A conta sai da fila e segue para a etapa Acesso.</q></dd></div>
+      <div><dt>Descartar com motivo</dt><dd><q>Descartar conta · Fora do ICP · Já é cliente · Momento errado</q><q>Conta descartada: momento errado. Ela volta a ser monitorada em 90 dias.</q></dd></div>
+      <div><dt>Fila vazia</dt><dd><q>Nenhuma conta entrou na faixa de abordagem esta semana. Revise os critérios ou amplie a região.</q><q>Revisar critérios</q></dd></div>
+      <div><dt>Fonte de sinal fora do ar</dt><dd><q>Os sinais do LinkedIn não atualizam desde 4 nov. As contas afetadas aparecem tracejadas até a próxima varredura.</q></dd></div>
+      <div><dt>Sinal inferido</dt><dd><q>Inferido a partir do script do HubSpot no site. Confirme com o time antes de usar na mensagem.</q><q>Confirmar sinal</q></dd></div>
+      <div><dt>Prioridade explicada</dt><dd><q>Por que 91: aderência ao ICP, 44. Vagas abertas em vendas, 26. Nova liderança comercial, 21.</q></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ===================== Fases ===================== -->
+<section class="secao" id="fases" aria-labelledby="titulo-fases">
+  <div class="wrap">
+    <p class="rotulo">Fases</p>
+    <h2 class="t2" id="titulo-fases">Três entregas, cada uma utilizável sozinha.</h2>
+    <p class="lead apoio">A ordem segue o próprio Radar: primeiro a fila com motivo, depois o instrumento e o dossiê, por fim a confiança nos dados e a passagem para Acesso.</p>
+    <ol class="fases">
+      <li class="fase">
+        <span class="fase__n" aria-hidden="true">1</span>
+        <div><h3 class="t3">Fundação</h3>
+          <ul class="fase__lista"><li>Tokens claros no código e o shell: barra, navegação, canvas Bone.</li><li>Fila da semana com motivo, data e prioridade em coluna.</li><li>Densidade confortável e compacta.</li><li>Estados de fila vazia e de fonte fora do ar.</li></ul></div>
+        <p class="fase__medida"><b>Como saber se funcionou</b>Tempo entre a atualização da semana e a primeira conta abordada. Meta: cair pela metade.</p>
+      </li>
+      <li class="fase">
+        <span class="fase__n" aria-hidden="true">2</span>
+        <div><h3 class="t3">Instrumento e dossiê</h3>
+          <ul class="fase__lista"><li>Radar em Ink sincronizado com a fila, com faixas de ação e setores do ICP.</li><li>Dossiê com composição da prioridade, linha do tempo de sinais e comitê de compra.</li><li>Ângulo da primeira mensagem, editável pelo consultor.</li></ul></div>
+        <p class="fase__medida"><b>Como saber se funcionou</b>Parcela das contas abordadas com ângulo preenchido, e quantas vezes o time abre a planilha paralela.</p>
+      </li>
+      <li class="fase">
+        <span class="fase__n" aria-hidden="true">3</span>
+        <div><h3 class="t3">Confiança e passagem</h3>
+          <ul class="fase__lista"><li>Sinais com confiança visível e ação de confirmar.</li><li>Descarte com motivo, que alimenta os critérios.</li><li>Critérios editáveis com prévia de quem entra e sai da faixa.</li><li>Envio para a cadência ou para o CRM do cliente.</li></ul></div>
+        <p class="fase__medida"><b>Como saber se funcionou</b>Taxa de resposta das contas vindas do Radar comparada às demais, por segmento.</p>
+      </li>
+    </ol>
+
+    <h3 class="t3 subtitulo">Antes de começar, preciso saber</h3>
+    <ul class="perguntas">
+      <li>Quem opera o Radar no dia a dia: o consultor da Velora, o time do cliente ou os dois? Isso decide se a tela tem troca de cliente no topo.</li>
+      <li>Quais fontes de sinal existem hoje e de quanto em quanto tempo atualizam?</li>
+      <li>A prioridade atual tem pesos conhecidos ou vem de um modelo? A composição no dossiê depende disso.</li>
+      <li>Para onde a conta vai depois do Radar: ferramenta de cadência, CRM do cliente ou outra?</li>
+      <li>Pode me mandar as telas da versão atual? Com elas, este plano ganha um diagnóstico do que existe hoje.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="doc-rodape">
+  <span>Velora Radar · plano de evolução de UX/UI</span>
+  <span>Base: Design System Velora 2026 e site v10</span>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var C = 300, R = 270;
+  var SETORES = ['SaaS vertical', 'Fintech', 'Healthtech', 'Logtech', 'Serviços de TI'];
+  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var contas = [
+    { id: 'tramo', nome: 'Tramo Logística', setor: 3, frac: .3, pessoas: 420, cidade: 'Curitiba', score: 91, nova: true,
+      motivo: 'Abriu 7 vagas de vendas em 21 dias', data: '2 nov', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 44], ['Vagas abertas em vendas', 26], ['Nova liderança comercial', 21]],
+      sinais: [
+        { data: '2 nov', tipo: 'Contratação', texto: '7 vagas de SDR e executivo de contas abertas em 21 dias.', fonte: 'LinkedIn Vagas', conf: 'confirmado' },
+        { data: '24 out', tipo: 'Liderança', texto: 'Nova diretora comercial assumiu há 13 dias.', fonte: 'LinkedIn', conf: 'confirmado' },
+        { data: '15 out', tipo: 'Expansão', texto: 'Centro de distribuição em Joinville deve abrir no 1º trimestre.', fonte: 'Imprensa regional', conf: 'inferido' } ],
+      comite: [
+        { papel: 'Diretora comercial', pessoa: 'Marina Toledo', nota: 'No cargo há 13 dias' },
+        { papel: 'CEO e fundador', pessoa: 'Rafael Abreu', nota: 'Assina contratos acima de R$ 200 mil' },
+        { papel: 'Head de marketing', pessoa: null, nota: 'Cargo vago. Mapear quem responde por marketing hoje.' } ],
+      angulo: 'O time comercial vai dobrar com uma diretora recém-chegada. Antes de as 7 contratações começarem, ajude a definir os critérios de qualificação e o processo que elas vão seguir.' },
+    { id: 'selva', nome: 'Selva Pagamentos', setor: 1, frac: .35, pessoas: 260, cidade: 'São Paulo', score: 88, nova: true,
+      motivo: 'Captou Série B de R$ 80 milhões', data: '30 out', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 40], ['Captação recente', 30], ['Vagas abertas em vendas', 18]],
+      sinais: [
+        { data: '3 nov', tipo: 'Contratação', texto: '3 vagas de marketing de produto abertas.', fonte: 'LinkedIn Vagas', conf: 'confirmado' },
+        { data: '30 out', tipo: 'Captação', texto: 'Série B de R$ 80 milhões, liderada por um fundo de venture.', fonte: 'Comunicado da empresa', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'CRO', pessoa: 'Paulo Nery', nota: 'Veio de um banco digital' },
+        { papel: 'CMO', pessoa: 'Ana Lúcia Prado', nota: 'Na empresa há 2 anos' } ],
+      angulo: 'Com a Série B, a meta de receita sobe e o conselho cobra previsibilidade. Mostre como chegar ao pipeline que essa meta pede sem depender só de mídia.' },
+    { id: 'nuvia', nome: 'Nuvia Saúde', setor: 2, frac: .25, pessoas: 180, cidade: 'Belo Horizonte', score: 84, nova: false,
+      motivo: 'Trocou de CRM nos últimos 60 dias', data: '25 out', conf: 'inferido',
+      comp: [['Aderência ao ICP', 46], ['Troca de ferramenta comercial', 22], ['Engajamento com o cliente', 16]],
+      sinais: [
+        { data: '25 out', tipo: 'Tecnologia', texto: 'O script do HubSpot apareceu no site; antes era RD Station.', fonte: 'Leitura do site', conf: 'inferido' },
+        { data: '18 out', tipo: 'Engajamento', texto: 'Duas pessoas de vendas passaram a seguir a página do cliente no LinkedIn.', fonte: 'LinkedIn', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'Gerente de operações comerciais', pessoa: 'Lucas Ferraz', nota: 'Conduz a migração do CRM' },
+        { papel: 'Diretor de vendas', pessoa: 'Henrique Sá', nota: 'Responde pela meta de novos contratos' } ],
+      angulo: 'Troca de CRM costuma vir com dados bagunçados e funil redesenhado. Ofereça estruturar etapas e critérios enquanto a migração ainda está aberta.' },
+    { id: 'quadra', nome: 'Quadra ERP', setor: 0, frac: .55, pessoas: 340, cidade: 'Porto Alegre', score: 82, nova: false,
+      motivo: 'Lançou módulo para o agronegócio', data: '27 out', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 48], ['Produto novo', 20], ['Expansão de mercado', 14]],
+      sinais: [
+        { data: '27 out', tipo: 'Produto', texto: 'Módulo de gestão para cooperativas agrícolas lançado.', fonte: 'Site da empresa', conf: 'confirmado' },
+        { data: '12 out', tipo: 'Contratação', texto: '2 vagas de executivo de contas com foco no agro.', fonte: 'LinkedIn Vagas', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'VP de receita', pessoa: 'Clara Winck', nota: 'Responde pela meta do novo módulo' },
+        { papel: 'Gerente de marketing', pessoa: 'Diego Rocha', nota: 'Time de 4 pessoas' } ],
+      angulo: 'Produto novo para um mercado novo, sem lista de contas pronta. Comece pelo mapeamento das cooperativas que se encaixam no ICP do módulo.' },
+    { id: 'fenda', nome: 'Fenda Software', setor: 4, frac: .45, pessoas: 610, cidade: 'Florianópolis', score: 79, nova: true,
+      motivo: 'Novo CRO há 3 semanas', data: '14 out', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 38], ['Nova liderança comercial', 26], ['Crescimento do quadro', 15]],
+      sinais: [
+        { data: '20 out', tipo: 'Crescimento', texto: 'Quadro cresceu 12% em 6 meses.', fonte: 'LinkedIn', conf: 'inferido' },
+        { data: '14 out', tipo: 'Liderança', texto: 'Novo CRO, vindo de uma consultoria global.', fonte: 'LinkedIn', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'CRO', pessoa: 'Tiago Mendes', nota: 'No cargo há 3 semanas' },
+        { papel: 'Coordenadora de pré-vendas', pessoa: 'Júlia Campos', nota: 'Lidera 6 SDRs' } ],
+      angulo: 'Um CRO novo tem cerca de 90 dias para apresentar um plano. Leve um diagnóstico do funil atual que ele possa usar como ponto de partida.' },
+    { id: 'arvo', nome: 'Arvo Seguros Digitais', setor: 1, frac: .78, pessoas: 150, cidade: 'Rio de Janeiro', score: 78, nova: false,
+      motivo: 'Anunciou expansão para o Chile', data: '20 out', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 36], ['Expansão de mercado', 24], ['Captação recente', 18]],
+      sinais: [
+        { data: '20 out', tipo: 'Expansão', texto: 'Operação no Chile prevista para março.', fonte: 'Imprensa', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'CEO', pessoa: 'Beatriz Lemos', nota: 'Fundadora' },
+        { papel: 'Head de growth', pessoa: 'Caio Martins', nota: 'Lidera a entrada no Chile' } ],
+      angulo: 'Entrar no Chile pede ICP e mensagens novas. Proponha validar o mercado com uma lista curta de contas antes de montar o time local.' },
+    { id: 'lumen', nome: 'Lumen Clínicas', setor: 2, frac: .7, pessoas: 95, cidade: 'Campinas', score: 77, nova: true,
+      motivo: 'Visitou a página de preços 4 vezes em 10 dias', data: '5 nov', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 34], ['Visitas à página de preços', 28], ['Porte em crescimento', 15]],
+      sinais: [
+        { data: '5 nov', tipo: 'Engajamento', texto: '4 visitas à página de preços do cliente em 10 dias, de 2 pessoas diferentes.', fonte: 'Site do cliente, dado próprio', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'Diretora de operações', pessoa: 'Renata Alves', nota: 'Uma das duas visitas' },
+        { papel: 'Sócio-fundador', pessoa: 'Marcos Vieira', nota: 'Decide compras acima de R$ 50 mil' } ],
+      angulo: 'Há intenção ativa: duas pessoas compararam planos esta semana. Responda rápido, com um caso de clínica de porte parecido.' },
+    { id: 'brisa', nome: 'Brisa Frotas', setor: 3, frac: .75, pessoas: 230, cidade: 'Goiânia', score: 76, nova: false,
+      motivo: 'Contratou a primeira head de marketing', data: '9 out', conf: 'confirmado',
+      comp: [['Aderência ao ICP', 42], ['Nova liderança comercial', 20], ['Vagas abertas em vendas', 14]],
+      sinais: [
+        { data: '29 out', tipo: 'Contratação', texto: '2 vagas de SDR abertas.', fonte: 'LinkedIn Vagas', conf: 'confirmado' },
+        { data: '9 out', tipo: 'Liderança', texto: 'Primeira head de marketing da empresa contratada.', fonte: 'LinkedIn', conf: 'confirmado' } ],
+      comite: [
+        { papel: 'Head de marketing', pessoa: 'Larissa Duarte', nota: 'Primeira pessoa no cargo' },
+        { papel: 'Diretor comercial', pessoa: 'Fábio Ramos', nota: 'Na empresa há 6 anos' } ],
+      angulo: 'A primeira head de marketing vai montar a área do zero. Ajude a ligar marketing às contas que vendas já quer abrir.' }
+  ];
+
+  var estado = {}; // id -> 'enviada' | 'descartada:<motivo>'
+  var selecionada = contas[0].id;
+
+  /* ---------- Geometria do radar ---------- */
+  // Faixas de ação: 100–75 abordar agora, 75–50 aquecer, abaixo de 50 observar.
+  function raio(score) {
+    if (score >= 75) return R * (0.06 + (100 - score) / 25 * 0.30);
+    if (score >= 50) return R * (0.36 + (75 - score) / 25 * 0.32);
+    return R * (0.68 + (50 - score) / 50 * 0.28);
+  }
+  function angulo(setor, frac) { return (-90 + setor * 72 + 72 * (0.12 + 0.76 * frac)) * Math.PI / 180; }
+  function ponto(setor, frac, score) {
+    var a = angulo(setor, frac), r = raio(score);
+    return { x: C + r * Math.cos(a), y: C + r * Math.sin(a) };
+  }
+  function el(nome, attrs, pai) {
+    var e = document.createElementNS(NS, nome);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (pai) pai.appendChild(e);
+    return e;
+  }
+
+  // Contas monitoradas fora da fila (posições fixas, geradas com semente).
+  var semente = 7;
+  function aleatorio() { semente = (semente * 16807) % 2147483647; return (semente - 1) / 2147483646; }
+  var fundo = [];
+  for (var i = 0; i < 38; i++) fundo.push({ setor: Math.floor(aleatorio() * 5), frac: aleatorio(), score: 14 + Math.floor(aleatorio() * 60), sinal: aleatorio() < .12 ? (aleatorio() < .5 ? 'confirmado' : 'inferido') : null });
+
+  var svg = document.getElementById('radar');
+  var pontos = {};
+
+  function desenharRadar() {
+    var r75 = raio(75), r50 = raio(50);
+    [r75, r50].forEach(function (r) { el('circle', { cx: C, cy: C, r: r, class: 'r-anel r-anel--faixa' }, svg); });
+    el('circle', { cx: C, cy: C, r: R, class: 'r-anel r-anel--externo' }, svg);
+    for (var s = 0; s < 5; s++) {
+      var a = (-90 + s * 72) * Math.PI / 180;
+      el('line', { x1: C + 12 * Math.cos(a), y1: C + 12 * Math.sin(a), x2: C + R * Math.cos(a), y2: C + R * Math.sin(a), class: 'r-divisa' }, svg);
+      var m = (-90 + s * 72 + 36) * Math.PI / 180, rl = R - 18;
+      var t = el('text', { x: C + rl * Math.cos(m), y: C + rl * Math.sin(m) + 5, 'text-anchor': 'middle', class: 'r-setor-txt' }, svg);
+      t.textContent = SETORES[s];
+    }
+    [['Abordar agora', r75, 'r-faixa-txt r-faixa-txt--1'], ['Aquecer', r50, 'r-faixa-txt'], ['Observar', R, 'r-faixa-txt']].forEach(function (f) {
+      var t = el('text', { x: C + 8, y: C - f[1] + 18, class: f[2] }, svg);
+      t.textContent = f[0];
+    });
+
+    fundo.forEach(function (c) {
+      var p = ponto(c.setor, c.frac, c.score);
+      if (c.sinal) el('circle', { cx: p.x, cy: p.y, r: 10, class: 'r-sinal' + (c.sinal === 'inferido' ? ' r-sinal--inferido' : '') }, svg);
+      el('circle', { cx: p.x, cy: p.y, r: 3.4, class: 'r-conta' }, svg);
+    });
+
+    var varredura = el('g', { class: 'r-varredura' }, svg);
+    el('line', { x1: C, y1: C, x2: C, y2: C - R + 4 }, varredura);
+
+    contas.forEach(function (c, idx) {
+      var p = ponto(c.setor, c.frac, c.score);
+      var g = el('g', { class: 'r-ponto', 'data-id': c.id }, svg);
+      if (c.nova) el('circle', { cx: p.x, cy: p.y, r: 13, class: 'r-sinal' + (c.conf === 'inferido' ? ' r-sinal--inferido' : '') }, g);
+      el('circle', { cx: p.x, cy: p.y, r: 17, class: 'r-hover' }, g);
+      el('circle', { cx: p.x, cy: p.y, r: 7, class: 'r-fila' }, g);
+      var alvo = el('circle', { cx: p.x, cy: p.y, r: 18, class: 'r-fila-alvo' }, g);
+      var tt = el('title', {}, alvo); tt.textContent = (idx + 1) + '. ' + c.nome + ', prioridade ' + c.score;
+      g.addEventListener('click', function () { selecionar(c.id, true); });
+      g.addEventListener('mouseenter', function () { realcar(c.id, true); });
+      g.addEventListener('mouseleave', function () { realcar(c.id, false); });
+      pontos[c.id] = { g: g, p: p };
+    });
+
+    el('circle', { cx: C, cy: C, r: 3, class: 'r-centro' }, svg);
+    svg.__sel = el('g', { 'aria-hidden': 'true' }, svg);
+
+    if (!reduz && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) {
+        if (en.some(function (e) { return e.isIntersecting; })) { varredura.classList.add('is-rodando'); io.disconnect(); }
+      }, { threshold: .4 });
+      io.observe(svg);
+    }
+  }
+
+  function marcarNoRadar() {
+    var camada = svg.__sel;
+    while (camada.firstChild) camada.removeChild(camada.firstChild);
+    var item = pontos[selecionada]; if (!item) return;
+    var c = contas.filter(function (x) { return x.id === selecionada; })[0];
+    var p = item.p;
+    el('circle', { cx: p.x, cy: p.y, r: 17, class: 'r-sel' }, camada);
+    var direita = p.x < C + 60;
+    var lx = direita ? p.x + 30 : p.x - 30;
+    el('line', { x1: direita ? p.x + 18 : p.x - 18, y1: p.y, x2: lx, y2: p.y, class: 'r-guia' }, camada);
+    var t = el('text', { x: direita ? lx + 6 : lx - 6, y: p.y + 5, 'text-anchor': direita ? 'start' : 'end', class: 'r-rotulo' }, camada);
+    t.textContent = c.nome;
+    Object.keys(pontos).forEach(function (id) { pontos[id].g.classList.toggle('is-feito', !!estado[id]); });
+  }
+
+  function realcar(id, sim) {
+    if (pontos[id]) pontos[id].g.classList.toggle('is-hover', sim);
+  }
+
+  /* ---------- Fila ---------- */
+  var fila = document.getElementById('fila');
+  var seta = '<svg class="seta" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1.5 8h12M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); }
+
+  function seloEstado(id) {
+    var e = estado[id]; if (!e) return '';
+    return e === 'enviada' ? '<span class="selo selo--feito">Enviada</span>' : '<span class="selo selo--feito">Descartada</span>';
+  }
+
+  function desenharFila() {
+    fila.innerHTML = contas.map(function (c, i) {
+      return '<li><button type="button" class="linha' + (estado[c.id] ? ' is-feito' : '') + '" data-id="' + c.id + '" aria-pressed="' + (c.id === selecionada) + '">' +
+        '<span class="linha__n">' + (i + 1) + '</span>' +
+        '<span><span class="linha__nome">' + esc(c.nome) + (c.nova && !estado[c.id] ? ' <span class="selo">Nova</span>' : '') + seloEstado(c.id) + '</span>' +
+          '<span class="linha__meta">' + SETORES[c.setor] + ', ' + c.pessoas + ' pessoas, ' + esc(c.cidade) + '</span></span>' +
+        '<span class="linha__quando"><span class="linha__motivo">' + esc(c.motivo) + '</span>' +
+          '<span class="linha__data">' + c.data + (c.conf === 'inferido' ? ' <span class="selo selo--inferido">inferido</span>' : '') + '</span></span>' +
+        '<span class="linha__prio"><span class="linha__score"><span class="sr">Prioridade </span>' + c.score + '</span><span class="barra" aria-hidden="true"><i style="width:' + c.score + '%"></i></span></span>' +
+      '</button></li>';
+    }).join('');
+    fila.querySelectorAll('.linha').forEach(function (b) {
+      var id = b.getAttribute('data-id');
+      b.addEventListener('click', function () { selecionar(id, false); });
+      b.addEventListener('mouseenter', function () { realcar(id, true); });
+      b.addEventListener('mouseleave', function () { realcar(id, false); });
+      b.addEventListener('focus', function () { realcar(id, true); });
+      b.addEventListener('blur', function () { realcar(id, false); });
+    });
+  }
+
+  function atualizarResumo() {
+    var abertas = contas.filter(function (c) { return !estado[c.id]; });
+    var novas = abertas.filter(function (c) { return c.nova; }).length;
+    var feitas = contas.length - abertas.length;
+    var txt = '<b>' + abertas.length + (abertas.length === 1 ? ' conta' : ' contas') + '</b> na faixa de abordagem. <b>' + novas + '</b> ' + (novas === 1 ? 'entrou' : 'entraram') + ' esta semana.';
+    if (feitas) txt += ' ' + feitas + (feitas === 1 ? ' já foi tratada.' : ' já foram tratadas.');
+    document.getElementById('resumo').innerHTML = txt;
+  }
+
+  /* ---------- Dossiê ---------- */
+  var dossie = document.getElementById('dossie');
+  function desenharDossie() {
+    var c = contas.filter(function (x) { return x.id === selecionada; })[0];
+    var pos = contas.indexOf(c) + 1;
+    var e = estado[c.id];
+    var status = '';
+    if (e === 'enviada') status = 'Enviada para cadência.<span>A conta sai da fila e segue para a etapa Acesso.</span>';
+    else if (e) status = 'Conta descartada: ' + e.split(':')[1] + '.<span>Ela volta a ser monitorada em 90 dias.</span>';
+
+    dossie.innerHTML =
+      '<div class="dossie__cab">' +
+        '<div><p class="painel__rotulo">Dossiê · ' + pos + 'ª da fila</p>' +
+          '<h3 class="dossie__nome">' + esc(c.nome) + '</h3>' +
+          '<p class="dossie__meta">' + SETORES[c.setor] + ', ' + c.pessoas + ' pessoas, ' + esc(c.cidade) + '</p></div>' +
+        '<div><div class="prio__topo"><span class="prio__n">' + c.score + '</span><span class="prio__txt">de prioridade.<br>Veja de onde vem cada parte.</span></div>' +
+          '<div class="composicao" aria-hidden="true">' + c.comp.map(function (k) { return '<i style="width:' + k[1] + '%"></i>'; }).join('') + '</div>' +
+          '<ul class="composicao__lista">' + c.comp.map(function (k) { return '<li><span>' + esc(k[0]) + '</span><b>' + k[1] + '</b></li>'; }).join('') + '</ul></div>' +
+      '</div>' +
+      '<div class="dossie__corpo">' +
+        '<div><h4 class="painel__rotulo" style="margin-bottom:14px">Por que agora</h4><ol class="tempo">' +
+          c.sinais.map(function (s) {
+            return '<li class="' + (s.conf === 'inferido' ? 'inferido' : '') + '"><p class="tempo__data">' + s.data + (s.conf === 'inferido' ? ' <span class="selo selo--inferido">inferido</span>' : '') + '</p>' +
+              '<p class="tempo__tipo">' + esc(s.tipo) + '</p><p class="tempo__texto">' + esc(s.texto) + '</p><p class="tempo__fonte">Fonte: ' + esc(s.fonte) + '</p></li>';
+          }).join('') + '</ol></div>' +
+        '<div><h4 class="painel__rotulo" style="margin-bottom:14px">Comitê de compra</h4><ul class="comite">' +
+          c.comite.map(function (p) {
+            return '<li class="' + (p.pessoa ? '' : 'vago') + '"><p class="comite__papel">' + esc(p.papel) + '</p>' +
+              '<p class="comite__pessoa">' + (p.pessoa ? esc(p.pessoa) : 'Não mapeado') + '</p><p class="comite__nota">' + esc(p.nota) + '</p></li>';
+          }).join('') + '</ul></div>' +
+        '<div><h4 class="painel__rotulo" style="margin-bottom:14px">Ângulo de abordagem</h4>' +
+          '<p class="angulo__texto">' + esc(c.angulo) + '</p>' +
+          '<p class="angulo__nota">Sugestão para a primeira mensagem. O consultor pode editar antes de enviar.</p>' +
+          '<div class="acoes">' +
+            '<button class="botao" type="button" id="enviar"' + (e ? ' disabled' : '') + '><span>' + (e === 'enviada' ? 'Enviada para cadência' : 'Enviar para cadência') + '</span>' + (e ? '' : seta) + '</button>' +
+            (e ? '<button class="link" type="button" id="desfazer">Desfazer</button>' : '<button class="link" type="button" id="descartar" aria-expanded="false" aria-controls="motivos">Descartar conta</button>') +
+          '</div>' +
+          '<div class="motivos" id="motivos" hidden><button type="button" data-motivo="fora do ICP">Fora do ICP</button><button type="button" data-motivo="já é cliente">Já é cliente</button><button type="button" data-motivo="momento errado">Momento errado</button></div>' +
+          '<p class="status" role="status">' + status + '</p>' +
+        '</div>' +
+      '</div>';
+
+    var bEnviar = document.getElementById('enviar');
+    if (bEnviar && !e) bEnviar.addEventListener('click', function () { tratar(c.id, 'enviada'); });
+    var bDesc = document.getElementById('descartar');
+    var caixa = document.getElementById('motivos');
+    if (bDesc) bDesc.addEventListener('click', function () {
+      var abrir = caixa.hidden;
+      caixa.hidden = !abrir;
+      bDesc.setAttribute('aria-expanded', String(abrir));
+      if (abrir) caixa.querySelector('button').focus();
+    });
+    caixa.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () { tratar(c.id, 'descartada:' + b.getAttribute('data-motivo')); });
+    });
+    var bDesf = document.getElementById('desfazer');
+    if (bDesf) bDesf.addEventListener('click', function () { delete estado[c.id]; tudo(); var n = document.getElementById('enviar'); if (n) n.focus(); });
+  }
+
+  function tratar(id, novo) {
+    estado[id] = novo;
+    tudo();
+    var d = document.getElementById('desfazer'); if (d) d.focus();
+  }
+
+  function selecionar(id, rolar) {
+    selecionada = id;
+    tudo();
+    if (rolar && window.matchMedia('(max-width: 899px)').matches) dossie.scrollIntoView({ behavior: reduz ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function tudo() { desenharFila(); desenharDossie(); marcarNoRadar(); atualizarResumo(); }
+
+  desenharRadar();
+  tudo();
+})();
+</script>
