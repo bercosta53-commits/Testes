@@ -20,22 +20,10 @@
     var fase = Number(s.dataset.fase || 0);
     var parte = Number(s.dataset.parte || 0);
 
-    /* Cabeçalho: marcador de fase nos slides da proposta, assinatura nos demais */
-    var dir = fase
-      ? '<ol class="fases" aria-label="Fases do projeto">' + FASES.map(function (nome, k) {
-          return (k ? '<li class="sep" aria-hidden="true">·</li>' : '') +
-            '<li' + (k + 1 === fase ? ' class="on" aria-current="step"' : '') + '>' + pad(k + 1) + ' ' + nome + '</li>';
-        }).join('') + '</ol>'
-      : '<p class="topo__dir">' + TOPO + '</p>';
-
-    /* Rodapé: as quatro partes, com a atual destacada */
-    var partes = '<ol class="partes" aria-label="Partes da apresentação">' + PARTES.map(function (nome, k) {
-      return '<li' + (k + 1 === parte ? ' class="on" aria-current="true"' : '') + '>' + pad(k + 1) + ' ' + nome + '</li>';
-    }).join('') + '</ol>';
-
-    s.insertAdjacentHTML('beforeend',
-      '<header class="topo"><p class="marca"><b>Velora</b><span>Growth &amp; Beyond</span></p>' + dir + '</header>' +
-      '<footer class="pe">' + partes + '<span><b>' + pad(i + 1) + '</b> / ' + pad(total) + '</span></footer>');
+    /* Cabeçalho leve: só o logo da Velora. Rodapé: só o número do slide. */
+    var logo = s.classList.contains('escuro') ? 'img/logos/velora-claro.png' : 'img/logos/velora-escuro.png';
+    var topo = s.classList.contains('capa') ? '' : '<header class="topo"><img class="topo__logo" src="' + logo + '" alt="Velora"></header>';
+    s.insertAdjacentHTML('beforeend', topo + '<footer class="pe"><span class="pe__n">' + pad(i + 1) + '</span></footer>');
 
     /* Aberturas de parte: índice com a posição atual */
     if (s.classList.contains('divisor') && !s.classList.contains('divisor--fase')) {
