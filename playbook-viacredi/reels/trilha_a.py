@@ -53,61 +53,69 @@ def stutter():
     t = t_(0.18); x = np.sign(np.sin(2 * np.pi * 220 * t)) * (np.floor(t * 40) % 2) * 0.12
     return x * np.exp(-t * 6)
 
-# --- 0 a 7 s: tensão
-for b in range(14):
-    at = b * BEAT; tt = t_(0.22); add(np.sin(2 * np.pi * 55 * tt) * np.exp(-tt * 14), at, 0.55)
-    add(tick(), at + 0.25, 0.35, 0.3); add(tick(), at, 0.2, -0.3)
-drone = pad([note(45), note(52), note(57), note(60)], 7.0, 0.22) * np.linspace(0.3, 1.0, int(7 * SR))
-add(drone, 0, 1.0)
-for i, at in enumerate([0.35 + k * 0.36 for k in range(5)]):  # quedas das regras
-    add(pluck(note(69 - 2 * i), 0.25, 0.22), at, 1.0, -0.2 + 0.1 * i)
-add(whoosh(0.45, True), 2.85, 0.9)          # whip pan
-add(riser(1.4, 180, 1400), 5.6, 0.9)
-add(stutter(), 6.3, 1.0)
+def blip(f=880, g=0.16, pan=0.0):
+    t = t_(0.12); return np.sin(2 * np.pi * f * t) * np.exp(-t * 38) * g
+def click(g=0.5):
+    t = t_(0.04); return hp(rng.standard_normal(len(t)), 2000) * np.exp(-t * 220) * g
 
-# --- 7 s: drop e groove (Am F C G, 1 compasso = 2 s)
-add(impact(0.9), 7.0)
+# --- 0 a 6,95 s: tensão
+for b in range(14):
+    at = b * BEAT; tt = t_(0.22); add(np.sin(2 * np.pi * 55 * tt) * np.exp(-tt * 14), at, 0.5)
+    add(tick(), at + 0.25, 0.3, 0.3); add(tick(), at, 0.18, -0.3)
+add(pad([note(45), note(52), note(57), note(60)], 6.95, 0.22) * np.linspace(0.3, 1.0, int(6.95 * SR)), 0, 1.0)
+for i in range(6): add(pluck(note(69 - 2 * i), 0.25, 0.2), 0.55 + i * 0.33, 1.0, -0.25 + 0.1 * i)  # regras
+add(whoosh(0.4, True), 3.35, 0.9)
+for t0, f in [(3.95, 660), (4.6, 880), (5.2, 660)]: add(blip(f), t0, 1.0)
+add(stutter(), 5.25, 1.0); add(impact(0.35), 5.65)
+add(riser(1.4, 180, 1400), 5.4, 0.85)
+add(whoosh(0.5, True), 6.5, 1.0)
+# --- 6,95 s: drop e groove
+add(impact(0.9), 6.95)
 prog = [(57, [57, 60, 64]), (53, [53, 57, 60]), (48, [55, 60, 64]), (55, [55, 59, 62])]
 def groove(a, b, drums=True):
-    bar = int(a / 2.0)
     t = a
     while t < b - 1e-6:
-        beat = int(round((t - 7.0) / BEAT))
+        beat = int(round((t - 6.95) / BEAT))
         if drums:
             add(kick(0.9), t)
-            if beat % 2 == 1: add(clap(), t, 0.9, 0.05)
-            add(hat(), t + 0.25, 0.8, 0.25); add(hat(beat % 4 == 3), t + 0.25 if beat % 4 == 3 else t + 0.125, 0.4, -0.25)
-        root = prog[int((t - 7.0) // 2.0) % 4][0]
-        for k in range(2):
-            add(pluck(note(root - 24), 0.22, 0.45), t + k * 0.25, 1.0)
+            if beat % 2 == 1: add(clap(), t, 0.85, 0.05)
+            add(hat(), t + 0.25, 0.8, 0.25); add(hat(beat % 4 == 3), t + 0.125, 0.35, -0.25)
+        root = prog[int((t - 6.95) // 2.0) % 4][0]
+        for k in range(2): add(pluck(note(root - 24), 0.22, 0.45), t + k * 0.25, 1.0)
         t += BEAT
-    c = 7.0 + 2.0 * np.floor((a - 7.0) / 2.0)
+    c = 6.95 + 2.0 * np.floor((a - 6.95) / 2.0)
     while c < b - 1e-6:
-        ch = prog[int((c - 7.0) // 2.0) % 4][1]
+        ch = prog[int((c - 6.95) // 2.0) % 4][1]
         s0 = max(c, a); d = min(c + 2.0, b) - s0
-        add(pad([note(n) for n in ch], d, 0.16), s0, 1.0, 0.0)
-        for k in range(8):  # brilho em semicolcheias
+        if d > 0.05: add(pad([note(n) for n in ch], d, 0.15), s0, 1.0)
+        for k in range(8):
             at = c + k * 0.25
-            if s0 <= at < b: add(pluck(note(ch[k % 3] + 12), 0.18, 0.08), at, 1.0, 0.4 if k % 2 else -0.4)
+            if s0 <= at < b: add(pluck(note(ch[k % 3] + 12), 0.18, 0.07), at, 1.0, 0.4 if k % 2 else -0.4)
         c += 2.0
-groove(7.0, 16.9)
-add(whoosh(0.4, True), 11.8, 0.8)
-add(whoosh(0.45, False), 16.8, 0.8)
-# --- 17 a 19 s: respiro para o número
-add(pad([note(57), note(60), note(64), note(69)], 2.0, 0.18), 17.0)
-for k in range(10):  # contagem
-    add(pluck(note(64 + k), 0.12, 0.10), 17.5 + k * 0.14, 1.0, 0.2)
-add(impact(0.45), 19.0)
-groove(19.0, 25.0)
-add(whoosh(0.4, True), 20.8, 0.7)
-add(riser(1.0, 240, 1800), 25.0, 0.8)
-# --- 26 s: CTA, acorde resolvido
-add(impact(0.6), 26.0)
-groove(26.0, 28.0)
+groove(6.95, 20.95)
+add(whoosh(0.45, False), 7.5, 0.7)                       # regras voando
+for k in range(3): add(click(0.6), 9.55 + k * 0.3); add(blip(1320, 0.12), 9.58 + k * 0.3, 1.0, 0.3)
+add(whoosh(0.4, True), 10.35, 0.8); add(whoosh(0.4, False), 11.2, 0.6)
+add(whoosh(0.4, True), 13.4, 0.8)
+for t0, f in [(13.9, 784), (14.75, 988), (15.65, 784), (16.35, 988), (17.45, 1175), (19.45, 1318)]: add(blip(f, 0.14), t0, 1.0)
+add(click(0.8), 18.75)
+for k in range(12): add(pluck(note(76 + (k * 5) % 12), 0.2, 0.08), 19.85 + k * 0.05, 1.0, (-1) ** k * 0.5)  # confete
+add(whoosh(0.4, True), 20.9, 0.8)
+# --- 21 a 22,6 s: respiro para o contador
+add(pad([note(57), note(60), note(64), note(69)], 1.65, 0.18), 20.95)
+for k in range(9): add(pluck(note(64 + k), 0.12, 0.10), 21.35 + k * 0.15, 1.0, 0.2)
+add(impact(0.45), 22.65)
+groove(22.95, 26.45)
+add(whoosh(0.4, True), 23.8, 0.8)
+for t0 in [24.05, 24.6, 25.15]: add(whoosh(0.35, False), t0, 0.5)
+add(riser(1.0, 240, 1800), 25.55, 0.8)
+# --- 26,55 s: CTA
+add(impact(0.6), 26.55)
+groove(26.95, 28.5)
+add(click(0.9), 28.55)
 cfin = [note(n) for n in [48, 55, 60, 64, 67, 72]]
-add(pad(cfin, 4.0, 0.26), 28.0)
-for k, n in enumerate([60, 64, 67, 72]):
-    add(pluck(note(n + 12), 0.6, 0.12), 28.0 + k * 0.12, 1.0, -0.3 + 0.2 * k)
+add(pad(cfin, 1.45, 0.26), 28.55)
+for k, n in enumerate([60, 64, 67, 72]): add(pluck(note(n + 12), 0.6, 0.12), 28.6 + k * 0.12, 1.0, -0.3 + 0.2 * k)
 
 mix = np.stack([L, R], 1)
 mix[-int(0.6 * SR):] *= np.linspace(1, 0, int(0.6 * SR))[:, None]

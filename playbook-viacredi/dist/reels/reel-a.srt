@@ -1,43 +1,43 @@
 1
-00:00:00,250 --> 00:00:02,950
-Mais regras deixam seu agente de IA mais seguro?
+00:00:00,150 --> 00:00:03,500
+Seu agente de IA pode estar robótico.
 
 2
-00:00:03,250 --> 00:00:05,600
-Ou só mais robótico?
+00:00:03,650 --> 00:00:06,750
+Regra atrás de regra, conversa travada.
 
 3
-00:00:07,150 --> 00:00:09,600
-A Viacredi fez o contrário: tirou o excesso de regras
+00:00:07,100 --> 00:00:10,550
+A Viacredi fez o contrário.
 
 4
-00:00:09,600 --> 00:00:11,850
-e explicou ao agente o papel dele.
+00:00:10,700 --> 00:00:13,500
+Uma cooperada reformando a cozinha.
 
 5
-00:00:12,250 --> 00:00:14,800
-Dias depois, uma conversa sobre reforma de cozinha
+00:00:13,600 --> 00:00:15,400
+01 Escuta
 
 6
-00:00:14,800 --> 00:00:16,900
-terminou em contratação de crédito.
+00:00:15,400 --> 00:00:17,200
+02 Contexto
 
 7
-00:00:17,250 --> 00:00:19,000
-Nos primeiros dias de teste,
+00:00:17,200 --> 00:00:19,250
+03 Oferta com sentido
 
 8
-00:00:19,000 --> 00:00:20,900
-mais de R$ 150 mil em crédito foram liberados.
+00:00:19,250 --> 00:00:21,000
+04 Decisão dela
 
 9
-00:00:21,250 --> 00:00:23,400
-No playbook, você vê o caso e leva o método:
+00:00:21,100 --> 00:00:23,950
+Nos primeiros dias de teste, +R$ 150 mil em crédito.
 
 10
-00:00:23,400 --> 00:00:25,900
-papel do agente, guardrails e plano de teste.
+00:00:24,050 --> 00:00:26,500
+O método está no playbook.
 
 11
-00:00:26,350 --> 00:00:29,500
-Baixe o playbook e desenhe o seu primeiro teste.
+00:00:26,650 --> 00:00:30,000
+Playbook Agentes de IA na Oferta de Crédito

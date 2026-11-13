@@ -97,6 +97,7 @@ export const ICON = {
   phone: `<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>`,
   user2: `<circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17 14.6c2 .5 3.4 2.3 4 5.4"/>`,
   check: `<path d="M5 12.5l4.5 4.5L19 7.5"/>`,
+  ban: `<circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/>`,
   video: `<rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.5l5.5-3v9l-5.5-3z"/>`,
   call: `<path d="M6.6 3.5h2.9l1.6 4-2.1 1.5a11 11 0 0 0 6 6l1.5-2.1 4 1.6v2.9a2 2 0 0 1-2.1 2A16 16 0 0 1 4.6 5.6a2 2 0 0 1 2-2.1z"/>`,
   camera: `<path d="M3.5 8.5h3.5l2-2.5h6l2 2.5h3.5v10.5h-17z"/><circle cx="12" cy="13.2" r="3.4"/>`,
