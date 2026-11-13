@@ -1,43 +1,27 @@
 1
-00:00:00,150 --> 00:00:03,500
-Seu agente de IA pode estar robótico.
+00:00:00,100 --> 00:00:01,850
+Seu cliente pergunta: e o seu agente responde…
 
 2
-00:00:03,650 --> 00:00:06,750
-Regra atrás de regra, conversa travada.
+00:00:01,950 --> 00:00:08,000
+Mesma pergunta, duas respostas.
 
 3
-00:00:07,100 --> 00:00:10,550
-A Viacredi fez o contrário.
+00:00:08,050 --> 00:00:11,350
+Mesma pergunta, dois finais.
 
 4
-00:00:10,700 --> 00:00:13,500
-Uma cooperada reformando a cozinha.
+00:00:11,750 --> 00:00:15,450
+A diferença não é a IA. É o que você ensina a ela.
 
 5
-00:00:13,600 --> 00:00:15,400
-01 Escuta
+00:00:15,550 --> 00:00:19,450
+Viacredi, primeiros dias de teste: +R$ 150 mil em crédito.
 
 6
-00:00:15,400 --> 00:00:17,200
-02 Contexto
+00:00:19,550 --> 00:00:24,950
+Como fazer na sua instituição?
 
 7
-00:00:17,200 --> 00:00:19,250
-03 Oferta com sentido
-
-8
-00:00:19,250 --> 00:00:21,000
-04 Decisão dela
-
-9
-00:00:21,100 --> 00:00:23,950
-Nos primeiros dias de teste, +R$ 150 mil em crédito.
-
-10
-00:00:24,050 --> 00:00:26,500
-O método está no playbook.
-
-11
-00:00:26,650 --> 00:00:30,000
+00:00:25,050 --> 00:00:30,000
 Playbook Agentes de IA na Oferta de Crédito
