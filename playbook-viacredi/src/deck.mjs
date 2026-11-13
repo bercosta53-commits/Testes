@@ -155,8 +155,8 @@ const s1 = `
     <div class="cl-top">
       <div class="pill-w"><i></i>Guia Prático</div>
       <h1 class="t cover-t">${gold('Testando ==Agentes de IA==')}<br>na Oferta de Crédito</h1>
-      <p class="case-l"><i></i>Baseado no case Viacredi + Ubots</p>
-      <p class="lead">Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.</p>
+      <p class="case-l"><i></i>Baseado no caso Viacredi + Ubots</p>
+      <p class="lead">Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar sobre crédito com seus cooperados e como essa experiência pode ajudar a sua instituição.</p>
     </div>
     <ol class="cover-steps">
       <li><span class="cn">1</span><b>Preparar<br>o Agente</b></li>
@@ -194,21 +194,21 @@ const s2 = `
     <div class="content s2">
       <div class="s2-card">
         <div class="body-txt">
-          <p>A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem <b>mais de 1 milhão de cooperados</b> e <b>mais de 100 postos</b> em Santa Catarina e no Paraná. Relacionamento próximo sempre foi a estratégia da casa.</p>
-          <p>O desafio era ampliar a oferta de linhas de crédito com agentes de IA sem perder esse jeito de atender. E sem referência de mercado: até ali, a cooperativa trabalhava com bots de fluxo, de regras fixas, e não tinha nenhuma métrica de IA generativa para comparar.</p>
+          <p>A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem <b>mais de 1 milhão de cooperados</b> e <b>mais de 100 postos</b> em Santa Catarina e no Paraná. A proximidade com os cooperados sempre esteve no centro da sua atuação.</p>
+          <p>O desafio era ampliar a oferta de crédito com agentes de IA sem abrir mão da proximidade no atendimento. Era um território novo: a cooperativa usava bots de fluxo, baseados em regras fixas, e ainda não tinha indicadores de IA generativa para orientar o teste.</p>
         </div>
         <div class="protag">
           <span class="mono">G</span>
           <div>
             <div class="pt-nm"><b>Giovanna</b> · ${CARGO}</div>
-            <div class="pt-ds">Conduziu o projeto do primeiro teste à operação atual.</div>
+            <div class="pt-ds">Conduziu o projeto desde o primeiro teste até a operação atual.</div>
           </div>
         </div>
       </div>
       <div class="s2-r">
         <h3 class="h3">Ponto de partida</h3>
-        <div class="pp"><span class="num">1</span><div><b>Bots de fluxo</b><p>Conversas presas a regras fixas e caminhos pré-definidos.</p></div></div>
-        <div class="pp"><span class="num">2</span><div><b>Sem histórico</b><p>Nenhum indicador de IA generativa para usar como base.</p></div></div>
+        <div class="pp"><span class="num">1</span><div><b>Bots de fluxo</b><p>Conversas limitadas a regras e caminhos predefinidos.</p></div></div>
+        <div class="pp"><span class="num">2</span><div><b>Sem histórico</b><p>Sem indicadores prévios de IA generativa para comparar.</p></div></div>
         <div class="pp hl"><span class="num">3</span><div><b>Parceria com a Ubots</b><p>Construir e testar um agente de IA para a oferta de crédito.</p></div></div>
       </div>
     </div>
@@ -226,7 +226,7 @@ const s3 = `
 <section class="slide light" id="s3">
   ${header(3)}
   <div class="main">
-    ${titleBlock('O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo', 'Cada "não pode" parecia deixar o agente mais seguro. Na prática, deixou a conversa mais rígida, e cada tentativa de torná-lo simpático com novas regras reforçava o tom robótico.')}
+    ${titleBlock('O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo', 'Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava mais rígida, e cada nova regra para deixá-lo simpático acabava reforçando o tom robótico.')}
     <div class="content s3">
       <div class="cmp">
         <div class="cmp-col">
@@ -267,7 +267,7 @@ const s4 = `
 <section class="slide dark" id="s4">
   ${header(4, true)}
   <div class="main">
-    ${titleBlock('A virada veio quando o agente ==entendeu o papel dele==', 'Na primeira semana de julho, a Viacredi reformulou a lógica do agente. Tirou o excesso de regras, explicou no prompt o conceito e o objetivo do papel dele e manteve só os guardrails críticos de segurança, desenhados com a ajuda da própria IA.', { subW: 1010 })}
+    ${titleBlock('A virada veio quando o agente ==entendeu o papel dele==', 'Na primeira semana de julho, a Viacredi repensou a lógica do agente. Reduziu as regras, deixou mais claro o papel dele no prompt e preservou os guardrails essenciais de segurança, com a ajuda da própria IA.', { subW: 1010 })}
     <div class="content s4">
       <div class="s4-grid">
         <div class="cols3">
@@ -277,7 +277,7 @@ const s4 = `
         </div>
         ${quote('"Quando expliquei ao agente qual era o papel dele e o que ele precisava alcançar, a experiência melhorou na hora. Hoje, quando aparece um problema, eu levo para a própria IA e a gente constrói a solução junto."', { dark: true, cls: 'q4' })}
       </div>
-      <p class="apoio">Saudação, transbordo e volume de mensagens passaram a ser ajustados em conjunto com a IA, sem nova regra manual.</p>
+      <p class="apoio">Saudação, transbordo e volume de mensagens passaram a ser ajustados com apoio da IA, sem criar uma regra a cada mudança.</p>
       <div class="band"><span>Segurança onde importa, conversa de verdade no resto.</span>${wave('var(--escuro)', 96, 2, 3.5)}</div>
     </div>
   </div>
@@ -288,7 +288,7 @@ const s5 = `
   ${header(5)}
   <svg class="conn" data-conn></svg>
   <div class="main">
-    ${titleBlock('Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito', 'Dias depois da mudança, uma cooperada respondeu à oferta dizendo que já tinha um crédito contratado, mas que era bom saber de outro disponível. Nada do que veio depois estava roteirizado.', { subW: 860 })}
+    ${titleBlock('Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito', 'Poucos dias depois da mudança, uma cooperada disse que já tinha um crédito contratado, mas gostou de saber que havia outra opção. A conversa seguiu sem um roteiro pronto.', { subW: 860 })}
     <div class="content s5">
       <div class="s5-l" data-bleed>
         <div class="stage"></div>
@@ -304,10 +304,10 @@ const s5 = `
         </div>
       </div>
       <div class="anns">
-        <div class="ann" data-ann="a1"><span class="ann-n">1</span><div><b>Escuta</b><p>Em vez de repetir a oferta, o agente pergunta o motivo do interesse.</p></div></div>
-        <div class="ann" data-ann="a2"><span class="ann-n">2</span><div><b>Contexto</b><p>A cooperada conta da reforma e o agente conversa sobre ela, como faria um bom atendente.</p></div></div>
-        <div class="ann" data-ann="a3"><span class="ann-n">3</span><div><b>Oferta com sentido</b><p>O crédito aparece como resposta a um plano real, e não como disparo genérico.</p></div></div>
-        <div class="ann" data-ann="a4"><span class="ann-n">4</span><div><b>Decisão da cooperada</b><p>A contratação vem da conversa. Nenhum passo estava previsto em roteiro.</p></div></div>
+        <div class="ann" data-ann="a1"><span class="ann-n">1</span><div><b>Escuta</b><p>Em vez de insistir na oferta, o agente procura entender o interesse.</p></div></div>
+        <div class="ann" data-ann="a2"><span class="ann-n">2</span><div><b>Contexto</b><p>A cooperada fala da reforma, e o agente acompanha o assunto com naturalidade.</p></div></div>
+        <div class="ann" data-ann="a3"><span class="ann-n">3</span><div><b>Oferta com sentido</b><p>O crédito passa a fazer sentido dentro do plano da cooperada.</p></div></div>
+        <div class="ann" data-ann="a4"><span class="ann-n">4</span><div><b>Decisão da cooperada</b><p>A cooperada decide contratar. A conversa não seguiu um roteiro pronto.</p></div></div>
         <p class="cap">Reconstituição a partir do relato do projeto.</p>
       </div>
     </div>
@@ -319,34 +319,32 @@ const s6 = `
   ${header(6)}
   <div class="main">
     <div class="trow">
-      ${titleBlock('A liberdade para conversar veio junto com ==transparência e segurança==', 'O mesmo contexto que deixa a conversa natural também protege o cooperado: o agente explica custos, orienta a contratação pelo canal seguro e chama o time humano quando faz sentido.', { subW: 780 })}
-      ${quote('"O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito."', { cls: 'qside' })}
+      ${titleBlock('A liberdade para conversar veio junto com ==transparência e segurança==', 'O contexto torna a conversa mais natural sem deixar a segurança de lado: o agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.', { subW: 760 })}
+      ${quote('"O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito."', { cls: 'pull' })}
     </div>
     <div class="content s6">
       <div class="cards3">
         <div class="c6">
-          <h4><span class="num">1</span>Custos às claras</h4>
+          <div class="c6-hd"><span class="num">1</span><div><h4>Custos às claras</h4><p class="sup">Transparência sem esperar o cooperado insistir.</p></div></div>
           <div class="stage6">
-            ${waScreen({ size: 'sm', date: false, input: false, body: `
+            ${waScreen({ size: 'sm', date: false, body: `
               ${m('us', 'Quais são os custos da retirada?', '09:12')}
               ${m('ag', 'É um crédito com juros e IOF. Antes de contratar, você vê o valor de cada custo na simulação.', '09:12')}
               ${m('ag', 'Se quiser comparar com outras linhas, eu te encaminho para o nosso time.', '09:13', { cls: 'cont', btns: [{ t: 'Falar com o time humano', icon: 'user2' }] })}
             ` })}
           </div>
-          <p class="sup">Transparência sem esperar o cooperado insistir.</p>
         </div>
         <div class="c6">
-          <h4><span class="num">2</span>Fechamento pelo app</h4>
+          <div class="c6-hd"><span class="num">2</span><div><h4>Fechamento pelo app</h4><p class="sup">O canal seguro vira orientação, e não bloqueio.</p></div></div>
           <div class="stage6">
-            ${waScreen({ size: 'sm', date: false, input: false, body: `
+            ${waScreen({ size: 'sm', date: false, body: `
               ${m('us', 'Dá para fechar aqui mesmo, pelo WhatsApp?', '16:40')}
               ${m('ag', `Por segurança, a contratação é 100% digital pelo aplicativo. É rápido:<ol class="w-steps"><li><b>1</b>Abra o app e acesse Crédito</li><li><b>2</b>Escolha a proposta enviada</li><li><b>3</b>Revise e confirme</li></ol>`, '16:41', { btns: [{ t: 'Abrir o aplicativo', icon: 'ext' }] })}
             ` })}
           </div>
-          <p class="sup">O canal seguro vira orientação, e não bloqueio.</p>
         </div>
         <div class="c6">
-          <h4><span class="num">3</span>Transbordo com contexto</h4>
+          <div class="c6-hd"><span class="num">3</span><div><h4>Transbordo com contexto</h4><p class="sup">O transbordo ficou baixo. Quando ocorre, o time recebe o contexto e continua sem pedir repetição ao cooperado.</p></div></div>
           <div class="stage6">
             <div class="ub-con">
               <div class="uc-top"><img src="${LOGO.ubots}" alt="Ubots"><span class="uc-tab on">${lineIcon('inbox', 2)}Transbordos</span><span class="uc-dot"></span></div>
@@ -365,7 +363,6 @@ const s6 = `
               </div>
             </div>
           </div>
-          <p class="sup">O transbordo ficou baixo. Quando acontece, o time continua a conversa sem pedir que o cooperado repita nada.</p>
         </div>
       </div>
     </div>
@@ -373,48 +370,33 @@ const s6 = `
 </section>`;
 
 const tl = [
-  ['Abril a junho', 'Testes controlados. Pausas frequentes para refinar o agente, preparar o time e definir os novos indicadores.', 'teste'],
-  ['Junho', 'Pausa total para reestruturar os disparos e planejar a escala.', 'pausa'],
-  ['1ª semana de julho', 'A virada: menos regras, mais contexto.', 'virada'],
-  ['2ª semana de julho', 'Testes retomados com a nova versão do agente.', 'retomada'],
-  ['Até dezembro', 'Meta de rodar mais de 10% das ações ativas com agente generativo.', 'meta'],
+  ['Abril a junho', 'Testes controlados. Pausas frequentes para refinar o agente, preparar o time e definir os novos indicadores.', 'teste', 'Testes controlados'],
+  ['Junho', 'Pausa total para reestruturar os disparos e planejar a escala.', 'pausa', 'Pausa'],
+  ['1ª semana de julho', 'A virada: menos regras, mais contexto.', 'virada', 'Virada'],
+  ['2ª semana de julho', 'Testes retomados com a nova versão do agente.', 'retomada', 'Retomada'],
+  ['Até dezembro', 'Meta de rodar mais de 10% das ações ativas com agente generativo.', 'meta', 'Meta'],
 ];
-const MESES = ['Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-const pct = (mo) => `${(mo / 9) * 100}%`; // posição em meses a partir de abril
-const ganttBar = (k) => ({
-  teste: `<i class="gb teste" style="left:${pct(0.04)};width:${pct(0.62)}"></i><i class="gb teste" style="left:${pct(0.72)};width:${pct(0.58)}"></i><i class="gb teste" style="left:${pct(1.36)};width:${pct(0.6)}"></i><span class="gb-note" style="left:${pct(0.04)}">pausas de ajuste</span>`,
-  pausa: `<i class="gb pausa" style="left:${pct(2.02)};width:${pct(0.96)}"></i>`,
-  virada: `<i class="gb-ms" style="left:${pct(3.12)}"></i>`,
-  retomada: `<i class="gb retomada" style="left:${pct(3.3)};width:${pct(5.7)}"></i>`,
-  meta: `<i class="gb meta" style="left:${pct(3.3)};width:${pct(5.55)}"></i><span class="gb-flag" style="left:${pct(8.85)}">${lineIcon('check', 2.6)}+10%</span>`,
-})[k];
 const s7 = `
 <section class="slide light" id="s7">
   ${header(7)}
   <div class="main">
-    ${titleBlock('Testar pouco, pausar e voltar melhor ==fez parte do método==', 'A Viacredi não começou em escala. Começou com cooperados reais, volume baixo e filtros de risco, e tratou cada pausa como parte do teste.')}
+    ${titleBlock('Testar pouco, pausar e voltar melhor ==fez parte do método==', 'A Viacredi começou com cooperados reais, em pequenos volumes e com filtros de risco. A cada pausa, a equipe revia as conversas, ajustava o agente e preparava o próximo teste.')}
     <div class="content s7">
-      <div class="gantt">
-        <div class="g-row g-hd">
-          <span class="g-lab">Cronograma do teste</span>
-          <span class="g-tl">${MESES.map((mm) => `<i>${mm}</i>`).join('')}</span>
-        </div>
-        <div class="g-body">
-          <div class="g-grid" aria-hidden="true"><span class="g-vir" style="left:${pct(3.12)}"><em>Virada</em></span></div>
-          ${tl.map(([t, d, k], i) => `
-          <div class="g-row ${k}">
-            <div class="g-lab"><span class="g-n">${i + 1}</span><div><b>${t}</b><p>${d}</p></div></div>
-            <div class="g-tl">${ganttBar(k)}</div>
-          </div>`).join('')}
-        </div>
+      <ol class="phases">
+        ${tl.map(([t, d, k, tag], i) => `
+        <li class="ph ${k}">
+          <span class="ph-track"></span>
+          <span class="ph-n">${String(i + 1).padStart(2, '0')}</span>
+          <b>${t}</b>
+          <p>${d}</p>
+          <span class="ph-tag">${tag}</span>
+        </li>`).join('')}
+      </ol>
+      <div class="ub-band">
+        <div class="ubb-hd"><img src="${LOGO.ubots}" alt="Ubots"><h3 class="h3">O papel da Ubots</h3>${wave('var(--ouro)', 72, 2, 3)}</div>
+        <p>A Ubots construiu o primeiro agente em parceria com a Viacredi e ofereceu a plataforma para a equipe testar no próprio ritmo. Com o Agent Builder, o time ganhou autonomia: Giovanna já criou quatro agentes sem depender da equipe de implementação.</p>
+        <p>Próximos passos: testar um agente mais generalista e expandir para produtos sem risco de crédito, como cartões e aplicações, no onboarding de novos cooperados.</p>
       </div>
-      <aside class="ubots-panel">
-        <div class="up-hd"><img src="${LOGO.ubots}" alt="Ubots"></div>
-        <h3 class="h3">O papel da Ubots</h3>
-        <p>A Ubots entrou como parceira na construção do primeiro agente e como plataforma para o time testar no próprio ritmo. Com o Agent Builder, a equipe da Viacredi ganhou autonomia: Giovanna já construiu 4 agentes sem depender do time de implementação.</p>
-        <p>Próximos passos da cooperativa: um agente mais generalista e agentes para produtos sem risco de crédito, como cartão e aplicações no onboarding de novos cooperados.</p>
-        ${wave('var(--ouro)', 88, 2, 3.5)}
-      </aside>
     </div>
     <p class="foot">Mais de R$ 150 mil em crédito liberados antes de a operação estar totalmente estruturada.</p>
   </div>
@@ -440,7 +422,7 @@ const s8 = `
 <section class="slide light" id="s8">
   ${header(8)}
   <div class="main">
-    ${titleBlock('Antes de escrever regras, escreva ==o papel do agente==', 'Explique ao agente para que ele existe, com quem conversa e onde termina a autonomia dele. Preencha com as definições da sua instituição.')}
+    ${titleBlock('Antes de escrever regras, escreva ==o papel do agente==', 'Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir. Use as perguntas abaixo para definir o primeiro teste da sua instituição.')}
     <div class="content s8">
       <div class="ws">
         ${s8fields.map(([l, p], i) => `
@@ -456,17 +438,17 @@ const s8 = `
         <ul class="cklist">${s8guard.map((g, i) => `<li>${check(`s8_guard_${i + 1}`, true)}<span>${g}</span></li>`).join('')}</ul>
       </div>
     </div>
-    <div class="tip"><span class="tip-i">${ICON.bulb}</span><p>Na Viacredi, a própria IA ajudou a desenhar os guardrails e a resolver os ajustes do dia a dia. Comece por aí.</p></div>
+    <div class="tip"><span class="tip-i">${ICON.bulb}</span><p>Na Viacredi, a própria IA ajudou a construir os guardrails e ajustar a operação. Comece por esse diálogo.</p></div>
   </div>
 </section>`;
 
 const steps = [
-  ['Preparação', 'Papel do agente e guardrails escritos, público definido com filtros de risco, responsáveis e indicadores combinados.', 'agente pronto para conversar com um grupo pequeno.', ['Data', 'Responsável'], 'dk'],
-  ['Teste', 'Disparos em volume baixo, leitura das conversas e pausas para ajustar sempre que preciso.', 'conversas revisadas e ajustes registrados.', ['Início', 'Término', 'Responsável'], 'au'],
-  ['Avaliação', 'Resultados, transbordos e qualidade das conversas consolidados.', 'decisão de continuar, ajustar ou ampliar.', ['Data', 'Responsável'], 'dk'],
+  ['Preparação', 'Defina o papel e os limites do agente, o público inicial com filtros de risco, os responsáveis e os indicadores do teste.', 'agente pronto para conversar com um grupo pequeno.', ['Data', 'Responsável'], 'dk'],
+  ['Teste', 'Comece com poucos disparos, acompanhe as conversas e faça pausas para ajustar o que for necessário.', 'conversas revisadas e ajustes registrados.', ['Início', 'Término', 'Responsável'], 'au'],
+  ['Avaliação', 'Reúna os resultados, os transbordos e os aprendizados sobre a qualidade das conversas.', 'decisão de continuar, ajustar ou ampliar.', ['Data', 'Responsável'], 'dk'],
 ];
 const inds = [
-  ['chat', 'Resposta', 'Clientes que responderam ÷ clientes abordados'],
+  ['chat', 'Resposta', 'Cooperados que responderam ÷ cooperados abordados'],
   ['fwd', 'Avanço', 'Conversas que chegaram à apresentação da oferta'],
   ['doc', 'Contratação', 'Contratações ÷ conversas com interesse'],
   ['money', 'Valor', 'Crédito contratado no período'],
@@ -498,7 +480,7 @@ const s9 = `
       </div>
       <div class="evalbar">
         <ul class="qs">
-          <li><span class="q">?</span>O teste respondeu ao objetivo definido no slide 8?</li>
+          <li><span class="q">?</span>O teste respondeu ao objetivo definido na página 8?</li>
           <li><span class="q">?</span>Quais situações exigiram participação humana?</li>
           <li><span class="q">?</span>O que ajustar antes de ampliar o volume?</li>
         </ul>
@@ -512,10 +494,10 @@ const s9 = `
 </section>`;
 
 const levar = [
-  ['Papel do agente', 'slide 8'],
-  ['Guardrails críticos', 'slide 8'],
-  ['Plano de teste e responsáveis', 'slide 9'],
-  ['Indicadores e critério de decisão', 'slide 9'],
+  ['Papel do agente', 'pág. 8'],
+  ['Guardrails críticos', 'pág. 8'],
+  ['Plano de teste e responsáveis', 'pág. 9'],
+  ['Indicadores e critério de decisão', 'pág. 9'],
 ];
 const s10 = `
 <section class="slide dark cta" id="s10">
@@ -526,13 +508,13 @@ const s10 = `
         ${pill()}
         <h1 class="t">${gold('Desenhe o ==primeiro teste== de agente de IA na sua instituição')}</h1>
       </div>
-      <p class="sub">Use este guia para definir o papel do agente, os guardrails e o plano de teste antes de colocar a primeira conversa no ar.</p>
+      <p class="sub">Este guia ajuda sua equipe a definir o papel do agente, os cuidados de segurança e o plano de teste antes da primeira conversa com os cooperados.</p>
     </div>
     <div class="cta-grid">
       <div class="cta-main">
         <div class="cm-hd"><span class="cm-i">${ICON.spark}</span>${wave('var(--escuro)', 96, 3, 3.5)}</div>
         <h3>Converse com a Ubots sobre a sua operação</h3>
-        <p>Leve a linha de crédito que você quer testar e as definições preenchidas neste playbook.</p>
+        <p>Traga a linha de crédito que faz sentido testar e as definições do playbook. Podemos construir os próximos passos juntos.</p>
         <div class="cta-row">
           <a class="btn" href="#url-a-confirmar">Falar com um especialista <span aria-hidden="true">→</span></a>
           <span class="url">${tbc('[URL A CONFIRMAR, com UTM]')}</span>
@@ -845,20 +827,22 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .anns .cap{margin-top:2px}
 
 /* ---------- s6 ---------- */
-.trow{display:grid;grid-template-columns:1fr 360px;gap:44px;align-items:start}
-.trow .tblock h1.t{max-width:820px}
-.qside{background:var(--card);border:1px solid var(--linha);border-left:4px solid var(--ouro);border-radius:16px;padding:18px 20px 14px 66px;box-shadow:var(--sombra);margin-top:4px}
-.qside .qmark{left:16px;top:8px;font-size:72px}
-.qside blockquote{font-size:15.5px;line-height:1.48}
-.qside figcaption{font-size:12px;line-height:1.7;margin-top:8px}
+.trow{display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:end}
+.trow .tblock h1.t{max-width:800px}
+.pull{padding:4px 0 2px 26px;border-left:3px solid var(--ouro);margin-bottom:2px}
+.pull .qmark{display:none}
+.pull blockquote{font:italic 400 16.5px/1.5 'Nunito'}
+.pull figcaption{font-size:12px;line-height:1.75;margin-top:8px}
 .s6{gap:0}
 .cards3{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:minmax(0,1fr);gap:22px}
-.c6{min-height:0;background:var(--card);border:1px solid var(--linha);border-radius:20px;padding:14px 16px 14px;display:flex;flex-direction:column;box-shadow:var(--sombra)}
-.c6 h4{display:flex;align-items:center;gap:12px;font:700 17px/1.2 'Poppins';padding-left:4px}
-.c6 h4 .num{width:26px;line-height:.9}
-.stage6{flex:1;min-height:0;margin-top:12px;border-radius:14px;overflow:hidden;display:flex;box-shadow:0 0 0 1px var(--linha)}
+.c6{min-height:0;background:var(--card);border:1px solid var(--linha);border-radius:22px;padding:18px 18px 0;display:flex;flex-direction:column;box-shadow:var(--sombra);overflow:hidden}
+.c6-hd{display:flex;gap:14px;align-items:flex-start;min-height:62px;padding:0 2px}
+.c6-hd .num{width:26px;line-height:.85;flex:none}
+.c6-hd h4{font:700 17px/1.2 'Poppins'}
+.sup{font:400 13.5px/1.42 'Nunito';color:var(--cinza-medio);margin-top:4px}
+.stage6{flex:1;min-height:0;margin-top:14px;border-radius:16px 16px 0 0;overflow:hidden;display:flex;box-shadow:0 0 0 1px var(--linha), 0 -6px 20px rgba(107,77,0,.06)}
 .stage6 > .wa2{flex:1}
-.sup{font:400 13.5px/1.42 'Nunito';color:var(--cinza-medio);margin-top:10px;padding:0 4px}
+.stage6 .w-chat{justify-content:flex-start}
 .ub-con{flex:1;display:flex;flex-direction:column;background:#F6F3EC;font-family:'Inter',sans-serif}
 .uc-top{display:flex;align-items:center;gap:12px;padding:9px 12px;background:#fff;border-bottom:1px solid var(--linha)}
 .uc-top img{height:15px}
@@ -881,40 +865,31 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .uc-btn{margin-top:auto;align-self:stretch;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--escuro);color:var(--branco);font:600 12px/1 'Inter';padding:10px;border-radius:9px}
 .uc-btn svg{width:13px;height:13px;color:var(--ouro)}
 
-/* ---------- s7 (cronograma) ---------- */
-.s7{display:grid;grid-template-columns:1fr 350px;grid-template-rows:minmax(0,1fr);gap:24px}
-.gantt{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--linha);border-radius:22px;box-shadow:var(--sombra);overflow:hidden}
-.g-row{display:grid;grid-template-columns:330px 1fr;align-items:stretch}
-.g-hd{background:var(--escuro);color:var(--branco)}
-.g-hd .g-lab{font:600 12px/1 'Poppins';letter-spacing:.06em;text-transform:uppercase;color:var(--ouro);padding:12px 18px;display:flex;align-items:center}
-.g-hd .g-tl{display:grid;grid-template-columns:repeat(9,1fr);padding:0}
-.g-hd .g-tl i{font:600 12px/1 'Poppins';font-style:normal;text-align:center;padding:12px 0;border-left:1px solid #2C2620}
-.g-body{position:relative;flex:1;display:flex;flex-direction:column}
-.g-grid{position:absolute;left:330px;right:0;top:0;bottom:0;pointer-events:none;
-  background:repeating-linear-gradient(90deg,var(--linha) 0 1px,transparent 1px calc(100% / 9));background-size:calc(100% / 9) 100%}
-.g-body .g-row{flex:1;border-top:1px solid var(--linha);position:relative}
-.g-body .g-row:first-of-type{border-top:0}
-.g-body .g-row:nth-child(odd){background:rgba(255,248,231,.55)}
-.g-body .g-lab{display:flex;gap:11px;align-items:flex-start;padding:8px 16px 8px 18px;border-right:1px solid var(--linha)}
-.g-n{width:22px;height:22px;border-radius:50%;background:var(--ouro);font:700 11px/22px 'Poppins';text-align:center;flex:none}
-.g-lab b{font:700 14px/1.2 'Poppins'}
-.g-lab p{font:400 12.5px/1.35 'Nunito';color:var(--cinza-medio);margin-top:2px}
-.g-body .g-tl{position:relative}
-.gb{position:absolute;top:50%;height:22px;margin-top:-11px;border-radius:6px}
-.gb.teste{background:var(--ouro);box-shadow:inset 0 -2px 0 rgba(107,77,0,.18)}
-.gb-note{position:absolute;top:50%;margin-top:14px;font:600 10.5px/1 'Nunito';color:var(--ouro-texto);white-space:nowrap}
-.gb.pausa{background:repeating-linear-gradient(135deg,#D9D3C7 0 5px,#F3EEE4 5px 10px);border:1px solid #CFC8BA}
-.gb.retomada{background:linear-gradient(90deg,var(--escuro) 0%,var(--escuro) 45%,rgba(7,4,1,.25) 100%)}
-.gb.meta{height:20px;margin-top:-10px;border:2px dashed var(--escuro);background:rgba(253,195,72,.18)}
-.gb-ms{position:absolute;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;background:var(--escuro);transform:rotate(45deg);border-radius:3px;box-shadow:0 0 0 5px rgba(253,195,72,.55)}
-.gb-flag{position:absolute;top:50%;transform:translate(-100%,-50%);display:inline-flex;align-items:center;gap:4px;background:var(--escuro);color:var(--ouro);font:700 11px/1 'Poppins';padding:6px 8px;border-radius:7px;white-space:nowrap}
-.gb-flag svg{width:11px;height:11px}
-.g-vir{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--escuro);opacity:.85}
-.g-vir em{position:absolute;bottom:6px;left:6px;font:700 10.5px/1 'Poppins';font-style:normal;color:var(--escuro);background:var(--ouro);padding:4px 7px;border-radius:5px}
-.ubots-panel{position:relative;border:1.5px solid var(--ouro);background:var(--card);border-radius:22px;padding:22px 24px 50px;box-shadow:var(--sombra)}
-.up-hd img{height:22px;display:block;margin-bottom:14px}
-.ubots-panel p{font:400 14px/1.5 'Nunito';margin-top:9px}
-.ubots-panel .wave{position:absolute;right:26px;bottom:20px}
+/* ---------- s7 (fases) ---------- */
+.s7{gap:16px}
+.phases{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border:1px solid var(--linha);border-radius:22px;box-shadow:var(--sombra);overflow:hidden}
+.ph{position:relative;display:flex;flex-direction:column;padding:0 22px 20px}
+.ph+.ph{border-left:1px solid var(--linha)}
+.ph-track{display:block;height:8px;margin:0 -22px 20px;background:var(--ouro)}
+.ph.pausa .ph-track{background:repeating-linear-gradient(135deg,#CFC8BA 0 6px,#EEE8DC 6px 12px)}
+.ph.virada{background:var(--escuro);color:var(--branco);border-left-color:var(--escuro)}
+.ph.virada + .ph{border-left-color:var(--escuro)}
+.ph.virada .ph-track{background:var(--ouro)}
+.ph.retomada .ph-track{background:var(--ouro)}
+.ph.meta .ph-track{background:repeating-linear-gradient(90deg,var(--ouro) 0 12px,transparent 12px 20px);background-color:var(--ouro-fundo)}
+.ph-n{font:700 40px/1 'Poppins';color:var(--ouro);letter-spacing:-.03em}
+.ph b{font:700 16.5px/1.25 'Poppins';margin-top:14px}
+.ph p{font:400 14px/1.5 'Nunito';color:var(--cinza-medio);margin-top:8px}
+.ph.virada p{color:var(--cinza-claro)}
+.ph-tag{margin-top:auto;align-self:flex-start;font:600 11px/1 'Poppins';padding:6px 10px;border-radius:999px;background:var(--ouro-suave);color:var(--ouro-texto)}
+.ph.pausa .ph-tag{background:#EEE8DC;color:#4F4A43}
+.ph.virada .ph-tag{background:var(--ouro);color:var(--escuro)}
+.ph.meta .ph-tag{background:transparent;border:1.5px dashed var(--ouro-texto)}
+.ub-band{flex:none;display:grid;grid-template-columns:250px 1fr 1fr;gap:32px;align-items:start;background:var(--card);border:1.5px solid var(--ouro);border-radius:20px;padding:20px 28px;box-shadow:var(--sombra)}
+.ubb-hd{display:flex;flex-direction:column;gap:10px}
+.ubb-hd img{height:22px;width:max-content}
+.ubb-hd .wave{margin-top:4px}
+.ub-band p{font:400 14.5px/1.55 'Nunito'}
 
 /* ---------- s8 ---------- */
 .s8{display:grid;grid-template-columns:1fr 430px;grid-template-rows:minmax(0,1fr);gap:24px}

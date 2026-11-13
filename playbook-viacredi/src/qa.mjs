@@ -82,7 +82,7 @@ const data = await page.evaluate(() => {
       const fgc = over(fg, bg);
       const L1 = lum(fgc), L2 = lum(bg);
       const ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
-      texts.push({ t: n.textContent.trim().slice(0, 50), size: parseFloat(cs.fontSize), weight: +cs.fontWeight, ratio: +ratio.toFixed(2), bigGold: !!el.closest('.gold,.num,.big-n,.qmark,.cn') && parseFloat(cs.fontSize) >= 40 });
+      texts.push({ t: n.textContent.trim().slice(0, 50), size: parseFloat(cs.fontSize), weight: +cs.fontWeight, ratio: +ratio.toFixed(2), bigGold: !!el.closest('.gold,.num,.big-n,.qmark,.cn,.ph-n') && parseFloat(cs.fontSize) >= 40 });
     }
     // cores azul/teal (exceto o logo, que é imagem)
     const blue = [];

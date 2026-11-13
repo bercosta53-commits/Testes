@@ -79,10 +79,10 @@ Componentes recorrentes (copiar do Crediauc):
 
 - Pílula: `Guia Prático`
 - Título: Testando ==Agentes de IA== na Oferta de Crédito
-- Subtítulo: Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.
+- Subtítulo: Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar sobre crédito com seus cooperados e como essa experiência pode ajudar a sua instituição.
 - Chips de etapas: `1 Preparar o Agente` → `2 Testar em Volume Controlado` → `3 Avaliar e Escalar`
 - Rótulo de público: Material para
-- Linha de origem (abaixo do título, discreta): Baseado no case Viacredi + Ubots
+- Linha de origem (abaixo do título, discreta): Baseado no caso Viacredi + Ubots
 - Tags de público: `Cooperativas de Crédito` · `Bancos e Fintechs` · `Instituições Financeiras` · `Serviços Financeiros` · `Financeiras`
 
 ---
@@ -93,15 +93,15 @@ Componentes recorrentes (copiar do Crediauc):
 - Título: Uma cooperativa de 74 anos decidiu ==testar IA generativa== na venda de crédito
 - Corpo (esquerda):
 
-  A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem mais de 1 milhão de cooperados e mais de 100 postos em Santa Catarina e no Paraná. Relacionamento próximo sempre foi a estratégia da casa.
+  A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem mais de 1 milhão de cooperados e mais de 100 postos em Santa Catarina e no Paraná. A proximidade com os cooperados sempre esteve no centro da sua atuação.
 
-  O desafio era ampliar a oferta de linhas de crédito com agentes de IA sem perder esse jeito de atender. E sem referência de mercado: até ali, a cooperativa trabalhava com bots de fluxo, de regras fixas, e não tinha nenhuma métrica de IA generativa para comparar.
+  O desafio era ampliar a oferta de crédito com agentes de IA sem abrir mão da proximidade no atendimento. Era um território novo: a cooperativa usava bots de fluxo, baseados em regras fixas, e ainda não tinha indicadores de IA generativa para orientar o teste.
 
 - Cards à direita, título "Ponto de partida":
-  - **Bots de fluxo** · Conversas presas a regras fixas e caminhos pré-definidos.
-  - **Sem histórico** · Nenhum indicador de IA generativa para usar como base.
+  - **Bots de fluxo** · Conversas limitadas a regras e caminhos predefinidos.
+  - **Sem histórico** · Sem indicadores prévios de IA generativa para comparar.
   - **Parceria com a Ubots** · Construir e testar um agente de IA para a oferta de crédito.
-- Card da protagonista (faixa inferior): **Giovanna** · [cargo A CONFIRMAR] · Conduziu o projeto do primeiro teste à operação atual.
+- Card da protagonista (faixa inferior): **Giovanna** · [cargo A CONFIRMAR] · Conduziu o projeto desde o primeiro teste até a operação atual.
 - Faixa de resultados (revisão de 13/11, escura, números em ouro de tamanho moderado):
   - Fase de teste
   - Resultados do teste
@@ -117,7 +117,7 @@ Componentes recorrentes (copiar do Crediauc):
 **Layout:** wireframe comparativo em dois painéis lado a lado, ligados por uma seta, sobre o fundo claro. Citação da Giovanna embaixo à esquerda, callout escuro embaixo à direita.
 
 - Título: O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo
-- Subtítulo: Cada "não pode" parecia deixar o agente mais seguro. Na prática, deixou a conversa mais rígida, e cada tentativa de torná-lo simpático com novas regras reforçava o tom robótico.
+- Subtítulo: Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava mais rígida, e cada nova regra para deixá-lo simpático acabava reforçando o tom robótico.
 - Painel esquerdo, "Instruções por regras" (mock de editor de prompt, linhas riscadas de amarelo suave):
   - Não fale sobre…
   - Não responda se…
@@ -139,7 +139,7 @@ Componentes recorrentes (copiar do Crediauc):
 **Layout:** fundo `--escuro`. Título e subtítulo no topo, três colunas de wireframe ("Saiu / Entrou / Ficou"), citação grande à direita ou na base, faixa com a mensagem-chave. Slide com mais texto.
 
 - Título: A virada veio quando o agente ==entendeu o papel dele==
-- Subtítulo: Na primeira semana de julho, a Viacredi reformulou a lógica do agente. Tirou o excesso de regras, explicou no prompt o conceito e o objetivo do papel dele e manteve só os guardrails críticos de segurança, desenhados com a ajuda da própria IA.
+- Subtítulo: Na primeira semana de julho, a Viacredi repensou a lógica do agente. Reduziu as regras, deixou mais claro o papel dele no prompt e preservou os guardrails essenciais de segurança, com a ajuda da própria IA.
 - Coluna 1, **O que saiu** (borda tracejada cinza, itens riscados):
   - Regras de comportamento em excesso
   - Roteiro fechado para cada resposta
@@ -152,7 +152,7 @@ Componentes recorrentes (copiar do Crediauc):
   - Transparência sobre custos
   - Contratação pelo canal seguro
 - Citação: "Quando expliquei ao agente qual era o papel dele e o que ele precisava alcançar, a experiência melhorou na hora. Hoje, quando aparece um problema, eu levo para a própria IA e a gente constrói a solução junto." [Fala A CONFIRMAR com a Giovanna]
-- Linha de apoio (cinza claro): Saudação, transbordo e volume de mensagens passaram a ser ajustados em conjunto com a IA, sem nova regra manual.
+- Linha de apoio (cinza claro): Saudação, transbordo e volume de mensagens passaram a ser ajustados com apoio da IA, sem criar uma regra a cada mudança.
 - Faixa final (ouro, Poppins 22px): Segurança onde importa, conversa de verdade no resto.
 
 ---
@@ -161,7 +161,7 @@ Componentes recorrentes (copiar do Crediauc):
 **Layout:** wireframe complexo. Mock de celular com a conversa à esquerda (45%); à direita, quatro anotações numeradas ligadas por linhas a pontos da conversa. Título e subtítulo em cima, largura total.
 
 - Título: Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito
-- Subtítulo: Dias depois da mudança, uma cooperada respondeu à oferta dizendo que já tinha um crédito contratado, mas que era bom saber de outro disponível. Nada do que veio depois estava roteirizado.
+- Subtítulo: Poucos dias depois da mudança, uma cooperada disse que já tinha um crédito contratado, mas gostou de saber que havia outra opção. A conversa seguiu sem um roteiro pronto.
 - Conversa no celular (substituir pelo print anonimizado aprovado; se não houver print, usar esta reconstituição com a legenda "Reconstituição a partir do relato do projeto"):
   1. Cooperada: "Já tenho um crédito contratado, mas achei bom saber que tem outro disponível."
   2. Agente: "Que bom! Posso perguntar o que você está planejando?"
@@ -170,10 +170,10 @@ Componentes recorrentes (copiar do Crediauc):
   5. Agente: apresenta a linha de crédito ligada ao plano da reforma (barras)
   6. Cooperada: decide contratar (barras + selo ouro "Contratação")
 - Anotações:
-  - **1 Escuta** · Em vez de repetir a oferta, o agente pergunta o motivo do interesse.
-  - **2 Contexto** · A cooperada conta da reforma e o agente conversa sobre ela, como faria um bom atendente.
-  - **3 Oferta com sentido** · O crédito aparece como resposta a um plano real, e não como disparo genérico.
-  - **4 Decisão da cooperada** · A contratação vem da conversa. Nenhum passo estava previsto em roteiro.
+  - **1 Escuta** · Em vez de insistir na oferta, o agente procura entender o interesse.
+  - **2 Contexto** · A cooperada fala da reforma, e o agente acompanha o assunto com naturalidade.
+  - **3 Oferta com sentido** · O crédito passa a fazer sentido dentro do plano da cooperada.
+  - **4 Decisão da cooperada** · A cooperada decide contratar. A conversa não seguiu um roteiro pronto.
 - Legenda (11px): Conversa anonimizada. Dados da cooperada preservados.
 
 ---
@@ -182,7 +182,7 @@ Componentes recorrentes (copiar do Crediauc):
 **Layout:** três cards de mesma altura, cada um com um mini wireframe. Citação da Giovanna em faixa na base.
 
 - Título: A liberdade para conversar veio junto com ==transparência e segurança==
-- Subtítulo: O mesmo contexto que deixa a conversa natural também protege o cooperado: o agente explica custos, orienta a contratação pelo canal seguro e chama o time humano quando faz sentido.
+- Subtítulo: O contexto torna a conversa mais natural sem deixar a segurança de lado: o agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.
 - Card 1, **Custos às claras**
   - Mini chat: cooperado pergunta sobre os custos da retirada → agente explica que é um crédito com juros e IOF, contextualiza e oferece encaminhar ao time humano para comparar com outras linhas.
   - Linha de apoio: Transparência sem esperar o cooperado insistir.
@@ -195,7 +195,7 @@ Componentes recorrentes (copiar do Crediauc):
     - Interesse: linha de crédito [X]
     - Ponto em aberto: quer comparar com outras linhas
     - Histórico: conversa completa anexada
-  - Linha de apoio: O transbordo ficou baixo. Quando acontece, o time continua a conversa sem pedir que o cooperado repita nada.
+  - Linha de apoio: O transbordo ficou baixo. Quando ocorre, o time recebe o contexto e continua sem pedir repetição ao cooperado.
 - Faixa de citação: "O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito." [Fala A CONFIRMAR com a Giovanna]
 
 ---
@@ -204,7 +204,7 @@ Componentes recorrentes (copiar do Crediauc):
 **Layout:** linha do tempo horizontal ocupando 65% da largura (5 marcos, numerais ouro), painel lateral "O papel da Ubots" à direita. Slide com mais texto.
 
 - Título: Testar pouco, pausar e voltar melhor ==fez parte do método==
-- Subtítulo: A Viacredi não começou em escala. Começou com cooperados reais, volume baixo e filtros de risco, e tratou cada pausa como parte do teste.
+- Subtítulo: A Viacredi começou com cooperados reais, em pequenos volumes e com filtros de risco. A cada pausa, a equipe revia as conversas, ajustava o agente e preparava o próximo teste.
 - Linha do tempo:
   - **Abril a junho** · Testes controlados. Pausas frequentes para refinar o agente, preparar o time e definir os novos indicadores.
   - **Junho** · Pausa total para reestruturar os disparos e planejar a escala.
@@ -213,9 +213,9 @@ Componentes recorrentes (copiar do Crediauc):
   - **Até dezembro** · Meta de rodar mais de 10% das ações ativas com agente generativo.
 - Painel "O papel da Ubots" (card com borda ouro):
 
-  A Ubots entrou como parceira na construção do primeiro agente e como plataforma para o time testar no próprio ritmo. Com o Agent Builder, a equipe da Viacredi ganhou autonomia: Giovanna já construiu 4 agentes sem depender do time de implementação.
+  A Ubots construiu o primeiro agente em parceria com a Viacredi e ofereceu a plataforma para a equipe testar no próprio ritmo. Com o Agent Builder, o time ganhou autonomia: Giovanna já criou quatro agentes sem depender da equipe de implementação.
 
-  Próximos passos da cooperativa: um agente mais generalista e agentes para produtos sem risco de crédito, como cartão e aplicações no onboarding de novos cooperados.
+  Próximos passos: testar um agente mais generalista e expandir para produtos sem risco de crédito, como cartões e aplicações, no onboarding de novos cooperados.
 
 - Rodapé discreto: Mais de R$ 150 mil em crédito liberados antes de a operação estar totalmente estruturada.
 
@@ -225,7 +225,7 @@ Componentes recorrentes (copiar do Crediauc):
 **Layout:** como o slide 4 do Crediauc. Grade de 6 campos para preencher à esquerda (2 colunas × 3 linhas), caixa escura com checklist à direita, dica na base.
 
 - Título: Antes de escrever regras, escreva ==o papel do agente==
-- Subtítulo: Explique ao agente para que ele existe, com quem conversa e onde termina a autonomia dele. Preencha com as definições da sua instituição.
+- Subtítulo: Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir. Use as perguntas abaixo para definir o primeiro teste da sua instituição.
 - Campos:
   - **Objetivo** · Qual resultado a conversa deve buscar?
   - **Público** · Para quem é a oferta e em que momento da relação?
@@ -239,7 +239,7 @@ Componentes recorrentes (copiar do Crediauc):
   - Transparência sobre juros, IOF e demais custos
   - Canal seguro para a contratação
   - Quem revisa as conversas e com que frequência
-- Dica (ícone de lâmpada pequeno ou numeral, faixa ouro suave): Na Viacredi, a própria IA ajudou a desenhar os guardrails e a resolver os ajustes do dia a dia. Comece por aí.
+- Dica (ícone de lâmpada pequeno ou numeral, faixa ouro suave): Na Viacredi, a própria IA ajudou a construir os guardrails e ajustar a operação. Comece por esse diálogo.
 
 ---
 
@@ -248,18 +248,18 @@ Componentes recorrentes (copiar do Crediauc):
 
 - Título: Teste em ==volume controlado== e meça o que muda na conversa
 - Etapas:
-  - **1 Preparação** · Papel do agente e guardrails escritos, público definido com filtros de risco, responsáveis e indicadores combinados. **Entrega:** agente pronto para conversar com um grupo pequeno. Campos: Data · Responsável
-  - **2 Teste** · Disparos em volume baixo, leitura das conversas e pausas para ajustar sempre que preciso. **Entrega:** conversas revisadas e ajustes registrados. Campos: Início · Término · Responsável
-  - **3 Avaliação** · Resultados, transbordos e qualidade das conversas consolidados. **Entrega:** decisão de continuar, ajustar ou ampliar. Campos: Data · Responsável
+  - **1 Preparação** · Defina o papel e os limites do agente, o público inicial com filtros de risco, os responsáveis e os indicadores do teste. **Entrega:** agente pronto para conversar com um grupo pequeno. Campos: Data · Responsável
+  - **2 Teste** · Comece com poucos disparos, acompanhe as conversas e faça pausas para ajustar o que for necessário. **Entrega:** conversas revisadas e ajustes registrados. Campos: Início · Término · Responsável
+  - **3 Avaliação** · Reúna os resultados, os transbordos e os aprendizados sobre a qualidade das conversas. **Entrega:** decisão de continuar, ajustar ou ampliar. Campos: Data · Responsável
 - Indicadores:
-  - **Resposta** · Clientes que responderam ÷ clientes abordados
+  - **Resposta** · Cooperados que responderam ÷ cooperados abordados
   - **Avanço** · Conversas que chegaram à apresentação da oferta
   - **Contratação** · Contratações ÷ conversas com interesse
   - **Valor** · Crédito contratado no período
   - **Transbordo** · Transferências para o humano e seus motivos
   - **Qualidade** · Conversas revisadas sem desvio dos guardrails
 - Barra escura:
-  - O teste respondeu ao objetivo definido no slide 8?
+  - O teste respondeu ao objetivo definido na página 8?
   - Quais situações exigiram participação humana?
   - O que ajustar antes de ampliar o volume?
   - Checkboxes: Continuar · Ajustar · Ampliar
@@ -272,16 +272,16 @@ Componentes recorrentes (copiar do Crediauc):
 
 - Pílula: `Playbook · Agentes de IA na Oferta de Crédito`
 - Título: Desenhe o ==primeiro teste== de agente de IA na sua instituição
-- Subtítulo: Use este guia para definir o papel do agente, os guardrails e o plano de teste antes de colocar a primeira conversa no ar.
+- Subtítulo: Este guia ajuda sua equipe a definir o papel do agente, os cuidados de segurança e o plano de teste antes da primeira conversa com os cooperados.
 - Card esquerdo:
   - **Converse com a Ubots sobre a sua operação**
-  - Leve a linha de crédito que você quer testar e as definições preenchidas neste playbook.
+  - Traga a linha de crédito que faz sentido testar e as definições do playbook. Podemos construir os próximos passos juntos.
   - Botão ouro: `Falar com um especialista →` (link: [URL A CONFIRMAR, com UTM])
 - Card direito, "Leve para a conversa" (checkboxes com pílula de slide):
-  - Papel do agente · slide 8
-  - Guardrails críticos · slide 8
-  - Plano de teste e responsáveis · slide 9
-  - Indicadores e critério de decisão · slide 9
+  - Papel do agente · pág. 8
+  - Guardrails críticos · pág. 8
+  - Plano de teste e responsáveis · pág. 9
+  - Indicadores e critério de decisão · pág. 9
 
 ---
 
