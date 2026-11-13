@@ -19,6 +19,8 @@ const LOGO = {
   ubotsDark: b64('logo-ubots-dark.png', 'image/png'),
   via: b64('logo-viacredi.png', 'image/png'),
   viaDark: b64('logo-viacredi-dark.png', 'image/png'),
+  iconIA: b64('icon-ia.png', 'image/png'),
+  iconWA: b64('icon-whatsapp.png', 'image/png'),
 };
 
 const FONTS = [
@@ -132,46 +134,60 @@ const s1 = `
 <section class="slide light cover" id="s1">
   ${header(1, false, false)}
   <div class="cover-l">
-    <div class="pill-w"><i></i>Guia prático</div>
-    <h1 class="t cover-t">${gold('Testando ==agentes de IA==')}<br>na oferta de crédito</h1>
-    <p class="lead">Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.</p>
+    <div class="cl-top">
+      <div class="pill-w"><i></i>Guia Prático</div>
+      <h1 class="t cover-t">${gold('Testando ==Agentes de IA==')}<br>na Oferta de Crédito</h1>
+      <p class="lead">Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.</p>
+    </div>
     <ol class="cover-steps">
-      <li><span class="cn">1</span><b>Preparar o agente</b></li>
-      <li><span class="cn">2</span><b>Testar em volume controlado</b></li>
-      <li><span class="cn">3</span><b>Avaliar e escalar</b></li>
+      <li><span class="cn">1</span><b>Preparar<br>o Agente</b></li>
+      <li><span class="cn">2</span><b>Testar em Volume<br>Controlado</b></li>
+      <li><span class="cn">3</span><b>Avaliar<br>e Escalar</b></li>
     </ol>
-    <p class="aud">Para bancos, cooperativas de crédito e instituições financeiras · Baseado no case Viacredi + Ubots</p>
+    <div class="cl-aud">
+      <span class="aud-l">Material para</span>
+      <ul class="aud-tags"><li>Cooperativas de Crédito</li><li>Bancos e Fintechs</li><li>Instituições Financeiras</li><li>Serviços Financeiros</li></ul>
+      <p class="aud">Baseado no case Viacredi + Ubots</p>
+    </div>
   </div>
   <div class="cover-art" aria-hidden="true" data-bleed>
     <div class="ca-glow"></div>
-    <svg class="ca-orbit" viewBox="0 0 600 600"><circle cx="300" cy="300" r="180"/><circle cx="300" cy="300" r="250"/><circle cx="300" cy="300" r="320" stroke-dasharray="2 10"/></svg>
-    <div class="ca-rules">
-      <div class="r"><i></i><i style="width:70%"></i></div>
-      <div class="r"><i></i><i style="width:56%"></i></div>
-      <div class="r"><i></i><i style="width:64%"></i></div>
-      <div class="r"><i></i><i style="width:48%"></i></div>
-    </div>
+    <svg class="ca-orbit" viewBox="0 0 700 700"><circle cx="350" cy="350" r="200"/><circle cx="350" cy="350" r="270"/><circle cx="350" cy="350" r="340" stroke-dasharray="2 9"/></svg>
     <div class="ca-phone">
       <div class="screen">
         <div class="sbar"><b>9:41</b>${ICON.status}</div>
-        <div class="cp-hd"><span class="wa-av">${ICON.spark}</span><span class="cp-nm"><i class="bar" style="width:96px;height:8px;background:rgba(255,253,249,.92)"></i><i class="bar" style="width:52px;height:6px;margin-top:6px;background:rgba(255,253,249,.4)"></i></span><span class="wa-ico">${ICON.wa}</span></div>
-        <div class="cp-chat">
-          <div class="cb-b ag"><span class="selo">${ICON.spark}Agente de IA</span>${bars(92, 68)}</div>
-          <div class="cb-b us">${bars(86, 54)}</div>
-          <div class="cb-b ag">${bars(88, 74, 40)}</div>
-          <div class="cb-b us">${bars(64)}</div>
-          <div class="cb-b ag typing"><i></i><i></i><i></i></div>
+        <div class="wa-hd">
+          <span class="bk">${lineIcon('back', 2)}</span>
+          <span class="wa-av">${ICON.spark}</span>
+          <span class="wa-name">Agente Viacredi<small>online</small></span>
+          <span class="wa-ico">${ICON.wa}</span>
         </div>
+        <div class="chat cp">
+          <div class="b ag"><span class="selo">${ICON.spark}Agente de IA</span><br>Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?<span class="meta">10:30</span></div>
+          <div class="b us">Quero sim! Estou reformando a cozinha.<span class="meta">10:31${ICON.ticks}</span></div>
+          <div class="b ag">Que legal! Simulei uma opção para a sua reforma:
+            <div class="sim">
+              <div class="sim-hd"><span>${lineIcon('money', 2)}</span><b>Crédito Reforma</b></div>
+              <dl><dt>Valor</dt><dd>R$ 15.000,00</dd><dt>Parcelas</dt><dd>24x</dd><dt>Custos</dt><dd>Juros e IOF inclusos</dd></dl>
+              <span class="sim-btn">Ver Condições</span>
+            </div><span class="meta">10:31</span></div>
+          <div class="b us">Perfeito, quero contratar.<span class="meta">10:33${ICON.ticks}</span></div>
+          <div class="b ag">Ótimo! Por segurança, a contratação é feita pelo app. Te enviei o passo a passo.<span class="meta">10:33</span></div>
+          <div class="done">${lineIcon('check', 2.6)}Crédito Contratado</div>
+        </div>
+        <div class="wa-in"><span class="wa-field">${lineIcon('plus', 2)}<i></i></span><span class="wa-mic">${lineIcon('mic', 2)}</span></div>
       </div>
     </div>
+    <img class="ca-ia" src="${LOGO.iconIA}" alt="">
+    <img class="ca-wa" src="${LOGO.iconWA}" alt="">
     <div class="ca-ctx">
-      <div class="ctx-hd"><span class="ctx-i">${ICON.spark}</span><i class="bar" style="width:58%;height:8px;background:var(--escuro)"></i></div>
-      <div class="ctx-row"><span class="dot"></span>${bars(78)}</div>
-      <div class="ctx-row"><span class="dot"></span>${bars(64)}</div>
-      <div class="ctx-row"><span class="dot"></span>${bars(70)}</div>
-      <div class="ctx-chips"><i></i><i></i></div>
+      <div class="ctx-hd"><span class="ctx-i">${ICON.spark}</span><b>Contexto do Cooperado</b></div>
+      <dl>
+        <dt>Objetivo</dt><dd>Reforma da cozinha</dd>
+        <dt>Perfil</dt><dd>Crédito pré-aprovado</dd>
+        <dt>Canal</dt><dd>Contratação pelo app</dd>
+      </dl>
     </div>
-    <div class="ca-shield">${lineIcon('shield', 2)}</div>
     ${wave('var(--escuro)', 96, 3, 3.5)}
   </div>
 </section>`;
@@ -635,53 +651,55 @@ h1.t{font:700 42px/1.14 'Poppins';letter-spacing:-.026em;margin-top:0;color:var(
 
 /* ---------- s1 capa ---------- */
 .cover .count b,.cover .count{color:var(--escuro)}
-.cover-l{position:absolute;left:var(--mx);top:170px;bottom:44px;width:700px;display:flex;flex-direction:column}
-.pill-w{align-self:flex-start;display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--linha);border-radius:999px;padding:9px 16px;font:500 13px/1 'Poppins';box-shadow:0 4px 14px rgba(107,77,0,.06)}
+.cover-l{position:absolute;left:var(--mx);top:122px;bottom:44px;width:720px;display:flex;flex-direction:column;justify-content:space-between}
+.pill-w{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--linha);border-radius:999px;padding:9px 16px;font:600 13px/1 'Poppins';box-shadow:0 4px 14px rgba(107,77,0,.06)}
 .pill-w i{width:8px;height:8px;border-radius:50%;background:var(--ouro)}
-h1.cover-t{font-size:58px;line-height:1.07;margin-top:26px;letter-spacing:-.032em;max-width:none}
-.lead{font:400 19px/1.55 'Nunito';color:var(--escuro);margin-top:24px;max-width:640px}
-.cover-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:auto;border-top:1.5px solid var(--escuro)}
-.cover-steps li{padding:18px 24px 0 0;display:flex;flex-direction:column;gap:10px;position:relative}
-.cover-steps li+li{padding-left:24px;border-left:1px solid var(--ouro-linha)}
-.cover-steps .cn{font:700 48px/1 'Poppins';color:var(--ouro);letter-spacing:-.03em}
+h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034em;max-width:none}
+.lead{font:400 19px/1.55 'Nunito';color:var(--escuro);margin-top:20px;max-width:650px}
+.cover-steps{display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border:1px solid var(--linha);border-radius:22px;box-shadow:var(--sombra);overflow:hidden}
+.cover-steps li{display:flex;align-items:center;gap:16px;padding:22px 22px}
+.cover-steps li+li{border-left:1px solid var(--linha)}
+.cover-steps li:nth-child(2){background:var(--ouro-fundo)}
+.cover-steps .cn{font:700 48px/1 'Poppins';color:var(--ouro);letter-spacing:-.03em;flex:none}
 .cover-steps b{font:600 16px/1.3 'Poppins'}
-.aud{font:400 12px/1.4 'Nunito';color:var(--cinza-medio);margin-top:26px}
+.aud-l{display:block;font:600 12px/1 'Poppins';color:var(--ouro-texto);letter-spacing:.08em;text-transform:uppercase}
+.aud-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.aud-tags li{font:500 13.5px/1 'Poppins';padding:10px 15px;border-radius:999px;background:var(--escuro);color:var(--branco)}
+.aud{font:400 12px/1.4 'Nunito';color:var(--cinza-medio);margin-top:14px}
 .cover-art{position:absolute;left:860px;top:24px;right:24px;bottom:24px;border-radius:34px;overflow:hidden;
-  background:linear-gradient(155deg,#FFD978 0%,var(--ouro) 42%,#F7B530 100%)}
-.ca-glow{position:absolute;left:-120px;top:-140px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,253,249,.55),rgba(255,253,249,0) 65%)}
-.ca-orbit{position:absolute;left:30px;top:150px;width:600px;height:600px;fill:none;stroke:rgba(255,253,249,.55);stroke-width:1.5}
-.ca-rules{position:absolute;left:36px;top:150px;width:200px;padding:18px 18px 14px;border-radius:18px;background:rgba(255,253,249,.42);border:1px solid rgba(255,253,249,.6);transform:rotate(-7deg);opacity:.9}
-.ca-rules .r{display:flex;align-items:center;gap:9px;margin-bottom:12px;position:relative}
-.ca-rules .r i:first-child{width:12px;height:12px;border-radius:3px;border:2px solid rgba(107,77,0,.45);flex:none}
-.ca-rules .r i:last-child{height:7px;border-radius:4px;background:rgba(107,77,0,.30)}
-.ca-rules .r:after{content:"";position:absolute;left:-4px;right:20px;top:50%;height:2px;background:var(--escuro);opacity:.55;transform:rotate(-2deg)}
-.ca-phone{position:absolute;left:176px;top:200px;width:290px;height:640px;background:var(--escuro);border-radius:44px;padding:9px;box-shadow:0 40px 70px rgba(107,77,0,.38)}
-.ca-phone .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:#FBF6EA;display:flex;flex-direction:column}
-.cp-hd{display:flex;align-items:center;gap:10px;background:var(--escuro);padding:10px 16px 14px}
-.cp-nm{flex:1}
-.cp-chat{flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:10px;background:radial-gradient(rgba(214,160,40,.16) 1.1px, transparent 1.3px) 0 0/16px 16px, #FBF6EA}
-.cb-b{border-radius:14px;padding:12px 13px;box-shadow:0 1px 1.5px rgba(7,4,1,.1)}
-.cb-b.ag{background:var(--ouro-suave);width:84%;border-top-left-radius:4px}
-.cb-b.ag .bar{background:rgba(107,77,0,.24)}
-.cb-b.us{background:#fff;width:70%;margin-left:auto;border-top-right-radius:4px}
-.cb-b.typing{width:64px;display:flex;gap:5px;padding:12px 14px}
-.cb-b.typing i{width:8px;height:8px;border-radius:50%;background:rgba(107,77,0,.45)}
-.cb-b.typing i:nth-child(2){opacity:.7} .cb-b.typing i:nth-child(3){opacity:.4}
-.selo{display:inline-flex;align-items:center;gap:5px;background:var(--escuro);color:var(--ouro);font:600 10.5px/1 'Poppins';padding:5px 9px 5px 7px;border-radius:999px;margin-bottom:10px}
-.selo svg{width:10px;height:10px}
-.ca-ctx{position:absolute;left:338px;top:390px;width:210px;padding:16px 16px 14px;background:#fff;border-radius:18px;box-shadow:0 24px 44px rgba(107,77,0,.28);transform:rotate(3deg)}
-.ctx-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.ctx-i{width:28px;height:28px;border-radius:9px;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;flex:none}
-.ctx-i svg{width:14px;height:14px}
-.ctx-row{display:flex;align-items:center;gap:9px;margin-top:9px}
-.ctx-row .dot{width:8px;height:8px;border-radius:50%;background:var(--ouro);flex:none}
-.ctx-row .bar{flex:1;background:rgba(7,4,1,.12)}
-.ctx-chips{display:flex;gap:7px;margin-top:14px}
-.ctx-chips i{height:18px;border-radius:999px;background:var(--ouro-suave);border:1px solid var(--ouro-linha);width:58px}
-.ctx-chips i+i{width:44px}
-.ca-shield{position:absolute;left:70px;top:560px;width:62px;height:62px;border-radius:50%;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;box-shadow:0 16px 30px rgba(7,4,1,.25)}
-.ca-shield svg{width:28px;height:28px}
-.cover-art > .wave{position:absolute;right:34px;bottom:34px}
+  background:linear-gradient(160deg,#FFDB80 0%,var(--ouro) 46%,#F6B42E 100%)}
+.ca-glow{position:absolute;left:-60px;top:-80px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(255,253,249,.6),rgba(255,253,249,0) 62%)}
+.ca-orbit{position:absolute;left:-72px;top:30px;width:700px;height:700px;fill:none;stroke:rgba(255,253,249,.6);stroke-width:1.5}
+.ca-phone{position:absolute;left:126px;top:40px;width:322px;height:682px;background:var(--escuro);border-radius:48px;padding:10px;box-shadow:0 40px 70px rgba(107,77,0,.40), inset 0 0 0 2px #2A2520}
+.ca-phone .screen{width:100%;height:100%;border-radius:39px;overflow:hidden;display:flex;flex-direction:column;background:#FBF6EA}
+.ca-phone .sbar{padding:14px 24px 4px 28px}
+.ca-phone .wa-hd{padding:9px 14px 11px}
+.chat.cp{gap:7px;padding:11px 12px 8px}
+.chat.cp .b{font-size:12px;line-height:1.38;padding:7px 10px 5px;max-width:88%}
+.chat.cp .b .meta{font-size:9px}
+.chat.cp .selo{margin:0 0 4px}
+.selo{display:inline-flex;align-items:center;gap:5px;background:var(--escuro);color:var(--ouro);font:600 9.5px/1 'Poppins';padding:4px 8px 4px 6px;border-radius:999px}
+.selo svg{width:9px;height:9px}
+.sim{margin-top:7px;background:#fff;border-radius:10px;padding:9px 10px 10px;box-shadow:0 1px 2px rgba(107,77,0,.15)}
+.sim-hd{display:flex;align-items:center;gap:7px;padding-bottom:7px;border-bottom:1px solid var(--linha)}
+.sim-hd span{width:20px;height:20px;border-radius:6px;background:var(--ouro);display:grid;place-items:center}
+.sim-hd svg{width:12px;height:12px}
+.sim-hd b{font:700 11.5px/1 'Poppins'}
+.sim dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin-top:7px;font:400 11px/1.3 'Nunito'}
+.sim dt{color:var(--cinza-medio)} .sim dd{text-align:right;font-weight:700}
+.sim-btn{display:block;margin-top:9px;text-align:center;background:var(--escuro);color:var(--ouro);font:600 10.5px/1 'Poppins';padding:7px 0;border-radius:999px}
+.done{align-self:flex-end;margin-right:4px;display:inline-flex;align-items:center;gap:6px;margin-top:2px;background:var(--escuro);color:var(--branco);font:600 11px/1 'Poppins';padding:7px 12px 7px 9px;border-radius:999px;box-shadow:0 4px 10px rgba(7,4,1,.18)}
+.done svg{width:13px;height:13px;color:var(--ouro)}
+.ca-ia{position:absolute;left:46px;top:300px;width:92px;height:92px;border-radius:26px;transform:rotate(-8deg);box-shadow:0 18px 34px rgba(80,40,120,.35)}
+.ca-wa{position:absolute;right:34px;top:150px;width:76px;height:76px;border-radius:22px;transform:rotate(8deg);box-shadow:0 18px 34px rgba(20,110,60,.30)}
+.ca-ctx{position:absolute;left:16px;top:626px;width:214px;padding:14px 16px 14px;background:#fff;border-radius:18px;box-shadow:0 24px 44px rgba(107,77,0,.30);transform:rotate(-3deg)}
+.ctx-hd{display:flex;align-items:center;gap:9px;padding-bottom:9px;border-bottom:1px solid var(--linha)}
+.ctx-hd b{font:700 12px/1.2 'Poppins'}
+.ctx-i{width:26px;height:26px;border-radius:8px;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;flex:none}
+.ctx-i svg{width:13px;height:13px}
+.ca-ctx dl{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;margin-top:9px;font:400 11.5px/1.3 'Nunito'}
+.ca-ctx dt{color:var(--cinza-medio)} .ca-ctx dd{font-weight:700}
+.cover-art > .wave{position:absolute;left:36px;top:46px}
 
 /* ---------- s2 ---------- */
 .s2{display:grid;grid-template-columns:1.55fr 1fr;gap:28px}

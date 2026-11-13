@@ -75,13 +75,15 @@ Componentes recorrentes (copiar do Crediauc):
 ## 3. Copy e layout por slide
 
 ### Slide 1 · Capa
-**Layout:** igual à capa do Crediauc. Texto à esquerda, ilustração à direita (card ouro arredondado com mock de conversa abstrata: barras de texto, um balão do agente com selo "Agente de IA" e ícone pequeno de WhatsApp).
+**Layout:** texto à esquerda, ilustração à direita: painel ouro com celular mostrando uma conversa de contratação de crédito (oferta, plano da cooperada, simulação com juros e IOF, contratação pelo app), cartão "Contexto do Cooperado" e ícones de IA e WhatsApp. Textos da capa em Title Case (revisão de 13/11).
 
-- Pílula: `Guia prático`
-- Título: Testando ==agentes de IA== na oferta de crédito
+- Pílula: `Guia Prático`
+- Título: Testando ==Agentes de IA== na Oferta de Crédito
 - Subtítulo: Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.
-- Linha de público (12px, cinza): Para bancos, cooperativas de crédito e instituições financeiras · Baseado no case Viacredi + Ubots
-- Chips de etapas (como Crediauc): `1 Preparar o agente` → `2 Testar em volume controlado` → `3 Avaliar e escalar`
+- Chips de etapas: `1 Preparar o Agente` → `2 Testar em Volume Controlado` → `3 Avaliar e Escalar`
+- Rótulo de público: Material para
+- Tags de público: `Cooperativas de Crédito` · `Bancos e Fintechs` · `Instituições Financeiras` · `Serviços Financeiros`
+- Linha de origem (12px, cinza): Baseado no case Viacredi + Ubots
 
 ---
 

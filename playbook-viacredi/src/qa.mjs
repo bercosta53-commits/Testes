@@ -14,7 +14,7 @@ const HTML = path.join(ROOT, 'dist/playbook-viacredi-ubots.html');
 const PDF = path.join(ROOT, 'dist/playbook-viacredi-ubots.pdf');
 const MD = fs.readFileSync(path.join(ROOT, 'playbook-viacredi-ubots.md'), 'utf8');
 
-const norm = (s) => s.replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim();
+const norm = (s) => s.replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase(); // caixa ignorada: há rótulos em CSS uppercase
 
 // ---- fragmentos de copy por slide, extraídos do .md ----
 function copyFragments() {
@@ -30,7 +30,7 @@ function copyFragments() {
       if (!t || /^Layout:/.test(t)) continue;
       if (/^(- )?(Mini chat|Wireframe|Conversa no celular|Cards à direita|Painel|Coluna|Card |Campos:|Indicadores:|Etapas:|Barra escura:|Linha do tempo:|Anotações:|Caixa escura|Dica|Faixa de citação|Card esquerdo:|Card direito|Botão)/.test(t) && !/: \S/.test(t.replace(/^- /, '').replace(/^[^:]+:/, '')) ) continue;
       let v = t.replace(/^- /, '').replace(/^\d+\. /, '');
-      const lab = v.match(/^(Pílula|Título|Subtítulo|Linha de público[^:]*|Citação|Callout escuro|Linha de apoio[^:]*|Faixa final[^:]*|Rodapé[^:]*|Legenda[^:]*|Selo no canto|Corpo \(esquerda\)|Card da protagonista[^:]*|Dica[^:]*|Faixa de citação|Chips de etapas[^:]*):\s*(.*)$/);
+      const lab = v.match(/^(Pílula|Título|Subtítulo|Linha de público[^:]*|Citação|Callout escuro|Linha de apoio[^:]*|Faixa final[^:]*|Rodapé[^:]*|Legenda[^:]*|Rótulo de público|Tags de público|Linha de origem[^:]*|Selo no canto|Corpo \(esquerda\)|Card da protagonista[^:]*|Dica[^:]*|Faixa de citação|Chips de etapas[^:]*):\s*(.*)$/);
       if (lab) v = lab[2];
       else if (/^(Painel|Coluna|Card|Mini chat|Wireframe|Caixa escura|Barra escura|Botão)/.test(v)) continue;
       v = v.replace(/==/g, '').replace(/\s*\[(Fala|cargo|URL)[^\]]*\]/g, '').replace(/\(link:.*$/, '');
@@ -112,7 +112,7 @@ report.push('# QA · Playbook Viacredi + Ubots', '', `Gerado em ${new Date().toI
 const allBlue = data.flatMap((d) => d.blue.map((b) => `slide ${d.n}: ${b}`));
 const dashes = data.filter((d) => /[—–]/.test(d.text)).map((d) => d.n);
 report.push('## Checklist', '');
-report.push(`- [${allBlue.length ? ' ' : 'x'}] Nenhum azul ou teal nos elementos do layout: ${ok(!allBlue.length)}${allBlue.length ? '\n  - ' + allBlue.join('\n  - ') : ''} (o logo Viacredi é a marca original, imagem, e mantém as cores dela)`);
+report.push(`- [${allBlue.length ? ' ' : 'x'}] Nenhum azul ou teal nos elementos do layout: ${ok(!allBlue.length)}${allBlue.length ? '\n  - ' + allBlue.join('\n  - ') : ''} (exceções em imagem: o logo Viacredi e o ícone de IA da capa mantêm as cores originais)`);
 report.push(`- [${dashes.length ? ' ' : 'x'}] Nenhum travessão (— ou –) no texto visível: ${ok(!dashes.length)}${dashes.length ? ' slides ' + dashes.join(', ') : ''}`);
 // 2. contraste
 const minRows = data.map((d) => {
