@@ -46,7 +46,10 @@ As marcações em magenta (`[... A CONFIRMAR]`) precisam sumir:
 
 Outros pontos:
 
-- Slide 5 usa a reconstituição da conversa com a legenda "Reconstituição a partir do relato do projeto." Quando entrar o `print-cozinha.png` aprovado, voltar a legenda "Conversa anonimizada. Dados da cooperada preservados."
-- Slide 6: as frases curtas dos mini chats ("Quais são os custos da retirada?", "É um crédito com juros e IOF.", "Dá para fechar aqui mesmo, pelo WhatsApp?", "Por segurança, a contratação é 100% digital pelo aplicativo.") foram reconstituídas a partir do case. Validar ou trocar pelos prints `print-iof.png` e `print-app.png`.
-- Uso do logo Viacredi e menção ao Sistema Ailos: aprovação da Viacredi. O logo mantém as cores originais da marca (inclui azul); é a única exceção à regra "nenhum azul".
-- Sem retrato da Giovanna: o card da protagonista usa um monograma "G" e os cards de citação usam só aspas e assinatura.
+- Conversas: todas as mensagens têm texto real (revisão de 13/11). No slide 5, as falas 4 a 6 foram reconstituídas a partir do relato do case, com a legenda "Reconstituição a partir do relato do projeto." No slide 6, os mini chats (custos, encaminhamento e passo a passo no app) também são reconstituições. Validar com a Viacredi ou trocar pelos prints aprovados.
+- Capa: os valores da simulação (R$ 15.000,00 em 24x) são fictícios, só ilustram a contratação.
+- Slide 2: a faixa "Resultados do teste" traz as métricas do case marcadas como fase de teste.
+- As telas de produto (WhatsApp e console Ubots) usam a fonte Inter para dar realismo de interface. O resto do material segue em Poppins e Nunito.
+- Cores fora da paleta só em imagens: o logo Viacredi e o ícone de IA da capa. O verde do WhatsApp aparece nas telas de produto.
+- Uso do logo Viacredi e menção ao Sistema Ailos: precisam de aprovação da Viacredi. A capa usa só o logo Ubots.
+- Sem retrato da Giovanna: o card da protagonista usa um monograma "G".

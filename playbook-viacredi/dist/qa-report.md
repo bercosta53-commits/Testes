@@ -1,6 +1,6 @@
 # QA · Playbook Viacredi + Ubots
 
-Gerado em 2026-11-13 15:11 UTC
+Gerado em 2026-11-13 15:21 UTC
 
 ## Checklist
 
@@ -9,8 +9,8 @@ Gerado em 2026-11-13 15:11 UTC
 - [x] Contraste ≥ 4,5:1 em todo texto: OK (tabela abaixo)
 - [x] Contador de página 01 / 10 … 10 / 10: OK
 - [x] Régua de título: no máximo 2 linhas e 940px de largura (capa e CTA têm régua própria): OK
-  - 01: 2 linha(s), 582px · 02: 2 linha(s), 756px · 03: 2 linha(s), 587px · 04: 2 linha(s), 635px · 05: 2 linha(s), 749px · 06: 2 linha(s), 873px · 07: 2 linha(s), 764px · 08: 2 linha(s), 704px · 09: 2 linha(s), 393px · 10: 2 linha(s), 590px
-- [ ] Copy idêntica ao .md (156 trechos conferidos): 1 trecho(s) para revisar
+  - 01: 2 linha(s), 582px · 02: 2 linha(s), 756px · 03: 2 linha(s), 587px · 04: 2 linha(s), 635px · 05: 2 linha(s), 749px · 06: 2 linha(s), 772px · 07: 2 linha(s), 764px · 08: 2 linha(s), 704px · 09: 2 linha(s), 393px · 10: 2 linha(s), 746px
+- [ ] Copy idêntica ao .md (167 trechos conferidos): 1 trecho(s) para revisar
   - slide 5: "Conversa anonimizada. Dados da cooperada preservados"
 - [ ] Nenhum [A CONFIRMAR] sobrando na versão final: PENDENTE, 8 marcações em magenta neste rascunho
   - slide 2: [cargo A CONFIRMAR]
@@ -22,23 +22,23 @@ Gerado em 2026-11-13 15:11 UTC
   - slide 6: [Fala A CONFIRMAR com a Giovanna]
   - slide 10: [URL A CONFIRMAR, com UTM]
 - [x] Dois slides escuros nunca em sequência: OK (escuros: 4, 10)
-- [x] PDF com texto selecionável e 10 páginas de 1440×810 pt: OK (10 páginas, 1712 palavras extraídas por pdftotext, 25 campos de formulário)
+- [x] PDF com texto selecionável e 10 páginas de 1440×810 pt: OK (10 páginas, 1875 palavras extraídas por pdftotext, 25 campos de formulário)
 - [x] Nenhum elemento vazando do slide ou da zona de conteúdo (exceto sangrias intencionais da capa e do celular do slide 5): OK
 
 ## Contraste por slide
 
 | Slide | Menor contraste | Texto | Menor fonte |
 |---|---|---|---|
-| 01 | 5.14:1 | Baseado no case Viacredi + Ubots (12px) | 9.5px · 12.73:1 |
-| 02 | 5.14:1 | / 10 (13px) | 12px · 7.07:1 |
-| 03 | 5.14:1 | / 10 (13px) | 10px · 7.07:1 |
+| 01 | 5.14:1 | Baseado no case Viacredi + Ubots (14px) | 10.5px · 7.07:1 |
+| 02 | 5.14:1 | / 10 (13px) | 10.5px · 12.73:1 |
+| 03 | 5.14:1 | / 10 (13px) | 11px · 12.73:1 |
 | 04 | 5.57:1 | [cargo A CONFIRMAR] (13px) | 12px · 10.10:1 |
-| 05 | 5.14:1 | / 10 (13px) | 10px · 5.22:1 |
-| 06 | 5.14:1 | / 10 (13px) | 9.5px · 5.22:1 |
-| 07 | 5.14:1 | / 10 (13px) | 12px · 7.07:1 |
+| 05 | 5.14:1 | / 10 (13px) | 11px · 5.69:1 |
+| 06 | 5.14:1 | / 10 (13px) | 10px · 5.69:1 |
+| 07 | 5.06:1 | Pausa total para reestruturar os disparos e planej (12.5px) | 10.5px · 12.73:1 |
 | 08 | 5.14:1 | / 10 (13px) | 12px · 7.07:1 |
 | 09 | 5.14:1 | / 10 (13px) | 11px · 9.62:1 |
-| 10 | 5.57:1 | [URL A CONFIRMAR, com UTM] (12px) | 12px · 10.10:1 |
+| 10 | 5.57:1 | [URL A CONFIRMAR, com UTM] (12px) | 11px · 8.60:1 |
 
 Fundo considerado: a cor sólida do elemento ou do card mais próximo; nos slides claros sem card, o `--branco`. Títulos, numerais e aspas em ouro (≥ 40px) ficam fora da regra de 4,5:1 por serem texto grande decorativo, conforme a seção 2 do brief; não entram na tabela.
 

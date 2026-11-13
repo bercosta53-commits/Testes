@@ -28,7 +28,7 @@ function copyFragments() {
       line = line.replace(/\*\*/g, '').replace(/`/g, '');
       const t = line.trim();
       if (!t || /^Layout:/.test(t)) continue;
-      if (/^(- )?(Mini chat|Wireframe|Conversa no celular|Cards à direita|Painel|Coluna|Card |Campos:|Indicadores:|Etapas:|Barra escura:|Linha do tempo:|Anotações:|Caixa escura|Dica|Faixa de citação|Card esquerdo:|Card direito|Botão)/.test(t) && !/: \S/.test(t.replace(/^- /, '').replace(/^[^:]+:/, '')) ) continue;
+      if (/^(- )?(Mini chat|Wireframe|Conversa no celular|Cards à direita|Painel|Coluna|Card |Campos:|Indicadores:|Etapas:|Barra escura:|Linha do tempo:|Anotações:|Caixa escura|Dica|Faixa de citação|Card esquerdo:|Card direito|Botão|Faixa de resultados)/.test(t) && !/: \S/.test(t.replace(/^- /, '').replace(/^[^:]+:/, '')) ) continue;
       let v = t.replace(/^- /, '').replace(/^\d+\. /, '');
       const lab = v.match(/^(Pílula|Título|Subtítulo|Linha de público[^:]*|Citação|Callout escuro|Linha de apoio[^:]*|Faixa final[^:]*|Rodapé[^:]*|Legenda[^:]*|Rótulo de público|Tags de público|Linha de origem[^:]*|Selo no canto|Corpo \(esquerda\)|Card da protagonista[^:]*|Dica[^:]*|Faixa de citação|Chips de etapas[^:]*):\s*(.*)$/);
       if (lab) v = lab[2];

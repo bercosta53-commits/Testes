@@ -75,15 +75,15 @@ Componentes recorrentes (copiar do Crediauc):
 ## 3. Copy e layout por slide
 
 ### Slide 1 · Capa
-**Layout:** texto à esquerda, ilustração à direita: painel ouro com celular mostrando uma conversa de contratação de crédito (oferta, plano da cooperada, simulação com juros e IOF, contratação pelo app), cartão "Contexto do Cooperado" e ícones de IA e WhatsApp. Textos da capa em Title Case (revisão de 13/11).
+**Layout:** header só com o logo Ubots. Texto à esquerda, ilustração à direita: painel ouro com celular mostrando uma conversa de contratação de crédito (oferta, plano da cooperada, simulação com juros e IOF, contratação pelo app), cartão "Contexto do Cooperado" e ícones de IA e WhatsApp. Textos da capa em Title Case (revisão de 13/11).
 
 - Pílula: `Guia Prático`
 - Título: Testando ==Agentes de IA== na Oferta de Crédito
 - Subtítulo: Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.
 - Chips de etapas: `1 Preparar o Agente` → `2 Testar em Volume Controlado` → `3 Avaliar e Escalar`
 - Rótulo de público: Material para
-- Tags de público: `Cooperativas de Crédito` · `Bancos e Fintechs` · `Instituições Financeiras` · `Serviços Financeiros`
-- Linha de origem (12px, cinza): Baseado no case Viacredi + Ubots
+- Linha de origem (abaixo do título, discreta): Baseado no case Viacredi + Ubots
+- Tags de público: `Cooperativas de Crédito` · `Bancos e Fintechs` · `Instituições Financeiras` · `Serviços Financeiros` · `Financeiras`
 
 ---
 
@@ -102,7 +102,14 @@ Componentes recorrentes (copiar do Crediauc):
   - **Sem histórico** · Nenhum indicador de IA generativa para usar como base.
   - **Parceria com a Ubots** · Construir e testar um agente de IA para a oferta de crédito.
 - Card da protagonista (faixa inferior): **Giovanna** · [cargo A CONFIRMAR] · Conduziu o projeto do primeiro teste à operação atual.
-- Rodapé discreto (12px, cinza): Ainda na fase de testes, mais de R$ 150 mil em crédito foram liberados por meio do agente.
+- Faixa de resultados (revisão de 13/11, escura, números em ouro de tamanho moderado):
+  - Fase de teste
+  - Resultados do teste
+  - Números obtidos antes de a operação estar totalmente estruturada.
+  - **+R$ 150 mil** · em crédito liberado por meio do agente
+  - **4 agentes** · construídos pela própria equipe no Agent Builder
+  - **Transbordo baixo** · com nota de contexto para o time de negócios
+  - **+10%** · meta de ações ativas com agente generativo até dezembro
 
 ---
 
