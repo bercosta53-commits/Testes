@@ -1,6 +1,6 @@
 # QA · Playbook Viacredi + Ubots
 
-Gerado em 2026-11-13 15:09 UTC
+Gerado em 2026-11-13 15:11 UTC
 
 ## Checklist
 
@@ -22,14 +22,14 @@ Gerado em 2026-11-13 15:09 UTC
   - slide 6: [Fala A CONFIRMAR com a Giovanna]
   - slide 10: [URL A CONFIRMAR, com UTM]
 - [x] Dois slides escuros nunca em sequência: OK (escuros: 4, 10)
-- [x] PDF com texto selecionável e 10 páginas de 1440×810 pt: OK (10 páginas, 1749 palavras extraídas por pdftotext, 25 campos de formulário)
+- [x] PDF com texto selecionável e 10 páginas de 1440×810 pt: OK (10 páginas, 1712 palavras extraídas por pdftotext, 25 campos de formulário)
 - [x] Nenhum elemento vazando do slide ou da zona de conteúdo (exceto sangrias intencionais da capa e do celular do slide 5): OK
 
 ## Contraste por slide
 
 | Slide | Menor contraste | Texto | Menor fonte |
 |---|---|---|---|
-| 01 | 5.14:1 | Baseado no case Viacredi + Ubots (12px) | 9px · 7.07:1 |
+| 01 | 5.14:1 | Baseado no case Viacredi + Ubots (12px) | 9.5px · 12.73:1 |
 | 02 | 5.14:1 | / 10 (13px) | 12px · 7.07:1 |
 | 03 | 5.14:1 | / 10 (13px) | 10px · 7.07:1 |
 | 04 | 5.57:1 | [cargo A CONFIRMAR] (13px) | 12px · 10.10:1 |

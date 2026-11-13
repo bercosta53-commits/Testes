@@ -152,7 +152,7 @@ const s1 = `
   </div>
   <div class="cover-art" aria-hidden="true" data-bleed>
     <div class="ca-glow"></div>
-    <svg class="ca-orbit" viewBox="0 0 700 700"><circle cx="350" cy="350" r="200"/><circle cx="350" cy="350" r="270"/><circle cx="350" cy="350" r="340" stroke-dasharray="2 9"/></svg>
+    <svg class="ca-orbit" viewBox="0 0 700 700"><circle cx="350" cy="350" r="200"/><circle cx="350" cy="350" r="270"/></svg>
     <div class="ca-phone">
       <div class="screen">
         <div class="sbar"><b>9:41</b>${ICON.status}</div>
@@ -165,14 +165,13 @@ const s1 = `
         <div class="chat cp">
           <div class="b ag"><span class="selo">${ICON.spark}Agente de IA</span><br>Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?<span class="meta">10:30</span></div>
           <div class="b us">Quero sim! Estou reformando a cozinha.<span class="meta">10:31${ICON.ticks}</span></div>
-          <div class="b ag">Que legal! Simulei uma opção para a sua reforma:
+          <div class="b ag">Simulei uma opção para a sua reforma:
             <div class="sim">
-              <div class="sim-hd"><span>${lineIcon('money', 2)}</span><b>Crédito Reforma</b></div>
-              <dl><dt>Valor</dt><dd>R$ 15.000,00</dd><dt>Parcelas</dt><dd>24x</dd><dt>Custos</dt><dd>Juros e IOF inclusos</dd></dl>
-              <span class="sim-btn">Ver Condições</span>
+              <span class="sim-l">Crédito Reforma</span>
+              <b class="sim-v">R$ 15.000,00</b>
+              <span class="sim-d">24x · Juros e IOF inclusos</span>
             </div><span class="meta">10:31</span></div>
           <div class="b us">Perfeito, quero contratar.<span class="meta">10:33${ICON.ticks}</span></div>
-          <div class="b ag">Ótimo! Por segurança, a contratação é feita pelo app. Te enviei o passo a passo.<span class="meta">10:33</span></div>
           <div class="done">${lineIcon('check', 2.6)}Crédito Contratado</div>
         </div>
         <div class="wa-in"><span class="wa-field">${lineIcon('plus', 2)}<i></i></span><span class="wa-mic">${lineIcon('mic', 2)}</span></div>
@@ -180,15 +179,7 @@ const s1 = `
     </div>
     <img class="ca-ia" src="${LOGO.iconIA}" alt="">
     <img class="ca-wa" src="${LOGO.iconWA}" alt="">
-    <div class="ca-ctx">
-      <div class="ctx-hd"><span class="ctx-i">${ICON.spark}</span><b>Contexto do Cooperado</b></div>
-      <dl>
-        <dt>Objetivo</dt><dd>Reforma da cozinha</dd>
-        <dt>Perfil</dt><dd>Crédito pré-aprovado</dd>
-        <dt>Canal</dt><dd>Contratação pelo app</dd>
-      </dl>
-    </div>
-    ${wave('var(--escuro)', 96, 3, 3.5)}
+    ${wave('var(--escuro)', 72, 3, 3)}
   </div>
 </section>`;
 
@@ -674,13 +665,16 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .ca-phone .screen{width:100%;height:100%;border-radius:39px;overflow:hidden;display:flex;flex-direction:column;background:#FBF6EA}
 .ca-phone .sbar{padding:14px 24px 4px 28px}
 .ca-phone .wa-hd{padding:9px 14px 11px}
-.chat.cp{gap:7px;padding:11px 12px 8px}
-.chat.cp .b{font-size:12px;line-height:1.38;padding:7px 10px 5px;max-width:88%}
-.chat.cp .b .meta{font-size:9px}
-.chat.cp .selo{margin:0 0 4px}
+.chat.cp{gap:12px;padding:18px 14px 10px}
+.chat.cp .b{font-size:13.5px;line-height:1.42;padding:9px 12px 6px;max-width:86%}
+.chat.cp .b .meta{font-size:9.5px}
+.chat.cp .selo{margin:0 0 6px}
 .selo{display:inline-flex;align-items:center;gap:5px;background:var(--escuro);color:var(--ouro);font:600 9.5px/1 'Poppins';padding:4px 8px 4px 6px;border-radius:999px}
 .selo svg{width:9px;height:9px}
-.sim{margin-top:7px;background:#fff;border-radius:10px;padding:9px 10px 10px;box-shadow:0 1px 2px rgba(107,77,0,.15)}
+.sim{margin-top:8px;background:#fff;border-radius:10px;padding:11px 12px 12px;box-shadow:0 1px 2px rgba(107,77,0,.15);display:flex;flex-direction:column;gap:4px}
+.sim-l{font:500 11px/1 'Poppins';color:var(--cinza-medio)}
+.sim-v{font:700 20px/1.1 'Poppins';letter-spacing:-.01em}
+.sim-d{font:600 11.5px/1.3 'Nunito';color:var(--ouro-texto)}
 .sim-hd{display:flex;align-items:center;gap:7px;padding-bottom:7px;border-bottom:1px solid var(--linha)}
 .sim-hd span{width:20px;height:20px;border-radius:6px;background:var(--ouro);display:grid;place-items:center}
 .sim-hd svg{width:12px;height:12px}
@@ -690,8 +684,8 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .sim-btn{display:block;margin-top:9px;text-align:center;background:var(--escuro);color:var(--ouro);font:600 10.5px/1 'Poppins';padding:7px 0;border-radius:999px}
 .done{align-self:flex-end;margin-right:4px;display:inline-flex;align-items:center;gap:6px;margin-top:2px;background:var(--escuro);color:var(--branco);font:600 11px/1 'Poppins';padding:7px 12px 7px 9px;border-radius:999px;box-shadow:0 4px 10px rgba(7,4,1,.18)}
 .done svg{width:13px;height:13px;color:var(--ouro)}
-.ca-ia{position:absolute;left:46px;top:300px;width:92px;height:92px;border-radius:26px;transform:rotate(-8deg);box-shadow:0 18px 34px rgba(80,40,120,.35)}
-.ca-wa{position:absolute;right:34px;top:150px;width:76px;height:76px;border-radius:22px;transform:rotate(8deg);box-shadow:0 18px 34px rgba(20,110,60,.30)}
+.ca-ia{position:absolute;left:58px;top:150px;width:72px;height:72px;border-radius:20px;transform:rotate(-8deg);box-shadow:0 18px 34px rgba(80,40,120,.35)}
+.ca-wa{position:absolute;right:46px;top:500px;width:62px;height:62px;border-radius:18px;transform:rotate(8deg);box-shadow:0 18px 34px rgba(20,110,60,.30)}
 .ca-ctx{position:absolute;left:16px;top:626px;width:214px;padding:14px 16px 14px;background:#fff;border-radius:18px;box-shadow:0 24px 44px rgba(107,77,0,.30);transform:rotate(-3deg)}
 .ctx-hd{display:flex;align-items:center;gap:9px;padding-bottom:9px;border-bottom:1px solid var(--linha)}
 .ctx-hd b{font:700 12px/1.2 'Poppins'}
@@ -699,7 +693,7 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .ctx-i svg{width:13px;height:13px}
 .ca-ctx dl{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;margin-top:9px;font:400 11.5px/1.3 'Nunito'}
 .ca-ctx dt{color:var(--cinza-medio)} .ca-ctx dd{font-weight:700}
-.cover-art > .wave{position:absolute;left:36px;top:46px}
+.cover-art > .wave{position:absolute;left:34px;bottom:40px;opacity:.85}
 
 /* ---------- s2 ---------- */
 .s2{display:grid;grid-template-columns:1.55fr 1fr;gap:28px}
