@@ -14,7 +14,7 @@ const A = (p) => path.join(ROOT, 'assets', p);
 const b64 = (p, mime) => `data:${mime};base64,${fs.readFileSync(A(p)).toString('base64')}`;
 
 const TOTAL = 10;
-const LOGO = {
+export const LOGO = {
   ubots: b64('logo-ubots.png', 'image/png'),
   ubotsDark: b64('logo-ubots-dark.png', 'image/png'),
   via: b64('logo-viacredi.png', 'image/png'),
@@ -64,7 +64,7 @@ const titleBlock = (title, sub, { subW } = {}) => `
       ${sub ? `<p class="sub"${subW ? ` style="max-width:${subW}px"` : ''}>${sub}</p>` : ''}
     </div>`;
 
-const wave = (color = 'var(--ouro)', w = 112, rows = 3, sw = 4) => {
+export const wave = (color = 'var(--ouro)', w = 112, rows = 3, sw = 4) => {
   const step = 12.5, amp = 5.5, gap = 14;
   const rowsSvg = [];
   for (let r = 0; r < rows; r++) {
@@ -77,7 +77,7 @@ const wave = (color = 'var(--ouro)', w = 112, rows = 3, sw = 4) => {
   return `<svg class="wave" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${rowsSvg.join('')}</svg>`;
 };
 
-const ICON = {
+export const ICON = {
   wa: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M12 5.3a6.7 6.7 0 0 0-5.8 10.1l-.9 3.3 3.4-.9A6.7 6.7 0 1 0 12 5.3z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.7 9.1c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.5 1.2c.1.1.1.3 0 .4l-.3.5c-.1.1-.2.2-.1.4.3.5.7 1 1.2 1.4.4.3.9.6 1.4.8.2.1.3 0 .4-.1l.5-.6c.1-.2.3-.2.4-.1l1.2.6c.2.1.3.2.3.3 0 .4-.1.9-.5 1.2-.4.3-1 .5-1.6.4-1.4-.3-2.6-1.1-3.5-2.1-.8-.9-1.4-2-1.4-3 0-.5.2-.9.5-1.1z" fill="#fff"/></svg>`,
   spark: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z" fill="currentColor"/></svg>`,
   ticks: `<svg class="tk" viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6.5l3 3L10 3M7.5 9.5l.5.5L14.5 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
@@ -105,9 +105,9 @@ const ICON = {
   ext: `<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5.5H4.5V6H10"/>`,
   inbox: `<path d="M4 13l2.5-8h11L20 13v6H4z"/><path d="M4 13h4.5l1.5 2.5h4l1.5-2.5H20"/>`,
 };
-const lineIcon = (k, sw = 1.8) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+export const lineIcon = (k, sw = 1.8) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
 
-const bars = (...ws) => ws.map((w) => `<i class="bar" style="width:${w}%"></i>`).join('');
+export const bars = (...ws) => ws.map((w) => `<i class="bar" style="width:${w}%"></i>`).join('');
 
 const quote = (text, { dark = false, cls = '' } = {}) => `
   <figure class="quote ${dark ? 'on-dark' : ''} ${cls}">
@@ -119,7 +119,7 @@ const quote = (text, { dark = false, cls = '' } = {}) => `
 // --- componentes de produto (WhatsApp, alta fidelidade) ---
 const VERIFIED = `<svg class="w-ver" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#25D366"/><path d="M4.6 8.3l2.2 2.1 4.6-4.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 // tela do WhatsApp (iOS, modo claro). size: 'lg' | 'sm'
-const waScreen = ({ status = false, size = 'lg', body = '', input = true, date = true, cls = '' } = {}) => `
+export const waScreen = ({ status = false, size = 'lg', body = '', input = true, date = true, cls = '' } = {}) => `
   <div class="wa2 ${size} ${cls}">
     ${status ? `<div class="w-sbar"><b>9:41</b><span class="island"></span>${ICON.status}</div>` : ''}
     <div class="w-top">
@@ -132,12 +132,12 @@ const waScreen = ({ status = false, size = 'lg', body = '', input = true, date =
     ${input ? `<div class="w-in">${lineIcon('plus', 1.9)}<span class="w-field">${lineIcon('sticker', 1.6)}</span>${lineIcon('camera', 1.7)}${lineIcon('mic', 1.7)}</div>` : ''}
   </div>`;
 // mensagem. side: 'ag' (agente, recebida) | 'us' (cooperado, enviada)
-const m = (side, html, time, { anchor, btns, cls = '', react } = {}) => `
+export const m = (side, html, time, { anchor, btns, cls = '', react } = {}) => `
   <div class="m ${side} ${cls}"${anchor ? ` data-anchor="${anchor}"` : ''}>
     <div class="mb">${html}<span class="sp"></span><span class="mt">${time}${side === 'us' ? ICON.ticks : ''}</span>${react ? `<span class="react">${react}</span>` : ''}</div>
     ${btns ? `<div class="mbtns">${btns.map((b) => `<span class="mbtn">${lineIcon(b.icon || 'reply', 2)}${b.t}</span>`).join('')}</div>` : ''}
   </div>`;
-const aiTag = `<span class="w-ai">${ICON.spark}Agente de IA</span>`;
+export const aiTag = `<span class="w-ai">${ICON.spark}Agente de IA</span>`;
 
 const field = (label, ph, { h = 74, id } = {}) => `
   <div class="field">
@@ -529,7 +529,7 @@ const s10 = `
 </section>`;
 
 // ---------- css ----------
-const CSS = `
+export const CSS = `
 ${FONTS}
 :root{
   --ouro:#FDC348; --escuro:#070401; --branco:#FFFDF9;

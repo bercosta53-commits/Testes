@@ -1,0 +1,43 @@
+1
+00:00:00,250 --> 00:00:02,950
+Mais regras deixam seu agente de IA mais seguro?
+
+2
+00:00:03,250 --> 00:00:05,600
+Ou só mais robótico?
+
+3
+00:00:07,150 --> 00:00:09,600
+A Viacredi fez o contrário: tirou o excesso de regras
+
+4
+00:00:09,600 --> 00:00:11,850
+e explicou ao agente o papel dele.
+
+5
+00:00:12,250 --> 00:00:14,800
+Dias depois, uma conversa sobre reforma de cozinha
+
+6
+00:00:14,800 --> 00:00:16,900
+terminou em contratação de crédito.
+
+7
+00:00:17,250 --> 00:00:19,000
+Nos primeiros dias de teste,
+
+8
+00:00:19,000 --> 00:00:20,900
+mais de R$ 150 mil em crédito foram liberados.
+
+9
+00:00:21,250 --> 00:00:23,400
+No playbook, você vê o caso e leva o método:
+
+10
+00:00:23,400 --> 00:00:25,900
+papel do agente, guardrails e plano de teste.
+
+11
+00:00:26,350 --> 00:00:29,500
+Baixe o playbook e desenhe o seu primeiro teste.

@@ -1,1 +1,3 @@
 node_modules/
+dist/reels/*.html
+dist/reels/*.wav
