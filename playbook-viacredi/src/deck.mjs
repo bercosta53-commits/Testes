@@ -1,5 +1,10 @@
 // Gera o HTML do Playbook Viacredi + Ubots (10 slides, 1440x810).
 // A copy vem do playbook-viacredi-ubots.md e não deve ser reescrita aqui.
+//
+// Sistema de diagramação (vale para todos os slides):
+//   margens laterais 96px · header em y=40 · zona de título a partir de y=108
+//   régua de título 940px (máx. 2 linhas) · régua de subtítulo 800px
+//   zona de conteúdo ocupa toda a altura restante até o rodapé (y=766)
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,17 +41,22 @@ const tbc = (s) => `<span class="tbc">${s}</span>`;
 const CARGO = tbc('[cargo A CONFIRMAR]');
 const FALA = tbc('[Fala A CONFIRMAR com a Giovanna]');
 
-const header = (n, dark = false) => `
+const header = (n, dark = false, withPill = true) => `
   <header class="hdr">
     <div class="logos">
       <img class="ub" src="${dark ? LOGO.ubotsDark : LOGO.ubots}" alt="Ubots">
       <span class="vdiv"></span>
       <img class="vc" src="${dark ? LOGO.viaDark : LOGO.via}" alt="Viacredi">
     </div>
-    <div class="count"><b>${String(n).padStart(2, '0')}</b> <span>/ ${TOTAL}</span></div>
+    <div class="hdr-r">${withPill ? pill() : ''}<div class="count"><b>${String(n).padStart(2, '0')}</b> <span>/ ${TOTAL}</span></div></div>
   </header>`;
 
 const pill = (t = 'Playbook · Agentes de IA na Oferta de Crédito') => `<div class="pill">${t}</div>`;
+const titleBlock = (title, sub, { subW } = {}) => `
+    <div class="tblock">
+      <h1 class="t">${gold(title)}</h1>
+      ${sub ? `<p class="sub"${subW ? ` style="max-width:${subW}px"` : ''}>${sub}</p>` : ''}
+    </div>`;
 
 const wave = (color = 'var(--ouro)', w = 112, rows = 3, sw = 4) => {
   const step = 12.5, amp = 5.5, gap = 14;
@@ -64,6 +74,8 @@ const wave = (color = 'var(--ouro)', w = 112, rows = 3, sw = 4) => {
 const ICON = {
   wa: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M12 5.3a6.7 6.7 0 0 0-5.8 10.1l-.9 3.3 3.4-.9A6.7 6.7 0 1 0 12 5.3z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.7 9.1c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.5 1.2c.1.1.1.3 0 .4l-.3.5c-.1.1-.2.2-.1.4.3.5.7 1 1.2 1.4.4.3.9.6 1.4.8.2.1.3 0 .4-.1l.5-.6c.1-.2.3-.2.4-.1l1.2.6c.2.1.3.2.3.3 0 .4-.1.9-.5 1.2-.4.3-1 .5-1.6.4-1.4-.3-2.6-1.1-3.5-2.1-.8-.9-1.4-2-1.4-3 0-.5.2-.9.5-1.1z" fill="#fff"/></svg>`,
   spark: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z" fill="currentColor"/></svg>`,
+  ticks: `<svg class="tk" viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6.5l3 3L10 3M7.5 9.5l.5.5L14.5 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  status: `<svg viewBox="0 0 56 12" aria-hidden="true" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0.5" width="3" height="11.5" rx="1"/><path d="M28 3.2a8.6 8.6 0 0 1 11 0l-1.3 1.5a6.6 6.6 0 0 0-8.4 0zM30.4 6a5 5 0 0 1 6.2 0l-1.3 1.5a3 3 0 0 0-3.6 0zM33.5 9.2l1.4 1.6-1.4 1.4-1.4-1.4z"/><rect x="43" y="1" width="11" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="44.8" y="2.8" width="7.4" height="6.4" rx="1.3"/></svg>`,
   bulb: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1V16h5v-.1c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z"/></svg>`,
   chat: `<path d="M4 5h16v11H9l-5 4z"/>`,
   fwd: `<path d="M4 12h14M13 6l6 6-6 6"/>`,
@@ -72,8 +84,15 @@ const ICON = {
   person: `<circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/>`,
   shield: `<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>`,
   back: `<path d="M15 5l-7 7 7 7"/>`,
+  plus: `<path d="M12 5v14M5 12h14"/>`,
+  mic: `<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>`,
+  dots: `<circle cx="12" cy="5" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="19" r="1.3"/>`,
+  lock: `<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>`,
+  phone: `<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>`,
+  user2: `<circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17 14.6c2 .5 3.4 2.3 4 5.4"/>`,
+  check: `<path d="M5 12.5l4.5 4.5L19 7.5"/>`,
 };
-const lineIcon = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+const lineIcon = (k, sw = 1.8) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
 
 const bars = (...ws) => ws.map((w) => `<i class="bar" style="width:${w}%"></i>`).join('');
 
@@ -81,15 +100,24 @@ const quote = (text, { dark = false, cls = '' } = {}) => `
   <figure class="quote ${dark ? 'on-dark' : ''} ${cls}">
     <span class="qmark" aria-hidden="true">“</span>
     <blockquote>${text}</blockquote>
-    <figcaption>Giovanna · ${CARGO}, Viacredi <span class="sep"></span>${FALA}</figcaption>
+    <figcaption>Giovanna · ${CARGO}, Viacredi<span class="sep"></span>${FALA}</figcaption>
   </figure>`;
 
-const waHeader = (name = 'Agente Viacredi') => `
-  <div class="wa-hd">
+// --- componentes de produto (WhatsApp) ---
+const waHead = ({ status = false, big = false } = {}) => `
+  ${status ? `<div class="sbar"><b>9:41</b>${ICON.status}</div>` : ''}
+  <div class="wa-hd ${big ? 'big' : ''}">
+    <span class="bk">${lineIcon('back', 2)}</span>
     <span class="wa-av">${ICON.spark}</span>
-    <span class="wa-name">${name}</span>
+    <span class="wa-name">Agente Viacredi<small>online</small></span>
     <span class="wa-ico">${ICON.wa}</span>
+    <span class="wa-dots">${lineIcon('dots', 2)}</span>
   </div>`;
+const waInput = () => `
+  <div class="wa-in"><span class="wa-field">${lineIcon('plus', 2)}<i></i></span><span class="wa-mic">${lineIcon('mic', 2)}</span></div>`;
+// side: 'ag' (agente, esquerda) | 'us' (cooperado, direita)
+const msg = (side, html, time, { anchor, cls = '' } = {}) => `
+  <div class="b ${side} ${cls}"${anchor ? ` data-anchor="${anchor}"` : ''}>${html}<span class="meta">${time}${side === 'us' ? ICON.ticks : ''}</span></div>`;
 
 const field = (label, ph, { h = 74, id } = {}) => `
   <div class="field">
@@ -101,43 +129,50 @@ const check = (id, dark = false) => `<span class="cb ${dark ? 'cb-d' : ''}" ${id
 
 // ---------- slides ----------
 const s1 = `
-<section class="slide light" id="s1">
-  ${header(1)}
+<section class="slide light cover" id="s1">
+  ${header(1, false, false)}
   <div class="cover-l">
     <div class="pill-w"><i></i>Guia prático</div>
-    <h1 class="t cover">${gold('Testando ==agentes de IA==')}<br>na oferta de crédito</h1>
+    <h1 class="t cover-t">${gold('Testando ==agentes de IA==')}<br>na oferta de crédito</h1>
     <p class="lead">Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar com cooperados sobre crédito, e como levar esse teste para a sua instituição.</p>
+    <ol class="cover-steps">
+      <li><span class="cn">1</span><b>Preparar o agente</b></li>
+      <li><span class="cn">2</span><b>Testar em volume controlado</b></li>
+      <li><span class="cn">3</span><b>Avaliar e escalar</b></li>
+    </ol>
     <p class="aud">Para bancos, cooperativas de crédito e instituições financeiras · Baseado no case Viacredi + Ubots</p>
-    <div class="chips">
-      <div class="chip"><span class="n dk">1</span>Preparar o agente</div>
-      <span class="arr" aria-hidden="true"></span>
-      <div class="chip"><span class="n au">2</span>Testar em volume controlado</div>
-      <span class="arr" aria-hidden="true"></span>
-      <div class="chip"><span class="n dk">3</span>Avaliar e escalar</div>
-    </div>
   </div>
-  <div class="cover-art" aria-hidden="true">
-    <div class="ring"></div>
-    <div class="list-card">
-      <i class="bar dkbar" style="width:70%"></i>
-      <div class="li"><span class="ck on"></span>${bars(72)}</div>
-      <div class="li"><span class="ck on"></span>${bars(60)}</div>
-      <div class="li"><span class="ck"></span>${bars(66)}</div>
-      <div class="li"><span class="ck"></span>${bars(52)}</div>
+  <div class="cover-art" aria-hidden="true" data-bleed>
+    <div class="ca-glow"></div>
+    <svg class="ca-orbit" viewBox="0 0 600 600"><circle cx="300" cy="300" r="180"/><circle cx="300" cy="300" r="250"/><circle cx="300" cy="300" r="320" stroke-dasharray="2 10"/></svg>
+    <div class="ca-rules">
+      <div class="r"><i></i><i style="width:70%"></i></div>
+      <div class="r"><i></i><i style="width:56%"></i></div>
+      <div class="r"><i></i><i style="width:64%"></i></div>
+      <div class="r"><i></i><i style="width:48%"></i></div>
     </div>
-    <div class="chat-card">
-      <div class="cc-hd">
-        <span class="cc-av">${ICON.spark}</span>
-        <span class="cc-nm"><i class="bar" style="width:92px;height:9px;background:var(--escuro);opacity:.85"></i><i class="bar" style="width:56px;margin-top:6px"></i></span>
-        <span class="cc-wa">${ICON.wa}</span>
+    <div class="ca-phone">
+      <div class="screen">
+        <div class="sbar"><b>9:41</b>${ICON.status}</div>
+        <div class="cp-hd"><span class="wa-av">${ICON.spark}</span><span class="cp-nm"><i class="bar" style="width:96px;height:8px;background:rgba(255,253,249,.92)"></i><i class="bar" style="width:52px;height:6px;margin-top:6px;background:rgba(255,253,249,.4)"></i></span><span class="wa-ico">${ICON.wa}</span></div>
+        <div class="cp-chat">
+          <div class="cb-b ag"><span class="selo">${ICON.spark}Agente de IA</span>${bars(92, 68)}</div>
+          <div class="cb-b us">${bars(86, 54)}</div>
+          <div class="cb-b ag">${bars(88, 74, 40)}</div>
+          <div class="cb-b us">${bars(64)}</div>
+          <div class="cb-b ag typing"><i></i><i></i><i></i></div>
+        </div>
       </div>
-      <div class="cc-b ag"><span class="selo">${ICON.spark}Agente de IA</span>${bars(88, 64)}</div>
-      <div class="cc-b us">${bars(82, 50)}</div>
-      <div class="cc-b ag">${bars(84, 70)}<i class="bar au" style="width:46%"></i></div>
-      <div class="cc-b us">${bars(60)}</div>
     </div>
-    <div class="spark-dot">${ICON.spark}</div>
-    ${wave('#FFFDF9', 104, 3, 4)}
+    <div class="ca-ctx">
+      <div class="ctx-hd"><span class="ctx-i">${ICON.spark}</span><i class="bar" style="width:58%;height:8px;background:var(--escuro)"></i></div>
+      <div class="ctx-row"><span class="dot"></span>${bars(78)}</div>
+      <div class="ctx-row"><span class="dot"></span>${bars(64)}</div>
+      <div class="ctx-row"><span class="dot"></span>${bars(70)}</div>
+      <div class="ctx-chips"><i></i><i></i></div>
+    </div>
+    <div class="ca-shield">${lineIcon('shield', 2)}</div>
+    ${wave('var(--escuro)', 96, 3, 3.5)}
   </div>
 </section>`;
 
@@ -145,12 +180,11 @@ const s2 = `
 <section class="slide light" id="s2">
   ${header(2)}
   <div class="main">
-    ${pill()}
-    <h1 class="t" style="max-width:1120px">${gold('Uma cooperativa de 74 anos decidiu ==testar IA generativa== na venda de crédito')}</h1>
-    <div class="s2-grid">
-      <div class="s2-l">
+    ${titleBlock('Uma cooperativa de 74 anos decidiu ==testar IA generativa== na venda de crédito')}
+    <div class="content s2">
+      <div class="s2-card">
         <div class="body-txt">
-          <p>A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem mais de 1 milhão de cooperados e mais de 100 postos em Santa Catarina e no Paraná. Relacionamento próximo sempre foi a estratégia da casa.</p>
+          <p>A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem <b>mais de 1 milhão de cooperados</b> e <b>mais de 100 postos</b> em Santa Catarina e no Paraná. Relacionamento próximo sempre foi a estratégia da casa.</p>
           <p>O desafio era ampliar a oferta de linhas de crédito com agentes de IA sem perder esse jeito de atender. E sem referência de mercado: até ali, a cooperativa trabalhava com bots de fluxo, de regras fixas, e não tinha nenhuma métrica de IA generativa para comparar.</p>
         </div>
         <div class="protag">
@@ -165,46 +199,51 @@ const s2 = `
         <h3 class="h3">Ponto de partida</h3>
         <div class="pp"><span class="num">1</span><div><b>Bots de fluxo</b><p>Conversas presas a regras fixas e caminhos pré-definidos.</p></div></div>
         <div class="pp"><span class="num">2</span><div><b>Sem histórico</b><p>Nenhum indicador de IA generativa para usar como base.</p></div></div>
-        <div class="pp"><span class="num">3</span><div><b>Parceria com a Ubots</b><p>Construir e testar um agente de IA para a oferta de crédito.</p></div></div>
+        <div class="pp hl"><span class="num">3</span><div><b>Parceria com a Ubots</b><p>Construir e testar um agente de IA para a oferta de crédito.</p></div></div>
       </div>
     </div>
+    <p class="foot">Ainda na fase de testes, mais de R$ 150 mil em crédito foram liberados por meio do agente.</p>
   </div>
-  <p class="foot">Ainda na fase de testes, mais de R$ 150 mil em crédito foram liberados por meio do agente.</p>
 </section>`;
 
 const s3 = `
 <section class="slide light" id="s3">
   ${header(3)}
   <div class="main">
-    ${pill()}
-    <h1 class="t" style="max-width:1180px">${gold('O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo')}</h1>
-    <p class="sub">Cada "não pode" parecia deixar o agente mais seguro. Na prática, deixou a conversa mais rígida, e cada tentativa de torná-lo simpático com novas regras reforçava o tom robótico.</p>
-    <div class="cmp">
-      <div class="panel editor">
-        <div class="ed-hd"><span class="dots"><i></i><i></i><i></i></span><b>Instruções por regras</b><span class="badge">+ 1 regra a cada ajuste</span></div>
-        <ol class="rules">
-          <li><span class="mk">Não fale sobre…</span></li>
-          <li><span class="mk">Não responda se…</span></li>
-          <li><span class="mk">Não ofereça…</span></li>
-          <li><span class="mk">Sempre use a frase…</span></li>
-          <li><span class="mk">Não saia do roteiro…</span></li>
-        </ol>
-      </div>
-      <div class="cmp-arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON.fwd}</svg></div>
-      <div class="panel wa">
-        <div class="wa-top"><b>Conversa resultante</b></div>
-        ${waHeader()}
-        <div class="wa-body">
-          <div class="msg ag">Olá. Temos uma linha de crédito disponível para você. Deseja saber mais? Responda SIM ou NÃO.</div>
-          <div class="msg us">Depende, pra que serve?</div>
-          <div class="msg ag">Não entendi sua resposta. Responda SIM ou NÃO.</div>
+    ${titleBlock('O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo', 'Cada "não pode" parecia deixar o agente mais seguro. Na prática, deixou a conversa mais rígida, e cada tentativa de torná-lo simpático com novas regras reforçava o tom robótico.')}
+    <div class="content s3">
+      <div class="cmp">
+        <div class="cmp-col">
+          <div class="editor">
+            <div class="ed-hd"><span class="dots"><i></i><i></i><i></i></span><b>Instruções por regras</b><span class="badge">+ 1 regra a cada ajuste</span></div>
+            <ol class="rules">
+              <li><span class="mk">Não fale sobre…</span></li>
+              <li><span class="mk">Não responda se…</span></li>
+              <li><span class="mk">Não ofereça…</span></li>
+              <li><span class="mk">Sempre use a frase…</span></li>
+              <li><span class="mk">Não saia do roteiro…</span></li>
+              <li class="ghost"><i class="bar" style="width:38%"></i><span class="caret"></span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="cmp-arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON.fwd}</svg></div>
+        <div class="cmp-col">
+          <div class="wa-win">
+            <div class="win-lbl"><b>Conversa resultante</b></div>
+            ${waHead()}
+            <div class="chat">
+              ${msg('ag', 'Olá. Temos uma linha de crédito disponível para você. Deseja saber mais? Responda SIM ou NÃO.', '10:02')}
+              ${msg('us', 'Depende, pra que serve?', '10:04')}
+              ${msg('ag', 'Não entendi sua resposta. Responda SIM ou NÃO.', '10:04', { cls: 'robot' })}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <p class="cap">Exemplo ilustrativo.</p>
-    <div class="s3-bot">
-      ${quote('"A gente colocava regra atrás de regra: não pode isso, não pode aquilo. E o agente ficava cada vez mais mecânico."')}
-      <div class="callout">${wave('var(--ouro)', 80, 2, 3.5)}<p>Na prática, era IA generativa trabalhando com os mesmos limites de um bot de fluxo.</p></div>
+      <p class="cap">Exemplo ilustrativo.</p>
+      <div class="s3-bot">
+        ${quote('"A gente colocava regra atrás de regra: não pode isso, não pode aquilo. E o agente ficava cada vez mais mecânico."', { cls: 'qcard' })}
+        <div class="callout">${wave('var(--ouro)', 80, 2, 3.5)}<p>Na prática, era IA generativa trabalhando com os mesmos limites de um bot de fluxo.</p></div>
+      </div>
     </div>
   </div>
 </section>`;
@@ -213,19 +252,19 @@ const s4 = `
 <section class="slide dark" id="s4">
   ${header(4, true)}
   <div class="main">
-    ${pill()}
-    <h1 class="t">${gold('A virada veio quando o agente ==entendeu o papel dele==')}</h1>
-    <p class="sub" style="max-width:1140px">Na primeira semana de julho, a Viacredi reformulou a lógica do agente. Tirou o excesso de regras, explicou no prompt o conceito e o objetivo do papel dele e manteve só os guardrails críticos de segurança, desenhados com a ajuda da própria IA.</p>
-    <div class="s4-grid">
-      <div class="cols3">
-        <div class="col saiu"><h4>O que saiu</h4><ul><li>Regras de comportamento em excesso</li><li>Roteiro fechado para cada resposta</li></ul></div>
-        <div class="col entrou"><h4>O que entrou</h4><ul><li>O objetivo da conversa</li><li>O contexto do cooperado e da oferta</li><li>Liberdade para conversar sobre o que o cooperado trouxer</li></ul></div>
-        <div class="col ficou"><h4>O que ficou</h4><ul><li>Guardrails críticos de segurança</li><li>Transparência sobre custos</li><li>Contratação pelo canal seguro</li></ul></div>
+    ${titleBlock('A virada veio quando o agente ==entendeu o papel dele==', 'Na primeira semana de julho, a Viacredi reformulou a lógica do agente. Tirou o excesso de regras, explicou no prompt o conceito e o objetivo do papel dele e manteve só os guardrails críticos de segurança, desenhados com a ajuda da própria IA.', { subW: 1010 })}
+    <div class="content s4">
+      <div class="s4-grid">
+        <div class="cols3">
+          <div class="col saiu"><span class="cl-i">−</span><h4>O que saiu</h4><ul><li>Regras de comportamento em excesso</li><li>Roteiro fechado para cada resposta</li></ul></div>
+          <div class="col entrou"><span class="cl-i">+</span><h4>O que entrou</h4><ul><li>O objetivo da conversa</li><li>O contexto do cooperado e da oferta</li><li>Liberdade para conversar sobre o que o cooperado trouxer</li></ul></div>
+          <div class="col ficou"><span class="cl-i">${lineIcon('shield', 2)}</span><h4>O que ficou</h4><ul><li>Guardrails críticos de segurança</li><li>Transparência sobre custos</li><li>Contratação pelo canal seguro</li></ul></div>
+        </div>
+        ${quote('"Quando expliquei ao agente qual era o papel dele e o que ele precisava alcançar, a experiência melhorou na hora. Hoje, quando aparece um problema, eu levo para a própria IA e a gente constrói a solução junto."', { dark: true, cls: 'q4' })}
       </div>
-      ${quote('"Quando expliquei ao agente qual era o papel dele e o que ele precisava alcançar, a experiência melhorou na hora. Hoje, quando aparece um problema, eu levo para a própria IA e a gente constrói a solução junto."', { dark: true, cls: 'q4' })}
+      <p class="apoio">Saudação, transbordo e volume de mensagens passaram a ser ajustados em conjunto com a IA, sem nova regra manual.</p>
+      <div class="band"><span>Segurança onde importa, conversa de verdade no resto.</span>${wave('var(--escuro)', 96, 2, 3.5)}</div>
     </div>
-    <p class="apoio">Saudação, transbordo e volume de mensagens passaram a ser ajustados em conjunto com a IA, sem nova regra manual.</p>
-    <div class="band"><span>Segurança onde importa, conversa de verdade no resto.</span>${wave('var(--escuro)', 96, 2, 3.5)}</div>
   </div>
 </section>`;
 
@@ -234,31 +273,31 @@ const s5 = `
   ${header(5)}
   <svg class="conn" data-conn></svg>
   <div class="main">
-    ${pill()}
-    <h1 class="t" style="max-width:1180px">${gold('Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito')}</h1>
-    <p class="sub">Dias depois da mudança, uma cooperada respondeu à oferta dizendo que já tinha um crédito contratado, mas que era bom saber de outro disponível. Nada do que veio depois estava roteirizado.</p>
-    <div class="s5-grid">
-      <div class="s5-l">
+    ${titleBlock('Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito', 'Dias depois da mudança, uma cooperada respondeu à oferta dizendo que já tinha um crédito contratado, mas que era bom saber de outro disponível. Nada do que veio depois estava roteirizado.', { subW: 860 })}
+    <div class="content s5">
+      <div class="s5-l" data-bleed>
+        <div class="stage"></div>
         <div class="phone">
           <div class="screen">
-            <div class="wa-hd big"><span class="bk">${lineIcon('back')}</span><span class="wa-av">${ICON.spark}</span><span class="wa-name">Agente Viacredi<small>online</small></span><span class="wa-ico">${ICON.wa}</span></div>
-            <div class="wa-body">
-              <div class="msg us">Já tenho um crédito contratado, mas achei bom saber que tem outro disponível.</div>
-              <div class="msg ag" data-anchor="a1">Que bom! Posso perguntar o que você está planejando?</div>
-              <div class="msg us" data-anchor="a2">Estou reformando a cozinha.</div>
-              <div class="msg ag bars-only">${bars(92, 74)}</div>
-              <div class="msg ag bars-only" data-anchor="a3">${bars(88, 80, 46)}</div>
-              <div class="msg us bars-only" data-anchor="a4">${bars(90, 58)}<span class="selo-c">Contratação</span></div>
+            ${waHead({ status: true, big: true })}
+            <div class="chat">
+              ${msg('us', 'Já tenho um crédito contratado, mas achei bom saber que tem outro disponível.', '14:21')}
+              ${msg('ag', 'Que bom! Posso perguntar o que você está planejando?', '14:21', { anchor: 'a1' })}
+              ${msg('us', 'Estou reformando a cozinha.', '14:23', { anchor: 'a2' })}
+              ${msg('ag', bars(94, 72), '14:23', { cls: 'bo' })}
+              ${msg('ag', bars(90, 82, 48), '14:24', { cls: 'bo', anchor: 'a3' })}
+              ${msg('us', bars(88, 56) + '<span class="selo-c">Contratação</span>', '14:26', { cls: 'bo', anchor: 'a4' })}
             </div>
+            ${waInput()}
           </div>
         </div>
-        <p class="cap s5-cap">Reconstituição a partir do relato do projeto.</p>
       </div>
       <div class="anns">
         <div class="ann" data-ann="a1"><span class="ann-n">1</span><div><b>Escuta</b><p>Em vez de repetir a oferta, o agente pergunta o motivo do interesse.</p></div></div>
         <div class="ann" data-ann="a2"><span class="ann-n">2</span><div><b>Contexto</b><p>A cooperada conta da reforma e o agente conversa sobre ela, como faria um bom atendente.</p></div></div>
         <div class="ann" data-ann="a3"><span class="ann-n">3</span><div><b>Oferta com sentido</b><p>O crédito aparece como resposta a um plano real, e não como disparo genérico.</p></div></div>
         <div class="ann" data-ann="a4"><span class="ann-n">4</span><div><b>Decisão da cooperada</b><p>A contratação vem da conversa. Nenhum passo estava previsto em roteiro.</p></div></div>
+        <p class="cap">Reconstituição a partir do relato do projeto.</p>
       </div>
     </div>
   </div>
@@ -268,53 +307,55 @@ const s6 = `
 <section class="slide light" id="s6">
   ${header(6)}
   <div class="main">
-    ${pill()}
-    <h1 class="t" style="max-width:1180px">${gold('A liberdade para conversar veio junto com ==transparência e segurança==')}</h1>
-    <p class="sub">O mesmo contexto que deixa a conversa natural também protege o cooperado: o agente explica custos, orienta a contratação pelo canal seguro e chama o time humano quando faz sentido.</p>
-    <div class="cards3">
-      <div class="c6">
-        <h4><span class="num sm">1</span>Custos às claras</h4>
-        <div class="mini">
-          ${waHeader()}
-          <div class="wa-body">
-            <div class="msg us">Quais são os custos da retirada?</div>
-            <div class="msg ag">É um crédito com juros e IOF. ${bars(90, 70)}</div>
-            <div class="msg ag">${bars(84)}<span class="chip-in">Falar com o time humano</span></div>
-          </div>
-        </div>
-        <p class="sup">Transparência sem esperar o cooperado insistir.</p>
-      </div>
-      <div class="c6">
-        <h4><span class="num sm">2</span>Fechamento pelo app</h4>
-        <div class="mini">
-          ${waHeader()}
-          <div class="wa-body">
-            <div class="msg us">Dá para fechar aqui mesmo, pelo WhatsApp?</div>
-            <div class="msg ag">Por segurança, a contratação é 100% digital pelo aplicativo. ${bars(70)}
-              <ol class="steps"><li><span>1</span>${bars(80)}</li><li><span>2</span>${bars(64)}</li><li><span>3</span>${bars(72)}</li></ol>
+    ${titleBlock('A liberdade para conversar veio junto com ==transparência e segurança==', 'O mesmo contexto que deixa a conversa natural também protege o cooperado: o agente explica custos, orienta a contratação pelo canal seguro e chama o time humano quando faz sentido.', { subW: 860 })}
+    <div class="content s6">
+      <div class="cards3">
+        <div class="c6">
+          <h4><span class="num">1</span>Custos às claras</h4>
+          <div class="stage6">
+            <div class="mini">
+              ${waHead()}
+              <div class="chat">
+                ${msg('us', 'Quais são os custos da retirada?', '09:12')}
+                ${msg('ag', 'É um crédito com juros e IOF.' + bars(92, 66), '09:12')}
+                ${msg('ag', bars(80) + `<span class="chip-in">${lineIcon('user2', 2)}Falar com o time humano</span>`, '09:13')}
+              </div>
             </div>
           </div>
+          <p class="sup">Transparência sem esperar o cooperado insistir.</p>
         </div>
-        <p class="sup">O canal seguro vira orientação, e não bloqueio.</p>
-      </div>
-      <div class="c6">
-        <h4><span class="num sm">3</span>Transbordo com contexto</h4>
-        <div class="mini note-wrap">
-          <div class="note">
-            <span class="pin" aria-hidden="true"></span>
-            <b class="nt">Nota para o time de negócios</b>
-            <dl>
-              <dt>Cooperado:</dt><dd>[nome]</dd>
-              <dt>Interesse:</dt><dd>linha de crédito [X]</dd>
-              <dt>Ponto em aberto:</dt><dd>quer comparar com outras linhas</dd>
-              <dt>Histórico:</dt><dd>conversa completa anexada</dd>
-            </dl>
+        <div class="c6">
+          <h4><span class="num">2</span>Fechamento pelo app</h4>
+          <div class="stage6">
+            <div class="mini">
+              ${waHead()}
+              <div class="chat">
+                ${msg('us', 'Dá para fechar aqui mesmo, pelo WhatsApp?', '16:40')}
+                ${msg('ag', `<span class="sec">${lineIcon('lock', 2)}</span>Por segurança, a contratação é 100% digital pelo aplicativo.<ol class="steps"><li><span>1</span>${bars(84)}</li><li><span>2</span>${bars(66)}</li><li><span>3</span>${bars(76)}</li></ol>`, '16:41')}
+              </div>
+            </div>
           </div>
+          <p class="sup">O canal seguro vira orientação, e não bloqueio.</p>
         </div>
-        <p class="sup">O transbordo ficou baixo. Quando acontece, o time continua a conversa sem pedir que o cooperado repita nada.</p>
+        <div class="c6">
+          <h4><span class="num">3</span>Transbordo com contexto</h4>
+          <div class="stage6">
+            <div class="handoff">
+              <div class="ho-hd"><span class="ho-i">${ICON.spark}</span><b>Nota para o time de negócios</b></div>
+              <dl>
+                <dt>Cooperado:</dt><dd>[nome]</dd>
+                <dt>Interesse:</dt><dd>linha de crédito [X]</dd>
+                <dt>Ponto em aberto:</dt><dd>quer comparar com outras linhas</dd>
+                <dt>Histórico:</dt><dd>conversa completa anexada</dd>
+              </dl>
+              <div class="ho-ft"><span class="av">${lineIcon('person', 2)}</span>${bars(46)}<span class="go">${lineIcon('fwd', 2.2)}</span></div>
+            </div>
+          </div>
+          <p class="sup">O transbordo ficou baixo. Quando acontece, o time continua a conversa sem pedir que o cooperado repita nada.</p>
+        </div>
       </div>
+      ${quote('"O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito."', { cls: 'qband' })}
     </div>
-    ${quote('"O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito."', { cls: 'qband' })}
   </div>
 </section>`;
 
@@ -329,29 +370,30 @@ const s7 = `
 <section class="slide light" id="s7">
   ${header(7)}
   <div class="main">
-    ${pill()}
-    <h1 class="t" style="max-width:1120px">${gold('Testar pouco, pausar e voltar melhor ==fez parte do método==')}</h1>
-    <p class="sub">A Viacredi não começou em escala. Começou com cooperados reais, volume baixo e filtros de risco, e tratou cada pausa como parte do teste.</p>
-    <div class="s7-grid">
-      <div class="tl">
-        <div class="tl-line"></div><div class="tl-dash"></div>
-        ${tl.map(([t, d, k], i) => `
-        <div class="ms ${k}">
-          <span class="big-n">${i + 1}</span>
-          <span class="dot"></span>
-          <b>${t}</b>
-          <p>${d}</p>
-        </div>`).join('')}
+    ${titleBlock('Testar pouco, pausar e voltar melhor ==fez parte do método==', 'A Viacredi não começou em escala. Começou com cooperados reais, volume baixo e filtros de risco, e tratou cada pausa como parte do teste.')}
+    <div class="content s7">
+      <div class="tl-card">
+        <div class="tl">
+          <div class="tl-line"></div><div class="tl-dash"></div>
+          ${tl.map(([t, d, k], i) => `
+          <div class="ms ${k}">
+            <span class="big-n">${i + 1}</span>
+            <span class="dot">${k === 'pause' ? '<i></i><i></i>' : ''}</span>
+            <b>${t}</b>
+            <p>${d}</p>
+          </div>`).join('')}
+        </div>
       </div>
       <aside class="ubots-panel">
+        <div class="up-hd"><img src="${LOGO.ubots}" alt="Ubots"></div>
         <h3 class="h3">O papel da Ubots</h3>
         <p>A Ubots entrou como parceira na construção do primeiro agente e como plataforma para o time testar no próprio ritmo. Com o Agent Builder, a equipe da Viacredi ganhou autonomia: Giovanna já construiu 4 agentes sem depender do time de implementação.</p>
         <p>Próximos passos da cooperativa: um agente mais generalista e agentes para produtos sem risco de crédito, como cartão e aplicações no onboarding de novos cooperados.</p>
         ${wave('var(--ouro)', 88, 2, 3.5)}
       </aside>
     </div>
+    <p class="foot">Mais de R$ 150 mil em crédito liberados antes de a operação estar totalmente estruturada.</p>
   </div>
-  <p class="foot">Mais de R$ 150 mil em crédito liberados antes de a operação estar totalmente estruturada.</p>
 </section>`;
 
 const s8fields = [
@@ -369,21 +411,25 @@ const s8guard = [
   'Canal seguro para a contratação',
   'Quem revisa as conversas e com que frequência',
 ];
+const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '');
 const s8 = `
 <section class="slide light" id="s8">
   ${header(8)}
   <div class="main">
-    ${pill()}
-    <h1 class="t">${gold('Antes de escrever regras, escreva ==o papel do agente==')}</h1>
-    <p class="sub">Explique ao agente para que ele existe, com quem conversa e onde termina a autonomia dele. Preencha com as definições da sua instituição.</p>
-    <div class="s8-grid">
-      <div class="card fields6">
-        ${s8fields.map(([l, p], i) => field(l, p, { h: 96, id: `s8_${l.toLowerCase().normalize("NFD").replace(/[^a-z]/g, "")}` })).join('')}
+    ${titleBlock('Antes de escrever regras, escreva ==o papel do agente==', 'Explique ao agente para que ele existe, com quem conversa e onde termina a autonomia dele. Preencha com as definições da sua instituição.')}
+    <div class="content s8">
+      <div class="ws">
+        ${s8fields.map(([l, p], i) => `
+        <div class="wf">
+          <div class="wf-hd"><span class="wf-n">${String(i + 1).padStart(2, '0')}</span><b>${l}</b></div>
+          <p class="wf-q">${p}</p>
+          <div class="wf-area" data-field="s8_${slug(l)}"><i></i><i></i></div>
+        </div>`).join('')}
       </div>
       <div class="darkbox">
+        <div class="db-hd"><span class="db-i">${lineIcon('shield', 2)}</span>${wave('var(--ouro)', 76, 2, 3)}</div>
         <h3>Guardrails críticos: o que nunca muda</h3>
         <ul class="cklist">${s8guard.map((g, i) => `<li>${check(`s8_guard_${i + 1}`, true)}<span>${g}</span></li>`).join('')}</ul>
-        ${wave('var(--ouro)', 112, 3, 4)}
       </div>
     </div>
     <div class="tip"><span class="tip-i">${ICON.bulb}</span><p>Na Viacredi, a própria IA ajudou a desenhar os guardrails e a resolver os ajustes do dia a dia. Comece por aí.</p></div>
@@ -407,35 +453,38 @@ const s9 = `
 <section class="slide light" id="s9">
   ${header(9)}
   <div class="main">
-    ${pill()}
-    <h1 class="t" style="max-width:1100px">${gold('Teste em ==volume controlado== e meça o que muda na conversa')}</h1>
-    <div class="steps3">
-      ${steps.map(([t, d, e, fs, c], i) => `
-      <div class="card step">
-        <div class="st-hd"><span class="n ${c}">${i + 1}</span><b>${t}</b></div>
-        <p class="st-d">${d}</p>
-        <div class="entrega"><b>Entrega:</b> ${e}</div>
-        <div class="st-f" style="grid-template-columns:${fs.length === 3 ? '1fr 1fr 1.3fr' : '1fr 1.5fr'}">
-          ${fs.map((f) => field(f, '', { h: 32, id: `s9_${i + 1}_${f.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '')}` })).join('')}
+    ${titleBlock('Teste em ==volume controlado== e meça o que muda na conversa')}
+    <div class="content s9">
+      <div class="steps3">
+        ${steps.map(([t, d, e, fs, c], i) => `
+        <div class="step ${c}">
+          <div class="st-hd"><span class="st-n">${i + 1}</span><b>${t}</b></div>
+          <div class="st-body">
+            <p class="st-d">${d}</p>
+            <div class="entrega"><b>Entrega:</b> ${e}</div>
+            <div class="st-f" style="grid-template-columns:${fs.length === 3 ? '1fr 1fr 1.3fr' : '1fr 1.5fr'}">
+              ${fs.map((f) => field(f, '', { h: 34, id: `s9_${i + 1}_${slug(f)}` })).join('')}
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div class="inds">
+        <div class="ind-line"></div>
+        ${inds.map(([ic, t, d]) => `<div class="ind"><span class="ic">${lineIcon(ic, 1.9)}</span><b>${t}</b><p>${d}</p></div>`).join('')}
+      </div>
+      <div class="evalbar">
+        <ul class="qs">
+          <li><span class="q">?</span>O teste respondeu ao objetivo definido no slide 8?</li>
+          <li><span class="q">?</span>Quais situações exigiram participação humana?</li>
+          <li><span class="q">?</span>O que ajustar antes de ampliar o volume?</li>
+        </ul>
+        <div class="dec">
+          ${['Continuar', 'Ajustar', 'Ampliar'].map((d) => `<span class="dpill">${check(`s9_${d.toLowerCase()}`, true)}${d}</span>`).join('')}
         </div>
-      </div>`).join('')}
-    </div>
-    <div class="inds">
-      <div class="ind-line"></div>
-      ${inds.map(([ic, t, d]) => `<div class="ind"><span class="ic">${lineIcon(ic)}</span><b>${t}</b><p>${d}</p></div>`).join('')}
-    </div>
-    <div class="evalbar">
-      <ul class="qs">
-        <li><span class="q">?</span>O teste respondeu ao objetivo definido no slide 8?</li>
-        <li><span class="q">?</span>Quais situações exigiram participação humana?</li>
-        <li><span class="q">?</span>O que ajustar antes de ampliar o volume?</li>
-      </ul>
-      <div class="dec">
-        ${['Continuar', 'Ajustar', 'Ampliar'].map((d) => `<span class="dpill">${check(`s9_${d.toLowerCase()}`, true)}${d}</span>`).join('')}
       </div>
     </div>
+    <p class="foot sm">Os resultados da Viacredi não constituem projeção para outras instituições.</p>
   </div>
-  <p class="foot sm">Os resultados da Viacredi não constituem projeção para outras instituições.</p>
 </section>`;
 
 const levar = [
@@ -446,13 +495,13 @@ const levar = [
 ];
 const s10 = `
 <section class="slide dark cta" id="s10">
-  ${header(10, true)}
+  ${header(10, true, false)}
   <div class="main center">
     ${pill()}
     <h1 class="t">${gold('Desenhe o ==primeiro teste== de agente')}<br>de IA na sua instituição</h1>
     <p class="sub">Use este guia para definir o papel do agente, os guardrails e o plano de teste antes de colocar a primeira conversa no ar.</p>
     <div class="cta-grid">
-      <div class="dcard">
+      <div class="dcard dc-l">
         <h3>Converse com a Ubots sobre a sua operação</h3>
         <p>Leve a linha de crédito que você quer testar e as definições preenchidas neste playbook.</p>
         <div class="cta-row">
@@ -465,7 +514,7 @@ const s10 = `
       </div>
       <div class="dcard">
         <h3>Leve para a conversa</h3>
-        <ul class="levar">${levar.map(([t, s], i) => `<li>${check(`s10_${i + 1}`, true)}<span>${t}</span><em>${s}</em></li>`).join('')}</ul>
+        <ul class="levar">${levar.map(([t, s], i) => `<li>${check(`s10_${i + 1}`, true)}<span class="lv">${t}</span><em>${s}</em></li>`).join('')}</ul>
       </div>
     </div>
   </div>
@@ -477,10 +526,14 @@ ${FONTS}
 :root{
   --ouro:#FDC348; --escuro:#070401; --branco:#FFFDF9;
   --cinza-medio:#6C6C71; --cinza-claro:#AFAFB4; --ouro-suave:#FFF3D1;
-  /* derivados */
-  --ouro-texto:#6B4D00;  /* texto pequeno sobre ouro-suave */
-  --card:#FFFFFF; --linha:#ECE5D6; --dark-card:#15110C; --dark-line:#2C2620;
+  /* derivados do sistema */
+  --ouro-texto:#6B4D00;   /* texto pequeno sobre ouro-suave */
+  --ouro-fundo:#FFF8E7;   /* áreas de escrita e faixas leves */
+  --ouro-linha:#F0DDAE;   /* bordas e pautas sobre tons de ouro */
+  --card:#FFFFFF; --linha:#EEE7D8; --dark-card:#15110C; --dark-line:#2C2620;
+  --sombra:0 1px 2px rgba(107,77,0,.06), 0 12px 32px rgba(107,77,0,.08);
   --tbc:#B4005E; --tbc-bg:#FFE1F0;
+  --mx:96px; --regua:940px; --regua-sub:860px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#24201B}
@@ -489,301 +542,379 @@ body{font-family:'Nunito',sans-serif;color:var(--escuro);-webkit-font-smoothing:
 .slide{width:1440px;height:810px;position:relative;overflow:hidden;flex:none;page-break-after:always;break-after:page;box-shadow:0 20px 60px rgba(0,0,0,.35)}
 .slide.light{background:
   radial-gradient(760px 560px at 100% 0%, var(--ouro-suave) 0%, rgba(255,243,209,.55) 38%, rgba(255,243,209,0) 72%),
-  radial-gradient(620px 420px at 0% 100%, rgba(255,243,209,.55) 0%, rgba(255,243,209,0) 70%),
+  radial-gradient(620px 420px at 0% 100%, rgba(255,243,209,.5) 0%, rgba(255,243,209,0) 70%),
   var(--branco)}
 .slide.dark{background:
-  radial-gradient(820px 520px at 50% 18%, rgba(253,195,72,.10) 0%, rgba(253,195,72,0) 70%),
+  radial-gradient(820px 520px at 78% 8%, rgba(253,195,72,.11) 0%, rgba(253,195,72,0) 70%),
   var(--escuro); color:var(--branco)}
 ul,ol{list-style:none}
+b{font-weight:700}
 
 /* header */
-.hdr{position:absolute;top:40px;left:90px;right:90px;height:36px;display:flex;align-items:center;justify-content:space-between;z-index:3}
+.hdr{position:absolute;top:40px;left:var(--mx);right:var(--mx);height:36px;display:flex;align-items:center;justify-content:space-between;z-index:5}
 .logos{display:flex;align-items:center;gap:20px}
-.logos .ub{height:28px}
-.logos .vc{height:33px}
-.vdiv{width:1px;height:30px;background:var(--cinza-claro)}
+.logos .ub{height:27px}
+.logos .vc{height:32px}
+.vdiv{width:1px;height:28px;background:var(--cinza-claro)}
 .dark .vdiv{background:#4A443D}
+.hdr-r{display:flex;align-items:center;gap:22px}
 .count{font:500 13px/1 'Poppins';letter-spacing:.06em;color:var(--cinza-medio)}
 .count b{font-weight:600;color:var(--escuro)}
 .dark .count{color:var(--cinza-claro)} .dark .count b{color:var(--branco)}
 
-/* layout base */
-.main{position:absolute;top:100px;left:90px;right:90px;bottom:40px;display:flex;flex-direction:column}
-.pill{align-self:flex-start;background:var(--ouro-suave);color:var(--ouro-texto);font:500 12px/1 'Poppins';padding:8px 14px;border-radius:999px}
+/* grade vertical comum */
+.main{position:absolute;top:118px;left:var(--mx);right:var(--mx);bottom:44px;display:flex;flex-direction:column}
+.tblock{flex:none}
+.pill{display:inline-block;background:var(--ouro-suave);color:var(--ouro-texto);font:500 12px/1 'Poppins';padding:8px 14px;border-radius:999px}
 .dark .pill{background:rgba(253,195,72,.14);color:var(--ouro)}
-h1.t{font:700 44px/1.12 'Poppins';letter-spacing:-.028em;margin-top:14px;color:var(--escuro)}
+h1.t{font:700 42px/1.14 'Poppins';letter-spacing:-.026em;margin-top:0;color:var(--escuro);max-width:var(--regua)}
 .dark h1.t{color:var(--branco)}
 .gold{color:var(--ouro)}
-.sub{font:400 16px/1.5 'Nunito';color:var(--cinza-medio);margin-top:10px;max-width:1080px}
+.sub{font:400 17px/1.55 'Nunito';color:var(--cinza-medio);margin-top:14px;max-width:var(--regua-sub)}
 .dark .sub{color:var(--cinza-claro)}
+.content{flex:1;min-height:0;margin-top:32px;display:flex;flex-direction:column}
+.foot{flex:none;margin-top:18px;font:400 12px/1.3 'Nunito';color:var(--cinza-medio)}
+.foot.sm{font-size:11px}
 .h3{font:700 18px/1.2 'Poppins'}
 .cap{font:400 11px/1.3 'Nunito';color:var(--cinza-medio)}
-.foot{position:absolute;left:90px;bottom:30px;font:400 12px/1.3 'Nunito';color:var(--cinza-medio)}
-.foot.sm{font-size:11px}
 .tbc{color:var(--tbc);background:var(--tbc-bg);border-radius:4px;padding:1px 5px;font-style:normal;font-weight:700;white-space:nowrap}
-.card{background:var(--card);border:1px solid var(--linha);border-radius:18px;box-shadow:0 10px 30px rgba(107,77,0,.07)}
+.card{background:var(--card);border:1px solid var(--linha);border-radius:20px;box-shadow:var(--sombra)}
 .num{font:700 40px/1 'Poppins';color:var(--ouro);letter-spacing:-.02em}
-.n{width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;font:600 14px/1 'Poppins';flex:none}
-.n.dk{background:var(--escuro);color:var(--branco)} .n.au{background:var(--ouro);color:var(--escuro)}
-.bar{display:block;height:7px;border-radius:4px;background:rgba(7,4,1,.13)}
+.bar{display:block;height:7px;border-radius:4px;background:rgba(7,4,1,.12)}
 .bar+.bar{margin-top:6px}
 .wave{display:block}
 
-/* field */
+/* field (slide 9) */
 .field label{display:block;font:600 12px/1.2 'Nunito';color:var(--escuro);margin-bottom:6px}
-.box{border:1px solid var(--cinza-claro);border-radius:8px;background:#fff;padding:9px 12px}
-.box .ph{display:block;font:400 13px/1.35 'Nunito';color:var(--cinza-medio)}
+.box{border:1px solid var(--ouro-linha);border-radius:9px;background:var(--ouro-fundo)}
 .cb{width:18px;height:18px;border:2px solid var(--ouro-texto);border-radius:5px;flex:none;display:inline-block;background:transparent}
 .cb.cb-d{border-color:var(--ouro)}
 
 /* quote */
-.quote{position:relative;padding-left:58px}
-.quote .qmark{position:absolute;left:0;top:-8px;font:800 96px/1 'Nunito';color:var(--ouro)}
+.quote{position:relative;padding-left:62px}
+.quote .qmark{position:absolute;left:0;top:-10px;font:800 96px/1 'Nunito';color:var(--ouro)}
 .quote blockquote{font:italic 400 18px/1.5 'Nunito';color:var(--escuro)}
 .quote figcaption{margin-top:10px;font:600 13px/1.6 'Nunito';color:var(--cinza-medio)}
-.quote .sep{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--cinza-claro);vertical-align:middle;margin:0 8px}
+.quote .sep{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--cinza-claro);vertical-align:middle;margin:0 10px}
 .quote.on-dark blockquote{color:var(--branco)}
 .quote.on-dark figcaption{color:var(--cinza-claro)}
 
-/* whatsapp */
+/* ===== produto: WhatsApp ===== */
+.sbar{display:flex;align-items:center;justify-content:space-between;background:var(--escuro);color:var(--branco);padding:12px 24px 2px 28px;font:600 12px/1 'Poppins'}
+.sbar svg{width:52px;height:11px}
 .wa-hd{display:flex;align-items:center;gap:9px;background:var(--escuro);color:var(--branco);padding:9px 12px}
-.wa-av{width:26px;height:26px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;flex:none}
-.wa-av svg{width:13px;height:13px}
-.wa-name{font:600 13px/1.1 'Poppins';flex:1;display:flex;flex-direction:column}
-.wa-name small{font:400 11px/1.2 'Nunito';color:var(--cinza-claro);margin-top:2px}
-.wa-ico svg{width:16px;height:16px;display:block}
-.wa-body{display:flex;flex-direction:column;gap:8px;padding:12px}
-.msg{max-width:82%;font:400 13.5px/1.4 'Nunito';padding:8px 11px;border-radius:12px;color:var(--escuro)}
-.msg.ag{align-self:flex-start;background:var(--ouro-suave);border-top-left-radius:3px}
-.msg.us{align-self:flex-end;background:#fff;border:1px solid var(--cinza-claro);border-top-right-radius:3px}
-.msg.ag .bar{background:rgba(107,77,0,.22)}
-.msg.bars-only{width:62%;padding:11px 12px}
-.msg > .bar:first-child{margin-top:6px}
-.msg.bars-only > .bar:first-child{margin-top:0}
+.wa-hd.big{padding:10px 14px 12px}
+.wa-hd .bk{width:16px;height:16px;flex:none} .wa-hd .bk svg{width:16px;height:16px;display:block}
+.wa-av{width:30px;height:30px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;flex:none}
+.wa-av svg{width:15px;height:15px}
+.wa-name{font:600 13.5px/1.1 'Poppins';flex:1;display:flex;flex-direction:column}
+.wa-name small{font:400 11px/1.2 'Nunito';color:var(--cinza-claro);margin-top:3px}
+.wa-ico svg{width:17px;height:17px;display:block}
+.wa-dots{width:16px;height:16px;color:var(--cinza-claro)} .wa-dots svg{width:16px;height:16px;display:block}
+.chat{flex:1;display:flex;flex-direction:column;gap:8px;padding:14px 14px;
+  background:radial-gradient(rgba(214,160,40,.16) 1.1px, transparent 1.3px) 0 0/16px 16px, #FBF6EA}
+.b{position:relative;max-width:84%;font:400 13.5px/1.42 'Nunito';padding:8px 11px 7px;border-radius:12px;color:var(--escuro);box-shadow:0 1px 1.5px rgba(7,4,1,.10)}
+.b.ag{align-self:flex-start;background:var(--ouro-suave);border-top-left-radius:3px}
+.b.ag:before{content:"";position:absolute;left:-7px;top:0;border-top:9px solid var(--ouro-suave);border-left:8px solid transparent}
+.b.us{align-self:flex-end;background:#fff;border:1px solid #DEDAD2;border-top-right-radius:3px}
+.b.us:before{content:"";position:absolute;right:-8px;top:-1px;border-top:9px solid #DEDAD2;border-right:8px solid transparent}
+.b.us:after{content:"";position:absolute;right:-6px;top:0;border-top:8px solid #fff;border-right:7px solid transparent}
+.b .meta{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:2px;font:600 10px/1 'Nunito';color:var(--cinza-medio)}
+.b.ag .meta{color:var(--ouro-texto)}
+.b .tk{width:15px;height:10px;color:#C88D0A}
+.b.ag .bar{background:rgba(107,77,0,.22)}
+.b > .bar:first-child{margin-top:4px}
+.b.bo{width:64%;padding:10px 12px 7px}
+.b.bo > .bar:first-child{margin-top:0}
+.b.robot{border:1.5px dashed rgba(107,77,0,.45)}
+.wa-in{display:flex;align-items:center;gap:8px;padding:8px 10px 14px;background:#FBF6EA}
+.wa-field{flex:1;display:flex;align-items:center;gap:8px;height:34px;border-radius:999px;background:#fff;padding:0 12px;color:var(--cinza-medio);box-shadow:0 1px 1.5px rgba(7,4,1,.08)}
+.wa-field svg{width:16px;height:16px} .wa-field i{display:block;height:6px;width:46%;border-radius:4px;background:rgba(7,4,1,.09)}
+.wa-mic{width:34px;height:34px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;flex:none}
+.wa-mic svg{width:16px;height:16px}
 
-/* ---------- s1 ---------- */
-.cover-l{position:absolute;left:90px;top:212px;width:820px}
-.pill-w{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--linha);border-radius:999px;padding:9px 16px;font:500 13px/1 'Poppins';box-shadow:0 4px 14px rgba(107,77,0,.06)}
+/* ---------- s1 capa ---------- */
+.cover .count b,.cover .count{color:var(--escuro)}
+.cover-l{position:absolute;left:var(--mx);top:170px;bottom:44px;width:700px;display:flex;flex-direction:column}
+.pill-w{align-self:flex-start;display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--linha);border-radius:999px;padding:9px 16px;font:500 13px/1 'Poppins';box-shadow:0 4px 14px rgba(107,77,0,.06)}
 .pill-w i{width:8px;height:8px;border-radius:50%;background:var(--ouro)}
-h1.t.cover{font-size:60px;line-height:1.08;margin-top:22px;letter-spacing:-.032em}
-.lead{font:400 19px/1.5 'Nunito';color:var(--escuro);margin-top:22px;max-width:720px}
-.aud{font:400 12px/1.4 'Nunito';color:var(--cinza-medio);margin-top:16px}
-.chips{display:flex;align-items:center;gap:12px;margin-top:34px}
-.chip{white-space:nowrap;display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--linha);border-radius:14px;padding:11px 16px 11px 11px;font:600 15px/1 'Poppins';box-shadow:0 8px 20px rgba(107,77,0,.07)}
-.arr{width:30px;height:2px;background:var(--cinza-claro);position:relative}
-.arr:after{content:"";position:absolute;right:-1px;top:-4px;width:8px;height:8px;border-top:2px solid var(--cinza-claro);border-right:2px solid var(--cinza-claro);transform:rotate(45deg)}
-.cover-art{position:absolute;left:930px;top:122px;width:420px;height:596px;border-radius:38px;overflow:hidden;
-  background:linear-gradient(160deg,#FFD873 0%,var(--ouro) 45%,#F6B532 100%);box-shadow:0 30px 60px rgba(107,77,0,.18)}
-.cover-art .ring{position:absolute;left:-120px;top:-130px;width:340px;height:340px;border-radius:50%;border:28px solid rgba(255,253,249,.28)}
-.list-card{position:absolute;left:26px;top:250px;width:190px;padding:20px 18px;background:rgba(255,253,249,.92);border-radius:20px;transform:rotate(-6deg);box-shadow:0 16px 30px rgba(107,77,0,.16)}
-.list-card .dkbar{height:10px;background:rgba(7,4,1,.72);margin-bottom:16px}
-.list-card .li{display:flex;align-items:center;gap:10px;margin-top:14px}
-.list-card .li .bar{flex:1;background:rgba(107,77,0,.18)}
-.ck{width:20px;height:20px;border-radius:6px;border:2px solid #E3A21A;flex:none;position:relative;background:#fff}
-.ck.on{background:var(--ouro)}
-.ck.on:after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid var(--escuro);border-width:0 2px 2px 0;transform:rotate(45deg)}
-.chat-card{position:absolute;left:128px;top:108px;width:262px;padding:18px 16px 20px;background:#fff;border-radius:24px;transform:rotate(3deg);box-shadow:0 24px 44px rgba(107,77,0,.22)}
-.cc-hd{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--linha);margin-bottom:14px}
-.cc-av{width:36px;height:36px;border-radius:50%;background:var(--ouro-suave);color:#E3A21A;display:grid;place-items:center}
-.cc-av svg{width:18px;height:18px}
-.cc-nm{flex:1}
-.cc-wa svg{width:20px;height:20px;display:block}
-.cc-b{border-radius:14px;padding:12px 13px;margin-top:10px}
-.cc-b.ag{background:var(--ouro-suave);width:86%;border-top-left-radius:4px}
-.cc-b.ag .bar{background:rgba(107,77,0,.24)}
-.cc-b.ag .bar.au{background:var(--ouro);height:10px}
-.cc-b.us{background:#F4F1EA;width:74%;margin-left:auto;border-top-right-radius:4px}
-.selo{display:inline-flex;align-items:center;gap:5px;background:var(--escuro);color:var(--ouro);font:600 10.5px/1 'Poppins';padding:5px 8px 5px 7px;border-radius:999px;margin-bottom:9px}
+h1.cover-t{font-size:58px;line-height:1.07;margin-top:26px;letter-spacing:-.032em;max-width:none}
+.lead{font:400 19px/1.55 'Nunito';color:var(--escuro);margin-top:24px;max-width:640px}
+.cover-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:auto;border-top:1.5px solid var(--escuro)}
+.cover-steps li{padding:18px 24px 0 0;display:flex;flex-direction:column;gap:10px;position:relative}
+.cover-steps li+li{padding-left:24px;border-left:1px solid var(--ouro-linha)}
+.cover-steps .cn{font:700 48px/1 'Poppins';color:var(--ouro);letter-spacing:-.03em}
+.cover-steps b{font:600 16px/1.3 'Poppins'}
+.aud{font:400 12px/1.4 'Nunito';color:var(--cinza-medio);margin-top:26px}
+.cover-art{position:absolute;left:860px;top:24px;right:24px;bottom:24px;border-radius:34px;overflow:hidden;
+  background:linear-gradient(155deg,#FFD978 0%,var(--ouro) 42%,#F7B530 100%)}
+.ca-glow{position:absolute;left:-120px;top:-140px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,253,249,.55),rgba(255,253,249,0) 65%)}
+.ca-orbit{position:absolute;left:30px;top:150px;width:600px;height:600px;fill:none;stroke:rgba(255,253,249,.55);stroke-width:1.5}
+.ca-rules{position:absolute;left:36px;top:150px;width:200px;padding:18px 18px 14px;border-radius:18px;background:rgba(255,253,249,.42);border:1px solid rgba(255,253,249,.6);transform:rotate(-7deg);opacity:.9}
+.ca-rules .r{display:flex;align-items:center;gap:9px;margin-bottom:12px;position:relative}
+.ca-rules .r i:first-child{width:12px;height:12px;border-radius:3px;border:2px solid rgba(107,77,0,.45);flex:none}
+.ca-rules .r i:last-child{height:7px;border-radius:4px;background:rgba(107,77,0,.30)}
+.ca-rules .r:after{content:"";position:absolute;left:-4px;right:20px;top:50%;height:2px;background:var(--escuro);opacity:.55;transform:rotate(-2deg)}
+.ca-phone{position:absolute;left:176px;top:200px;width:290px;height:640px;background:var(--escuro);border-radius:44px;padding:9px;box-shadow:0 40px 70px rgba(107,77,0,.38)}
+.ca-phone .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:#FBF6EA;display:flex;flex-direction:column}
+.cp-hd{display:flex;align-items:center;gap:10px;background:var(--escuro);padding:10px 16px 14px}
+.cp-nm{flex:1}
+.cp-chat{flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:10px;background:radial-gradient(rgba(214,160,40,.16) 1.1px, transparent 1.3px) 0 0/16px 16px, #FBF6EA}
+.cb-b{border-radius:14px;padding:12px 13px;box-shadow:0 1px 1.5px rgba(7,4,1,.1)}
+.cb-b.ag{background:var(--ouro-suave);width:84%;border-top-left-radius:4px}
+.cb-b.ag .bar{background:rgba(107,77,0,.24)}
+.cb-b.us{background:#fff;width:70%;margin-left:auto;border-top-right-radius:4px}
+.cb-b.typing{width:64px;display:flex;gap:5px;padding:12px 14px}
+.cb-b.typing i{width:8px;height:8px;border-radius:50%;background:rgba(107,77,0,.45)}
+.cb-b.typing i:nth-child(2){opacity:.7} .cb-b.typing i:nth-child(3){opacity:.4}
+.selo{display:inline-flex;align-items:center;gap:5px;background:var(--escuro);color:var(--ouro);font:600 10.5px/1 'Poppins';padding:5px 9px 5px 7px;border-radius:999px;margin-bottom:10px}
 .selo svg{width:10px;height:10px}
-.spark-dot{position:absolute;right:22px;top:70px;width:66px;height:66px;border-radius:50%;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;box-shadow:0 14px 26px rgba(7,4,1,.25)}
-.spark-dot svg{width:28px;height:28px}
-.cover-art .wave{position:absolute;right:30px;bottom:30px}
+.ca-ctx{position:absolute;left:338px;top:390px;width:210px;padding:16px 16px 14px;background:#fff;border-radius:18px;box-shadow:0 24px 44px rgba(107,77,0,.28);transform:rotate(3deg)}
+.ctx-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ctx-i{width:28px;height:28px;border-radius:9px;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;flex:none}
+.ctx-i svg{width:14px;height:14px}
+.ctx-row{display:flex;align-items:center;gap:9px;margin-top:9px}
+.ctx-row .dot{width:8px;height:8px;border-radius:50%;background:var(--ouro);flex:none}
+.ctx-row .bar{flex:1;background:rgba(7,4,1,.12)}
+.ctx-chips{display:flex;gap:7px;margin-top:14px}
+.ctx-chips i{height:18px;border-radius:999px;background:var(--ouro-suave);border:1px solid var(--ouro-linha);width:58px}
+.ctx-chips i+i{width:44px}
+.ca-shield{position:absolute;left:70px;top:560px;width:62px;height:62px;border-radius:50%;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;box-shadow:0 16px 30px rgba(7,4,1,.25)}
+.ca-shield svg{width:28px;height:28px}
+.cover-art > .wave{position:absolute;right:34px;bottom:34px}
 
 /* ---------- s2 ---------- */
-.s2-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:56px;margin-top:52px}
-.s2-l{display:flex;flex-direction:column}
-.body-txt p{font:400 19px/1.66 'Nunito';color:var(--escuro)}
-.body-txt p+p{margin-top:20px}
-.protag{margin-top:40px;display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--linha);border-radius:16px;padding:16px 20px;box-shadow:0 10px 30px rgba(107,77,0,.07)}
-.mono{width:46px;height:46px;border-radius:50%;background:var(--ouro);display:grid;place-items:center;font:700 20px/1 'Poppins';flex:none}
+.s2{display:grid;grid-template-columns:1.55fr 1fr;gap:28px}
+.s2-card{display:flex;flex-direction:column;justify-content:space-between;background:var(--card);border:1px solid var(--linha);border-radius:22px;box-shadow:var(--sombra);overflow:hidden}
+.body-txt{padding:34px 38px 0}
+.body-txt p{font:400 20px/1.66 'Nunito';color:var(--escuro)}
+.body-txt p b{font-weight:800}
+.body-txt p+p{margin-top:18px}
+.protag{display:flex;align-items:center;gap:16px;background:var(--ouro-fundo);border-top:1px solid var(--ouro-linha);padding:20px 36px;margin-top:24px}
+.mono{width:48px;height:48px;border-radius:50%;background:var(--ouro);display:grid;place-items:center;font:700 20px/1 'Poppins';flex:none}
 .pt-nm{font:400 16px/1.3 'Nunito'} .pt-nm b{font:700 16px 'Poppins'}
-.pt-ds{font:400 14.5px/1.4 'Nunito';color:var(--cinza-medio);margin-top:3px}
-.s2-r{display:flex;flex-direction:column;gap:16px}
-.s2-r .h3{margin-bottom:2px}
-.pp{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--linha);border-radius:16px;padding:26px 24px;box-shadow:0 10px 30px rgba(107,77,0,.06)}
-.pp .num{width:30px;text-align:center}
-.pp b{font:700 16px/1.25 'Poppins'}
+.pt-ds{font:400 14.5px/1.4 'Nunito';color:var(--escuro);opacity:.78;margin-top:3px}
+.s2-r{display:flex;flex-direction:column;gap:14px}
+.s2-r .h3{margin:4px 0 0}
+.pp{flex:1;display:flex;gap:20px;align-items:center;background:var(--card);border:1px solid var(--linha);border-radius:18px;padding:18px 24px;box-shadow:var(--sombra)}
+.pp .num{width:30px;text-align:center;flex:none}
+.pp b{font:700 16.5px/1.25 'Poppins'}
 .pp p{font:400 14.5px/1.45 'Nunito';color:var(--cinza-medio);margin-top:4px}
+.pp.hl{background:var(--escuro);border-color:var(--escuro)}
+.pp.hl b{color:var(--branco)} .pp.hl p{color:var(--cinza-claro)}
 
 /* ---------- s3 ---------- */
-.cmp{display:grid;grid-template-columns:1fr 64px 1fr;align-items:stretch;margin-top:22px}
-.panel{background:var(--card);border:1px solid var(--linha);border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(107,77,0,.07)}
-.ed-hd{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--linha);font:600 13px/1 'Poppins'}
-.ed-hd .dots{display:flex;gap:5px} .ed-hd .dots i{width:9px;height:9px;border-radius:50%;background:var(--cinza-claro)}
-.badge{margin-left:auto;background:var(--escuro);color:var(--ouro);font:600 11px/1 'Poppins';padding:6px 10px;border-radius:999px}
-.rules{counter-reset:r;padding:18px 18px 18px 16px;display:flex;flex-direction:column;gap:12px}
-.rules li{counter-increment:r;display:flex;align-items:center;gap:14px;font:600 17px/1.3 'Nunito'}
-.rules li:before{content:counter(r);font:500 12px/1 'Poppins';color:var(--cinza-medio);width:12px;text-align:right}
-.mk{background:linear-gradient(transparent 52%, #FDE3A0 52%, #FDE3A0 92%, transparent 92%);padding:0 3px}
+.s3{gap:0}
+.cmp{flex:1;min-height:0;display:grid;grid-template-columns:1fr 70px 1fr;align-items:stretch}
+.cmp-col{display:flex;min-height:0}
+.editor{flex:1;background:#141009;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px rgba(7,4,1,.18);display:flex;flex-direction:column}
+.ed-hd{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #2A241C;font:600 13px/1 'Poppins';color:var(--branco)}
+.ed-hd .dots{display:flex;gap:6px} .ed-hd .dots i{width:10px;height:10px;border-radius:50%;background:#3A332A}
+.badge{margin-left:auto;background:var(--ouro);color:var(--escuro);font:600 11px/1 'Poppins';padding:6px 11px;border-radius:999px}
+.rules{counter-reset:r;padding:16px 20px;display:flex;flex-direction:column;justify-content:center;gap:11px;flex:1}
+.rules li{counter-increment:r;display:flex;align-items:center;gap:16px;font:600 16.5px/1.3 'Nunito';color:var(--branco)}
+.rules li:before{content:counter(r);font:500 12px/1 'Poppins';color:var(--cinza-claro);width:14px;text-align:right}
+.mk{background:linear-gradient(transparent 50%, rgba(253,195,72,.38) 50%, rgba(253,195,72,.38) 94%, transparent 94%);padding:0 4px}
+.rules li.ghost .bar{height:9px;background:rgba(253,195,72,.22);flex:none}
+.rules li.g2{opacity:.6}
+.caret{width:2px;height:18px;background:var(--ouro)}
 .cmp-arr{display:grid;place-items:center;color:var(--escuro)}
-.cmp-arr svg{width:40px;height:40px;padding:9px;border-radius:50%;background:var(--ouro);overflow:visible}
-.panel.wa{display:flex;flex-direction:column}
-.wa-top{padding:11px 16px;font:600 13px/1 'Poppins';border-bottom:1px solid var(--linha)}
-.panel.wa .wa-hd{padding:7px 12px}
-.panel.wa .wa-body{gap:10px;padding:16px 16px;background:var(--branco);flex:1;justify-content:center}
-.panel.wa .msg{font-size:15px;padding:9px 13px}
-.cmp + .cap{margin-top:8px}
-.s3-bot{display:grid;grid-template-columns:1.55fr 1fr;gap:40px;margin-top:auto;align-items:end}
-.callout{background:var(--escuro);color:var(--branco);border-radius:18px;padding:20px 24px;display:flex;gap:18px;align-items:center}
+.cmp-arr svg{width:42px;height:42px;padding:10px;border-radius:50%;background:var(--ouro);box-shadow:0 8px 18px rgba(214,160,40,.35)}
+.wa-win{flex:1;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--linha);box-shadow:var(--sombra)}
+.win-lbl{padding:12px 16px;font:600 13px/1 'Poppins'}
+.wa-win .chat{justify-content:center;gap:10px}
+.wa-win .b{font-size:14.5px}
+.s3 .cap{margin-top:10px}
+.s3-bot{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;margin-top:22px;align-items:stretch}
+.qcard{background:var(--card);border:1px solid var(--linha);border-radius:18px;padding:20px 26px 16px 92px;box-shadow:var(--sombra)}
+.qcard .qmark{left:26px;top:12px}
+.callout{background:var(--escuro);color:var(--branco);border-radius:18px;padding:20px 26px;display:flex;gap:18px;align-items:center}
 .callout p{font:600 18px/1.4 'Poppins'}
 .callout .wave{flex:none}
 
 /* ---------- s4 ---------- */
-.s4-grid{display:grid;grid-template-columns:1.62fr 1fr;gap:44px;margin-top:30px;align-items:stretch}
-.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.col{border-radius:16px;padding:24px 22px 26px;min-height:300px}
-.col h4{font:700 19px/1.2 'Poppins';margin-bottom:18px}
-.col li{font:400 17px/1.4 'Nunito';padding-left:24px;position:relative}
-.col li+li{margin-top:14px}
-.col.saiu{border:1.5px dashed var(--cinza-medio)}
+.s4-grid{flex:1;min-height:0;display:grid;grid-template-columns:1.62fr 1fr;gap:48px;align-items:stretch}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.col{border-radius:18px;padding:20px 20px 20px;position:relative}
+.cl-i{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:600 20px/1 'Poppins';margin-bottom:12px}
+.cl-i svg{width:17px;height:17px}
+.col h4{font:700 18px/1.2 'Poppins';margin-bottom:12px}
+.col li{font:400 15.5px/1.4 'Nunito';padding-left:22px;position:relative}
+.col li+li{margin-top:10px}
+.col.saiu{border:1.5px dashed #5A544D}
+.col.saiu .cl-i{border:1.5px solid var(--cinza-claro);color:var(--cinza-claro)}
 .col.saiu h4{color:var(--cinza-claro)}
 .col.saiu li{color:var(--cinza-claro);text-decoration:line-through;text-decoration-color:var(--cinza-claro)}
 .col.saiu li:before{content:"×";position:absolute;left:2px;top:-1px;font:600 16px/1.4 'Poppins';color:var(--cinza-claro)}
-.col.entrou{border:1.5px solid var(--ouro);background:rgba(253,195,72,.06)}
+.col.entrou{border:1.5px solid var(--ouro);background:rgba(253,195,72,.07)}
+.col.entrou .cl-i{background:rgba(253,195,72,.16);color:var(--ouro)}
 .col.entrou h4{color:var(--ouro)}
 .col.entrou li{color:var(--branco)}
 .col.entrou li:before{content:"+";position:absolute;left:2px;top:-1px;font:600 16px/1.4 'Poppins';color:var(--ouro)}
 .col.ficou{background:var(--ouro);color:var(--escuro)}
+.col.ficou .cl-i{background:var(--escuro);color:var(--ouro)}
 .col.ficou li:before{content:"";position:absolute;left:3px;top:5px;width:6px;height:11px;border:solid var(--escuro);border-width:0 2px 2px 0;transform:rotate(45deg)}
 .q4{align-self:center}
-.q4 blockquote{font-size:20px}
-.apoio{font:400 15px/1.4 'Nunito';color:var(--cinza-claro);margin-top:22px}
-.band{margin-top:auto;background:var(--ouro);color:var(--escuro);border-radius:16px;padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.q4 blockquote{font-size:19px}
+.apoio{font:400 15px/1.4 'Nunito';color:var(--cinza-claro);margin-top:16px}
+.band{margin-top:16px;background:var(--ouro);color:var(--escuro);border-radius:18px;padding:20px 30px;display:flex;align-items:center;justify-content:space-between}
 .band span{font:700 22px/1.2 'Poppins';letter-spacing:-.01em}
 
 /* ---------- s5 ---------- */
-.conn{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:2;overflow:visible}
-.s5-grid{display:grid;grid-template-columns:560px 1fr;gap:0;margin-top:14px;flex:1;min-height:0}
+.conn{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:3;overflow:visible}
+.s5{display:grid;grid-template-columns:520px 1fr;gap:0}
 .s5-l{position:relative}
-.phone{position:absolute;left:60px;top:0;width:384px;height:446px;background:var(--escuro);border-radius:44px;padding:9px;box-shadow:0 30px 60px rgba(7,4,1,.22)}
-.screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--branco);display:flex;flex-direction:column}
-.wa-hd.big{padding:16px 14px 9px}
-.wa-hd .bk{color:var(--branco);width:16px;height:16px} .wa-hd .bk svg{width:16px;height:16px;display:block}
-.phone .wa-body{gap:7px;padding:11px 13px}
-.phone .msg{font-size:13px;padding:7px 10px}
-.phone .msg.bars-only{padding:9px 11px}
-.selo-c{display:inline-block;margin-top:9px;background:var(--ouro);color:var(--escuro);font:600 11px/1 'Poppins';padding:6px 10px;border-radius:999px}
-.s5-cap{position:absolute;left:60px;top:456px}
-.anns{display:flex;flex-direction:column;justify-content:space-between;padding:4px 0 10px 80px}
-.ann{display:flex;gap:16px;align-items:flex-start;max-width:600px}
-.ann-n{width:32px;height:32px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;font:700 15px/1 'Poppins';flex:none;position:relative;z-index:3}
+.stage{position:absolute;left:0;right:30px;top:24px;bottom:-60px;border-radius:28px 28px 0 0;background:linear-gradient(180deg,var(--ouro-suave),rgba(255,243,209,.2))}
+.phone{position:absolute;left:62px;top:-6px;width:376px;height:560px;background:var(--escuro);border-radius:48px;padding:10px;box-shadow:0 34px 60px rgba(107,77,0,.25)}
+.phone .screen{width:100%;height:100%;border-radius:39px;overflow:hidden;display:flex;flex-direction:column}
+.phone .chat{gap:7px;padding:10px 14px}
+.phone .b{font-size:13px;padding:7px 10px 6px}
+.phone .b.bo{padding:9px 11px 6px}
+.selo-c{display:inline-flex;align-items:center;margin-top:9px;background:var(--ouro);color:var(--escuro);font:600 11px/1 'Poppins';padding:6px 10px;border-radius:999px}
+.anns{display:flex;flex-direction:column;justify-content:space-between;padding:2px 0 0 92px}
+.ann{display:flex;gap:18px;align-items:flex-start;padding:14px 20px;background:var(--card);border:1px solid var(--linha);border-radius:16px;box-shadow:var(--sombra)}
+.ann-n{width:34px;height:34px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;font:700 15px/1 'Poppins';flex:none;position:relative;z-index:4}
 .ann b{font:700 17px/1.2 'Poppins'}
-.ann p{font:400 15px/1.45 'Nunito';color:var(--cinza-medio);margin-top:4px}
+.ann p{font:400 15px/1.45 'Nunito';color:var(--cinza-medio);margin-top:3px}
+.anns .cap{margin-top:2px}
 
 /* ---------- s6 ---------- */
-.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:18px}
-.c6{background:var(--card);border:1px solid var(--linha);border-radius:18px;padding:14px 18px 14px;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(107,77,0,.07)}
+.s6{gap:0}
+.cards3{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.c6{background:var(--card);border:1px solid var(--linha);border-radius:20px;padding:14px 18px 14px;display:flex;flex-direction:column;box-shadow:var(--sombra)}
 .c6 h4{display:flex;align-items:center;gap:12px;font:700 17px/1.2 'Poppins'}
-.num.sm{font-size:40px;width:26px;line-height:.9}
-.mini{margin-top:10px;border:1px solid var(--linha);border-radius:14px;overflow:hidden;background:var(--branco);height:222px}
-.mini .wa-hd{padding:5px 10px}
-.mini .wa-av{width:22px;height:22px}
-.mini .wa-name{font-size:12px}
-.mini .wa-body{padding:9px 10px;gap:6px}
-.mini .msg{font-size:12.5px;line-height:1.35;padding:6px 10px;max-width:90%}
-.mini .msg > .bar:first-child{margin-top:5px}
-.chip-in{display:inline-block;margin-top:8px;background:var(--escuro);color:var(--branco);font:600 10.5px/1 'Poppins';padding:6px 9px;border-radius:999px}
-.steps{margin-top:7px;display:flex;flex-direction:column;gap:5px}
+.c6 h4 .num{width:26px;line-height:.9}
+.stage6{flex:1;min-height:186px;margin-top:12px;border-radius:14px;background:linear-gradient(180deg,var(--ouro-suave),var(--ouro-fundo));padding:12px 14px 0;display:flex;align-items:flex-start;overflow:hidden}
+.mini{flex:1;align-self:stretch;border-radius:14px 14px 0 0;overflow:hidden;background:#fff;box-shadow:0 10px 24px rgba(107,77,0,.16);display:flex;flex-direction:column}
+.mini .wa-hd{padding:7px 10px;gap:8px}
+.mini .wa-av{width:24px;height:24px} .mini .wa-av svg{width:12px;height:12px}
+.mini .wa-name{font-size:12px} .mini .wa-name small{font-size:10px;margin-top:2px}
+.mini .wa-dots{display:none}
+.mini .chat{padding:9px 12px;gap:6px}
+.mini .b{font-size:12.5px;line-height:1.38;padding:6px 10px 5px;max-width:90%}
+.mini .b .meta{font-size:9.5px}
+.chip-in{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:var(--escuro);color:var(--branco);font:600 10.5px/1 'Poppins';padding:6px 10px 6px 8px;border-radius:999px}
+.chip-in svg{width:12px;height:12px;color:var(--ouro)}
+.sec{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;background:var(--escuro);color:var(--ouro);vertical-align:-3px;margin-right:6px}
+.sec svg{width:11px;height:11px}
+.steps{margin-top:8px;display:flex;flex-direction:column;gap:6px}
 .steps li{display:flex;align-items:center;gap:8px}
 .steps li span{width:17px;height:17px;border-radius:50%;background:var(--escuro);color:var(--branco);font:600 10px/17px 'Poppins';text-align:center;flex:none}
 .steps li .bar{flex:1;margin:0}
-.note-wrap{display:grid;place-items:center;background:var(--branco)}
-.note{position:relative;width:86%;background:var(--ouro-suave);border-radius:6px 6px 6px 22px;padding:20px 18px 14px;transform:rotate(-1.6deg);box-shadow:0 12px 22px rgba(107,77,0,.14)}
-.note .pin{position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--escuro)}
-.note .nt{display:block;font:700 13px/1.2 'Poppins';margin-bottom:9px}
-.note dl{display:grid;grid-template-columns:auto 1fr;gap:5px 8px;font:400 12.5px/1.35 'Nunito'}
-.note dt{font-weight:700}
-.sup{font:400 14px/1.4 'Nunito';color:var(--cinza-medio);margin-top:10px}
-.qband{margin-top:14px;background:var(--card);border:1px solid var(--linha);border-radius:18px;padding:13px 26px 11px 84px;box-shadow:0 10px 30px rgba(107,77,0,.06)}
-.qband .qmark{left:24px;top:8px;font-size:80px}
-.qband blockquote{font-size:16px;line-height:1.45}
-.qband figcaption{margin-top:3px}
+.handoff{flex:1;align-self:stretch;margin-bottom:14px;background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(107,77,0,.16);border-left:4px solid var(--ouro);padding:14px 16px;display:flex;flex-direction:column}
+.ho-hd{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--linha)}
+.ho-hd b{font:700 13px/1.2 'Poppins'}
+.ho-i{width:26px;height:26px;border-radius:8px;background:var(--escuro);color:var(--ouro);display:grid;place-items:center;flex:none}
+.ho-i svg{width:13px;height:13px}
+.handoff dl{display:grid;grid-template-columns:auto 1fr;gap:7px 10px;font:400 12.5px/1.35 'Nunito';margin-top:10px}
+.handoff dt{font-weight:700}
+.ho-ft{margin-top:auto;display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--linha)}
+.ho-ft .av{width:24px;height:24px;border-radius:50%;background:var(--ouro-suave);color:var(--ouro-texto);display:grid;place-items:center;flex:none}
+.ho-ft .av svg{width:13px;height:13px}
+.ho-ft .bar{flex:1;margin:0}
+.ho-ft .go{width:26px;height:26px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;flex:none}
+.ho-ft .go svg{width:13px;height:13px}
+.sup{font:400 13.5px/1.42 'Nunito';color:var(--cinza-medio);margin-top:10px}
+.qband{margin-top:16px;background:var(--card);border:1px solid var(--linha);border-radius:18px;padding:15px 28px 12px 92px;box-shadow:var(--sombra)}
+.qband .qmark{left:26px;top:10px;font-size:84px}
+.qband blockquote{font-size:16.5px;line-height:1.45}
+.qband figcaption{margin-top:4px}
 
 /* ---------- s7 ---------- */
-.s7-grid{display:grid;grid-template-columns:1fr 410px;gap:48px;margin-top:40px;align-items:start}
-.tl{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
-.tl-line{position:absolute;left:8px;top:77px;width:calc(80% - 4px);height:2px;background:var(--escuro)}
-.tl-dash{position:absolute;left:calc(80% + 4px);top:77px;right:60px;height:0;border-top:2px dashed var(--escuro)}
+.s7{display:grid;grid-template-columns:1fr 450px;grid-template-rows:minmax(0,1fr);gap:28px}
+.tl-card{background:var(--card);border:1px solid var(--linha);border-radius:22px;box-shadow:var(--sombra);padding:28px 30px;display:flex;flex-direction:column;justify-content:center;
+  background-image:linear-gradient(180deg,var(--ouro-fundo) 0,var(--ouro-fundo) 128px,transparent 128px)}
+.tl{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.tl-line{position:absolute;left:10px;top:86px;width:calc(80% - 6px);height:3px;border-radius:2px;background:var(--escuro)}
+.tl-dash{position:absolute;left:calc(80% + 4px);top:86px;right:40px;height:0;border-top:3px dashed var(--escuro)}
 .ms{position:relative;display:flex;flex-direction:column}
-.ms .big-n{font:700 56px/1 'Poppins';color:var(--ouro);height:62px}
-.ms .dot{width:16px;height:16px;border-radius:50%;background:var(--ouro);border:2px solid var(--escuro);margin:7px 0 16px;position:relative;z-index:1}
-.ms.key .dot{width:24px;height:24px;margin:3px 0 12px -4px;box-shadow:0 0 0 6px rgba(253,195,72,.35)}
+.ms .big-n{font:700 56px/1 'Poppins';color:var(--ouro);height:66px}
+.ms .dot{width:22px;height:22px;border-radius:50%;background:var(--ouro);border:3px solid var(--escuro);margin:6px 0 20px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:2px}
 .ms.pause .dot{background:var(--branco)}
+.ms.pause .dot i{width:3px;height:8px;background:var(--escuro);border-radius:1px}
+.ms.key .dot{width:30px;height:30px;margin:2px 0 16px -4px;box-shadow:0 0 0 7px rgba(253,195,72,.35)}
 .ms.goal .dot{background:var(--branco);border-style:dashed}
 .ms b{font:700 17px/1.25 'Poppins'}
 .ms p{font:400 15px/1.5 'Nunito';color:var(--cinza-medio);margin-top:8px}
 .ms.key b{background:var(--escuro);color:var(--ouro);align-self:flex-start;padding:5px 9px;border-radius:8px;margin-left:-2px}
-.ubots-panel{position:relative;border:1.5px solid var(--ouro);background:var(--card);border-radius:20px;padding:26px 28px 76px}
-.ubots-panel p{font:400 15px/1.55 'Nunito';margin-top:12px}
-.ubots-panel .h3{margin-bottom:2px}
-.ubots-panel .wave{position:absolute;right:22px;bottom:20px}
+.ubots-panel{position:relative;border:1.5px solid var(--ouro);background:var(--card);border-radius:22px;padding:24px 30px 56px;box-shadow:var(--sombra)}
+.up-hd img{height:22px;display:block;margin-bottom:14px}
+.ubots-panel p{font:400 15px/1.55 'Nunito';margin-top:10px}
+.ubots-panel .wave{position:absolute;right:26px;bottom:20px}
 
 /* ---------- s8 ---------- */
-.s8-grid{display:grid;grid-template-columns:1fr 430px;gap:24px;margin-top:22px}
-.fields6{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;padding:20px 22px}
-.darkbox{position:relative;background:var(--escuro);color:var(--branco);border-radius:20px;padding:30px 30px}
-.darkbox h3{font:700 20px/1.3 'Poppins';max-width:330px}
-.cklist{margin-top:24px;display:flex;flex-direction:column;gap:17px}
-.cklist li{display:flex;gap:12px;align-items:flex-start;font:400 16px/1.4 'Nunito'}
+.s8{display:grid;grid-template-columns:1fr 430px;grid-template-rows:minmax(0,1fr);gap:24px}
+.ws{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:14px}
+.wf{background:var(--card);border:1px solid var(--linha);border-radius:16px;padding:16px 16px 14px;display:flex;flex-direction:column;box-shadow:var(--sombra)}
+.wf-hd{display:flex;align-items:center;gap:10px}
+.wf-n{font:700 12px/1 'Poppins';color:var(--escuro);background:var(--ouro);border-radius:7px;padding:5px 7px}
+.wf-hd b{font:700 16px/1 'Poppins'}
+.wf-q{font:400 13.5px/1.38 'Nunito';color:var(--cinza-medio);margin-top:8px;min-height:37px}
+.wf-area{flex:1;min-height:30px;margin-top:9px;border-radius:10px;background:var(--ouro-fundo);border:1px solid var(--ouro-linha);position:relative;
+  background-image:repeating-linear-gradient(180deg,transparent 0,transparent 25px,var(--ouro-linha) 25px,var(--ouro-linha) 26px);background-position:0 4px;background-clip:padding-box}
+.wf-area i{display:none}
+.darkbox{position:relative;background:var(--escuro);color:var(--branco);border-radius:22px;padding:22px 28px 16px;display:flex;flex-direction:column;
+  background-image:radial-gradient(360px 240px at 100% 0%, rgba(253,195,72,.16), rgba(253,195,72,0) 70%)}
+.db-hd{display:flex;align-items:center;justify-content:space-between}
+.db-i{width:40px;height:40px;border-radius:12px;background:var(--ouro);color:var(--escuro);display:grid;place-items:center}
+.db-i svg{width:22px;height:22px}
+.darkbox h3{font:700 19px/1.3 'Poppins';margin-top:14px}
+.cklist{margin-top:8px;display:flex;flex-direction:column;flex:1;justify-content:space-between}
+.cklist li{display:flex;gap:14px;align-items:flex-start;font:400 15px/1.38 'Nunito';padding:9px 0;border-top:1px solid var(--dark-line)}
 .cklist .cb{margin-top:1px}
-.darkbox .wave{position:absolute;right:26px;bottom:22px}
-.tip{margin-top:auto;display:flex;align-items:center;gap:16px;background:var(--ouro-suave);border-radius:14px;padding:13px 20px}
-.tip-i{width:34px;height:34px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;flex:none}
-.tip-i svg{width:19px;height:19px}
-.tip p{font:600 15px/1.4 'Nunito'}
+.tip{flex:none;margin-top:16px;display:flex;align-items:center;gap:16px;background:var(--ouro-suave);border-radius:16px;padding:14px 22px}
+.tip-i{width:36px;height:36px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;flex:none}
+.tip-i svg{width:20px;height:20px}
+.tip p{font:600 15.5px/1.4 'Nunito'}
 
 /* ---------- s9 ---------- */
-.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
-.step{padding:14px 18px 16px;display:flex;flex-direction:column}
-.st-hd{display:flex;align-items:center;gap:11px}
+.s9{gap:0}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--card);border:1px solid var(--linha);border-radius:18px;overflow:hidden;box-shadow:var(--sombra);display:flex;flex-direction:column}
+.st-hd{display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--escuro);color:var(--branco)}
+.step.au .st-hd{background:var(--ouro);color:var(--escuro)}
+.st-n{width:30px;height:30px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;font:700 14px/1 'Poppins'}
+.step.au .st-n{background:var(--escuro);color:var(--ouro)}
 .st-hd b{font:700 17px/1 'Poppins'}
-.st-d{font:400 13.5px/1.45 'Nunito';color:var(--cinza-medio);margin-top:8px;min-height:59px}
-.entrega{background:var(--ouro-suave);border-left:3px solid var(--ouro);border-radius:6px;padding:8px 11px;font:400 13px/1.4 'Nunito';margin-top:8px}
+.st-body{padding:12px 18px 16px;display:flex;flex-direction:column;flex:1}
+.st-d{font:400 13.5px/1.45 'Nunito';color:var(--cinza-medio);min-height:39px}
+.entrega{background:var(--ouro-fundo);border:1px solid var(--ouro-linha);border-left:4px solid var(--ouro);border-radius:8px;padding:8px 12px;font:400 13px/1.4 'Nunito';margin-top:10px}
 .entrega b{font-weight:800}
-.st-f{display:grid;gap:10px;margin-top:10px}
-.st-f .field label{font-size:11.5px;margin-bottom:4px}
-.inds{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:18px}
-.ind-line{position:absolute;left:18px;right:calc(16.66% - 18px);top:17px;height:1.5px;background:var(--cinza-claro)}
+.st-f{display:grid;gap:10px;margin-top:auto;padding-top:12px}
+.st-f .field label{font-size:11.5px;margin-bottom:5px}
+.inds{position:relative;flex:1;min-height:128px;margin-top:16px;display:grid;grid-template-columns:repeat(6,1fr);gap:18px;align-items:start;align-content:center;background:var(--ouro-suave);border-radius:18px;padding:16px 26px}
+.ind-line{display:none}
+.ind:not(:last-child):before{content:"";position:absolute;left:50px;right:-12px;top:19px;height:2px;background:repeating-linear-gradient(90deg,#D9A93A 0 6px,transparent 6px 11px)}
 .ind{position:relative}
-.ind .ic{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--escuro);background:#fff;display:grid;place-items:center}
-.ind .ic svg{width:18px;height:18px}
-.ind b{display:block;font:700 15px/1.2 'Poppins';margin-top:9px}
-.ind p{font:400 12.5px/1.4 'Nunito';color:var(--cinza-medio);margin-top:3px}
-.evalbar{margin-top:auto;margin-bottom:16px;background:var(--escuro);color:var(--branco);border-radius:16px;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.qs{display:grid;grid-template-columns:auto auto;gap:6px 30px}
+.ind .ic{width:40px;height:40px;border-radius:50%;background:var(--ouro);color:var(--escuro);display:grid;place-items:center;box-shadow:0 0 0 5px var(--ouro-suave)}
+.ind .ic svg{width:19px;height:19px}
+.ind b{display:block;font:700 15px/1.2 'Poppins';margin-top:10px}
+.ind p{font:400 12.5px/1.4 'Nunito';color:var(--ouro-texto);margin-top:3px}
+.evalbar{flex:none;margin-top:16px;background:var(--escuro);color:var(--branco);border-radius:18px;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.qs{display:grid;grid-template-columns:auto auto;gap:7px 30px}
 .qs li{display:flex;align-items:center;gap:9px;font:400 14px/1.3 'Nunito'}
-.q{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--cinza-claro);color:var(--cinza-claro);font:600 10.5px/15px 'Poppins';text-align:center;flex:none}
+.q{width:19px;height:19px;border-radius:50%;background:rgba(253,195,72,.16);color:var(--ouro);font:700 11px/19px 'Poppins';text-align:center;flex:none}
 .dec{display:flex;gap:10px}
-.dpill{display:flex;align-items:center;gap:9px;border:1px solid #3A332B;background:#14100B;border-radius:999px;padding:9px 16px 9px 12px;font:600 14px/1 'Poppins'}
+.dpill{display:flex;align-items:center;gap:9px;border:1px solid #3A332B;background:#17130E;border-radius:999px;padding:10px 17px 10px 12px;font:600 14px/1 'Poppins'}
 
 /* ---------- s10 ---------- */
 .main.center{align-items:center;text-align:center}
-.cta .main{top:96px}
-.main.center .pill{align-self:center;margin-top:8px}
-.cta h1.t{font-size:52px;margin-top:22px}
-.cta .sub{max-width:700px;font-size:17px;margin-top:14px}
-.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;width:100%;margin-top:auto;text-align:left}
-.dcard{background:var(--dark-card);border:1px solid var(--dark-line);border-radius:22px;padding:30px 34px;display:flex;flex-direction:column;min-height:330px}
+.cta .main{top:104px}
+.cta h1.t{font-size:52px;margin-top:20px;max-width:1000px}
+.cta .sub{max-width:700px;font-size:17px;margin-top:16px}
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;margin-top:auto;text-align:left}
+.dcard{background:var(--dark-card);border:1px solid var(--dark-line);border-radius:24px;padding:32px 36px;display:flex;flex-direction:column;min-height:330px}
+.dc-l{background:linear-gradient(160deg,#211A10,var(--dark-card) 60%);border-color:#3A2F1C}
 .dcard h3{font:700 22px/1.25 'Poppins';color:var(--branco)}
-.dcard > p{font:400 16px/1.5 'Nunito';color:var(--cinza-claro);margin-top:8px;max-width:520px}
+.dcard > p{font:400 16px/1.5 'Nunito';color:var(--cinza-claro);margin-top:10px;max-width:500px}
 .cta-row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto}
 .btn{display:inline-flex;align-items:center;gap:12px;background:var(--ouro);color:var(--escuro);text-decoration:none;font:600 17px/1 'Poppins';padding:18px 26px;border-radius:999px;box-shadow:0 10px 26px rgba(253,195,72,.25)}
-.url{margin-top:12px;font-size:12px}
 .btn span{font-size:20px}
+.url{margin-top:12px;font-size:12px}
 .levar{margin-top:16px}
-.levar li{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--dark-line);font:400 16px/1.3 'Nunito';color:var(--branco)}
+.levar li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--dark-line);font:400 16px/1.3 'Nunito';color:var(--branco)}
 .levar li:last-child{border-bottom:0}
-.levar li > span:not(.cb){flex:1}
+.levar .lv{flex:1}
 .levar em{font:600 12px/1 'Poppins';font-style:normal;color:var(--ouro);background:rgba(253,195,72,.14);padding:6px 10px;border-radius:999px}
 
 /* print / export */
@@ -806,16 +937,19 @@ const JS = `
     document.querySelectorAll('svg[data-conn]').forEach(function(svg){
       var slide = svg.closest('.slide'); var sr = slide.getBoundingClientRect();
       var k = sr.width / 1440; var out = '';
+      var phone = slide.querySelector('.phone').getBoundingClientRect();
       slide.querySelectorAll('[data-ann]').forEach(function(a, idx){
         var t = slide.querySelector('[data-anchor="'+a.dataset.ann+'"]'); if(!t) return;
         var n = a.querySelector('.ann-n').getBoundingClientRect();
         var b = t.getBoundingClientRect();
         var x1 = (b.right - sr.left)/k, y1 = (b.top + b.height/2 - sr.top)/k;
-        var x2 = (n.left - sr.left)/k, y2 = (n.top + n.height/2 - sr.top)/k;
-        var phone = slide.querySelector('.phone').getBoundingClientRect();
-        var xm = (phone.right - sr.left)/k + 30 + idx*16;
-        out += '<path d="M'+x1+' '+y1+' H'+(xm-10)+' Q'+xm+' '+y1+' '+xm+' '+(y1+(y2>y1?10:-10))+' V'+(y2+(y2>y1?-10:10))+' Q'+xm+' '+y2+' '+(xm+10)+' '+y2+' H'+(x2-2)+'" fill="none" stroke="#6C6C71" stroke-width="1.4"/>';
-        out += '<circle cx="'+x1+'" cy="'+y1+'" r="5" fill="#FDC348" stroke="#070401" stroke-width="1.6"/>';
+        var x2 = (a.getBoundingClientRect().left - sr.left)/k, y2 = (n.top + n.height/2 - sr.top)/k;
+        var xm = (phone.right - sr.left)/k + 26 + idx*12;
+        var dy = y2 - y1, r = Math.min(10, Math.abs(dy)/2), s = dy > 0 ? 1 : -1;
+        var d = Math.abs(dy) < 2 ? 'M'+x1+' '+y1+' H'+x2
+          : 'M'+x1+' '+y1+' H'+(xm-r)+' Q'+xm+' '+y1+' '+xm+' '+(y1+s*r)+' V'+(y2-s*r)+' Q'+xm+' '+y2+' '+(xm+r)+' '+y2+' H'+x2;
+        out += '<path d="'+d+'" fill="none" stroke="#070401" stroke-width="1.4" stroke-dasharray="1 0"/>';
+        out += '<circle cx="'+x1+'" cy="'+y1+'" r="5.5" fill="#FDC348" stroke="#070401" stroke-width="1.8"/>';
       });
       svg.setAttribute('viewBox','0 0 1440 810'); svg.innerHTML = out;
     });

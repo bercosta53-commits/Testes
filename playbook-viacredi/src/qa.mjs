@@ -82,7 +82,7 @@ const data = await page.evaluate(() => {
       const fgc = over(fg, bg);
       const L1 = lum(fgc), L2 = lum(bg);
       const ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
-      texts.push({ t: n.textContent.trim().slice(0, 50), size: parseFloat(cs.fontSize), weight: +cs.fontWeight, ratio: +ratio.toFixed(2), bigGold: !!el.closest('.gold,.num,.big-n,.qmark') && parseFloat(cs.fontSize) >= 40 });
+      texts.push({ t: n.textContent.trim().slice(0, 50), size: parseFloat(cs.fontSize), weight: +cs.fontWeight, ratio: +ratio.toFixed(2), bigGold: !!el.closest('.gold,.num,.big-n,.qmark,.cn') && parseFloat(cs.fontSize) >= 40 });
     }
     // cores azul/teal (exceto o logo, que é imagem)
     const blue = [];
@@ -95,8 +95,11 @@ const data = await page.evaluate(() => {
     return {
       n: i + 1, dark: slide.classList.contains('dark'), text: slide.innerText,
       counter: slide.querySelector('.count').innerText.replace(/\s+/g, ' ').trim(),
+      titleLines: (() => { const h = slide.querySelector('h1.t'); if (!h) return 0; const cs = getComputedStyle(h); return Math.round(h.getBoundingClientRect().height / parseFloat(cs.lineHeight)); })(),
+      titleW: (() => { const h = slide.querySelector('h1.t'); if (!h) return 0; const r = document.createRange(); r.selectNodeContents(h); return Math.round(Math.max(...[...r.getClientRects()].map((x) => x.width))); })(),
       texts, blue, tbc: [...slide.querySelectorAll('.tbc')].map((e) => e.innerText),
-      overflow: [...slide.querySelectorAll('*')].filter((e) => { const r = e.getBoundingClientRect(), s = slide.getBoundingClientRect(); return r.width && (r.right > s.right + 1 || r.bottom > s.bottom + 1 || r.left < s.left - 1); }).map((e) => e.className).slice(0, 5),
+      overflow: [...slide.querySelectorAll('*')].filter((e) => { if (e.closest('[data-bleed]')) return false; const r = e.getBoundingClientRect(), s = slide.getBoundingClientRect(); return r.width && (r.right > s.right + 1 || r.bottom > s.bottom + 1 || r.left < s.left - 1); }).map((e) => String(e.className.baseVal ?? e.className)).slice(0, 5)
+        .concat((() => { const c = slide.querySelector('.content'); if (!c) return []; const cr = c.getBoundingClientRect(); return [...c.querySelectorAll('*')].filter((e) => !e.closest('[data-bleed]') && e.getBoundingClientRect().height && e.getBoundingClientRect().bottom > cr.bottom + 1).map((e) => 'fora da zona de conteúdo: ' + String(e.className.baseVal ?? e.className)).slice(0, 5); })()),
     };
   });
 });
@@ -122,6 +125,10 @@ report.push(`- [${contrastOk ? 'x' : ' '}] Contraste ≥ 4,5:1 em todo texto: ${
 // 3. contador
 const counters = data.map((d) => d.counter === `${String(d.n).padStart(2, '0')} / 10`);
 report.push(`- [${counters.every(Boolean) ? 'x' : ' '}] Contador de página 01 / 10 … 10 / 10: ${ok(counters.every(Boolean))}`);
+// régua de título
+const tl = data.map((d) => `${String(d.n).padStart(2, '0')}: ${d.titleLines} linha(s), ${d.titleW}px`);
+const tOk = data.every((d) => d.titleLines <= 2 && (d.n === 1 || d.n === 10 || d.titleW <= 940));
+report.push(`- [${tOk ? 'x' : ' '}] Régua de título: no máximo 2 linhas e 940px de largura (capa e CTA têm régua própria): ${ok(tOk)}\n  - ${tl.join(' · ')}`);
 // 4. copy
 const missing = [];
 for (const d of data) {
@@ -146,7 +153,7 @@ const nFields = pdfDoc.getForm().getFields().length;
 report.push(`- [${sizeOk && words > 500 ? 'x' : ' '}] PDF com texto selecionável e 10 páginas de 1440×810 pt: ${ok(sizeOk && words > 500)} (${sizes.length} páginas, ${words} palavras extraídas por pdftotext, ${nFields} campos de formulário)`);
 // overflow
 const ovf = data.filter((d) => d.overflow.length).map((d) => `slide ${d.n}: ${d.overflow.join(', ')}`);
-report.push(`- [${ovf.length ? ' ' : 'x'}] Nenhum elemento vazando da área do slide: ${ok(!ovf.length)}${ovf.length ? '\n  - ' + ovf.join('\n  - ') : ''}`);
+report.push(`- [${ovf.length ? ' ' : 'x'}] Nenhum elemento vazando do slide ou da zona de conteúdo (exceto sangrias intencionais da capa e do celular do slide 5): ${ok(!ovf.length)}${ovf.length ? '\n  - ' + ovf.join('\n  - ') : ''}`);
 
 report.push('', '## Contraste por slide', '', '| Slide | Menor contraste | Texto | Menor fonte |', '|---|---|---|---|');
 for (const r of minRows) report.push(`| ${String(r.n).padStart(2, '0')} | ${r.worst.ratio.toFixed(2)}:1 | ${r.worst.t.replace(/\|/g, '/')} (${r.worst.size}px) | ${r.smallest.size}px · ${r.smallest.ratio.toFixed(2)}:1 |`);

@@ -19,6 +19,15 @@ npm run qa      # gera dist/qa-report.md
 
 Requer Node 18+ e o Playwright com Chromium (`require('playwright')`).
 
+## Sistema de diagramação
+
+Vale para todos os slides (definido no topo de `src/deck.mjs`):
+
+- Margens laterais de 96px; header em y=40 com logos à esquerda e, à direita, a pílula de seção e o contador.
+- Zona de título a partir de y=118. Régua de título de 940px (no máximo 2 linhas, checado no QA) e régua de subtítulo de 860px.
+- A zona de conteúdo ocupa toda a altura restante até o rodapé (y=766), e o QA falha se algo vazar dela.
+- As sangrias intencionais são só duas: a ilustração da capa e o celular do slide 5.
+
 ## Estrutura
 
 - `src/deck.mjs`: tokens, componentes e os 10 slides (HTML/CSS; wireframes em HTML/CSS/SVG inline).
