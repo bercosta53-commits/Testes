@@ -260,35 +260,55 @@ boot(() => {
     };
   }, { captions: false });
 
-  // 07 · CTA: Playbook Ubots · Agentes de IA --------------------------------------
+  // 07 · Assinatura: Playbook Ubots · Agentes de IA ------------------------------------
+  // Hierarquia: etiqueta → nome do produto → subtítulo → o playbook como objeto → CTA → logos.
   ENGINE.scene(S.s7, DUR, 'light', cam => {
-    const glow = pos(h('div', 'abs', cam), -200, 300, 1480, 1100);
-    glow.style.background = 'radial-gradient(closest-side, rgba(253,195,72,.55), rgba(253,195,72,0))';
-    const cover = pos(h('div', 'abs', cam), 110, 300, 860, 484);
-    Object.assign(cover.style, { borderRadius: '28px', backgroundImage: 'url(../assets/capa.jpg)', backgroundSize: 'cover', boxShadow: 'var(--soft-shadow)', transformOrigin: '50% 100%' });
-    const sig = h('div', 'center', cam, '<span style="display:inline-flex;align-items:center;gap:14px;font:700 40px Poppins;letter-spacing:-.02em;background:var(--ink);color:var(--y);padding:16px 30px;border-radius:999px">Playbook Ubots · Agentes de IA</span>'); pos(sig, 0, 840);
-    const title = h('div', 'center', cam, 'Como vender crédito no WhatsApp<br>com agentes de IA'); pos(title, 0, 930);
-    Object.assign(title.style, { font: '600 50px/1.15 Poppins', letterSpacing: '-0.03em' });
-    const btn = pos(h('div', 'abs', cam), CX - 340, 1090, 680, 124);
-    Object.assign(btn.style, { background: 'var(--y)', color: 'var(--ink)', borderRadius: '999px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '22px', font: '700 46px Poppins', letterSpacing: '-0.01em' });
-    btn.innerHTML = 'Baixe grátis <span class="ar">→</span>';
-    const arrow = btn.querySelector('.ar'); arrow.style.display = 'inline-block';
-    const logos = pos(h('div', 'abs', cam), 0, 1280, 1080, 70);
-    Object.assign(logos.style, { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '36px' });
-    logos.innerHTML = '<img src="../assets/ubots-logo.png" style="height:54px"><i style="width:2px;height:56px;background:#d6d2c9"></i><img src="../assets/viacredi-logo.png" style="height:68px">';
-    const t0 = S.s7, sigT = wt(10, 4), press = wt(11, 0);
+    const eye = h('div', 'center', cam, 'PLAYBOOK UBOTS'); pos(eye, 0, 236);
+    Object.assign(eye.style, { font: '600 26px Poppins', letterSpacing: '.22em', color: '#8d8a83' });
+    const ttl = maskLine(cam, 'center giant', 'Agentes de IA'); pos(ttl.m, 0, 290); ttl.m.style.width = '1080px';
+    const tsz = fit(ttl.i, 900);
+    ttl.m.style.paddingBottom = '0.22em'; ttl.m.style.marginBottom = '0';   // não corta a perna do "g"
+    const sub = h('div', 'center', cam, 'Como vender crédito no WhatsApp:<br>o método da Viacredi.'); pos(sub, 0, 290 + tsz * 1.18);
+    Object.assign(sub.style, { font: '500 40px/1.3 Poppins', letterSpacing: '-.015em', color: '#55524c' });
+    // o playbook como objeto: capa + duas páginas atrás, brilho amarelo localizado
+    const glow = pos(h('div', 'abs', cam), 90, 560, 900, 640);
+    glow.style.background = 'radial-gradient(closest-side, rgba(253,195,72,.6), rgba(253,195,72,0))';
+    const book = pos(h('div', 'abs', cam), 150, 640, 780, 439); book.style.transformOrigin = '50% 100%';
+    const pages = [[-5, -18, 10], [4, 16, 4]].map(([r, x, y]) => {
+      const pg = pos(h('div', 'abs', book), x, y, 780, 439);
+      Object.assign(pg.style, { background: '#fff', borderRadius: '22px', boxShadow: '0 20px 40px -24px rgba(40,30,10,.35)', transform: `rotate(${r}deg)` });
+      return { pg, r };
+    });
+    const cover = pos(h('div', 'abs', book), 0, 0, 780, 439);
+    Object.assign(cover.style, { borderRadius: '22px', backgroundImage: 'url(../assets/capa.jpg)', backgroundSize: 'cover', boxShadow: 'var(--soft-shadow)' });
+    // CTA dominante
+    const btn = pos(h('div', 'abs', cam), 150, 1150, 780, 132);
+    Object.assign(btn.style, { background: 'var(--ink)', color: 'var(--y)', borderRadius: '999px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 18px 0 56px', font: '700 50px Poppins', letterSpacing: '-.02em' });
+    btn.innerHTML = '<span>Baixe grátis</span><span class="ar" style="width:96px;height:96px;border-radius:50%;background:var(--y);color:var(--ink);display:grid;place-items:center;font:700 46px Poppins">→</span>';
+    const arrow = btn.querySelector('.ar');
+    const meta = h('div', 'center', cam, 'PDF gratuito · 11 páginas'); pos(meta, 0, 1306);
+    Object.assign(meta.style, { font: '500 28px Poppins', color: '#8d8a83' });
+    const logos = pos(h('div', 'abs', cam), 0, 1392, 1080, 64);
+    Object.assign(logos.style, { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' });
+    logos.innerHTML = '<img src="../assets/ubots-logo.png" style="height:46px"><i style="width:2px;height:48px;background:#d6d2c9"></i><img src="../assets/viacredi-logo.png" style="height:58px">';
+    const t0 = S.s7, press = wt(11, 0);
     return {
       update(lt, t) {
-        glow.style.opacity = enter(t, t0, 1.0, E.outCubic);
-        const kc = enter(t, t0 - 0.04, 0.7);
-        cover.style.transform = `perspective(1600px) translateY(${(1 - kc) * 160}px) rotateX(${(1 - kc) * 24}deg)`; cover.style.opacity = clamp(kc * 2);
-        const ks = E.outBack(prog(t, sigT - 0.1, sigT + 0.25)); tf(sig, { s: 0.7 + 0.3 * ks, o: clamp(ks * 2) });
-        const kt = enter(t, t0 + 0.4, 0.45); tf(title, { y: (1 - kt) * 30, o: kt });
-        const kb = E.outBack(prog(t, press - 0.6, press - 0.25));
-        const pr = 1 - 0.05 * Math.sin(Math.PI * prog(t, press, press + 0.22));
-        tf(btn, { s: (0.8 + 0.2 * kb) * pr, o: clamp(kb * 2) });
-        tf(arrow, { x: 16 * Math.sin(Math.PI * prog(t, press, press + 0.3)) });
-        const kl = enter(t, t0 + 0.8, 0.45); tf(logos, { y: (1 - kl) * 20, o: kl });
+        op(eye, enter(t, t0 - 0.04, 0.4));
+        maskT(ttl, enter(t, t0 + 0.05, 0.55));
+        const ks = enter(t, t0 + 0.3, 0.5); tf(sub, { y: (1 - ks) * 24, o: ks });
+        op(glow, enter(t, t0 + 0.3, 1.0, E.outCubic));
+        const kb = E.outExpo(prog(t, t0 + 0.35, t0 + 1.2));
+        book.style.transform = `perspective(1800px) translateY(${(1 - kb) * 220}px) rotateX(${(1 - kb) * 28}deg) rotate(${lerp(4, -2, kb)}deg)`;
+        book.style.opacity = clamp(kb * 2);
+        const kf = E.outCubic(prog(t, t0 + 0.9, t0 + 1.5));            // páginas se abrem em leque
+        pages.forEach(o => { o.pg.style.transform = `rotate(${o.r * kf}deg)`; });
+        const kc = E.outBack(prog(t, press - 0.75, press - 0.35));
+        const pr = 1 - 0.04 * Math.sin(Math.PI * prog(t, press, press + 0.22));
+        tf(btn, { y: (1 - kc) * 40, s: pr, o: clamp(kc * 2) });
+        arrow.style.transform = `translateX(${10 * Math.sin(Math.PI * prog(t, press, press + 0.3))}px)`;
+        op(meta, enter(t, press - 0.2, 0.4));
+        const kl = enter(t, press + 0.1, 0.45); tf(logos, { y: (1 - kl) * 16, o: kl });
       },
     };
   }, { captions: false });
