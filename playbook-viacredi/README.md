@@ -1,10 +1,10 @@
 # Playbook · Agentes de IA na Oferta de Crédito (case Viacredi + Ubots)
 
-Deck de 10 slides (1440×810), mesmo modelo do Playbook Sicoob Crediauc. A copy vem de `playbook-viacredi-ubots.md`.
+Deck de 11 slides (1440×810), mesmo modelo do Playbook Sicoob Crediauc. A copy vem de `playbook-viacredi-ubots.md`.
 
 ## Saídas (`dist/`)
 
-- `playbook-viacredi-ubots.pdf`: 10 páginas de 1440×810 pt (mesmo tamanho do PDF do Crediauc), texto selecionável, fontes embutidas e 25 campos preenchíveis (slides 8, 9 e 10).
+- `playbook-viacredi-ubots.pdf`: 11 páginas de 1440×810 pt (mesmo tamanho do PDF do Crediauc), texto selecionável, fontes embutidas e 25 campos preenchíveis (slides 8, 9 e 10).
 - `playbook-viacredi-ubots.html`: deck navegável e autocontido, com fontes e logos embutidos. Navegue com as setas ou PageUp/PageDown.
 - `previews/slide-01.png` … `slide-10.png`: previews em 2x.
 - `qa-report.md`: resultado do QA da seção 7.

@@ -13,7 +13,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const A = (p) => path.join(ROOT, 'assets', p);
 const b64 = (p, mime) => `data:${mime};base64,${fs.readFileSync(A(p)).toString('base64')}`;
 
-const TOTAL = 10;
+const TOTAL = 11;
 export const LOGO = {
   ubots: b64('logo-ubots.png', 'image/png'),
   ubotsDark: b64('logo-ubots-dark.png', 'image/png'),
@@ -120,13 +120,13 @@ const quote = (text, { dark = false, cls = '' } = {}) => `
 // --- componentes de produto (WhatsApp, alta fidelidade) ---
 const VERIFIED = `<svg class="w-ver" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#25D366"/><path d="M4.6 8.3l2.2 2.1 4.6-4.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 // tela do WhatsApp (iOS, modo claro). size: 'lg' | 'sm'
-export const waScreen = ({ status = false, size = 'lg', body = '', input = true, date = true, cls = '' } = {}) => `
+export const waScreen = ({ status = false, size = 'lg', body = '', input = true, date = true, cls = '', name = 'Agente Viacredi' } = {}) => `
   <div class="wa2 ${size} ${cls}">
     ${status ? `<div class="w-sbar"><b>9:41</b><span class="island"></span>${ICON.status}</div>` : ''}
     <div class="w-top">
       <span class="w-back">${lineIcon('back', 2.2)}</span>
       <span class="w-av">${ICON.spark}</span>
-      <span class="w-id"><b>Agente Viacredi${VERIFIED}</b><small>Conta comercial</small></span>
+      <span class="w-id"><b>${name}${VERIFIED}</b><small>Conta comercial</small></span>
       <span class="w-act">${lineIcon('video', 1.7)}${lineIcon('call', 1.7)}</span>
     </div>
     <div class="w-chat">${date ? '<span class="w-date">Hoje</span>' : ''}${body}</div>
@@ -155,25 +155,17 @@ const s1 = `
   <div class="cover-l">
     <div class="cl-top">
       <div class="pill-w"><i></i>Guia Prático</div>
-      <h1 class="t cover-t">${gold('Testando ==Agentes de IA==')}<br>na Oferta de Crédito</h1>
-      <p class="case-l"><i></i>Baseado no caso Viacredi + Ubots</p>
-      <p class="lead">Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar sobre crédito com seus cooperados e como essa experiência pode ajudar a sua instituição.</p>
+      <h1 class="t cover-t">${gold('Como vender crédito ==no WhatsApp== com agentes de IA')}</h1>
+      <p class="lead">O método de uma cooperativa que liberou mais de R$ 150 mil em crédito ainda na fase de testes</p>
     </div>
-    <ol class="cover-steps">
-      <li><span class="cn">1</span><b>Preparar<br>o Agente</b></li>
-      <li><span class="cn">2</span><b>Testar em Volume<br>Controlado</b></li>
-      <li><span class="cn">3</span><b>Avaliar<br>e Escalar</b></li>
-    </ol>
     <div class="cl-aud">
       <span class="aud-l">Material para</span>
       <ul class="aud-tags"><li>Cooperativas de Crédito</li><li>Bancos e Fintechs</li><li>Instituições Financeiras</li><li>Serviços Financeiros</li><li>Financeiras</li></ul>
     </div>
   </div>
   <div class="cover-art" aria-hidden="true" data-bleed>
-    <div class="ca-glow"></div>
-    <svg class="ca-orbit" viewBox="0 0 700 700"><circle cx="350" cy="350" r="200"/><circle cx="350" cy="350" r="270"/></svg>
     <div class="ca-phone phone2">
-      ${waScreen({ status: true, body: `
+      ${waScreen({ status: true, name: 'Agente de Crédito', body: `
         ${m('ag', `${aiTag}Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?`, '10:30')}
         ${m('us', 'Quero sim! Estou reformando a cozinha.', '10:31')}
         ${m('ag', `Que legal! Simulei uma opção para a sua reforma:
@@ -183,7 +175,6 @@ const s1 = `
     </div>
     <img class="ca-ia" src="${LOGO.iconIA}" alt="">
     <img class="ca-wa" src="${LOGO.iconWA}" alt="">
-    ${wave('var(--escuro)', 72, 3, 3)}
   </div>
 </section>`;
 
@@ -191,7 +182,7 @@ const s2 = `
 <section class="slide light" id="s2">
   ${header(2)}
   <div class="main">
-    ${titleBlock('Uma cooperativa de 74 anos decidiu ==testar IA generativa== na venda de crédito')}
+    ${titleBlock('Entenda o ==ponto de partida==', 'Uma cooperativa de 74 anos decidiu testar IA generativa na venda de crédito, sem abrir mão da proximidade com os cooperados.')}
     <div class="content s2">
       <div class="s2-card">
         <div class="body-txt">
@@ -213,13 +204,6 @@ const s2 = `
         <div class="pp hl"><span class="num">3</span><div><b>Parceria com a Ubots</b><p>Construir e testar um agente de IA para a oferta de crédito.</p></div></div>
       </div>
     </div>
-    <div class="results">
-      <div class="rs-l"><span class="rs-tag">Fase de teste</span><b>Resultados do teste</b><small>Números obtidos antes de a operação estar totalmente estruturada.</small></div>
-      <div class="rs-m"><b>+R$ 150 mil</b><span>em crédito liberado por meio do agente</span></div>
-      <div class="rs-m"><b>4 agentes</b><span>construídos pela própria equipe no Agent Builder</span></div>
-      <div class="rs-m"><b>Transbordo baixo</b><span>com nota de contexto para o time de negócios</span></div>
-      <div class="rs-m"><b>+10%</b><span>meta de ações ativas com agente generativo até dezembro</span></div>
-    </div>
   </div>
 </section>`;
 
@@ -227,7 +211,7 @@ const s3 = `
 <section class="slide light" id="s3">
   ${header(3)}
   <div class="main">
-    ${titleBlock('O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo', 'Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava mais rígida, e cada nova regra para deixá-lo simpático acabava reforçando o tom robótico.')}
+    ${titleBlock('Evite ==empilhar regras== no agente', 'Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava rígida e o tom, robótico.')}
     <div class="content s3">
       <div class="cmp">
         <div class="cmp-col">
@@ -268,7 +252,7 @@ const s4 = `
 <section class="slide dark" id="s4">
   ${header(4, true)}
   <div class="main">
-    ${titleBlock('A virada veio quando o agente ==entendeu o papel dele==', 'Na primeira semana de julho, a Viacredi repensou a lógica do agente. Reduziu as regras, deixou mais claro o papel dele no prompt e preservou os guardrails essenciais de segurança, com a ajuda da própria IA.', { subW: 1010 })}
+    ${titleBlock('Explique ao agente ==o papel dele==', 'Em julho, a Viacredi reduziu as regras, deixou claro o papel do agente no prompt e preservou os guardrails essenciais de segurança.')}
     <div class="content s4">
       <div class="s4-grid">
         <div class="cols3">
@@ -289,7 +273,7 @@ const s5 = `
   ${header(5)}
   <svg class="conn" data-conn></svg>
   <div class="main">
-    ${titleBlock('Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito', 'Poucos dias depois da mudança, uma cooperada disse que já tinha um crédito contratado, mas gostou de saber que havia outra opção. A conversa seguiu sem um roteiro pronto.', { subW: 860 })}
+    ${titleBlock('Deixe a conversa ==seguir o cooperado==', 'Poucos dias após a mudança, uma conversa sobre reforma de cozinha terminou em contratação de crédito, sem roteiro pronto.')}
     <div class="content s5">
       <div class="s5-l" data-bleed>
         <div class="stage"></div>
@@ -320,7 +304,7 @@ const s6 = `
   ${header(6)}
   <div class="main">
     <div class="trow">
-      ${titleBlock('A liberdade para conversar veio junto com ==transparência e segurança==', 'O contexto torna a conversa mais natural sem deixar a segurança de lado: o agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.', { subW: 760 })}
+      ${titleBlock('Combine liberdade com ==transparência e segurança==', 'O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.', { subW: 760 })}
       ${quote('"O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito."', { cls: 'pull' })}
     </div>
     <div class="content s6">
@@ -373,7 +357,7 @@ const s6 = `
 const tl = [
   ['Abril a junho', 'Testes controlados. Pausas frequentes para refinar o agente, preparar o time e definir os novos indicadores.', 'teste', 'Testes controlados'],
   ['Junho', 'Pausa total para reestruturar os disparos e planejar a escala.', 'pausa', 'Pausa'],
-  ['1ª semana de julho', 'A virada: menos regras, mais contexto.', 'virada', 'Virada'],
+  ['1ª semana de julho', 'Reformulação das instruções e esclarecimento do papel do agente: menos regras e mais contexto.', 'virada', 'Virada'],
   ['2ª semana de julho', 'Testes retomados com a nova versão do agente.', 'retomada', 'Retomada'],
   ['Até dezembro', 'Meta de rodar mais de 10% das ações ativas com agente generativo.', 'meta', 'Meta'],
 ];
@@ -381,7 +365,7 @@ const s7 = `
 <section class="slide light" id="s7">
   ${header(7)}
   <div class="main">
-    ${titleBlock('Testar pouco, pausar e voltar melhor ==fez parte do método==', 'A Viacredi começou com cooperados reais, em pequenos volumes e com filtros de risco. A cada pausa, a equipe revia as conversas, ajustava o agente e preparava o próximo teste.')}
+    ${titleBlock('Teste pouco, ==pause e volte melhor==', 'A Viacredi começou com cooperados reais, pequenos volumes e filtros de risco, e usou cada pausa para ajustar o agente.')}
     <div class="content s7">
       <ol class="phases">
         ${tl.map(([t, d, k, tag], i) => `
@@ -399,7 +383,29 @@ const s7 = `
         <p>Próximos passos: testar um agente mais generalista e expandir para produtos sem risco de crédito, como cartões e aplicações, no onboarding de novos cooperados.</p>
       </div>
     </div>
-    <p class="foot">Mais de R$ 150 mil em crédito liberados antes de a operação estar totalmente estruturada.</p>
+  </div>
+</section>`;
+
+const s8r = `
+<section class="slide dark" id="s8">
+  ${header(8, true)}
+  <div class="main">
+    ${titleBlock('Acompanhe ==os resultados do teste==', 'Números alcançados ainda na fase de testes, antes de a operação estar totalmente estruturada.')}
+    <div class="content rsx">
+      <div class="rs-hero">
+        <span class="rs-k">Geração de negócio</span>
+        <b class="rs-big">+R$ 150 mil</b>
+        <p>em crédito liberado por meio do agente, ainda na fase de testes.</p>
+        ${wave('var(--escuro)', 96, 3, 3.5)}
+      </div>
+      <div class="rs-grid">
+        <div class="rs-c"><span class="rs-k">Eficiência no transbordo</span><b>Transbordo baixo</b><p>Quando acontece, o agente envia uma nota com o contexto para o time de negócios.</p></div>
+        <div class="rs-c"><span class="rs-k">Conversão espontânea</span><b>Conversa que vira contratação</b><p>Uma conversa sobre reforma de cozinha terminou em contratação, sem roteiro pronto.</p></div>
+        <div class="rs-c"><span class="rs-k">Autonomia do time</span><b>4 agentes</b><p>construídos pela própria equipe no Agent Builder, sem depender da implementação.</p></div>
+        <div class="rs-c"><span class="rs-k">Escala</span><b>+10%</b><p>meta de ações ativas com agente generativo até dezembro.</p></div>
+      </div>
+    </div>
+    <p class="foot sm">Os resultados da Viacredi não constituem projeção para outras instituições.</p>
   </div>
 </section>`;
 
@@ -421,9 +427,9 @@ const s8guard = [
 const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '');
 const s8 = `
 <section class="slide light" id="s8">
-  ${header(8)}
+  ${header(9)}
   <div class="main">
-    ${titleBlock('Antes de escrever regras, escreva ==o papel do agente==', 'Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir. Use as perguntas abaixo para definir o primeiro teste da sua instituição.')}
+    ${titleBlock('Escreva ==o papel do agente==', 'Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir.')}
     <div class="content s8">
       <div class="ws">
         ${s8fields.map(([l, p], i) => `
@@ -458,9 +464,9 @@ const inds = [
 ];
 const s9 = `
 <section class="slide light" id="s9">
-  ${header(9)}
+  ${header(10)}
   <div class="main">
-    ${titleBlock('Teste em ==volume controlado== e meça o que muda na conversa')}
+    ${titleBlock('Teste em ==volume controlado== e meça', 'Comece com poucos disparos, acompanhe as conversas e decida com indicadores se continua, ajusta ou amplia.')}
     <div class="content s9">
       <div class="steps3">
         ${steps.map(([t, d, e, fs, c], i) => `
@@ -481,7 +487,7 @@ const s9 = `
       </div>
       <div class="evalbar">
         <ul class="qs">
-          <li><span class="q">?</span>O teste respondeu ao objetivo definido na página 8?</li>
+          <li><span class="q">?</span>O teste respondeu ao objetivo definido na página 9?</li>
           <li><span class="q">?</span>Quais situações exigiram participação humana?</li>
           <li><span class="q">?</span>O que ajustar antes de ampliar o volume?</li>
         </ul>
@@ -490,26 +496,24 @@ const s9 = `
         </div>
       </div>
     </div>
-    <p class="foot sm">Os resultados da Viacredi não constituem projeção para outras instituições.</p>
   </div>
 </section>`;
 
 const levar = [
-  ['Papel do agente', 'pág. 8'],
-  ['Guardrails críticos', 'pág. 8'],
-  ['Plano de teste e responsáveis', 'pág. 9'],
-  ['Indicadores e critério de decisão', 'pág. 9'],
+  ['Papel do agente', 'pág. 9'],
+  ['Guardrails críticos', 'pág. 9'],
+  ['Plano de teste e responsáveis', 'pág. 10'],
+  ['Indicadores e critério de decisão', 'pág. 10'],
 ];
 const s10 = `
 <section class="slide dark cta" id="s10">
-  ${header(10, true, false)}
+  ${header(11, true, false)}
   <div class="main">
     <div class="cta-top">
       <div>
         ${pill()}
-        <h1 class="t">${gold('Desenhe o ==primeiro teste== de agente de IA na sua instituição')}</h1>
+        <h1 class="t">${gold('Quer aplicar ==este método== na sua instituição?')}</h1>
       </div>
-      <p class="sub">Este guia ajuda sua equipe a definir o papel do agente, os cuidados de segurança e o plano de teste antes da primeira conversa com os cooperados.</p>
     </div>
     <div class="cta-grid">
       <div class="cta-main">
@@ -583,6 +587,7 @@ h1.t{font:700 42px/1.14 'Poppins';letter-spacing:-.026em;margin-top:0;color:var(
 .dark .sub{color:var(--cinza-claro)}
 .content{flex:1;min-height:0;margin-top:32px;display:flex;flex-direction:column}
 .foot{flex:none;margin-top:18px;font:400 12px/1.3 'Nunito';color:var(--cinza-medio)}
+.dark .foot{color:var(--cinza-claro)}
 .foot.sm{font-size:11px}
 .h3{font:700 18px/1.2 'Poppins'}
 .cap{font:400 11px/1.3 'Nunito';color:var(--cinza-medio)}
@@ -681,7 +686,7 @@ h1.t{font:700 42px/1.14 'Poppins';letter-spacing:-.026em;margin-top:0;color:var(
 .cover-l{position:absolute;left:var(--mx);top:122px;bottom:44px;width:720px;display:flex;flex-direction:column;justify-content:space-between}
 .pill-w{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--linha);border-radius:999px;padding:9px 16px;font:600 13px/1 'Poppins';box-shadow:0 4px 14px rgba(107,77,0,.06)}
 .pill-w i{width:8px;height:8px;border-radius:50%;background:var(--ouro)}
-h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034em;max-width:none}
+h1.cover-t{font-size:62px;line-height:1.08;margin-top:28px;letter-spacing:-.034em;max-width:none}
 .case-l{display:flex;align-items:center;gap:10px;margin-top:16px;font:500 14px/1 'Poppins';color:var(--cinza-medio)}
 .case-l i{width:26px;height:2px;background:var(--ouro);border-radius:2px}
 .lead{font:400 19px/1.55 'Nunito';color:var(--escuro);margin-top:20px;max-width:650px}
@@ -693,12 +698,10 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .cover-steps b{font:600 16px/1.3 'Poppins'}
 .aud-l{display:block;font:600 12px/1 'Poppins';color:var(--ouro-texto);letter-spacing:.08em;text-transform:uppercase}
 .aud-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.aud-tags li{font:500 13.5px/1 'Poppins';padding:10px 15px;border-radius:999px;background:var(--escuro);color:var(--branco)}
+.aud-tags li{font:500 13.5px/1 'Poppins';padding:10px 15px;border-radius:999px;background:transparent;border:1px solid var(--cinza-claro);color:var(--escuro)}
 .aud{font:400 12px/1.4 'Nunito';color:var(--cinza-medio);margin-top:14px}
 .cover-art{position:absolute;left:860px;top:24px;right:24px;bottom:24px;border-radius:34px;overflow:hidden;
   background:linear-gradient(160deg,#FFDB80 0%,var(--ouro) 46%,#F6B42E 100%)}
-.ca-glow{position:absolute;left:-60px;top:-80px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(255,253,249,.6),rgba(255,253,249,0) 62%)}
-.ca-orbit{position:absolute;left:-72px;top:30px;width:700px;height:700px;fill:none;stroke:rgba(255,253,249,.6);stroke-width:1.5}
 .ca-phone{position:absolute;left:112px;top:40px;width:338px;height:682px}
 .ca-phone .w-chat{gap:6px;padding:14px 12px 12px}
 .ca-phone .mb{font-size:13.5px}
@@ -722,7 +725,20 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 .ctx-i svg{width:13px;height:13px}
 .ca-ctx dl{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;margin-top:9px;font:400 11.5px/1.3 'Nunito'}
 .ca-ctx dt{color:var(--cinza-medio)} .ca-ctx dd{font-weight:700}
-.cover-art > .wave{position:absolute;left:34px;bottom:40px;opacity:.85}
+.cover .lead{font:400 22px/1.5 'Nunito';margin-top:26px;max-width:620px;color:var(--cinza-medio)}
+.cover-l{justify-content:center;gap:120px}
+/* resultados */
+.rsx{display:grid;grid-template-columns:1fr 1.45fr;gap:22px}
+.rs-hero{position:relative;background:linear-gradient(155deg,#FFD978,var(--ouro) 50%,#F4AE2A) var(--ouro);color:var(--escuro);border-radius:24px;padding:32px 34px;display:flex;flex-direction:column;justify-content:center}
+.rs-hero .rs-k{color:var(--escuro);background:rgba(7,4,1,.1)}
+.rs-big{font:700 64px/1 'Poppins';letter-spacing:-.04em;margin-top:22px}
+.rs-hero p{font:600 19px/1.45 'Nunito';margin-top:14px;max-width:360px}
+.rs-hero .wave{position:absolute;right:30px;top:30px}
+.rs-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px}
+.rs-c{background:var(--dark-card);border:1px solid var(--dark-line);border-radius:20px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center}
+.rs-k{align-self:flex-start;font:600 11px/1 'Poppins';letter-spacing:.07em;text-transform:uppercase;color:var(--ouro);background:rgba(253,195,72,.12);padding:7px 10px;border-radius:999px}
+.rs-c b{font:700 26px/1.15 'Poppins';color:var(--branco);margin-top:14px;letter-spacing:-.01em}
+.rs-c p{font:400 15px/1.45 'Nunito';color:var(--cinza-claro);margin-top:8px}
 
 /* ---------- s2 ---------- */
 .s2{display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:minmax(0,1fr);gap:24px}
@@ -949,7 +965,7 @@ h1.cover-t{font-size:60px;line-height:1.06;margin-top:22px;letter-spacing:-.034e
 
 /* ---------- s10 ---------- */
 .cta .main{top:118px}
-.cta-top{display:grid;grid-template-columns:1fr 340px;gap:56px;align-items:end}
+.cta-top{display:block}
 .cta h1.t{font-size:50px;line-height:1.1;margin-top:18px;max-width:860px;letter-spacing:-.03em}
 .cta .sub{font-size:17px;line-height:1.55;margin:0 0 6px;max-width:none}
 .cta-grid{flex:1;min-height:0;display:grid;grid-template-columns:1.15fr 1fr;gap:24px;margin-top:40px}
@@ -1042,7 +1058,7 @@ export function buildHtml() {
 </head>
 <body>
 <main class="deck">
-${[s1, s2, s3, s4, s5, s6, s7, s8, s9, s10].join('\n')}
+${[s1, s2, s3, s4, s5, s6, s7, s8r, s8, s9, s10].join('\n')}
 </main>
 <script>${JS}</script>
 </body>

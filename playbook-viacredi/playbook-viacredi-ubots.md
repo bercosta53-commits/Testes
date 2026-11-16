@@ -1,6 +1,6 @@
 # Playbook · Testando agentes de IA na oferta de crédito
 
-Brief de produção para o Claude Code. Case Viacredi + Ubots. 10 slides, 16:9, mesmo modelo e recursos do Playbook Sicoob Crediauc.
+Brief de produção para o Claude Code. Case Viacredi + Ubots. 11 slides (eram 10; o slide de resultados entrou na revisão de 16/11), 16:9, mesmo modelo e recursos do Playbook Sicoob Crediauc.
 
 ---
 
@@ -10,7 +10,7 @@ Brief de produção para o Claude Code. Case Viacredi + Ubots. 10 slides, 16:9, 
 2. Peça ao Claude Code: "Leia `playbook-viacredi-ubots.md` e construa o deck seguindo as seções 2 a 5. Depois rode o QA da seção 7."
 3. Saídas esperadas:
    - `dist/playbook-viacredi-ubots.html`: deck navegável, um `<section>` de 1440×810 por slide
-   - `dist/playbook-viacredi-ubots.pdf`: PDF com 10 páginas de 1440×810 pt, exportado via Playwright (Chromium), texto selecionável
+   - `dist/playbook-viacredi-ubots.pdf`: PDF com 11 páginas de 1440×810 pt, exportado via Playwright (Chromium), texto selecionável
    - `dist/previews/slide-01.png` … `slide-10.png` para revisão
 
 Regras de copy (não negociáveis):
@@ -60,7 +60,7 @@ Tokens:
 - Contraste: corpo e legendas com no mínimo 4,5:1. Texto `--cinza-medio` só sobre `--branco`. Ouro nunca como cor de texto pequeno sobre branco (falha contraste): sobre branco, ouro só em títulos ≥ 40px ou como fundo de pílula/botão com texto escuro.
 
 Componentes recorrentes (copiar do Crediauc):
-- **Header:** logo Ubots | divisória | logo Viacredi, canto superior esquerdo. Contador `02 / 10` no canto superior direito.
+- **Header:** logo Ubots | divisória | logo Viacredi, canto superior esquerdo. Contador `02 / 11` no canto superior direito.
 - **Pílula de seção:** fundo `--ouro-suave`, texto 12px: `Playbook · Agentes de IA na Oferta de Crédito`.
 - **Título:** Poppins Bold 44px, com 2 a 4 palavras em `--ouro` (indicadas abaixo entre `==assim==`).
 - **Subtítulo:** Nunito 16px, `--cinza-medio`, máximo 2 linhas.
@@ -75,14 +75,12 @@ Componentes recorrentes (copiar do Crediauc):
 ## 3. Copy e layout por slide
 
 ### Slide 1 · Capa
-**Layout:** header só com o logo Ubots. Texto à esquerda, ilustração à direita: painel ouro com celular mostrando uma conversa de contratação de crédito (oferta, plano da cooperada, simulação com juros e IOF, contratação pelo app), cartão "Contexto do Cooperado" e ícones de IA e WhatsApp. Textos da capa em Title Case (revisão de 13/11).
+**Layout:** capa clean (revisão de 16/11). Header só com o logo Ubots. À esquerda: pílula, título, subtítulo e público. À direita: painel ouro com o celular da conversa de contratação e os ícones de IA e WhatsApp. A Viacredi não aparece na capa; o case entra no contexto, a partir do slide 2.
 
 - Pílula: `Guia Prático`
-- Título: Testando ==Agentes de IA== na Oferta de Crédito
-- Subtítulo: Menos regras, mais contexto: o que a Viacredi aprendeu ao colocar um agente de IA para conversar sobre crédito com seus cooperados e como essa experiência pode ajudar a sua instituição.
-- Chips de etapas: `1 Preparar o Agente` → `2 Testar em Volume Controlado` → `3 Avaliar e Escalar`
+- Título: Como vender crédito ==no WhatsApp== com agentes de IA
+- Subtítulo: O método de uma cooperativa que liberou mais de R$ 150 mil em crédito ainda na fase de testes
 - Rótulo de público: Material para
-- Linha de origem (abaixo do título, discreta): Baseado no caso Viacredi + Ubots
 - Tags de público: `Cooperativas de Crédito` · `Bancos e Fintechs` · `Instituições Financeiras` · `Serviços Financeiros` · `Financeiras`
 
 ---
@@ -90,7 +88,8 @@ Componentes recorrentes (copiar do Crediauc):
 ### Slide 2 · O ponto de partida
 **Layout:** texto corrido à esquerda (60%), coluna de cards à direita (40%), card da protagonista na base. Slide com mais texto.
 
-- Título: Uma cooperativa de 74 anos decidiu ==testar IA generativa== na venda de crédito
+- Título: Entenda o ==ponto de partida==
+- Subtítulo: Uma cooperativa de 74 anos decidiu testar IA generativa na venda de crédito, sem abrir mão da proximidade com os cooperados.
 - Corpo (esquerda):
 
   A Viacredi, cooperativa do Sistema Ailos com sede em Blumenau, tem mais de 1 milhão de cooperados e mais de 100 postos em Santa Catarina e no Paraná. A proximidade com os cooperados sempre esteve no centro da sua atuação.
@@ -102,22 +101,14 @@ Componentes recorrentes (copiar do Crediauc):
   - **Sem histórico** · Sem indicadores prévios de IA generativa para comparar.
   - **Parceria com a Ubots** · Construir e testar um agente de IA para a oferta de crédito.
 - Card da protagonista (faixa inferior): **Giovanna** · [cargo A CONFIRMAR] · Conduziu o projeto desde o primeiro teste até a operação atual.
-- Faixa de resultados (revisão de 13/11, escura, números em ouro de tamanho moderado):
-  - Fase de teste
-  - Resultados do teste
-  - Números obtidos antes de a operação estar totalmente estruturada.
-  - **+R$ 150 mil** · em crédito liberado por meio do agente
-  - **4 agentes** · construídos pela própria equipe no Agent Builder
-  - **Transbordo baixo** · com nota de contexto para o time de negócios
-  - **+10%** · meta de ações ativas com agente generativo até dezembro
 
 ---
 
 ### Slide 3 · O erro natural
 **Layout:** wireframe comparativo em dois painéis lado a lado, ligados por uma seta, sobre o fundo claro. Citação da Giovanna embaixo à esquerda, callout escuro embaixo à direita.
 
-- Título: O primeiro instinto foi ==empilhar regras==, e o agente virou um bot de fluxo
-- Subtítulo: Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava mais rígida, e cada nova regra para deixá-lo simpático acabava reforçando o tom robótico.
+- Título: Evite ==empilhar regras== no agente
+- Subtítulo: Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava rígida e o tom, robótico.
 - Painel esquerdo, "Instruções por regras" (mock de editor de prompt, linhas riscadas de amarelo suave):
   - Não fale sobre…
   - Não responda se…
@@ -138,8 +129,8 @@ Componentes recorrentes (copiar do Crediauc):
 ### Slide 4 · A virada (escuro)
 **Layout:** fundo `--escuro`. Título e subtítulo no topo, três colunas de wireframe ("Saiu / Entrou / Ficou"), citação grande à direita ou na base, faixa com a mensagem-chave. Slide com mais texto.
 
-- Título: A virada veio quando o agente ==entendeu o papel dele==
-- Subtítulo: Na primeira semana de julho, a Viacredi repensou a lógica do agente. Reduziu as regras, deixou mais claro o papel dele no prompt e preservou os guardrails essenciais de segurança, com a ajuda da própria IA.
+- Título: Explique ao agente ==o papel dele==
+- Subtítulo: Em julho, a Viacredi reduziu as regras, deixou claro o papel do agente no prompt e preservou os guardrails essenciais de segurança.
 - Coluna 1, **O que saiu** (borda tracejada cinza, itens riscados):
   - Regras de comportamento em excesso
   - Roteiro fechado para cada resposta
@@ -160,8 +151,8 @@ Componentes recorrentes (copiar do Crediauc):
 ### Slide 5 · A conversa da cozinha
 **Layout:** wireframe complexo. Mock de celular com a conversa à esquerda (45%); à direita, quatro anotações numeradas ligadas por linhas a pontos da conversa. Título e subtítulo em cima, largura total.
 
-- Título: Uma conversa sobre ==reforma de cozinha== terminou em contratação de crédito
-- Subtítulo: Poucos dias depois da mudança, uma cooperada disse que já tinha um crédito contratado, mas gostou de saber que havia outra opção. A conversa seguiu sem um roteiro pronto.
+- Título: Deixe a conversa ==seguir o cooperado==
+- Subtítulo: Poucos dias após a mudança, uma conversa sobre reforma de cozinha terminou em contratação de crédito, sem roteiro pronto.
 - Conversa no celular (substituir pelo print anonimizado aprovado; se não houver print, usar esta reconstituição com a legenda "Reconstituição a partir do relato do projeto"):
   1. Cooperada: "Já tenho um crédito contratado, mas achei bom saber que tem outro disponível."
   2. Agente: "Que bom! Posso perguntar o que você está planejando?"
@@ -181,8 +172,8 @@ Componentes recorrentes (copiar do Crediauc):
 ### Slide 6 · Liberdade com responsabilidade
 **Layout:** três cards de mesma altura, cada um com um mini wireframe. Citação da Giovanna em faixa na base.
 
-- Título: A liberdade para conversar veio junto com ==transparência e segurança==
-- Subtítulo: O contexto torna a conversa mais natural sem deixar a segurança de lado: o agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.
+- Título: Combine liberdade com ==transparência e segurança==
+- Subtítulo: O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.
 - Card 1, **Custos às claras**
   - Mini chat: cooperado pergunta sobre os custos da retirada → agente explica que é um crédito com juros e IOF, contextualiza e oferece encaminhar ao time humano para comparar com outras linhas.
   - Linha de apoio: Transparência sem esperar o cooperado insistir.
@@ -203,12 +194,12 @@ Componentes recorrentes (copiar do Crediauc):
 ### Slide 7 · Como o teste aconteceu
 **Layout:** linha do tempo horizontal ocupando 65% da largura (5 marcos, numerais ouro), painel lateral "O papel da Ubots" à direita. Slide com mais texto.
 
-- Título: Testar pouco, pausar e voltar melhor ==fez parte do método==
-- Subtítulo: A Viacredi começou com cooperados reais, em pequenos volumes e com filtros de risco. A cada pausa, a equipe revia as conversas, ajustava o agente e preparava o próximo teste.
+- Título: Teste pouco, ==pause e volte melhor==
+- Subtítulo: A Viacredi começou com cooperados reais, pequenos volumes e filtros de risco, e usou cada pausa para ajustar o agente.
 - Linha do tempo:
   - **Abril a junho** · Testes controlados. Pausas frequentes para refinar o agente, preparar o time e definir os novos indicadores.
   - **Junho** · Pausa total para reestruturar os disparos e planejar a escala.
-  - **1ª semana de julho** · A virada: menos regras, mais contexto.
+  - **1ª semana de julho** · Reformulação das instruções e esclarecimento do papel do agente: menos regras e mais contexto.
   - **2ª semana de julho** · Testes retomados com a nova versão do agente.
   - **Até dezembro** · Meta de rodar mais de 10% das ações ativas com agente generativo.
 - Painel "O papel da Ubots" (card com borda ouro):
@@ -217,15 +208,33 @@ Componentes recorrentes (copiar do Crediauc):
 
   Próximos passos: testar um agente mais generalista e expandir para produtos sem risco de crédito, como cartões e aplicações, no onboarding de novos cooperados.
 
-- Rodapé discreto: Mais de R$ 150 mil em crédito liberados antes de a operação estar totalmente estruturada.
+---
+
+### Slide 8 · Os resultados do teste (escuro)
+**Layout:** novo (revisão de 16/11, a pedido da Steph): os resultados saem do slide 2 e ganham slide próprio. Card ouro com o resultado de negócio à esquerda; grade 2 × 2 de cards escuros à direita. Números em tamanho moderado, sempre com contexto.
+
+- Título: Acompanhe ==os resultados do teste==
+- Subtítulo: Números alcançados ainda na fase de testes, antes de a operação estar totalmente estruturada.
+- Resultados:
+  - Geração de negócio
+  - **+R$ 150 mil** · em crédito liberado por meio do agente, ainda na fase de testes.
+  - Eficiência no transbordo
+  - **Transbordo baixo** · Quando acontece, o agente envia uma nota com o contexto para o time de negócios.
+  - Conversão espontânea
+  - **Conversa que vira contratação** · Uma conversa sobre reforma de cozinha terminou em contratação, sem roteiro pronto.
+  - Autonomia do time
+  - **4 agentes** · construídos pela própria equipe no Agent Builder, sem depender da implementação.
+  - Escala
+  - **+10%** · meta de ações ativas com agente generativo até dezembro.
+- Rodapé (11px): Os resultados da Viacredi não constituem projeção para outras instituições.
 
 ---
 
-### Slide 8 · Método 1: o papel do agente
+### Slide 9 · Método 1: o papel do agente
 **Layout:** como o slide 4 do Crediauc. Grade de 6 campos para preencher à esquerda (2 colunas × 3 linhas), caixa escura com checklist à direita, dica na base.
 
-- Título: Antes de escrever regras, escreva ==o papel do agente==
-- Subtítulo: Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir. Use as perguntas abaixo para definir o primeiro teste da sua instituição.
+- Título: Escreva ==o papel do agente==
+- Subtítulo: Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir.
 - Campos:
   - **Objetivo** · Qual resultado a conversa deve buscar?
   - **Público** · Para quem é a oferta e em que momento da relação?
@@ -243,10 +252,11 @@ Componentes recorrentes (copiar do Crediauc):
 
 ---
 
-### Slide 9 · Método 2: testar e medir
+### Slide 10 · Método 2: testar e medir
 **Layout:** três colunas de etapas com numerais grandes (como slide 5 do Crediauc), cada uma com caixa "Entrega" e campos Data/Responsável. Abaixo, linha de 6 indicadores ligados por ícones de linha (como slide 8 do Crediauc). Barra escura final com perguntas de avaliação e checkboxes de decisão.
 
-- Título: Teste em ==volume controlado== e meça o que muda na conversa
+- Título: Teste em ==volume controlado== e meça
+- Subtítulo: Comece com poucos disparos, acompanhe as conversas e decida com indicadores se continua, ajusta ou amplia.
 - Etapas:
   - **1 Preparação** · Defina o papel e os limites do agente, o público inicial com filtros de risco, os responsáveis e os indicadores do teste. **Entrega:** agente pronto para conversar com um grupo pequeno. Campos: Data · Responsável
   - **2 Teste** · Comece com poucos disparos, acompanhe as conversas e faça pausas para ajustar o que for necessário. **Entrega:** conversas revisadas e ajustes registrados. Campos: Início · Término · Responsável
@@ -259,29 +269,27 @@ Componentes recorrentes (copiar do Crediauc):
   - **Transbordo** · Transferências para o humano e seus motivos
   - **Qualidade** · Conversas revisadas sem desvio dos guardrails
 - Barra escura:
-  - O teste respondeu ao objetivo definido na página 8?
+  - O teste respondeu ao objetivo definido na página 9?
   - Quais situações exigiram participação humana?
   - O que ajustar antes de ampliar o volume?
   - Checkboxes: Continuar · Ajustar · Ampliar
-- Rodapé (11px): Os resultados da Viacredi não constituem projeção para outras instituições.
 
 ---
 
-### Slide 10 · CTA (escuro)
+### Slide 11 · CTA (escuro)
 **Layout:** igual ao slide 9 do Crediauc. Título centralizado, dois cards na base.
 
 - Pílula: `Playbook · Agentes de IA na Oferta de Crédito`
-- Título: Desenhe o ==primeiro teste== de agente de IA na sua instituição
-- Subtítulo: Este guia ajuda sua equipe a definir o papel do agente, os cuidados de segurança e o plano de teste antes da primeira conversa com os cooperados.
+- Título: Quer aplicar ==este método== na sua instituição?
 - Card esquerdo:
   - **Converse com a Ubots sobre a sua operação**
   - Traga a linha de crédito que faz sentido testar e as definições do playbook. Podemos construir os próximos passos juntos.
   - Botão ouro: `Falar com um especialista →` (link: [URL A CONFIRMAR, com UTM])
 - Card direito, "Leve para a conversa" (checkboxes com pílula de slide):
-  - Papel do agente · pág. 8
-  - Guardrails críticos · pág. 8
-  - Plano de teste e responsáveis · pág. 9
-  - Indicadores e critério de decisão · pág. 9
+  - Papel do agente · pág. 9
+  - Guardrails críticos · pág. 9
+  - Plano de teste e responsáveis · pág. 10
+  - Indicadores e critério de decisão · pág. 10
 
 ---
 
@@ -296,9 +304,10 @@ Componentes recorrentes (copiar do Crediauc):
 | 5 | Claro | Wireframe complexo | Celular anotado |
 | 6 | Claro | Wireframe | Três cards com mini chats |
 | 7 | Claro | Texto + linha do tempo | Timeline + painel lateral |
-| 8 | Claro | Campos | Grade preenchível + caixa escura |
-| 9 | Claro | Campos + métricas | Etapas + indicadores + barra escura |
-| 10 | Escuro | CTA | Centralizado + dois cards |
+| 8 | Escuro | Resultados | Card ouro + grade 2 × 2 |
+| 9 | Claro | Campos | Grade preenchível + caixa escura |
+| 10 | Claro | Campos + métricas | Etapas + indicadores + barra escura |
+| 11 | Escuro | CTA | Título + dois cards |
 
 ---
 
@@ -343,8 +352,8 @@ Confirmar antes de publicar:
 QA visual (rodar após o build):
 - [ ] Nenhum azul ou teal; nenhum travessão no texto visível
 - [ ] Contraste ≥ 4,5:1 no menor texto de cada slide (registrar o valor)
-- [ ] Contador de página correto (`01 / 10` … `10 / 10`)
+- [ ] Contador de página correto (`01 / 11` … `11 / 11`)
 - [ ] Copy idêntica à deste arquivo
 - [ ] Nenhum `[A CONFIRMAR]` sobrando na versão final
 - [ ] Dois slides escuros nunca em sequência
-- [ ] PDF com texto selecionável e 10 páginas de 1440×810
+- [ ] PDF com texto selecionável e 11 páginas de 1440×810

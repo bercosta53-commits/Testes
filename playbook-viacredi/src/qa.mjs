@@ -28,7 +28,7 @@ function copyFragments() {
       line = line.replace(/\*\*/g, '').replace(/`/g, '');
       const t = line.trim();
       if (!t || /^Layout:/.test(t)) continue;
-      if (/^(- )?(Mini chat|Wireframe|Conversa no celular|Cards à direita|Painel|Coluna|Card |Campos:|Indicadores:|Etapas:|Barra escura:|Linha do tempo:|Anotações:|Caixa escura|Dica|Faixa de citação|Card esquerdo:|Card direito|Botão|Faixa de resultados)/.test(t) && !/: \S/.test(t.replace(/^- /, '').replace(/^[^:]+:/, '')) ) continue;
+      if (/^(- )?(Mini chat|Wireframe|Conversa no celular|Cards à direita|Painel|Coluna|Card |Campos:|Indicadores:|Etapas:|Barra escura:|Linha do tempo:|Anotações:|Caixa escura|Dica|Faixa de citação|Card esquerdo:|Card direito|Botão|Faixa de resultados|Resultados:)/.test(t) && !/: \S/.test(t.replace(/^- /, '').replace(/^[^:]+:/, '')) ) continue;
       let v = t.replace(/^- /, '').replace(/^\d+\. /, '');
       const lab = v.match(/^(Pílula|Título|Subtítulo|Linha de público[^:]*|Citação|Callout escuro|Linha de apoio[^:]*|Faixa final[^:]*|Rodapé[^:]*|Legenda[^:]*|Rótulo de público|Tags de público|Linha de origem[^:]*|Selo no canto|Corpo \(esquerda\)|Card da protagonista[^:]*|Dica[^:]*|Faixa de citação|Chips de etapas[^:]*):\s*(.*)$/);
       if (lab) v = lab[2];
@@ -95,6 +95,7 @@ const data = await page.evaluate(() => {
     return {
       n: i + 1, dark: slide.classList.contains('dark'), text: slide.innerText,
       counter: slide.querySelector('.count').innerText.replace(/\s+/g, ' ').trim(),
+      subLen: (() => { const s = slide.querySelector('.tblock .sub'); return s ? s.innerText.trim().length : 0; })(),
       titleLines: (() => { const h = slide.querySelector('h1.t'); if (!h) return 0; const cs = getComputedStyle(h); return Math.round(h.getBoundingClientRect().height / parseFloat(cs.lineHeight)); })(),
       titleW: (() => { const h = slide.querySelector('h1.t'); if (!h) return 0; const r = document.createRange(); r.selectNodeContents(h); return Math.round(Math.max(...[...r.getClientRects()].map((x) => x.width))); })(),
       texts, blue, tbc: [...slide.querySelectorAll('.tbc')].map((e) => e.innerText),
@@ -123,12 +124,14 @@ const minRows = data.map((d) => {
 const contrastOk = minRows.every((r) => r.worst.ratio >= 4.5);
 report.push(`- [${contrastOk ? 'x' : ' '}] Contraste ≥ 4,5:1 em todo texto: ${ok(contrastOk)} (tabela abaixo)`);
 // 3. contador
-const counters = data.map((d) => d.counter === `${String(d.n).padStart(2, '0')} / 10`);
-report.push(`- [${counters.every(Boolean) ? 'x' : ' '}] Contador de página 01 / 10 … 10 / 10: ${ok(counters.every(Boolean))}`);
+const counters = data.map((d) => d.counter === `${String(d.n).padStart(2, '0')} / ${data.length}`);
+report.push(`- [${counters.every(Boolean) ? 'x' : ' '}] Contador de página 01 / ${data.length} … ${data.length} / ${data.length}: ${ok(counters.every(Boolean))}`);
 // régua de título
 const tl = data.map((d) => `${String(d.n).padStart(2, '0')}: ${d.titleLines} linha(s), ${d.titleW}px`);
-const tOk = data.every((d) => d.titleLines <= 2 && (d.n === 1 || d.n === 10 || d.titleW <= 940));
-report.push(`- [${tOk ? 'x' : ' '}] Régua de título: no máximo 2 linhas e 940px de largura (capa e CTA têm régua própria): ${ok(tOk)}\n  - ${tl.join(' · ')}`);
+const tOk = data.every((d) => d.titleLines <= (d.n === 1 ? 3 : 2) && (d.n === 1 || d.n === data.length || d.titleW <= 940));
+report.push(`- [${tOk ? 'x' : ' '}] Régua de título: no máximo 2 linhas e 940px de largura (capa até 3 linhas; capa e CTA têm régua própria): ${ok(tOk)}\n  - ${tl.join(' · ')}`);
+const subs = data.map((d) => ({ n: d.n, len: d.subLen })).filter((x) => x.len > 140);
+report.push(`- [${subs.length ? ' ' : 'x'}] Subtítulos (tese) com até 140 caracteres: ${ok(!subs.length)}${subs.length ? ' slides ' + subs.map((x) => x.n + ' (' + x.len + ')').join(', ') : ''}`);
 // 4. copy
 const missing = [];
 for (const d of data) {
@@ -146,11 +149,11 @@ report.push(`- [${seq ? ' ' : 'x'}] Dois slides escuros nunca em sequência: ${o
 // 7. PDF
 const pdfDoc = await PDFDocument.load(fs.readFileSync(PDF));
 const sizes = pdfDoc.getPages().map((p) => p.getSize());
-const sizeOk = sizes.length === 10 && sizes.every((s) => Math.round(s.width) === 1440 && Math.round(s.height) === 810);
+const sizeOk = sizes.length === data.length && sizes.every((s) => Math.round(s.width) === 1440 && Math.round(s.height) === 810);
 let words = 0;
 try { words = execFileSync('pdftotext', [PDF, '-']).toString().split(/\s+/).filter(Boolean).length; } catch {}
 const nFields = pdfDoc.getForm().getFields().length;
-report.push(`- [${sizeOk && words > 500 ? 'x' : ' '}] PDF com texto selecionável e 10 páginas de 1440×810 pt: ${ok(sizeOk && words > 500)} (${sizes.length} páginas, ${words} palavras extraídas por pdftotext, ${nFields} campos de formulário)`);
+report.push(`- [${sizeOk && words > 500 ? 'x' : ' '}] PDF com texto selecionável e ${data.length} páginas de 1440×810 pt: ${ok(sizeOk && words > 500)} (${sizes.length} páginas, ${words} palavras extraídas por pdftotext, ${nFields} campos de formulário)`);
 // overflow
 const ovf = data.filter((d) => d.overflow.length).map((d) => `slide ${d.n}: ${d.overflow.join(', ')}`);
 report.push(`- [${ovf.length ? ' ' : 'x'}] Nenhum elemento vazando do slide ou da zona de conteúdo (exceto sangrias intencionais da capa e do celular do slide 5): ${ok(!ovf.length)}${ovf.length ? '\n  - ' + ovf.join('\n  - ') : ''}`);
