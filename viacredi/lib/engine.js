@@ -162,12 +162,11 @@ function buildLiveBg(el, mode = 'grid', idx = 0) {
     p.setAttribute('d', 'M50 6C76 6 94 24 94 49C94 73 75 90 51 90C45 90 40 89 35 87L18 96L22 80C11 72 6 61 6 49C6 24 24 6 50 6Z');
     p.setAttribute('fill', 'none'); sv.setAttribute('overflow', 'visible'); sv.style.background = 'none';
     sv.appendChild(p); bg.appendChild(sv);
-    const spots = [[640, -260], [-520, 900], [560, 1180], [-480, -200], [600, 700], [-560, 1200], [520, -300]];
-    const [bx, by] = spots[idx % spots.length];
-    return t => {
-      grid.style.backgroundPosition = `${(t * 8).toFixed(1)}px ${(t * -12).toFixed(1)}px`;
-      sv.style.transform = `translate3d(${bx}px,${by}px,0) rotate(${(t * 4 + idx * 40).toFixed(2)}deg)`;
-    };
+    // balão parado e só nos cantos, fora da área de conteúdo (faixa de baixo e canto de cima acima da legenda)
+    const C = [['br'], ['tl'], ['bl'], ['br'], ['bl'], ['br'], ['tr']][idx % 7][0];
+    const size = 760, pos2 = { br: [1080 - size * 0.42, 1920 - size * 0.26], bl: [-size * 0.58, 1920 - size * 0.26], tr: [1080 - size * 0.40, -size * 0.80], tl: [-size * 0.60, -size * 0.80] }[C];
+    Object.assign(sv.style, { width: size + 'px', height: size + 'px', transform: `translate3d(${pos2[0]}px,${pos2[1]}px,0)${C[1] === 'l' ? ' scaleX(-1)' : ''}` });
+    return t => { grid.style.backgroundPosition = `${(t * 8).toFixed(1)}px ${(t * -12).toFixed(1)}px`; };
   }
   if (mode === 'shapes') {
     // formas sólidas, bordas nítidas, recortadas nas bordas e em deriva lenta

@@ -26,6 +26,8 @@ W = [c['words'] for c in TL['chunks']]          # W[bloco][palavra] = tempo no v
 wt = lambda k, j: W[k][j]
 S = {'s2': 4.0, 's3': wt(3, 0) - 0.3, 's4': wt(5, 0) - 0.35, 's5': wt(7, 0) - 0.12, 's6': wt(8, 3) - 0.35, 's7': wt(10, 0) - 0.2}  # = scenes.js
 
+K5 = min(1, (S['s6'] - S['s5']) / 3.9)   # conversa escala com a duração real da cena
+
 # regras caindo sobre o agente (mesma fórmula de scenes.js)
 t0, t1, NR = wt(2, 2), wt(2, 9), 8
 RULES = [t0 + (t1 - t0) * (i / (NR - 1)) for i in range(NR)]
@@ -47,13 +49,13 @@ CUES = [
     (S['s4'] + 0.05, 'slide', -9),        # janela do Agent Builder
     (wt(5, 3), 'type', -16),              # digita "Papel do agente"
     *[x for i in range(4) for x in ((wt(6, i) + 0.02, 'slide', -15), (wt(6, i) + 0.12, 'type', -19))],
-    (wt(6, 3) + 0.6, 'chime', -11),       # papel salvo
+    (min(wt(6, 3) + 0.5, S['s5'] - 0.45), 'chime', -11),  # papel salvo
     (S['s5'] + 0.05, 'pop', -7),          # bolha da Ana
-    (S['s5'] + 0.65, 'tap', -12),         # etiqueta salta da bolha
-    (S['s5'] + 1.35, 'tap', -10),         # etiqueta encaixa no cartão da Ana
-    (S['s5'] + 1.62, 'pop', -7),          # oferta personalizada
-    (S['s5'] + 3.02, 'pop', -7),          # "Quero!"
-    (S['s5'] + 3.38, 'chime', -5),        # crédito contratado
+    (S['s5'] + 0.65 * K5, 'tap', -12),         # etiqueta salta da bolha
+    (S['s5'] + 1.35 * K5, 'tap', -10),         # etiqueta encaixa no cartão da Ana
+    (S['s5'] + 1.62 * K5, 'pop', -7),          # oferta personalizada
+    (S['s5'] + 3.02 * K5, 'pop', -7),          # "Quero!"
+    (S['s5'] + 3.38 * K5, 'chime', -5),        # crédito contratado
     (S['s6'], 'whoosh', -11),             # corte para o número
     (wt(8, 3) + 0.12, 'slide', -15),      # sublinhado
     (wt(9, 0), 'pop', -9),                # "Ainda na fase de testes"

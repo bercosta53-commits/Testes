@@ -79,6 +79,11 @@ Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em gra
 - Tela do número: faixa contínua de contratos ilustrativos (nomes, sem valores) passando embaixo; câmera avança devagar.
 - Fundo: grade técnica (escolhida entre 3 opções sem desfoque): branco quente, grade fina de 72 px deslizando devagar e o contorno gigante do balão da Ubots girando, cortado na borda. O creme com luzes desfocadas foi descartado por repetir a linguagem dos vídeos antigos. `node render.mjs v1 --bg shapes|type` gera as outras opções.
 
+### Revisão v6 (locução contínua, balão nos cantos)
+
+- Locução travando: a edição picotava a fala em 6 blocos com respiros artificiais, e uma emenda caía no meio do som entre "cooperado" e "Resultado". Agora a locução entra inteira e contínua, como foi gerada, acelerada 1,04x numa passada só; a única junção é com a assinatura, em silêncio real. As cenas se ajustam sozinhas aos tempos das palavras. Vídeo com ~28 s.
+- Balão da marca: parado, só recortado nos cantos (faixa de baixo e canto de cima acima da legenda), sem passar por trás de conteúdo.
+
 ### Produto sem excesso de informação (v3)
 
 Uma informação por vez, entrando e saindo, com personalização:

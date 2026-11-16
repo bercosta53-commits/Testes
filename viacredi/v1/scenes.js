@@ -190,7 +190,7 @@ boot(() => {
       return { r, lab: r.querySelector('.lab'), v: r.querySelector('.val'), num: r.querySelector('.num'), ok: r.querySelector('.ok'), val, at, done, i };
     });
     const toast = h('div', 'toast', cam, '✓ Papel do agente salvo'); pos(toast, 0, 1190);
-    const toastAt = wt(6, 3) + 0.6;
+    const toastAt = Math.min(wt(6, 3) + 0.5, S.s5 - 0.45);
     return {
       update(lt, t) {
         const kw = E.outExpo(prog(t, S.s4 - 0.04, S.s4 + 0.6));
@@ -248,8 +248,9 @@ boot(() => {
     const rc = { x: 72 + 104, y: 430 + 52 };
     const s = S.s5;
     // cada bolha só entra depois que a anterior saiu (sem sobreposição)
-    const T = { b1: s + 0.08, mark: s + 0.45, fly: s + 0.9, b1out: s + 1.35, b2: s + 1.62, b2out: s + 2.75, b3: s + 3.02, stamp: s + 3.38 };
-    const OUT = 0.3;
+    const k = Math.min(1, (S.s6 - S.s5) / 3.9);   // os tempos acompanham a duração real da cena
+    const T = { b1: s + 0.08 * k, mark: s + 0.45 * k, fly: s + 0.9 * k, b1out: s + 1.35 * k, b2: s + 1.62 * k, b2out: s + 2.75 * k, b3: s + 3.02 * k, stamp: s + 3.38 * k };
+    const OUT = 0.3 * k;
     return {
       update(lt, t) {
         const kp = E.outBack(prog(t, s - 0.04, s + 0.35)); tf(per, { s: 0.8 + 0.2 * kp, o: clamp(kp * 2) });

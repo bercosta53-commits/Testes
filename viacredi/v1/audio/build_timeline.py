@@ -10,7 +10,7 @@ Saída: timeline.json (usado por mix.py) e ../vo.js (usado pelas cenas).
 import json, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEMPO = 1.05  # locução 5% mais rápida, tom preservado (atempo)
+TEMPO = 1.04  # locução 4% mais rápida numa passada só (sem emendas)
 
 W = [("Crédito",0.147,0.48),("pré-aprovado.",0.56,1.48),("Oferta",1.6,2.08),("disparada",2.24,2.88),("no",2.96,3),("WhatsApp.",3.04,3.72),
 ("Só",3.92,4),("que",4.04,4.08),("agente",4.16,4.48),("de",4.52,4.56),("IA",4.64,4.96),("cheio",5.04,5.36),("de",5.44,5.48),("regra",5.52,5.92),("fala",6,6.24),("como",6.32,6.4),("robô.",6.48,7.2),
@@ -31,13 +31,10 @@ SIGW = spread(SIG1, 0.03, 2.98) + spread(SIG2, 3.27, 4.09)
 
 # blocos: (arquivo, ini, fim na origem, respiro antes no vídeo)
 BLOCKS = [
-    ('vo2_mateus_a.mp3', 0.02, 3.815, 0.30),   # Crédito pré-aprovado. Oferta disparada no WhatsApp.
-    ('vo2_mateus_a.mp3', 3.815, 7.145, 0.20),  # Só que agente de IA cheio de regra fala como robô.
-    ('vo2_mateus_a.mp3', 7.145, 10.545, 0.35), # Na Viacredi a saída foi menos regra e mais contexto.
-    ('vo2_mateus_a.mp3', 10.545, 15.385, 0.60),# Eles escreveram o papel do agente: objetivo, público, oferta, tom.
-    ('vo2_mateus_a.mp3', 15.385, 17.955, 0.70),# E a conversa passou a seguir o cooperado.
-    ('vo2_mateus_a.mp3', 17.955, 22.89, 0.60), # Resultado: mais de 150 mil reais em crédito, ainda na fase de testes.
-    ('sig_a.mp3', 0.0, 4.15, 0.90),            # O método está no Playbook Ubots Agentes de IA. Baixe grátis.
+    # locução inteira, contínua, do jeito que foi gerada (antes era picotada em 6 blocos com respiros
+    # artificiais, e uma emenda caía no meio da fala: soava como trava)
+    ('vo2_mateus_a.mp3', 0.02, 22.89, 0.30),
+    ('sig_a.mp3', 0.0, 4.15, 0.25),            # O método está no Playbook Ubots Agentes de IA. Baixe grátis.
 ]
 
 segs = []
@@ -65,8 +62,8 @@ for a, b, hide in CH:
                    'words': [x for _, x in ws], 'hide': hide})
 
 MUSIC_SLAM = 7.35  # volta cheia da trilha v2 (music2_b) — alinhada ao "Na Viacredi"
-music_at = round(segs[2]['at'] - MUSIC_SLAM, 3)
-DUR = 31.0
+music_at = round(place('vo2_mateus_a.mp3', 7.24) - 0.12 - MUSIC_SLAM, 3)   # volta cheia no "Na Viacredi"
+DUR = round(END_VO + 1.4, 1)
 
 json.dump({'tempo': TEMPO, 'dur': DUR, 'end_vo': round(END_VO, 3), 'music': {'file': 'music2_b.mp3', 'at': music_at},
            'segments': segs, 'chunks': chunks}, open(os.path.join(HERE, 'timeline.json'), 'w'), ensure_ascii=False, indent=1)
