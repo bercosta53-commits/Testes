@@ -62,7 +62,7 @@ Tokens:
 Componentes recorrentes (copiar do Crediauc):
 - **Header:** logo Ubots | divisória | logo Viacredi, canto superior esquerdo. Contador `02 / 11` no canto superior direito.
 - **Pílula de seção:** fundo `--ouro-suave`, texto 12px: `Playbook · Agentes de IA na Oferta de Crédito`.
-- **Título:** Poppins Bold 42px, no imperativo, com maiúscula nas palavras principais (artigos e preposições em minúscula) e 2 a 4 palavras em `--ouro` (indicadas abaixo entre `==assim==`). Slides 2 a 10 levam selo numerado de passo (01 a 09) antes do título; capa e CTA não.
+- **Título:** Poppins Bold 42px, no imperativo, com maiúscula nas palavras principais (artigos e preposições em minúscula) e 2 a 4 palavras em `--ouro` (indicadas abaixo entre `==assim==`). Slides 2 a 10 levam a numeração do passo (01. a 09.) antes do título, na mesma fonte, cor e tamanho do título; capa e CTA não.
 - **Subtítulo:** Nunito 16px, `--cinza-medio`, máximo 2 linhas.
 - **Campo para preencher:** rótulo Nunito SemiBold 12px + caixa com borda 1px `--cinza-claro`, raio 8px, placeholder em cinza.
 - **Caixa "Entrega":** fundo `--ouro-suave`, rótulo "Entrega:" em negrito.

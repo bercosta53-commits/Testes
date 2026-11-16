@@ -1,6 +1,6 @@
 # QA · Playbook Viacredi + Ubots
 
-Gerado em 2026-11-16 12:57 UTC
+Gerado em 2026-11-16 13:00 UTC
 
 ## Checklist
 

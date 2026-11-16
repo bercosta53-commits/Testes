@@ -60,7 +60,7 @@ const header = (n, dark = false, withPill = true, partner = true) => `
 const pill = (t = 'Playbook · Agentes de IA na Oferta de Crédito') => `<div class="pill">${t}</div>`;
 const titleBlock = (title, sub, { subW, n } = {}) => `
     <div class="tblock">
-      <h1 class="t">${n ? `<span class="tn">${String(n).padStart(2, '0')}</span>` : ''}${gold(title)}</h1>
+      <h1 class="t">${n ? `<span class="tn">${String(n).padStart(2, '0')}. </span>` : ''}${gold(title)}</h1>
       ${sub ? `<p class="sub"${subW ? ` style="max-width:${subW}px"` : ''}>${sub}</p>` : ''}
     </div>`;
 
@@ -582,8 +582,7 @@ b{font-weight:700}
 .dark .pill{background:rgba(253,195,72,.14);color:var(--ouro)}
 h1.t{font:700 42px/1.14 'Poppins';letter-spacing:-.026em;margin-top:0;color:var(--escuro);max-width:var(--regua)}
 .dark h1.t{color:var(--branco)}
-.tn{display:inline-grid;place-items:center;min-width:56px;height:46px;padding:0 10px;margin-right:18px;border-radius:12px;background:var(--escuro);color:var(--ouro);font:700 26px/1 'Poppins';letter-spacing:0;vertical-align:6px}
-.dark .tn{background:var(--ouro);color:var(--escuro)}
+.tn{color:inherit;font:inherit}
 .gold{color:var(--ouro)}
 .sub{font:400 17px/1.55 'Nunito';color:var(--cinza-medio);margin-top:14px;max-width:var(--regua-sub)}
 .dark .sub{color:var(--cinza-claro)}
