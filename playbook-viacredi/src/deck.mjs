@@ -58,9 +58,9 @@ const header = (n, dark = false, withPill = true, partner = true) => `
   </header>`;
 
 const pill = (t = 'Playbook · Agentes de IA na Oferta de Crédito') => `<div class="pill">${t}</div>`;
-const titleBlock = (title, sub, { subW } = {}) => `
+const titleBlock = (title, sub, { subW, n } = {}) => `
     <div class="tblock">
-      <h1 class="t">${gold(title)}</h1>
+      <h1 class="t">${n ? `<span class="tn">${String(n).padStart(2, '0')}</span>` : ''}${gold(title)}</h1>
       ${sub ? `<p class="sub"${subW ? ` style="max-width:${subW}px"` : ''}>${sub}</p>` : ''}
     </div>`;
 
@@ -182,7 +182,7 @@ const s2 = `
 <section class="slide light" id="s2">
   ${header(2)}
   <div class="main">
-    ${titleBlock('Entenda o ==ponto de partida==', 'Uma cooperativa de 74 anos decidiu testar IA generativa na venda de crédito, sem abrir mão da proximidade com os cooperados.')}
+    ${titleBlock('Entenda o ==Ponto de Partida==', 'Uma cooperativa de 74 anos decidiu testar IA generativa na venda de crédito, sem abrir mão da proximidade com os cooperados.', { n: 1 })}
     <div class="content s2">
       <div class="s2-card">
         <div class="body-txt">
@@ -211,7 +211,7 @@ const s3 = `
 <section class="slide light" id="s3">
   ${header(3)}
   <div class="main">
-    ${titleBlock('Evite ==empilhar regras== no agente', 'Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava rígida e o tom, robótico.')}
+    ${titleBlock('Evite ==Empilhar Regras== no Agente', 'Cada "não pode" parecia tornar o agente mais seguro. Na prática, a conversa ficava rígida e o tom, robótico.', { n: 2 })}
     <div class="content s3">
       <div class="cmp">
         <div class="cmp-col">
@@ -252,7 +252,7 @@ const s4 = `
 <section class="slide dark" id="s4">
   ${header(4, true)}
   <div class="main">
-    ${titleBlock('Explique ao agente ==o papel dele==', 'Em julho, a Viacredi reduziu as regras, deixou claro o papel do agente no prompt e preservou os guardrails essenciais de segurança.')}
+    ${titleBlock('Explique ao Agente ==o Papel Dele==', 'Em julho, a Viacredi reduziu as regras, deixou claro o papel do agente no prompt e preservou os guardrails essenciais de segurança.', { n: 3 })}
     <div class="content s4">
       <div class="s4-grid">
         <div class="cols3">
@@ -273,7 +273,7 @@ const s5 = `
   ${header(5)}
   <svg class="conn" data-conn></svg>
   <div class="main">
-    ${titleBlock('Deixe a conversa ==seguir o cooperado==', 'Poucos dias após a mudança, uma conversa sobre reforma de cozinha terminou em contratação de crédito, sem roteiro pronto.')}
+    ${titleBlock('Deixe a Conversa ==Seguir o Cooperado==', 'Poucos dias após a mudança, uma conversa sobre reforma de cozinha terminou em contratação de crédito, sem roteiro pronto.', { n: 4 })}
     <div class="content s5">
       <div class="s5-l" data-bleed>
         <div class="stage"></div>
@@ -304,7 +304,7 @@ const s6 = `
   ${header(6)}
   <div class="main">
     <div class="trow">
-      ${titleBlock('Combine liberdade com ==transparência e segurança==', 'O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.', { subW: 760 })}
+      ${titleBlock('Combine Liberdade com ==Transparência e Segurança==', 'O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.', { subW: 760, n: 5 })}
       ${quote('"O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito."', { cls: 'pull' })}
     </div>
     <div class="content s6">
@@ -365,7 +365,7 @@ const s7 = `
 <section class="slide light" id="s7">
   ${header(7)}
   <div class="main">
-    ${titleBlock('Teste pouco, ==pause e volte melhor==', 'A Viacredi começou com cooperados reais, pequenos volumes e filtros de risco, e usou cada pausa para ajustar o agente.')}
+    ${titleBlock('Teste Pouco, ==Pause e Volte Melhor==', 'A Viacredi começou com cooperados reais, pequenos volumes e filtros de risco, e usou cada pausa para ajustar o agente.', { n: 6 })}
     <div class="content s7">
       <ol class="phases">
         ${tl.map(([t, d, k, tag], i) => `
@@ -390,7 +390,7 @@ const s8r = `
 <section class="slide dark" id="s8">
   ${header(8, true)}
   <div class="main">
-    ${titleBlock('Acompanhe ==os resultados do teste==', 'Números alcançados ainda na fase de testes, antes de a operação estar totalmente estruturada.')}
+    ${titleBlock('Acompanhe ==os Resultados do Teste==', 'Números alcançados ainda na fase de testes, antes de a operação estar totalmente estruturada.', { n: 7 })}
     <div class="content rsx">
       <div class="rs-hero">
         <span class="rs-k">Geração de negócio</span>
@@ -429,7 +429,7 @@ const s8 = `
 <section class="slide light" id="s8">
   ${header(9)}
   <div class="main">
-    ${titleBlock('Escreva ==o papel do agente==', 'Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir.')}
+    ${titleBlock('Escreva ==o Papel do Agente==', 'Comece pelo propósito: por que o agente existe, com quem vai conversar e até onde pode ir.', { n: 8 })}
     <div class="content s8">
       <div class="ws">
         ${s8fields.map(([l, p], i) => `
@@ -466,7 +466,7 @@ const s9 = `
 <section class="slide light" id="s9">
   ${header(10)}
   <div class="main">
-    ${titleBlock('Teste em ==volume controlado== e meça', 'Comece com poucos disparos, acompanhe as conversas e decida com indicadores se continua, ajusta ou amplia.')}
+    ${titleBlock('Teste em ==Volume Controlado== e Meça', 'Comece com poucos disparos, acompanhe as conversas e decida com indicadores se continua, ajusta ou amplia.', { n: 9 })}
     <div class="content s9">
       <div class="steps3">
         ${steps.map(([t, d, e, fs, c], i) => `
@@ -512,7 +512,7 @@ const s10 = `
     <div class="cta-top">
       <div>
         ${pill()}
-        <h1 class="t">${gold('Quer aplicar ==este método== na sua instituição?')}</h1>
+        <h1 class="t">${gold('Quer Aplicar ==Este Método== na Sua Instituição?')}</h1>
       </div>
     </div>
     <div class="cta-grid">
@@ -582,6 +582,8 @@ b{font-weight:700}
 .dark .pill{background:rgba(253,195,72,.14);color:var(--ouro)}
 h1.t{font:700 42px/1.14 'Poppins';letter-spacing:-.026em;margin-top:0;color:var(--escuro);max-width:var(--regua)}
 .dark h1.t{color:var(--branco)}
+.tn{display:inline-grid;place-items:center;min-width:56px;height:46px;padding:0 10px;margin-right:18px;border-radius:12px;background:var(--escuro);color:var(--ouro);font:700 26px/1 'Poppins';letter-spacing:0;vertical-align:6px}
+.dark .tn{background:var(--ouro);color:var(--escuro)}
 .gold{color:var(--ouro)}
 .sub{font:400 17px/1.55 'Nunito';color:var(--cinza-medio);margin-top:14px;max-width:var(--regua-sub)}
 .dark .sub{color:var(--cinza-claro)}
