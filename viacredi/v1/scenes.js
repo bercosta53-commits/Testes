@@ -25,12 +25,13 @@ function inOut(t, tin, tout, d = 0.45) {
 }
 const mixHex = (a, b, k) => { const p = s => [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)); const A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * clamp(k))).join(',')})`; };
 
-// cortes de cena (derivados da locução)
-const S = { s2: 3.95, s3: 7.3, s4: 11.1, s5: 16.1, s6: 19.6, s7: 24.95 };
+// cortes de cena (derivados da locução; mix.py usa a mesma regra)
+let S;
 
 boot(() => {
   ENGINE.capMode = 'build';
   ENGINE.init({ dur: DUR, captions: VO });
+  S = { s2: 4.0, s3: wt(3, 0) - 0.3, s4: wt(5, 0) - 0.35, s5: wt(7, 0) - 0.12, s6: wt(8, 0) - 0.05, s7: wt(10, 0) - 0.2 };
 
   // 01 · Base pré-aprovada com nomes → seleciona a Ana → disparo ------------------
   ENGINE.scene(0, S.s2, 'light', cam => {
@@ -65,33 +66,31 @@ boot(() => {
   });
 
   // 02 · Agente cheio de regra: as regras se empilham e soterram o agente -----------
-  ENGINE.scene(S.s2, S.s3 + 0.15, 'dark', cam => {
+  ENGINE.scene(S.s2, S.s3 + 0.75, 'dark', cam => {
     const icon = pos(h('div', 'abs', cam), CX - 120, 860 - 120, 240, 240);
     Object.assign(icon.style, { borderRadius: '50%', display: 'grid', placeItems: 'center', font: '600 120px Poppins', color: 'var(--ink)' });
     icon.textContent = '✦';
     const lab = h('div', 'center', cam, 'Agente de IA'); pos(lab, 0, 1130);
     Object.assign(lab.style, { font: '600 34px Poppins', color: '#bdb8ae' });
-    const R = ['Não fale sobre…', 'Não responda se…', 'Não ofereça…', 'Sempre use a frase…', 'Não saia do roteiro…',
-      'Não improvise.', 'Não saia do fluxo.', 'Não cite prazos.', 'Não mude de assunto.', 'Siga o script.',
-      'Não pergunte nada.', 'Não fale de juros.', 'Repita a oferta.', 'Não use emoji.'];
+    const R = ['Não fale sobre…', 'Não responda se…', 'Não ofereça…', 'Sempre use a frase…', 'Não saia do roteiro…', 'Não improvise.', 'Siga o script.', 'Não mude de assunto.'];
     const t0 = wt(2, 2), t1 = wt(2, 9); // "agente" → "como"
     const chips = R.map((txt, i) => {
       const c = h('div', 'abs', cam, txt);
-      Object.assign(c.style, { font: `600 ${i < 5 ? 40 : 32}px Poppins`, background: '#f4f2ee', color: 'var(--ink)', padding: '16px 26px', borderRadius: '16px', whiteSpace: 'nowrap', boxShadow: '0 20px 40px -20px rgba(0,0,0,.6)' });
+      Object.assign(c.style, { font: `600 ${i < 5 ? 42 : 36}px Poppins`, background: '#f4f2ee', color: 'var(--ink)', padding: '16px 26px', borderRadius: '16px', whiteSpace: 'nowrap', boxShadow: '0 20px 40px -20px rgba(0,0,0,.6)' });
       const ang = hash(i * 3.3) * Math.PI * 2, rad = 120 + hash(i * 7.1) * 260;
-      const at = t0 + (t1 - t0) * Math.pow(i / (R.length - 1), 0.8);
+      const at = t0 + (t1 - t0) * (i / (R.length - 1));
       const w = c.offsetWidth, x = clamp(CX + Math.cos(ang) * rad * 1.1, 72 + w / 2 + 10, 1008 - w / 2 - 10);
       return { c, w, x, y: 860 + Math.sin(ang) * rad * 0.9, r: (hash(i * 9.7) - 0.5) * 22, at, from: ang };
     });
     const blob = blobSVG(cam, 'var(--y)'); pos(blob, CX - 60, 900, 120, 120);
     return {
       update(lt, t) {
-        const ki = E.outBack(prog(t, S.s2 + 0.05, S.s2 + 0.45));
+        const ki = E.outBack(prog(t, S.s2 - 0.04, S.s2 + 0.4));
         tf(icon, { s: ki * (1 - 0.15 * prog(t, t0, wt(2, 10))), o: clamp(ki * 2) });
         icon.style.background = mixHex('#fdc348', '#4a4a4a', prog(t, wt(2, 5), wt(2, 10)));
         op(lab, enter(t, S.s2 + 0.2, 0.3));
         chips.forEach(o => {
-          const k = E.outExpo(prog(t, o.at, o.at + 0.35));
+          const k = E.outExpo(prog(t, o.at, o.at + 0.45));
           const dx = Math.cos(o.from) * 900 * (1 - k), dy = Math.sin(o.from) * 900 * (1 - k);
           o.c.style.left = o.x - o.w / 2 + dx + 'px'; o.c.style.top = o.y - 30 + dy + 'px';
           o.c.style.transform = `rotate(${o.r * k}deg)`; o.c.style.opacity = t >= o.at ? 1 : 0;
@@ -99,7 +98,7 @@ boot(() => {
         // no "robô": tudo trava num tremor seco
         const shake = t > wt(2, 10) && t < wt(2, 10) + 0.25 ? (hash(Math.floor(t * 30)) - 0.5) * 14 : 0;
         cam.style.translate = `${shake}px 0`;
-        const kb = E.inOutExpo(prog(t, S.s3 - 0.2, S.s3 + 0.15));
+        const kb = E.inOutCubic(prog(t, S.s3 - 0.25, S.s3 + 0.3));
         tf(blob, { s: kb * 26, o: kb > 0 ? 1 : 0 });
       },
     };
@@ -116,16 +115,16 @@ boot(() => {
     const ws = fit(word.i, 780); word.m.style.width = '1080px';
     return {
       update(lt, t) {
-        el.style.clipPath = `circle(${E.inOutExpo(prog(t, S.s3, S.s3 + 0.38)) * 1400}px at 50% 52%)`;
+        el.style.clipPath = `circle(${E.inOutCubic(prog(t, S.s3 + 0.1, S.s3 + 0.65)) * 1400}px at 50% 52%)`;
         const coll = wt(4, 0), more = wt(4, 3);
         bars.forEach((o, i) => {
-          const kin = E.outExpo(prog(t, S.s3 + 0.25 + i * 0.04, S.s3 + 0.65 + i * 0.04));
+          const kin = E.outExpo(prog(t, S.s3 + 0.45 + i * 0.04, S.s3 + 0.85 + i * 0.04));
           const kc = E.inOutCubic(prog(t, coll + i * 0.025, coll + 0.35 + i * 0.025));
           const km = E.inOutExpo(prog(t, more - 0.05, more + 0.25));
           const hh = lerp(o.hh * kin, 56, kc);
           Object.assign(o.b.style, { left: lerp(o.x, CX - 28, km) + 'px', top: 960 - hh / 2 + 'px', width: '56px', height: hh + 'px', background: kc > 0.5 ? '#bdb8ae' : 'var(--ink)', opacity: 1 - km });
         });
-        op(lab, enter(t, S.s3 + 0.6, 0.3) * (1 - enter(t, coll, 0.3)));
+        op(lab, enter(t, S.s3 + 0.8, 0.3) * (1 - enter(t, coll, 0.3)));
         const kp = E.outExpo(prog(t, more + 0.05, more + 0.5));
         const pw = lerp(56, 940, kp), ph = lerp(56, ws * 1.25, kp);
         Object.assign(pillY.style, { left: CX - pw / 2 + 'px', top: 960 - ph / 2 + 'px', width: pw + 'px', height: ph + 'px', opacity: prog(t, more, more + 0.05) });
@@ -135,9 +134,9 @@ boot(() => {
     };
   });
 
-  // 04 · Agent Builder: um campo por vez, entrando e saindo ------------------------
+  // 04 · Agent Builder: o campo falado entra grande; os anteriores viram lista com ✓ ----
   ENGINE.scene(S.s4, S.s5, 'light', cam => {
-    const win = pos(h('div', 'win', cam), 90, 560, 900, 520);
+    const win = pos(h('div', 'win', cam), 90, 500, 900, 640);
     win.innerHTML = `<div class="win-top"><img src="../assets/ubots-logo.png"><span class="sep"></span><span>Agent Builder</span><span class="dots"><i></i><i></i><i></i><i></i></span></div><div class="win-body"></div>`;
     const body = win.querySelector('.win-body');
     const dots = [...win.querySelectorAll('.dots i')];
@@ -149,29 +148,38 @@ boot(() => {
       ['Oferta', 'A linha que cabe no plano.'],
       ['Tom', 'Próximo, como a cooperativa.'],
     ];
-    const cards = F.map(([lab, val], i) => {
-      const c = h('div', 'fcard', body, `<span class="num">0${i + 1}</span><div class="lab">${lab}</div><div class="val"></div>`);
-      const at = wt(6, i), next = i < 3 ? wt(6, i + 1) : 99;
-      return { c, v: c.querySelector('.val'), val, at, next };
+    const rows = F.map(([lab, val], i) => {
+      const r = h('div', 'frow', body, `<div class="hd"><span class="num">0${i + 1}</span><span class="ok">✓</span><span class="lab">${lab}</span></div><div class="val"></div>`);
+      const at = wt(6, i), done = i < 3 ? wt(6, i + 1) : 99;
+      return { r, lab: r.querySelector('.lab'), v: r.querySelector('.val'), num: r.querySelector('.num'), ok: r.querySelector('.ok'), val, at, done, i };
     });
-    const toast = h('div', 'toast', cam, '✓ Papel do agente salvo'); pos(toast, 0, 1140);
-    const toastAt = wt(6, 3) + 0.45;
+    const toast = h('div', 'toast', cam, '✓ Papel do agente salvo'); pos(toast, 0, 1190);
+    const toastAt = wt(6, 3) + 0.6;
     return {
       update(lt, t) {
-        const kw = E.outExpo(prog(t, S.s4 + 0.05, S.s4 + 0.65));
+        const kw = E.outExpo(prog(t, S.s4 - 0.04, S.s4 + 0.6));
         win.style.transform = `perspective(1800px) translateY(${(1 - kw) * 180}px) rotateX(${(1 - kw) * 12}deg)`;
         win.style.opacity = clamp(kw * 1.6);
-        const io = inOut(t, S.s4 + 0.2, wt(6, 0) - 0.25);
+        const io = inOut(t, S.s4 + 0.2, wt(6, 0) - 0.3, 0.4);
         intro.style.visibility = io.vis ? 'visible' : 'hidden';
         tf(intro, { x: -200 * io.b, y: (1 - io.a) * 40, o: io.a * (1 - io.b) });
         typeIn(introTx, 'Papel do agente', prog(t, wt(5, 3), wt(5, 3) + 0.5));
         introTx.parentElement.style.color = t > wt(5, 3) ? 'var(--ink)' : '#a39b8f';
-        cards.forEach((o, i) => {
-          const r = inOut(t, o.at + 0.02, i < 3 ? o.next - 0.24 : 99, 0.32);
-          o.c.style.visibility = r.vis ? 'visible' : 'hidden';
-          tf(o.c, { x: (1 - r.a) * 260 - 320 * r.b, o: r.a * (1 - r.b) });
-          typeIn(o.v, o.val, prog(t, o.at + 0.1, o.at + 0.5));
-          dots[i].classList.toggle('on', t >= o.at);
+        const nDone = rows.filter(o => t >= o.done).length;
+        rows.forEach(o => {
+          const ka = E.outExpo(prog(t, o.at, o.at + 0.4));           // entra
+          const kd = E.inOutCubic(prog(t, o.done, o.done + 0.4));    // vira item da lista
+          o.r.style.visibility = t >= o.at ? 'visible' : 'hidden';
+          const listY = 26 + o.i * 64, activeY = 30 + nDone * 64 + 14;
+          o.r.style.top = lerp(activeY, listY, kd) + 'px';
+          o.lab.style.fontSize = lerp(84, 34, kd) + 'px';
+          o.lab.style.color = kd > 0.5 ? '#55524c' : 'var(--ink)';
+          o.num.style.display = kd > 0.5 ? 'none' : 'inline-block';
+          o.ok.style.display = kd > 0.5 ? 'grid' : 'none';
+          typeIn(o.v, o.val, prog(t, o.at + 0.1, o.at + 0.55));
+          o.v.style.opacity = 1 - kd; o.v.style.height = lerp(50, 0, kd) + 'px';
+          tf(o.r, { x: (1 - ka) * 220, o: ka });
+          dots[o.i].classList.toggle('on', t >= o.at);
         });
         const kt = E.outBack(prog(t, toastAt, toastAt + 0.35));
         toast.style.left = '50%'; toast.style.transform = `translateX(-50%) scale(${0.7 + 0.3 * kt})`; toast.style.opacity = clamp(kt * 2);
@@ -198,11 +206,11 @@ boot(() => {
     const r1 = { x: r0.x, y: r0.y - 96 };
     const rc = { x: 72 + 104, y: 440 + 52 };
     const s = S.s5;
-    const T = { b1: s + 0.05, mark: s + 0.4, fly: s + 0.8, b1out: s + 1.2, b2: s + 1.3, b2out: s + 2.38, b3: s + 2.64, stamp: s + 3.0 };
+    const T = { b1: s + 0.05, mark: s + 0.5, fly: s + 1.0, b1out: s + 1.55, b2: s + 1.65, b2out: s + 3.05, b3: s + 3.32, stamp: s + 3.7 };
     return {
       update(lt, t) {
-        const kp = E.outBack(prog(t, s + 0.02, s + 0.4)); tf(per, { s: 0.8 + 0.2 * kp, o: clamp(kp * 2) });
-        const i1 = inOut(t, T.b1, T.b1out, 0.35);
+        const kp = E.outBack(prog(t, s - 0.04, s + 0.35)); tf(per, { s: 0.8 + 0.2 * kp, o: clamp(kp * 2) });
+        const i1 = inOut(t, s - 0.04, T.b1out, 0.35);
         b1.style.visibility = i1.vis ? 'visible' : 'hidden';
         tf(b1, { y: (1 - i1.a) * 60 - 260 * i1.b, s: 0.9 + 0.1 * i1.a, o: i1.a * (1 - i1.b) }); b1.style.transformOrigin = '100% 100%';
         mk.style.backgroundSize = `${E.inOutCubic(prog(t, T.mark, T.mark + 0.3)) * 100}% 100%`;
@@ -240,10 +248,10 @@ boot(() => {
     const c0 = S.s6 + 0.05, land = wt(8, 3) + 0.12;
     return {
       update(lt, t) {
-        const n = Math.round(150 * E.outCubic(prog(t, c0, land)));
+        const n = Math.round(150 * E.outCubic(prog(t, S.s6 - 0.04, land)));
         num.textContent = `R$ ${n} mil`;
         tf(num, { s: lerp(1.06, 1, E.outExpo(prog(t, c0, c0 + 0.5))) });
-        op(pre, enter(t, c0, 0.3));
+        op(pre, enter(t, S.s6 - 0.04, 0.3));
         bar.style.transform = `scaleX(${E.outExpo(prog(t, land, land + 0.5))})`;
         const kp = enter(t, wt(8, 7), 0.4); tf(post, { y: (1 - kp) * 20, o: kp });
         const kc = E.outBack(prog(t, wt(9, 0), wt(9, 0) + 0.35)); tf(chip, { s: 0.7 + 0.3 * kc, o: clamp(kc * 2) });
@@ -272,7 +280,7 @@ boot(() => {
     return {
       update(lt, t) {
         glow.style.opacity = enter(t, t0, 1.0, E.outCubic);
-        const kc = enter(t, t0 + 0.05, 0.7);
+        const kc = enter(t, t0 - 0.04, 0.7);
         cover.style.transform = `perspective(1600px) translateY(${(1 - kc) * 160}px) rotateX(${(1 - kc) * 24}deg)`; cover.style.opacity = clamp(kc * 2);
         const ks = E.outBack(prog(t, sigT - 0.1, sigT + 0.25)); tf(sig, { s: 0.7 + 0.3 * ks, o: clamp(ks * 2) });
         const kt = enter(t, t0 + 0.4, 0.45); tf(title, { y: (1 - kt) * 30, o: kt });

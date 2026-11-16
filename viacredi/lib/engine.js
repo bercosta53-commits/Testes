@@ -146,7 +146,7 @@ function buildGrain(stage) {
     }
     tiles.push(img);
   }
-  return { update(t) { ctx.putImageData(tiles[Math.floor(t * 15) % tiles.length], 0, 0); } };
+  return { update(t) { ctx.putImageData(tiles[Math.floor(t * 30 + 1e-6) % tiles.length], 0, 0); } };
 }
 
 // ---------------------------------------------------------------- motor

@@ -66,6 +66,12 @@ Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em gra
 - **Efeitos:** os mesmos efeitos orgânicos, retemporizados; as regras que caem sobre o agente têm som de card deslizando e toques.
 - **Master:** -14 LUFS, pico -1 dBTP, 30 s. `python3 v1/audio/build_timeline.py && python3 v1/audio/mix.py`.
 
+### Revisão v4 (som e travamentos)
+
+- Som: sem normalização dinâmica (bombeava o volume); agora ganho fixo para -14 LUFS + limitador em -1,5 dBFS. Ducking mais suave (razão 3, retorno 0,6 s). Intermediários em ponto flutuante (a trilha original passa 0,2 dB do teto). Primeiro efeito não começa mais cortado. Regras caindo: 8 em vez de 14, só as 5 primeiras com som.
+- Imagem: a cena das regras só sai depois que o círculo da cena seguinte abre (antes o amarelo sumia de uma vez); grão muda a cada quadro (antes 15/s, parecia engasgo); cada cena já entra com movimento no primeiro quadro.
+- Ritmo: 32 s; locução a 1,05x; Agent Builder acumula a lista com ✓ em vez de trocar os campos; conversa da Ana com 4,45 s de tela.
+
 ### Produto sem excesso de informação (v3)
 
 Uma informação por vez, entrando e saindo, com personalização:

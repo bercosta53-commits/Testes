@@ -24,34 +24,33 @@ FILE = {'whoosh': 'whoosh_b', 'tap': 'tap_a', 'pop': 'pop_b', 'knock': 'knock_b'
 
 W = [c['words'] for c in TL['chunks']]          # W[bloco][palavra] = tempo no vídeo
 wt = lambda k, j: W[k][j]
-S = {'s2': 3.95, 's3': 7.3, 's4': 11.1, 's5': 16.1, 's6': 19.6, 's7': 24.95}   # cortes (iguais a scenes.js)
+S = {'s2': 4.0, 's3': wt(3, 0) - 0.3, 's4': wt(5, 0) - 0.35, 's5': wt(7, 0) - 0.12, 's6': wt(8, 0) - 0.05, 's7': wt(10, 0) - 0.2}  # = scenes.js
 
 # regras caindo sobre o agente (mesma fórmula de scenes.js)
-t0, t1, NR = wt(2, 2), wt(2, 9), 14
-RULES = [t0 + (t1 - t0) * (i / (NR - 1)) ** 0.8 for i in range(NR)]
+t0, t1, NR = wt(2, 2), wt(2, 9), 8
+RULES = [t0 + (t1 - t0) * (i / (NR - 1)) for i in range(NR)]
 
 CUES = [
-    (0.10, 'slide', -12),                 # fila de pré-aprovados entra
+    (0.25, 'slide', -12),                 # fila de pré-aprovados entra
     (wt(0, 1), 'tap', -4),                # moldura escolhe a Ana
     (wt(1, 1) + 0.1, 'whoosh', -7),       # disparo
     (wt(1, 1) + 0.6, 'pop', -5),          # "Enviada para a Ana"
     (S['s2'] + 0.05, 'pop', -9),          # agente aparece
-    *[(t, 'slide', -13) for t in RULES[:5]],          # regras do ebook caem
-    *[(t, 'tap', -17) for t in RULES[5:]],            # e continuam se acumulando
+    *[(t, 'slide', -14) for t in RULES[:5]],          # regras do ebook caem (só as 5 primeiras com som)
     (wt(2, 10), 'knock', -4),             # "robô": trava
-    (S['s3'] - 0.2, 'swell', -5),         # forma da marca cobre o quadro
+    (S['s3'] - 0.25, 'swell', -5),        # forma da marca cobre o quadro
     (wt(4, 3) + 0.05, 'slide', -9),       # pílula amarela cresce
     (wt(4, 4), 'tap', -9),                # "contexto."
     (S['s4'] + 0.05, 'slide', -9),        # janela do Agent Builder
     (wt(5, 3), 'type', -16),              # digita "Papel do agente"
     *[x for i in range(4) for x in ((wt(6, i) + 0.02, 'slide', -15), (wt(6, i) + 0.12, 'type', -19))],
-    (wt(6, 3) + 0.45, 'chime', -11),      # papel salvo
+    (wt(6, 3) + 0.6, 'chime', -11),       # papel salvo
     (S['s5'] + 0.05, 'pop', -7),          # bolha da Ana
-    (S['s5'] + 0.55, 'tap', -12),         # etiqueta salta da bolha
-    (S['s5'] + 1.25, 'tap', -10),         # etiqueta encaixa no cartão da Ana
-    (S['s5'] + 1.30, 'pop', -7),          # oferta personalizada
-    (S['s5'] + 2.64, 'pop', -7),          # "Quero!"
-    (S['s5'] + 3.00, 'chime', -5),        # crédito contratado
+    (S['s5'] + 0.75, 'tap', -12),         # etiqueta salta da bolha
+    (S['s5'] + 1.45, 'tap', -10),         # etiqueta encaixa no cartão da Ana
+    (S['s5'] + 1.65, 'pop', -7),          # oferta personalizada
+    (S['s5'] + 3.32, 'pop', -7),          # "Quero!"
+    (S['s5'] + 3.70, 'chime', -5),        # crédito contratado
     (S['s6'], 'whoosh', -11),             # corte para o número
     (wt(8, 3) + 0.12, 'slide', -15),      # sublinhado
     (wt(9, 0), 'pop', -9),                # "Ainda na fase de testes"
@@ -70,7 +69,7 @@ def load(path, extra=None):
 
 
 def save(path, x):
-    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-f', 'f32le', '-ar', str(SR), '-ac', '2', '-i', '-', path],
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-f', 'f32le', '-ar', str(SR), '-ac', '2', '-i', '-', '-c:a', 'pcm_f32le', path],
                    input=x.astype(np.float32).tobytes(), check=True)
 
 
@@ -102,21 +101,35 @@ def run():
         if n not in cache:
             cache[n] = load(None, ['-i', os.path.join(src, 'sfx', n + '.mp3')])
         place(fx, cache[n], t - ONSET[s], gdb)
-    # 3) trilha deslocada para a volta cheia cair no "Na Viacredi"
+    # 3) trilha deslocada para a volta cheia cair no "Na Viacredi"; +2 compassos no fim para cobrir os 32 s
+    m = load(None, ['-i', os.path.join(src, TL['music']['file'])]) * (10 ** (-8 / 20))
+    bar2 = int(round(8 * 60 / 123 * SR))           # 2 compassos a 123 BPM
+    cut = int(28.55 * SR); xf = int(0.03 * SR)
+    tail = m[cut - bar2 - xf:cut].copy()           # repete os 2 compassos anteriores ao corte
+    tail[:xf] *= np.linspace(0, 1, xf)[:, None]
+    head = m[:cut].copy(); head[-xf:] *= np.linspace(1, 0, xf)[:, None]
+    m = np.concatenate([head[:-xf], head[-xf:] + tail[:xf], tail[xf:]])
     mus = np.zeros((N, 2), np.float32)
-    place(mus, load(None, ['-i', os.path.join(src, TL['music']['file'])]), TL['music']['at'])
-    fo = int(1.0 * SR); mus[-fo:] *= np.linspace(1, 0, fo)[:, None]
+    place(mus, m, TL['music']['at'])
+    fo = int(1.2 * SR); mus[-fo:] *= np.linspace(1, 0, fo)[:, None]
     tmp = os.path.join(HERE, '.tmp'); os.makedirs(tmp, exist_ok=True)
     for name, arr in (('vo', vo), ('fx', fx), ('mus', mus)):
         save(os.path.join(tmp, name + '.wav'), arr)
-    # 4) trilha abaixa sob a voz (sidechain), soma tudo e normaliza para -14 LUFS
-    out = os.path.join(HERE, 'mix.wav')
-    graph = (f'[0:a]highpass=f=70,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2dB,asplit[vo][key];'
-             f'[1:a]volume=-6dB[m0];'
-             f'[m0][key]sidechaincompress=threshold=0.025:ratio=5:attack=20:release=300:makeup=1[mus];'
-             f'[vo][mus][2:a]amix=inputs=3:normalize=0:duration=first,loudnorm=I=-14:TP=-1:LRA=9,aresample={SR}[out]')
+    # 4) trilha abaixa sob a voz com ducking suave; ganho fixo para -14 LUFS + limitador em -1,5 dBFS
+    pre = os.path.join(tmp, 'premix.wav')
+    graph = ('[0:a]highpass=f=70,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2dB,asplit[vo][key];'
+             '[1:a][key]sidechaincompress=threshold=0.04:ratio=3:attack=40:release=600:makeup=1[mus];'
+             '[vo][mus][2:a]amix=inputs=3:normalize=0:duration=first[out]')
     subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', os.path.join(tmp, 'vo.wav'), '-i', os.path.join(tmp, 'mus.wav'),
-                    '-i', os.path.join(tmp, 'fx.wav'), '-filter_complex', graph, '-map', '[out]', '-ar', str(SR), '-ac', '2', out], check=True)
+                    '-i', os.path.join(tmp, 'fx.wav'), '-filter_complex', graph, '-map', '[out]', '-c:a', 'pcm_f32le', pre], check=True)
+    meas = subprocess.run(['ffmpeg', '-v', 'info', '-i', pre, '-af', 'ebur128', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    I = float([l for l in meas.splitlines() if l.strip().startswith('I:')][-1].split()[1])
+    gain = -14.0 - I
+    out = os.path.join(HERE, 'mix.wav')
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', pre, '-af',
+                    f'volume={gain:.2f}dB,alimiter=limit=0.84:attack=5:release=60:level=disabled',
+                    '-c:a', 'pcm_s24le', '-ar', str(SR), out], check=True)
+    print(f'loudness antes {I:.1f} LUFS, ganho {gain:+.1f} dB')
     print(out)
 
 
