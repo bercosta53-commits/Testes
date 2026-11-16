@@ -44,15 +44,22 @@ Fontes: "menos regras e mais contexto" (pág. 7), papel do agente (pág. 9), con
 
 Locução mantida. Muda a direção de arte: fundo gelo (#F2F1EE), amarelo Ubots como única cor de destaque, uma ideia por quadro, tudo centralizado. A frase-guia é montada palavra por palavra no topo e funciona como legenda. O protagonista de cada quadro é um objeto ou uma palavra gigante.
 
-| Cena | Tela |
-|---|---|
-| 01 Pré-aprovado | Fila de tickets de pré-aprovado (como a fila de caminhões da ServiceUp). A moldura amarela seleciona um; no "disparada" todos sobem em rajada e fica o selo "✓✓ Enviada". |
-| 02 Robô | Preto. "Não entendi." gigante, pílulas SIM / NÃO, tremidas com eco (o loop do bot). A forma da marca Ubots cresce do centro e cobre o quadro. |
-| 03 Menos regra | Barras pretas (as regras) em forma de onda encolhem até virar pontos; os pontos se fundem e viram a pílula amarela "contexto.". |
-| 04 Papel do agente | Ícone do agente no centro; a cada palavra falada, a palavra gigante troca embaixo (Objetivo. Público. Oferta. Tom.) e um chip voa para a órbita. Transbordo e fechamento entram em seguida. |
-| 05 Conversa | Card de chat com profundidade (entra inclinado); a conversa da cozinha aparece bolha a bolha. |
-| 06 Resultado | O ticket volta com a moldura e o selo vira "✓ Crédito contratado". Corte: "R$ 150 mil" gigante contando, sublinhado amarelo. |
-| 07 CTA | Brilho amarelo, capa do playbook em 3D, botão em pílula, logos. |
+Versão atual: **32 s**, ritmo em ondas (minimalista ↔ tela de produto carregada).
+
+Tempo de leitura mínimo: palavra ou número gigante ≥ 1,5 s; frase ≥ 1 s depois da última palavra; tela de produto ≥ 2 s inteira na tela. As frases-guia ficam até o fim da cena.
+
+| Cena | Tempo | Ritmo | Tela |
+|---|---|---|---|
+| 01 Pré-aprovado | 0–3,6 s | minimalista | Fila de tickets de pré-aprovado (a fila de caminhões da ServiceUp). A moldura amarela seleciona um; no "disparada" todos sobem em rajada e fica "✓✓ Enviada para a base". |
+| 02 Robô | 3,6–7,25 s | minimalista | Preto. Bolha "digitando…", depois "Não entendi." gigante e pílulas SIM / NÃO, tremidas com eco. A forma da marca Ubots cresce e cobre o quadro. |
+| 03 Menos regra | 7,05–11,1 s | minimalista | Barras (as regras) encolhem até virar pontos; os pontos se fundem na pílula amarela "contexto.". |
+| 04 Papel do agente | 11,1–17,5 s | minimalista → **carregado** | Ícone do agente; cada palavra falada vira palavra gigante e chip em órbita. Depois o diagrama recua e entra o **Agent Builder**: 6 campos preenchidos, guardrails críticos, cursor clica em Salvar, toast "Papel do agente salvo". |
+| 05 Conversa | 17,5–22,2 s | **carregado** | Celular com a conversa completa (simulação R$ 15.000, "Ver condições no app", selo "Crédito contratado") e as 4 anotações da pág. 5 ligadas por linhas. |
+| 06 Resultado | 22,2–25,9 s | minimalista | O ticket volta com a moldura e o selo vira "✓ Crédito contratado". Corte: "R$ 150 mil" gigante contando. |
+| 07 Indicadores | 25,9–28,5 s | **carregado** | Painel com os números da pág. 8: +R$ 150 mil, 4 agentes criados pela equipe, transbordo baixo com nota de contexto, meta de +10% até dezembro. |
+| 08 CTA | 28,5–32 s | minimalista | Brilho amarelo, capa do playbook em 3D, botão em pílula, logos. |
+
+Telas de produto: desenhadas a partir do ebook (págs. 5, 6, 8, 9) como placeholder. Trocar pelos prints reais da plataforma Ubots antes da versão final. Textos dos campos do Agent Builder são exemplo ilustrativo (sinalizado na tela).
 
 Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em grade, arquivada).
 

@@ -112,7 +112,9 @@ function buildCaptions(stage, chunks) {
     update(t, visible) {
       items.forEach((it, i) => {
         const next = items[i + 1];
-        const end = Math.min(it.t1 + 0.6, next ? next.t0 - 0.02 : it.t1 + 0.6);
+        // a frase fica na tela até a próxima começar ou a cena dela acabar (tempo de leitura)
+        const home = ENGINE.scenes.filter(s => s.t0 <= it.t0 + 0.08).pop();
+        const end = Math.min(next ? next.t0 - 0.02 : Infinity, home ? home.t1 : it.t1 + 1.5);
         const on = visible && !it.hide && t >= it.t0 - 0.08 && t < end;
         it.el.style.display = on ? 'block' : 'none';
         if (!on) return;
