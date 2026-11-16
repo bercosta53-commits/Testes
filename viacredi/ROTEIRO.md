@@ -72,6 +72,13 @@ Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em gra
 - Imagem: a cena das regras só sai depois que o círculo da cena seguinte abre (antes o amarelo sumia de uma vez); grão muda a cada quadro (antes 15/s, parecia engasgo); cada cena já entra com movimento no primeiro quadro.
 - Ritmo: 32 s; locução a 1,05x; Agent Builder acumula a lista com ✓ em vez de trocar os campos; conversa da Ana com 4,45 s de tela.
 
+### Revisão v5 (som, número e fundo)
+
+- "Interrupção" aos 19 s: era o respiro de 2 s entre "cooperado" e "Resultado". Agora 0,6 s; o "Quero!" e o selo entram sobre "Resultado: mais de…" e o corte para o número cai no "150". Vídeo com 31 s.
+- "Martelando": o efeito de toque gerado tinha 8 batidas seguidas e entrava no início e no fim; agora só a primeira batida. Trilha com menos grave (o bumbo pesava sob a voz), ainda menos na intro abafada.
+- Tela do número: faixa contínua de contratos ilustrativos (nomes, sem valores) passando embaixo; câmera avança devagar.
+- Fundo: o cinza gelo virou superfície viva (creme quente + luzes amarelas e pêssego derivando + grade de pontos), contínua entre as cenas claras.
+
 ### Produto sem excesso de informação (v3)
 
 Uma informação por vez, entrando e saindo, com personalização:

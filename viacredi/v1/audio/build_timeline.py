@@ -36,7 +36,7 @@ BLOCKS = [
     ('vo2_mateus_a.mp3', 7.145, 10.545, 0.35), # Na Viacredi a saída foi menos regra e mais contexto.
     ('vo2_mateus_a.mp3', 10.545, 15.385, 0.60),# Eles escreveram o papel do agente: objetivo, público, oferta, tom.
     ('vo2_mateus_a.mp3', 15.385, 17.955, 0.70),# E a conversa passou a seguir o cooperado.
-    ('vo2_mateus_a.mp3', 17.955, 22.89, 2.00), # Resultado: mais de 150 mil reais em crédito, ainda na fase de testes.
+    ('vo2_mateus_a.mp3', 17.955, 22.89, 0.60), # Resultado: mais de 150 mil reais em crédito, ainda na fase de testes.
     ('sig_a.mp3', 0.0, 4.15, 0.90),            # O método está no Playbook Ubots Agentes de IA. Baixe grátis.
 ]
 
@@ -66,7 +66,7 @@ for a, b, hide in CH:
 
 MUSIC_SLAM = 7.35  # volta cheia da trilha v2 (music2_b) — alinhada ao "Na Viacredi"
 music_at = round(segs[2]['at'] - MUSIC_SLAM, 3)
-DUR = 32.0
+DUR = 31.0
 
 json.dump({'tempo': TEMPO, 'dur': DUR, 'end_vo': round(END_VO, 3), 'music': {'file': 'music2_b.mp3', 'at': music_at},
            'segments': segs, 'chunks': chunks}, open(os.path.join(HERE, 'timeline.json'), 'w'), ensure_ascii=False, indent=1)

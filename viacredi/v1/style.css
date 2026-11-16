@@ -180,3 +180,12 @@
 .steps .st i { width: 18px; height: 18px; border-radius: 50%; background: #d6d2c9; display: block; }
 .steps .st.on { color: var(--ink); } .steps .st.on i { background: var(--y); box-shadow: 0 0 0 6px rgba(253,195,72,.3); }
 .steps .ln { width: 60px; height: 3px; background: #d6d2c9; }
+
+/* v6: fundo vivo das telas claras (no lugar do cinza gelo) */
+:root { --cream-live: #fff3dc; }
+#stage { background: var(--cream-live); }
+.tone-light { background: var(--cream-live); }
+.livebg { position: absolute; inset: 0; overflow: hidden; }
+.livebg .glow { position: absolute; left: 0; top: 0; border-radius: 50%; will-change: transform; }
+.livebg .dots { position: absolute; inset: -40px; background-image: radial-gradient(rgba(122, 86, 0, .14) 1.7px, transparent 2.1px); background-size: 38px 38px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 45%, #000 30%, transparent 85%); mask-image: radial-gradient(ellipse 90% 70% at 50% 45%, #000 30%, transparent 85%); }

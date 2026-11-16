@@ -30,8 +30,9 @@ let S;
 
 boot(() => {
   ENGINE.capMode = 'build';
+  ENGINE.liveBg = true;
   ENGINE.init({ dur: DUR, captions: VO });
-  S = { s2: 4.0, s3: wt(3, 0) - 0.3, s4: wt(5, 0) - 0.35, s5: wt(7, 0) - 0.12, s6: wt(8, 0) - 0.05, s7: wt(10, 0) - 0.2 };
+  S = { s2: 4.0, s3: wt(3, 0) - 0.3, s4: wt(5, 0) - 0.35, s5: wt(7, 0) - 0.12, s6: wt(8, 3) - 0.35, s7: wt(10, 0) - 0.2 };   // número entra no "150"
 
   // 01 · Base pré-aprovada com nomes → seleciona a Ana → disparo ------------------
   ENGINE.scene(0, S.s2, 'light', cam => {
@@ -246,7 +247,7 @@ boot(() => {
     const rc = { x: 72 + 104, y: 430 + 52 };
     const s = S.s5;
     // cada bolha só entra depois que a anterior saiu (sem sobreposição)
-    const T = { b1: s + 0.1, mark: s + 0.5, fly: s + 1.0, b1out: s + 1.5, b2: s + 1.8, b2out: s + 3.0, b3: s + 3.3, stamp: s + 3.7 };
+    const T = { b1: s + 0.08, mark: s + 0.45, fly: s + 0.9, b1out: s + 1.35, b2: s + 1.62, b2out: s + 2.75, b3: s + 3.02, stamp: s + 3.38 };
     const OUT = 0.3;
     return {
       update(lt, t) {
@@ -282,25 +283,40 @@ boot(() => {
     };
   });
 
-  // 06 · R$ 150 mil (minimalista) ----------------------------------------------
+  // 06 · R$ 150 mil: o número conta enquanto contratos ilustrativos passam embaixo -----
   ENGINE.scene(S.s6, S.s7, 'light', cam => {
-    const pre = h('div', 'center small', cam, 'mais de'); pos(pre, 0, 650);
-    const num = h('div', 'center giant', cam, 'R$ 150 mil'); const ns = fit(num, 940); pos(num, 0, 730);
-    const bar = pos(h('div', 'pill', cam), CX - 300, 730 + ns * 0.98, 600, 22); bar.style.background = 'var(--y)';
-    const post = h('div', 'center small', cam, 'em crédito liberado'); pos(post, 0, 770 + ns * 1.05);
-    const chip = h('div', 'center', cam, '<span class="chip y" style="font-size:32px;padding:14px 28px">Ainda na fase de testes</span>'); pos(chip, 0, 850 + ns * 1.05);
-    const foot = h('div', 'center', cam, 'Os resultados da Viacredi não constituem projeção para outras instituições.'); pos(foot, 0, 1250);
+    const pre = h('div', 'center small', cam, 'mais de'); pos(pre, 0, 560);
+    const num = h('div', 'center giant', cam, 'R$ 150 mil'); const ns = fit(num, 940); pos(num, 0, 640);
+    const bar = pos(h('div', 'pill', cam), CX - 300, 640 + ns * 0.98, 600, 22); bar.style.background = 'var(--y)';
+    const post = h('div', 'center small', cam, 'em crédito liberado pelo agente'); pos(post, 0, 690 + ns * 1.05);
+    const chip = h('div', 'center', cam, '<span class="chip y" style="font-size:32px;padding:14px 28px">Ainda na fase de testes</span>'); pos(chip, 0, 770 + ns * 1.05);
+    // faixa de contratos (ilustrativa, sem valores) deslizando sem parar: a tela nunca fica parada
+    const lane = pos(h('div', 'abs', cam), 0, 1124, 1080, 120); lane.style.overflow = 'visible';
+    const NM = ['Ana R.', 'Carlos M.', 'Juliana R.', 'Roberto S.', 'Fernanda L.', 'Paulo T.', 'Lia M.', 'Marcos D.', 'Beatriz F.', 'Tiago C.'];
+    const tks = NM.map((nm, i) => {
+      const k = h('div', 'abs', lane, `<span style="width:52px;height:52px;border-radius:50%;background:${i ? 'var(--ice-2)' : 'var(--y)'};display:grid;place-items:center;font:700 22px Poppins">${nm[0]}</span><span><b style="font:700 26px Poppins">${nm}</b><br><span style="font:700 20px Poppins;color:#0b6b3a">✓ Crédito contratado</span></span>`);
+      Object.assign(k.style, { display: 'flex', alignItems: 'center', gap: '14px', background: '#fff', borderRadius: '24px', padding: '16px 24px 16px 16px', boxShadow: 'var(--soft-shadow)', whiteSpace: 'nowrap' });
+      return { k, w: k.offsetWidth };
+    });
+    const total = tks.reduce((a, o) => a + o.w + 24, 0);
+    const ill = h('div', 'center', cam, 'Ilustrativo'); pos(ill, 0, 1258);
+    Object.assign(ill.style, { font: '500 20px Poppins', color: '#a39b8f' });
+    const foot = h('div', 'center', cam, 'Os resultados da Viacredi não constituem projeção para outras instituições.'); pos(foot, 0, 1310);
     Object.assign(foot.style, { font: '500 22px Poppins', color: '#8d8a83' });
-    const c0 = S.s6 + 0.05, land = wt(8, 3) + 0.12;
+    const land = wt(8, 3) + 0.12;
     return {
       update(lt, t) {
         const n = Math.round(150 * E.outCubic(prog(t, S.s6 - 0.04, land)));
         num.textContent = `R$ ${n} mil`;
-        tf(num, { s: lerp(1.06, 1, E.outExpo(prog(t, c0, c0 + 0.5))) });
+        tf(num, { s: lerp(1.08, 1, E.outExpo(prog(t, S.s6 - 0.04, S.s6 + 0.5))) * (1 + 0.02 * prog(t, land, S.s7)) });
         op(pre, enter(t, S.s6 - 0.04, 0.3));
         bar.style.transform = `scaleX(${E.outExpo(prog(t, land, land + 0.5))})`;
         const kp = enter(t, wt(8, 7), 0.4); tf(post, { y: (1 - kp) * 20, o: kp });
         const kc = E.outBack(prog(t, wt(9, 0), wt(9, 0) + 0.35)); tf(chip, { s: 0.7 + 0.3 * kc, o: clamp(kc * 2) });
+        // esteira contínua da direita para a esquerda
+        const kl = enter(t, S.s6 + 0.2, 0.5); lane.style.opacity = kl; op(ill, kl * 0.9);
+        let x = 1080 - (t - S.s6) * 260;
+        tks.forEach(o => { let xx = x; while (xx < -o.w - 40) xx += total; o.k.style.left = xx + 'px'; o.k.style.top = '0px'; x += o.w + 24; });
         op(foot, enter(t, wt(9, 4), 0.4));
       },
     };

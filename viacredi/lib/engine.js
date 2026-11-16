@@ -149,6 +149,26 @@ function buildGrain(stage) {
   return { update(t) { ctx.putImageData(tiles[Math.floor(t * 30 + 1e-6) % tiles.length], 0, 0); } };
 }
 
+// ---------------------------------------------------------------- fundo vivo
+// Função só do tempo global: o fundo segue sem emenda de uma cena clara para outra.
+function buildLiveBg(el) {
+  const bg = h('div', 'livebg', el);
+  const G = [
+    { c: 'rgba(253,195,72,.55)', s: 1150, x: 200, y: 420, ax: 160, ay: 120, f: 0.21, p: 0 },
+    { c: 'rgba(255,170,110,.30)', s: 1000, x: 900, y: 1300, ax: 140, ay: 160, f: 0.17, p: 2.1 },
+    { c: 'rgba(253,195,72,.35)', s: 900, x: 860, y: 260, ax: 120, ay: 100, f: 0.25, p: 4.2 },
+    { c: 'rgba(255,255,255,.7)', s: 700, x: 420, y: 1000, ax: 180, ay: 120, f: 0.19, p: 1.3 },
+  ].map(g => { const d = h('div', 'glow', bg); Object.assign(d.style, { width: g.s + 'px', height: g.s + 'px', background: `radial-gradient(closest-side, ${g.c}, rgba(255,255,255,0))` }); return { d, ...g }; });
+  const dots = h('div', 'dots', bg);
+  return t => {
+    G.forEach(g => {
+      const x = g.x + Math.sin(t * g.f + g.p) * g.ax - g.s / 2, y = g.y + Math.cos(t * g.f * 0.8 + g.p) * g.ay - g.s / 2;
+      g.d.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+    });
+    dots.style.backgroundPosition = `${(t * 6).toFixed(1)}px ${(t * -10).toFixed(1)}px`;
+  };
+}
+
 // ---------------------------------------------------------------- motor
 const ENGINE = {
   scenes: [], dur: 10, t: 0,
@@ -163,11 +183,14 @@ const ENGINE = {
   // tone: 'light' | 'dark' | 'yellow' (define cor da legenda e da barra de topo)
   scene(t0, t1, tone, build, { captions = true } = {}) {
     const el = h('div', 'scene tone-' + tone, this.root);
+    // telas claras: superfície viva (creme + luzes derivando + grade de pontos), contínua entre cenas
+    const bg = tone === 'light' && ENGINE.liveBg ? buildLiveBg(el) : null;
     const cam = h('div', 'cam', el);
     el.style.display = 'block';           // visível durante a montagem para medir texto
     const api = build(cam, el) || {};
     el.style.display = 'none';
-    this.scenes.push({ t0, t1, tone, el, cam, update: api.update || (() => {}), captions });
+    const upd = api.update || (() => {});
+    this.scenes.push({ t0, t1, tone, el, cam, update: bg ? (lt, t) => { bg(t); upd(lt, t); } : upd, captions });
   },
   seek(t) {
     this.t = t;

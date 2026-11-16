@@ -18,13 +18,13 @@ DUR = TL['dur']
 SR = 48000
 
 # Onde o som "acontece" dentro do arquivo (ataque), para alinhar o ataque ao evento visual.
-ONSET = {'whoosh': .45, 'tap': .13, 'pop': 0, 'knock': .17, 'swell': .31, 'slide': .16, 'chime': 0, 'type': 0, 'page': .23}
+ONSET = {'whoosh': .45, 'tap': .034, 'pop': 0, 'knock': .17, 'swell': .31, 'slide': .16, 'chime': 0, 'type': 0, 'page': .23}
 FILE = {'whoosh': 'whoosh_b', 'tap': 'tap_a', 'pop': 'pop_b', 'knock': 'knock_b', 'swell': 'swell_b',
         'slide': 'slide_a', 'chime': 'chime_b', 'type': 'type_a', 'page': 'page_b'}
 
 W = [c['words'] for c in TL['chunks']]          # W[bloco][palavra] = tempo no vídeo
 wt = lambda k, j: W[k][j]
-S = {'s2': 4.0, 's3': wt(3, 0) - 0.3, 's4': wt(5, 0) - 0.35, 's5': wt(7, 0) - 0.12, 's6': wt(8, 0) - 0.05, 's7': wt(10, 0) - 0.2}  # = scenes.js
+S = {'s2': 4.0, 's3': wt(3, 0) - 0.3, 's4': wt(5, 0) - 0.35, 's5': wt(7, 0) - 0.12, 's6': wt(8, 3) - 0.35, 's7': wt(10, 0) - 0.2}  # = scenes.js
 
 # regras caindo sobre o agente (mesma fórmula de scenes.js)
 t0, t1, NR = wt(2, 2), wt(2, 9), 8
@@ -49,11 +49,11 @@ CUES = [
     *[x for i in range(4) for x in ((wt(6, i) + 0.02, 'slide', -15), (wt(6, i) + 0.12, 'type', -19))],
     (wt(6, 3) + 0.6, 'chime', -11),       # papel salvo
     (S['s5'] + 0.05, 'pop', -7),          # bolha da Ana
-    (S['s5'] + 0.75, 'tap', -12),         # etiqueta salta da bolha
-    (S['s5'] + 1.45, 'tap', -10),         # etiqueta encaixa no cartão da Ana
-    (S['s5'] + 1.80, 'pop', -7),          # oferta personalizada
-    (S['s5'] + 3.30, 'pop', -7),          # "Quero!"
-    (S['s5'] + 3.70, 'chime', -5),        # crédito contratado
+    (S['s5'] + 0.65, 'tap', -12),         # etiqueta salta da bolha
+    (S['s5'] + 1.35, 'tap', -10),         # etiqueta encaixa no cartão da Ana
+    (S['s5'] + 1.62, 'pop', -7),          # oferta personalizada
+    (S['s5'] + 3.02, 'pop', -7),          # "Quero!"
+    (S['s5'] + 3.38, 'chime', -5),        # crédito contratado
     (S['s6'], 'whoosh', -11),             # corte para o número
     (wt(8, 3) + 0.12, 'slide', -15),      # sublinhado
     (wt(9, 0), 'pop', -9),                # "Ainda na fase de testes"
@@ -102,10 +102,18 @@ def run():
     for t, s, gdb in CUES:
         n = FILE[s]
         if n not in cache:
-            cache[n] = load(None, ['-i', os.path.join(src, 'sfx', n + '.mp3')])
+            # o "toque" gerado tem 8 batidas seguidas (soava como martelo): usa só a primeira
+            trim = ['-ss', '0.10', '-to', '0.33'] if s == 'tap' else []
+            cache[n] = load(None, [*trim, '-i', os.path.join(src, 'sfx', n + '.mp3'), '-af', 'afade=t=out:st=0.17:d=0.06' if trim else 'anull'])
         place(fx, cache[n], t - ONSET[s], gdb)
     # 3) trilha deslocada para a volta cheia cair no "Na Viacredi"; +2 compassos no fim para cobrir os 32 s
-    m = load(None, ['-i', os.path.join(src, TL['music']['file'])]) * (10 ** (-8 / 20))
+    # menos grave (o bumbo four-on-the-floor martelava sob a voz); a intro abafada perde ainda mais grave
+    mpath = os.path.join(src, TL['music']['file'])
+    m = load(None, ['-i', mpath, '-af', 'highpass=f=45,lowshelf=f=130:g=-5']) * (10 ** (-8 / 20))
+    mi = load(None, ['-i', mpath, '-af', 'highpass=f=45,lowshelf=f=150:g=-11']) * (10 ** (-8 / 20))
+    k0, k1 = int(6.9 * SR), int(7.35 * SR)                  # volta cheia da trilha em 7,35 s
+    w = np.zeros(len(m), np.float32); w[:k0] = 1; w[k0:k1] = np.linspace(1, 0, k1 - k0)
+    m = mi * w[:, None] + m * (1 - w[:, None])
     bar2 = int(round(8 * 60 / 123 * SR))           # 2 compassos a 123 BPM
     cut = int(28.55 * SR); xf = int(0.03 * SR)
     tail = m[cut - bar2 - xf:cut].copy()           # repete os 2 compassos anteriores ao corte
