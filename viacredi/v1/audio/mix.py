@@ -34,13 +34,16 @@ CUES = [
     (0.25, 'slide', -12),                 # fila de pré-aprovados entra
     (wt(0, 1), 'tap', -4),                # moldura escolhe a Ana
     (wt(1, 1) + 0.1, 'whoosh', -7),       # disparo
-    (wt(1, 1) + 0.6, 'pop', -5),          # "Enviada para a Ana"
+    (wt(1, 1) + 0.4, 'pop', -9),          # notificação do Carlos
+    (wt(1, 1) + 0.54, 'pop', -9),         # da Juliana
+    (wt(1, 1) + 0.68, 'pop', -5),         # da Ana (na frente)
     (S['s2'] + 0.05, 'pop', -9),          # agente aparece
     *[(t, 'slide', -14) for t in RULES[:5]],          # regras do ebook caem (só as 5 primeiras com som)
     (wt(2, 10), 'knock', -4),             # "robô": trava
     (S['s3'] - 0.25, 'swell', -5),        # forma da marca cobre o quadro
-    (wt(4, 3) + 0.05, 'slide', -9),       # pílula amarela cresce
-    (wt(4, 4), 'tap', -9),                # "contexto."
+    *[(wt(4, 0) + i * 0.11 + 0.16, 'whoosh', -20) for i in range(5)],  # regras riscadas saem do editor
+    (wt(4, 3), 'slide', -9),              # bloco de contexto cresce
+    (wt(4, 4), 'tap', -9),                # "contexto." grifado
     (S['s4'] + 0.05, 'slide', -9),        # janela do Agent Builder
     (wt(5, 3), 'type', -16),              # digita "Papel do agente"
     *[x for i in range(4) for x in ((wt(6, i) + 0.02, 'slide', -15), (wt(6, i) + 0.12, 'type', -19))],
@@ -48,8 +51,8 @@ CUES = [
     (S['s5'] + 0.05, 'pop', -7),          # bolha da Ana
     (S['s5'] + 0.75, 'tap', -12),         # etiqueta salta da bolha
     (S['s5'] + 1.45, 'tap', -10),         # etiqueta encaixa no cartão da Ana
-    (S['s5'] + 1.65, 'pop', -7),          # oferta personalizada
-    (S['s5'] + 3.32, 'pop', -7),          # "Quero!"
+    (S['s5'] + 1.80, 'pop', -7),          # oferta personalizada
+    (S['s5'] + 3.30, 'pop', -7),          # "Quero!"
     (S['s5'] + 3.70, 'chime', -5),        # crédito contratado
     (S['s6'], 'whoosh', -11),             # corte para o número
     (wt(8, 3) + 0.12, 'slide', -15),      # sublinhado

@@ -42,8 +42,12 @@ boot(() => {
       return { c, i, d: Math.abs(i - 3) };
     });
     const frame = pos(h('div', 'selframe', cam), 390 - 24, 780 - 24, 348, 408);
-    const sent = h('div', 'center', cam, '<span style="display:inline-flex;align-items:center;gap:16px;font:600 46px Poppins;color:#0b6b3a;background:#d9fdd3;padding:26px 42px;border-radius:999px">✓✓ Enviada para a Ana</span>');
-    pos(sent, 0, 900);
+    // o disparo vira notificações no WhatsApp, uma por cooperado, com nome e valor
+    const NT = [['Carlos', '8.000'], ['Juliana', '12.000'], ['Ana', '15.000']];
+    const notifs = NT.map(([nm, v], i) => {
+      const n = h('div', 'notif', cam, `<div class="ic"><i></i></div><div class="tx"><div class="hd">Viacredi<span>agora</span></div><div class="bd">${nm}, você tem <b>R$ ${v}</b> em crédito pré-aprovado.${i === 2 ? ' Quer ver como usar?' : ''}</div>${i === 2 ? '<div class="st">✓✓ Entregue</div>' : ''}</div>`);
+      return { n, i };
+    });
     return {
       update(lt, t) {
         const kin = enter(t, 0.05, 0.8, E.outExpo);
@@ -59,8 +63,14 @@ boot(() => {
         const kf = E.outBack(prog(t, selT, selT + 0.35));
         const fp = E.inCubic(prog(t, launch, launch + 0.5));
         tf(frame, { s: lerp(1.3, 1, kf) * (1 + 0.04 * E.outBack(prog(t, selT, selT + 0.3))), y: -1500 * fp, o: clamp(kf * 3) });
-        const ks = E.outBack(prog(t, launch + 0.5, launch + 0.85));
-        tf(sent, { s: 0.6 + 0.4 * ks, o: clamp(ks * 2) });
+        notifs.forEach(o => {
+          const at = launch + 0.3 + o.i * 0.14;
+          const k = E.outExpo(prog(t, at, at + 0.5));
+          const ana = o.i === 2;                              // as três legíveis; a da Ana em destaque
+          o.n.style.top = (540 + o.i * 215) + 'px';
+          tf(o.n, { y: (1 - k) * -120, s: ana ? 1 : 0.94, o: clamp(k * 1.5) * (ana ? 1 : 0.62) });
+          o.n.style.visibility = t >= at ? 'visible' : 'hidden';
+        });
       },
     };
   });
@@ -104,32 +114,56 @@ boot(() => {
     };
   });
 
-  // 03 · Menos regra, mais contexto (minimalista) --------------------------------
+  // 03 · Menos regra, mais contexto: o editor de instruções perde as regras e ganha contexto ----
   ENGINE.scene(S.s3, S.s4, 'light', (cam, el) => {
-    const N = 9, bars = [];
-    const hs = [300, 420, 250, 380, 460, 330, 400, 270, 350];
-    for (let i = 0; i < N; i++) bars.push({ b: h('div', 'pill', cam), x: CX - (N * 56 + (N - 1) * 30) / 2 + i * 86, hh: hs[i] });
-    const lab = h('div', 'center small', cam, 'regras do agente'); pos(lab, 0, 1190);
-    const pillY = h('div', 'pill', cam); pillY.style.background = 'var(--y)';
-    const word = maskLine(cam, 'center giant', 'contexto.'); pos(word.m, 0, 790);
-    const ws = fit(word.i, 780); word.m.style.width = '1080px';
+    const hl = h('div', 'hl', cam, '<s>menos regra<i></i></s>, mais <em>contexto.</em>'); pos(hl, 0, 268);
+    hl.style.fontSize = '84px';
+    const strike = hl.querySelector('s i'), emph = hl.querySelector('em');
+    const ed = pos(h('div', 'ed', cam), 90, 470, 900, 760);
+    ed.innerHTML = '<div class="ed-top"><span class="dts"><i></i><i></i><i></i></span>Instruções do agente<span class="cnt">8 regras</span></div>';
+    const cnt = ed.querySelector('.cnt');
+    const L = [['Não fale sobre…', 0], ['Não responda se…', 0], ['Não ofereça…', 0], ['Sempre use a frase…', 0], ['Não saia do roteiro…', 0],
+      ['Seja transparente sobre juros e IOF.', 1], ['Contrate só pelo canal seguro.', 1], ['Não peça dados sensíveis.', 1]];
+    const lines = L.map(([tx, keep], i) => {
+      const l = h('div', 'ed-ln', ed, `<span class="n">${i + 1}</span><span class="t">${tx}<i></i></span>${keep ? '<span class="g">✓</span>' : ''}`);
+      return { l, keep, i, st: l.querySelector('.t i'), g: l.querySelector('.g') };
+    });
+    const box = h('div', 'ctxb', ed, '<div class="h">+ Contexto</div><div class="cs"><span>Objetivo da conversa</span><span>Plano do cooperado</span><span>Oferta disponível</span></div>');
+    const chips = [...box.querySelectorAll('.cs span')];
+    const coll = wt(4, 0), more = wt(4, 3);
+    const del = lines.filter(o => !o.keep);
     return {
       update(lt, t) {
         el.style.clipPath = `circle(${E.inOutCubic(prog(t, S.s3 + 0.1, S.s3 + 0.65)) * 1400}px at 50% 52%)`;
-        const coll = wt(4, 0), more = wt(4, 3);
-        bars.forEach((o, i) => {
-          const kin = E.outExpo(prog(t, S.s3 + 0.45 + i * 0.04, S.s3 + 0.85 + i * 0.04));
-          const kc = E.inOutCubic(prog(t, coll + i * 0.025, coll + 0.35 + i * 0.025));
-          const km = E.inOutExpo(prog(t, more - 0.05, more + 0.25));
-          const hh = lerp(o.hh * kin, 56, kc);
-          Object.assign(o.b.style, { left: lerp(o.x, CX - 28, km) + 'px', top: 960 - hh / 2 + 'px', width: '56px', height: hh + 'px', background: kc > 0.5 ? '#bdb8ae' : 'var(--ink)', opacity: 1 - km });
+        const ke = E.outExpo(prog(t, S.s3 + 0.35, S.s3 + 1.0));
+        ed.style.transform = `perspective(1800px) translateY(${(1 - ke) * 160}px) rotateX(${(1 - ke) * 12}deg)`; ed.style.opacity = clamp(ke * 1.6);
+        // manchete: aparece no "menos", risca "regra", grifa "contexto"
+        const kh = enter(t, coll - 0.05, 0.4); tf(hl, { y: (1 - kh) * 30, o: kh });
+        strike.style.transform = `scaleX(${E.inOutCubic(prog(t, wt(4, 1), wt(4, 1) + 0.3))})`;
+        emph.style.backgroundSize = `${E.inOutCubic(prog(t, wt(4, 4), wt(4, 4) + 0.35)) * 100}% 100%`;
+        // linhas: as 5 regras são riscadas e saem; ficam os 3 guardrails
+        let y = 108, removed = 0;
+        lines.forEach(o => {
+          const d0 = coll + (o.keep ? 99 : del.indexOf(o) * 0.11);
+          const ks = E.inOutCubic(prog(t, d0, d0 + 0.18));             // risca
+          const kx = E.inCubic(prog(t, d0 + 0.16, d0 + 0.38));         // sai
+          o.st.style.transform = `scaleX(${o.keep ? 0 : ks})`;
+          const kin = E.outExpo(prog(t, S.s3 + 0.5 + o.i * 0.05, S.s3 + 0.9 + o.i * 0.05));
+          o.l.style.top = y + 'px';
+          tf(o.l, { x: -120 * kx + (1 - kin) * 40, o: kin * (1 - kx) });
+          o.l.style.color = o.keep && t > coll + 0.6 ? 'var(--ink)' : '#55524c';
+          if (o.g) o.g.style.opacity = enter(t, coll + 0.6, 0.3);
+          const gone = E.inOutCubic(prog(t, d0 + 0.3, d0 + 0.5));
+          y += 62 * (o.keep ? 1 : 1 - gone);
+          if (!o.keep && gone >= 1) removed++;
         });
-        op(lab, enter(t, S.s3 + 0.8, 0.3) * (1 - enter(t, coll, 0.3)));
-        const kp = E.outExpo(prog(t, more + 0.05, more + 0.5));
-        const pw = lerp(56, 940, kp), ph = lerp(56, ws * 1.25, kp);
-        Object.assign(pillY.style, { left: CX - pw / 2 + 'px', top: 960 - ph / 2 + 'px', width: pw + 'px', height: ph + 'px', opacity: prog(t, more, more + 0.05) });
-        word.m.style.top = 960 - ws * 0.55 + 'px';
-        maskT(word, enter(t, wt(4, 4), 0.4));
+        cnt.textContent = t < coll + 0.5 ? `${8 - removed} regras` : '3 guardrails';
+        // bloco de contexto cresce embaixo dos guardrails
+        const kb = E.outExpo(prog(t, more, more + 0.5));
+        box.style.top = y + 18 + 'px';
+        box.style.opacity = clamp(kb * 2); box.style.transform = `scaleY(${0.6 + 0.4 * kb})`; box.style.transformOrigin = '50% 0';
+        chips.forEach((c, i) => { const kc = E.outBack(prog(t, more + 0.25 + i * 0.12, more + 0.55 + i * 0.12)); c.style.display = 'inline-block'; c.style.transform = `scale(${kc})`; c.style.opacity = clamp(kc * 2); });
+        ed.style.height = lerp(760, y + 18 + 230 + 24, E.inOutCubic(prog(t, coll, more + 0.4))) + 'px';
       },
     };
   });
@@ -189,48 +223,60 @@ boot(() => {
 
   // 05 · A conversa segue a Ana: contexto vira oferta, oferta vira contrato ----------
   ENGINE.scene(S.s5, S.s6, 'light', cam => {
-    const per = pos(h('div', 'persona', cam), 72, 440);
+    const per = pos(h('div', 'persona', cam), 72, 430);
     per.innerHTML = '<div class="av">A</div><div><div class="nm">Ana R.</div><div class="ctx"></div></div>';
     const ctx = per.querySelector('.ctx');
-    const b1 = h('div', 'bbl me', cam, 'Estou <mark>reformando a cozinha</mark>.'); pos(b1, 0, 760); b1.style.right = '72px'; b1.style.left = 'auto';
+    const panel = h('div', 'chatp', cam, '<div class="hd"><span class="av">✦</span><div>Agente Viacredi<div class="s">online</div></div></div>');
+    pos(panel, 72, 580, 936, 604);
+    const inP = (cls, html, top, side) => { const b = h('div', 'bbl ' + cls, panel, html); b.style.top = top + 'px'; b.style[side] = '28px'; b.style.boxShadow = 'none'; return b; };
+    const b1 = inP('me', 'Estou <mark>reformando a cozinha</mark>.', 296, 'right');
     const mk = b1.querySelector('mark');
+    const b2 = inP('bot', '<span class="ai">✦ Agente de IA</span><br>Que legal! Simulei uma opção para a sua reforma:<div class="sim"><div class="a"><span>Crédito Reforma</span></div><div class="b">R$ 15.000,00</div><div class="c">24x · juros e IOF inclusos</div></div>', 128, 'left');
+    b2.style.maxWidth = '820px'; b2.style.fontSize = '40px';
+    const b3 = inP('me', 'Quero! Vou contratar para terminar a obra.', 226, 'right'); b3.style.maxWidth = '720px';
+    const stamp = h('div', 'stamp', panel, '✓ Crédito contratado');
     const fly = h('div', 'tagfly', cam, 'reforma da cozinha');
-    const b2 = h('div', 'bbl bot', cam, '<span class="ai">✦ Agente de IA</span><br>Que legal! Simulei uma opção para a sua reforma:<div class="sim"><div class="a"><span>Crédito Reforma</span></div><div class="b">R$ 15.000,00</div><div class="c">24x · juros e IOF inclusos</div></div>');
-    pos(b2, 72, 640); b2.style.maxWidth = '860px';
-    const b3 = h('div', 'bbl me', cam, 'Quero! Vou contratar para terminar a obra.'); pos(b3, 0, 820); b3.style.right = '72px'; b3.style.left = 'auto'; b3.style.maxWidth = '760px';
-    const stamp = h('div', 'stamp', cam, '✓ Crédito contratado');
-    const note = h('div', 'center', cam, 'Reconstituição a partir do relato do projeto.'); pos(note, 0, 1250);
+    const steps = h('div', 'steps', cam, '<span class="st"><i></i>Contexto</span><span class="ln"></span><span class="st"><i></i>Oferta</span><span class="ln"></span><span class="st"><i></i>Decisão</span>');
+    pos(steps, 72, 1214, 936);
+    const st = [...steps.querySelectorAll('.st')];
+    const note = h('div', 'center', cam, 'Reconstituição a partir do relato do projeto.'); pos(note, 0, 1288);
     Object.assign(note.style, { font: '500 22px Poppins', color: '#8d8a83' });
     const mr = mk.getBoundingClientRect(), sr = ENGINE.stage.getBoundingClientRect();
-    const r0 = { x: mr.left - sr.left, y: mr.top - sr.top };
-    const r1 = { x: r0.x, y: r0.y - 96 };
-    const rc = { x: 72 + 104, y: 440 + 52 };
+    const r1 = { x: mr.left - sr.left, y: mr.top - sr.top - 96 };   // nasce acima do trecho grifado, sem cobri-lo
+    const rc = { x: 72 + 104, y: 430 + 52 };
     const s = S.s5;
-    const T = { b1: s + 0.05, mark: s + 0.5, fly: s + 1.0, b1out: s + 1.55, b2: s + 1.65, b2out: s + 3.05, b3: s + 3.32, stamp: s + 3.7 };
+    // cada bolha só entra depois que a anterior saiu (sem sobreposição)
+    const T = { b1: s + 0.1, mark: s + 0.5, fly: s + 1.0, b1out: s + 1.5, b2: s + 1.8, b2out: s + 3.0, b3: s + 3.3, stamp: s + 3.7 };
+    const OUT = 0.3;
     return {
       update(lt, t) {
         const kp = E.outBack(prog(t, s - 0.04, s + 0.35)); tf(per, { s: 0.8 + 0.2 * kp, o: clamp(kp * 2) });
-        const i1 = inOut(t, s - 0.04, T.b1out, 0.35);
-        b1.style.visibility = i1.vis ? 'visible' : 'hidden';
-        tf(b1, { y: (1 - i1.a) * 60 - 260 * i1.b, s: 0.9 + 0.1 * i1.a, o: i1.a * (1 - i1.b) }); b1.style.transformOrigin = '100% 100%';
+        const kq = E.outExpo(prog(t, s - 0.04, s + 0.55));
+        panel.style.transform = `perspective(1800px) translateY(${(1 - kq) * 140}px) rotateX(${(1 - kq) * 10}deg)`; panel.style.opacity = clamp(kq * 1.6);
+        const show = (b, tin, tout, origin) => {
+          const a = E.outBack(prog(t, tin, tin + 0.35)), o = E.inCubic(prog(t, tout, tout + OUT));
+          b.style.visibility = t >= tin && t < tout + OUT ? 'visible' : 'hidden';
+          b.style.transformOrigin = origin;
+          b.style.transform = `translateY(${(1 - a) * 40 - 120 * o}px) scale(${0.88 + 0.12 * a})`;
+          b.style.opacity = clamp(a * 2) * (1 - o);
+        };
+        show(b1, T.b1, T.b1out, '100% 100%');
+        show(b2, T.b2, T.b2out, '0 100%');
+        show(b3, T.b3, 99, '100% 100%');
         mk.style.backgroundSize = `${E.inOutCubic(prog(t, T.mark, T.mark + 0.3)) * 100}% 100%`;
         const kpop = E.outBack(prog(t, T.fly - 0.25, T.fly + 0.05));
         const kf = E.inOutCubic(prog(t, T.fly + 0.05, T.fly + 0.45));
         fly.style.visibility = t >= T.fly - 0.25 && kf < 1 ? 'visible' : 'hidden';
-        fly.style.left = lerp(r0.x, lerp(r1.x, rc.x, kf), clamp(kpop)) + 'px';
-        fly.style.top = lerp(r0.y, lerp(r1.y, rc.y, kf), clamp(kpop)) + 'px';
-        fly.style.transform = `scale(${lerp(0.6, 1, clamp(kpop)) * lerp(1, 0.8, kf)})`;
-        ctx.textContent = kf >= 1 ? 'reforma da cozinha' : '';
-        ctx.style.display = kf >= 1 ? 'inline-block' : 'none';
-        const i2 = inOut(t, T.b2, T.b2out, 0.35);
-        b2.style.visibility = i2.vis ? 'visible' : 'hidden';
-        tf(b2, { y: (1 - i2.a) * 60 - 260 * i2.b, s: 0.9 + 0.1 * i2.a, o: i2.a * (1 - i2.b) }); b2.style.transformOrigin = '0 100%';
-        const i3 = inOut(t, T.b3, 99, 0.35);
-        b3.style.visibility = i3.vis ? 'visible' : 'hidden';
-        tf(b3, { y: (1 - i3.a) * 60, s: 0.9 + 0.1 * i3.a, o: i3.a }); b3.style.transformOrigin = '100% 100%';
+        fly.style.left = lerp(r1.x, rc.x, kf) + 'px';
+        fly.style.top = lerp(r1.y + (1 - clamp(kpop)) * 30, rc.y, kf) + 'px';
+        fly.style.opacity = clamp(kpop * 2);
+        fly.style.transform = `scale(${lerp(0.7, 1, clamp(kpop)) * lerp(1, 0.8, kf)})`;
+        ctx.textContent = kf >= 1 ? 'reforma da cozinha' : ''; ctx.style.display = kf >= 1 ? 'inline-block' : 'none';
         const ks = E.outBack(prog(t, T.stamp, T.stamp + 0.3));
-        pos(stamp, 0, 820 + b3.offsetHeight + 24); stamp.style.left = 'auto'; stamp.style.right = '72px';
+        stamp.style.top = 226 + b3.offsetHeight + 18 + 'px'; stamp.style.right = '28px';
         tf(stamp, { s: 0.6 + 0.4 * ks, o: clamp(ks * 2) }); stamp.style.transformOrigin = '100% 0';
+        st[0].classList.toggle('on', t >= T.fly); st[1].classList.toggle('on', t >= T.b2); st[2].classList.toggle('on', t >= T.b3);
+        op(steps, enter(t, s + 0.2, 0.4));
         op(note, enter(t, s + 0.3, 0.4));
       },
     };
