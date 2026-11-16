@@ -45,6 +45,29 @@ const A = `<section class="ad" id="a">
   <span class="tag t1"><i>${lineIcon('spark', 0)}</i>Agente de IA</span>
 </section>`;
 
+// ---------- versão no grid medido da referência "15x" ----------
+const G = { m: 74, z: 1.75, sx: 416, sy: 531, sw: 242, sh: 517 };
+G.tx = 560 - G.sx * G.z; G.ty = 560 - G.sy * G.z;
+const GS = { x: 560, y: 560, w: G.sw * G.z, h: G.sh * G.z };
+const GCW = 300;
+const gchat = waScreen({ status: true, date: false, input: true, name: 'Agente Viacredi', body: `<div class="flow">
+  ${m('us', 'Tô reformando a cozinha. Esse crédito serve pra isso?', '14:22')}
+  ${m('ag', `Serve sim! Simulei pra sua reforma:<span class="sim"><span class="sim-l">Crédito Reforma</span><b class="sim-v">R$ 15.000,00</b><span class="sim-d">24x · juros e IOF claros</span></span>`, '14:23', { btns: [{ t: 'Contratar pelo app', icon: 'ext' }], cls: 'tap' })}
+  <div class="ok"><span class="ok-i">${tick}</span><div><b>Crédito contratado</b><small>R$ 15.000,00 em 24x · pelo app</small></div></div>
+</div>` });
+const GRID = `<section class="ad g" id="g">
+  <i class="gglow"></i>
+  <div class="grp">
+  <div class="scr" style="left:${GS.x}px;top:${GS.y}px;width:${GS.w}px;height:${GS.h}px"><div class="scl" style="width:${GCW}px;height:${(GCW * GS.h) / GS.w}px;transform:scale(${GS.w / GCW})">${gchat}</div></div>
+  <img class="photo z" src="${img('c1-celular-key-flip.png')}" style="width:${1080 * G.z}px;height:${1350 * G.z}px;left:${G.tx}px;top:${G.ty}px" alt="">
+  </div>
+  <div class="gshade"></div>
+  <div class="gbrand"><img src="${LOGO.ubotsDark}" alt="Ubots"><img class="vc" src="${LOGO.viaDark}" alt="Viacredi"></div>
+  <h1 class="gh">A Viacredi tirou regras do agente de IA. <em>A conversa virou contratação.</em></h1>
+  <p class="gp">Menos regras, mais contexto: o método para vender crédito no WhatsApp com IA.</p>
+  <span class="gcta"><b>${lineIcon('fwd', 2.8)}</b>Baixe o playbook</span>
+</section>`;
+
 const B = `<section class="ad" id="b">
   <img class="photo" src="${img('c1-tesoura-1080.jpg')}" alt="">
   <div class="topfade"></div>
@@ -99,6 +122,18 @@ h1 em{font-style:normal;color:#FDC348}
 .t1{right:40px;top:398px;transform:rotate(4deg)}
 .t2{left:80px;top:1110px;transform:rotate(-4deg)}
 .tag i svg{width:22px;height:22px}
+/* grid medido da referência */
+.grp{position:absolute;inset:0;z-index:2;transform:rotate(-9deg) translate(0px,70px);transform-origin:770px 1050px}
+.gglow{position:absolute;left:-200px;bottom:-260px;width:900px;height:700px;z-index:4;border-radius:50%;background:radial-gradient(closest-side,rgba(253,195,72,.30),rgba(253,195,72,0));pointer-events:none}
+.g .gshade{position:absolute;inset:0;z-index:3;background:linear-gradient(90deg,rgba(7,4,1,.96) 0%,rgba(7,4,1,.9) 40%,rgba(7,4,1,0) 58%),linear-gradient(180deg,rgba(7,4,1,.96) 0%,rgba(7,4,1,.85) 36%,rgba(7,4,1,0) 50%)}
+.gbrand{position:absolute;left:0;right:0;top:96px;z-index:5;display:flex;justify-content:center;align-items:center;gap:70px}
+.gbrand img{height:50px}.gbrand img.vc{height:60px}
+.gh{position:absolute;left:74px;right:150px;top:220px;margin:0;z-index:5;font:700 62px/1.12 'Poppins';letter-spacing:-.035em;color:#FFFDF9}
+.gh em{font-style:normal;color:#FDC348}
+.gp{position:absolute;left:74px;top:470px;width:400px;margin:0;z-index:5;font:400 30px/1.42 'Poppins';color:#D6D3CF;letter-spacing:-.01em}
+.gcta{position:absolute;left:74px;top:690px;z-index:5;display:inline-flex;align-items:center;gap:18px;background:#FDC348;color:#070401;font:600 30px/1 'Poppins';padding:12px 34px 12px 12px;border-radius:999px;box-shadow:0 14px 34px rgba(244,174,42,.3)}
+.gcta b{width:56px;height:56px;border-radius:50%;background:#070401;color:#FDC348;display:grid;place-items:center}
+.gcta b svg{width:28px;height:28px}
 /* B */
 .role{position:absolute;right:70px;bottom:90px;z-index:5;background:#FFFDF9;color:#070401;border:4px solid #FDC348;border-radius:24px;padding:22px 26px;transform:rotate(-3deg);box-shadow:0 24px 50px rgba(0,0,0,.45)}
 .role p{display:flex;align-items:center;gap:10px;margin:0;font:700 30px/1 'Poppins'}
@@ -106,7 +141,7 @@ h1 em{font-style:normal;color:#FDC348}
 .role span{display:block;margin-top:10px;font:600 22px/1.2 'Nunito';color:#45433F}
 `;
 
-const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><style>${CSS}\n${ACSS}</style></head><body>${A}${B}</body></html>`;
+const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><style>${CSS}\n${ACSS}</style></head><body>${A}${B}${GRID}</body></html>`;
 const HTML = path.join(OUT, 'criativo-01.html');
 fs.writeFileSync(HTML, html);
 const browser = await chromium.launch();
@@ -115,6 +150,7 @@ await p.goto(pathToFileURL(HTML).href);
 await p.evaluate(() => document.fonts.ready.then(() => Promise.all([...document.images].map((i) => i.decode().catch(() => 0)))));
 await (await p.$('#a')).screenshot({ path: path.join(OUT, 'criativo-01-a.png') });
 await (await p.$('#b')).screenshot({ path: path.join(OUT, 'criativo-01-b.png') });
+await (await p.$('#g')).screenshot({ path: path.join(OUT, 'criativo-01-grid.png') });
 await browser.close();
 fs.rmSync(HTML);
 console.log('ok');
