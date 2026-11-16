@@ -33,7 +33,7 @@ boot(() => {
   ENGINE.liveBg = true;
   ENGINE.bgMode = new URLSearchParams(location.search).get('bg') || 'grid';
   ENGINE.init({ dur: DUR, captions: VO });
-  S = { s2: 4.0, s3: wt(3, 0) - 0.3, s4: wt(5, 0) - 0.35, s5: wt(7, 0) - 0.12, s6: wt(8, 3) - 0.35, s7: wt(10, 0) - 0.2 };   // número entra no "150"
+  S = { s2: 4.0, s3: wt(3, 0) - 0.3, s4: wt(5, 0) - 0.1, s5: wt(7, 0) - 0.12, s6: wt(8, 3) - 0.35, s7: wt(10, 0) - 0.2 };   // número entra no "150"
 
   // 01 · Base pré-aprovada com nomes → seleciona a Ana → disparo ------------------
   ENGINE.scene(0, S.s2, 'light', cam => {

@@ -15,7 +15,7 @@ Proporção: problema ~5 s (20%), solução e prova ~19 s. O robô é genérico 
 ### Locução (colar no ElevenLabs)
 
 ```
-[upbeat] [confident] Crédito pré-aprovado. Oferta disparada no WhatsApp. Só que agente de IA cheio de regra fala como robô. Na /viaˈkɾɛdʒi/ a saída foi menos regra e mais contexto. Eles escreveram o papel do agente: objetivo, público, oferta, tom. E a conversa passou a seguir o cooperado. Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. O método está no Playbook Ubots Agentes de IA. Baixe grátis.
+[upbeat] [confident] Crédito pré-aprovado. Oferta disparada no WhatsApp. [short pause] Só que agente de /iˈa/ cheio de regra fala como robô. [pause] Na /viaˈkɾɛdʒi/ a saída foi menos regra e mais contexto. [pause] Eles escreveram o papel do agente: objetivo, público, oferta, tom. [short pause] E a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] O método está no Playbook Ubots Agentes de /iˈa/. Baixe grátis.
 ```
 
 v3 (áudio): o trecho do "Não entendi. Responda SIM ou NÃO." saiu (confundia a jornada); o problema agora é dito direto ("agente de IA cheio de regra fala como robô") e mostrado com as regras do ebook se empilhando sobre o agente. "Viacredi" vai em fonética (/viaˈkɾɛdʒi/) e sem vírgula, para não arrastar o final. A assinatura cita "Playbook Ubots Agentes de IA".
@@ -83,6 +83,11 @@ Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em gra
 
 - Locução travando: a edição picotava a fala em 6 blocos com respiros artificiais, e uma emenda caía no meio do som entre "cooperado" e "Resultado". Agora a locução entra inteira e contínua, como foi gerada, acelerada 1,04x numa passada só; a única junção é com a assinatura, em silêncio real. As cenas se ajustam sozinhas aos tempos das palavras. Vídeo com ~28 s.
 - Balão da marca: parado, só recortado nos cantos (faixa de baixo e canto de cima acima da legenda), sem passar por trás de conteúdo.
+
+### Revisão v7 (locução em tomada única, 30,7 s)
+
+- "IA" escrito em fonética (/iˈa/) nas duas ocorrências; antes saía "ei-ai". Na nova tomada o "IA" dura 0,16 s (antes 0,32 s, típico do ditongo em inglês).
+- Locução gerada de novo numa tomada só, com as pausas na própria interpretação (depois de WhatsApp, robô, contexto, tom, cooperado e testes). Velocidade natural, sem aceleração e sem emendas. Vídeo com 30,7 s; o CTA fica ~6 s na tela.
 
 ### Produto sem excesso de informação (v3)
 

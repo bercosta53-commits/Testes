@@ -24,7 +24,7 @@ FILE = {'whoosh': 'whoosh_b', 'tap': 'tap_a', 'pop': 'pop_b', 'knock': 'knock_b'
 
 W = [c['words'] for c in TL['chunks']]          # W[bloco][palavra] = tempo no vídeo
 wt = lambda k, j: W[k][j]
-S = {'s2': 4.0, 's3': wt(3, 0) - 0.3, 's4': wt(5, 0) - 0.35, 's5': wt(7, 0) - 0.12, 's6': wt(8, 3) - 0.35, 's7': wt(10, 0) - 0.2}  # = scenes.js
+S = {'s2': 4.0, 's3': wt(3, 0) - 0.3, 's4': wt(5, 0) - 0.1, 's5': wt(7, 0) - 0.12, 's6': wt(8, 3) - 0.35, 's7': wt(10, 0) - 0.2}  # = scenes.js
 
 K5 = min(1, (S['s6'] - S['s5']) / 3.9)   # conversa escala com a duração real da cena
 
