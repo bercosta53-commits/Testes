@@ -4,58 +4,91 @@ Formato: 9:16, 1080×1920, 30 fps. Linguagem nova: editorial em grade (ver "Sist
 
 ---
 
-## Vídeo 1: "Regra atrás de regra" (atração, ~25 s)
+## Vídeo 1: "Pré-aprovado" (atração, ~24 s) · v2
 
-Papel na campanha: parar o scroll com a ideia do ebook (empilhar regras deixa o agente robótico). Fala com quem já testou bot de fluxo ou IA e se frustrou.
+Papel na campanha: parar o scroll com uma cena que todo gestor de crédito reconhece (a oferta de pré-aprovado que esbarra num agente robótico) e passar rápido para a saída da Viacredi.
+
+Âncora no ICP: o ticket de **crédito pré-aprovado**. Cooperativas, bancos e fintechs vivem de base pré-aprovada e disparo de oferta. O ticket abre o vídeo sendo disparado e volta no clímax com o selo trocado para "✓ Crédito contratado", a conversão que esse público persegue. Ninguém precisa dizer "se você é gestor de…".
+
+Proporção: problema ~5 s (20%), solução e prova ~19 s. O robô é genérico ("o agente de IA"), não o da Viacredi.
 
 ### Locução (colar no ElevenLabs)
 
 ```
-Não fale sobre isso. Não responda aquilo. Não ofereça. Não saia do roteiro. <break time="0.6s" />
-A Viacredi começou assim o agente de IA que vende crédito no WhatsApp: uma regra nova a cada ajuste. E a conversa foi ficando com cara de robô. <break time="0.5s" />
-Em julho, eles cortaram regras e escreveram o papel do agente. <break time="0.4s" />
-Ainda na fase de testes, foram mais de 150 mil reais em crédito liberado. <break time="0.5s" />
-O método completo está no playbook. Baixe grátis.
+Crédito pré-aprovado. Oferta disparada no WhatsApp. <break time="0.2s" />
+E o agente de IA responde: "Não entendi. Responda SIM ou NÃO." <break time="0.5s" />
+Na Viacredi, a saída foi menos regra e mais contexto. <break time="0.3s" />
+Eles escreveram o papel do agente: objetivo, público, oferta, tom. <break time="0.3s" />
+E a conversa passou a seguir o cooperado. <break time="0.4s" />
+Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. <break time="0.5s" />
+O método está no playbook. Baixe grátis.
 ```
+
+Fontes: "menos regras e mais contexto" (pág. 7), papel do agente (pág. 9), conversa da cozinha (pág. 5, reconstituição), R$ 150 mil (pág. 8). Conversa robótica: exemplo ilustrativo da pág. 3.
 
 ### Decupagem
 
-| Tempo (aprox.) | Locução | Tela |
+| Tempo (estimado) | Locução | Tela |
 |---|---|---|
-| 0–5 s | "Não fale sobre isso… Não saia do roteiro." | Fundo creme. Cada regra entra em Poppins enorme, alinhada à esquerda, com número de linha e marca-texto amarelo (o editor da pág. 3 do ebook). A cada regra o bloco encolhe e outra entra; contador no topo: REGRAS 01 → 37. No fim a tela está lotada e ilegível. |
-| 5–11 s | "A Viacredi começou assim… cara de robô." | Corte seco para preto. Bolha macro, cortada pela borda: "Não entendi sua resposta. Responda SIM ou NÃO." Ela se repete 3× empilhada (o loop do bot). Linha de anotação: "Conversa resultante · tom robótico". |
-| 11–16 s | "Em julho, eles cortaram regras e escreveram o papel do agente." | Corte seco para amarelo. As regras voltam e são riscadas uma a uma e caem. Sobra um formulário limpo "Papel do agente": 01 Objetivo, 02 Público, 03 Oferta, 04 Tom, 05 Transbordo, 06 Fechamento (pág. 9). |
-| 16–21 s | "Ainda na fase de testes… crédito liberado." | Preto. "+R$ 150 mil" ocupando a largura toda, entrando por máscara. Rodapé legal: "Os resultados da Viacredi não constituem projeção para outras instituições." |
-| 21–25 s | "O método completo está no playbook. Baixe grátis." | Creme. Capa do playbook montada em grade, botão "Baixe o playbook grátis", logos Ubots | Viacredi. |
+| 0–3,1 s | "Crédito pré-aprovado. Oferta disparada no WhatsApp." | Creme. "Crédito pré-aprovado." em tipografia enorme. O ticket (chip "Crédito pré-aprovado", R$ 15.000,00, 24x) entra; no "disparada", cópias dele saem em rajada para fora do quadro, como mensagens enviadas. |
+| 3,1–6,3 s | "E o agente de IA responde: 'Não entendi…'" | Corte seco para preto. Cooperado pergunta "Depende. Serve pra quê?"; a bolha do agente responde "Não entendi. Responda SIM ou NÃO." com botões SIM / NÃO e se repete em loop, tremendo. |
+| 6,3–9,1 s | "Na Viacredi, a saída foi menos regra e mais contexto." | Painel amarelo sobe e cobre o preto. "menos regra" encolhe enquanto é dita; "mais contexto." cresce até ocupar a largura. Ondas do ebook animadas. |
+| 9,1–13,1 s | "Eles escreveram o papel do agente: objetivo, público, oferta, tom." | Creme. "O papel do agente." + grade com 6 campos da pág. 9. Cada campo acende no momento em que a palavra é dita; transbordo e fechamento acendem em seguida. |
+| 13,1–15,5 s | "E a conversa passou a seguir o cooperado." | Conversa da cozinha em bolhas macro, rolando como chat: "Estou reformando a cozinha." → resposta do agente → oferta → "Quero!". |
+| 15,5–19,7 s | "Resultado: mais de 150 mil reais…" | Preto. O ticket do início volta e o selo vira "✓ Crédito contratado". "+R$ 150 mil" conta de 0 a 150 ocupando a largura. Rodapé legal. |
+| 19,7–24 s | "O método está no playbook. Baixe grátis." | Creme. Capa do playbook montada em fatias, título, botão "Baixe o playbook grátis", logos Ubots e Viacredi. |
 
 ---
 
-## Vídeo 2: "A cozinha" (caso + conversão, ~32 s)
+### Execução v1 · linguagem das referências (Addx Studio: ServiceUp, ClickUp Artifacts)
 
-Papel na campanha: provar com uma conversa real (reconstituída) que o método funciona, e fechar com o número.
+Locução mantida. Muda a direção de arte: fundo gelo (#F2F1EE), amarelo Ubots como única cor de destaque, uma ideia por quadro, tudo centralizado. A frase-guia é montada palavra por palavra no topo e funciona como legenda. O protagonista de cada quadro é um objeto ou uma palavra gigante.
+
+| Cena | Tela |
+|---|---|
+| 01 Pré-aprovado | Fila de tickets de pré-aprovado (como a fila de caminhões da ServiceUp). A moldura amarela seleciona um; no "disparada" todos sobem em rajada e fica o selo "✓✓ Enviada". |
+| 02 Robô | Preto. "Não entendi." gigante, pílulas SIM / NÃO, tremidas com eco (o loop do bot). A forma da marca Ubots cresce do centro e cobre o quadro. |
+| 03 Menos regra | Barras pretas (as regras) em forma de onda encolhem até virar pontos; os pontos se fundem e viram a pílula amarela "contexto.". |
+| 04 Papel do agente | Ícone do agente no centro; a cada palavra falada, a palavra gigante troca embaixo (Objetivo. Público. Oferta. Tom.) e um chip voa para a órbita. Transbordo e fechamento entram em seguida. |
+| 05 Conversa | Card de chat com profundidade (entra inclinado); a conversa da cozinha aparece bolha a bolha. |
+| 06 Resultado | O ticket volta com a moldura e o selo vira "✓ Crédito contratado". Corte: "R$ 150 mil" gigante contando, sublinhado amarelo. |
+| 07 CTA | Brilho amarelo, capa do playbook em 3D, botão em pílula, logos. |
+
+Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em grade, arquivada).
+
+---
+
+## Vídeo 2: "A cozinha" (caso + conversão, ~24 s) · v2
+
+Papel na campanha: provar com uma conversa (reconstituída) que o método funciona, e fechar com o número.
+
+Correção da v1: a jornada alternava o sujeito a cada frase (ela, o agente, ela, o agente, ela) e dava a sensação de vai e volta. Agora a cooperada só aparece na abertura, com a objeção. Daí em diante o agente é o único sujeito e a história anda numa direção só: objeção → pergunta → descoberta → oferta → contratado. As falas da cooperada ficam na tela (bolhas), não na locução.
+
+Mesma âncora do vídeo 1: o ticket de crédito pré-aprovado abre o vídeo e volta com o selo "✓ Crédito contratado".
 
 ### Locução (colar no ElevenLabs)
 
 ```
-Uma cooperada da Viacredi recebeu uma oferta de crédito pelo WhatsApp. E respondeu que já tinha um. <break time="0.5s" />
-O agente de IA não insistiu. Perguntou o que ela estava planejando. <break time="0.5s" />
-Ela contou que estava reformando a cozinha. O agente seguiu o assunto e mostrou como a linha de crédito ajudava na obra. <break time="0.4s" />
-Ela decidiu contratar, numa conversa que não seguiu roteiro nenhum. <break time="0.6s" />
+A oferta de crédito pré-aprovado chega pelo WhatsApp. E a cooperada responde: já tenho um. <break time="0.4s" />
+O agente de IA da Viacredi não insiste. Pergunta o que ela está planejando. <break time="0.3s" />
+Descobre uma reforma de cozinha e mostra como o crédito ajuda na obra. <break time="0.3s" />
+Crédito contratado, numa conversa sem roteiro pronto. <break time="0.5s" />
 Ainda na fase de testes, foram mais de 150 mil reais em crédito liberado. <break time="0.5s" />
-Como a Viacredi chegou nisso está no playbook. Baixe grátis.
+O método está no playbook. Baixe grátis.
 ```
 
 ### Decupagem
 
-| Tempo (aprox.) | Locução | Tela |
+Barra de progresso no topo com 4 etapas (Escuta, Contexto, Oferta, Decisão) que só avança: reforça visualmente que a conversa vai numa direção.
+
+| Tempo (estimado) | Locução | Tela |
 |---|---|---|
-| 0–4 s | "Uma cooperada… já tinha um." | Preto. Bolha verde macro: "Já tenho um crédito contratado, mas achei bom saber que tem outro disponível." Metadado: COOPERADA · 14:21. |
-| 4–9 s | "O agente de IA não insistiu…" | Creme. Bolha do agente entra; linha de anotação puxa o rótulo "01 Escuta". |
-| 9–15 s | "Ela contou que estava reformando a cozinha…" | A palavra COZINHA em tipografia gigante, vazando da tela; bolha "Estou reformando a cozinha." por cima. Rótulo "02 Contexto". |
-| 15–21 s | "…mostrou como a linha de crédito ajudava na obra." | Bolha do agente com a oferta. Rótulo "03 Oferta com sentido". |
-| 21–25 s | "Ela decidiu contratar…" | "Quero! Vou contratar para terminar a obra." + selo "✓ Contratação". Rótulo "04 Decisão da cooperada". A câmera recua e mostra a conversa inteira com as 4 anotações ligadas por linhas (pág. 5 do ebook). |
-| 25–29 s | "Ainda na fase de testes…" | Amarelo. "+R$ 150 mil" gigante. Rodapé legal. |
-| 29–32 s | "Como a Viacredi chegou nisso…" | CTA igual ao do vídeo 1 (mesma assinatura de campanha). |
+| 0–4,5 s | "A oferta de crédito pré-aprovado… já tenho um." | Preto. O ticket de pré-aprovado chega como mensagem. Resposta em bolha verde macro: "Já tenho um crédito contratado, mas achei bom saber que tem outro disponível." |
+| 4,5–8 s | "O agente de IA da Viacredi não insiste. Pergunta…" | Creme. Bolha do agente: "Que bom! Posso perguntar o que você está planejando?" Barra avança para 01 Escuta. |
+| 8–12,5 s | "Descobre uma reforma de cozinha e mostra como…" | "Estou reformando a cozinha." com a palavra COZINHA gigante ao fundo (02 Contexto), depois a oferta do agente: "Essa linha de crédito pode ajudar com os gastos da reforma." (03 Oferta). |
+| 12,5–15,5 s | "Crédito contratado, numa conversa sem roteiro pronto." | "Quero! Vou contratar para terminar a obra." O ticket volta e o selo vira "✓ Crédito contratado" (04 Decisão). A câmera recua e mostra a conversa inteira anotada, como na pág. 5. |
+| 15,5–19,8 s | "Ainda na fase de testes…" | Amarelo. "+R$ 150 mil" gigante. Rodapé legal. |
+| 19,8–24 s | "O método está no playbook. Baixe grátis." | CTA igual ao do vídeo 1 (mesma assinatura de campanha). |
 
 Rodapé nas cenas de conversa: "Reconstituição a partir do relato do projeto." (mesma nota da pág. 5).
 

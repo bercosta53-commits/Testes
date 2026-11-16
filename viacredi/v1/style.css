@@ -1,0 +1,33 @@
+/* V1 · linguagem das referências (lançamento SaaS premium):
+   fundo gelo, uma cor de destaque (amarelo Ubots), uma ideia por quadro, centralizado,
+   frase leve montada palavra por palavra + objeto/número gigante como protagonista. */
+:root { --ice: #f2f1ee; --ice-2: #e7e5e0; --soft-shadow: 0 40px 80px -30px rgba(40, 30, 10, .28), 0 12px 24px -12px rgba(40, 30, 10, .18); }
+#stage { background: var(--ice); }
+.tone-light { background: var(--ice); }
+.tone-dark { background: #0d0d0d; }
+
+/* frase-guia no topo, centralizada (substitui a legenda) */
+.cap { top: 262px; left: 80px; width: 920px; text-align: center; }
+.cap-line { font-family: Poppins; font-weight: 500; font-size: 62px; line-height: 1.2; letter-spacing: -0.025em; }
+.cap .w { opacity: 0; }
+#stage[data-tone=light] .cap { color: var(--ink); }
+#stage[data-tone=dark] .cap { color: #f4f2ee; }
+
+.center { position: absolute; left: 0; width: 1080px; text-align: center; }
+.giant { font-family: Poppins; font-weight: 700; letter-spacing: -0.05em; line-height: .9; white-space: nowrap; }
+.small { font-family: Poppins; font-weight: 500; font-size: 34px; letter-spacing: -0.01em; color: #77746e; }
+
+/* ticket mini (fila de pré-aprovados) */
+.mini { position: absolute; width: 300px; height: 360px; background: #fff; border-radius: 30px; box-shadow: var(--soft-shadow); padding: 30px 28px; }
+.mini .av { width: 64px; height: 64px; border-radius: 50%; background: var(--ice-2); }
+.mini .nm { height: 18px; width: 70%; border-radius: 9px; background: var(--ice-2); margin-top: 22px; }
+.mini .tag { display: inline-block; margin-top: 30px; font: 600 19px Poppins; padding: 8px 14px; border-radius: 99px; background: var(--ice-2); color: #8d8a83; }
+.mini .val { font: 700 44px Poppins; letter-spacing: -.04em; margin-top: 16px; color: #b9b5ad; }
+.mini .ln { height: 12px; width: 55%; border-radius: 6px; background: var(--ice-2); margin-top: 18px; }
+.mini.sel .tag { background: var(--y); color: var(--ink); }
+.mini.sel .val { color: var(--ink); }
+.mini.sel .av { background: #f6d27e; }
+.selframe { position: absolute; border: 7px solid var(--y); border-radius: 10px; }
+
+.pill { position: absolute; border-radius: 999px; }
+.shadow { box-shadow: var(--soft-shadow); }
