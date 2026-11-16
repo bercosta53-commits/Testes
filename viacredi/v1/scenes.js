@@ -47,7 +47,7 @@ boot(() => {
     // o disparo vira notificações no WhatsApp, uma por cooperado, com nome e valor
     const NT = [['Carlos', '8.000'], ['Juliana', '12.000'], ['Ana', '15.000']];
     const notifs = NT.map(([nm, v], i) => {
-      const n = h('div', 'notif', cam, `<div class="ic"><i></i></div><div class="tx"><div class="hd">Viacredi<span>agora</span></div><div class="bd">${nm}, você tem <b>R$ ${v}</b> em crédito pré-aprovado.${i === 2 ? ' Quer ver como usar?' : ''}</div>${i === 2 ? '<div class="st">✓✓ Entregue</div>' : ''}</div>`);
+      const n = h('div', 'notif', cam, `<div class="ic"><i></i></div><div class="tx"><div class="hd">Viacredi<span>agora</span></div><div class="bd">${nm}, você tem <span class="mk" style="--k:1">R$ ${v}</span> em crédito pré-aprovado.${i === 2 ? ' Quer ver como usar?' : ''}</div>${i === 2 ? '<div class="st">✓✓ Entregue</div>' : ''}</div>`);
       return { n, i };
     });
     return {
@@ -118,9 +118,9 @@ boot(() => {
 
   // 03 · Menos regra, mais contexto: o editor de instruções perde as regras e ganha contexto ----
   ENGINE.scene(S.s3, S.s4, 'light', (cam, el) => {
-    const hl = h('div', 'hl', cam, '<s>menos regra<i></i></s>, mais <em>contexto.</em>'); pos(hl, 0, 268);
+    const hl = h('div', 'hl', cam, '<s>menos regra<i></i></s>, mais <span class="mk">contexto.</span>'); pos(hl, 0, 250);
     hl.style.fontSize = '84px';
-    const strike = hl.querySelector('s i'), emph = hl.querySelector('em');
+    const strike = hl.querySelector('s i'), emph = hl.querySelector('.mk');
     const ed = pos(h('div', 'ed', cam), 90, 470, 900, 760);
     ed.innerHTML = '<div class="ed-top"><span class="dts"><i></i><i></i><i></i></span>Instruções do agente<span class="cnt">8 regras</span></div>';
     const cnt = ed.querySelector('.cnt');
@@ -142,7 +142,7 @@ boot(() => {
         // manchete: aparece no "menos", risca "regra", grifa "contexto"
         const kh = enter(t, coll - 0.05, 0.4); tf(hl, { y: (1 - kh) * 30, o: kh });
         strike.style.transform = `scaleX(${E.inOutCubic(prog(t, wt(4, 1), wt(4, 1) + 0.3))})`;
-        emph.style.backgroundSize = `${E.inOutCubic(prog(t, wt(4, 4), wt(4, 4) + 0.35)) * 100}% 100%`;
+        emph.style.setProperty('--k', E.inOutCubic(prog(t, wt(4, 4), wt(4, 4) + 0.35)));
         // linhas: as 5 regras são riscadas e saem; ficam os 3 guardrails
         let y = 108, removed = 0;
         lines.forEach(o => {
@@ -225,27 +225,27 @@ boot(() => {
 
   // 05 · A conversa segue a Ana: contexto vira oferta, oferta vira contrato ----------
   ENGINE.scene(S.s5, S.s6, 'light', cam => {
-    const per = pos(h('div', 'persona', cam), 72, 430);
+    const per = pos(h('div', 'persona', cam), 72, 466);
     per.innerHTML = '<div class="av">A</div><div><div class="nm">Ana R.</div><div class="ctx"></div></div>';
     const ctx = per.querySelector('.ctx');
     const panel = h('div', 'chatp', cam, '<div class="hd"><span class="av">✦</span><div>Agente Viacredi<div class="s">online</div></div></div>');
-    pos(panel, 72, 580, 936, 604);
+    pos(panel, 72, 612, 936, 604);
     const inP = (cls, html, top, side) => { const b = h('div', 'bbl ' + cls, panel, html); b.style.top = top + 'px'; b.style[side] = '28px'; b.style.boxShadow = 'none'; return b; };
-    const b1 = inP('me', 'Estou <mark>reformando a cozinha</mark>.', 296, 'right');
-    const mk = b1.querySelector('mark');
+    const b1 = inP('me', 'Estou <span class="mk">reformando a cozinha</span>.', 296, 'right');
+    const mk = b1.querySelector('.mk');
     const b2 = inP('bot', '<span class="ai">✦ Agente de IA</span><br>Que legal! Simulei uma opção para a sua reforma:<div class="sim"><div class="a"><span>Crédito Reforma</span></div><div class="b">R$ 15.000,00</div><div class="c">24x · juros e IOF inclusos</div></div>', 128, 'left');
     b2.style.maxWidth = '820px'; b2.style.fontSize = '40px';
     const b3 = inP('me', 'Quero! Vou contratar para terminar a obra.', 226, 'right'); b3.style.maxWidth = '720px';
     const stamp = h('div', 'stamp', panel, '✓ Crédito contratado');
     const fly = h('div', 'tagfly', cam, 'reforma da cozinha');
     const steps = h('div', 'steps', cam, '<span class="st"><i></i>Contexto</span><span class="ln"></span><span class="st"><i></i>Oferta</span><span class="ln"></span><span class="st"><i></i>Decisão</span>');
-    pos(steps, 72, 1214, 936);
+    pos(steps, 72, 1246, 936);
     const st = [...steps.querySelectorAll('.st')];
-    const note = h('div', 'center', cam, 'Reconstituição a partir do relato do projeto.'); pos(note, 0, 1288);
+    const note = h('div', 'center', cam, 'Reconstituição a partir do relato do projeto.'); pos(note, 0, 1318);
     Object.assign(note.style, { font: '500 22px Poppins', color: '#8d8a83' });
     const mr = mk.getBoundingClientRect(), sr = ENGINE.stage.getBoundingClientRect();
     const r1 = { x: mr.left - sr.left, y: mr.top - sr.top - 96 };   // nasce acima do trecho grifado, sem cobri-lo
-    const rc = { x: 72 + 104, y: 430 + 52 };
+    const rc = { x: 72 + 104, y: 466 + 52 };
     const s = S.s5;
     // cada bolha só entra depois que a anterior saiu (sem sobreposição)
     const k = Math.min(1, (S.s6 - S.s5) / 3.9);   // os tempos acompanham a duração real da cena
@@ -266,7 +266,7 @@ boot(() => {
         show(b1, T.b1, T.b1out, '100% 100%');
         show(b2, T.b2, T.b2out, '0 100%');
         show(b3, T.b3, 99, '100% 100%');
-        mk.style.backgroundSize = `${E.inOutCubic(prog(t, T.mark, T.mark + 0.3)) * 100}% 100%`;
+        mk.style.setProperty('--k', E.inOutCubic(prog(t, T.mark, T.mark + 0.3)));
         const kpop = E.outBack(prog(t, T.fly - 0.25, T.fly + 0.05));
         const kf = E.inOutCubic(prog(t, T.fly + 0.05, T.fly + 0.45));
         fly.style.visibility = t >= T.fly - 0.25 && kf < 1 ? 'visible' : 'hidden';
@@ -289,7 +289,9 @@ boot(() => {
   ENGINE.scene(S.s6, S.s7, 'light', cam => {
     const pre = h('div', 'center small', cam, 'mais de'); pos(pre, 0, 560);
     const num = h('div', 'center giant', cam, 'R$ 150 mil'); const ns = fit(num, 940); pos(num, 0, 640);
-    const bar = pos(h('div', 'pill', cam), CX - 300, 640 + ns * 0.98, 600, 22); bar.style.background = 'var(--y)';
+    const bar = pos(h('div', 'abs', cam), CX - 500, 640 + ns * 0.5, 1000, ns * 0.36);
+    Object.assign(bar.style, { background: 'var(--y)', borderRadius: ns * 0.08 + 'px', transformOrigin: '0 50%' });
+    num.style.zIndex = 2; num.style.position = 'absolute';
     const post = h('div', 'center small', cam, 'em crédito liberado pelo agente'); pos(post, 0, 690 + ns * 1.05);
     const chip = h('div', 'center', cam, '<span class="chip y" style="font-size:32px;padding:14px 28px">Ainda na fase de testes</span>'); pos(chip, 0, 770 + ns * 1.05);
     // faixa de contratos (ilustrativa, sem valores) deslizando sem parar: a tela nunca fica parada
