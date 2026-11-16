@@ -15,14 +15,10 @@ Proporção: problema ~5 s (20%), solução e prova ~19 s. O robô é genérico 
 ### Locução (colar no ElevenLabs)
 
 ```
-Crédito pré-aprovado. Oferta disparada no WhatsApp. <break time="0.2s" />
-E o agente de IA responde: "Não entendi. Responda SIM ou NÃO." <break time="0.5s" />
-Na Viacredi, a saída foi menos regra e mais contexto. <break time="0.3s" />
-Eles escreveram o papel do agente: objetivo, público, oferta, tom. <break time="0.3s" />
-E a conversa passou a seguir o cooperado. <break time="0.4s" />
-Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. <break time="0.5s" />
-O método está no playbook. Baixe grátis.
+[upbeat] [confident] Crédito pré-aprovado. Oferta disparada no WhatsApp. Só que agente de IA cheio de regra fala como robô. Na /viaˈkɾɛdʒi/ a saída foi menos regra e mais contexto. Eles escreveram o papel do agente: objetivo, público, oferta, tom. E a conversa passou a seguir o cooperado. Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. O método está no Playbook Ubots Agentes de IA. Baixe grátis.
 ```
+
+v3 (áudio): o trecho do "Não entendi. Responda SIM ou NÃO." saiu (confundia a jornada); o problema agora é dito direto ("agente de IA cheio de regra fala como robô") e mostrado com as regras do ebook se empilhando sobre o agente. "Viacredi" vai em fonética (/viaˈkɾɛdʒi/) e sem vírgula, para não arrastar o final. A assinatura cita "Playbook Ubots Agentes de IA".
 
 Fontes: "menos regras e mais contexto" (pág. 7), papel do agente (pág. 9), conversa da cozinha (pág. 5, reconstituição), R$ 150 mil (pág. 8). Conversa robótica: exemplo ilustrativo da pág. 3.
 
@@ -63,12 +59,12 @@ Telas de produto: desenhadas a partir do ebook (págs. 5, 6, 8, 9) como placehol
 
 Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em grade, arquivada).
 
-### Áudio (gerado no ElevenLabs, flow "Viacredi V1 · locução, trilha e efeitos")
+### Áudio v2 (gerado no ElevenLabs, flow "Viacredi V1 · locução, trilha e efeitos")
 
-- **Locução:** voz "Mateus" (masculina, jovem, natural, sem jeito de locutor), modelo eleven_v4. Das 2 versões, ficou a de menor variação de tom (desvio de 3,4 semitons contra 3,5). A transcrição (Scribe) dá o tempo de cada palavra; a legenda e os cortes seguem esses tempos (`v1/vo.js`, gerado de `v1/audio/timeline.json`). Respiros extras entre blocos: +0,35 s depois do robô, +0,58 s depois de "contexto", +0,22 s antes da conversa, +0,25 s antes do resultado, +0,44 s antes do CTA.
-- **Trilha:** eleven_music_v2_5, 33 s, instrumental: baixo, bateria com aro e palmas, guitarra abafada, Rhodes e marimba, 102 BPM. Escolhida a versão B porque segue o arco do vídeo: contida de 0 a 9 s (o problema), abre no groove cheio exatamente no "contexto." e resolve no fim. Fica 12 dB abaixo da voz enquanto ele fala (ducking).
-- **Efeitos (orgânicos, nada de 8 bits):** papel varrendo o ar, toque de dedo no vidro, gota, batida seca em madeira, respiração com brilho de prato, card deslizando na mesa, sino de vidro, teclado, página virando. Cada um alinhado ao quadro do evento (lista em `v1/audio/mix.py`).
-- **Master:** -14 LUFS, pico -1 dBTP (padrão Reels). `python3 v1/audio/mix.py` refaz a mixagem.
+- **Locução:** voz "Mateus", eleven_v4 com [upbeat] [confident], sem pausas forçadas; acelerada 8% na edição (tom preservado). Testadas 4 versões (Mateus e Jonas, 2 de cada): Mateus A tinha o tom mais vivo (182 Hz) com variação contida (3,7 semitons; Jonas 4,7). Assinatura gerada à parte na mesma voz e emendada.
+- **Trilha:** pop-funk corporativo a ~123 BPM (antes ~101), baixo slap, bateria four-on-the-floor, guitarra abafada e metais curtos. Os primeiros 7 s vêm filtrados (o problema) e a energia cheia volta exatamente no "Na Viacredi". 11 dB abaixo da voz enquanto ele fala.
+- **Efeitos:** os mesmos efeitos orgânicos, retemporizados; as regras que caem sobre o agente têm som de card deslizando e toques.
+- **Master:** -14 LUFS, pico -1 dBTP, 30 s. `python3 v1/audio/build_timeline.py && python3 v1/audio/mix.py`.
 
 ### Produto sem excesso de informação (v3)
 
