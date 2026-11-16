@@ -77,7 +77,7 @@ Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em gra
 - "Interrupção" aos 19 s: era o respiro de 2 s entre "cooperado" e "Resultado". Agora 0,6 s; o "Quero!" e o selo entram sobre "Resultado: mais de…" e o corte para o número cai no "150". Vídeo com 31 s.
 - "Martelando": o efeito de toque gerado tinha 8 batidas seguidas e entrava no início e no fim; agora só a primeira batida. Trilha com menos grave (o bumbo pesava sob a voz), ainda menos na intro abafada.
 - Tela do número: faixa contínua de contratos ilustrativos (nomes, sem valores) passando embaixo; câmera avança devagar.
-- Fundo: o cinza gelo virou superfície viva (creme quente + luzes amarelas e pêssego derivando + grade de pontos), contínua entre as cenas claras.
+- Fundo: grade técnica (escolhida entre 3 opções sem desfoque): branco quente, grade fina de 72 px deslizando devagar e o contorno gigante do balão da Ubots girando, cortado na borda. O creme com luzes desfocadas foi descartado por repetir a linguagem dos vídeos antigos. `node render.mjs v1 --bg shapes|type` gera as outras opções.
 
 ### Produto sem excesso de informação (v3)
 

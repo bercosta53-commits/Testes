@@ -203,17 +203,17 @@ boot(() => {
         introTx.parentElement.style.color = t > wt(5, 3) ? 'var(--ink)' : '#a39b8f';
         const nDone = rows.filter(o => t >= o.done).length;
         rows.forEach(o => {
-          const ka = E.outExpo(prog(t, o.at, o.at + 0.4));           // entra
-          const kd = E.inOutCubic(prog(t, o.done, o.done + 0.4));    // vira item da lista
-          o.r.style.visibility = t >= o.at ? 'visible' : 'hidden';
-          const listY = 26 + o.i * 64, activeY = 30 + nDone * 64 + 14;
+          const ka = E.outExpo(prog(t, o.at + 0.12, o.at + 0.5));    // entra (depois que o anterior começa a encolher)
+          const kd = E.inOutCubic(prog(t, o.done, o.done + 0.25));   // vira item da lista
+          o.r.style.visibility = t >= o.at + 0.12 ? 'visible' : 'hidden';
+          const listY = 26 + o.i * 64, activeY = 30 + o.i * 64 + 14;   // cada linha tem a própria posição: nada pula
           o.r.style.top = lerp(activeY, listY, kd) + 'px';
           o.lab.style.fontSize = lerp(84, 34, kd) + 'px';
           o.lab.style.color = kd > 0.5 ? '#55524c' : 'var(--ink)';
           o.num.style.display = kd > 0.5 ? 'none' : 'inline-block';
           o.ok.style.display = kd > 0.5 ? 'grid' : 'none';
           typeIn(o.v, o.val, prog(t, o.at + 0.1, o.at + 0.55));
-          o.v.style.opacity = 1 - kd; o.v.style.height = lerp(50, 0, kd) + 'px';
+          o.v.style.opacity = 1 - clamp(prog(t, o.done - 0.05, o.done + 0.08)); o.v.style.height = lerp(50, 0, kd) + 'px'; o.v.style.overflow = 'hidden';
           tf(o.r, { x: (1 - ka) * 220, o: ka });
           dots[o.i].classList.toggle('on', t >= o.at);
         });
