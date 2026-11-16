@@ -57,7 +57,7 @@ CUES = [
     (S['s5'] + 3.02 * K5, 'pop', -7),          # "Quero!"
     (S['s5'] + 3.38 * K5, 'chime', -5),        # crédito contratado
     (S['s6'], 'whoosh', -11),             # corte para o número
-    (wt(8, 3) + 0.12, 'slide', -15),      # sublinhado
+    (wt(8, 7) + 0.35, 'slide', -13),      # contagem fecha: marca-texto entra
     (wt(9, 0), 'pop', -9),                # "Ainda na fase de testes"
     (S['s7'] + 0.05, 'page', -6),         # capa do playbook
     (wt(10, 4) - 0.1, 'tap', -8),         # "Playbook Ubots · Agentes de IA"

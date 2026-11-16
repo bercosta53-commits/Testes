@@ -303,14 +303,19 @@ boot(() => {
       return { k, w: k.offsetWidth };
     });
     const total = tks.reduce((a, o) => a + o.w + 24, 0);
+    // posição de repouso: dois contratos inteiros e centralizados; bordas da faixa esfumadas
+    const offs = []; tks.reduce((a, o) => { offs.push(a); return a + o.w + 24; }, 0);
+    const restD = 1080 + (offs[1] + offs[2] + tks[2].w) / 2 - 540;   // Carlos e Juliana no centro
+    lane.style.webkitMaskImage = lane.style.maskImage = 'linear-gradient(to right, transparent 0, #000 90px, #000 990px, transparent 1080px)';
     const ill = h('div', 'center', cam, 'Ilustrativo'); pos(ill, 0, 1258);
     Object.assign(ill.style, { font: '500 20px Poppins', color: '#a39b8f' });
     const foot = h('div', 'center', cam, 'Os resultados da Viacredi não constituem projeção para outras instituições.'); pos(foot, 0, 1310);
     Object.assign(foot.style, { font: '500 22px Poppins', color: '#8d8a83' });
-    const land = wt(8, 3) + 0.12;
+    const land = wt(8, 7) + 0.35;   // contagem dura a frase toda e fecha logo depois de "crédito"
     return {
       update(lt, t) {
-        const n = Math.round(150 * E.outCubic(prog(t, S.s6 - 0.04, land)));
+        const pn = prog(t, S.s6 - 0.04, land), kn = 1 - (1 - pn) * (1 - pn);   // sobe de forma mais uniforme e assenta no fim
+        const n = Math.round(150 * kn);
         num.textContent = `R$ ${n} mil`;
         tf(num, { s: lerp(1.08, 1, E.outExpo(prog(t, S.s6 - 0.04, S.s6 + 0.5))) * (1 + 0.02 * prog(t, land, S.s7)) });
         op(pre, enter(t, S.s6 - 0.04, 0.3));
@@ -319,7 +324,7 @@ boot(() => {
         const kc = E.outBack(prog(t, wt(9, 0), wt(9, 0) + 0.35)); tf(chip, { s: 0.7 + 0.3 * kc, o: clamp(kc * 2) });
         // esteira contínua da direita para a esquerda
         const kl = enter(t, S.s6 + 0.2, 0.5); lane.style.opacity = kl; op(ill, kl * 0.9);
-        let x = 1080 - (t - S.s6) * 260;
+        let x = 1080 - restD * kn;   // a faixa anda junto com a contagem e para quando ela fecha
         tks.forEach(o => { let xx = x; while (xx < -o.w - 40) xx += total; o.k.style.left = xx + 'px'; o.k.style.top = '0px'; x += o.w + 24; });
         op(foot, enter(t, wt(9, 4), 0.4));
       },
