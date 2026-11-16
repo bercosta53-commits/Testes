@@ -26,3 +26,8 @@ Instaladas em 16/11/2026 a partir dos repositórios abaixo. Cada pasta traz a li
 | social-media-specs | https://github.com/hermoso-ai/marketing-skills | MIT License |
 | static-ad | https://github.com/robpalmer99/claude-code-copywriting-skills | Creative Commons Attribution 4.0 International (CC BY 4.0) |
 | ugc-ad-scripts | https://github.com/hermoso-ai/marketing-skills | MIT License |
+| banner-design | https://github.com/nextlevelbuilder/ui-ux-pro-max-skill | MIT License |
+| ui-ux-pro-max | https://github.com/nextlevelbuilder/ui-ux-pro-max-skill (sem a pasta de testes) | MIT License |
+| static-ad-concept-generator | https://github.com/Creatify-AI/static-ad-concept-generator | MIT License |
+
+Notas de revisão (16/11): ui-ux-pro-max traz scripts Python que só leem os CSVs locais (biblioteca padrão; a única referência de rede é o Google Fonts no HTML de pré-visualização). static-ad-concept-generator tem uma seção opcional que chama a API paga da Creatify; não usamos. A skill `design` do mesmo repositório ficou de fora porque gera logos e ícones por API de IA.
