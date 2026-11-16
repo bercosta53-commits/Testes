@@ -63,6 +63,21 @@ Telas de produto: desenhadas a partir do ebook (págs. 5, 6, 8, 9) como placehol
 
 Arquivos: `v1/` (esta versão) e `v1-grade/` (primeira versão, editorial em grade, arquivada).
 
+### Áudio (gerado no ElevenLabs, flow "Viacredi V1 · locução, trilha e efeitos")
+
+- **Locução:** voz "Mateus" (masculina, jovem, natural, sem jeito de locutor), modelo eleven_v4. Das 2 versões, ficou a de menor variação de tom (desvio de 3,4 semitons contra 3,5). A transcrição (Scribe) dá o tempo de cada palavra; a legenda e os cortes seguem esses tempos (`v1/vo.js`, gerado de `v1/audio/timeline.json`). Respiros extras entre blocos: +0,35 s depois do robô, +0,58 s depois de "contexto", +0,22 s antes da conversa, +0,25 s antes do resultado, +0,44 s antes do CTA.
+- **Trilha:** eleven_music_v2_5, 33 s, instrumental: baixo, bateria com aro e palmas, guitarra abafada, Rhodes e marimba, 102 BPM. Escolhida a versão B porque segue o arco do vídeo: contida de 0 a 9 s (o problema), abre no groove cheio exatamente no "contexto." e resolve no fim. Fica 12 dB abaixo da voz enquanto ele fala (ducking).
+- **Efeitos (orgânicos, nada de 8 bits):** papel varrendo o ar, toque de dedo no vidro, gota, batida seca em madeira, respiração com brilho de prato, card deslizando na mesa, sino de vidro, teclado, página virando. Cada um alinhado ao quadro do evento (lista em `v1/audio/mix.py`).
+- **Master:** -14 LUFS, pico -1 dBTP (padrão Reels). `python3 v1/audio/mix.py` refaz a mixagem.
+
+### Produto sem excesso de informação (v3)
+
+Uma informação por vez, entrando e saindo, com personalização:
+- Fila de pré-aprovados com nomes; a moldura escolhe a **Ana**; "Enviada para a Ana".
+- Agent Builder em carrossel: um campo por palavra falada (Objetivo, Público, Oferta, Tom), cada um entra pela direita e sai pela esquerda; fecha com "Papel do agente salvo".
+- Conversa da Ana: "reformando a cozinha" é grifado e vira a etiqueta de contexto no cartão dela; a oferta nasce como "Crédito Reforma"; termina em "✓ Crédito contratado".
+- O painel de indicadores saiu.
+
 ---
 
 ## Vídeo 2: "A cozinha" (caso + conversão, ~24 s) · v2

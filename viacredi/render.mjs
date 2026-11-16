@@ -67,19 +67,23 @@ await Promise.all(Array.from({ length: WORKERS }, worker));
 await browser.close(); server.close(); console.log();
 
 // áudio: trilha abaixa sob a locução (sidechain), tudo normalizado para -14 LUFS (Reels)
+const mixed = path.join(here, video, 'audio/mix.wav');
 const vo = path.join(here, video, 'audio/vo.wav'), mus = path.join(here, video, 'audio/trilha.wav');
 const hasVo = fs.existsSync(vo), hasMus = fs.existsSync(mus);
 const inputs = ['-framerate', String(FPS), '-start_number', String(Math.round(from * FPS)), '-i', path.join(frames, 'f%05d.png')];
 let filter = [], map = ['-map', '0:v'];
-if (hasVo) inputs.push('-i', vo);
-if (hasMus) inputs.push('-i', mus);
-if (hasVo && hasMus) {
+const hasMix = fs.existsSync(mixed);
+if (hasMix) inputs.push('-i', mixed);
+else if (hasVo) inputs.push('-i', vo);
+if (!hasMix && hasMus) inputs.push('-i', mus);
+if (hasMix) { map.push('-map', '1:a'); }
+else if (hasVo && hasMus) {
   filter = ['-filter_complex', '[1:a]asplit[v1][v2];[2:a]volume=0.5[m];[m][v1]sidechaincompress=threshold=0.02:ratio=8:attack=15:release=400[d];[d][v2]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1[a]'];
   map.push('-map', '[a]');
 } else if (hasVo || hasMus) { filter = ['-filter_complex', '[1:a]loudnorm=I=-14:TP=-1[a]']; map.push('-map', '[a]'); }
 const outFile = path.join(OUT, `${video}.mp4`);
 const r = spawnSync('ffmpeg', ['-y', '-v', 'error', ...inputs, ...filter, ...map,
   '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-pix_fmt', 'yuv420p', '-profile:v', 'high',
-  ...(hasVo || hasMus ? ['-c:a', 'aac', '-b:a', '256k', '-shortest'] : []), '-movflags', '+faststart', outFile], { stdio: 'inherit' });
+  ...(hasMix || hasVo || hasMus ? ['-c:a', 'aac', '-b:a', '256k', '-shortest'] : []), '-movflags', '+faststart', outFile], { stdio: 'inherit' });
 console.log(r.status === 0 ? outFile : 'ffmpeg falhou');
 process.exit(r.status ?? 1);

@@ -99,9 +99,10 @@ function buildCaptions(stage, chunks) {
     const words = text.split(' ');
     const total = words.reduce((a, w) => a + w.length + 1, 0);
     let acc = 0;
-    const ws = words.map(w => {
+    const ws = words.map((w, i) => {
       const s = h('span', 'w', el, w + ' '); s.style.display = 'inline-block'; s.style.whiteSpace = 'pre';
-      const at = t0 + (acc / total) * (t1 - t0);
+      // tempo real da palavra (transcrição) quando existe; senão, distribuído pelas letras
+      const at = opt.words ? opt.words[i] : t0 + (acc / total) * (t1 - t0);
       acc += w.length + 1;
       return { s, at };
     });
@@ -203,7 +204,7 @@ async function boot(setup) {
   const play = h('button', '', bar, '▶');
   const range = h('input', '', bar); range.type = 'range'; range.min = 0; range.max = ENGINE.dur; range.step = 1 / FPS;
   const time = h('span', 'time', bar);
-  const audios = ['audio/vo.wav', 'audio/trilha.wav'].map(src => { const a = new Audio(src); a.preload = 'auto'; a.onerror = () => { a.broken = true; }; return a; });
+  const audios = ['audio/mix.wav'].map(src => { const a = new Audio(src); a.preload = 'auto'; a.onerror = () => { a.broken = true; }; return a; });
   let playing = false, t0 = 0, base = 0;
   const fitStage = () => {
     const s = Math.min((innerHeight - 70) / H, innerWidth / W);
