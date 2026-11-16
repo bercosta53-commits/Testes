@@ -357,7 +357,7 @@ boot(() => {
     const logos = pos(h('div', 'abs', cam), 0, 1392, 1080, 64);
     Object.assign(logos.style, { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' });
     logos.innerHTML = '<img src="../assets/ubots-logo.png" style="height:46px"><i style="width:2px;height:48px;background:#d6d2c9"></i><img src="../assets/viacredi-logo.png" style="height:58px">';
-    const t0 = S.s7, press = wt(11, 0);
+    const t0 = S.s7, press = wt(11, 1) + 0.78;   // clique depois que a voz diz "grátis", em espaço limpo
     return {
       update(lt, t) {
         op(eye, enter(t, t0 - 0.04, 0.4));
@@ -372,7 +372,12 @@ boot(() => {
         const kc = E.outBack(prog(t, press - 0.75, press - 0.35));
         const pr = 1 - 0.04 * Math.sin(Math.PI * prog(t, press, press + 0.22));
         tf(btn, { y: (1 - kc) * 40, s: pr, o: clamp(kc * 2) });
-        arrow.style.transform = `translateX(${10 * Math.sin(Math.PI * prog(t, press, press + 0.3))}px)`;
+        // sucesso: a seta vira ✓ com um pulo
+        const ok = t >= press + 0.12;
+        arrow.textContent = ok ? '✓' : '→';
+        const kp = E.outBack(prog(t, press + 0.12, press + 0.42));
+        arrow.style.transform = ok ? `scale(${0.6 + 0.4 * kp})` : `translateX(${10 * Math.sin(Math.PI * prog(t, press, press + 0.3))}px)`;
+        arrow.style.boxShadow = ok ? `0 0 0 ${(18 * (1 - prog(t, press + 0.12, press + 0.7))).toFixed(1)}px rgba(253,195,72,${(0.5 * (1 - prog(t, press + 0.12, press + 0.7))).toFixed(2)})` : 'none';
         op(meta, enter(t, press - 0.2, 0.4));
         const kl = enter(t, press + 0.1, 0.45); tf(logos, { y: (1 - kl) * 16, o: kl });
       },

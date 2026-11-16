@@ -61,8 +61,9 @@ CUES = [
     (wt(9, 0), 'pop', -9),                # "Ainda na fase de testes"
     (S['s7'] + 0.05, 'page', -6),         # capa do playbook
     (wt(10, 4) - 0.1, 'tap', -8),         # "Playbook Ubots · Agentes de IA"
-    (wt(11, 0) - 0.6, 'pop', -9),         # botão aparece
-    (wt(11, 0), 'tap', -4),               # clique em "Baixe grátis"
+    (wt(11, 1) + 0.78 - 0.75, 'pop', -9),  # botão aparece
+    (wt(11, 1) + 0.78, 'tap', 0),          # clique em "Baixe grátis" (depois da fala, em espaço limpo)
+    (wt(11, 1) + 0.78 + 0.12, 'chime', -4),  # sucesso: a seta vira ✓
 ]
 
 
