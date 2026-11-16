@@ -151,22 +151,41 @@ function buildGrain(stage) {
 
 // ---------------------------------------------------------------- fundo vivo
 // Função só do tempo global: o fundo segue sem emenda de uma cena clara para outra.
-function buildLiveBg(el) {
-  const bg = h('div', 'livebg', el);
-  const G = [
-    { c: 'rgba(253,195,72,.55)', s: 1150, x: 200, y: 420, ax: 160, ay: 120, f: 0.21, p: 0 },
-    { c: 'rgba(255,170,110,.30)', s: 1000, x: 900, y: 1300, ax: 140, ay: 160, f: 0.17, p: 2.1 },
-    { c: 'rgba(253,195,72,.35)', s: 900, x: 860, y: 260, ax: 120, ay: 100, f: 0.25, p: 4.2 },
-    { c: 'rgba(255,255,255,.7)', s: 700, x: 420, y: 1000, ax: 180, ay: 120, f: 0.19, p: 1.3 },
-  ].map(g => { const d = h('div', 'glow', bg); Object.assign(d.style, { width: g.s + 'px', height: g.s + 'px', background: `radial-gradient(closest-side, ${g.c}, rgba(255,255,255,0))` }); return { d, ...g }; });
-  const dots = h('div', 'dots', bg);
-  return t => {
-    G.forEach(g => {
-      const x = g.x + Math.sin(t * g.f + g.p) * g.ax - g.s / 2, y = g.y + Math.cos(t * g.f * 0.8 + g.p) * g.ay - g.s / 2;
-      g.d.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-    });
-    dots.style.backgroundPosition = `${(t * 6).toFixed(1)}px ${(t * -10).toFixed(1)}px`;
-  };
+function buildLiveBg(el, mode = 'grid', idx = 0) {
+  const bg = h('div', 'livebg bg-' + mode, el);
+  const ns = 'http://www.w3.org/2000/svg';
+  if (mode === 'grid') {
+    // grade técnica + contorno gigante do balão da marca, cortado na borda
+    const grid = h('div', 'grid', bg);
+    const sv = document.createElementNS(ns, 'svg'); sv.setAttribute('viewBox', '0 0 100 100'); sv.classList.add('bubble');
+    const p = document.createElementNS(ns, 'path');
+    p.setAttribute('d', 'M50 6C76 6 94 24 94 49C94 73 75 90 51 90C45 90 40 89 35 87L18 96L22 80C11 72 6 61 6 49C6 24 24 6 50 6Z');
+    p.setAttribute('fill', 'none'); sv.setAttribute('overflow', 'visible'); sv.style.background = 'none';
+    sv.appendChild(p); bg.appendChild(sv);
+    const spots = [[640, -260], [-520, 900], [560, 1180], [-480, -200], [600, 700], [-560, 1200], [520, -300]];
+    const [bx, by] = spots[idx % spots.length];
+    return t => {
+      grid.style.backgroundPosition = `${(t * 8).toFixed(1)}px ${(t * -12).toFixed(1)}px`;
+      sv.style.transform = `translate3d(${bx}px,${by}px,0) rotate(${(t * 4 + idx * 40).toFixed(2)}deg)`;
+    };
+  }
+  if (mode === 'shapes') {
+    // formas sólidas, bordas nítidas, recortadas nas bordas e em deriva lenta
+    const S = [
+      [{ k: 'half', c: 'var(--y)', s: 900, x: 520, y: -380, r: 20 }, { k: 'ring', c: 'var(--ink)', s: 360, x: -140, y: 1380, r: 0 }],
+      [], [{ k: 'circle', c: 'var(--y)', s: 760, x: -300, y: 1300, r: 0 }, { k: 'pill', c: 'var(--ink)', s: 520, x: 760, y: 140, r: -30 }],
+      [{ k: 'half', c: 'var(--y)', s: 820, x: -360, y: 1240, r: 200 }, { k: 'ring', c: 'var(--y)', s: 420, x: 820, y: 180, r: 0 }],
+      [{ k: 'circle', c: 'var(--y)', s: 700, x: 700, y: 1360, r: 0 }, { k: 'pill', c: 'var(--ink)', s: 460, x: -240, y: 200, r: 30 }],
+      [{ k: 'half', c: 'var(--y)', s: 1000, x: 40, y: 1340, r: 180 }, { k: 'ring', c: 'var(--ink)', s: 300, x: 860, y: 260, r: 0 }],
+      [{ k: 'circle', c: 'var(--y)', s: 640, x: 760, y: -220, r: 0 }, { k: 'pill', c: 'var(--ink)', s: 420, x: -200, y: 1500, r: -20 }],
+    ][idx] || [];
+    const els = S.map((o, i) => { const d = h('div', 'shape ' + o.k, bg); Object.assign(d.style, { width: o.s + 'px', height: (o.k === 'pill' ? o.s * 0.36 : o.k === 'half' ? o.s / 2 : o.s) + 'px' }); d.style.setProperty('--c', o.c); return { d, ...o, i }; });
+    return t => els.forEach(o => { o.d.style.transform = `translate3d(${(o.x + Math.sin(t * 0.3 + o.i) * 30).toFixed(1)}px,${(o.y + Math.cos(t * 0.25 + o.i) * 24).toFixed(1)}px,0) rotate(${(o.r + t * (o.k === 'ring' ? 0 : 3)).toFixed(2)}deg)`; });
+  }
+  // 'type': a palavra-chave da cena, gigante e só em contorno, passando devagar
+  const words = ['PRÉ-APROVADO', '', 'CONTEXTO', 'PAPEL', 'CONVERSA', 'RESULTADO', 'PLAYBOOK'];
+  const rows = [0, 1].map(k => h('div', 'bigword', bg, (words[idx] + ' · ').repeat(4)));
+  return t => rows.forEach((r, k) => { r.style.transform = `translate3d(${((k ? -1 : 1) * t * 60 - 600 - k * 900) % 2400}px,${k ? 1240 : 120}px,0)`; });
 }
 
 // ---------------------------------------------------------------- motor
@@ -184,7 +203,7 @@ const ENGINE = {
   scene(t0, t1, tone, build, { captions = true } = {}) {
     const el = h('div', 'scene tone-' + tone, this.root);
     // telas claras: superfície viva (creme + luzes derivando + grade de pontos), contínua entre cenas
-    const bg = tone === 'light' && ENGINE.liveBg ? buildLiveBg(el) : null;
+    const bg = tone === 'light' && ENGINE.liveBg ? buildLiveBg(el, ENGINE.bgMode, this.scenes.length) : null;
     const cam = h('div', 'cam', el);
     el.style.display = 'block';           // visível durante a montagem para medir texto
     const api = build(cam, el) || {};

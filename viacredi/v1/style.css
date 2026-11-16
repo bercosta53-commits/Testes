@@ -189,3 +189,15 @@
 .livebg .glow { position: absolute; left: 0; top: 0; border-radius: 50%; will-change: transform; }
 .livebg .dots { position: absolute; inset: -40px; background-image: radial-gradient(rgba(122, 86, 0, .14) 1.7px, transparent 2.1px); background-size: 38px 38px;
   -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 45%, #000 30%, transparent 85%); mask-image: radial-gradient(ellipse 90% 70% at 50% 45%, #000 30%, transparent 85%); }
+
+/* v7: opções de fundo SEM desfoque (o bokeh creme é a linguagem saturada dos vídeos antigos) */
+#stage, .tone-light { background: #fbf9f4; }
+.bg-grid .grid { position: absolute; inset: -80px; background-image: linear-gradient(rgba(70,55,20,.075) 2px, transparent 2px), linear-gradient(90deg, rgba(70,55,20,.075) 2px, transparent 2px); background-size: 72px 72px; }
+.bg-grid .bubble { position: absolute; left: 0; top: 0; width: 1500px; height: 1500px; transform-origin: 50% 50%; }
+.bg-grid .bubble path { fill: none; stroke: var(--y); stroke-width: 1.1; }
+.bg-shapes .shape { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; }
+.bg-shapes .circle { border-radius: 50%; background: var(--c); }
+.bg-shapes .half { border-radius: 9999px 9999px 0 0; background: var(--c); }
+.bg-shapes .pill { border-radius: 999px; background: var(--c); }
+.bg-shapes .ring { border-radius: 50%; border: 44px solid var(--c); box-sizing: border-box; }
+.bg-type .bigword { position: absolute; left: 0; top: 0; white-space: nowrap; font: 900 300px Poppins; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 3px rgba(122, 86, 0, .16); }

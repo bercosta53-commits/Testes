@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(p).pipe(res);
 });
 await new Promise(r => server.listen(0, r));
-const url = `http://127.0.0.1:${server.address().port}/${video}/index.html?render`;
+const url = `http://127.0.0.1:${server.address().port}/${video}/index.html?render${args.bg ? '&bg=' + args.bg : ''}`;
 const browser = await chromium.launch({ args: ['--force-color-profile=srgb', '--font-render-hinting=none'] });
 
 async function openPage() {
@@ -41,7 +41,7 @@ if (args.stills) {
   const page = await openPage();
   for (const s of String(args.stills).split(',').map(Number)) {
     await page.evaluate(t => ENGINE.seek(t), s);
-    const f = path.join(OUT, `${video}-still-${s.toFixed(2)}.png`);
+    const f = path.join(OUT, `${video}${args.bg ? '-' + args.bg : ''}-still-${s.toFixed(2)}.png`);
     await page.screenshot({ path: f });
     console.log(f);
   }
