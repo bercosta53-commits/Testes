@@ -22,7 +22,7 @@ const head = `
   <span class="cta">Baixe o playbook <b>${lineIcon('fwd', 2.6)}</b></span>`;
 
 // tela do celular: foto ampliada 1.55x para o celular dominar a metade de baixo, à direita
-const Z = 1.55, TX = -100, TY = -269;
+const Z = 1.45, TX = 0, TY = -300;
 const SCREEN = { x: 422 * Z + TX, y: 531 * Z + TY, w: 242 * Z, h: 517 * Z };
 const CW = 296; // largura natural da tela; escala ~1.27 deixa a conversa legível
 const chat = waScreen({ status: true, date: false, input: true, name: 'Agente Viacredi', body: `<div class="flow">
@@ -40,11 +40,9 @@ const A = `<section class="ad" id="a">
   <div class="col">
     <h1>A Viacredi tirou regras do agente de IA. <em>A conversa virou contratação.</em></h1>
     <h2>Menos regras, mais contexto: o método para vender crédito no WhatsApp com IA.</h2>
-    <p>Mais de R$ 150 mil em crédito liberado ainda na fase de testes.</p>
     <span class="cta">Baixe o playbook <b>${lineIcon('fwd', 2.6)}</b></span>
   </div>
   <span class="tag t1"><i>${lineIcon('spark', 0)}</i>Agente de IA</span>
-  <span class="tag t2"><i>${lineIcon('lock', 2.4)}</i>Contratação pelo app</span>
 </section>`;
 
 const B = `<section class="ad" id="b">
@@ -86,19 +84,19 @@ h1 em{font-style:normal;color:#FDC348}
 .sim-l{font:500 11px/1 'Inter';color:#655F58}.sim-v{font:700 19px/1.1 'Inter';letter-spacing:-.02em}.sim-d{font:500 11.5px/1.3 'Inter';color:#6B4D00}
 /* A refinada */
 .photo.z{position:absolute;max-width:none}
-.shade{position:absolute;inset:0;z-index:3;background:linear-gradient(90deg,rgba(7,4,1,.94) 0%,rgba(7,4,1,.8) 42%,rgba(7,4,1,0) 64%),linear-gradient(180deg,rgba(7,4,1,.75) 0%,rgba(7,4,1,0) 28%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 78%);mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 78%)}
+.shade{position:absolute;inset:0;z-index:3;background:linear-gradient(90deg,rgba(7,4,1,.94) 0%,rgba(7,4,1,.82) 40%,rgba(7,4,1,0) 56%),linear-gradient(180deg,rgba(7,4,1,.75) 0%,rgba(7,4,1,0) 28%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 78%);mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 78%)}
 #a .brand{left:80px;top:80px}
-.col{position:absolute;left:80px;top:170px;width:610px;z-index:5}
-#a h1{position:static;font-size:54px;line-height:1.12}
-.col h2{margin:24px 0 0;font:600 30px/1.3 'Poppins';color:#FFFDF9;max-width:470px;letter-spacing:-.01em}
+.col{position:absolute;left:80px;top:172px;width:470px;z-index:5}
+#a h1{position:static;font-size:50px;line-height:1.14}
+.col h2{margin:26px 0 0;font:500 28px/1.38 'Poppins';color:#E9E5DE;max-width:450px;letter-spacing:-.01em}
 .col p{margin:14px 0 0;font:500 25px/1.4 'Nunito';color:#CFCAC2;max-width:450px}
-#a .cta{position:static;margin-top:36px;font-size:34px;padding:16px 16px 16px 42px;gap:22px;box-shadow:0 0 0 10px rgba(253,195,72,.16),0 22px 50px rgba(244,174,42,.5)}
+#a .cta{position:static;margin-top:40px;white-space:nowrap;font-size:32px;padding:15px 15px 15px 38px;gap:20px;box-shadow:0 0 0 10px rgba(253,195,72,.16),0 22px 50px rgba(244,174,42,.5)}
 #a .cta b{width:66px;height:66px}
 #a .cta b svg{width:32px;height:32px}
 .tag{position:absolute;z-index:6;display:inline-flex;align-items:center;gap:12px;background:#FFFDF9;color:#070401;font:700 26px/1 'Poppins';padding:12px 22px 12px 12px;border-radius:999px;box-shadow:0 20px 44px rgba(0,0,0,.45)}
 .tag i{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#070401;color:#FDC348}
 .tag i svg{width:22px;height:22px;fill:#FDC348}
-.t1{right:60px;top:500px;transform:rotate(4deg)}
+.t1{right:40px;top:398px;transform:rotate(4deg)}
 .t2{left:80px;top:1110px;transform:rotate(-4deg)}
 .tag i svg{width:22px;height:22px}
 /* B */
