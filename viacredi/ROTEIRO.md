@@ -106,7 +106,7 @@ Papel na campanha: mesma linguagem e mesma peça visual do vídeo 1, mas a ordem
 ### Locução (ElevenLabs, voz Mateus, eleven_v4, tomada única com as pausas na interpretação)
 
 ```
-[upbeat] [confident] Como vender crédito no WhatsApp com agentes de /iˈa/. [short pause] Chegou o Playbook Ubots. [pause] Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos. [pause] E tudo saiu de um caso real. Na /viaˈkɾɛdʒi/ o agente trocou regra por contexto, e a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] Baixe grátis.
+[upbeat] [confident] Como vender crédito no WhatsApp com agentes de í-á. [short pause] Chegou o Playbook Ubots. [pause] Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos. [pause] E tudo saiu de um caso real. Na /viaˈkɾɛdʒi/ o agente trocou regra por contexto, e a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] Baixe grátis.
 ```
 
 71 palavras (o vídeo 1 tem 69 e deu 28,3 s de fala). v3: abre com o título da capa do ebook. v2 do roteiro: sem "como vender crédito" (soava estranho) e sem jargão ("guardrails" virou "limites que nunca mudam", "volume controlado" virou "poucos disparos"): estimativa de 30 a 31 s com o tempo de leitura do CTA.
@@ -125,13 +125,15 @@ Fontes no ebook: papel do agente e o que nunca muda (pág. 9), começar com pouc
 | 19,5–24,5 s | "Resultado: mais de 150 mil reais em crédito, ainda na fase de testes." | Contador acompanhando a fala, faixa de contratos ilustrativos freando junto, marca-texto, "Ainda na fase de testes", rodapé legal. | Cena 6 do V1 |
 | 24,5–30,5 s | "Baixe grátis." | Volta ao objeto da abertura (fecha o círculo): título, capa, botão "Baixe grátis", clique + ✓ com o sino, logos. | Assinatura do V1 |
 
-### Produção v2 (tempos reais da locução, tomada B, 25,6 s de fala)
+### Produção v3 (tomada voc_a, 25,8 s de fala)
+
+Revisão v3: o "IA" da abertura soava "agentes de A" (o "i" do "de", dito "dji", engolia o "i" de "IA"). Escrito "í-á", a voz faz uma pausa curta depois do "de" e sustenta o "i" (medido no áudio). A bolha de PDF genérica virou a prévia da capa.
 
 Revisão v2: a abertura deixou de repetir a assinatura (o livro só aparece no fim) e as telas do playbook e do caso perderam o excesso (miniaturas de página, lista acumulada, dados da cooperativa): uma ideia por tela.
 
 | Corte | Tempo | Cena |
 |---|---|---|
-| Abertura | 0–7,3 s | só o título da capa, grande: aparece inteiro em cinza no primeiro quadro e cada palavra escurece quando é dita; marca-texto em "agentes de IA"; no "Chegou" o título sobe e o playbook chega como arquivo no WhatsApp (bolha de PDF) |
+| Abertura | 0–7,3 s | só o título da capa, grande: aparece inteiro em cinza no primeiro quadro e cada palavra escurece quando é dita; marca-texto em "agentes de IA"; no "Chegou" o título sobe e o playbook chega como mensagem no WhatsApp com a capa real como prévia (sem ícone de PDF) |
 | No playbook | 7,3–13,1 s | um cartão por item, entrando e saindo, com barras de progresso no topo; um gesto por cartão: o agente com o papel digitado, o cadeado que fecha em "mudam", 3 pontos que acendem numa base de 24 |
 | Caso real | 13,1–15,7 s | só o logo da Viacredi e o selo "Caso real", que entra no "real" |
 | Menos regra | 15,7–18,1 s | editor do V1: apaga em "trocou regra", contexto em "por contexto", selo "3 limites" |

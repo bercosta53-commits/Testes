@@ -225,11 +225,11 @@
 .case-facts { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; padding: 40px 40px 0; }
 .case-facts span { font: 700 34px Poppins; background: var(--y-soft, #fff1cf); border-radius: 999px; padding: 14px 26px; display: inline-block; }
 /* 1B v2: arquivo no WhatsApp, cartões do playbook */
-.filemsg { position: absolute; display: flex; align-items: center; gap: 30px; background: #fff; border-radius: 40px 40px 40px 12px; padding: 30px 36px 44px; box-shadow: var(--soft-shadow); }
-.filemsg .fi { width: 108px; height: 132px; border-radius: 14px 34px 14px 14px; background: var(--y); display: grid; place-items: end center; padding-bottom: 18px; box-sizing: border-box; font: 800 26px Poppins; color: var(--ink); flex: none; }
-.filemsg .fn { font: 700 50px Poppins; letter-spacing: -.035em; color: var(--ink); }
-.filemsg .fm { font: 500 30px Poppins; color: #77746e; margin-top: 6px; }
-.filemsg .ft { position: absolute; right: 30px; bottom: 16px; font: 500 22px Poppins; color: #a39b8f; }
+.filemsg { position: absolute; background: #fff; border-radius: 40px 40px 40px 12px; padding: 18px 18px 30px; box-sizing: border-box; box-shadow: var(--soft-shadow); }
+.filemsg .pv { height: 440px; border-radius: 26px; background: url(../assets/capa.jpg) center / cover; }
+.filemsg .fn { font: 700 42px Poppins; letter-spacing: -.035em; color: var(--ink); margin: 26px 18px 0; }
+.filemsg .fm { display: flex; justify-content: space-between; font: 500 28px Poppins; color: #8d8a83; margin: 6px 18px 0; }
+.filemsg .ft { font-size: 22px; color: #a39b8f; align-self: flex-end; }
 .filemsg .ft b { color: #34b7f1; }
 .pbars { display: flex; gap: 12px; }
 .pbars i { flex: 1; height: 8px; border-radius: 4px; background: #e4e1da; overflow: hidden; display: block; }

@@ -12,20 +12,20 @@ import json, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 TEMPO = 1.0  # velocidade natural (acelerar prejudicava a leitura)
 
-W = [("Como",0.22,0.24),("vender",0.347,0.56),("crédito",0.64,1.04),("no",1.067,1.093),("WhatsApp",1.12,1.68),("com",1.72,1.76),("agentes",1.84,2.4),("de",2.44,2.48),("IA.",2.56,3.04),
-("Chegou",3.36,3.6),("o",3.68,3.76),("Playbook",3.88,4.24),("Ubots.",4.32,5.08),
-("Ele",5.488,5.52),("mostra",5.6,5.92),("como",6,6.16),("escrever",6.24,6.56),("o",6.6,6.64),("papel",6.68,6.96),("do",7,7.04),("agente,",7.12,7.68),("quais",7.72,7.92),("limites",8,8.48),("nunca",8.56,8.8),("mudam",8.88,9.36),("e",9.44,9.52),("como",9.6,9.76),("começar",9.88,10.24),("com",10.36,10.48),("poucos",10.533,10.8),("disparos.",10.92,11.76),
-("E",11.96,12),("tudo",12.04,12.32),("saiu",12.373,12.56),("de",12.6,12.64),("um",12.68,12.72),("caso",12.84,13.04),("real.",13.24,13.84),
-("Na",13.88,13.92),("Viacredi",14,14.56),("o",14.64,14.68),("agente",14.72,15.04),("trocou",15.12,15.44),("regra",15.52,15.92),("por",16,16.08),("contexto,",16.36,16.827),
-("e",16.853,16.88),("a",16.92,16.96),("conversa",17.04,17.44),("passou",17.52,17.72),("a",17.76,17.84),("seguir",17.92,18.08),("o",18.12,18.16),("cooperado.",18.24,19.04),
-("Resultado:",19.12,20),("mais",20.08,20.24),("de",20.32,20.48),("150",20.56,21.28),("mil",21.52,21.6),("reais",21.68,22),("em",22.08,22.16),("crédito,",22.24,22.907),("ainda",23.013,23.2),("na",23.28,23.36),("fase",23.44,23.6),("de",23.68,23.76),("testes.",23.88,24.56),
-("Baixe",24.64,24.88),("grátis.",24.96,25.68)]
-# vídeo 1B: tomada única (vob_b), transcrição Scribe acima
+W = [("Como",0.22,0.24),("vender",0.347,0.56),("crédito",0.64,1.04),("no",1.08,1.12),("WhatsApp",1.2,1.68),("com",1.76,1.84),("agentes",2.04,2.4),("de",2.48,2.56),("IA.",2.72,3.32),
+("Chegou",3.806,4),("o",4.04,4.08),("Playbook",4.16,4.56),("Ubots.",4.64,5.36),
+("Ele",5.728,5.76),("mostra",5.84,6.16),("como",6.24,6.4),("escrever",6.48,6.8),("o",6.84,6.88),("papel",6.92,7.2),("do",7.24,7.28),("agente,",7.36,7.92),("quais",7.96,8.16),("limites",8.24,8.72),("nunca",8.8,9.12),("mudam",9.2,9.6),("e",9.68,9.76),("como",9.84,10.08),("começar",10.2,10.56),("com",10.68,10.8),("poucos",10.853,11.12),("disparos.",11.24,11.96),
+("E",12.352,12.4),("tudo",12.48,12.72),("saiu",12.8,13.04),("de",13.12,13.173),("um",13.227,13.28),("caso",13.36,13.52),("real.",13.6,14.24),
+("Na",14.28,14.32),("Viacredi",14.4,14.92),("o",14.94,14.96),("agente",15.04,15.28),("trocou",15.36,15.68),("regra",15.8,16.08),("por",16.16,16.24),("contexto,",16.52,16.96),
+("e",17,17.04),("a",17.067,17.093),("conversa",17.12,17.68),("passou",17.76,17.92),("a",17.96,18),("seguir",18.08,18.4),("o",18.44,18.48),("cooperado.",18.52,19.36),
+("Resultado:",19.85,20.24),("mais",20.28,20.4),("de",20.48,20.64),("150",20.72,21.44),("mil",21.68,21.76),("reais",21.84,22.16),("em",22.24,22.32),("crédito,",22.4,22.96),("ainda",23.12,23.36),("na",23.44,23.52),("fase",23.56,23.76),("de",23.84,23.92),("testes.",24,24.8),
+("Baixe",24.88,25.12),("grátis.",25.2,25.76)]
+# vídeo 1B v3: tomada única voc_a ("IA" escrito "í-á": o "i" não se funde mais com o "de"), tempos Scribe acima
 SIGW = []
 
 # blocos: (arquivo, ini, fim na origem, respiro antes no vídeo)
 BLOCKS = [
-    ('vob_b.mp3', 0.0, 25.8, 1.30),   # 1,3 s de abertura só com imagem e trilha
+    ('voc_a.mp3', 0.0, 25.8, 1.30),   # 1,3 s de abertura só com imagem e trilha
 ]
 
 segs = []
@@ -42,7 +42,7 @@ def place(f, s):
             return round(g['at'] + (s - g['src0']) / TEMPO, 3)
     raise ValueError((f, s))
 
-words = [(w, place('vob_b.mp3', a)) for w, a, _ in W]
+words = [(w, place('voc_a.mp3', a)) for w, a, _ in W]
 
 # blocos de legenda: (primeira, última palavra, oculta?)
 CH = [(0,8,True),(9,12,True),(13,30,True),(31,37,False),(38,45,True),(46,53,False),(54,61,True),(62,66,True),(67,68,True)]
@@ -53,7 +53,7 @@ for a, b, hide in CH:
                    'words': [x for _, x in ws], 'hide': hide})
 
 MUSIC_SLAM = 7.35  # volta cheia da trilha v2 (music2_b) — alinhada ao "Na Viacredi"
-music_at = round(place('vob_b.mp3', 3.36) - 0.1 - MUSIC_SLAM, 3)   # volta cheia no "Chegou o Playbook Ubots"   # volta cheia no "Na Viacredi"
+music_at = round(place('voc_a.mp3', 3.806) - 0.1 - MUSIC_SLAM, 3)   # volta cheia no "Chegou o Playbook Ubots"
 DUR = 30.4
 
 json.dump({'tempo': TEMPO, 'dur': DUR, 'end_vo': round(END_VO, 3), 'music': {'file': 'music2_b.mp3', 'at': music_at},

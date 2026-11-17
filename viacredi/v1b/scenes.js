@@ -42,8 +42,9 @@ boot(() => {
     ttl.style.fontSize = '108px'; ttl.style.transformOrigin = '50% 0';
     const th = ttl.offsetHeight;
     const ws = [...ttl.querySelectorAll('.w')], mk = ttl.querySelector('.mk');
-    const file = h('div', 'filemsg', cam, '<div class="fi"><span>PDF</span></div><div><div class="fn">Playbook Ubots</div><div class="fm">Agentes de IA · 11 páginas</div></div><div class="ft">agora <b>✓✓</b></div>');
-    pos(file, 140, 880, 800);
+    // o playbook chega como mensagem: a capa real como prévia, nome e dados embaixo (sem ícone genérico)
+    const file = h('div', 'filemsg', cam, '<div class="pv"></div><div class="fn">Playbook Ubots · Agentes de IA</div><div class="fm">11 páginas · PDF<span class="ft">agora <b>✓✓</b></span></div>');
+    pos(file, 130, 740, 820);
     const arr = wt(1, 0);                      // "Chegou"
     return {
       update(lt, t) {
