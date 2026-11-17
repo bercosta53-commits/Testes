@@ -20,7 +20,8 @@ const DARK = { dark: true, text: '#F3EEE6', soft: '#4C4640', card: '#191512', st
   pillBg: '#1E1A17', pillBorder: 'rgba(255,255,255,0.16)', rule: 'rgba(255,255,255,0.07)' };
 let P = LIGHT;
 const cv = document.getElementById('c');
-const ctx = cv.getContext('2d');
+let ctx = cv.getContext('2d');
+let TKR;
 
 // ------------------------------------------------------------------ util
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -653,7 +654,11 @@ const SCENES2 = [
     const pp = eBack(prog(t, 33.2, 33.5), 2);
     withT(() => pill(0, 0, 'Ainda na fase de testes', { size: 34, h: 72 }), W / 2, 1060, pp, 0, pp * 2);
     ctx.restore();
-    // faixa de contratações (ilustrativa) rolando
+    // faixa de contratações (ilustrativa) rolando — presa entre margens de 60 px, com esmaecimento nas pontas
+    if (!TKR) { TKR = document.createElement('canvas'); TKR.width = W; TKR.height = 170; }
+    const tk = TKR.getContext('2d');
+    tk.clearRect(0, 0, W, 170);
+    const main = ctx; ctx = tk;                                      // desenha os cards no canvas auxiliar
     const off = -((t - 32.35) * 140) % (PEOPLE.length * 300);
     for (let k = -1; k < PEOPLE.length * 2; k++) {
       const [l, n2] = PEOPLE[((k % PEOPLE.length) + PEOPLE.length) % PEOPLE.length];
@@ -664,8 +669,21 @@ const SCENES2 = [
         avatar(52, 0, 24, l, '#F1EDE6');
         text(n2, 90, -16, { w: 700, size: 26 });
         text('✓ Crédito contratado', 90, 20, { w: 700, size: 20, fam: 'Nunito', color: C.greenT });
-      }, x, 1230, 1, 0, eOut(prog(lt, 0.5, 0.8)));
+      }, x, 85, 1, 0, 1);
     }
+    tk.globalCompositeOperation = 'destination-in';                  // máscara: some antes de tocar as bordas
+    const mg = tk.createLinearGradient(60, 0, 1020, 0);
+    mg.addColorStop(0, 'rgba(0,0,0,0)'); mg.addColorStop(0.09, 'rgba(0,0,0,1)');
+    mg.addColorStop(0.91, 'rgba(0,0,0,1)'); mg.addColorStop(1, 'rgba(0,0,0,0)');
+    tk.fillStyle = mg; tk.fillRect(60, 0, 960, 170);
+    tk.globalCompositeOperation = 'source-over';
+    tk.save(); tk.globalCompositeOperation = 'destination-in'; tk.fillStyle = '#000';
+    tk.fillRect(0, 0, 0, 0); tk.restore();
+    ctx = main;
+    ctx.save(); ctx.globalAlpha *= eOut(prog(lt, 0.5, 0.8));
+    ctx.beginPath(); ctx.rect(60, 1145, 960, 170); ctx.clip();       // nada fora das margens
+    ctx.drawImage(TKR, 0, 1145);
+    ctx.restore();
     withT(() => {
       text('Ilustrativo', W / 2, 0, { w: 600, size: 22, fam: 'Nunito', color: '#A8A198', align: 'center' });
       text('Os resultados da Viacredi não constituem projeção para outras instituições.', W / 2, 44, { w: 600, size: 22, fam: 'Nunito', color: '#8F887F', align: 'center' });
