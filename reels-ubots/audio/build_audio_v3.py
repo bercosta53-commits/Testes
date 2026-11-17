@@ -56,11 +56,10 @@ CUES = [
     (32.35, 'whoosh', -11), (33.2, 'pop', -9),                  # para o número / "Ainda na fase de testes"
     (34.65, 'slide', -13),                   # contagem fecha: marca-texto entra
     (35.7, 'whoosh', -13), (37.65, 'pop', -7),                  # câmera B / selo
-    (38.9, 'whoosh', -11), (39.4, 'page', -6),                  # playbook / documento
+    (38.9, 'whoosh', -11), (39.15, 'page', -6),                 # playbook / capa chega
+    *[(t, 'page', -10) for t in (39.4, 39.9, 40.4)],            # páginas entram atrás da capa
     (41.6, 'whoosh', -13),                                      # CTA com a persona
-    (45.15, 'page', -6),                     # tela final: capa do playbook (como no v1b)
-    (45.95, 'pop', -9),                      # botão aparece
-    (46.7, 'tap', 0), (46.82, 'chime', -4),  # clique em "Baixe grátis" / a seta vira ✓
+    (45.1, 'slide', -9), (45.35, 'pop', -9), (45.65, 'chime', -4),  # tela final / botão ✓
 ]
 
 
@@ -118,6 +117,13 @@ def run():
         out = np.concatenate([out, seg[xf:]])
     mus = np.zeros((N, 2), np.float32)
     place(mus, out, AT)
+    # intimidade no gancho: trilha bem baixa enquanto ela fala; volume padrão no zoom do celular
+    lvl = np.ones(N, np.float32)
+    a0, a1 = int(7.75 * SR), int(8.25 * SR)
+    low = 10 ** (-16 / 20)
+    lvl[:a0] = low
+    lvl[a0:a1] = low + (1 - low) * (0.5 - 0.5 * np.cos(np.linspace(0, np.pi, a1 - a0)))
+    mus *= lvl[:, None]
     fo = int(1.2 * SR); mus[-fo:] *= np.linspace(1, 0, fo)[:, None]
     tmp = os.path.join(HERE, '.tmp'); os.makedirs(tmp, exist_ok=True)
     for name, arr in (('vo', vo_bed), ('fx', fx), ('mus', mus)):
