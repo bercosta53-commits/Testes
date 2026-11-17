@@ -32,11 +32,11 @@ CUES = [
     (3.5, 'knock', -8), (3.5, 'whoosh', -17), (3.64, 'knock', -13),   # "robô": glitch (impacto sem agressividade)
     (6.1, 'whoosh', -12),                    # corte para o celular
     (7.0, 'pop', -7),                        # notificação no celular
-    (8.1, 'whoosh', -8),                     # mergulho na tela → escuro (sem calibração: precisa de força)
+    (8.1, 'whoosh', -6),                     # mergulho na tela → escuro (sem calibração: precisa de força)
     (8.75, 'pop', -9), (9.55, 'pop', -9),    # mensagens do robô / cliente
     (10.35, 'knock', -5),                    # "Não entendi": trava
     *[(t, 'tap', -11) for t in (10.75, 11.05, 11.35, 11.65)],   # Bancos, Cooperativas, Fintechs, Financeiras
-    (12.0, 'swell', -5),                     # a luz entra com a Ubots
+    (12.0, 'swell', -15),                    # a luz entra com a Ubots (suave)
     (12.6, 'pop', -8),                       # logo assenta
     (13.55, 'slide', -10), (14.1, 'pop', -8), (14.95, 'pop', -8), (15.4, 'pop', -8),   # card do agente na cena da Ubots
     (16.0, 'whoosh', -12), (16.2, 'type', -17),                 # gerente digitando
@@ -112,7 +112,7 @@ def run():
     # queda grave que acompanha o mergulho na tela do celular (8,1 -> 8,6 s)
     n = int(0.55 * SR); tt = np.arange(n) / SR
     drop = np.sin(2 * np.pi * np.cumsum(150 * np.exp(-tt * 5) + 38) / SR) * np.exp(-tt * 4.5) * np.minimum(1, tt / 0.03)
-    place(fx, np.stack([drop, drop], 1).astype(np.float32), DIVE + 0.1, -12)
+    place(fx, np.stack([drop, drop], 1).astype(np.float32), DIVE + 0.1, -9)
     # 3) trilha: intro abafada sob o gancho; a volta cheia (7,35 s no arquivo) cai no fim do gancho (6,1 s)
     mpath = os.path.join(SRC, 'music2_b.mp3')
     m = load(['-i', mpath, '-af', 'highpass=f=45,lowshelf=f=130:g=-5']) * (10 ** (-8 / 20))
