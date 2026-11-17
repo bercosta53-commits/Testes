@@ -30,15 +30,15 @@ PRESS = wt(8, 1) + 1.0                   # clique depois de "grátis"
 ITEMS = [wt(2, 5), wt(2, 9), wt(2, 14)]  # papel, limites, começar
 
 CUES = [
-    (0.15, 'page', -8),                   # o playbook cai na tela
-    (0.70, 'slide', -14),                 # páginas abrem em leque
     (wt(0, 8), 'tap', -12),               # marca-texto em "agentes de IA"
-    (wt(1, 0), 'pop', -5),                # "Chegou o Playbook Ubots"
-    (S['s2'] + 0.05, 'slide', -9),        # janela "No playbook"
-    *[x for t in ITEMS for x in ((t + 0.02, 'slide', -13), (t + 0.12, 'page', -14))],
+    (wt(1, 0) - 0.25, 'whoosh', -16),     # título sobe
+    (wt(1, 0) + 0.08, 'pop', -5),         # o arquivo do playbook chega
+    (S['s2'] - 0.25, 'whoosh', -14),      # troca de tela
+    *[(t - 0.16, 'slide', -11) for t in ITEMS[1:]],   # próximo cartão
+    (wt(2, 11) + 0.12, 'knock', -8),      # cadeado fecha em "mudam"
+    *[(wt(2, 16) + j * 0.14, 'pop', -13) for j in range(3)],  # 3 disparos
     (S['s3'] + 0.02, 'whoosh', -11),      # caso real
-    (S['s3'] + 0.30, 'pop', -8),          # logo Viacredi
-    *[(S['s3'] + 0.65 + i * 0.15, 'pop', -12) for i in range(3)],  # dados da cooperativa
+    (wt(3, 6) - 0.02, 'tap', -6),         # selo "Caso real"
     (S['s4'] - 0.05, 'swell', -8),        # círculo abre o editor
     *[(wt(4, 4) + i * 0.11 + 0.16, 'whoosh', -20) for i in range(5)],  # regras riscadas saem
     (wt(4, 6), 'slide', -9),              # bloco de contexto cresce

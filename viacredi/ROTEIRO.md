@@ -125,13 +125,15 @@ Fontes no ebook: papel do agente e o que nunca muda (pág. 9), começar com pouc
 | 19,5–24,5 s | "Resultado: mais de 150 mil reais em crédito, ainda na fase de testes." | Contador acompanhando a fala, faixa de contratos ilustrativos freando junto, marca-texto, "Ainda na fase de testes", rodapé legal. | Cena 6 do V1 |
 | 24,5–30,5 s | "Baixe grátis." | Volta ao objeto da abertura (fecha o círculo): título, capa, botão "Baixe grátis", clique + ✓ com o sino, logos. | Assinatura do V1 |
 
-### Produção (tempos reais da locução, tomada B, 25,6 s de fala)
+### Produção v2 (tempos reais da locução, tomada B, 25,6 s de fala)
+
+Revisão v2: a abertura deixou de repetir a assinatura (o livro só aparece no fim) e as telas do playbook e do caso perderam o excesso (miniaturas de página, lista acumulada, dados da cooperativa): uma ideia por tela.
 
 | Corte | Tempo | Cena |
 |---|---|---|
-| Abertura | 0–7,3 s | título da capa montando palavra a palavra, marca-texto em "agentes de IA", capa caindo com as páginas em leque, selo "Novo · Playbook Ubots" no "Chegou" |
-| O que tem no playbook | 7,3–13,1 s | janela com os 3 itens entrando na palavra falada ("papel", "limites", "começar"), cada um com o recorte real da página (pág. 9, 9, 10); o recorte dos limites corta o título "Guardrails" da página |
-| Caso real | 13,1–15,7 s | cartão Viacredi (dados da pág. 2); o logo pulsa quando a voz diz "Viacredi" |
+| Abertura | 0–7,3 s | só o título da capa, grande: aparece inteiro em cinza no primeiro quadro e cada palavra escurece quando é dita; marca-texto em "agentes de IA"; no "Chegou" o título sobe e o playbook chega como arquivo no WhatsApp (bolha de PDF) |
+| No playbook | 7,3–13,1 s | um cartão por item, entrando e saindo, com barras de progresso no topo; um gesto por cartão: o agente com o papel digitado, o cadeado que fecha em "mudam", 3 pontos que acendem numa base de 24 |
+| Caso real | 13,1–15,7 s | só o logo da Viacredi e o selo "Caso real", que entra no "real" |
 | Menos regra | 15,7–18,1 s | editor do V1: apaga em "trocou regra", contexto em "por contexto", selo "3 limites" |
 | Conversa | 18,1–21,5 s | cena da Ana do V1, comprimida para 3,4 s |
 | Número | 21,5–25,9 s | contador do V1, fecha logo depois de "crédito"; selo "Ainda na fase de testes" |

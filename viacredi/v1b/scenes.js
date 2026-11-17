@@ -35,106 +35,108 @@ boot(() => {
   ENGINE.init({ dur: DUR, captions: VO });
   S = { s2: wt(2, 3) - 0.25, s3: wt(3, 0) - 0.2, s4: wt(4, 2) - 0.2, s5: wt(5, 0) - 0.1, s6: wt(6, 3) - 0.35, s7: wt(7, 4) + 0.7 };   // = audio/mix.py
 
-  // 01 · Abertura: o playbook chega; o título da capa se monta com a fala ----------------
+  // 01 · Abertura: só o título da capa, grande, montando com a fala. No "Chegou", o playbook chega como arquivo no WhatsApp
   ENGINE.scene(0, S.s2, 'light', cam => {
-    const eye = h('div', 'center', cam, 'PLAYBOOK UBOTS'); pos(eye, 0, 236);
-    Object.assign(eye.style, { font: '600 26px Poppins', letterSpacing: '.22em', color: '#8d8a83' });
     const TW = ['Como', 'vender', 'crédito', 'no', 'WhatsApp', 'com', '<span class="mk">agentes de IA.</span>'];
-    const ttl = h('div', 'open-title', cam, TW.map(w => `<span class="w">${w}</span>`).join(' ')); pos(ttl, 90, 290, 900);
+    const ttl = h('div', 'open-title', cam, TW.map(w => `<span class="w">${w}</span>`).join(' ')); pos(ttl, 80, 0, 920);
+    ttl.style.fontSize = '108px'; ttl.style.transformOrigin = '50% 0';
+    const th = ttl.offsetHeight;
     const ws = [...ttl.querySelectorAll('.w')], mk = ttl.querySelector('.mk');
-    const glow = pos(h('div', 'abs', cam), 90, 660, 900, 640);
-    glow.style.background = 'radial-gradient(closest-side, rgba(253,195,72,.6), rgba(253,195,72,0))';
-    const book = pos(h('div', 'abs', cam), 150, 720, 780, 439); book.style.transformOrigin = '50% 100%';
-    const pages = [[-5, -18, 10], [4, 16, 4]].map(([r, x, y]) => {
-      const pg = pos(h('div', 'abs', book), x, y, 780, 439);
-      Object.assign(pg.style, { background: '#fff', borderRadius: '22px', boxShadow: '0 20px 40px -24px rgba(40,30,10,.35)' });
-      return { pg, r };
-    });
-    const cover = pos(h('div', 'abs', book), 0, 0, 780, 439);
-    Object.assign(cover.style, { borderRadius: '22px', backgroundImage: 'url(../assets/capa.jpg)', backgroundSize: 'cover', boxShadow: 'var(--soft-shadow)' });
-    const chip = h('div', 'center', cam, '<span class="newchip">Novo · Playbook Ubots</span>'); pos(chip, 0, 1236);
+    const file = h('div', 'filemsg', cam, '<div class="fi"><span>PDF</span></div><div><div class="fn">Playbook Ubots</div><div class="fm">Agentes de IA · 11 páginas</div></div><div class="ft">agora <b>✓✓</b></div>');
+    pos(file, 140, 880, 800);
+    const arr = wt(1, 0);                      // "Chegou"
     return {
       update(lt, t) {
-        op(eye, enter(t, 0.05, 0.4));
-        ws.forEach((w, i) => { const k = enter(t, wt(0, i) - 0.04, 0.32); w.style.opacity = k; w.style.transform = `translateY(${(1 - k) * 18}px)`; });
+        const kin = enter(t, -0.2, 0.3);   // o título inteiro já no primeiro quadro, em cinza; cada palavra escurece quando é dita
+        ws.forEach((w, i) => { const k = enter(t, wt(0, i) - 0.04, 0.32); w.style.opacity = lerp(0.16 * kin, 1, k); w.style.transform = `translateY(${(1 - kin) * 22}px)`; });
         mk.style.setProperty('--k', E.inOutCubic(prog(t, wt(0, 8), wt(0, 8) + 0.4)));
-        op(glow, enter(t, 0.1, 1.0, E.outCubic));
-        const kb = E.outExpo(prog(t, 0.1, 1.0));
-        book.style.transform = `perspective(1800px) translateY(${(1 - kb) * -260}px) rotateX(${(1 - kb) * -24}deg) rotate(${lerp(-5, -2, kb)}deg)`;
-        book.style.opacity = clamp(kb * 2);
-        const kf = E.outCubic(prog(t, 0.55, 1.2));                       // páginas se abrem em leque
-        pages.forEach(o => { o.pg.style.transform = `rotate(${o.r * kf}deg)`; });
-        const kc = E.outBack(prog(t, wt(1, 0), wt(1, 0) + 0.4)); tf(chip, { s: 0.7 + 0.3 * kc, o: clamp(kc * 2) });
+        // o título sai do centro e sobe para dar lugar ao arquivo
+        const km = E.inOutCubic(prog(t, arr - 0.3, arr + 0.25));
+        const out = E.inCubic(prog(t, S.s2 - 0.32, S.s2));
+        ttl.style.top = lerp(930 - th / 2, 330, km) + 'px';
+        ttl.style.transform = `translateY(${-60 * out}px) scale(${lerp(1, 0.78, km)})`;
+        ttl.style.opacity = 1 - out;
+        const kf = E.outBack(prog(t, arr + 0.05, arr + 0.5));
+        file.style.transformOrigin = '0 100%';
+        file.style.transform = `translateY(${(1 - kf) * 60 - 60 * out}px) scale(${0.85 + 0.15 * kf})`;
+        file.style.opacity = clamp(kf * 2) * (1 - out);
       },
     };
   });
 
-  // 02 · O que tem no playbook: cada item falado entra com a página real; os anteriores viram lista ✓
+  // 02 · No playbook: um item por vez, em cartão que entra e sai; cada um com um gesto só -------
   ENGINE.scene(S.s2, S.s3, 'light', cam => {
-    const ttl = h('div', 'open-title center', cam, 'O que tem no playbook'); pos(ttl, 0, 262);
-    const win = pos(h('div', 'win', cam), 90, 410, 900, 800);
-    win.innerHTML = `<div class="win-top"><img src="../assets/ubots-logo.png"><span class="sep"></span><span>Playbook · Agentes de IA</span><span class="dots"><i></i><i></i><i></i></span></div><div class="win-body"></div>`;
-    const body = win.querySelector('.win-body');
-    const dots = [...win.querySelectorAll('.dots i')];
-    // recortes das páginas reais (coordenadas na página com 2000 px de largura)
-    const F = [
-      ['Papel do agente', 'pg9', [130, 330, 1110, 630], 'pág. 9'],
-      ['Limites que nunca mudam', 'pg9', [1268, 488, 602, 472], 'pág. 9'],
-      ['Começar com poucos disparos', 'pg10', [130, 330, 1740, 360], 'pág. 10'],
-    ];
-    const at = [wt(2, 5), wt(2, 9), wt(2, 14)];   // "papel", "limites", "começar"
-    const rows = F.map(([lab, img, [cx, cy, cw, ch], pg], i) => {
-      const r = h('div', 'frow', body, `<div class="hd"><span class="num">0${i + 1}</span><span class="ok">✓</span><span class="lab">${lab}</span></div><div class="thumb"><span class="pgc">${pg}</span></div>`);
-      const th = r.querySelector('.thumb');
-      const sc = Math.min(812 / cw, 440 / ch), tw = Math.round(cw * sc), thh = Math.round(ch * sc);
-      Object.assign(th.style, { width: tw + 'px', height: thh + 'px', backgroundImage: `url(../assets/${img}.jpg)`, backgroundSize: `${2000 * sc}px auto`, backgroundPosition: `${-cx * sc}px ${-cy * sc}px` });
-      return { r, i, lab: r.querySelector('.lab'), num: r.querySelector('.num'), ok: r.querySelector('.ok'), pgc: r.querySelector('.pgc'), th, thh, at: at[i], done: i < 2 ? at[i + 1] : 99 };
+    const eye = h('div', 'center', cam, 'NO PLAYBOOK'); pos(eye, 0, 300);
+    Object.assign(eye.style, { font: '600 28px Poppins', letterSpacing: '.22em', color: '#8d8a83' });
+    const bars = pos(h('div', 'abs', cam), 340, 366, 400, 8);
+    const fills = [0, 1, 2].map(i => {
+      const tr = pos(h('div', 'abs', bars), i * 140, 0, 120, 8);
+      Object.assign(tr.style, { background: '#e4e1da', borderRadius: '4px', overflow: 'hidden' });
+      const f = pos(h('div', 'abs', tr), 0, 0, 120, 8);
+      Object.assign(f.style, { background: 'var(--ink)', transformOrigin: '0 50%' });
+      return f;
     });
+    const at = [wt(2, 5), wt(2, 9), wt(2, 14)];          // "papel", "limites", "começar"
+    const T = ['Papel do agente', 'Limites que nunca mudam', 'Começar com poucos disparos'];
+    const cards = T.map((tx, i) => {
+      const c = pos(h('div', 'pcard', cam), 90, 470, 900, 700);
+      c.innerHTML = `<div class="pn">0${i + 1}</div><div class="pt">${tx}</div><div class="pv"></div>`;
+      return { c, v: c.querySelector('.pv') };
+    });
+    // 01 · o agente e o papel dele, digitado
+    cards[0].v.innerHTML = '<div class="ag"><div class="av">✦</div><div><div class="an">Agente de crédito</div><div class="ar"><span class="tx"></span></div></div></div>';
+    const roleTx = cards[0].v.querySelector('.tx');
+    // 02 · cadeado que fecha no "nunca mudam"
+    cards[1].v.innerHTML = '<div class="lock"><div class="sh"></div><div class="bd"><i></i></div></div>';
+    const shackle = cards[1].v.querySelector('.sh'), lockEl = cards[1].v.querySelector('.lock');
+    // 03 · uma base inteira, só 3 disparos
+    const dots = [];
+    const grid = h('div', 'dgrid', cards[2].v);
+    for (let i = 0; i < 24; i++) dots.push(h('i', '', grid));
+    const hot = [9, 3, 18];
+    const tin = [S.s2 - 0.04, at[1] - 0.18, at[2] - 0.18], tout = [at[1] - 0.18, at[2] - 0.18, S.s3 - 0.3];
     return {
       update(lt, t) {
-        const kt = enter(t, S.s2 - 0.04, 0.4); tf(ttl, { y: (1 - kt) * 20, o: kt });
-        const kw = E.outExpo(prog(t, S.s2 - 0.04, S.s2 + 0.6));
-        win.style.transform = `perspective(1800px) translateY(${(1 - kw) * 180}px) rotateX(${(1 - kw) * 12}deg)`; win.style.opacity = clamp(kw * 1.6);
-        rows.forEach(o => {
-          const ka = E.outExpo(prog(t, o.at + 0.12, o.at + 0.5));      // entra depois que o anterior começa a encolher
-          const kd = E.inOutCubic(prog(t, o.done, o.done + 0.3));       // vira item da lista
-          o.r.style.visibility = t >= o.at + 0.12 ? 'visible' : 'hidden';
-          o.r.style.top = lerp(30 + o.i * 64 + 14, 26 + o.i * 64, kd) + 'px';
-          o.lab.style.fontSize = lerp(48, 34, kd) + 'px';
-          o.lab.style.color = kd > 0.5 ? '#55524c' : 'var(--ink)';
-          o.num.style.display = kd > 0.5 ? 'none' : 'inline-block';
-          o.ok.style.display = kd > 0.5 ? 'grid' : 'none';
-          o.pgc.style.opacity = 1 - kd;
-          o.th.style.opacity = 1 - clamp(prog(t, o.done - 0.05, o.done + 0.1));
-          o.th.style.height = lerp(o.thh, 0, kd) + 'px'; o.th.style.marginTop = lerp(24, 0, kd) + 'px';
-          const kz = E.outCubic(prog(t, o.at + 0.2, o.at + 0.8)); o.th.style.transform = `scale(${0.96 + 0.04 * kz})`;
-          tf(o.r, { x: (1 - ka) * 220, o: ka });
-          dots[o.i].classList.toggle('on', t >= o.at);
+        op(eye, enter(t, S.s2 - 0.04, 0.4)); op(bars, enter(t, S.s2, 0.4));
+        const end = E.inCubic(prog(t, S.s3 - 0.3, S.s3));
+        eye.style.opacity *= 1 - end; bars.style.opacity *= 1 - end;
+        fills.forEach((f, i) => { f.style.transform = `scaleX(${clamp(prog(t, tin[i] + 0.1, tout[i]))})`; });
+        cards.forEach((o, i) => {
+          const a = E.outExpo(prog(t, tin[i], tin[i] + 0.5)), b = i < 2 ? E.inCubic(prog(t, tout[i], tout[i] + 0.3)) : end;
+          o.c.style.visibility = t >= tin[i] && b < 1 ? 'visible' : 'hidden';
+          o.c.style.transform = `translateX(${(1 - a) * 420 - (i < 2 ? 420 : 0) * b}px) rotate(${(1 - a) * 3}deg)`;
+          o.c.style.opacity = clamp(a * 1.5) * (1 - b);
+        });
+        typeIn(roleTx, 'Entende o plano do cooperado.', prog(t, at[0] + 0.25, at[0] + 1.0));
+        const kl = prog(t, wt(2, 11) - 0.1, wt(2, 11) + 0.15);     // "mudam": fecha
+        shackle.style.transform = `translateY(${-46 * (1 - E.inCubic(kl))}px)`;
+        lockEl.style.transform = `scale(${1 + 0.06 * Math.sin(Math.PI * prog(t, wt(2, 11) + 0.15, wt(2, 11) + 0.45))})`;
+        hot.forEach((d, j) => {
+          const k = E.outBack(prog(t, wt(2, 16) + j * 0.14, wt(2, 16) + j * 0.14 + 0.3));
+          dots[d].style.background = k > 0.05 ? 'var(--y)' : '';
+          dots[d].style.transform = `scale(${1 + 0.35 * k})`;
+          dots[d].style.boxShadow = k > 0.05 ? `0 0 0 ${Math.round(10 * k)}px rgba(253,195,72,.28)` : 'none';
         });
       },
     };
   });
 
-  // 03 · Caso real: a cooperativa por trás do método (dados da pág. 2) --------------------
+  // 03 · Caso real: só o logo e o selo ----------------------------------------------------
   ENGINE.scene(S.s3, S.s4, 'light', cam => {
-    const card = pos(h('div', 'win', cam), 90, 560, 900, 600);
-    card.innerHTML = `<div class="case-tag">Caso real</div>
-      <div class="case-logo"><img src="../assets/viacredi-logo.png"></div>
-      <div class="case-sub">Cooperativa do Sistema Ailos · Blumenau (SC)</div>
-      <div class="case-facts"><span>74 anos</span><span>+1 milhão de cooperados</span><span>+100 postos em SC e PR</span></div>`;
-    const facts = [...card.querySelectorAll('.case-facts span')];
-    const logo = card.querySelector('.case-logo img'), tag = card.querySelector('.case-tag'), sub = card.querySelector('.case-sub');
-    const vw = wt(4, 1);   // "Viacredi" falado: o logo pulsa
+    const tile = pos(h('div', 'abs', cam), 190, 760, 700, 380);
+    Object.assign(tile.style, { background: '#fff', borderRadius: '44px', boxShadow: 'var(--soft-shadow)', display: 'grid', placeItems: 'center' });
+    tile.innerHTML = '<img src="../assets/viacredi-logo.png" style="height:150px">';
+    const logo = tile.querySelector('img');
+    const stamp = h('div', 'abs', cam, 'Caso real'); pos(stamp, 640, 700);
+    Object.assign(stamp.style, { font: '800 44px Poppins', letterSpacing: '-.02em', background: 'var(--ink)', color: 'var(--y)', padding: '16px 32px', borderRadius: '999px', whiteSpace: 'nowrap' });
+    const real = wt(3, 6), vw = wt(4, 1);
     return {
       update(lt, t) {
-        const kw = E.outExpo(prog(t, S.s3 - 0.04, S.s3 + 0.6));
-        card.style.transform = `perspective(1800px) translateY(${(1 - kw) * 160}px) rotateX(${(1 - kw) * 12}deg)`; card.style.opacity = clamp(kw * 1.6);
-        const kl = E.outBack(prog(t, S.s3 + 0.3, S.s3 + 0.65));
-        const pulse = 1 + 0.06 * Math.sin(Math.PI * prog(t, vw, vw + 0.4));
-        logo.style.transform = `scale(${(0.7 + 0.3 * kl) * pulse})`; logo.style.opacity = clamp(kl * 2);
-        const kg = E.outBack(prog(t, S.s3 + 0.2, S.s3 + 0.5)); tag.style.transform = `scale(${0.6 + 0.4 * kg})`; tag.style.opacity = clamp(kg * 2);
-        const ks = enter(t, S.s3 + 0.45, 0.4); sub.style.opacity = ks; sub.style.transform = `translateY(${(1 - ks) * 14}px)`;
-        facts.forEach((f, i) => { const k = E.outBack(prog(t, S.s3 + 0.65 + i * 0.15, S.s3 + 0.95 + i * 0.15)); f.style.transform = `scale(${0.6 + 0.4 * k})`; f.style.opacity = clamp(k * 2); });
+        const kw = E.outExpo(prog(t, S.s3 - 0.04, S.s3 + 0.55));
+        tf(tile, { y: (1 - kw) * 120, s: 0.92 + 0.08 * kw, o: clamp(kw * 1.6) });
+        logo.style.transform = `scale(${1 + 0.06 * Math.sin(Math.PI * prog(t, vw, vw + 0.4))})`;
+        const ks = E.outBack(prog(t, real - 0.05, real + 0.3));
+        stamp.style.transform = `rotate(-6deg) scale(${lerp(1.6, 1, ks)})`; stamp.style.opacity = clamp(ks * 3);
       },
     };
   });
