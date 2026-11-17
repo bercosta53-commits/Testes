@@ -401,7 +401,7 @@ slides.push(`
 
 /* ---------------------------------------------------------------- 12 TESTE EM VOLUME CONTROLADO */
 const fb = (name, label, x, y, w) => `<div class="abs" style="left:${x}px;top:${y}px;width:${w}px"><div style="font:400 16px Nunito;color:var(--muted)">${label}</div><div class="fld" data-f="${name}" style="position:relative;height:42px;margin-top:4px;border-radius:12px"></div></div>`;
-const phase = (x, dark, n, t, desc, deliv, fields, headBg, headCol) => `<div class="card abs" style="left:${x}px;top:340px;width:530px;height:350px;border-radius:26px;overflow:hidden">
+const phase = (x, dark, n, t, desc, deliv, fields, headBg, headCol) => `<div class="card abs" style="left:${x}px;top:316px;width:530px;height:360px;border-radius:26px;overflow:hidden">
   <div style="height:70px;background:${headBg};color:${headCol};display:flex;align-items:center;gap:16px;padding:0 26px"><span style="width:40px;height:40px;border-radius:50%;background:${dark ? 'var(--amber)' : '#070401'};color:${dark ? '#070401' : 'var(--amber)'};font:700 20px Poppins;display:flex;align-items:center;justify-content:center">${n}</span><span class="pop" style="font:600 26px Poppins">${t}</span></div>
   <div style="padding:14px 26px 0;font:400 18.5px/1.45 Nunito;color:var(--muted);height:106px">${desc}</div>
   <div style="margin:0 26px;border-left:5px solid var(--amber);background:#fff8e6;border-radius:10px;padding:10px 16px;font:400 18.5px/1.4 Nunito"><b style="font-weight:800">Entrega:</b> ${deliv}</div></div>`;
@@ -412,11 +412,11 @@ slides.push(`
   ${phase(128, true, 1, 'Preparação', 'Defina o papel e os limites do agente, o público inicial com filtros de risco, os responsáveis e os indicadores do teste.', 'agente pronto para conversar com um grupo pequeno.', 0, '#070401', '#fff')}
   ${phase(695, false, 2, 'Teste', 'Comece com poucos disparos, acompanhe as conversas e faça pausas para ajustar o que for necessário.', 'conversas revisadas e ajustes registrados.', 0, 'var(--amber)', '#070401')}
   ${phase(1262, true, 3, 'Avaliação', 'Reúna os resultados, os transbordos e os aprendizados sobre a qualidade das conversas.', 'decisão de continuar, ajustar ou ampliar.', 0, '#070401', '#fff')}
-  ${fb('prep_data', 'Data', 154, 622, 150)}${fb('prep_resp', 'Responsável', 322, 622, 330)}
-  ${fb('teste_inicio', 'Início', 721, 622, 150)}${fb('teste_fim', 'Término', 889, 622, 150)}${fb('teste_resp', 'Responsável', 1057, 622, 150)}
-  ${fb('aval_data', 'Data', 1288, 622, 150)}${fb('aval_resp', 'Responsável', 1456, 622, 310)}
+  ${fb('prep_data', 'Data', 154, 584, 150)}${fb('prep_resp', 'Responsável', 322, 584, 306)}
+  ${fb('teste_inicio', 'Início', 721, 584, 150)}${fb('teste_fim', 'Término', 889, 584, 150)}${fb('teste_resp', 'Responsável', 1057, 584, 150)}
+  ${fb('aval_data', 'Data', 1288, 584, 150)}${fb('aval_resp', 'Responsável', 1456, 584, 310)}
 
-  <div class="abs" style="left:128px;top:716px;width:1664px;height:180px;border-radius:28px;background:#fff3d1;padding:0 40px;display:flex;gap:0">
+  <div class="abs" style="left:128px;top:700px;width:1664px;height:200px;border-radius:28px;background:#fff3d1;padding:0 40px;display:flex;gap:0">
     ${[['chat', 'Resposta', 'Pessoas que responderam ÷ pessoas abordadas'], ['arrow', 'Avanço', 'Conversas que chegaram à oferta ÷ conversas iniciadas'], ['filechk', 'Contratação', 'Contratações ÷ conversas que chegaram à oferta'], ['cash', 'Valor', 'Crédito contratado no período'], ['user', 'Transbordo', 'Transferências para o humano e seus motivos'], ['shield', 'Qualidade', 'Conversas revisadas sem desvio dos guardrails']].map(([ic, t, d], i) => `<div style="flex:1;position:relative;padding-top:24px;padding-right:18px"><div style="position:absolute;left:0;right:0;top:${24 + 29}px;border-top:2px dashed #e8c36a;${i == 0 ? 'left:60px' : ''}${i == 5 ? ';right:auto;width:0' : ''}"></div><div style="position:relative;width:58px;height:58px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;z-index:1"><span style="width:28px;color:#070401">${I(ic)}</span></div><div class="pop" style="font:600 23px Poppins;margin-top:14px">${t}</div><div style="font:400 17.5px/1.45 Nunito;color:var(--muted);margin-top:4px">${d}</div></div>`).join('')}
   </div>
 
