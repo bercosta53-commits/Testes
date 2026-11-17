@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reels Ubots</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @font-face { font-family: 'Poppins'; font-weight: 600; src: url(assets/fonts/Poppins-600.ttf); }
+  @font-face { font-family: 'Poppins'; font-weight: 700; src: url(assets/fonts/Poppins-700.ttf); }
+  @font-face { font-family: 'Poppins'; font-weight: 800; src: url(assets/fonts/Poppins-800.ttf); }
+  @font-face { font-family: 'Nunito'; font-weight: 400; src: url(assets/fonts/Nunito-400.ttf); }
+  @font-face { font-family: 'Nunito'; font-weight: 600; src: url(assets/fonts/Nunito-600.ttf); }
+  @font-face { font-family: 'Nunito'; font-weight: 700; src: url(assets/fonts/Nunito-700.ttf); }
+  html, body { margin: 0; background: #111; height: 100%; }
+  body { display: grid; place-items: center; overflow: hidden; }
+  canvas { display: block; max-height: 100vh; aspect-ratio: 9 / 16; }
+  body.render canvas { max-height: none; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="reel.js"></script>
+</body>
+</html>
