@@ -106,7 +106,7 @@ Papel na campanha: mesma linguagem e mesma peça visual do vídeo 1, mas a ordem
 ### Locução (ElevenLabs, voz Mateus, eleven_v4, tomada única com as pausas na interpretação)
 
 ```
-[upbeat] [confident] Como vender crédito no WhatsApp com agentes de í-á. [short pause] Chegou o Playbook Ubots. [pause] Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos. [pause] E tudo saiu de um caso real. Na /viaˈkɾɛdʒi/ o agente trocou regra por contexto, e a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] Baixe grátis.
+[upbeat] [confident] Como ofertar crédito no WhatsApp com agentes de í-á. [short pause] Chegou o Playbook Ubots. [pause] Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos. [pause] E tudo saiu de um caso real. Na /viaˈkɾɛdʒi/ o agente trocou regra por contexto, e a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] Baixe grátis.
 ```
 
 71 palavras (o vídeo 1 tem 69 e deu 28,3 s de fala). v3: abre com o título da capa do ebook. v2 do roteiro: sem "como vender crédito" (soava estranho) e sem jargão ("guardrails" virou "limites que nunca mudam", "volume controlado" virou "poucos disparos"): estimativa de 30 a 31 s com o tempo de leitura do CTA.
@@ -125,7 +125,9 @@ Fontes no ebook: papel do agente e o que nunca muda (pág. 9), começar com pouc
 | 19,5–24,5 s | "Resultado: mais de 150 mil reais em crédito, ainda na fase de testes." | Contador acompanhando a fala, faixa de contratos ilustrativos freando junto, marca-texto, "Ainda na fase de testes", rodapé legal. | Cena 6 do V1 |
 | 24,5–30,5 s | "Baixe grátis." | Volta ao objeto da abertura (fecha o círculo): título, capa, botão "Baixe grátis", clique + ✓ com o sino, logos. | Assinatura do V1 |
 
-### Produção v3 (tomada voc_a, 25,8 s de fala)
+### Produção v4 (tomada vod_b, 26,3 s de fala)
+
+Revisão v4: abertura "Como ofertar crédito no WhatsApp com agentes de IA" (título em dois níveis, "Agentes de IA" como protagonista, com marca-texto e ✦); capa final do ebook ("Testando Agentes de IA na Oferta de Crédito", 10 páginas; a anterior ficou em assets/capa_v1.jpg); o caso real virou o perfil comercial da Viacredi no WhatsApp (símbolo, ✓, "Conta comercial · Cooperativa do Sistema Ailos", contador até "+1 milhão de cooperados em SC e PR", selo "Caso real"). Das duas tomadas, a vod_a emendava "de IA" (soava "de A"); a vod_b separa (medido).
 
 Revisão v3: o "IA" da abertura soava "agentes de A" (o "i" do "de", dito "dji", engolia o "i" de "IA"). Escrito "í-á", a voz faz uma pausa curta depois do "de" e sustenta o "i" (medido no áudio). A bolha de PDF genérica virou a prévia da capa.
 

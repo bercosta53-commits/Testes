@@ -37,25 +37,32 @@ boot(() => {
 
   // 01 · Abertura: só o título da capa, grande, montando com a fala. No "Chegou", o playbook chega como arquivo no WhatsApp
   ENGINE.scene(0, S.s2, 'light', cam => {
-    const TW = ['Como', 'vender', 'crédito', 'no', 'WhatsApp', 'com', '<span class="mk">agentes de IA.</span>'];
-    const ttl = h('div', 'open-title', cam, TW.map(w => `<span class="w">${w}</span>`).join(' ')); pos(ttl, 80, 0, 920);
-    ttl.style.fontSize = '108px'; ttl.style.transformOrigin = '50% 0';
+    const TA = ['Como', 'ofertar', 'crédito', 'no', 'WhatsApp', 'com'], TB = ['Agentes', 'de', 'IA.'];
+    const ttl = h('div', 'abs', cam); pos(ttl, 0, 0, 1080); ttl.style.transformOrigin = '50% 0';
+    const la = h('div', 'open-a', ttl, TA.map(w => `<span class="w">${w}</span>`).join(' '));
+    const lb = h('div', 'open-b', ttl, `<span class="mk">${TB.map(w => `<span class="w">${w}</span>`).join(' ')}</span>`);
+    const bsz = fit(lb, 940); lb.style.fontSize = bsz + 'px';
+    const spark = h('div', 'spark', lb, '✦');
     const th = ttl.offsetHeight;
-    const ws = [...ttl.querySelectorAll('.w')], mk = ttl.querySelector('.mk');
+    const ws = [...ttl.querySelectorAll('.w')], mk = lb.querySelector('.mk');
     // o playbook chega como mensagem: a capa real como prévia, nome e dados embaixo (sem ícone genérico)
-    const file = h('div', 'filemsg', cam, '<div class="pv"></div><div class="fn">Playbook Ubots · Agentes de IA</div><div class="fm">11 páginas · PDF<span class="ft">agora <b>✓✓</b></span></div>');
+    const file = h('div', 'filemsg', cam, '<div class="pv"></div><div class="fn">Playbook Ubots · Agentes de IA</div><div class="fm">10 páginas · PDF<span class="ft">agora <b>✓✓</b></span></div>');
     pos(file, 130, 740, 820);
     const arr = wt(1, 0);                      // "Chegou"
     return {
       update(lt, t) {
         const kin = enter(t, -0.2, 0.3);   // o título inteiro já no primeiro quadro, em cinza; cada palavra escurece quando é dita
         ws.forEach((w, i) => { const k = enter(t, wt(0, i) - 0.04, 0.32); w.style.opacity = lerp(0.16 * kin, 1, k); w.style.transform = `translateY(${(1 - kin) * 22}px)`; });
-        mk.style.setProperty('--k', E.inOutCubic(prog(t, wt(0, 8), wt(0, 8) + 0.4)));
+        mk.style.setProperty('--k', E.inOutCubic(prog(t, wt(0, 6), wt(0, 8) + 0.3)));   // o marca-texto corre junto com "agentes de IA"
+        const kb2 = E.outBack(prog(t, wt(0, 6) - 0.05, wt(0, 6) + 0.35));
+        lb.style.transform = `scale(${1 + 0.05 * Math.sin(Math.PI * prog(t, wt(0, 8), wt(0, 8) + 0.5))})`;
+        const ksp = E.outBack(prog(t, wt(0, 8) + 0.1, wt(0, 8) + 0.5));
+        spark.style.transform = `rotate(${(1 - ksp) * -90 + 8 * Math.sin(t * 2)}deg) scale(${ksp})`; spark.style.opacity = clamp(ksp * 2);
         // o título sai do centro e sobe para dar lugar ao arquivo
         const km = E.inOutCubic(prog(t, arr - 0.3, arr + 0.25));
         const out = E.inCubic(prog(t, S.s2 - 0.32, S.s2));
-        ttl.style.top = lerp(930 - th / 2, 330, km) + 'px';
-        ttl.style.transform = `translateY(${-60 * out}px) scale(${lerp(1, 0.78, km)})`;
+        ttl.style.top = lerp(930 - th / 2, 250, km) + 'px';
+        ttl.style.transform = `translateY(${-60 * out}px) scale(${lerp(1, 0.74, km)})`;
         ttl.style.opacity = 1 - out;
         const kf = E.outBack(prog(t, arr + 0.05, arr + 0.5));
         file.style.transformOrigin = '0 100%';
@@ -122,22 +129,32 @@ boot(() => {
     };
   });
 
-  // 03 · Caso real: só o logo e o selo ----------------------------------------------------
+  // 03 · Caso real: a Viacredi como perfil comercial no WhatsApp (a mesma conta do agente na capa)
   ENGINE.scene(S.s3, S.s4, 'light', cam => {
-    const tile = pos(h('div', 'abs', cam), 190, 760, 700, 380);
-    Object.assign(tile.style, { background: '#fff', borderRadius: '44px', boxShadow: 'var(--soft-shadow)', display: 'grid', placeItems: 'center' });
-    tile.innerHTML = '<img src="../assets/viacredi-logo.png" style="height:150px">';
-    const logo = tile.querySelector('img');
-    const stamp = h('div', 'abs', cam, 'Caso real'); pos(stamp, 640, 700);
-    Object.assign(stamp.style, { font: '800 44px Poppins', letterSpacing: '-.02em', background: 'var(--ink)', color: 'var(--y)', padding: '16px 32px', borderRadius: '999px', whiteSpace: 'nowrap' });
-    const real = wt(3, 6), vw = wt(4, 1);
+    const card = pos(h('div', 'prof', cam), 90, 520, 900, 760);
+    card.innerHTML = `<div class="band"></div>
+      <div class="av"><img src="../assets/viacredi-simbolo.png"></div>
+      <div class="nm">Viacredi <span class="vf">✓</span></div>
+      <div class="sb">Conta comercial · Cooperativa do Sistema Ailos</div>
+      <div class="st"><div class="big">+<span class="n">0</span></div><div class="lb">cooperados em SC e PR</div></div>`;
+    const av = card.querySelector('.av'), nm = card.querySelector('.nm'), sb = card.querySelector('.sb'), st = card.querySelector('.st'), n = card.querySelector('.n'), vf = card.querySelector('.vf');
+    const stamp = h('div', 'abs', cam, 'Caso real'); pos(stamp, 690, 488);
+    Object.assign(stamp.style, { font: '800 40px Poppins', letterSpacing: '-.02em', background: 'var(--ink)', color: 'var(--y)', padding: '14px 30px', borderRadius: '999px', whiteSpace: 'nowrap', boxShadow: '0 16px 30px -14px rgba(0,0,0,.45)' });
+    const real = wt(3, 6), vw = wt(4, 1), c0 = S.s3 + 0.55, c1 = S.s3 + 1.6;
     return {
       update(lt, t) {
         const kw = E.outExpo(prog(t, S.s3 - 0.04, S.s3 + 0.55));
-        tf(tile, { y: (1 - kw) * 120, s: 0.92 + 0.08 * kw, o: clamp(kw * 1.6) });
-        logo.style.transform = `scale(${1 + 0.06 * Math.sin(Math.PI * prog(t, vw, vw + 0.4))})`;
-        const ks = E.outBack(prog(t, real - 0.05, real + 0.3));
-        stamp.style.transform = `rotate(-6deg) scale(${lerp(1.6, 1, ks)})`; stamp.style.opacity = clamp(ks * 3);
+        card.style.transform = `perspective(1800px) translateY(${(1 - kw) * 140}px) rotateX(${(1 - kw) * 10}deg)`; card.style.opacity = clamp(kw * 1.6);
+        const ka = E.outBack(prog(t, S.s3 + 0.15, S.s3 + 0.55));
+        av.style.transform = `translateX(-50%) scale(${(0.6 + 0.4 * ka) * (1 + 0.06 * Math.sin(Math.PI * prog(t, vw, vw + 0.4)))})`; av.style.opacity = clamp(ka * 2);
+        const kn = enter(t, S.s3 + 0.3, 0.4); tf(nm, { y: (1 - kn) * 18, o: kn });
+        const kv = E.outBack(prog(t, S.s3 + 0.55, S.s3 + 0.85)); vf.style.transform = `scale(${kv})`;
+        const ks = enter(t, S.s3 + 0.4, 0.4); tf(sb, { y: (1 - ks) * 14, o: ks });
+        const kt = enter(t, c0 - 0.1, 0.4); tf(st, { y: (1 - kt) * 20, o: kt });
+        const kc = E.outCubic(prog(t, c0, c1));
+        n.textContent = kc >= 1 ? '1 milhão' : Math.round(1000000 * kc).toLocaleString('pt-BR');
+        const kr = E.outBack(prog(t, real - 0.05, real + 0.3));
+        stamp.style.transform = `rotate(-6deg) scale(${lerp(1.6, 1, kr)})`; stamp.style.opacity = clamp(kr * 3);
       },
     };
   });
@@ -312,7 +329,7 @@ boot(() => {
     const ttl = maskLine(cam, 'center giant', 'Agentes de IA'); pos(ttl.m, 0, 290); ttl.m.style.width = '1080px';
     const tsz = fit(ttl.i, 900);
     ttl.m.style.paddingBottom = Math.round(tsz * 0.28) + 'px'; ttl.m.style.marginBottom = '0';   // folga em px: a perna do "g" não é cortada
-    const sub = h('div', 'center', cam, 'Como vender crédito no WhatsApp:<br>o método da Viacredi.'); pos(sub, 0, 290 + tsz * 1.18);
+    const sub = h('div', 'center', cam, 'Como ofertar crédito no WhatsApp:<br>o método da Viacredi.'); pos(sub, 0, 290 + tsz * 1.18);
     Object.assign(sub.style, { font: '500 40px/1.3 Poppins', letterSpacing: '-.015em', color: '#55524c' });
     // o playbook como objeto: capa + duas páginas atrás, brilho amarelo localizado
     const glow = pos(h('div', 'abs', cam), 90, 560, 900, 640);
@@ -330,7 +347,7 @@ boot(() => {
     Object.assign(btn.style, { background: 'var(--ink)', color: 'var(--y)', borderRadius: '999px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 18px 0 56px', font: '700 50px Poppins', letterSpacing: '-.02em' });
     btn.innerHTML = '<span>Baixe grátis</span><span class="ar" style="width:96px;height:96px;border-radius:50%;background:var(--y);color:var(--ink);display:grid;place-items:center;font:700 46px Poppins">→</span>';
     const arrow = btn.querySelector('.ar');
-    const meta = h('div', 'center', cam, 'PDF gratuito · 11 páginas'); pos(meta, 0, 1306);
+    const meta = h('div', 'center', cam, 'PDF gratuito · 10 páginas'); pos(meta, 0, 1306);
     Object.assign(meta.style, { font: '500 28px Poppins', color: '#8d8a83' });
     const logos = pos(h('div', 'abs', cam), 0, 1392, 1080, 64);
     Object.assign(logos.style, { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' });
