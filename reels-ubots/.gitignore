@@ -1,2 +1,3 @@
-# WAVs intermediários: regenerados por build_audio.py
+# WAVs intermediários: regenerados pelos scripts de áudio
 audio/*.wav
+audio/.tmp/
