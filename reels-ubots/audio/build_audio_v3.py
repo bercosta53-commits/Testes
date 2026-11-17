@@ -28,7 +28,7 @@ FILE = {'whoosh': 'whoosh_b', 'tap': 'tap_a', 'pop': 'pop_b', 'knock': 'knock_b'
 T_CTX = 18.99                                # palavra "contexto" (mesmo cálculo de reel.js)
 
 CUES = [
-    (0.95, 'pop', -2),                       # ✦ no "IA" (o "plin": fora da calibração)
+    (0.95, 'pop', 3),                       # ✦ no "IA" (o "plin": fora da calibração)
     (3.5, 'knock', -8), (3.5, 'whoosh', -17), (3.64, 'knock', -13),   # "robô": glitch (impacto sem agressividade)
     (6.1, 'whoosh', -12),                    # corte para o celular
     (7.0, 'pop', -7),                        # notificação no celular
