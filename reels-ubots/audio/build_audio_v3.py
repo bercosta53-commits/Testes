@@ -86,7 +86,7 @@ def place(bed, clip, t, gain_db=0.0):
 def run():
     N = int(DUR * SR)
     # 1) locução (tomada única, nos tempos originais)
-    vo = load(['-i', os.path.join(HERE, 'locucao_v2.mp3')])
+    vo = load(['-i', os.path.join(HERE, 'locucao_v3.mp3')])
     vo_bed = np.zeros((N, 2), np.float32); place(vo_bed, vo, 0)
     # 2) efeitos
     fx = np.zeros((N, 2), np.float32)

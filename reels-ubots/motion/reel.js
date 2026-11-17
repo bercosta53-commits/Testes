@@ -477,10 +477,11 @@ const enter = (lt, d = 0.32) => eOut(prog(lt, 0, d));
 // ------------------------------------------------------------------ cenas
 const SCENES = [
   // gancho: persona em tela cheia (foto estática viva)
-  { a: 0, b: 6.1, cap: 1300, vig: 0.35, draw: (t) => {
+  { a: 0, b: 6.1, cap: 1300, vig: 0.35, draw: async (t) => {
     const punch = t >= 2.21 ? 1.17 : 1;
     const drift = t >= 2.21 ? (t - 2.21) * 0.012 : t * 0.02;
-    cover(IMG.P1, (1.02 + drift) * punch, 0.5, 0.36, Math.sin(t * 0.7) * 4, Math.cos(t * 0.5) * 3);
+    const hook = await vframe('lipsync/hook', Math.floor(t * FPS) + 1, 184);     // lipsync ElevenLabs (OmniHuman)
+    cover(hook, (1.02 + drift) * punch, 0.5, 0.36, Math.sin(t * 0.7) * 4, Math.cos(t * 0.5) * 3);
     if (t > 3.55 && t < 3.72) {                       // glitch em "robô"
       const k = Math.floor((t - 3.55) * 60);
       for (let i = 0; i < 7; i++) {
@@ -665,8 +666,9 @@ const SCENES2 = [
     playbookPages(t);
   } },
   // CTA com a persona: o take inteiro da fala, sem corte no meio
-  { a: 41.6, b: END_T0, cap: 1180, vig: 0.35, draw: (t, lt) => {
-    cover(IMG.P3, 1.04 + lt * 0.012, 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
+  { a: 41.6, b: END_T0, cap: 1180, vig: 0.35, draw: async (t, lt) => {
+    const f = await vframe('lipsync/cta', Math.floor((t - 41.71) * FPS) + 1, 97);   // a fala começa em 41,71 s
+    cover(f, 1.04 + lt * 0.012, 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
   } },
   // encerramento (tela final aprovada no v3)
   { a: END_T0, b: DUR, paper: true, draw: (t, lt) => {
