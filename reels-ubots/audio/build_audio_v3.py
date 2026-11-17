@@ -28,11 +28,11 @@ FILE = {'whoosh': 'whoosh_b', 'tap': 'tap_a', 'pop': 'pop_b', 'knock': 'knock_b'
 T_CTX = 18.99                                # palavra "contexto" (mesmo cálculo de reel.js)
 
 CUES = [
-    (0.95, 'pop', -10),                      # ✦ no "IA"
-    (3.5, 'knock', -1), (3.5, 'whoosh', -8), (3.62, 'knock', -4), (3.74, 'tap', -6),   # "robô": glitch forte
+    (0.95, 'pop', -2),                       # ✦ no "IA" (o "plin": fora da calibração)
+    (3.5, 'knock', -8), (3.5, 'whoosh', -17), (3.64, 'knock', -13),   # "robô": glitch (impacto sem agressividade)
     (6.1, 'whoosh', -12),                    # corte para o celular
     (7.0, 'pop', -7),                        # notificação no celular
-    (8.1, 'whoosh', -9),                     # mergulho na tela → escuro
+    (8.1, 'whoosh', -8),                     # mergulho na tela → escuro (sem calibração: precisa de força)
     (8.75, 'pop', -9), (9.55, 'pop', -9),    # mensagens do robô / cliente
     (10.35, 'knock', -5),                    # "Não entendi": trava
     *[(t, 'tap', -11) for t in (10.75, 11.05, 11.35, 11.65)],   # Bancos, Cooperativas, Fintechs, Financeiras
@@ -68,7 +68,9 @@ CUES = [
 # diferentes (tap e swell chegam a +2 dBFS; whoosh é ruído de banda larga). Trocas de cena e
 # confirmações de tópico ficam bem mais discretas; o glitch do "robô" (3,5-3,8 s) fica de fora.
 TRIM = {'whoosh': -9, 'tap': -9, 'pop': -3, 'chime': -3, 'slide': -4, 'type': -3, 'page': -3, 'knock': -2, 'swell': -3}
-GLITCH = (3.4, 3.9)
+GLITCH = (3.4, 3.9)            # cues nesta janela e o mergulho (8,1 s) não levam calibração
+DIVE = 8.1
+PLIN = 0.95
 
 
 def load(extra):
@@ -105,8 +107,12 @@ def run():
             trim = ['-ss', '0.10', '-to', '0.33'] if s == 'tap' else []   # o "toque" tem 8 batidas: usa só a primeira
             af = 'afade=t=out:st=0.17:d=0.06' if trim else ('lowpass=f=5500,highpass=f=120' if s == 'whoosh' else 'anull')
             cache[n] = load([*trim, '-i', os.path.join(SRC, 'sfx', n + '.mp3'), '-af', af])
-        trim = 0 if GLITCH[0] <= t <= GLITCH[1] else TRIM[s]
+        trim = 0 if (GLITCH[0] <= t <= GLITCH[1] or abs(t - DIVE) < 0.05 or abs(t - PLIN) < 0.05) else TRIM[s]
         place(fx, cache[n], t - ONSET[s], gdb + trim)
+    # queda grave que acompanha o mergulho na tela do celular (8,1 -> 8,6 s)
+    n = int(0.55 * SR); tt = np.arange(n) / SR
+    drop = np.sin(2 * np.pi * np.cumsum(150 * np.exp(-tt * 5) + 38) / SR) * np.exp(-tt * 4.5) * np.minimum(1, tt / 0.03)
+    place(fx, np.stack([drop, drop], 1).astype(np.float32), DIVE + 0.1, -12)
     # 3) trilha: intro abafada sob o gancho; a volta cheia (7,35 s no arquivo) cai no fim do gancho (6,1 s)
     mpath = os.path.join(SRC, 'music2_b.mp3')
     m = load(['-i', mpath, '-af', 'highpass=f=45,lowshelf=f=130:g=-5']) * (10 ** (-8 / 20))
