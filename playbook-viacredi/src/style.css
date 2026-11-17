@@ -14,7 +14,7 @@
 @font-face{font-family:Inter;font-weight:700;src:url(fonts/inter-700.woff2)}
 
 :root{
-  --cream:#fffdf9; --amber:#fdc348; --amber-d:#b27a00; --ink:#070401; --yellow:#fffd00;
+  --cream:#fffdf9; --amber:#fdc348; --amber-d:#b27a00; --ink:#070401; --yellow:#fdc348;
   --muted:#4f493c;          /* cinza dos textos pequenos, mais escuro */
   --muted-dark:#d3cdbd;     /* texto pequeno sobre fundo escuro, mais claro */
   --line:#f0e3c4; --band:#fff3d1; --wa-bg:#efe7dc; --wa-out:#d9fdd3;

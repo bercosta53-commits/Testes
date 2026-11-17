@@ -85,12 +85,11 @@ const pain = (n, title, text, pg, pgName) => `
 slides.push(`
 <section class="slide light" id="s2">${hdr(2)}
   <h2 class="t">O crédito está pré-aprovado. <em>A conversa, não.</em></h2>
-  <p class="sub" style="top:236px">Quatro sinais de que a oferta de crédito ficou parada na conversa. Cada um aponta para a página que o resolve.</p>
 
-  <div class="card abs" style="left:128px;top:344px;width:552px;height:656px;padding:30px 30px 0;display:flex;flex-direction:column">
+  <div class="card abs" style="left:128px;top:280px;width:552px;height:720px;padding:30px 30px 0;display:flex;flex-direction:column">
     <div style="font:700 16px Poppins;letter-spacing:.14em;color:#6b4a00">O QUE O COOPERADO VÊ</div>
     <div style="margin-top:18px;border-radius:26px;overflow:hidden;box-shadow:0 0 0 2px #eadfc7">
-    ${wa({ name: 'Agente de Crédito', input: false, bstyle: 'padding:22px 16px;gap:12px;min-height:250px', body: `
+    ${wa({ name: 'Agente de Crédito', input: false, bstyle: 'padding:22px 16px;gap:12px;min-height:310px', body: `
       <div style="align-self:center;background:#fff;border-radius:10px;font:500 14px Inter;color:#555;padding:4px 14px">Hoje</div>
       <div class="m in" style="max-width:92%;font-size:19px">Olá. Temos uma linha de crédito pré-aprovada para você. Deseja saber mais?<span class="tm">10:02${ticks.replace('#53bdeb', '#53bdeb')}</span></div>
       <div style="align-self:center;margin-top:34px;width:70px;border-top:3px dotted #bcae92"></div>` })}
@@ -99,7 +98,7 @@ slides.push(`
     <div style="margin-top:14px;font:400 21px/1.5 Nunito;color:var(--muted)">O crédito existe, o cooperado tem interesse em potencial, mas a conversa não acontece.</div>
   </div>
 
-  <div class="abs" style="left:720px;top:344px;width:1072px;height:656px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:32px">
+  <div class="abs" style="left:720px;top:280px;width:1072px;height:720px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:32px">
     ${pain(1, 'O cooperado não responde', 'A mensagem chega como mais um disparo. Sem uma conversa de verdade, a oferta não anda.', 6, 'Sem roteiro pronto')}
     ${pain(2, 'O bot não entende', 'Qualquer resposta fora do roteiro cai em “não entendi” e a conversa trava.', 5, 'Explique ao agente o papel dele')}
     ${pain(3, 'Medo de a IA falar demais', 'Dar liberdade ao agente assusta quando não está claro o que ele pode e o que nunca pode fazer.', 7, 'Liberdade com transparência e segurança')}
@@ -163,12 +162,7 @@ slides.push(`
   </div>
   <div class="abs" style="left:128px;top:788px;font:400 17px Nunito;color:var(--muted)">Exemplo ilustrativo.</div>
 
-  <div class="card abs" style="left:128px;top:832px;width:1060px;height:168px;border-radius:26px;display:flex;align-items:center;gap:30px;padding:0 40px">
-    <div style="flex:none;margin-top:-18px">${quoteGlyph}</div>
-    <div><div style="font:italic 400 24px/1.55 Nunito">“A gente colocava regra atrás de regra: não pode isso, não pode aquilo. E o agente ficava cada vez mais mecânico.”</div>
-    <div class="cite" style="margin-top:6px">${AUTH}</div></div>
-  </div>
-  <div class="abs" style="left:1228px;top:832px;width:564px;height:168px;border-radius:26px;background:#070401;color:#fff;display:flex;align-items:center;gap:28px;padding:0 36px"><div style="flex:none">${waveSvg('#fdc348', 94, 4.5)}</div><div style="font:600 25px/1.4 Poppins;letter-spacing:-.015em">Na prática, era IA generativa trabalhando com os mesmos limites de um bot de fluxo.</div></div>
+  <div class="abs" style="left:128px;top:836px;width:1664px;height:164px;border-radius:26px;background:#070401;color:#fff;display:flex;align-items:center;gap:44px;padding:0 56px"><div style="flex:none">${waveSvg('#fdc348', 120, 5)}</div><div style="font:600 30px/1.35 Poppins;letter-spacing:-.02em">Na prática, era IA generativa trabalhando com os mesmos limites de um bot de fluxo.</div></div>
 </section>`);
 
 /* ---------------------------------------------------------------- 05 EXPLIQUE O PAPEL (escura) */
@@ -178,7 +172,7 @@ slides.push(`
   <h2 class="t">03. Explique ao agente <em>o papel dele</em></h2>
   <p class="sub" style="top:236px;max-width:1500px">Em julho de 2026, a Viacredi reduziu as regras, deixou claro o papel do agente e preservou os guardrails de segurança.</p>
 
-  <div class="abs" style="left:128px;top:316px;width:330px;height:484px;border:2px dashed #4a4336;border-radius:30px;padding:34px 30px">
+  <div class="abs" style="left:128px;top:320px;width:330px;height:540px;border:2px dashed #4a4336;border-radius:30px;padding:34px 30px">
     <div style="font:700 15px Poppins;letter-spacing:.14em;color:#d3cdbd">ANTES</div>
     <div class="pop" style="font:600 30px/1.2 Poppins;margin:10px 0 4px;color:#fff">Regras</div>
     <div style="font:400 19px Nunito;color:#d3cdbd;margin-bottom:12px">O que saiu</div>
@@ -186,25 +180,20 @@ slides.push(`
     <div style="display:flex;gap:12px;font:400 21px/1.4 Nunito;margin-top:14px;color:#d3cdbd"><span style="font-weight:800;width:16px;flex:none">×</span><span style="text-decoration:line-through;text-decoration-color:#8a8372">Roteiro fechado para cada resposta</span></div>
     <div style="margin-top:18px;border-top:1px dashed #4a4336;padding-top:14px;font:400 18px/1.5 Nunito;color:#a59e8b;font-style:italic">Não fale sobre…<br>Não responda se…<br>Sempre use a frase…</div>
   </div>
-  <div class="abs" style="left:490px;top:316px;width:1302px;height:484px;border:2px solid var(--amber);border-radius:30px;background:#1a1307;padding:24px 38px 0">
-    <div style="display:flex;align-items:center;gap:14px"><div style="font:700 15px Poppins;letter-spacing:.14em;color:var(--amber)">DEPOIS</div><div class="pop" style="font:600 30px Poppins;letter-spacing:-.02em">Papel e contexto</div><span style="margin-left:14px;font:600 15px Nunito;background:#2b2210;color:#d3cdbd;border-radius:20px;padding:4px 14px">Exemplo genérico</span></div>
-    <div style="display:grid;grid-template-columns:1fr 330px;gap:12px 40px;margin-top:16px;align-items:stretch">
-      <div style="border-left:5px solid var(--amber);padding-left:24px;font:400 20px/1.45 Nunito;color:#f4efe2;display:flex;align-items:center">Você é o agente de crédito da cooperativa no WhatsApp. Seu objetivo é entender o que o cooperado está planejando e mostrar, quando fizer sentido, como o crédito pré-aprovado pode ajudar.</div>
-      <div style="border:2px solid #4a3a14;background:#241a09;border-radius:16px;padding:10px 16px;font:400 18px/1.4 Nunito"><b class="pop" style="font:600 17px Poppins;color:var(--amber)">+ O que entrou</b><br>O objetivo da conversa e o contexto do cooperado e da oferta</div>
-      <div style="border-left:5px solid var(--amber);padding-left:24px;font:400 20px/1.45 Nunito;color:#f4efe2;display:flex;align-items:center">Converse sobre o que ele trouxer, com o jeito próximo da cooperativa. Não insista na oferta: primeiro entenda o interesse.</div>
+  <div class="abs" style="left:490px;top:320px;width:1302px;height:540px;border:2px solid var(--amber);border-radius:30px;background:#1a1307;padding:24px 38px 0">
+    <div style="display:flex;align-items:center;gap:14px"><div style="font:700 15px Poppins;letter-spacing:.14em;color:var(--amber)">DEPOIS</div><div class="pop" style="font:600 30px Poppins;letter-spacing:-.02em">Papel e contexto</div></div>
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:22px 40px;margin-top:24px;align-items:stretch">
+      <div style="border-left:5px solid var(--amber);padding-left:24px;font:400 21px/1.5 Nunito;color:#f4efe2;display:flex;align-items:center">Você é o agente de crédito da cooperativa no WhatsApp. Seu objetivo é entender o que o cooperado está planejando e mostrar, quando fizer sentido, como o crédito pré-aprovado pode ajudar.</div>
+      <div style="border:2px solid #4a3a14;background:#241a09;border-radius:16px;padding:12px 18px;font:400 18px/1.4 Nunito"><b class="pop" style="font:600 17px Poppins;color:var(--amber)">+ O que entrou</b><br>O objetivo da conversa e o contexto do cooperado e da oferta</div>
+      <div style="border-left:5px solid var(--amber);padding-left:24px;font:400 21px/1.5 Nunito;color:#f4efe2;display:flex;align-items:center">Converse sobre o que ele trouxer, com o jeito próximo da cooperativa. Não insista na oferta: primeiro entenda o interesse.</div>
       <div style="border:2px solid #4a3a14;background:#241a09;border-radius:16px;padding:10px 16px;font:400 18px/1.4 Nunito"><b class="pop" style="font:600 17px Poppins;color:var(--amber)">+ O que entrou</b><br>Liberdade para conversar sobre o que o cooperado trouxer</div>
-      <div style="border-left:5px solid #fff;padding-left:24px;font:400 20px/1.45 Nunito;color:#f4efe2;display:flex;align-items:center">Sempre informe juros, IOF e demais custos com clareza. A contratação é feita apenas pelo aplicativo; oriente o passo a passo. Se ele quiser comparar linhas ou pedir algo que exige análise, transfira para o time com um resumo da conversa.</div>
+      <div style="border-left:5px solid #fff;padding-left:24px;font:400 21px/1.5 Nunito;color:#f4efe2;display:flex;align-items:center">Sempre informe juros, IOF e demais custos com clareza. A contratação é feita apenas pelo aplicativo; oriente o passo a passo. Se ele quiser comparar linhas ou pedir algo que exige análise, transfira para o time com um resumo da conversa.</div>
       <div style="background:var(--amber);color:#070401;border-radius:16px;padding:10px 16px;font:400 18px/1.4 Nunito"><b class="pop" style="font:600 17px Poppins;display:inline-flex;align-items:center;gap:7px"><span style="width:20px;display:block">${I('shield')}</span>O que ficou</b><br>Guardrails críticos de segurança, transparência sobre custos e contratação pelo canal seguro</div>
     </div>
     <div style="margin-top:12px;font:400 17px/1.4 Nunito;color:#d3cdbd">Saudação, transbordo e volume de mensagens passaram a ser ajustados com apoio da IA, sem criar uma regra a cada mudança.</div>
   </div>
 
-  <div class="abs" style="left:128px;top:828px;width:1664px;display:flex;align-items:center;gap:30px">
-    <div style="flex:none">${quoteGlyph}</div>
-    <div><div style="font:italic 400 22px/1.45 Nunito;color:#f4efe2">“Quando expliquei ao agente qual era o papel dele e o que ele precisava alcançar, a experiência melhorou na hora. Hoje, quando aparece um problema, eu levo para a própria IA e a gente constrói a solução junto.”</div>
-    <div class="cite" style="margin-top:4px">${AUTH}</div></div>
-  </div>
-  <div class="abs" style="left:128px;top:936px;width:1664px;height:64px;border-radius:20px;background:var(--amber);display:flex;align-items:center;justify-content:space-between;padding:0 40px"><span class="pop" style="font:700 26px Poppins;letter-spacing:-.025em">Segurança onde importa, conversa de verdade no resto.</span><span style="margin-top:2px">${waveSvg('#070401', 88, 4.5)}</span></div>
+  <div class="abs" style="left:128px;top:910px;width:1664px;height:72px;border-radius:20px;background:var(--amber);color:#070401;display:flex;align-items:center;justify-content:space-between;padding:0 40px"><span class="pop" style="font:700 26px Poppins;letter-spacing:-.025em">Segurança onde importa, conversa de verdade no resto.</span><span style="margin-top:2px">${waveSvg('#070401', 88, 4.5)}</span></div>
 </section>`);
 
 /* ---------------------------------------------------------------- 06 SEM ROTEIRO PRONTO */
@@ -240,29 +229,25 @@ slides.push(`
 const sc = (n, t, d) => `<div style="display:flex;gap:18px;align-items:flex-start;padding:24px 28px 0"><div class="num" style="font-size:60px;margin-top:-6px">${n}</div><div><div class="pop" style="font:600 26px Poppins;letter-spacing:-.02em">${t}</div><div style="font:400 20px/1.45 Nunito;color:var(--muted);margin-top:4px;min-height:58px">${d}</div></div></div>`;
 slides.push(`
 <section class="slide light" id="s7">${hdr(7)}
-  <h2 class="t" style="top:166px;line-height:1.15">05. Combine liberdade com<br><em>transparência e segurança</em></h2>
-  <p class="sub" style="top:362px;font-size:22.5px;max-width:1000px;line-height:1.55;top:326px">O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.</p>
-  <div class="abs" style="left:1260px;top:150px;width:532px;border-left:4px solid var(--amber);padding-left:26px">
-    <div style="font:italic 400 22px/1.55 Nunito">“O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito.”</div>
-    <div class="cite" style="margin-top:8px;font-size:17.5px">${AUTH}</div>
-  </div>
+  <h2 class="t" style="top:156px;line-height:1.15">05. Combine liberdade com<br><em>transparência e segurança</em></h2>
+  <p class="sub" style="top:362px;font-size:22.5px;max-width:1000px;line-height:1.55;top:312px">O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.</p>
 
-  <div class="card abs" style="left:128px;top:424px;width:534px;height:576px;border-radius:30px;overflow:hidden">${sc(1, 'Custos às claras', 'Transparência sem esperar o cooperado insistir.')}
-    ${wa({ name: 'Agente Viacredi', style: 'margin:14px 22px 0;height:438px;border-radius:20px 20px 0 0', input: false, bstyle: 'padding:12px 12px;gap:7px', body: `
+  <div class="card abs" style="left:128px;top:408px;width:534px;height:592px;border-radius:30px;overflow:hidden">${sc(1, 'Custos às claras', 'Transparência sem esperar o cooperado insistir.')}
+    ${wa({ name: 'Agente Viacredi', style: 'margin:14px 22px 0;height:454px;border-radius:20px 20px 0 0', input: false, bstyle: 'padding:12px 12px;gap:7px', body: `
       ${m('out', 'Quais são os custos desse crédito?', '09:12', 1)}
       <div class="m in" style="font-size:16.5px">É um crédito com juros e IOF. Antes de contratar, você vê o valor de cada custo na simulação.<span class="tm">09:12</span></div>
       <div class="m in" style="font-size:16.5px">Se quiser comparar com outras linhas, eu te encaminho para o nosso time.<span class="tm">09:13</span></div>
       <div class="wa-btn" style="font-size:16.5px">${I('users')}Falar com o time humano</div>` })}</div>
 
-  <div class="card abs" style="left:692px;top:424px;width:535px;height:576px;border-radius:30px;overflow:hidden">${sc(2, 'Fechamento pelo app', 'O canal seguro vira orientação, e não bloqueio.')}
-    ${wa({ name: 'Agente Viacredi', style: 'margin:14px 22px 0;height:438px;border-radius:20px 20px 0 0', input: false, bstyle: 'padding:12px 12px;gap:7px', body: `
+  <div class="card abs" style="left:692px;top:408px;width:535px;height:592px;border-radius:30px;overflow:hidden">${sc(2, 'Fechamento pelo app', 'O canal seguro vira orientação, e não bloqueio.')}
+    ${wa({ name: 'Agente Viacredi', style: 'margin:14px 22px 0;height:454px;border-radius:20px 20px 0 0', input: false, bstyle: 'padding:12px 12px;gap:7px', body: `
       ${m('out', 'Dá para fechar aqui mesmo, pelo WhatsApp?', '16:40', 1)}
       <div class="m in" style="font-size:16.5px">Por segurança, a contratação é 100% digital pelo aplicativo. É rápido:
         <div style="margin-top:6px;display:flex;flex-direction:column;gap:5px"><div><span class="no">1</span>Abra o app e acesse Crédito</div><div><span class="no">2</span>Escolha a proposta enviada</div><div><span class="no">3</span>Revise e confirme</div></div><span class="tm">16:41</span></div>
       <div class="wa-btn" style="font-size:16.5px">${I('ext')}Abrir o aplicativo</div>` })}</div>
 
-  <div class="card abs" style="left:1258px;top:424px;width:534px;height:576px;border-radius:30px;overflow:hidden">${sc(3, 'Transbordo com contexto', 'Quando o humano assume, recebe o resumo da conversa e continua sem pedir que o cooperado repita nada.')}
-    <div style="margin:18px 22px 0;border:2px solid #efe4cc;border-radius:20px 20px 0 0;height:438px;background:#fdfaf3;overflow:hidden">
+  <div class="card abs" style="left:1258px;top:408px;width:534px;height:592px;border-radius:30px;overflow:hidden">${sc(3, 'Transbordo com contexto', 'Quando o humano assume, recebe o resumo da conversa e continua sem pedir que o cooperado repita nada.')}
+    <div style="margin:18px 22px 0;border:2px solid #efe4cc;border-radius:20px 20px 0 0;height:454px;background:#fdfaf3;overflow:hidden">
       <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-bottom:1px solid #efe4cc"><img src="img/ubots-dark.png" style="height:25px"><span style="display:flex;align-items:center;gap:7px;font:600 15px Nunito;background:#fff3d1;border-radius:9px;padding:4px 11px"><span style="width:16px">${I('inbox')}</span>Transbordos</span><span style="margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--amber)"></span></div>
       <div style="display:flex;align-items:center;gap:12px;padding:12px 16px"><div style="width:42px;height:42px;border-radius:50%;background:#070401;color:#fff;display:flex;align-items:center;justify-content:center"><span style="width:21px">${I('user')}</span></div><div><div class="pop" style="font:600 17px Poppins">Maria</div><div style="font:400 14px Nunito;color:#6b6556">WhatsApp · agora</div></div><span style="margin-left:auto;background:var(--amber);border-radius:12px;font:700 14px Poppins;padding:4px 12px">Transbordo</span></div>
       <div style="margin:0 14px;background:#fff;border:1px solid #efe4cc;border-left:5px solid var(--amber);border-radius:12px;padding:12px 14px">
