@@ -1,0 +1,178 @@
+[
+ {
+  "t": 0.95,
+  "cue": "01 ✦ junto de \"IA\""
+ },
+ {
+  "t": 3.55,
+  "cue": "02 glitch em \"robô\""
+ },
+ {
+  "t": 6.05,
+  "cue": "03 corte para o celular"
+ },
+ {
+  "t": 7.0,
+  "cue": "03 celular vibra"
+ },
+ {
+  "t": 8.05,
+  "cue": "T1 mergulho na tela"
+ },
+ {
+  "t": 8.75,
+  "cue": "04 balão robô"
+ },
+ {
+  "t": 9.55,
+  "cue": "04 balão cliente"
+ },
+ {
+  "t": 10.35,
+  "cue": "04 balão robô de novo"
+ },
+ {
+  "t": 10.75,
+  "cue": "04 etiqueta Bancos"
+ },
+ {
+  "t": 11.05,
+  "cue": "04 etiqueta Cooperativas"
+ },
+ {
+  "t": 11.35,
+  "cue": "04 etiqueta Fintechs"
+ },
+ {
+  "t": 11.65,
+  "cue": "04 etiqueta Financeiras"
+ },
+ {
+  "t": 11.75,
+  "cue": "T2 onda"
+ },
+ {
+  "t": 12.3,
+  "cue": "05 logo Ubots"
+ },
+ {
+  "t": 14.7,
+  "cue": "06 corte para o gerente"
+ },
+ {
+  "t": 14.9,
+  "cue": "06 gerente digitando"
+ },
+ {
+  "t": 17.55,
+  "cue": "07 regra riscada 1"
+ },
+ {
+  "t": 18.1,
+  "cue": "07 regra riscada 2"
+ },
+ {
+  "t": 18.65,
+  "cue": "07 regra riscada 3"
+ },
+ {
+  "t": 19.2,
+  "cue": "07 REGRA vira CONTEXTO"
+ },
+ {
+  "t": 19.95,
+  "cue": "08 check guardrails"
+ },
+ {
+  "t": 20.4,
+  "cue": "08 check custos"
+ },
+ {
+  "t": 20.85,
+  "cue": "08 check canal seguro"
+ },
+ {
+  "t": 21.75,
+  "cue": "09 T3 bolha da persona"
+ },
+ {
+  "t": 22.6,
+  "cue": "09 balão do chat"
+ },
+ {
+  "t": 24.1,
+  "cue": "09 balão do chat"
+ },
+ {
+  "t": 25.5,
+  "cue": "09 etiqueta Escuta"
+ },
+ {
+  "t": 26.1,
+  "cue": "10 corte para a cozinha"
+ },
+ {
+  "t": 28.45,
+  "cue": "11 volta para o chat"
+ },
+ {
+  "t": 28.7,
+  "cue": "11 etiqueta Contexto"
+ },
+ {
+  "t": 29.1,
+  "cue": "11 etiqueta Oferta com sentido"
+ },
+ {
+  "t": 29.5,
+  "cue": "11 etiqueta Decisão"
+ },
+ {
+  "t": 29.85,
+  "cue": "11 selo Contratação"
+ },
+ {
+  "t": 30.35,
+  "cue": "12 T4 corte seco"
+ },
+ {
+  "t": 34.75,
+  "cue": "12 contador fecha em +R$150 mil"
+ },
+ {
+  "t": 35.65,
+  "cue": "12 bolha \"por sinal\""
+ },
+ {
+  "t": 37.7,
+  "cue": "12 carimbo EM TESTE"
+ },
+ {
+  "t": 38.75,
+  "cue": "T2 onda (2a)"
+ },
+ {
+  "t": 39.4,
+  "cue": "13 página"
+ },
+ {
+  "t": 39.9,
+  "cue": "13 página"
+ },
+ {
+  "t": 40.4,
+  "cue": "13 página"
+ },
+ {
+  "t": 41.6,
+  "cue": "14 corte para a persona"
+ },
+ {
+  "t": 42.6,
+  "cue": "14 botão Baixar"
+ },
+ {
+  "t": 44.85,
+  "cue": "14 assinatura final"
+ }
+]
