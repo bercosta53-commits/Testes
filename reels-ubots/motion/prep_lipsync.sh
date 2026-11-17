@@ -6,3 +6,7 @@ for n in hook cta; do
   ffmpeg -v error -y -i ${n}_raw.mp4 -an -vf "fps=30,crop=1080:1920,unsharp=5:5:0.4:5:5:0.0" -q:v 3 $n/f%03d.jpg
   echo "$n: $(ls $n | wc -l) quadros"
 done
+# câmera B: 3,48 s úteis, acelerados 15% para caber em "Que, por sinal…"
+rm -rf camb && mkdir camb
+ffmpeg -v error -y -t 3.48 -i camb_raw.mp4 -an -vf "setpts=PTS/1.15,fps=30,crop=1080:1920,unsharp=5:5:0.4:5:5:0.0" -q:v 3 camb/f%03d.jpg
+echo "camb: $(ls camb | wc -l) quadros"

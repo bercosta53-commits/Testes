@@ -238,7 +238,8 @@ const SEGS = [
   [26.20, 28.48, ['A cooperada conta', 'da reforma da *cozinha…*']],
   [28.73, 30.06, ['e ele ajuda', 'na *decisão.*']],
   [30.40, 35.44, ['Na *Viacredi,*', 'esse modelo de agente', 'já liberou mais de', ['*R$ 150 mil*', 'cento e cinquenta mil reais']]],
-  [35.73, 38.62, ['Que, por sinal…', 'ainda tá em', '*fase de teste.*']],
+  [35.73, 36.83, ['Que, por sinal…']],
+  [37.03, 38.76, ['ainda tá em', '*fase de teste.*']],
   [38.99, 41.41, ['O método completo', 'tá no *Playbook Ubots.*']],
   [41.71, 43.69, ['*Clica no link*', 'e baixa o material.']],
   [44.10, 44.99, ['É *grátis.*']],
@@ -519,7 +520,7 @@ const SCENES = [
     });
   } },
   // entra a Ubots
-  { a: 12.0, b: 14.8, narr: true, draw: (t, lt) => iris(t, lt, W / 2, 500, 0, 0.5, drawUbots) },
+  { a: 12.0, b: 16.0, narr: true, draw: (t, lt) => iris(t, lt, W / 2, 500, 0, 0.5, drawUbots) },
 ];
 // troca de mundo: desenha a cena no escuro e revela a versão clara num círculo que cresce
 function iris(t, lt, cx, cy, t0, dur, fn) {
@@ -541,16 +542,16 @@ function drawUbots(t, lt) {
   withT(() => { ctx.drawImage(IMG.ubots, -lw / 2, -lh / 2, lw, lh); sparkle(lw / 2 + 34, -lh / 2 - 6, 30 * p, t, C.ink, true); }, W / 2, 500, 0.7 + 0.3 * p, 0, p * 2);
   headline(t, 12.9, 17.0, 650, { size: 68, a: e });
   // o agente em ação: card de conversa com a oferta chegando
-  const cp = eBack(prog(t, 13.2, 13.65), 1.3);
+  const cp = eBack(prog(t, 13.5, 13.95), 1.3);
   withT(() => {
     chat(t, 90, 0, 900, 640, 'Agente de crédito', [
-      { side: 'in', at: 13.45, text: 'Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?', tag: true },
-      { side: 'out', at: 14.05, text: 'Quero ver!' },
-      { side: 'in', at: 14.45, text: 'Simulei uma opção pra você 👇' },
+      { side: 'in', at: 14.1, text: 'Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?', tag: true },
+      { side: 'out', at: 14.95, text: 'Quero ver!' },
+      { side: 'in', at: 15.4, text: 'Simulei uma opção pra você 👇' },
     ]);
   }, 0, 1010 + (1 - clamp(cp)) * 80, 1, 0, clamp(cp * 1.5));
   // selos flutuando em volta do card
-  [['✦ Agente de IA', 190, 1010, 13.6, -0.06], ['Segurança onde importa', 790, 1690, 14.2, 0.05]].forEach(([s2, x, y, at, r]) => {
+  [['✦ Agente de IA', 190, 1010, 14.2, -0.06], ['Segurança onde importa', 790, 1690, 15.2, 0.05]].forEach(([s2, x, y, at, r]) => {
     const q = eBack(prog(t, at, at + 0.3), 2.2);
     withT(() => pill(0, 0, s2, { size: 28, h: 58, bg: C.ink, fg: C.yellow }), x, y + Math.sin(t * 2 + x) * 6, q, r, q * 2);
   });
@@ -597,8 +598,8 @@ function drawSalto(t, lt) {
 }
 const SCENES2 = [
   // o gerente
-  { a: 14.8, b: 17.3, cap: 1300, vig: 0.3, draw: async (t, lt) => {
-    const img = await vframe('v2', Math.floor(lt * FPS) + 1, 75);
+  { a: 16.0, b: 17.3, cap: 1300, vig: 0.3, draw: async (t, lt) => {
+    const img = await vframe('v2', Math.floor(lt * FPS) + 16, 75);
     cover(img, 1.1 + lt * 0.01, 0.55, 0.36);
   } },
   // o salto: no escuro as regras são riscadas; no "contexto" a luz entra
@@ -671,8 +672,9 @@ const SCENES2 = [
     }, 0, 1330, 1, 0, eOut(prog(lt, 0.8, 1.1)));
   } },
   // "que, por sinal…" — câmera B
-  { a: 35.7, b: 38.9, cap: 1300, vig: 0.35, draw: (t, lt) => {
-    cover(IMG.P2, 1.06 + lt * 0.012, 0.55, 0.4, Math.sin(t * 0.6) * 4, 0);
+  { a: 35.7, b: 38.9, cap: 1300, vig: 0.35, draw: async (t, lt) => {
+    const f = await vframe('lipsync/camb', Math.floor((t - 35.73) * FPS) + 1, 91);    // lipsync da câmera B
+    cover(f, 1.04 + lt * 0.01, 0.55, 0.4, 0, 0);
   } },
   // o playbook
   { a: 38.9, b: 41.6, paper: true, draw: (t, lt) => {

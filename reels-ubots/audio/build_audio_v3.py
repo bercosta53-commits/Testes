@@ -38,7 +38,8 @@ CUES = [
     *[(t, 'tap', -11) for t in (10.75, 11.05, 11.35, 11.65)],   # Bancos, Cooperativas, Fintechs, Financeiras
     (12.0, 'swell', -5),                     # a luz entra com a Ubots
     (12.6, 'pop', -8),                       # logo assenta
-    (14.8, 'whoosh', -12), (15.0, 'type', -17),                 # gerente digitando
+    (13.55, 'slide', -10), (14.1, 'pop', -8), (14.95, 'pop', -8), (15.4, 'pop', -8),   # card do agente na cena da Ubots
+    (16.0, 'whoosh', -12), (16.2, 'type', -17),                 # gerente digitando
     *[(t, 'whoosh', -20) for t in (17.55, 18.1, 18.65)],        # regras riscadas
     (T_CTX + 0.05, 'swell', -6),             # "contexto": a luz entra de novo
     (19.25, 'tap', -9),                      # 8 regras → 3 limites
@@ -86,7 +87,7 @@ def place(bed, clip, t, gain_db=0.0):
 def run():
     N = int(DUR * SR)
     # 1) locução (tomada única, nos tempos originais)
-    vo = load(['-i', os.path.join(HERE, 'locucao_v3.mp3')])
+    vo = load(['-i', os.path.join(HERE, 'locucao_v4.mp3')])
     vo_bed = np.zeros((N, 2), np.float32); place(vo_bed, vo, 0)
     # 2) efeitos
     fx = np.zeros((N, 2), np.float32)
