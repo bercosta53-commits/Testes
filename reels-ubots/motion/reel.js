@@ -182,6 +182,18 @@ function smallCaps(s, cx, cy, color = C.gray) {
   font(600, 27); ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   if ('letterSpacing' in ctx) { ctx.letterSpacing = '7px'; ctx.fillText(s, cx + 3.5, cy); ctx.letterSpacing = '0px'; } else ctx.fillText(s, cx, cy);
 }
+function waves(x, y, w, amp, n, gap, color, lw, phase) {
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.lineCap = 'round';
+  for (let k = 0; k < n; k++) {
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const px = x + (w * i) / 60, py = y + k * gap + Math.sin((i / 60) * Math.PI * 4 + phase) * amp;
+      i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
 function lock(x, y, s) {
   ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
   ctx.strokeStyle = C.ink; ctx.lineWidth = 16; ctx.lineCap = 'round';
@@ -482,13 +494,7 @@ const SCENES = [
     const drift = t >= 2.21 ? (t - 2.21) * 0.012 : t * 0.02;
     const hook = await vframe('lipsync/hook', Math.floor(t * FPS) + 1, 184);     // lipsync ElevenLabs (OmniHuman)
     cover(hook, (1.02 + drift) * punch, 0.5, 0.36, Math.sin(t * 0.7) * 4, Math.cos(t * 0.5) * 3);
-    if (t > 3.55 && t < 3.72) {                       // glitch em "robô"
-      const k = Math.floor((t - 3.55) * 60);
-      for (let i = 0; i < 7; i++) {
-        const sy = hash(k * 31 + i) * H, sh = 30 + hash(k * 17 + i) * 120, off = (hash(k * 7 + i) - 0.5) * 120;
-        ctx.drawImage(cv, 0, sy, W, sh, off, sy, W, sh);
-      }
-    }
+    glitchFX(t, 3.5, 0.4);                              // glitch em "robô"
     if (t > 0.9 && t < 2.21) {                        // ✦ no "IA"
       const s = eBack(prog(t, 0.9, 1.25), 2.6) * (1 - prog(t, 1.9, 2.21));
       sparkle(790, 560, 64 * s, t * 1.2, C.yellow); sparkle(858, 474, 26 * s, -t * 2, C.white);
@@ -513,7 +519,7 @@ const SCENES = [
     });
   } },
   // entra a Ubots
-  { a: 12.0, b: 14.8, narr: true, draw: (t, lt) => iris(t, lt, W / 2, 620, 0, 0.5, drawUbots) },
+  { a: 12.0, b: 14.8, narr: true, draw: (t, lt) => iris(t, lt, W / 2, 500, 0, 0.5, drawUbots) },
 ];
 // troca de mundo: desenha a cena no escuro e revela a versão clara num círculo que cresce
 function iris(t, lt, cx, cy, t0, dur, fn) {
@@ -527,14 +533,27 @@ function iris(t, lt, cx, cy, t0, dur, fn) {
   P = LIGHT;
 }
 function drawUbots(t, lt) {
-  {
-    const e = enter(lt);
-    withT(() => smallCaps('É AÍ QUE ENTRA', W / 2, 0), 0, 380, 1, 0, e);
-    const p = eBack(prog(t, 12.55, 13.0), 1.7);
-    const lw = 620, lh = lw * IMG.ubots.height / IMG.ubots.width;
-    withT(() => { ctx.drawImage(IMG.ubots, -lw / 2, -lh / 2, lw, lh); sparkle(lw / 2 + 30, -lh / 2, 26 * p, t, C.ink, true); }, W / 2, 620, 0.7 + 0.3 * p, 0, p * 2);
-    headline(t, 13.3, 14.8, 880, { size: 70, a: e });
-  }
+  const e = enter(lt);
+  waves(120, 150, 840, 14, 2, 38, 'rgba(249,194,60,0.55)', 6, t * 2);
+  withT(() => smallCaps('É AÍ QUE ENTRA', W / 2, 0), 0, 330, 1, 0, e);
+  const p = eBack(prog(t, 12.4, 12.9), 1.7);
+  const lw = 720, lh = lw * IMG.ubots.height / IMG.ubots.width;
+  withT(() => { ctx.drawImage(IMG.ubots, -lw / 2, -lh / 2, lw, lh); sparkle(lw / 2 + 34, -lh / 2 - 6, 30 * p, t, C.ink, true); }, W / 2, 500, 0.7 + 0.3 * p, 0, p * 2);
+  headline(t, 12.9, 17.0, 650, { size: 68, a: e });
+  // o agente em ação: card de conversa com a oferta chegando
+  const cp = eBack(prog(t, 13.2, 13.65), 1.3);
+  withT(() => {
+    chat(t, 90, 0, 900, 640, 'Agente de crédito', [
+      { side: 'in', at: 13.45, text: 'Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?', tag: true },
+      { side: 'out', at: 14.05, text: 'Quero ver!' },
+      { side: 'in', at: 14.45, text: 'Simulei uma opção pra você 👇' },
+    ]);
+  }, 0, 1010 + (1 - clamp(cp)) * 80, 1, 0, clamp(cp * 1.5));
+  // selos flutuando em volta do card
+  [['✦ Agente de IA', 190, 1010, 13.6, -0.06], ['Segurança onde importa', 790, 1690, 14.2, 0.05]].forEach(([s2, x, y, at, r]) => {
+    const q = eBack(prog(t, at, at + 0.3), 2.2);
+    withT(() => pill(0, 0, s2, { size: 28, h: 58, bg: C.ink, fg: C.yellow }), x, y + Math.sin(t * 2 + x) * 6, q, r, q * 2);
+  });
 }
 function drawSalto(t, lt) {
   const e = enter(lt);
@@ -654,8 +673,6 @@ const SCENES2 = [
   // "que, por sinal…" — câmera B
   { a: 35.7, b: 38.9, cap: 1300, vig: 0.35, draw: (t, lt) => {
     cover(IMG.P2, 1.06 + lt * 0.012, 0.55, 0.4, Math.sin(t * 0.6) * 4, 0);
-    const p = eBack(prog(t, 37.62, 37.95), 2.2);
-    withT(() => { pill(0, 0, 'Ainda na fase de testes', { size: 46, h: 104 }); sparkle(300, -56, 26, t, C.white); }, W / 2, 1060, p, -0.04, p * 2);
   } },
   // o playbook
   { a: 38.9, b: 41.6, paper: true, draw: (t, lt) => {
@@ -688,6 +705,40 @@ const SCENES2 = [
 ];
 
 SCENES.push(...SCENES2);
+
+// glitch digital forte: tremor de zoom, canais RGB separados, faixas deslocadas, blocos, linhas e flashes
+let GLA, GLB;
+function glitchFX(t, t0, dur) {
+  const p = (t - t0) / dur;
+  if (p < 0 || p > 1) return;
+  if (!GLA) { GLA = document.createElement('canvas'); GLA.width = W; GLA.height = H; GLB = document.createElement('canvas'); GLB.width = W; GLB.height = H; }
+  const k = Math.floor(t * FPS), inten = p < 0.7 ? 1 : 1 - (p - 0.7) / 0.3;
+  const a = GLA.getContext('2d'), b = GLB.getContext('2d');
+  a.clearRect(0, 0, W, H); a.drawImage(cv, 0, 0);
+  const z = 1 + 0.07 * hash(k * 3.1) * inten, jx = (hash(k * 5.3) - 0.5) * 70 * inten, jy = (hash(k * 7.7) - 0.5) * 40 * inten;
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  const dx = (26 + 40 * hash(k * 1.9)) * inten;
+  [['#ff0000', -dx], ['#00ff00', 0], ['#0000ff', dx]].forEach(([col, off]) => {
+    b.globalCompositeOperation = 'source-over'; b.clearRect(0, 0, W, H); b.drawImage(GLA, 0, 0);
+    b.globalCompositeOperation = 'multiply'; b.fillStyle = col; b.fillRect(0, 0, W, H);
+    ctx.drawImage(GLB, off + jx - (W * (z - 1)) / 2, jy - (H * (z - 1)) / 2, W * z, H * z);
+  });
+  ctx.restore();
+  for (let i = 0; i < 12; i++) {                                    // faixas deslocadas
+    const sy = hash(k * 31 + i) * H, sh = 28 + hash(k * 17 + i) * 170, off = (hash(k * 7 + i) - 0.5) * 520 * inten;
+    ctx.drawImage(GLA, 0, sy, W, sh, off, sy, W, sh);
+  }
+  for (let i = 0; i < 5; i++) {                                     // blocos de cor
+    ctx.globalAlpha = 0.5 * inten; ctx.fillStyle = [C.yellow, '#ff2a6d', '#22e0ff', '#ffffff', '#000'][i];
+    ctx.fillRect(hash(k * 11 + i) * W, hash(k * 13 + i) * H, 120 + hash(k * 3 + i) * 380, 8 + hash(k * 19 + i) * 34);
+  }
+  ctx.globalAlpha = 0.18 * inten; ctx.fillStyle = '#000';
+  for (let y = 0; y < H; y += 6) ctx.fillRect(0, y, W, 2);          // linhas de varredura
+  ctx.globalAlpha = 1;
+  if (k % 3 === 0 && p < 0.8) { ctx.fillStyle = `rgba(255,255,255,${0.35 * inten})`; ctx.fillRect(0, 0, W, H); }   // flash
+  if (p < 0.1) { ctx.fillStyle = 'rgba(249,194,60,0.35)'; ctx.fillRect(0, 0, W, H); }
+}
 
 // ------------------------------------------------------------------ páginas do playbook (animação da v1)
 // a capa chega primeiro; as páginas internas voam da direita girando, como na v1,

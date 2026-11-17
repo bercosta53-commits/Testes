@@ -29,7 +29,7 @@ T_CTX = 18.99                                # palavra "contexto" (mesmo cálcul
 
 CUES = [
     (0.95, 'pop', -10),                      # ✦ no "IA"
-    (3.55, 'knock', -6),                     # "robô": glitch
+    (3.5, 'knock', -1), (3.5, 'whoosh', -8), (3.62, 'knock', -4), (3.74, 'tap', -6),   # "robô": glitch forte
     (6.1, 'whoosh', -12),                    # corte para o celular
     (7.0, 'pop', -7),                        # notificação no celular
     (8.1, 'whoosh', -9),                     # mergulho na tela → escuro
