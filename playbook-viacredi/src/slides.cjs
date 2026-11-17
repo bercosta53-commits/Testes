@@ -285,18 +285,18 @@ slides.push(`
 <section class="slide light" id="s8">${hdr(8)}
   <h2 class="t">06. Teste pouco, <em>pause e volte melhor</em></h2>
   <p class="sub" style="top:236px">A Viacredi começou com cooperados reais, pequenos volumes e filtros de risco, e usou cada pausa para ajustar o agente.</p>
-  <div class="card abs" style="left:128px;top:344px;width:1664px;height:452px;border-radius:30px;overflow:hidden;display:grid;grid-template-columns:repeat(5,1fr)">
+  <div class="card abs" style="left:128px;top:344px;width:1664px;height:424px;border-radius:30px;overflow:hidden;display:grid;grid-template-columns:repeat(5,1fr)">
     ${tl('01', 'Abril a junho de 2026', 'Testes controlados', 'Testes controlados. Pausas frequentes para refinar o agente, preparar o time e definir os novos indicadores.', pillS + 'background:#fff0c9;color:#5a3d00', false, 'background:var(--amber)')}
     ${tl('02', 'Junho de 2026', 'Pausa', 'Pausa total para reestruturar os disparos e planejar a escala.', pillS + 'background:#ece7dc;color:#5a5446', false, 'background:repeating-linear-gradient(135deg,#d8d0c0 0 8px,#ece7dc 8px 16px)')}
     ${tl('03', '1ª semana de julho de 2026', 'Virada', 'Reformulação das instruções e esclarecimento do papel do agente: menos regras e mais contexto.', pillS + 'background:var(--amber);color:#070401', true, 'background:var(--amber)')}
     ${tl('04', '2ª semana de julho de 2026', 'Retomada', 'Testes retomados com a nova versão do agente.', pillS + 'background:#fff0c9;color:#5a3d00', false, 'background:var(--amber)')}
     ${tl('05', 'Até dezembro de 2026', 'Meta', 'Meta de rodar mais de 10% das ações ativas com agente generativo.', pillS + 'border:2px dashed #7a5a14;color:#5a3d00;padding:5px 16px', false, 'background:repeating-linear-gradient(90deg,var(--amber) 0 12px,transparent 12px 24px)')}
   </div>
-  <div class="card abs" style="left:128px;top:828px;width:1664px;height:172px;border-radius:30px;display:flex;align-items:center;gap:50px;padding:0 46px;border-color:#fbd98b">
-    <div style="flex:none;width:420px"><div class="pop" style="font:700 30px Poppins;letter-spacing:-.025em">O que ficou com o time</div>
+  <div class="card abs" style="left:128px;top:796px;width:1664px;height:204px;border-radius:30px;display:flex;align-items:center;gap:44px;padding:28px 48px;border-color:#fbd98b">
+    <div style="flex:none;width:340px"><div class="pop" style="white-space:nowrap;font:700 28px Poppins;letter-spacing:-.025em">O que ficou com o time</div>
       <div style="margin-top:10px">${waveSvg('#fdc348', 100, 4.5)}</div></div>
-    <div style="flex:1.5;font:400 20px/1.5 Nunito;color:var(--ink)">O primeiro agente foi construído em parceria. Depois disso, o time da Viacredi passou a criar os próprios agentes: a Giovanna já colocou quatro no ar por conta própria, ajustando instruções, tom e transbordo no ritmo da operação. Quando surgia uma dúvida técnica ou um caso novo, o time da Ubots entrava como apoio.</div>
-    <div style="flex:1;font:400 20px/1.5 Nunito;color:var(--ink)"><b style="font-weight:800">Próximo passo:</b> levar a IA para produtos sem risco de crédito, como cartões e aplicações, no onboarding de novos cooperados.</div>
+    <div style="flex:1.7;font:400 19px/1.5 Nunito;color:var(--ink)">O primeiro agente foi construído em parceria. Depois disso, o time da Viacredi passou a criar os próprios agentes: a Giovanna já colocou quatro no ar por conta própria, ajustando instruções, tom e transbordo no ritmo da operação. Quando surgia uma dúvida técnica ou um caso novo, o time da Ubots entrava como apoio.</div>
+    <div style="flex:1;font:400 19px/1.5 Nunito;color:var(--ink)"><b style="font-weight:800">Próximo passo:</b> levar a IA para produtos sem risco de crédito, como cartões e aplicações, no onboarding de novos cooperados.</div>
   </div>
 </section>`);
 
