@@ -166,7 +166,7 @@ slides.push(`
   <div class="card abs" style="left:128px;top:832px;width:1060px;height:168px;border-radius:26px;display:flex;align-items:center;gap:30px;padding:0 40px">
     <div style="flex:none;margin-top:-18px">${quoteGlyph}</div>
     <div><div style="font:italic 400 24px/1.55 Nunito">“A gente colocava regra atrás de regra: não pode isso, não pode aquilo. E o agente ficava cada vez mais mecânico.”</div>
-    <div class="cite" style="margin-top:6px">${AUTH} ${CONFIRM}</div></div>
+    <div class="cite" style="margin-top:6px">${AUTH}</div></div>
   </div>
   <div class="abs" style="left:1228px;top:832px;width:564px;height:168px;border-radius:26px;background:#070401;color:#fff;display:flex;align-items:center;gap:28px;padding:0 36px"><div style="flex:none">${waveSvg('#fdc348', 94, 4.5)}</div><div style="font:600 25px/1.4 Poppins;letter-spacing:-.015em">Na prática, era IA generativa trabalhando com os mesmos limites de um bot de fluxo.</div></div>
 </section>`);
@@ -202,7 +202,7 @@ slides.push(`
   <div class="abs" style="left:128px;top:828px;width:1664px;display:flex;align-items:center;gap:30px">
     <div style="flex:none">${quoteGlyph}</div>
     <div><div style="font:italic 400 22px/1.45 Nunito;color:#f4efe2">“Quando expliquei ao agente qual era o papel dele e o que ele precisava alcançar, a experiência melhorou na hora. Hoje, quando aparece um problema, eu levo para a própria IA e a gente constrói a solução junto.”</div>
-    <div class="cite" style="margin-top:4px">${AUTH} ${CONFIRM}</div></div>
+    <div class="cite" style="margin-top:4px">${AUTH}</div></div>
   </div>
   <div class="abs" style="left:128px;top:936px;width:1664px;height:64px;border-radius:20px;background:var(--amber);display:flex;align-items:center;justify-content:space-between;padding:0 40px"><span class="pop" style="font:700 26px Poppins;letter-spacing:-.025em">Segurança onde importa, conversa de verdade no resto.</span><span style="margin-top:2px">${waveSvg('#070401', 88, 4.5)}</span></div>
 </section>`);
@@ -244,7 +244,7 @@ slides.push(`
   <p class="sub" style="top:362px;font-size:22.5px;max-width:1000px;line-height:1.55;top:326px">O agente esclarece custos, orienta a contratação pelo canal seguro e envolve o time humano quando necessário.</p>
   <div class="abs" style="left:1260px;top:150px;width:532px;border-left:4px solid var(--amber);padding-left:26px">
     <div style="font:italic 400 22px/1.55 Nunito">“O mercado costuma travar tudo num roteiro fechado. A liberdade guiada por contexto é o que deixa a experiência perto de um atendimento humano bem feito.”</div>
-    <div class="cite" style="margin-top:8px;font-size:17.5px">${AUTH} ${CONFIRM}</div>
+    <div class="cite" style="margin-top:8px;font-size:17.5px">${AUTH}</div>
   </div>
 
   <div class="card abs" style="left:128px;top:424px;width:534px;height:576px;border-radius:30px;overflow:hidden">${sc(1, 'Custos às claras', 'Transparência sem esperar o cooperado insistir.')}
@@ -439,7 +439,7 @@ slides.push(`
     <div class="abs" style="right:52px;top:48px">${waveSvg('#070401', 120, 5)}</div>
     <div class="abs" style="left:52px;right:52px;top:212px"><div class="pop" style="font:700 49px/1.12 Poppins;letter-spacing:-.035em">Leve seu plano para um diagnóstico</div>
       <div style="font:600 23px/1.55 Nunito;margin-top:16px">Traga a linha de crédito que faz sentido testar e as definições do playbook. Podemos construir os próximos passos juntos.</div></div>
-    <div class="abs" style="left:52px;bottom:44px;display:flex;align-items:center;gap:18px"><div style="height:68px;border-radius:40px;background:#070401;color:var(--amber);display:flex;align-items:center;gap:16px;padding:0 40px;font:600 26px Poppins">Agendar diagnóstico <span style="width:26px">${I('arrow')}</span></div><span class="tag" style="font-size:15px">[URL A CONFIRMAR, com UTM]</span></div>
+    <div class="abs" style="left:52px;bottom:44px;display:flex;align-items:center;gap:18px"><div style="height:68px;border-radius:40px;background:#070401;color:var(--amber);display:flex;align-items:center;gap:16px;padding:0 40px;font:600 26px Poppins">Agendar diagnóstico <span style="width:26px">${I('arrow')}</span></div></div>
   </div>
   <div class="abs" style="left:1033px;top:430px;width:759px;height:570px;border-radius:34px;border:2px solid #2a2418;background:#110d05;padding:34px 44px 14px;display:flex;flex-direction:column">
     <div class="pop" style="font:600 30px Poppins;letter-spacing:-.02em;margin-bottom:16px">Leve para a conversa</div>
