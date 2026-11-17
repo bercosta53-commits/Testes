@@ -106,10 +106,10 @@ Papel na campanha: mesma linguagem e mesma peça visual do vídeo 1, mas a ordem
 ### Locução (ElevenLabs, voz Mateus, eleven_v4, tomada única com as pausas na interpretação)
 
 ```
-[upbeat] [confident] Chegou o Playbook Ubots Agentes de /iˈa/, feito para quem oferece crédito no WhatsApp. [pause] Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos. [pause] E tudo saiu de um caso real. Na /viaˈkɾɛdʒi/ o agente trocou regra por contexto, e a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] Baixe grátis.
+[upbeat] [confident] Como vender crédito no WhatsApp com agentes de /iˈa/. [short pause] Chegou o Playbook Ubots. [pause] Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos. [pause] E tudo saiu de um caso real. Na /viaˈkɾɛdʒi/ o agente trocou regra por contexto, e a conversa passou a seguir o cooperado. [short pause] Resultado: mais de 150 mil reais em crédito, ainda na fase de testes. [pause] Baixe grátis.
 ```
 
-70 palavras (o vídeo 1 tem 69 e deu 28,3 s de fala). v2 do roteiro: sem "como vender crédito" (soava estranho) e sem jargão ("guardrails" virou "limites que nunca mudam", "volume controlado" virou "poucos disparos"): estimativa de 30 a 31 s com o tempo de leitura do CTA.
+71 palavras (o vídeo 1 tem 69 e deu 28,3 s de fala). v3: abre com o título da capa do ebook. v2 do roteiro: sem "como vender crédito" (soava estranho) e sem jargão ("guardrails" virou "limites que nunca mudam", "volume controlado" virou "poucos disparos"): estimativa de 30 a 31 s com o tempo de leitura do CTA.
 
 Fontes no ebook: papel do agente e o que nunca muda (pág. 9), começar com poucos disparos (pág. 10), cooperativa com mais de 1 milhão de cooperados e mais de 100 postos (pág. 2), menos regras e mais contexto (pág. 7), conversa da cozinha (pág. 5, reconstituição), R$ 150 mil (pág. 8).
 
@@ -117,7 +117,7 @@ Fontes no ebook: papel do agente e o que nunca muda (pág. 9), começar com pouc
 
 | Tempo | Locução | Tela | Origem |
 |---|---|---|---|
-| 0–4 s | "Chegou o Playbook Ubots Agentes de IA, feito para quem oferece crédito no WhatsApp." | Abertura com o playbook como objeto: etiqueta PLAYBOOK UBOTS, título "Agentes de IA" montando no ritmo da fala, capa caindo e as páginas abrindo em leque. | Assinatura do V1 (layout, capa, leque) usada como abertura |
+| 0–4 s | "Como vender crédito no WhatsApp com agentes de IA. Chegou o Playbook Ubots." (abertura = título da capa do ebook) | Abertura com o playbook como objeto: etiqueta PLAYBOOK UBOTS, título "Agentes de IA" montando no ritmo da fala, capa caindo e as páginas abrindo em leque. | Assinatura do V1 (layout, capa, leque) usada como abertura |
 | 4–10,5 s | "Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos." | O playbook abre: janela "No playbook" com lista que acumula ✓, um item por trecho falado, cada um com a miniatura real da página do PDF: 01 Papel do agente (pág. 9), 02 Limites que nunca mudam (pág. 9), 03 Começar com poucos disparos (pág. 10). | Lista acumulativa do Agent Builder + páginas reais do PDF |
 | 10,5–13 s | "E tudo saiu de um caso real." | Cartão do caso: logo Viacredi, "Cooperativa do Sistema Ailos · +1 milhão de cooperados · +100 postos em SC e PR". | Novo, montado com componentes do V1 (card, chips) |
 | 13–16,5 s | "Na Viacredi o agente trocou regra por contexto," | Editor de instruções: as regras são riscadas, ficam os 3 limites (selo "3 limites", sem a palavra guardrails), entra o bloco "+ Contexto"; manchete "menos regra, mais contexto." | Cena 3 do V1 |
