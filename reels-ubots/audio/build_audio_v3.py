@@ -118,12 +118,15 @@ def run():
         out = np.concatenate([out, seg[xf:]])
     mus = np.zeros((N, 2), np.float32)
     place(mus, out, AT)
-    # intimidade no gancho: trilha bem baixa enquanto ela fala; volume padrão no zoom do celular
-    lvl = np.ones(N, np.float32)
-    a0, a1 = int(7.75 * SR), int(8.25 * SR)
-    low = 10 ** (-16 / 20)
-    lvl[:a0] = low
-    lvl[a0:a1] = low + (1 - low) * (0.5 - 0.5 * np.cos(np.linspace(0, np.pi, a1 - a0)))
+    # intimidade: trilha bem baixa no gancho e, depois, sempre discreta (~10 dB abaixo da voz).
+    # a subida é lenta (6,3 -> 11,5 s, curva suave) para não "saltar" no zoom do celular;
+    # um leve realce (+3 dB) só no fechamento, na tela final.
+    t = np.arange(N) / SR
+    db = np.full(N, -16.0, np.float32)
+    k = np.clip((t - 6.3) / (11.5 - 6.3), 0, 1)
+    db += (-8.0 - (-16.0)) * (0.5 - 0.5 * np.cos(np.pi * k))
+    db += 3.0 * np.clip((t - 44.4) / 0.8, 0, 1)
+    lvl = (10 ** (db / 20)).astype(np.float32)
     mus *= lvl[:, None]
     fo = int(1.2 * SR); mus[-fo:] *= np.linspace(1, 0, fo)[:, None]
     tmp = os.path.join(HERE, '.tmp'); os.makedirs(tmp, exist_ok=True)
