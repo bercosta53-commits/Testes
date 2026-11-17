@@ -1,0 +1,160 @@
+{
+ "tempo": 1.0,
+ "dur": 30.4,
+ "end_vo": 27.1,
+ "music": {
+  "file": "music2_b.mp3",
+  "at": -2.79
+ },
+ "segments": [
+  {
+   "file": "vob_b.mp3",
+   "src0": 0.0,
+   "src1": 25.8,
+   "at": 1.3
+  }
+ ],
+ "chunks": [
+  {
+   "t0": 1.52,
+   "t1": 4.31,
+   "text": "Como vender crédito no WhatsApp com agentes de IA.",
+   "words": [
+    1.52,
+    1.647,
+    1.94,
+    2.367,
+    2.42,
+    3.02,
+    3.14,
+    3.74,
+    3.86
+   ],
+   "hide": true
+  },
+  {
+   "t0": 4.66,
+   "t1": 6.07,
+   "text": "Chegou o Playbook Ubots.",
+   "words": [
+    4.66,
+    4.98,
+    5.18,
+    5.62
+   ],
+   "hide": true
+  },
+  {
+   "t0": 6.788,
+   "t1": 12.67,
+   "text": "Ele mostra como escrever o papel do agente, quais limites nunca mudam e como começar com poucos disparos.",
+   "words": [
+    6.788,
+    6.9,
+    7.3,
+    7.54,
+    7.9,
+    7.98,
+    8.3,
+    8.42,
+    9.02,
+    9.3,
+    9.86,
+    10.18,
+    10.74,
+    10.9,
+    11.18,
+    11.66,
+    11.833,
+    12.22
+   ],
+   "hide": true
+  },
+  {
+   "t0": 13.26,
+   "t1": 14.99,
+   "text": "E tudo saiu de um caso real.",
+   "words": [
+    13.26,
+    13.34,
+    13.673,
+    13.9,
+    13.98,
+    14.14,
+    14.54
+   ],
+   "hide": false
+  },
+  {
+   "t0": 15.18,
+   "t1": 18.11,
+   "text": "Na Viacredi o agente trocou regra por contexto,",
+   "words": [
+    15.18,
+    15.3,
+    15.94,
+    16.02,
+    16.42,
+    16.82,
+    17.3,
+    17.66
+   ],
+   "hide": true
+  },
+  {
+   "t0": 18.153,
+   "t1": 19.99,
+   "text": "e a conversa passou a seguir o cooperado.",
+   "words": [
+    18.153,
+    18.22,
+    18.34,
+    18.82,
+    19.06,
+    19.22,
+    19.42,
+    19.54
+   ],
+   "hide": false
+  },
+  {
+   "t0": 20.42,
+   "t1": 23.99,
+   "text": "Resultado: mais de 150 mil reais em crédito,",
+   "words": [
+    20.42,
+    21.38,
+    21.62,
+    21.86,
+    22.82,
+    22.98,
+    23.38,
+    23.54
+   ],
+   "hide": true
+  },
+  {
+   "t0": 24.313,
+   "t1": 25.63,
+   "text": "ainda na fase de testes.",
+   "words": [
+    24.313,
+    24.58,
+    24.74,
+    24.98,
+    25.18
+   ],
+   "hide": true
+  },
+  {
+   "t0": 25.94,
+   "t1": 26.71,
+   "text": "Baixe grátis.",
+   "words": [
+    25.94,
+    26.26
+   ],
+   "hide": true
+  }
+ ]
+}

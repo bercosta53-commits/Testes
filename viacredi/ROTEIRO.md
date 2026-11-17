@@ -99,7 +99,7 @@ Uma informação por vez, entrando e saindo, com personalização:
 
 ---
 
-## Vídeo 1B: "O playbook" (material primeiro, embasamento depois, ~30 s) · roteiro para aprovação
+## Vídeo 1B: "O playbook" (material primeiro, embasamento depois, 30,4 s) · produzido (v1b-animatic.mp4)
 
 Papel na campanha: mesma linguagem e mesma peça visual do vídeo 1, mas a ordem inverte. Abre mostrando o produto (o que o gestor leva), depois prova com o caso Viacredi e fecha no download. Funciona melhor para quem já conhece o problema e quer saber o que tem no material.
 
@@ -124,6 +124,20 @@ Fontes no ebook: papel do agente e o que nunca muda (pág. 9), começar com pouc
 | 16,5–19,5 s | "e a conversa passou a seguir o cooperado." | Conversa da Ana no painel de chat: "reforma da cozinha" vira contexto, oferta "Crédito Reforma", "✓ Crédito contratado", etapas Contexto → Oferta → Decisão. | Cena 5 do V1 (versão curta) |
 | 19,5–24,5 s | "Resultado: mais de 150 mil reais em crédito, ainda na fase de testes." | Contador acompanhando a fala, faixa de contratos ilustrativos freando junto, marca-texto, "Ainda na fase de testes", rodapé legal. | Cena 6 do V1 |
 | 24,5–30,5 s | "Baixe grátis." | Volta ao objeto da abertura (fecha o círculo): título, capa, botão "Baixe grátis", clique + ✓ com o sino, logos. | Assinatura do V1 |
+
+### Produção (tempos reais da locução, tomada B, 25,6 s de fala)
+
+| Corte | Tempo | Cena |
+|---|---|---|
+| Abertura | 0–7,3 s | título da capa montando palavra a palavra, marca-texto em "agentes de IA", capa caindo com as páginas em leque, selo "Novo · Playbook Ubots" no "Chegou" |
+| O que tem no playbook | 7,3–13,1 s | janela com os 3 itens entrando na palavra falada ("papel", "limites", "começar"), cada um com o recorte real da página (pág. 9, 9, 10); o recorte dos limites corta o título "Guardrails" da página |
+| Caso real | 13,1–15,7 s | cartão Viacredi (dados da pág. 2); o logo pulsa quando a voz diz "Viacredi" |
+| Menos regra | 15,7–18,1 s | editor do V1: apaga em "trocou regra", contexto em "por contexto", selo "3 limites" |
+| Conversa | 18,1–21,5 s | cena da Ana do V1, comprimida para 3,4 s |
+| Número | 21,5–25,9 s | contador do V1, fecha logo depois de "crédito"; selo "Ainda na fase de testes" |
+| Assinatura | 25,9–30,4 s | CTA do V1; clique 1 s depois de "grátis" |
+
+Arquivos: `v1b/` (cenas, `audio/build_timeline.py`, `audio/mix.py`), recortes do PDF em `assets/pg2.jpg`, `pg9.jpg`, `pg10.jpg`. Master -14 LUFS, pico -1,2 dBFS.
 
 Fica de fora do V1: a fila de pré-aprovados, as notificações, as regras soterrando o agente e o Agent Builder (o componente de lista volta como "No playbook").
 Áudio: mesma trilha (volta cheia alinhada ao "Na Viacredi"), mesmos efeitos orgânicos, mesmo master (-14 LUFS). Fundo: grade técnica com o balão parado nos cantos.
