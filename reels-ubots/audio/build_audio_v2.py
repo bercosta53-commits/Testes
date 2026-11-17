@@ -1,13 +1,11 @@
-"""Áudio do monstro v2: trilha do animatic de referência (v1b) estendida para
-46 s com emenda no compasso + locução + efeitos pontuais nos tempos do motion v2.
+"""Áudio do monstro v3: trilha provisória (build_audio.py) + locução + efeitos
+pontuais nos tempos do motion v2/v3 (cenas escuras e entradas de luz).
 
     python3 build_audio_v2.py
-      -> trilha_v1b_46s.wav     (trilha estendida)
       -> mix_monstro_v2.wav     (locução + trilha com ducking + efeitos)
       -> mix_monstro_v2_-14LUFS.wav (via ffmpeg loudnorm, ver o final)
 
-A trilha de referência já vem mixada com os efeitos dela; aqui ela entra
-inteira como cama, e os efeitos próprios ficam mais baixos e só nos momentos-chave.
+Rode build_audio.py antes: ele gera trilha_temp.wav.
 """
 import subprocess
 import wave
@@ -40,53 +38,10 @@ def filt(x, kind, f, order=2):
     return sosfilt(butter(order, f, btype=kind, fs=SR, output='sos'), x)
 
 
-# ------------------------------------------------------------------ trilha estendida
-ref = read('ref_trilha_v1b.wav')
-BPM = 122.4
-JUMP = 32 * 60 / BPM                     # volta 8 compassos (32 tempos ≈ 15,69 s)
-mono = ref.mean(1)
-
-
-# envelopes por banda (10 ms): comparam batida e timbre, não a fase da onda
-HOP = SR // 100
-BANDS = [(40, 160), (160, 600), (600, 2500), (2500, 9000)]
-envs = []
-for lo, hi in BANDS:
-    s = filt(mono, 'bandpass', [lo, hi], 4)
-    e = np.sqrt(np.convolve(s ** 2, np.ones(HOP) / HOP, 'same')[::HOP])
-    envs.append(np.log(e + 1e-4))
-E = np.stack(envs)                         # bandas × quadros de 10 ms
-
-
-def sim(fa, fb, half=150):                 # janela de ±1,5 s em volta de cada ponto
-    a, b = E[:, fa - half:fa + half], E[:, fb - half:fb + half]
-    a = a - a.mean(1, keepdims=True); b = b - b.mean(1, keepdims=True)
-    return (a * b).sum() / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-9)
-
-
-best = None
-jf = int(round(JUMP * 100))
-for fa in range(int(19 * 100), int(27 * 100)):
-    for d in range(-3, 4):                 # deixa o salto variar ±30 ms (BPM estimado)
-        fb = fa - jf + d
-        c = sim(fa, fb)
-        if best is None or c > best[0]:
-            best = (c, fa, fb)
-corr, fa, fb = best
-A, B = fa / 100, fb / 100
-# ajuste fino da fase por amostra (±5 ms)
-ia, ib = int(A * SR), int(B * SR)
-seg = mono[ia - 1200:ia + 1200]
-lag = max(range(-240, 241, 2), key=lambda L: np.dot(seg, mono[ib + L - 1200:ib + L + 1200]))
-ib += lag
-XF = int(0.08 * SR)
-fade = np.sin(np.linspace(0, np.pi / 2, XF))[:, None]
-head = ref[:ia]
-tail = ref[ib:]
-splice = head[-XF:] * np.cos(np.linspace(0, np.pi / 2, XF))[:, None] + tail[:XF] * fade
-bed = np.concatenate([head[:-XF], splice, tail[XF:]])
-print(f'emenda: {A:.2f}s -> volta para {B + lag / SR:.2f}s (correlação {corr:.2f}) | trilha {len(bed) / SR:.2f}s')
-write('trilha_v1b_46s.wav', bed)
+# ------------------------------------------------------------------ trilha
+# trilha provisória sintetizada por build_audio.py (sem voz, sem efeitos)
+bed = read('trilha_temp.wav')
+print(f'trilha {len(bed) / SR:.2f}s')
 
 # ------------------------------------------------------------------ efeitos pontuais
 def t_(sec):
@@ -192,7 +147,7 @@ b2 = np.zeros((N, 2)); b2[: min(N, len(bed))] = bed[:N]
 env = filt(np.abs(vo), 'lowpass', 6)
 env = np.clip(env / (np.percentile(env, 95) + 1e-9), 0, 1)
 duck = 1 - 0.55 * env
-mix = b2 * 0.24 * duck[:, None] + np.stack([fx, fx], 1) * 0.3 + np.stack([vo, vo], 1)
+mix = b2 * 0.22 * duck[:, None] + np.stack([fx, fx], 1) * 0.45 + np.stack([vo, vo], 1)
 mix = filt(mix.T, 'highpass', 30).T
 f = int(0.5 * SR); mix[-f:] *= np.linspace(1, 0, f)[:, None]
 write('mix_monstro_v2.wav', mix)
@@ -202,7 +157,7 @@ def db(x):
     return 20 * np.log10(np.sqrt(np.mean(x ** 2)) + 1e-12)
 for a, b, label in [(7, 11.6, 'robô'), (21.9, 25.8, 'chat'), (31, 35.4, 'resultado')]:
     i, j = int(a * SR), int(b * SR)
-    print(f'{label:10s} voz {db(vo[i:j]):6.1f} dB | trilha {db((b2[i:j] * 0.24 * duck[i:j, None]).mean(1)):6.1f} dB')
+    print(f'{label:10s} voz {db(vo[i:j]):6.1f} dB | trilha {db((b2[i:j] * 0.22 * duck[i:j, None]).mean(1)):6.1f} dB')
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', 'mix_monstro_v2.wav', '-af', 'loudnorm=I=-14:TP=-1:LRA=7',
                 '-ar', '48000', 'mix_monstro_v2_-14LUFS.wav'], check=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', 'mix_monstro_v2_-14LUFS.wav', '-c:a', 'aac', '-b:a', '256k', 'mix_monstro_v2.m4a'], check=True)
