@@ -64,6 +64,13 @@ CUES = [
 ]
 
 
+# calibragem por tipo (dB), aplicada sobre o ganho de cada cue: os arquivos brutos têm níveis muito
+# diferentes (tap e swell chegam a +2 dBFS; whoosh é ruído de banda larga). Trocas de cena e
+# confirmações de tópico ficam bem mais discretas; o glitch do "robô" (3,5-3,8 s) fica de fora.
+TRIM = {'whoosh': -9, 'tap': -9, 'pop': -3, 'chime': -3, 'slide': -4, 'type': -3, 'page': -3, 'knock': -2, 'swell': -3}
+GLITCH = (3.4, 3.9)
+
+
 def load(extra):
     cmd = ['ffmpeg', '-v', 'error', *extra, '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-']
     raw = subprocess.run(cmd, capture_output=True, check=True).stdout
@@ -96,8 +103,10 @@ def run():
         n = FILE[s]
         if n not in cache:
             trim = ['-ss', '0.10', '-to', '0.33'] if s == 'tap' else []   # o "toque" tem 8 batidas: usa só a primeira
-            cache[n] = load([*trim, '-i', os.path.join(SRC, 'sfx', n + '.mp3'), '-af', 'afade=t=out:st=0.17:d=0.06' if trim else 'anull'])
-        place(fx, cache[n], t - ONSET[s], gdb)
+            af = 'afade=t=out:st=0.17:d=0.06' if trim else ('lowpass=f=5500,highpass=f=120' if s == 'whoosh' else 'anull')
+            cache[n] = load([*trim, '-i', os.path.join(SRC, 'sfx', n + '.mp3'), '-af', af])
+        trim = 0 if GLITCH[0] <= t <= GLITCH[1] else TRIM[s]
+        place(fx, cache[n], t - ONSET[s], gdb + trim)
     # 3) trilha: intro abafada sob o gancho; a volta cheia (7,35 s no arquivo) cai no fim do gancho (6,1 s)
     mpath = os.path.join(SRC, 'music2_b.mp3')
     m = load(['-i', mpath, '-af', 'highpass=f=45,lowshelf=f=130:g=-5']) * (10 ** (-8 / 20))
