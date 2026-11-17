@@ -338,7 +338,7 @@ boot(() => {
     Object.assign(eye.style, { font: '600 26px Poppins', letterSpacing: '.22em', color: '#8d8a83' });
     const ttl = maskLine(cam, 'center giant', 'Agentes de IA'); pos(ttl.m, 0, 290); ttl.m.style.width = '1080px';
     const tsz = fit(ttl.i, 900);
-    ttl.m.style.paddingBottom = '0.22em'; ttl.m.style.marginBottom = '0';   // não corta a perna do "g"
+    ttl.m.style.paddingBottom = Math.round(tsz * 0.28) + 'px'; ttl.m.style.marginBottom = '0';   // folga em px: a perna do "g" não é cortada
     const sub = h('div', 'center', cam, 'Como vender crédito no WhatsApp:<br>o método da Viacredi.'); pos(sub, 0, 290 + tsz * 1.18);
     Object.assign(sub.style, { font: '500 40px/1.3 Poppins', letterSpacing: '-.015em', color: '#55524c' });
     // o playbook como objeto: capa + duas páginas atrás, brilho amarelo localizado
