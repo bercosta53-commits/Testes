@@ -10,6 +10,14 @@ const C = {
   yellow: '#F9C23C', yellowL: '#FCE3A0', white: '#FFFFFF', chat: '#F2EEE6', green: '#D9FDD3',
   greenT: '#1E7A4C', red: '#C8443A', dark: '#0B0907',
 };
+// tema: o papel claro é o mundo da Ubots; o escuro, o mundo do robô travado em regras
+const LIGHT = { dark: false, text: C.ink, soft: C.soft, card: C.white, stroke: 'rgba(20,18,16,0.05)', shadow: 'rgba(70,55,25,0.13)',
+  chatBody: C.chat, inB: C.white, outB: C.green, head: C.white, sub: C.gray, num: '#B4ADA4', struck: '#A39A90',
+  pillBg: C.white, pillBorder: 'rgba(20,18,16,0.15)', rule: 'rgba(0,0,0,0.06)' };
+const DARK = { dark: true, text: '#F3EEE6', soft: '#4C4640', card: '#191512', stroke: 'rgba(255,255,255,0.07)', shadow: 'rgba(0,0,0,0.55)',
+  chatBody: '#110E0C', inB: '#27221E', outB: '#1D3A2A', head: '#1E1A17', sub: '#8C857D', num: '#6D655D', struck: '#6D655D',
+  pillBg: '#1E1A17', pillBorder: 'rgba(255,255,255,0.16)', rule: 'rgba(255,255,255,0.07)' };
+let P = LIGHT;
 const cv = document.getElementById('c');
 const ctx = cv.getContext('2d');
 
@@ -34,8 +42,8 @@ function rr(x, y, w, h, r) {
   ctx.closePath();
 }
 function font(w, s, fam = 'Poppins') { ctx.font = `${w} ${s}px ${fam}`; }
-function text(s, x, y, { w = 600, size = 30, fam = 'Poppins', color = C.ink, align = 'left', base = 'middle' } = {}) {
-  font(w, size, fam); ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = base; ctx.fillText(s, x, y);
+function text(s, x, y, { w = 600, size = 30, fam = 'Poppins', color = null, align = 'left', base = 'middle' } = {}) {
+  font(w, size, fam); ctx.fillStyle = color || P.text; ctx.textAlign = align; ctx.textBaseline = base; ctx.fillText(s, x, y);
   return ctx.measureText(s).width;
 }
 function wrap(s, maxW) {
@@ -89,7 +97,7 @@ function cover(img, scale = 1, fx = 0.5, fy = 0.5, dx = 0, dy = 0) {
 }
 
 // ------------------------------------------------------------------ papel + acabamento
-let GRAIN = [], PAPER;
+let GRAIN = [], PAPER, DARKPAPER;
 function makeGrain() {
   for (let k = 0; k < 4; k++) {
     const g = document.createElement('canvas'); g.width = 540; g.height = 960;
@@ -108,6 +116,14 @@ function makePaper() {
   p.strokeStyle = C.grid; p.lineWidth = 2;
   for (let x = 0; x <= W; x += 54) { p.beginPath(); p.moveTo(x + 0.5, 0); p.lineTo(x + 0.5, H); p.stroke(); }
   for (let y = 0; y <= H; y += 54) { p.beginPath(); p.moveTo(0, y + 0.5); p.lineTo(W, y + 0.5); p.stroke(); }
+  DARKPAPER = document.createElement('canvas'); DARKPAPER.width = W; DARKPAPER.height = H;
+  const d = DARKPAPER.getContext('2d');
+  d.fillStyle = C.dark; d.fillRect(0, 0, W, H);
+  const g = d.createRadialGradient(W / 2, H * 0.4, 100, W / 2, H * 0.45, H * 0.8);
+  g.addColorStop(0, 'rgba(60,45,20,0.35)'); g.addColorStop(1, 'rgba(0,0,0,0)'); d.fillStyle = g; d.fillRect(0, 0, W, H);
+  d.strokeStyle = 'rgba(255,255,255,0.035)'; d.lineWidth = 2;
+  for (let x = 0; x <= W; x += 54) { d.beginPath(); d.moveTo(x + 0.5, 0); d.lineTo(x + 0.5, H); d.stroke(); }
+  for (let y = 0; y <= H; y += 54) { d.beginPath(); d.moveTo(0, y + 0.5); d.lineTo(W, y + 0.5); d.stroke(); }
 }
 function finish(f, vignette) {
   if (vignette) {
@@ -120,8 +136,8 @@ function finish(f, vignette) {
 }
 // papel com traços amarelos finos nos cantos (giram devagar)
 function paper(t) {
-  ctx.drawImage(PAPER, 0, 0);
-  ctx.save(); ctx.strokeStyle = C.yellow; ctx.lineWidth = 6; ctx.lineCap = 'round';
+  ctx.drawImage(P.dark ? DARKPAPER : PAPER, 0, 0);
+  ctx.save(); ctx.strokeStyle = P.dark ? 'rgba(249,194,60,0.55)' : C.yellow; ctx.lineWidth = 6; ctx.lineCap = 'round';
   const d = Math.sin(t * 0.6) * 0.06;
   ctx.beginPath(); ctx.arc(W + 40, 1960, 300, Math.PI * 1.08 + d, Math.PI * 1.36 + d); ctx.stroke();
   ctx.beginPath(); ctx.arc(-60, 1980, 280, Math.PI * 1.62 - d, Math.PI * 1.86 - d); ctx.stroke();
@@ -131,12 +147,12 @@ function paper(t) {
 }
 
 // ------------------------------------------------------------------ componentes
-function card(x, y, w, h, r = 34, fill = C.white) {
+function card(x, y, w, h, r = 34, fill = null) {
   ctx.save();
-  ctx.shadowColor = 'rgba(70,55,25,0.13)'; ctx.shadowBlur = 46; ctx.shadowOffsetY = 16;
-  rr(x, y, w, h, r); ctx.fillStyle = fill; ctx.fill();
+  ctx.shadowColor = P.shadow; ctx.shadowBlur = 46; ctx.shadowOffsetY = 16;
+  rr(x, y, w, h, r); ctx.fillStyle = fill || P.card; ctx.fill();
   ctx.restore();
-  rr(x, y, w, h, r); ctx.strokeStyle = 'rgba(20,18,16,0.05)'; ctx.lineWidth = 2; ctx.stroke();
+  rr(x, y, w, h, r); ctx.strokeStyle = P.stroke; ctx.lineWidth = 2; ctx.stroke();
 }
 function sparkle(x, y, r, rot = 0, color = C.ink, stroke = false) {
   ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.beginPath();
@@ -241,6 +257,7 @@ for (const [a, b, chunks] of SEGS) {
 }
 
 // título revelado palavra a palavra: cinza → preto, marca-texto e risco no tempo da fala
+const T_CTX = (WORDS.find(w => w.w.startsWith('contexto')) || { t: 18.9 }).t;
 function headline(t, from, to, y, { size = 70, maxW = 930, a = 1, lh = 1.16 } = {}) {
   const words = WORDS.filter(w => w.t >= from - 0.05 && w.t < to);
   if (!words.length || a <= 0) return y;
@@ -264,7 +281,7 @@ function headline(t, from, to, y, { size = 70, maxW = 930, a = 1, lh = 1.16 } = 
       if (w.m === 'hl') {
         const p = eOut(prog(t, w.t, w.t + 0.28));
         const ext = i < ln.length - 1 && ln[i + 1].m === 'hl' ? sp : 0;
-        if (p > 0) { rr(x - 10, yy - size * 0.02, (w.ww + 20 + ext) * p, size * 0.46, 8); ctx.fillStyle = C.yellow; ctx.fill(); }
+        if (p > 0 && !P.dark) { rr(x - 10, yy - size * 0.02, (w.ww + 20 + ext) * p, size * 0.46, 8); ctx.fillStyle = C.yellow; ctx.fill(); }
       }
       x += w.ww + sp;
     });
@@ -272,8 +289,9 @@ function headline(t, from, to, y, { size = 70, maxW = 930, a = 1, lh = 1.16 } = 
     ln.forEach(w => {
       const on = prog(t, w.t - 0.02, w.t + 0.12);
       font(800, size); ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      ctx.fillStyle = on >= 1 ? C.ink : on <= 0 ? C.soft : mix(C.soft, C.ink, on);
-      if (w.m === 'st') ctx.fillStyle = on >= 1 ? '#9C8F84' : C.soft;
+      const done = P.dark && w.m === 'hl' ? C.yellow : P.text;
+      ctx.fillStyle = on >= 1 ? done : on <= 0 ? P.soft : mix(P.soft, done, on);
+      if (w.m === 'st') ctx.fillStyle = on >= 1 ? (P.dark ? '#7A7068' : '#9C8F84') : P.soft;
       ctx.fillText(w.w, x, yy);
       if (w.m === 'st') {
         const p = eOut(prog(t, w.t + 0.15, w.t + 0.4));
@@ -326,7 +344,7 @@ function chatBubble(x, y, w, lines, side, extra = 0) {
 function chat(t, x, y, w, h, title, msgs) {
   card(x, y, w, h, 34);
   ctx.save(); rr(x, y, w, h, 34); ctx.clip();
-  ctx.fillStyle = C.chat; ctx.fillRect(x, y + 118, w, h - 118);
+  ctx.fillStyle = P.chatBody; ctx.fillRect(x, y + 118, w, h - 118);
   const top = y + 150, bottom = y + h - 30, inner = w - 80;
   const items = [];
   let yy = 0;
@@ -349,7 +367,7 @@ function chat(t, x, y, w, h, title, msgs) {
     const bx = m.side === 'in' ? x + 40 : x + w - 40 - tw;
     const by = top + it.y - scroll;
     withT(() => {
-      rr(0, 0, tw, bh, 26); ctx.fillStyle = m.side === 'in' ? C.white : C.green; ctx.fill();
+      rr(0, 0, tw, bh, 26); ctx.fillStyle = m.side === 'in' ? P.inB : P.outB; ctx.fill();
       if (typing) {
         for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(40 + k * 26, 42, 8 + 3 * Math.sin(t * 10 - k), 0, Math.PI * 2); ctx.fillStyle = '#A59E95'; ctx.fill(); }
         return;
@@ -381,11 +399,11 @@ function chat(t, x, y, w, h, title, msgs) {
   }
   ctx.restore();
   // cabeçalho
-  ctx.save(); rr(x, y, w, 118, 34); ctx.clip(); ctx.fillStyle = C.white; ctx.fillRect(x, y, w, 118); ctx.restore();
-  ctx.fillStyle = 'rgba(0,0,0,0.06)'; ctx.fillRect(x, y + 117, w, 2);
+  ctx.save(); rr(x, y, w, 118, 34); ctx.clip(); ctx.fillStyle = P.head; ctx.fillRect(x, y, w, 118); ctx.restore();
+  ctx.fillStyle = P.rule; ctx.fillRect(x, y + 117, w, 2);
   avatar(x + 66, y + 59, 30, '', C.yellow); sparkle(x + 66, y + 59, 17, 0, C.ink);
   text(title, x + 116, y + 46, { w: 700, size: 34 });
-  text('online', x + 116, y + 84, { w: 600, size: 24, fam: 'Nunito', color: C.gray });
+  text(P.dark ? 'responde só SIM ou NÃO' : 'online', x + 116, y + 84, { w: 600, size: 24, fam: 'Nunito', color: P.sub });
 }
 // etapas Contexto — Oferta — Decisão (bolinhas ligadas por traço)
 function steps(t, cy, list) {
@@ -479,73 +497,90 @@ const SCENES = [
     const z = 1 + eInOut(prog(lt, 1.7, 2.3)) * 0.6;
     ctx.save(); ctx.translate(W / 2, H * 0.58); ctx.scale(z, z); ctx.translate(-W / 2, -H * 0.58); ctx.drawImage(img, 0, 0, W, H); ctx.restore();
     const fl = prog(lt, 1.85, 2.3);
-    if (fl > 0) { ctx.globalAlpha = eInOut(fl); ctx.drawImage(PAPER, 0, 0); ctx.globalAlpha = 1; }
+    if (fl > 0) { ctx.globalAlpha = eInOut(fl); ctx.drawImage(DARKPAPER, 0, 0); ctx.globalAlpha = 1; }
   } },
   // o robô travado em regra — "no seu banco… ou na sua cooperativa"
-  { a: 8.4, b: 12.0, paper: true, draw: (t, lt) => {
+  { a: 8.4, b: 12.0, paper: true, dark: true, draw: (t, lt) => {
     const e = enter(lt);
     headline(t, 9.4, 12.0, 330, { size: 66, a: e });
     withT(() => chat(t, 90, 560, 900, 700, 'Agente de crédito', ROBOT), 0, (1 - e) * 50, 1, 0, e);
     [['Bancos', 10.75], ['Cooperativas', 11.05], ['Fintechs', 11.35], ['Financeiras', 11.65]].forEach(([s, at], i) => {
       const p = eBack(prog(t, at, at + 0.25), 2.4);
-      withT(() => pill(0, 0, s, { size: 32, h: 66, bg: C.white, border: 'rgba(20,18,16,0.15)' }), [245, 520, 750, 960][i] - 60, 1340, p, 0, p * 2);
+      withT(() => pill(0, 0, s, { size: 32, h: 66, bg: P.pillBg, fg: P.text, border: P.pillBorder }), [245, 520, 750, 960][i] - 60, 1340, p, 0, p * 2);
     });
   } },
   // entra a Ubots
-  { a: 12.0, b: 14.8, paper: true, draw: (t, lt) => {
+  { a: 12.0, b: 14.8, narr: true, draw: (t, lt) => iris(t, lt, W / 2, 620, 0, 0.5, drawUbots) },
+];
+// troca de mundo: desenha a cena no escuro e revela a versão clara num círculo que cresce
+function iris(t, lt, cx, cy, t0, dur, fn) {
+  const r = eInOut(prog(lt, t0, t0 + dur)) * 2300;
+  if (r < 2290) { P = DARK; paper(t); fn(t, lt); }
+  if (r > 0) {
+    ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+    P = LIGHT; paper(t); fn(t, lt); ctx.restore();
+    if (r < 2290) { ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.strokeStyle = C.yellow; ctx.lineWidth = 8; ctx.stroke(); }
+  }
+  P = LIGHT;
+}
+function drawUbots(t, lt) {
+  {
     const e = enter(lt);
     withT(() => smallCaps('É AÍ QUE ENTRA', W / 2, 0), 0, 380, 1, 0, e);
     const p = eBack(prog(t, 12.55, 13.0), 1.7);
     const lw = 620, lh = lw * IMG.ubots.height / IMG.ubots.width;
     withT(() => { ctx.drawImage(IMG.ubots, -lw / 2, -lh / 2, lw, lh); sparkle(lw / 2 + 30, -lh / 2, 26 * p, t, C.ink, true); }, W / 2, 620, 0.7 + 0.3 * p, 0, p * 2);
     headline(t, 13.3, 14.8, 880, { size: 70, a: e });
-  } },
+  }
+}
+function drawSalto(t, lt) {
+  const e = enter(lt);
+    headline(t, 17.3, 21.85, 330, { size: 62, a: e });
+  withT(() => {
+    card(90, 560, 900, 720, 34);
+    for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(140 + k * 26, 630, 7, 0, Math.PI * 2); ctx.fillStyle = P.dark ? '#3A332D' : '#D6D0C7'; ctx.fill(); }
+    text('Instruções do agente', 230, 632, { w: 700, size: 34 });
+    const flip = eInOut(prog(t, 19.0, 19.3));
+    withT(() => pill(0, 0, flip < 0.5 ? '8 regras' : '3 limites', { size: 26, h: 52, bg: P.dark ? C.yellow : C.ink, fg: P.dark ? C.ink : C.yellow }), 880, 632, 1, 0, 1 - Math.sin(flip * Math.PI) * 0.6);
+    ctx.fillStyle = P.rule; ctx.fillRect(90, 690, 900, 2);
+    const strikes = [17.55, 18.1, 18.65, 18.8, 18.9];
+    RULES.forEach((r, i) => {
+      const gone = eInOut(prog(t, 19.1 + i * 0.03, 19.35 + i * 0.03));
+      const y = 760 + i * 74;
+      ctx.save(); ctx.globalAlpha *= 1 - gone * 0.75;
+      text(String(i + 1), 140, y, { w: 600, size: 26, color: P.num });
+      const w = text(r, 180, y, { w: 600, size: 38, fam: 'Nunito', color: t > strikes[i] ? P.struck : P.text });
+      const sp = eOut(prog(t, strikes[i], strikes[i] + 0.2));
+      if (sp > 0) { ctx.fillStyle = C.red; ctx.fillRect(176, y - 2, (w + 8) * sp, 5); }
+      ctx.restore();
+    });
+    LIMITS.forEach(([s, at], i) => {
+      const q = eBack(prog(t, at, at + 0.3), 1.6);
+      withT(() => {
+        text(String(6 + i), 0, 0, { w: 600, size: 26, color: P.num });
+        const w = text(s, 40, 0, { w: 700, size: 38, fam: 'Nunito' });
+        check(40 + w + 34, 0, 18, P.dark ? C.yellow : C.ink, P.dark ? C.ink : C.yellow);
+      }, 140 + (1 - q) * 40, 1060 + i * 64, 1, 0, q * 1.5);
+    });
+  }, 0, (1 - e) * 50, 1, 0, e);
+  // card empilhado: limites que nunca mudam
+  const lp = eBack(prog(t, 20.95, 21.3), 1.5);
+  withT(() => {
+    card(-250, -190, 500, 380, 32);
+    pill(-190, -130, '02', { size: 24, h: 40, bg: C.yellow });
+    text('Limites que', -210, -60, { w: 800, size: 46 });
+    text('nunca mudam', -210, -6, { w: 800, size: 46 });
+    lock(150, 80, 0.62 + 0.04 * Math.sin(t * 6));
+  }, 720, 1470, 1, 0.05 * (1 - lp) + 0.03, lp * 1.5);
+}
+const SCENES2 = [
   // o gerente
   { a: 14.8, b: 17.3, cap: 1300, vig: 0.3, draw: async (t, lt) => {
     const img = await vframe('v2', Math.floor(lt * FPS) + 1, 75);
     cover(img, 1.1 + lt * 0.01, 0.55, 0.36);
   } },
-  // o salto: regras riscadas → limites que nunca mudam
-  { a: 17.3, b: 21.85, paper: true, draw: (t, lt) => {
-    const e = enter(lt);
-    headline(t, 17.3, 21.85, 330, { size: 62, a: e });
-    withT(() => {
-      card(90, 560, 900, 720, 34);
-      for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(140 + k * 26, 630, 7, 0, Math.PI * 2); ctx.fillStyle = '#D6D0C7'; ctx.fill(); }
-      text('Instruções do agente', 230, 632, { w: 700, size: 34 });
-      const flip = eInOut(prog(t, 19.0, 19.3));
-      withT(() => pill(0, 0, flip < 0.5 ? '8 regras' : '3 limites', { size: 26, h: 52, bg: C.ink, fg: C.yellow }), 880, 632, 1, 0, 1 - Math.sin(flip * Math.PI) * 0.6);
-      ctx.fillStyle = 'rgba(0,0,0,0.06)'; ctx.fillRect(90, 690, 900, 2);
-      const strikes = [17.55, 18.1, 18.65, 18.8, 18.9];
-      RULES.forEach((r, i) => {
-        const gone = eInOut(prog(t, 19.1 + i * 0.03, 19.35 + i * 0.03));
-        const y = 760 + i * 74;
-        ctx.save(); ctx.globalAlpha *= 1 - gone * 0.75;
-        text(String(i + 1), 140, y, { w: 600, size: 26, color: '#B4ADA4' });
-        const w = text(r, 180, y, { w: 600, size: 38, fam: 'Nunito', color: t > strikes[i] ? '#A39A90' : C.ink });
-        const sp = eOut(prog(t, strikes[i], strikes[i] + 0.2));
-        if (sp > 0) { ctx.fillStyle = C.red; ctx.fillRect(176, y - 2, (w + 8) * sp, 5); }
-        ctx.restore();
-      });
-      LIMITS.forEach(([s, at], i) => {
-        const q = eBack(prog(t, at, at + 0.3), 1.6);
-        withT(() => {
-          text(String(6 + i), 0, 0, { w: 600, size: 26, color: '#B4ADA4' });
-          const w = text(s, 40, 0, { w: 700, size: 38, fam: 'Nunito' });
-          check(40 + w + 34, 0, 18, C.ink, C.yellow);
-        }, 140 + (1 - q) * 40, 1060 + i * 64, 1, 0, q * 1.5);
-      });
-    }, 0, (1 - e) * 50, 1, 0, e);
-    // card empilhado: limites que nunca mudam
-    const lp = eBack(prog(t, 20.95, 21.3), 1.5);
-    withT(() => {
-      card(-250, -190, 500, 380, 32);
-      pill(-190, -130, '02', { size: 24, h: 40, bg: C.yellow });
-      text('Limites que', -210, -60, { w: 800, size: 46 });
-      text('nunca mudam', -210, -6, { w: 800, size: 46 });
-      lock(150, 80, 0.62 + 0.04 * Math.sin(t * 6));
-    }, 720, 1470, 1, 0.05 * (1 - lp) + 0.03, lp * 1.5);
-  } },
+  // o salto: no escuro as regras são riscadas; no "contexto" a luz entra
+  { a: 17.3, b: 21.85, narr: true, draw: (t, lt) => iris(t, lt, W / 2, 900, T_CTX - 17.3, 0.45, drawSalto) },
   // o agente que escuta
   { a: 21.85, b: 26.2, paper: true, draw: (t, lt) => drawFluid(t, lt, 21.85, 26.2) },
   // a cozinha
@@ -652,6 +687,8 @@ const SCENES = [
   } },
 ];
 
+SCENES.push(...SCENES2);
+
 function drawFluid(t, lt, a, b) {
   const first = a < 26;
   const e = first ? enter(lt) : 1;
@@ -678,9 +715,11 @@ async function renderFrame(f) {
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, W, H);
+  P = sc.dark ? DARK : LIGHT;
   if (sc.paper) paper(t);
   await sc.draw(t, t - sc.a);
-  if (sc.paper) narrator(t, sc.a === 44.6 ? 1 - prog(t, 44.6, 44.8) : 1);
+  P = LIGHT;
+  if (sc.paper || sc.narr) narrator(t, sc.a === 44.6 ? 1 - prog(t, 44.6, 44.8) : 1);
   finish(f, sc.vig || 0);
   if (sc.cap && t < 45.45) captions(t, sc.cap);
   ctx.restore();
@@ -691,7 +730,7 @@ window.reelReady = preload().then(() => true);
 
 if (!location.search.includes('render')) {
   window.reelReady.then(async () => {
-    const audio = new Audio('../audio/mix_monstro_-14LUFS.wav');
+    const audio = new Audio('../audio/mix_monstro_v2_-14LUFS.wav');
     document.body.addEventListener('click', () => { audio.currentTime = 0; audio.play(); });
     let busy = false;
     const loop = async () => {

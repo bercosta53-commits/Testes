@@ -19,7 +19,7 @@ const FROM = Number(args.from ?? 0);
 const TO = Number(args.to ?? 1379);
 const OUT = path.resolve(here, args.out ?? 'monstro.mp4');
 const FRAMES_DIR = path.resolve(args.frames ?? path.join(here, '.frames'));
-const AUDIO = path.join(root, 'audio', 'mix_monstro_-14LUFS.wav');
+const AUDIO = path.join(root, 'audio', args.audio ?? 'mix_monstro_-14LUFS.wav');   // --audio arquivo.wav
 
 fs.mkdirSync(FRAMES_DIR, { recursive: true });
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.ttf': 'font/ttf', '.json': 'application/json',
