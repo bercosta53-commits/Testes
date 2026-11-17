@@ -357,7 +357,7 @@ boot(() => {
     Object.assign(btn.style, { background: 'var(--ink)', color: 'var(--y)', borderRadius: '999px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 18px 0 56px', font: '700 50px Poppins', letterSpacing: '-.02em' });
     btn.innerHTML = '<span>Baixe grátis</span><span class="ar" style="width:96px;height:96px;border-radius:50%;background:var(--y);color:var(--ink);display:grid;place-items:center;font:700 46px Poppins">→</span>';
     const arrow = btn.querySelector('.ar');
-    const meta = h('div', 'center', cam, 'PDF gratuito · 11 páginas'); pos(meta, 0, 1306);
+    const meta = h('div', 'center', cam, 'PDF gratuito · 10 páginas'); pos(meta, 0, 1306);
     Object.assign(meta.style, { font: '500 28px Poppins', color: '#8d8a83' });
     const logos = pos(h('div', 'abs', cam), 0, 1392, 1080, 64);
     Object.assign(logos.style, { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' });
