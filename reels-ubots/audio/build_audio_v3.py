@@ -18,7 +18,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
 SR = 48000
-DUR = 45.96
+DUR = 48.1
 BPM = 123
 
 # onde o som "acontece" dentro do arquivo (igual ao v1b)
@@ -57,8 +57,10 @@ CUES = [
     (34.65, 'slide', -13),                   # contagem fecha: marca-texto entra
     (35.7, 'whoosh', -13), (37.65, 'pop', -7),                  # câmera B / selo
     (38.9, 'whoosh', -11), (39.4, 'page', -6),                  # playbook / documento
-    (41.6, 'whoosh', -13), (42.5, 'pop', -9),                   # CTA / botão
-    (44.6, 'slide', -9), (44.85, 'pop', -9), (45.15, 'chime', -4),  # tela final / botão ✓
+    (41.6, 'whoosh', -13),                                      # CTA com a persona
+    (45.15, 'page', -6),                     # tela final: capa do playbook (como no v1b)
+    (45.95, 'pop', -9),                      # botão aparece
+    (46.7, 'tap', 0), (46.82, 'chime', -4),  # clique em "Baixe grátis" / a seta vira ✓
 ]
 
 
@@ -85,7 +87,7 @@ def place(bed, clip, t, gain_db=0.0):
 def run():
     N = int(DUR * SR)
     # 1) locução (tomada única, nos tempos originais)
-    vo = load(['-i', os.path.join(HERE, 'locucao_v1.mp3')])
+    vo = load(['-i', os.path.join(HERE, 'locucao_v2.mp3')])
     vo_bed = np.zeros((N, 2), np.float32); place(vo_bed, vo, 0)
     # 2) efeitos
     fx = np.zeros((N, 2), np.float32)

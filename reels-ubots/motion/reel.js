@@ -4,7 +4,8 @@
 // cards brancos com sombra suave, traços amarelos finos nos cantos.
 // Cada quadro é calculado só a partir do tempo (render paralelo e determinístico).
 'use strict';
-const W = 1080, H = 1920, FPS = 30, DUR = 45.96;
+const W = 1080, H = 1920, FPS = 30, DUR = 48.1;
+const END_T0 = 45.1;   // tela final (porte da tela final do v1b)
 const C = {
   paper: '#F9F8F1', grid: 'rgba(30,25,15,0.045)', ink: '#141210', soft: '#BDB6AC', gray: '#8A847C',
   yellow: '#F9C23C', yellowL: '#FCE3A0', white: '#FFFFFF', chat: '#F2EEE6', green: '#D9FDD3',
@@ -79,6 +80,7 @@ async function preload() {
   const list = {
     P1: 'assets/persona/P1.jpg', P2: 'assets/persona/P2.jpg', P3: 'assets/persona/P3.jpg',
     ubots: 'assets/logo_ubots_dark.png', viacredi: 'assets/logo_viacredi.png', pg1: 'assets/pdf/p-01.png',
+    capa: 'assets/v1b/capa.jpg', ubotsRef: 'assets/v1b/ubots-logo.png', viaRef: 'assets/v1b/viacredi-logo.png',
   };
   await Promise.all(Object.entries(list).map(async ([k, v]) => { IMG[k] = await loadImg(v); }));
   ENV = await (await fetch('assets/vo_env.json')).json();
@@ -226,8 +228,8 @@ const SEGS = [
   [30.40, 35.44, ['Na *Viacredi,*', 'esse modelo de agente', 'já liberou mais de', ['*R$ 150 mil*', 'cento e cinquenta mil reais']]],
   [35.73, 38.62, ['Que, por sinal…', 'ainda tá em', '*fase de teste.*']],
   [38.99, 41.41, ['O método completo', 'tá no *Playbook Ubots.*']],
-  [41.71, 43.37, ['*Clica no link*', 'e baixa o material.']],
-  [43.70, 45.40, ['Prometo', 'não *insistir.*']],
+  [41.71, 43.69, ['*Clica no link*', 'e baixa o material.']],
+  [44.10, 44.99, ['É *grátis.*']],
 ];
 const CHUNKS = [], WORDS = [];
 for (const [a, b, chunks] of SEGS) {
@@ -421,12 +423,12 @@ function steps(t, cy, list) {
 }
 // documento do playbook no estilo "mensagem com PDF"
 function docCard(cx, cy, w, a = 1, rot = 0) {
-  const img = IMG.pg1, ih = w * img.height / img.width, h = ih + 150;
+  const img = IMG.capa, ih = w * img.height / img.width, h = ih + 150;
   withT(() => {
     card(-w / 2 - 20, -h / 2, w + 40, h, 28);
     ctx.save(); rr(-w / 2, -h / 2 + 20, w, ih, 18); ctx.clip(); ctx.drawImage(img, -w / 2, -h / 2 + 20, w, ih); ctx.restore();
     text('Playbook Ubots · Agentes de IA', -w / 2 + 6, h / 2 - 82, { w: 700, size: 34 });
-    text('PDF gratuito', -w / 2 + 6, h / 2 - 38, { w: 600, size: 24, fam: 'Nunito', color: C.gray });
+    text('10 páginas · PDF', -w / 2 + 6, h / 2 - 38, { w: 600, size: 24, fam: 'Nunito', color: C.gray });
     text('agora ✓✓', w / 2 - 6, h / 2 - 38, { w: 600, size: 22, fam: 'Nunito', color: '#53A6E8', align: 'right' });
   }, cx, cy, 1, rot, a);
 }
@@ -663,31 +665,97 @@ const SCENES2 = [
     const dp = eBack(prog(t, 39.4, 39.8), 1.4);
     docCard(W / 2, 1040 + (1 - dp) * 120, 780, dp * 1.5, -0.02 * (1 - dp));
   } },
-  // CTA com a persona
-  { a: 41.6, b: 44.6, cap: 1130, vig: 0.35, draw: (t, lt) => {
-    cover(IMG.P3, 1.04 + lt * 0.01, 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
-    const p = eBack(prog(t, 42.5, 42.85), 1.4);
-    withT(() => { ctaButton(0, 0, 'Baixe grátis', t); text('PDF gratuito · Playbook Ubots', 0, 98, { w: 700, size: 28, fam: 'Nunito', color: C.white, align: 'center' }); },
-      W / 2, 1360 + (1 - p) * 220, 1, 0, p * 2);
+  // CTA com a persona: o take inteiro da fala, sem corte no meio
+  { a: 41.6, b: END_T0, cap: 1180, vig: 0.35, draw: (t, lt) => {
+    cover(IMG.P3, 1.04 + lt * 0.012, 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
   } },
-  // encerramento
-  { a: 44.6, b: DUR, paper: true, draw: (t, lt) => {
-    const e = enter(lt, 0.25);
-    withT(() => smallCaps('PLAYBOOK UBOTS', W / 2, 0), 0, 330, 1, 0, e);
-    withT(() => text('Agentes de IA', W / 2, 0, { w: 800, size: 104, align: 'center' }), 0, 440, 1, 0, e);
-    withT(() => {
-      text('Como ofertar crédito no WhatsApp:', W / 2, 0, { w: 600, size: 36, fam: 'Nunito', color: '#4F4A44', align: 'center' });
-      text('o método da Viacredi.', W / 2, 48, { w: 600, size: 36, fam: 'Nunito', color: '#4F4A44', align: 'center' });
-    }, 0, 550, 1, 0, eOut(prog(lt, 0.1, 0.35)));
-    docCard(W / 2, 930, 680, eOut(prog(lt, 0.15, 0.4)), 0);
-    const bp = eBack(prog(t, 44.85, 45.15), 1.8);
-    withT(() => ctaButton(0, 0, 'Baixe grátis', t, 'check'), W / 2, 1270, bp, 0, bp * 2);
-    withT(() => text('PDF gratuito', W / 2, 0, { w: 600, size: 28, fam: 'Nunito', color: C.gray, align: 'center' }), 0, 1375, 1, 0, bp);
-    logosRow(1490, eOut(prog(t, 45.05, 45.35)));
-  } },
+  // encerramento — porte fiel da tela final do v1b (viacredi/v1b/scenes.js)
+  { a: END_T0, b: DUR, paper: true, draw: (t) => drawEnd(t) },
 ];
 
 SCENES.push(...SCENES2);
+
+// ------------------------------------------------------------------ tela final (v1b)
+const eExpo = x => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * clamp(x)));
+const enterK = (t, a, d) => eOut(prog(t, a, a + d));
+function drawEnd(t) {
+  const t0 = END_T0, press = t0 + 1.6;
+  // eyebrow
+  ctx.save(); ctx.globalAlpha = enterK(t, t0 - 0.04, 0.4);
+  font(600, 26); ctx.fillStyle = '#8d8a83'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '5.7px';
+  ctx.fillText('PLAYBOOK UBOTS', W / 2 + 2.8, 236); if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+  ctx.restore();
+  // título "Agentes de IA" ajustado a 900 px, revelado por máscara
+  font(800, 100); const tsz = Math.floor(100 * 900 / ctx.measureText('Agentes de IA').width);
+  const km = enterK(t, t0 + 0.05, 0.55);
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 290, W, tsz * 1.28); ctx.clip();
+  font(800, tsz); ctx.fillStyle = C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  if ('letterSpacing' in ctx) ctx.letterSpacing = `${(-0.03 * tsz).toFixed(1)}px`;
+  ctx.fillText('Agentes de IA', W / 2, 290 + (1 - km) * tsz * 1.2); if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+  ctx.restore();
+  // subtítulo
+  const ks = enterK(t, t0 + 0.3, 0.5);
+  ctx.save(); ctx.globalAlpha = ks; font(500, 40); ctx.fillStyle = '#55524c'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  const sy = 290 + tsz * 1.18 + (1 - ks) * 24;
+  ctx.fillText('Como ofertar crédito no WhatsApp:', W / 2, sy); ctx.fillText('o método da Viacredi.', W / 2, sy + 52);
+  ctx.restore();
+  // brilho amarelo localizado
+  ctx.save(); ctx.globalAlpha = enterK(t, t0 + 0.3, 1.0);
+  const g = ctx.createRadialGradient(540, 880, 0, 540, 880, 320);
+  g.addColorStop(0, 'rgba(253,195,72,0.6)'); g.addColorStop(1, 'rgba(253,195,72,0)');
+  ctx.fillStyle = g; ctx.fillRect(90, 560, 900, 640); ctx.restore();
+  // o playbook como objeto: capa + duas páginas atrás que se abrem em leque
+  const kb = eExpo(prog(t, t0 + 0.35, t0 + 1.2));
+  const kf = eOut(prog(t, t0 + 0.9, t0 + 1.5));
+  ctx.save();
+  ctx.globalAlpha = clamp(kb * 2);
+  ctx.translate(150 + 390, 640 + 439 + (1 - kb) * 220);            // origem: centro de baixo do livro
+  ctx.rotate((lerp(4, -2, kb) * Math.PI) / 180);
+  ctx.scale(1, Math.cos(((1 - kb) * 28 * Math.PI) / 180));        // inclinação para trás (rotateX)
+  ctx.translate(-390, -439);
+  [[-5, -18, 10], [4, 16, 4]].forEach(([r, x, y]) => {
+    ctx.save(); ctx.translate(x + 390, y + 219.5); ctx.rotate((r * kf * Math.PI) / 180);
+    ctx.shadowColor = 'rgba(40,30,10,0.22)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 20;
+    rr(-390, -219.5, 780, 439, 22); ctx.fillStyle = C.white; ctx.fill(); ctx.restore();
+  });
+  ctx.save(); ctx.shadowColor = 'rgba(40,30,10,0.28)'; ctx.shadowBlur = 80; ctx.shadowOffsetY = 40;
+  rr(0, 0, 780, 439, 22); ctx.fillStyle = C.white; ctx.fill(); ctx.restore();
+  ctx.save(); rr(0, 0, 780, 439, 22); ctx.clip(); ctx.drawImage(IMG.capa, 0, 0, 780, 439); ctx.restore();
+  ctx.restore();
+  // CTA dominante: aparece, é clicado, a seta vira ✓
+  const kc = eBack(prog(t, press - 0.75, press - 0.35), 1.7);
+  const pr = 1 - 0.04 * Math.sin(Math.PI * prog(t, press, press + 0.22));
+  withT(() => {
+    rr(-390, -66, 780, 132, 66); ctx.fillStyle = C.ink; ctx.fill();
+    font(700, 50); ctx.fillStyle = C.yellow; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '-1px';
+    ctx.fillText('Baixe grátis', -390 + 56, 3); if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+    const ok = t >= press + 0.12, ax = 390 - 18 - 48;
+    const ring = 1 - prog(t, press + 0.12, press + 0.7);
+    if (ok && ring > 0) { ctx.beginPath(); ctx.arc(ax, 0, 48 + 18 * ring, 0, Math.PI * 2); ctx.fillStyle = `rgba(253,195,72,${0.5 * ring})`; ctx.fill(); }
+    const kp = eBack(prog(t, press + 0.12, press + 0.42), 1.7);
+    const ar = ok ? 0.6 + 0.4 * kp : 1, ox = ok ? 0 : 10 * Math.sin(Math.PI * prog(t, press, press + 0.3));
+    withT(() => {
+      ctx.beginPath(); ctx.arc(0, 0, 48, 0, Math.PI * 2); ctx.fillStyle = C.yellow; ctx.fill();
+      font(700, 46); ctx.fillStyle = C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(ok ? '✓' : '→', ok ? 0 : ox, 3);
+    }, ax, 0, ar);
+  }, W / 2, 1150 + 66 + (1 - kc) * 40, pr, 0, clamp(kc * 2));
+  // metadado e logos
+  ctx.save(); ctx.globalAlpha = enterK(t, press - 0.2, 0.4);
+  font(500, 28); ctx.fillStyle = '#8d8a83'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('PDF gratuito · 10 páginas', W / 2, 1306); ctx.restore();
+  const kl = enterK(t, press + 0.1, 0.45);
+  withT(() => {
+    const uw = 46 * IMG.ubotsRef.width / IMG.ubotsRef.height, vw = 58 * IMG.viaRef.width / IMG.viaRef.height;
+    const total = uw + 30 + 2 + 30 + vw;
+    let x = -total / 2;
+    ctx.drawImage(IMG.ubotsRef, x, -23, uw, 46); x += uw + 30;
+    ctx.fillStyle = '#d6d2c9'; ctx.fillRect(x, -24, 2, 48); x += 32;
+    ctx.drawImage(IMG.viaRef, x, -29, vw, 58);
+  }, W / 2, 1392 + 32 + (1 - kl) * 16, 1, 0, kl);
+}
 
 function drawFluid(t, lt, a, b) {
   const first = a < 26;
@@ -719,9 +787,9 @@ async function renderFrame(f) {
   if (sc.paper) paper(t);
   await sc.draw(t, t - sc.a);
   P = LIGHT;
-  if (sc.paper || sc.narr) narrator(t, sc.a === 44.6 ? 1 - prog(t, 44.6, 44.8) : 1);
+  if (sc.paper || sc.narr) narrator(t, sc.a === END_T0 ? 0 : 1);
   finish(f, sc.vig || 0);
-  if (sc.cap && t < 45.45) captions(t, sc.cap);
+  if (sc.cap && t < END_T0) captions(t, sc.cap);
   ctx.restore();
 }
 
@@ -730,7 +798,7 @@ window.reelReady = preload().then(() => true);
 
 if (!location.search.includes('render')) {
   window.reelReady.then(async () => {
-    const audio = new Audio('../audio/mix_monstro_v2_-14LUFS.wav');
+    const audio = new Audio('../audio/mix_monstro_v3_-14LUFS.wav');
     document.body.addEventListener('click', () => { audio.currentTime = 0; audio.play(); });
     let busy = false;
     const loop = async () => {
