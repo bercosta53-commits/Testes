@@ -1,0 +1,1 @@
+{"name":"playbook-viacredi-ubots","private":true,"scripts":{"build":"mkdir -p shots && node build.cjs && node finish.cjs"},"dependencies":{"pdf-lib":"^1.17.1","playwright":"*"}}

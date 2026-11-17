@@ -1,0 +1,104 @@
+@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-500.woff2)}
+@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-600.woff2)}
+@font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-700.woff2)}
+@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-800.woff2)}
+@font-face{font-family:Nunito;font-weight:400;src:url(fonts/nunito-400.woff2)}
+@font-face{font-family:Nunito;font-weight:600;src:url(fonts/nunito-600.woff2)}
+@font-face{font-family:Nunito;font-weight:700;src:url(fonts/nunito-700.woff2)}
+@font-face{font-family:Nunito;font-weight:800;src:url(fonts/nunito-800.woff2)}
+@font-face{font-family:Nunito;font-weight:400;font-style:italic;src:url(fonts/nunito-400i.woff2)}
+@font-face{font-family:Nunito;font-weight:600;font-style:italic;src:url(fonts/nunito-600i.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(fonts/inter-400.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(fonts/inter-500.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(fonts/inter-600.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(fonts/inter-700.woff2)}
+
+:root{
+  --cream:#fffdf9; --amber:#fdc348; --amber-d:#b27a00; --ink:#070401; --yellow:#fffd00;
+  --muted:#4f493c;          /* cinza dos textos pequenos, mais escuro */
+  --muted-dark:#d3cdbd;     /* texto pequeno sobre fundo escuro, mais claro */
+  --line:#f0e3c4; --band:#fff3d1; --wa-bg:#efe7dc; --wa-out:#d9fdd3;
+}
+@page{size:1920px 1080px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#222}
+body{font-family:Nunito,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.slide{width:1920px;height:1080px;position:relative;overflow:hidden;page-break-after:always;break-after:page;background:var(--cream)}
+.slide.light{background:
+  radial-gradient(ellipse 1100px 700px at 100% 0%,#fff0cc 0%,rgba(255,243,213,0) 70%),
+  radial-gradient(ellipse 900px 600px at 0% 100%,#fff6e3 0%,rgba(255,246,227,0) 70%),var(--cream)}
+.slide.dark{background:radial-gradient(ellipse 1200px 700px at 100% 0%,#1f1608 0%,rgba(22,15,5,0) 70%),#070401;color:#fff}
+.abs{position:absolute}
+.pop{font-family:Poppins,sans-serif}
+
+/* header */
+.hdr{position:absolute;left:128px;top:56px;height:44px;display:flex;align-items:center;gap:26px}
+.hdr .u{height:38px;display:block}
+.hdr .sep{width:2px;height:42px;background:#d8d2c4}
+.dark .hdr .sep{background:#4a4336}
+.hdr .v{height:42px;display:block}
+.hr{position:absolute;right:128px;top:60px;display:flex;align-items:center;gap:30px}
+.chip{font:500 18px Poppins;color:#5a3d00;background:rgba(253,195,72,.22);border-radius:30px;padding:8px 22px;height:38px;display:flex;align-items:center}
+.dark .chip{color:var(--amber);background:rgba(253,195,72,.14)}
+.pn{font:600 19px Poppins}.pn i{font-style:normal;font-weight:400;color:#8a8372;margin:0 4px}
+
+/* titles */
+.t{position:absolute;left:128px;top:148px;font:700 56px/1.12 Poppins;letter-spacing:-.034em;white-space:nowrap}
+.t em{font-style:normal;color:var(--amber)}
+.dark .t{color:#fff}
+.sub{position:absolute;left:128px;font:400 23px/1.55 Nunito;color:var(--muted);max-width:1180px}
+.dark .sub{color:var(--muted-dark)}
+
+/* cards & generic */
+.card{background:#fff;border:2px solid var(--line);border-radius:30px;box-shadow:0 10px 36px rgba(160,120,30,.10)}
+.tag{display:inline-block;font:600 .9em Nunito;background:#ffe1f0;color:#b0005f;border-radius:7px;padding:1px 9px;margin:0 2px}
+.cite{font:400 19px/1.45 Nunito;color:var(--muted)}
+.dark .cite{color:var(--muted-dark)}
+.wave{display:block}
+.num{font:700 68px/1 Poppins;color:var(--amber)}
+
+/* ------- whatsapp ------- */
+.wa{font-family:Inter,sans-serif;background:var(--wa-bg);overflow:hidden;display:flex;flex-direction:column}
+.wa-h{background:#f7f4ef;display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #e6dfd2;flex:none}
+.wa-h .back{width:22px;height:22px;flex:none}
+.wa-h .av{width:50px;height:50px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;flex:none}
+.wa-h .av svg{width:26px;height:26px}
+.wa-h .nm{font:600 20px/1.2 Inter;color:#111;display:flex;align-items:center;gap:6px}
+.wa-h .nm svg{width:19px;height:19px}
+.wa-h .st{font:400 16px/1.2 Inter;color:#666}
+.wa-h .ic{margin-left:auto;display:flex;gap:26px;color:#222}
+.wa-h .ic svg{width:26px;height:26px}
+.wa-b{padding:14px 16px;display:flex;flex-direction:column;gap:7px;flex:1;
+  background-image:radial-gradient(circle at 20px 20px,rgba(200,185,160,.35) 2px,transparent 2.5px);background-size:62px 62px}
+.m{max-width:84%;padding:9px 13px 7px;border-radius:14px;font:400 18px/1.32 Inter;color:#111;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.m.in{background:#fff;align-self:flex-start;border-top-left-radius:4px}
+.m.out{background:var(--wa-out);align-self:flex-end;border-top-right-radius:4px}
+.m .tm{display:block;text-align:right;font:400 14px/1 Inter;color:#6b6b6b;margin-top:4px}
+.m .tm b{color:#53bdeb;font-weight:700;margin-left:4px;letter-spacing:-3px}
+.wa-btn{background:#fff;border-radius:12px;text-align:center;font:500 18px Inter;color:#0b7a56;padding:11px 8px;align-self:stretch;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.wa-btn svg{width:19px;height:19px}
+.wa-btn.half{align-self:auto;flex:1}
+.wa-in{background:#f7f4ef;padding:12px 14px;display:flex;align-items:center;gap:14px;flex:none}
+.wa-in .box{flex:1;height:48px;background:#fff;border-radius:26px;border:1px solid #e4ddd0}
+.wa-in svg{width:28px;height:28px;color:#333}
+.badge{align-self:flex-end;background:var(--amber);color:#2b1c00;font:600 15px Inter;border-radius:14px;padding:4px 12px;display:flex;align-items:center;gap:6px;margin-top:-2px}
+.badge svg{width:15px;height:15px}
+.aitag{align-self:flex-start;background:#fff4d6;border-radius:8px;font:500 15px Inter;color:#6b4a00;padding:3px 10px;display:flex;gap:6px;align-items:center;margin-bottom:-2px}
+.aitag svg{width:13px;height:13px;color:var(--amber-d)}
+.phone{background:#0a0a0a;border-radius:72px;padding:13px;position:absolute;box-shadow:0 30px 60px rgba(90,60,0,.25)}
+.phone .scr{background:#f7f4ef;border-radius:60px;overflow:hidden;height:100%;display:flex;flex-direction:column}
+.phone .sb{height:62px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:6px 34px 0 40px;font:600 20px Inter;position:relative;background:#f7f4ef}
+.phone .isl{position:absolute;left:50%;top:14px;transform:translateX(-50%);width:132px;height:38px;background:#0a0a0a;border-radius:24px}
+.phone .sb svg{width:70px;height:20px}
+.wa .qr{display:flex;gap:9px}
+
+/* ------- guardrail / dark checklist box ------- */
+.gbox{background:linear-gradient(180deg,#14100a,#070401);border-radius:34px;color:#fff;position:absolute;padding:36px 40px;box-shadow:0 20px 50px rgba(60,40,0,.25)}
+.gbox .ico{width:58px;height:58px;border-radius:16px;background:var(--amber);display:flex;align-items:center;justify-content:center}
+.gbox .ico svg{width:30px;height:30px;color:#070401}
+.gbox h3{font:600 28px/1.2 Poppins;letter-spacing:-.02em;margin:22px 0 8px}
+.gbox .it{display:flex;align-items:center;gap:20px;font:400 21px/1.35 Nunito;border-top:1px solid #2c261b}
+.gbox .it:first-of-type{border-top:0}
+.gbox .it .cbx{width:30px;height:30px;border:3px solid var(--amber);border-radius:8px;flex:none}
+.fld{position:absolute;background:#fff8e6;border:2px solid #f3dca0;border-radius:12px}
+.field{display:inline-block;vertical-align:middle;background:#fff6dc;border-bottom:3px solid var(--amber);border-radius:6px 6px 0 0;height:30px;margin:0 4px;position:relative;top:1px}
