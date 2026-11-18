@@ -1,35 +1,53 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gasto em mídia mês a mês</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gasto em mídia 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fcfcfb;--tx:#0b0b0b;--tx2:#52514e;--grid:#e6e5e1;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a}
-@media(prefers-color-scheme:dark){:root{--bg:#1a1a19;--tx:#f0efec;--tx2:#c3c2b7;--grid:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70}}
-body{margin:0;background:var(--bg);color:var(--tx);font:14px system-ui,sans-serif;padding:24px 16px}
-.w{max-width:900px;margin:auto}h1{font-size:20px;margin:0 0 4px}p.s{color:var(--tx2);margin:0 0 16px}
-.lg{display:flex;gap:16px;margin-bottom:8px;color:var(--tx2)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-svg{width:100%;height:auto;display:block}text{fill:var(--tx2);font-size:12px}.t{fill:var(--tx);font-weight:600}
-#tip{position:fixed;pointer-events:none;background:var(--bg);color:var(--tx);border:1px solid var(--grid);padding:8px 10px;border-radius:6px;font-size:12px;display:none;box-shadow:0 2px 8px #0003}
-table{border-collapse:collapse;width:100%;margin-top:20px;font-size:12px}td,th{padding:4px 8px;text-align:right;border-bottom:1px solid var(--grid)}th:first-child,td:first-child{text-align:left}
-small{color:var(--tx2)}
-</style></head><body><div class="w"><h1>Gasto em mídia mês a mês</h1><p class="s">Google Ads, Meta Ads e LinkedIn Ads, mar–nov/2026 (R$)</p>
-<div class="lg" id="lg"></div><svg id="c" viewBox="0 0 900 400" role="img" aria-label="Barras empilhadas do gasto mensal por plataforma"></svg>
-<small>* Novembro parcial (até 18/11). LinkedIn: sem relatório de março e novembro.</small><table id="tb"></table></div><div id="tip"></div>
+:root{--bg:#f2ecdf;--ink:#111;--ink2:#4a463e;--blue:#1b4f9c;--red:#d9362b;--yel:#f4b31c;--on-blue:#fff;--on-red:#fff;--on-yel:#111;--rule:#111}
+@media(prefers-color-scheme:dark){:root{--bg:#141414;--ink:#f2ecdf;--ink2:#bdb7a8;--blue:#3d73d1;--red:#e5493d;--yel:#f4b31c;--on-blue:#fff;--on-red:#fff;--on-yel:#111;--rule:#f2ecdf}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Jost,Futura,"Century Gothic","Avenir Next",system-ui,sans-serif;padding:32px 16px}
+.w{max-width:1120px;margin:auto;border:3px solid var(--rule)}
+header{display:grid;grid-template-columns:1fr 280px;border-bottom:3px solid var(--rule)}
+.hd{padding:28px 32px}.hd small{letter-spacing:.28em;text-transform:uppercase;font-weight:700;font-size:12px}
+h1{margin:10px 0 8px;font-size:clamp(34px,6vw,64px);line-height:.95;text-transform:uppercase;font-weight:800;letter-spacing:-.01em}
+h1 span{color:var(--red)}.hd p{margin:0;color:var(--ink2);font-size:16px;max-width:46ch}
+.art{border-left:3px solid var(--rule);background:var(--yel);display:block;width:100%;height:100%}
+.kpis{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;border-bottom:3px solid var(--rule)}
+.k{padding:18px 22px;border-right:3px solid var(--rule);position:relative;min-height:116px}.k:last-child{border-right:0}
+.k b{display:block;font-size:30px;font-weight:800;line-height:1.1;margin-top:6px}.k span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.k em{font-style:normal;font-size:13px;opacity:.85}.k svg{position:absolute;right:16px;top:16px;width:26px;height:26px}
+.k.t{background:var(--ink);color:var(--bg)}.k.b{background:var(--blue);color:var(--on-blue)}.k.r{background:var(--red);color:var(--on-red)}.k.y{background:var(--yel);color:var(--on-yel)}
+.ch{padding:24px 28px 8px}.ch h2{margin:0 0 4px;font-size:14px;letter-spacing:.24em;text-transform:uppercase}
+svg#c{width:100%;height:auto;display:block}svg#c text{font-family:inherit;fill:var(--ink);font-size:13px;font-weight:500}.tt{font-weight:800!important;font-size:15px!important}
+.ft{display:grid;grid-template-columns:1fr 1fr;border-top:3px solid var(--rule)}.ft div{padding:18px 28px;font-size:14px;color:var(--ink2)}.ft div+div{border-left:3px solid var(--rule)}.ft b{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:12px;border-top:3px solid var(--rule)}td,th{padding:7px 10px;text-align:right;border-bottom:1px solid var(--rule)}th:first-child,td:first-child{text-align:left;padding-left:28px}td:last-child,th:last-child{padding-right:28px;font-weight:700}
+th{text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 12px;font-size:12px;display:none;font-weight:500}
+@media(max-width:760px){header{grid-template-columns:1fr}.art{height:140px;border-left:0;border-top:3px solid var(--rule)}.kpis{grid-template-columns:1fr 1fr}.k:nth-child(2){border-right:0}.k:nth-child(-n+2){border-bottom:3px solid var(--rule)}.ft{grid-template-columns:1fr}.ft div+div{border-left:0;border-top:3px solid var(--rule)}table{display:block;overflow-x:auto}}
+</style></head><body><div class="w">
+<header><div class="hd"><small>Ubots · Performance de mídia paga · Mar–Nov 2026</small><h1>Gasto em mídia<br>mês a <span>mês</span></h1><p>Investimento acumulado por plataforma: Google, Meta e LinkedIn Ads.</p></div>
+<svg class="art" viewBox="0 0 280 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="280" height="240" fill="var(--yel)"/><circle cx="105" cy="105" r="78" fill="var(--blue)"/><rect x="120" y="120" width="130" height="130" fill="var(--red)"/><polygon points="20,235 95,120 170,235" fill="#111"/><circle cx="215" cy="55" r="22" fill="none" stroke="#111" stroke-width="6"/><line x1="0" y1="120" x2="280" y2="120" stroke="#111" stroke-width="3"/></svg></header>
+<div class="kpis" id="kp"></div>
+<div class="ch"><h2>Investimento mensal acumulado (R$)</h2><svg id="c" viewBox="0 0 1060 400" role="img" aria-label="Barras empilhadas do gasto mensal por plataforma"></svg></div>
+<div class="ft"><div><b>Leitura.</b> O gasto sobe de R$ 5,7 mil (mar) a R$ 21,2 mil (set). O Google lidera até junho; de outubro em diante a Meta concentra quase tudo.</div><div><b>Notas.</b> * Novembro parcial (até 18/11). LinkedIn sem relatório de março e novembro.</div></div>
+<table id="tb"></table></div><div id="tip"></div>
 <script>
-const D={"meses": ["Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov*"], "series": [{"n": "Google Ads", "v": [5025.98, 5293.27, 7046.02, 13596.78, 6808.9, 4357.37, 4311.85, 932.72, 227.16]}, {"n": "Meta Ads", "v": [709.0, 2940.5, 4138.38, 2647.28, 8810.66, 5969.82, 8601.09, 14948.32, 7248.16]}, {"n": "LinkedIn Ads", "v": [0, 1895.7, 3430.35, 1100.0, 3791.07, 5086.56, 8268.39, 3007.73, 0]}]},C=['var(--s1)','var(--s2)','var(--s3)'];
+const D={"meses": ["Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov*"], "series": [{"n": "Google Ads", "v": [5025.98, 5293.27, 7046.02, 13596.78, 6808.9, 4357.37, 4311.85, 932.72, 227.16]}, {"n": "Meta Ads", "v": [709.0, 2940.5, 4138.38, 2647.28, 8810.66, 5969.82, 8601.09, 14948.32, 7248.16]}, {"n": "LinkedIn Ads", "v": [0, 1895.7, 3430.35, 1100.0, 3791.07, 5086.56, 8268.39, 3007.73, 0]}]},K=['var(--blue)','var(--red)','var(--yel)'],SH=['c','s','t'];
 const fm=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
-const W=900,H=400,L=60,R=10,T=28,B=36,n=D.meses.length;
-const tot=D.meses.map((_,i)=>D.series.reduce((a,s)=>a+s.v[i],0));
-const max=Math.ceil(Math.max(...tot)/5000)*5000,y=v=>T+(H-T-B)*(1-v/max),bw=48,step=(W-L-R)/n;
+const sh=(t,c,sz=26)=>t=='c'?`<circle cx="13" cy="13" r="12" fill="${c}" stroke="currentColor" stroke-width="2"/>`:t=='s'?`<rect x="1" y="1" width="24" height="24" fill="${c}" stroke="currentColor" stroke-width="2"/>`:`<polygon points="13,1 25,25 1,25" fill="${c}" stroke="currentColor" stroke-width="2"/>`;
+const tot=D.meses.map((_,i)=>D.series.reduce((a,s)=>a+s.v[i],0)),sum=a=>a.reduce((x,y)=>x+y,0),G=sum(tot);
+const cls=['b','r','y'];
+kp.innerHTML=`<div class="k t"><span>Total investido</span><b>${fm(G)}</b><em>9 meses · 3 plataformas</em></div>`+D.series.map((s,k)=>`<div class="k ${cls[k]}"><svg viewBox="0 0 26 26" style="color:#111">${sh(SH[k],'rgba(255,255,255,.0)')}</svg><span>${s.n}</span><b>${fm(sum(s.v))}</b><em>${(sum(s.v)/G*100).toFixed(0)}% do total</em></div>`).join('');
+const W=1060,H=400,L=56,R=10,T=34,B=40,n=D.meses.length,max=Math.ceil(Math.max(...tot)/5000)*5000,y=v=>T+(H-T-B)*(1-v/max),bw=62,step=(W-L-R)/n;
 let s='';
-for(let v=0;v<=max;v+=5000)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v/1000}k</text>`;
+for(let v=5000;v<=max;v+=5000)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--ink)" stroke-opacity=".18" stroke-dasharray="2 5"/><text x="${L-10}" y="${y(v)+4}" text-anchor="end">${v/1000}k</text>`;
 D.meses.forEach((m,i)=>{const x=L+step*i+(step-bw)/2;let acc=0;
  D.series.forEach((se,k)=>{const v=se.v[i];if(!v)return;const y0=y(acc),y1=y(acc+v);acc+=v;
-  s+=`<rect data-i="${i}" data-k="${k}" x="${x}" y="${y1}" width="${bw}" height="${Math.max(y0-y1-2,1)}" rx="3" fill="${C[k]}"/>`});
- s+=`<text class="t" x="${x+bw/2}" y="${y(tot[i])-6}" text-anchor="middle">${(tot[i]/1000).toFixed(1).replace('.',',')}k</text><text x="${x+bw/2}" y="${H-12}" text-anchor="middle">${m}</text>`});
+  s+=`<rect data-i="${i}" data-k="${k}" x="${x}" y="${y1}" width="${bw}" height="${y0-y1}" fill="${K[k]}" stroke="var(--rule)" stroke-width="2"/>`});
+ s+=`<text class="tt" x="${x+bw/2}" y="${y(tot[i])-9}" text-anchor="middle">${(tot[i]/1000).toFixed(1).replace('.',',')}k</text><text x="${x+bw/2}" y="${H-14}" text-anchor="middle" style="font-weight:700;letter-spacing:.1em">${m.toUpperCase()}</text>`});
+s+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--rule)" stroke-width="3"/>`;
 c.innerHTML=s;
-lg.innerHTML=D.series.map((x,k)=>`<span><i style="background:${C[k]}"></i>${x.n}</span>`).join('');
-tb.innerHTML='<tr><th></th>'+D.meses.map(m=>`<th>${m}</th>`).join('')+'<th>Total</th></tr>'+D.series.map(x=>`<tr><td>${x.n}</td>${x.v.map(v=>`<td>${v?fm(v):'–'}</td>`).join('')}<td>${fm(x.v.reduce((a,b)=>a+b,0))}</td></tr>`).join('')+`<tr><td><b>Total</b></td>${tot.map(v=>`<td><b>${fm(v)}</b></td>`).join('')}<td><b>${fm(tot.reduce((a,b)=>a+b,0))}</b></td></tr>`;
+tb.innerHTML='<tr><th></th>'+D.meses.map(m=>`<th>${m}</th>`).join('')+'<th>Total</th></tr>'+D.series.map(x=>`<tr><td>${x.n}</td>${x.v.map(v=>`<td>${v?fm(v):'–'}</td>`).join('')}<td>${fm(sum(x.v))}</td></tr>`).join('')+`<tr><td><b>Total</b></td>${tot.map(v=>`<td><b>${fm(v)}</b></td>`).join('')}<td>${fm(G)}</td></tr>`;
 const tip=document.getElementById('tip');
-c.addEventListener('mousemove',e=>{const r=e.target;if(!r.dataset||r.dataset.i===undefined){tip.style.display='none';return}
- const i=+r.dataset.i,k=+r.dataset.k;tip.innerHTML=`<b>${D.meses[i]}</b><br>${D.series[k].n}: ${fm(D.series[k].v[i])}<br>Total do mês: ${fm(tot[i])}`;
- tip.style.display='block';tip.style.left=e.clientX+12+'px';tip.style.top=e.clientY+12+'px'});
+c.addEventListener('mousemove',e=>{const r=e.target;if(r.dataset.i===undefined){tip.style.display='none';return}const i=+r.dataset.i,k=+r.dataset.k;
+ tip.innerHTML=`<b>${D.meses[i]}</b> · ${D.series[k].n}<br>${fm(D.series[k].v[i])} (total do mês ${fm(tot[i])})`;tip.style.display='block';tip.style.left=e.clientX+14+'px';tip.style.top=e.clientY+14+'px'});
 c.addEventListener('mouseleave',()=>tip.style.display='none');
 </script></body></html>
