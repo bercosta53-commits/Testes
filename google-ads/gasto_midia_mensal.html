@@ -1,0 +1,35 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gasto em mídia mês a mês</title>
+<style>
+:root{--bg:#fcfcfb;--tx:#0b0b0b;--tx2:#52514e;--grid:#e6e5e1;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a}
+@media(prefers-color-scheme:dark){:root{--bg:#1a1a19;--tx:#f0efec;--tx2:#c3c2b7;--grid:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70}}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px system-ui,sans-serif;padding:24px 16px}
+.w{max-width:900px;margin:auto}h1{font-size:20px;margin:0 0 4px}p.s{color:var(--tx2);margin:0 0 16px}
+.lg{display:flex;gap:16px;margin-bottom:8px;color:var(--tx2)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+svg{width:100%;height:auto;display:block}text{fill:var(--tx2);font-size:12px}.t{fill:var(--tx);font-weight:600}
+#tip{position:fixed;pointer-events:none;background:var(--bg);color:var(--tx);border:1px solid var(--grid);padding:8px 10px;border-radius:6px;font-size:12px;display:none;box-shadow:0 2px 8px #0003}
+table{border-collapse:collapse;width:100%;margin-top:20px;font-size:12px}td,th{padding:4px 8px;text-align:right;border-bottom:1px solid var(--grid)}th:first-child,td:first-child{text-align:left}
+small{color:var(--tx2)}
+</style></head><body><div class="w"><h1>Gasto em mídia mês a mês</h1><p class="s">Google Ads, Meta Ads e LinkedIn Ads, mar–nov/2026 (R$)</p>
+<div class="lg" id="lg"></div><svg id="c" viewBox="0 0 900 400" role="img" aria-label="Barras empilhadas do gasto mensal por plataforma"></svg>
+<small>* Novembro parcial (até 18/11). LinkedIn: sem relatório de março e novembro.</small><table id="tb"></table></div><div id="tip"></div>
+<script>
+const D={"meses": ["Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov*"], "series": [{"n": "Google Ads", "v": [5025.98, 5293.27, 7046.02, 13596.78, 6808.9, 4357.37, 4311.85, 932.72, 227.16]}, {"n": "Meta Ads", "v": [709.0, 2940.5, 4138.38, 2647.28, 8810.66, 5969.82, 8601.09, 14948.32, 7248.16]}, {"n": "LinkedIn Ads", "v": [0, 1895.7, 3430.35, 1100.0, 3791.07, 5086.56, 8268.39, 3007.73, 0]}]},C=['var(--s1)','var(--s2)','var(--s3)'];
+const fm=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
+const W=900,H=400,L=60,R=10,T=28,B=36,n=D.meses.length;
+const tot=D.meses.map((_,i)=>D.series.reduce((a,s)=>a+s.v[i],0));
+const max=Math.ceil(Math.max(...tot)/5000)*5000,y=v=>T+(H-T-B)*(1-v/max),bw=48,step=(W-L-R)/n;
+let s='';
+for(let v=0;v<=max;v+=5000)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v/1000}k</text>`;
+D.meses.forEach((m,i)=>{const x=L+step*i+(step-bw)/2;let acc=0;
+ D.series.forEach((se,k)=>{const v=se.v[i];if(!v)return;const y0=y(acc),y1=y(acc+v);acc+=v;
+  s+=`<rect data-i="${i}" data-k="${k}" x="${x}" y="${y1}" width="${bw}" height="${Math.max(y0-y1-2,1)}" rx="3" fill="${C[k]}"/>`});
+ s+=`<text class="t" x="${x+bw/2}" y="${y(tot[i])-6}" text-anchor="middle">${(tot[i]/1000).toFixed(1).replace('.',',')}k</text><text x="${x+bw/2}" y="${H-12}" text-anchor="middle">${m}</text>`});
+c.innerHTML=s;
+lg.innerHTML=D.series.map((x,k)=>`<span><i style="background:${C[k]}"></i>${x.n}</span>`).join('');
+tb.innerHTML='<tr><th></th>'+D.meses.map(m=>`<th>${m}</th>`).join('')+'<th>Total</th></tr>'+D.series.map(x=>`<tr><td>${x.n}</td>${x.v.map(v=>`<td>${v?fm(v):'–'}</td>`).join('')}<td>${fm(x.v.reduce((a,b)=>a+b,0))}</td></tr>`).join('')+`<tr><td><b>Total</b></td>${tot.map(v=>`<td><b>${fm(v)}</b></td>`).join('')}<td><b>${fm(tot.reduce((a,b)=>a+b,0))}</b></td></tr>`;
+const tip=document.getElementById('tip');
+c.addEventListener('mousemove',e=>{const r=e.target;if(!r.dataset||r.dataset.i===undefined){tip.style.display='none';return}
+ const i=+r.dataset.i,k=+r.dataset.k;tip.innerHTML=`<b>${D.meses[i]}</b><br>${D.series[k].n}: ${fm(D.series[k].v[i])}<br>Total do mês: ${fm(tot[i])}`;
+ tip.style.display='block';tip.style.left=e.clientX+12+'px';tip.style.top=e.clientY+12+'px'});
+c.addEventListener('mouseleave',()=>tip.style.display='none');
+</script></body></html>
