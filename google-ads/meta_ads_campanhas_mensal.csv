@@ -1,0 +1,44 @@
+mes,campanha,veiculacao,indicador,resultados,alcance,impressoes,cliques_link,cliques_todos,custo,cpm,ctr_link,cpc_link,custo_por_resultado
+2026-03,[ON NEST] [LEADS] [LKL] Captação,inactive,actions:offsite_conversion.fb_pixel_lead,19.0,23936,36378,484,553,524.94,14.43,0.0133,1.08,27.63
+2026-03,[ON NEST] [LEADS] [LKL] Captação Ruby,inactive,actions:offsite_conversion.fb_pixel_lead,6.0,10283,13248,210,237,184.00,13.89,0.0159,0.88,30.67
+2026-03,[ON NEST] [LEADS] Remarketing,inactive,,0.0,2,4,0,0,0.06,15.00,0.0000,,
+2026-04,[ON NEST] [LEADS] [LKL] Captação Ruby,inactive,actions:offsite_conversion.fb_pixel_lead,23.0,47991,77513,1406,1548,1075.30,13.87,0.0181,0.76,46.75
+2026-04,[ON NEST] [LEADS] [LKL] Captação,inactive,actions:offsite_conversion.fb_pixel_lead,50.0,39895,65079,1045,1147,885.22,13.60,0.0161,0.85,17.70
+2026-04,[ON NEST] [LEADS] [LKL] Coexistence,inactive,actions:offsite_conversion.fb_pixel_lead,16.0,15675,23101,414,455,336.21,14.55,0.0179,0.81,21.01
+2026-04,[ON NEST] [LEADS] [LKL] Financeiro,inactive,actions:offsite_conversion.fb_pixel_lead,2.0,13403,17053,150,162,238.45,13.98,0.0088,1.59,119.22
+2026-04,[ON NEST] [LEADS] Remarketing,inactive,,0.0,956,7972,183,197,188.49,23.64,0.0230,1.03,
+2026-04,[ON NEST] [LEADS] Remarketing,inactive,actions:onsite_conversion.messaging_conversation_started_7d,1.0,653,4631,38,48,151.03,32.61,0.0082,3.97,151.03
+2026-04,[ON NEST] [LEADS] [FORM] Remarketing,inactive,actions:leadgen.other,2.0,456,1849,25,28,65.80,35.59,0.0135,2.63,32.90
+2026-05,[ON NEST] [LEADS] [LKL] Coexistence,inactive,actions:offsite_conversion.fb_pixel_lead,31.0,43380,70965,1460,1607,1535.74,21.64,0.0206,1.05,49.54
+2026-05,[ON NEST] [LEADS] [LKL] Financeiro,inactive,actions:offsite_conversion.fb_pixel_lead,22.0,29527,49458,1105,1174,1013.67,20.50,0.0223,0.92,46.08
+2026-05,[ON NEST] [LEADS] [LKL] Captação,inactive,actions:offsite_conversion.fb_pixel_lead,6.0,39908,61488,980,1069,833.46,13.55,0.0159,0.85,138.91
+2026-05,[ON NEST] [TRÁFEGO] Cooptech,inactive,actions:omni_landing_page_view,1238.0,69911,115053,1611,1669,624.18,5.43,0.0140,0.39,0.50
+2026-05,[ON NEST] [LEADS] [LKL] Captação Ruby,inactive,actions:offsite_conversion.fb_pixel_lead,1.0,6922,8655,126,140,131.33,15.17,0.0146,1.04,131.33
+2026-06,[ON NEST] [LEADS] Bloqueio,inactive,actions:offsite_conversion.fb_pixel_lead,105.0,13203,25388,366,481,1281.53,50.48,0.0144,3.50,12.21
+2026-06,[ON NEST] [LEADS] [LKL] Captação,inactive,actions:offsite_conversion.fb_pixel_lead,30.0,24460,35242,570,640,905.95,25.71,0.0162,1.59,30.20
+2026-06,[ON NEST] [LEADS] [LKL] Coexistence,inactive,actions:offsite_conversion.fb_pixel_lead,1.0,7173,10117,262,295,459.80,45.45,0.0259,1.75,459.80
+2026-07,[ON NEST] [LEADS] Bloqueio,inactive,actions:offsite_conversion.fb_pixel_lead,551.0,72786,195390,2168,2799,7686.36,39.34,0.0111,3.55,13.95
+2026-07,[ON NEST] [LEADS] Recuperação de crédito,inactive,actions:offsite_conversion.fb_pixel_lead,9.0,4769,7576,135,154,431.09,56.90,0.0178,3.19,47.90
+2026-07,[ON NEST] [LEADS] Recuperação de crédito,inactive,,0.0,2709,4996,64,100,410.41,82.15,0.0128,6.41,
+2026-07,[ON NEST] [LEADS] [LKL] Captação,inactive,actions:offsite_conversion.fb_pixel_lead,11.0,7692,12180,185,208,282.80,23.22,0.0152,1.53,25.71
+2026-08,[ON NEST] [LEADS] Bloqueio,inactive,actions:offsite_conversion.fb_pixel_lead,115.0,42768,75683,785,952,3656.49,48.31,0.0104,4.66,31.80
+2026-08,ON NEST [LEADS] Recuperação de crédito,inactive,actions:offsite_conversion.fb_pixel_lead,34.0,35385,42193,433,482,1195.25,28.33,0.0103,2.76,35.15
+2026-08,ON NEST [LEADS] White Paper HS,inactive,actions:offsite_conversion.fb_pixel_lead,16.0,9679,21600,292,398,1083.24,50.15,0.0135,3.71,67.70
+2026-08,[ON NEST] [LEADS] Recuperação de crédito,inactive,,0.0,344,426,12,13,34.84,81.78,0.0282,2.90,
+2026-09,ON NEST [LEADS] White Paper HS,inactive,actions:offsite_conversion.fb_pixel_lead,30.0,103256,133117,1308,1487,3659.75,27.49,0.0098,2.80,121.99
+2026-09,ON NEST [LEADS] Recuperação de crédito,inactive,actions:offsite_conversion.fb_pixel_lead,113.0,67201,82648,1481,1462,1996.83,24.16,0.0179,1.35,17.67
+2026-09,ON NEST [LEADS] Guia Recuperação de crédito,inactive,actions:offsite_conversion.fb_pixel_lead,26.0,7253,19830,400,437,1647.84,83.10,0.0202,4.12,63.38
+2026-09,ON NEST [LEADS] White Paper Transpocred,inactive,actions:offsite_conversion.fb_pixel_lead,7.0,7807,10863,186,233,861.10,79.27,0.0171,4.63,123.01
+2026-09,ON NEST [LEADS] White Paper Transpocred — 25/09,inactive,actions:offsite_conversion.fb_pixel_lead,2.0,6158,7508,123,151,435.57,58.01,0.0164,3.54,217.78
+2026-10,ON NEST [LEADS] White Paper Transpocred,inactive,actions:offsite_conversion.fb_pixel_lead,85.0,130425,182794,2999,3199,8302.98,45.42,0.0164,2.77,97.68
+2026-10,ON NEST [LEADS] Sicoob Cred,active,actions:leadgen.other,158.0,38282,98494,1521,2060,3622.34,36.78,0.0154,2.38,22.93
+2026-10,ON NEST [LEADS] [NATIVO] White Paper Transpocred,inactive,actions:leadgen.other,43.0,8296,17712,214,360,1455.78,82.19,0.0121,6.80,33.86
+2026-10,ON NEST [LEADS] Recuperação de crédito,inactive,actions:offsite_conversion.fb_pixel_lead,70.0,8222,15625,880,819,779.40,49.88,0.0563,0.89,11.13
+2026-10,ON NEST [LEADS] White Paper HS,inactive,actions:offsite_conversion.fb_pixel_lead,4.0,3620,8491,77,104,519.96,61.24,0.0091,6.75,129.99
+2026-10,ON NEST [LEADS] Guia Recuperação de crédito,inactive,actions:offsite_conversion.fb_pixel_lead,3.0,1096,1759,54,58,210.15,119.47,0.0307,3.89,70.05
+2026-10,Post do Instagram: Algumas negociações...,inactive,actions:post_engagement,1143.0,2320,3326,0,4,57.71,17.35,0.0000,,0.05
+2026-11,ON NEST [LEADS] Sicoob Cred,active,actions:leadgen.other,137.0,22317,56567,483,974,3759.02,66.45,0.0085,7.78,27.44
+2026-11,ON NEST [LEADS] [NATIVO] White Paper Transpocred,inactive,actions:leadgen.other,34.0,8092,16270,197,343,2197.67,135.07,0.0121,11.16,64.64
+2026-11,ON NEST [LEADS] Black Friday,active,actions:leadgen.other,12.0,2133,4086,58,76,779.49,190.77,0.0142,13.44,64.96
+2026-11,ON NEST [LEADS] Diagnostico,active,actions:offsite_conversion.fb_pixel_lead,5.0,2040,3189,66,73,267.34,83.83,0.0207,4.05,53.47
+2026-11,ON NEST [LEADS] LP Sicoob CrediAuc,inactive,,0.0,2391,3739,94,111,244.64,65.43,0.0251,2.60,
