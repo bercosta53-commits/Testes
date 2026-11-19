@@ -770,8 +770,8 @@ const SCENES2 = [
   // CTA com a persona: o take inteiro da fala, sem corte no meio
   { a: 41.6, b: END_T0, cap: 1180, vig: 0.35, draw: async (t, lt) => {
     // completa: a fala do clipe começa em 41,71 s | SITE: segura o sorriso final do clipe (boca fechada) enquanto a locução fecha
-    const idx = SITE ? 96 : Math.floor((t - 41.71) * FPS) + 1;
-    const f = await vframe('lipsync/cta', idx, 97);
+    const f = SITE ? await vframe('lipsync/site', Math.floor((t - 41.95) * FPS) + 1, 68)      // lipsync "Acesse o site" (Aurora)
+                   : await vframe('lipsync/cta', Math.floor((t - 41.71) * FPS) + 1, 97);
     cover(f, 1.04 + lt * (SITE ? 0.02 : 0.012), 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
   } },
   // encerramento (tela final aprovada no v3)
