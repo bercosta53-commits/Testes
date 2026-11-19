@@ -220,7 +220,7 @@ const tab = (t) => `<aside class="tab"><i></i><span>${esc(t)}</span></aside>`;
     <div class="ghost" aria-hidden="true">150</div>
     <div class="capa-c">
       <div class="ano">ESTUDO · ${esc(T.capa.ano)}</div>
-      <div><h1 class="big">Nomes que <em>rolam</em> na boca</h1><div class="rule"></div><p class="subt">${esc(T.capa.subtitulo)}</p></div>
+      <div><h1 class="big">Nomes mais <em>sonoros</em> e impactantes do esporte mundial</h1><div class="rule"></div><p class="subt">${esc(T.capa.subtitulo)}</p></div>
       <div class="ano">150 NOMES · ${nPaises} PAÍSES · ${nEsportes} ESPORTES</div>
     </div>`,
   });
@@ -384,17 +384,17 @@ pages.find((p) => p.sec === 'sumario').html = sumHTML;
 const css = fontCSS + fs.readFileSync(P('src/style.css'), 'utf8').replace(/(-?\d*\.?\d+)u(?![a-z0-9])/g, 'calc(var(--u)*$1)');
 const js = fs.readFileSync(P('src/book.js'), 'utf8');
 const og = SITE_URL ? `${SITE_URL}/assets/og.png` : 'assets/og.png';
-const desc = `Os nomes mais sonoros e impactantes do esporte mundial: ${150} nomes, ${nPaises} países, ${nEsportes} esportes.`;
+const desc = `O guia definitivo: ${150} nomes, ${nPaises} países, ${nEsportes} esportes.`;
 let html = `<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Nomes que rolam na boca</title>
+<title>Nomes mais sonoros e impactantes do esporte mundial</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="theme-color" content="#151A1F">
 <meta property="og:type" content="book"><meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Nomes que rolam na boca">
+<meta property="og:title" content="Nomes mais sonoros e impactantes do esporte mundial: o guia definitivo">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="${esc(og)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 ${SITE_URL ? `<meta property="og:url" content="${esc(SITE_URL)}/">` : ''}

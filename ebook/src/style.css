@@ -59,7 +59,7 @@ a{color:inherit}
 
 /* capa */
 .capa .capa-c{position:absolute;inset:0;padding:34u 24u 28u 24u;display:flex;flex-direction:column;justify-content:space-between}
-.capa .big{font:800 88u/.86 var(--cond);text-transform:uppercase;color:var(--osso);letter-spacing:-.005em}
+.capa .big{font:800 60u/.9 var(--cond);text-transform:uppercase;color:var(--osso);letter-spacing:-.005em}
 .capa .big em{font-style:normal;color:var(--ambar)}
 .capa .ghost{position:absolute;right:-18u;bottom:70u;font:800 300u/.8 var(--cond);color:rgba(228,218,200,.07);pointer-events:none}
 .capa .ano{font:700 14u/1 var(--cond);letter-spacing:.14em;color:var(--ambar)}
