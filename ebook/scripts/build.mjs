@@ -315,7 +315,7 @@ for (let i = 0; i < rkRows.length / 10; i++) {
   const chunk = rkRows.slice(i * 10, i * 10 + 10);
   addPage({ sec: 'ranking', cls: 'paper', title: `${ord(chunk[0].pos)} ao ${ord(chunk[chunk.length - 1].pos)}`, pos: chunk[0].pos, html: `${tab('Ranking')}
   <div class="body"><div class="rk-h"><span class="eyebrow">Ranking · nota de assinatura</span><h2>${ord(chunk[0].pos)} a ${ord(chunk[chunk.length - 1].pos)}</h2></div>
-  <ul class="rows">${chunk.map((r) => `<li class="row${r.pos <= 20 ? ' top20' : ''}"><span class="rp">${r.pos}</span>${flag(r)}<span class="rn"><b>${r.ficha && r.ficha.tipo === 'pausa' ? '<span class="tri"></span>' : ''}${esc(r.nome)}</b><small>${esc(r.grupo)}</small></span><span class="rs">${esc(r.notaStr)}</span></li>`).join('')}</ul></div>` });
+  <ul class="rows">${chunk.map((r) => `<li class="row${r.pos <= 20 ? ' top20' : ''}"><span class="rp">${r.pos}</span>${flag(r)}<span class="rn"><b>${r.ficha && r.ficha.tipo === 'pausa' ? '<span class="tri"></span>' : ''}${esc(r.nome)}</b><small>${esc(r.esporte)}</small></span><span class="rs">${esc(r.notaStr)}</span></li>`).join('')}</ul></div>` });
   for (const r of pauseAfter.get(i) || []) addPage({ sec: 'ranking', cls: 'dark pause', title: `${ord(r.pos)} ${r.nome}`, pos: r.pos, html: pauseHTML(r) });
 }
 // divisor Top 10
