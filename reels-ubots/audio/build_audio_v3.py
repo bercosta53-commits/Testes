@@ -21,7 +21,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
 SR = 48000
-DUR = 45.6 if SITE else 48.1
+DUR = 46.0 if SITE else 48.1
 BPM = 123
 
 # onde o som "acontece" dentro do arquivo (igual ao v1b)
@@ -74,11 +74,11 @@ GLITCH = (3.4, 3.9)            # cues nesta janela e o mergulho (8,1 s) não lev
 DIVE = 8.1
 PLIN = 0.95
 
-if SITE:   # sem CTA da persona: o final é locução sobre a tela final
+if SITE:   # a apresentadora volta para fechar ("Acesse o site da Ubots"); depois, só os logos
     CUES = [c for c in CUES if c[0] < 41.55] + [
-        (41.6, 'slide', -9),             # tela final entra
-        (42.05, 'pop', -9),              # selo do site aparece
-        (43.55, 'chime', -5),            # assinatura ao dizer "Ubots"
+        (41.6, 'whoosh', -13),           # volta para a apresentadora
+        (44.6, 'slide', -9),             # cartão dos logos
+        (44.95, 'chime', -5),            # assinatura
     ]
 
 

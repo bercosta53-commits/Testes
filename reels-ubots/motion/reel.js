@@ -6,8 +6,8 @@
 'use strict';
 // variante: ?variant=site -> sem o CTA da persona; o final é locução sobre a tela final ("Acesse o site da Ubots")
 const SITE = new URLSearchParams(location.search).get('variant') === 'site';
-const W = 1080, H = 1920, FPS = 30, DUR = SITE ? 45.6 : 48.1;
-const END_T0 = SITE ? 41.6 : 45.1;   // tela final
+const W = 1080, H = 1920, FPS = 30, DUR = SITE ? 46.0 : 48.1;
+const END_T0 = SITE ? 44.6 : 45.1;   // tela final (no SITE: só os logos, depois do fechamento da apresentadora)
 const C = {
   paper: '#F9F8F1', grid: 'rgba(30,25,15,0.045)', ink: '#141210', soft: '#BDB6AC', gray: '#8A847C',
   yellow: '#F9C23C', yellowL: '#FCE3A0', white: '#FFFFFF', chat: '#F2EEE6', green: '#D9FDD3',
@@ -310,6 +310,7 @@ function buildTimeline(spoken) {
   }
   T_CTX = (WORDS.find(w => w.w.startsWith('contexto')) || { t: 18.9 }).t;
 }
+if (SITE) SEGS.splice(-2, 2, [41.95, 43.95, ['Acesse o *site da Ubots.*']]);   // sem "Clica no link / É grátis"
 buildTimeline(null);
 
 // título revelado palavra a palavra: cinza → preto, marca-texto e risco no tempo da fala
@@ -768,11 +769,25 @@ const SCENES2 = [
   } },
   // CTA com a persona: o take inteiro da fala, sem corte no meio
   { a: 41.6, b: END_T0, cap: 1180, vig: 0.35, draw: async (t, lt) => {
-    const f = await vframe('lipsync/cta', Math.floor((t - 41.71) * FPS) + 1, 97);   // a fala começa em 41,71 s
-    cover(f, 1.04 + lt * 0.012, 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
+    // completa: a fala do clipe começa em 41,71 s | SITE: segura o sorriso final do clipe (boca fechada) enquanto a locução fecha
+    const idx = SITE ? 96 : Math.floor((t - 41.71) * FPS) + 1;
+    const f = await vframe('lipsync/cta', idx, 97);
+    cover(f, 1.04 + lt * (SITE ? 0.02 : 0.012), 0.5, 0.42, Math.sin(t * 0.6) * 3, 0);
   } },
   // encerramento (tela final aprovada no v3)
   { a: END_T0, b: DUR, paper: true, draw: (t, lt) => {
+    if (SITE) {
+      // sem título, card, botão ou selo: só a assinatura das duas marcas, com respiro
+      const kl = eOut(prog(t, END_T0 + 0.1, END_T0 + 0.5));
+      withT(() => {
+        const uh = 92, uw = uh * IMG.ubotsRef.width / IMG.ubotsRef.height, vh = 112, vw = vh * IMG.viaRef.width / IMG.viaRef.height;
+        const total = uw + 56 + 3 + 56 + vw; let x = -total / 2;
+        ctx.drawImage(IMG.ubotsRef, x, -uh / 2, uw, uh); x += uw + 56;
+        ctx.fillStyle = '#d6d2c9'; ctx.fillRect(x, -48, 3, 96); x += 59;
+        ctx.drawImage(IMG.viaRef, x, -vh / 2, vw, vh);
+      }, W / 2, 960 + (1 - kl) * 20, 1, 0, kl);
+      return;
+    }
     const e = enter(lt, 0.25);
     withT(() => smallCaps('PLAYBOOK UBOTS', W / 2, 0), 0, 330, 1, 0, e);
     withT(() => text('Agentes de IA', W / 2, 0, { w: 800, size: 104, align: 'center' }), 0, 440, 1, 0, e);
@@ -782,17 +797,15 @@ const SCENES2 = [
     }, 0, 550, 1, 0, eOut(prog(lt, 0.1, 0.35)));
     docCard(W / 2, 930, 680, eOut(prog(lt, 0.15, 0.4)), 0);
     if (SITE) {
-      // final leve: sem botão de download. Um selo discreto acompanha a locução "Acesse o site da Ubots".
-      const bp = eBack(prog(t, 42.0, 42.35), 1.8);
+      // sem botão, sem selo: só a assinatura das duas marcas
+      const kl = eOut(prog(t, END_T0 + 0.1, END_T0 + 0.5));
       withT(() => {
-        font(700, 44); const tw = ctx.measureText('Acesse o site da Ubots').width, pw = tw + 150;
-        rr(-pw / 2, -58, pw, 116, 58); ctx.fillStyle = C.white; ctx.fill(); ctx.strokeStyle = C.ink; ctx.lineWidth = 4; ctx.stroke();
-        text('Acesse o site da Ubots', -pw / 2 + 44, 3, { w: 700, size: 44 });
-        ctx.beginPath(); ctx.arc(pw / 2 - 58, 0, 34, 0, Math.PI * 2); ctx.fillStyle = C.yellow; ctx.fill();
-        ctx.strokeStyle = C.ink; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        ctx.beginPath(); ctx.moveTo(pw / 2 - 70, 12); ctx.lineTo(pw / 2 - 46, -12); ctx.moveTo(pw / 2 - 64, -12); ctx.lineTo(pw / 2 - 46, -12); ctx.lineTo(pw / 2 - 46, 6); ctx.stroke();
-      }, W / 2, 1270, bp, 0, bp * 2);
-      logosRow(1450, eOut(prog(t, 43.4, 43.75)));
+        const uh = 92, uw = uh * IMG.ubotsRef.width / IMG.ubotsRef.height, vh = 112, vw = vh * IMG.viaRef.width / IMG.viaRef.height;
+        const total = uw + 56 + 3 + 56 + vw; let x = -total / 2;
+        ctx.drawImage(IMG.ubotsRef, x, -uh / 2, uw, uh); x += uw + 56;
+        ctx.fillStyle = '#d6d2c9'; ctx.fillRect(x, -48, 3, 96); x += 59;
+        ctx.drawImage(IMG.viaRef, x, -vh / 2, vw, vh);
+      }, W / 2, 960 + (1 - kl) * 20, 1, 0, kl);
     } else {
       const bp = eBack(prog(t, END_T0 + 0.25, END_T0 + 0.55), 1.8);
       withT(() => ctaButton(0, 0, 'Baixe grátis', t, 'check'), W / 2, 1270, bp, 0, bp * 2);
