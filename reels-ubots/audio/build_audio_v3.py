@@ -13,12 +13,15 @@ Os tempos dos efeitos seguem o motion v3 (reel.js).
 import os
 import subprocess
 
+VARIANT = os.environ.get('VARIANT', '')          # '' = versão completa (48,1 s) | 'site' = final com "Acesse o site" (45,6 s)
+SITE = VARIANT == 'site'
+
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
 SR = 48000
-DUR = 48.1
+DUR = 45.6 if SITE else 48.1
 BPM = 123
 
 # onde o som "acontece" dentro do arquivo (igual ao v1b)
@@ -72,6 +75,13 @@ GLITCH = (3.4, 3.9)            # cues nesta janela e o mergulho (8,1 s) não lev
 DIVE = 8.1
 PLIN = 0.95
 
+if SITE:   # sem CTA da persona: o final é locução sobre a tela final
+    CUES = [c for c in CUES if c[0] < 41.55] + [
+        (41.6, 'slide', -9),             # tela final entra
+        (42.05, 'pop', -9),              # selo do site aparece
+        (43.55, 'chime', -5),            # assinatura ao dizer "Ubots"
+    ]
+
 
 def load(extra):
     cmd = ['ffmpeg', '-v', 'error', *extra, '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-']
@@ -96,7 +106,7 @@ def place(bed, clip, t, gain_db=0.0):
 def run():
     N = int(DUR * SR)
     # 1) locução (tomada única, nos tempos originais)
-    vo = load(['-i', os.path.join(HERE, 'locucao_v4.mp3')])
+    vo = load(['-i', os.path.join(HERE, 'locucao_site.mp3' if SITE else 'locucao_v4.mp3')])
     vo_bed = np.zeros((N, 2), np.float32); place(vo_bed, vo, 0)
     # 2) efeitos
     fx = np.zeros((N, 2), np.float32)
@@ -140,7 +150,7 @@ def run():
     db = np.full(N, -16.0, np.float32)
     k = np.clip((t - 6.3) / (11.5 - 6.3), 0, 1)
     db += (-8.0 - (-16.0)) * (0.5 - 0.5 * np.cos(np.pi * k))
-    db += 3.0 * np.clip((t - 44.4) / 0.8, 0, 1)
+    db += 3.0 * np.clip((t - (DUR - 3.7)) / 0.8, 0, 1)
     lvl = (10 ** (db / 20)).astype(np.float32)
     mus *= lvl[:, None]
     fo = int(1.2 * SR); mus[-fo:] *= np.linspace(1, 0, fo)[:, None]
@@ -157,11 +167,12 @@ def run():
     meas = subprocess.run(['ffmpeg', '-v', 'info', '-i', pre, '-af', 'ebur128', '-f', 'null', '-'], capture_output=True, text=True).stderr
     I = float([l for l in meas.splitlines() if l.strip().startswith('I:')][-1].split()[1])
     gain = -14.0 - I
-    final = os.path.join(HERE, 'mix_monstro_v3_-14LUFS.wav')
+    tag = '_site' if SITE else '_v3'
+    final = os.path.join(HERE, f'mix_monstro{tag}_-14LUFS.wav')
     subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', pre, '-af',
                     f'volume={gain:.2f}dB,alimiter=limit=0.84:attack=5:release=60:level=disabled',
                     '-c:a', 'pcm_s16le', '-ar', str(SR), final], check=True)
-    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', final, '-c:a', 'aac', '-b:a', '256k', os.path.join(HERE, 'mix_monstro_v3.m4a')], check=True)
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', final, '-c:a', 'aac', '-b:a', '256k', os.path.join(HERE, f'mix_monstro{tag}.m4a')], check=True)
     print(f'trilha {len(out) / SR:.1f}s a partir de {AT:+.2f}s | loudness antes {I:.1f} LUFS, ganho {gain:+.1f} dB')
 
 

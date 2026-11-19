@@ -4,8 +4,10 @@
 // cards brancos com sombra suave, traços amarelos finos nos cantos.
 // Cada quadro é calculado só a partir do tempo (render paralelo e determinístico).
 'use strict';
-const W = 1080, H = 1920, FPS = 30, DUR = 48.1;
-const END_T0 = 45.1;   // tela final (porte da tela final do v1b)
+// variante: ?variant=site -> sem o CTA da persona; o final é locução sobre a tela final ("Acesse o site da Ubots")
+const SITE = new URLSearchParams(location.search).get('variant') === 'site';
+const W = 1080, H = 1920, FPS = 30, DUR = SITE ? 45.6 : 48.1;
+const END_T0 = SITE ? 41.6 : 45.1;   // tela final
 const C = {
   paper: '#F9F8F1', grid: 'rgba(30,25,15,0.045)', ink: '#141210', soft: '#BDB6AC', gray: '#8A847C',
   yellow: '#F9C23C', yellowL: '#FCE3A0', white: '#FFFFFF', chat: '#F2EEE6', green: '#D9FDD3',
@@ -760,10 +762,24 @@ const SCENES2 = [
       text('o método da Viacredi.', W / 2, 48, { w: 600, size: 36, fam: 'Nunito', color: '#4F4A44', align: 'center' });
     }, 0, 550, 1, 0, eOut(prog(lt, 0.1, 0.35)));
     docCard(W / 2, 930, 680, eOut(prog(lt, 0.15, 0.4)), 0);
-    const bp = eBack(prog(t, END_T0 + 0.25, END_T0 + 0.55), 1.8);
-    withT(() => ctaButton(0, 0, 'Baixe grátis', t, 'check'), W / 2, 1270, bp, 0, bp * 2);
-    withT(() => text('PDF gratuito', W / 2, 0, { w: 600, size: 28, fam: 'Nunito', color: C.gray, align: 'center' }), 0, 1375, 1, 0, bp);
-    logosRow(1490, eOut(prog(t, END_T0 + 0.45, END_T0 + 0.75)));
+    if (SITE) {
+      // final leve: sem botão de download. Um selo discreto acompanha a locução "Acesse o site da Ubots".
+      const bp = eBack(prog(t, 42.0, 42.35), 1.8);
+      withT(() => {
+        font(700, 44); const tw = ctx.measureText('Acesse o site da Ubots').width, pw = tw + 150;
+        rr(-pw / 2, -58, pw, 116, 58); ctx.fillStyle = C.white; ctx.fill(); ctx.strokeStyle = C.ink; ctx.lineWidth = 4; ctx.stroke();
+        text('Acesse o site da Ubots', -pw / 2 + 44, 3, { w: 700, size: 44 });
+        ctx.beginPath(); ctx.arc(pw / 2 - 58, 0, 34, 0, Math.PI * 2); ctx.fillStyle = C.yellow; ctx.fill();
+        ctx.strokeStyle = C.ink; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.beginPath(); ctx.moveTo(pw / 2 - 70, 12); ctx.lineTo(pw / 2 - 46, -12); ctx.moveTo(pw / 2 - 64, -12); ctx.lineTo(pw / 2 - 46, -12); ctx.lineTo(pw / 2 - 46, 6); ctx.stroke();
+      }, W / 2, 1270, bp, 0, bp * 2);
+      logosRow(1450, eOut(prog(t, 43.4, 43.75)));
+    } else {
+      const bp = eBack(prog(t, END_T0 + 0.25, END_T0 + 0.55), 1.8);
+      withT(() => ctaButton(0, 0, 'Baixe grátis', t, 'check'), W / 2, 1270, bp, 0, bp * 2);
+      withT(() => text('PDF gratuito', W / 2, 0, { w: 600, size: 28, fam: 'Nunito', color: C.gray, align: 'center' }), 0, 1375, 1, 0, bp);
+      logosRow(1490, eOut(prog(t, END_T0 + 0.45, END_T0 + 0.75)));
+    }
   } },
 ];
 

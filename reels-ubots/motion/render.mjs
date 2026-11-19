@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(p).pipe(res);
 });
 await new Promise(r => server.listen(0, r));
-const url = `http://127.0.0.1:${server.address().port}/motion/reel.html?render`;
+const url = `http://127.0.0.1:${server.address().port}/motion/reel.html?render${args.variant ? '&variant=' + args.variant : ''}`;
 
 const browser = await chromium.launch({ args: ['--force-color-profile=srgb'] });
 const queue = [];
