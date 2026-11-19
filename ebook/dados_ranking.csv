@@ -1,0 +1,167 @@
+﻿posicao;nome;bandeira;grupo;nota_assinatura;F;P;M;D;X;eco;bloco;C;E;fama;apelido;total_sonoro;nota_sonora;no_corte_150
+1;Lomana LuaLua;🇨🇩;Cantigas em bloco;8,20;10;9;9;10;6;10;7;10;8;2;nao;56;9,33;sim
+2;Zinedine Zidane;🇫🇷;Cantados e fluidos;8,18;10;9;9;9;4;8;6;8;9;5;nao;54;9,00;sim
+3;Papa Bouba Diop;🇸🇳;Cantigas em bloco;8,15;8;9;9;6;7;10;9;10;8;3;nao;50;8,33;sim
+4;Djemba-Djemba;🇨🇲;Cantigas em bloco;8,12;8;10;8;10;8;10;7;10;7;2;nao;53;8,83;sim
+5;Shaquille O'Neal;🇺🇸;Cantigas em bloco;8,08;8;10;8;8;5;8;7;10;7;5;nao;51;8,50;sim
+6;Dikembe Mutombo;🇨🇩;Cantigas em bloco;8,05;8;10;9;8;5;9;6;10;8;4;nao;53;8,83;sim
+7;Bixente Lizarazu;🇫🇷;Cantados e fluidos;8,03;9;9;9;10;8;9;3;7;8;4;nao;52;8,67;sim
+8;Maurren Higa Maggi;🇧🇷;Cantigas em bloco;8,00;8;10;9;9;7;7;7;10;6;4;nao;52;8,67;sim
+9;Jay-Jay Okocha;🇳🇬;Cantados e fluidos;7,92;10;10;9;8;5;10;6;8;8;4;sim;51;8,50;sim
+10;Romelu Lukaku;🇧🇪;Cantados e fluidos;7,85;10;10;9;8;4;9;3;10;8;4;nao;55;9,17;sim
+11;Gianluca Pagliuca;🇮🇹;Cantados e fluidos;7,85;9;10;9;7;5;10;5;10;8;3;nao;53;8,83;sim
+12;Loris Capirossi;🇮🇹;Cantados e fluidos;7,82;8;10;9;9;7;9;3;7;8;4;nao;51;8,50;sim
+13;Pierre-Emerick Aubameyang;🇬🇦;Cantigas em bloco;7,83;8;9;9;10;8;5;8;7;8;4;nao;51;8,50;sim
+14;Duje Ćaleta-Car;🇭🇷;Cantigas em bloco;7,80;8;9;7;10;9;9;7;8;8;2;nao;50;8,33;sim
+15;Ole Gunnar Solskjær;🇳🇴;Cantigas em bloco;7,78;5;8;8;8;9;7;9;10;7;4;nao;46;7,67;sim
+16;Thierry Henry;🇫🇷;Curtos e abertos;7,60;9;10;9;6;2;9;3;10;8;5;nao;52;8,67;sim
+17;Bukayo Saka;🇬🇧;Cantados e fluidos;7,55;10;10;9;9;3;8;3;8;8;4;nao;54;9,00;sim
+18;Giannis Antetokounmpo;🇬🇷;Longos e quase ilegíveis;7,55;7;8;9;7;10;5;5;7;9;5;nao;47;7,83;sim
+19;Tore André Flo;🇳🇴;Cantigas em bloco;7,53;9;9;9;7;10;6;9;5;6;3;nao;45;7,50;sim
+20;Warren Zaïre-Emery;🇫🇷;Cantigas em bloco;7,50;9;8;9;9;7;6;7;8;8;3;nao;51;8,50;sim
+21;Manu Ginóbili;🇦🇷;Cantados e fluidos;7,45;10;10;9;8;5;5;3;8;8;5;nao;53;8,83;sim
+22;Yaya Touré;🇨🇮;Curtos e abertos;7,42;10;10;9;5;3;9;5;8;7;4;nao;49;8,17;sim
+23;Naomi Osaka;🇯🇵;Cantados e fluidos;7,42;10;9;9;7;3;6;3;10;9;5;nao;54;9,00;sim
+24;Juan Martín del Potro;🇦🇷;Cantigas em bloco;7,43;7;10;9;7;4;6;8;10;7;4;nao;50;8,33;sim
+25;Kareem Abdul-Jabbar;🇺🇸;Longos e quase ilegíveis;7,42;3;8;7;7;9;6;7;10;9;5;nao;44;7,33;sim
+26;Dele Alli;🇬🇧;Cantados e fluidos;7,28;10;10;8;8;4;8;3;10;7;3;nao;53;8,83;sim
+27;Sergio Goycochea;🇦🇷;Cantados e fluidos;7,28;9;10;9;8;6;6;3;7;8;4;nao;51;8,50;sim
+28;Siphiwe Tshabalala;🇿🇦;Cantados e fluidos;7,28;9;8;9;6;8;9;3;7;8;3;nao;47;7,83;sim
+29;Presnel Kimpembe;🇫🇷;Longos e quase ilegíveis;7,25;5;9;8;10;7;8;3;10;8;3;nao;50;8,33;sim
+30;Khvicha Kvaratskhelia;🇬🇪;Longos e quase ilegíveis;7,20;5;6;9;10;10;8;3;8;8;3;nao;46;7,67;sim
+31;Yelena Isinbayeva;🇷🇺;Cantados e fluidos;7,17;9;9;9;7;6;5;3;7;8;5;nao;49;8,17;sim
+32;Giancarlo Fisichella;🇮🇹;Cantigas em bloco;7,18;8;9;9;8;5;7;6;7;8;3;nao;49;8,17;sim
+33;Aryna Sabalenka;🇧🇾;Cantados e fluidos;7,10;9;9;9;8;6;6;3;7;7;4;nao;49;8,17;sim
+34;Takumi Minamino;🇯🇵;Cantados e fluidos;7,08;10;9;9;7;3;8;3;10;7;3;nao;52;8,67;sim
+35;Malo Gusto;🇫🇷;Cantados e fluidos;7,07;9;10;8;9;6;8;3;10;5;2;nao;51;8,50;sim
+36;Kylian Mbappé;🇫🇷;Fluidos de manual;7,08;8;9;8;9;5;3;3;10;9;5;nao;53;8,83;sim
+37;Rocky Marciano;🇺🇸;Cantados e fluidos;7,07;9;10;8;8;4;6;4;8;8;5;sim;49;8,17;sim
+38;Eden Hazard;🇧🇪;Fluidos de manual;7,02;8;10;7;9;7;5;3;8;7;4;nao;49;8,17;sim
+39;Sergej Milinković-Savić;🇷🇸;Cantigas em bloco;7,03;6;8;9;7;8;6;7;7;8;3;nao;45;7,50;sim
+40;Massimiliano Papis;🇮🇹;Cantados e fluidos;7,00;9;9;9;8;5;6;5;10;8;2;nao;53;8,83;sim
+41;Muhammad Ali;🇺🇸;Curtos e abertos;6,97;7;10;8;4;8;4;4;8;9;5;nao;46;7,67;sim
+42;Vasilis Torosidis;🇬🇷;Cantados e fluidos;6,92;9;9;9;7;5;9;3;7;8;2;nao;49;8,17;sim
+43;Valentino Rossi;🇮🇹;Curtos e abertos;6,90;8;10;9;6;2;5;3;8;10;5;nao;51;8,50;sim
+44;Marouane Fellaini;🇧🇪;Cantados e fluidos;6,85;9;10;9;8;5;5;3;10;6;3;nao;52;8,67;sim
+45;Gerard Deulofeu;🇪🇸;Fluidos de manual;6,85;9;10;9;8;6;5;3;10;8;2;nao;54;9,00;sim
+46;Piero Hincapié;🇪🇨;Cantados e fluidos;6,83;9;10;9;9;6;5;3;7;6;3;nao;50;8,33;sim
+47;Henrikh Mkhitaryan;🇦🇲;Longos e quase ilegíveis;6,83;6;8;9;8;9;4;3;10;9;3;nao;50;8,33;sim
+48;Papiss Demba Cissé;🇸🇳;Cantigas em bloco;6,80;8;10;9;7;5;6;7;7;7;2;nao;48;8,00;sim
+49;Eliud Kipchoge;🇰🇪;Fluidos de manual;6,80;6;9;9;7;6;4;3;8;8;5;nao;47;7,83;sim
+50;Sami Khedira;🇩🇪;Cantados e fluidos;6,78;10;10;8;8;4;4;3;8;7;4;nao;51;8,50;sim
+51;Ukyo Katayama;🇯🇵;Cantados e fluidos;6,75;10;10;9;8;4;7;3;7;7;2;nao;51;8,50;sim
+52;Dayot Upamecano;🇫🇷;Cantados e fluidos;6,75;9;9;9;10;6;4;3;7;7;3;nao;51;8,50;sim
+53;Mario Mandžukić;🇭🇷;Longos e quase ilegíveis;6,75;7;8;7;7;8;6;3;10;8;3;nao;47;7,83;sim
+54;Yuto Nagatomo;🇯🇵;Cantados e fluidos;6,72;10;10;9;7;3;6;3;8;7;3;nao;51;8,50;sim
+55;Alejandro Garnacho;🇦🇷;Cantados e fluidos;6,73;9;9;9;7;5;5;3;10;7;3;nao;51;8,50;sim
+56;Sha'Carri Richardson;🇺🇸;Fluidos de manual;6,72;6;9;8;8;5;5;5;8;7;4;nao;46;7,67;sim
+57;Jarno Trulli;🇮🇹;Fluidos de manual;6,70;8;10;8;9;3;5;3;10;8;3;nao;53;8,83;sim
+58;Phillip Cocu;🇳🇱;Fluidos de manual;6,65;8;10;8;9;4;5;3;10;6;3;nao;51;8,50;sim
+59;Thibaut Courtois;🇧🇪;Fluidos de manual;6,65;9;9;8;7;5;3;3;10;8;4;nao;51;8,50;sim
+60;Andrey Arshavin;🇷🇺;Fluidos de manual;6,65;7;10;7;7;5;7;3;8;8;3;nao;47;7,83;sim
+61;Bastian Schweinsteiger;🇩🇪;Longos e quase ilegíveis;6,65;5;8;7;9;9;3;3;10;8;4;nao;47;7,83;sim
+62;Faryd Mondragón;🇨🇴;Fluidos de manual;6,62;6;10;8;9;5;5;3;10;7;3;nao;50;8,33;sim
+63;Andre De Grasse;🇨🇦;Fluidos de manual;6,62;8;10;6;7;4;4;5;10;7;4;nao;48;8,00;sim
+64;Callum Hudson-Odoi;🇬🇧;Cantigas em bloco;6,62;5;9;9;8;7;5;7;8;7;2;nao;46;7,67;sim
+65;Kyriakos Papadopoulos;🇬🇷;Cantados e fluidos;6,60;9;8;9;5;6;7;4;7;9;2;nao;47;7,83;sim
+66;Demba Ba;🇸🇳;Curtos e abertos;6,60;8;10;8;5;3;8;3;8;8;3;nao;47;7,83;sim
+67;Danny Drinkwater;🇬🇧;Longos e quase ilegíveis;6,60;6;9;7;6;9;8;4;8;6;2;nao;42;7,00;sim
+68;Faustino Asprilla;🇨🇴;Fluidos de manual;6,58;8;10;8;8;5;4;3;10;7;3;nao;51;8,50;sim
+69;Tijjani Reijnders;🇳🇱;Fluidos de manual;6,58;7;9;7;9;7;4;3;10;7;3;nao;49;8,17;sim
+70;Serginho Chulapa;🇧🇷;Cantados e fluidos;6,57;9;10;9;8;6;5;5;10;6;2;sim;50;8,33;sim
+71;Alexi Lalas;🇺🇸;Cantados e fluidos;6,55;9;10;7;9;4;7;3;8;6;2;nao;49;8,17;sim
+72;Funes Mori;🇦🇷;Fluidos de manual;6,50;9;10;9;8;4;4;3;10;8;2;nao;54;9,00;sim
+73;Carlos Valderrama;🇨🇴;Curtos e abertos;6,50;7;10;9;6;3;6;3;7;7;4;nao;46;7,67;sim
+74;Davor Šuker;🇭🇷;Fluidos de manual;6,50;8;10;7;7;6;2;3;10;8;4;nao;50;8,33;sim
+75;Hatem Ben Arfa;🇫🇷;Fluidos de manual;6,50;7;10;8;7;5;5;6;8;8;2;nao;48;8,00;sim
+76;Tyrell Malacia;🇳🇱;Cantados e fluidos;6,48;9;9;8;9;4;5;3;10;7;2;nao;52;8,67;sim
+77;Hakan Çalhanoğlu;🇹🇷;Fluidos de manual;6,47;7;9;8;6;8;4;3;8;9;3;nao;47;7,83;sim
+78;Mika Häkkinen;🇫🇮;Fluidos de manual;6,48;7;10;7;6;7;4;3;8;7;4;nao;45;7,50;sim
+79;Roger Milla;🇨🇲;Curtos e abertos;6,43;8;10;8;6;3;4;3;10;7;4;nao;49;8,17;sim
+80;Iker Casillas;🇪🇸;Curtos e abertos;6,42;8;10;7;6;3;4;3;8;7;5;nao;46;7,67;sim
+81;Milan Baroš;🇨🇿;Fluidos de manual;6,43;8;10;7;6;5;5;3;10;7;3;nao;48;8,00;sim
+82;John Obi Mikel;🇳🇬;Curtos e abertos;6,42;8;10;7;5;4;5;8;8;5;3;nao;43;7,17;sim
+83;Mohamed Salah;🇪🇬;Curtos e abertos;6,40;8;10;8;5;3;5;3;8;8;4;nao;47;7,83;sim
+84;Marat Safin;🇷🇺;Fluidos de manual;6,40;6;10;7;7;4;4;3;10;8;4;nao;48;8,00;sim
+85;Anatoliy Tymoshchuk;🇺🇦;Longos e quase ilegíveis;6,40;7;6;9;6;10;4;3;8;8;3;nao;44;7,33;sim
+86;Maurício Gugelmin;🇧🇷;Fluidos de manual;6,38;8;10;9;8;6;4;3;10;5;2;nao;50;8,33;sim
+87;Martin Djetou;🇨🇮;Fluidos de manual;6,38;8;10;8;7;5;5;3;10;7;2;nao;50;8,33;sim
+88;Mehdi Benatia;🇲🇦;Cantados e fluidos;6,35;10;10;8;7;4;4;3;7;7;3;nao;49;8,17;sim
+89;Gaizka Mendieta;🇪🇸;Fluidos de manual;6,35;8;10;8;9;4;4;3;8;6;3;nao;49;8,17;sim
+90;Miroslav Klose;🇩🇪;Fluidos de manual;6,35;7;10;9;8;4;3;3;8;6;4;nao;48;8,00;sim
+91;Roland Ratzenberger;🇦🇹;Longos e quase ilegíveis;6,35;3;9;6;8;8;7;3;10;8;2;nao;44;7,33;sim
+92;Mathieu Flamini;🇫🇷;Cantados e fluidos;6,33;9;9;9;7;4;4;3;8;7;3;nao;49;8,17;sim
+93;Kevin-Prince Boateng;🇬🇭;Cantigas em bloco;6,33;8;7;9;8;4;4;8;5;6;3;nao;43;7,17;sim
+94;Gabby Agbonlahor;🇬🇧;Fluidos de manual;6,33;6;9;8;9;7;4;3;10;7;2;nao;49;8,17;sim
+95;Cuauhtémoc Blanco;🇲🇽;Fluidos de manual;6,32;6;9;8;7;8;3;3;8;9;3;nao;47;7,83;sim
+96;Karol Kučera;🇸🇰;Curtos e abertos;6,30;9;10;9;5;5;6;3;8;6;2;nao;47;7,83;sim
+97;Pau Cubarsí;🇪🇸;Fluidos de manual;6,30;9;10;8;8;5;3;3;8;6;3;nao;49;8,17;sim
+98;Matuzalém;🇧🇷;Nome único e apelidos;6,30;9;10;7;9;6;4;3;6;8;2;nao;49;8,17;sim
+99;Péricles Chamusca;🇧🇷;Cantados e fluidos;6,27;8;10;9;9;5;5;3;7;8;1;nao;51;8,50;sim
+100;Pierluigi Casiraghi;🇮🇹;Cantados e fluidos;6,28;9;8;9;8;6;5;3;6;7;2;nao;47;7,83;sim
+101;Salomón Rondón;🇻🇪;Curtos e abertos;6,28;7;10;7;7;3;8;3;10;5;2;nao;46;7,67;sim
+102;Jari Litmanen;🇫🇮;Fluidos de manual;6,27;6;9;7;8;6;5;3;8;7;3;nao;45;7,50;sim
+103;Ryan Gravenberch;🇳🇱;Longos e quase ilegíveis;6,28;5;6;9;8;8;4;3;10;7;3;nao;45;7,50;sim
+104;Steve Cherundolo;🇺🇸;Cantados e fluidos;6,23;9;10;9;7;6;3;3;8;7;2;nao;50;8,33;sim
+105;Shinji Kagawa;🇯🇵;Curtos e abertos;6,22;9;10;8;7;3;4;3;8;7;3;nao;49;8,17;sim
+106;Luís Boa Morte;🇵🇹;Cantigas em bloco;6,22;8;8;9;7;8;5;5;5;8;1;nao;45;7,50;sim
+107;Nestory Irankunda;🇦🇺;Cantados e fluidos;6,20;8;9;9;8;7;5;3;7;7;1;nao;48;8,00;sim
+108;Trent Alexander-Arnold;🇬🇧;Longos e quase ilegíveis;6,20;3;6;6;8;6;6;6;7;7;4;nao;37;6,17;sim
+109;Takuma Sato;🇯🇵;Curtos e abertos;6,18;10;10;8;5;2;5;3;8;7;3;nao;48;8,00;sim
+110;Toby Alderweireld;🇧🇪;Longos e quase ilegíveis;6,15;5;7;7;9;9;3;3;10;6;3;nao;44;7,33;sim
+111;Hélder Postiga;🇵🇹;Fluidos de manual;6,10;7;10;9;8;5;4;3;8;6;2;nao;48;8,00;sim
+112;Javier Sotomayor;🇨🇺;Curtos e abertos;6,10;8;10;8;5;3;4;3;7;7;4;nao;45;7,50;sim
+113;Robin Le Normand;🇪🇸;Fluidos de manual;6,10;6;9;7;7;4;4;5;8;8;3;nao;45;7,50;sim
+114;Serguei Bubka;🇺🇦;Nome único e apelidos;6,10;5;8;8;6;6;4;3;5;7;5;nao;39;6,50;sim
+115;Nigel Mansell;🇬🇧;Fluidos de manual;6,08;6;9;8;7;3;3;3;10;7;4;nao;47;7,83;sim
+116;Paul Pogba;🇫🇷;Travados e secos;6,07;4;9;6;7;4;7;3;5;8;4;nao;39;6,50;sim
+117;Asamoah Gyan;🇬🇭;Fluidos de manual;6,05;9;9;6;7;5;3;3;8;8;3;nao;47;7,83;sim
+118;Regla Bell;🇨🇺;Nome único e apelidos;6,05;8;10;6;7;5;3;3;8;8;3;nao;47;7,83;sim
+119;Unai Simón;🇪🇸;Curtos e abertos;6,03;9;10;8;5;3;3;3;10;7;3;nao;49;8,17;sim
+120;Lars Grael;🇧🇷;Nome único e apelidos;6,03;6;9;6;9;4;3;3;8;7;4;nao;45;7,50;sim
+121;Jakub Błaszczykowski;🇵🇱;Longos e quase ilegíveis;6,03;4;7;7;7;10;4;3;7;8;3;nao;40;6,67;sim
+122;Damián Bobadilla;🇵🇾;Cantados e fluidos;6,00;9;10;8;7;5;5;3;8;6;1;nao;48;8,00;sim
+123;Jaime Oncins;🇧🇷;Fluidos de manual;6,00;8;10;7;8;5;3;3;10;6;2;nao;49;8,17;sim
+124;Gheorghe Popescu;🇷🇴;Curtos e abertos;6,00;8;9;8;4;5;4;3;8;8;3;nao;45;7,50;sim
+125;Seth Gibernau;🇪🇸;Fluidos de manual;6,00;5;9;8;9;6;3;3;8;6;3;nao;45;7,50;sim
+126;Micky van de Ven;🇳🇱;Longos e quase ilegíveis;6,00;6;9;7;7;6;5;6;7;5;2;nao;41;6,83;sim
+127;Per Mertesacker;🇩🇪;Longos e quase ilegíveis;6,00;5;8;7;9;8;4;3;5;7;3;nao;41;6,83;sim
+128;Younes Kaboul;🇫🇷;Fluidos de manual;5,98;8;10;7;8;4;3;3;10;7;2;nao;50;8,33;sim
+129;Maiconsuel;🇧🇷;Fluidos de manual;5,97;8;9;7;10;7;3;3;8;7;1;nao;49;8,17;sim
+130;Edwin van der Sar;🇳🇱;Longos e quase ilegíveis;5,98;3;8;6;8;7;3;6;7;6;4;nao;38;6,33;sim
+131;Eiður Guðjohnsen;🇮🇸;Longos e quase ilegíveis;5,95;4;8;6;8;10;4;3;8;8;2;nao;42;7,00;sim
+132;Giovanni van Bronckhorst;🇳🇱;Longos e quase ilegíveis;5,95;3;7;5;9;8;4;6;8;6;3;nao;38;6,33;sim
+133;Ons Jabeur;🇹🇳;Nome único e apelidos;5,93;6;9;6;7;5;3;3;8;7;4;nao;43;7,17;sim
+134;David Ospina;🇨🇴;Curtos e abertos;5,90;7;10;8;5;3;4;3;8;8;3;nao;46;7,67;sim
+135;Piotr Trochowski;🇩🇪;Longos e quase ilegíveis;5,90;4;9;6;7;8;5;3;8;8;2;nao;42;7,00;sim
+136;Alex Oxlade-Chamberlain;🇬🇧;Longos e quase ilegíveis;5,90;4;7;7;7;8;5;7;5;7;2;nao;37;6,17;sim
+137;Stephen Eustáquio;🇨🇦;Fluidos de manual;5,85;7;9;9;7;6;3;3;8;6;2;nao;46;7,67;sim
+138;Gerhard Berger;🇦🇹;Travados e secos;5,85;3;9;5;5;3;8;3;10;8;3;nao;40;6,67;sim
+139;Tony Meola;🇺🇸;Curtos e abertos;5,83;10;9;9;6;3;4;3;8;5;2;nao;47;7,83;sim
+140;Iker Muniain;🇪🇸;Fluidos de manual;5,83;8;9;8;8;4;3;3;8;7;2;nao;48;8,00;sim
+141;Achraf Hakimi;🇲🇦;Travados e secos;5,83;5;8;7;6;3;5;3;8;7;4;nao;41;6,83;sim
+142;Alen Bokšić;🇭🇷;Travados e secos;5,80;3;8;5;9;7;3;3;10;8;3;nao;43;7,17;sim
+143;Arda Güler;🇹🇷;Fluidos de manual;5,75;7;9;7;6;4;3;3;8;8;3;nao;45;7,50;sim
+144;Charles Barkley;🇺🇸;Fluidos de manual;5,72;5;9;8;6;3;3;3;10;5;4;nao;43;7,17;sim
+145;Lev Yashin;🇷🇺;Nome único e apelidos;5,72;5;9;6;7;3;3;3;5;8;5;nao;40;6,67;sim
+146;Vitinha;🇵🇹;Nome único e apelidos;5,70;10;10;8;8;3;3;2;6;7;3;sim;47;7,83;sim
+147;Ibrahim Ba;🇫🇷;Curtos e abertos;5,65;9;10;7;4;3;4;3;8;8;2;nao;46;7,67;sim
+148;Matvey Safonov;🇷🇺;Fluidos de manual;5,65;5;9;8;6;5;4;3;8;8;2;nao;44;7,33;sim
+149;Cesc Fàbregas;🇪🇸;Nome único e apelidos;5,60;5;8;6;8;5;3;3;5;7;4;nao;39;6,50;sim
+150;Maarten Martens;🇧🇪;Travados e secos;5,60;4;9;6;6;4;9;3;10;4;1;nao;39;6,50;sim
+151;Djalminha;🇧🇷;Nome único e apelidos;5,60;8;10;7;9;5;3;2;6;9;2;sim;47;7,83;nao
+152;Fran Mérida;🇪🇸;Nome único e apelidos;5,50;9;9;8;6;4;3;3;5;7;2;nao;44;7,33;nao
+153;Yao Ming;🇨🇳;Nome único e apelidos;5,45;8;9;5;5;2;2;2;5;9;5;nao;41;6,83;nao
+154;Dennis Rodman;🇺🇸;Travados e secos;5,45;3;8;6;6;3;4;3;10;6;4;nao;39;6,50;nao
+155;Edgar Davids;🇳🇱;Travados e secos;5,40;3;8;5;7;4;3;3;10;6;4;nao;39;6,50;nao
+156;Gervinho;🇨🇮;Nome único e apelidos;5,34;8;10;7;9;4;3;2;6;7;2;sim;45;7,50;nao
+157;Jaap Stam;🇳🇱;Travados e secos;5,27;3;9;6;6;4;3;3;5;8;4;nao;37;6,17;nao
+158;Florian Wirtz;🇩🇪;Travados e secos;5,28;4;7;6;7;5;3;3;8;7;3;nao;39;6,50;nao
+159;Denilson;🇧🇷;Nome único e apelidos;5,15;7;10;6;7;2;3;2;6;8;2;nao;44;7,33;nao
+160;Christoph Metzelder;🇩🇪;Travados e secos;5,15;2;8;6;8;7;3;3;8;6;2;nao;38;6,33;nao
+161;Ryan Giggs;🇬🇧;Travados e secos;5,15;4;7;4;8;3;3;3;8;6;4;nao;37;6,17;nao
+162;Ian Thorpe;🇦🇺;Travados e secos;5,12;4;8;5;5;3;3;2;8;5;5;nao;35;5,83;nao
+163;Larry Bird;🇺🇸;Travados e secos;5,08;4;7;4;5;3;3;2;8;7;5;nao;35;5,83;nao
+164;Romaric;🇨🇮;Nome único e apelidos;5,05;7;9;7;8;4;3;2;6;6;1;nao;43;7,17;nao
+165;Arvid Lindblad;🇬🇧;Travados e secos;4,88;1;8;4;9;5;4;3;10;7;1;nao;39;6,50;nao
+166;Dwight Yorke;🇹🇹;Travados e secos;4,55;1;7;3;7;5;3;3;5;5;4;nao;28;4,67;nao

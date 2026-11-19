@@ -1,0 +1,24 @@
+{
+  "name": "nomes-que-rolam-na-boca",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "E-book mobile: Nomes que rolam na boca",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "pdf": "node scripts/pdf.mjs",
+    "serve": "node scripts/serve.mjs",
+    "all": "npm run build && npm run pdf"
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/source-serif-4": "^5.3.1",
+    "flag-icons": "^7.6.0"
+  },
+  "devDependencies": {
+    "playwright": "*"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

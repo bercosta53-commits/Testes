@@ -1,0 +1,21 @@
+// Gera dist/nomes-que-rolam-na-boca.pdf: uma página por tela, 1080 x 1920 px.
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { loadPlaywright } from './pw.mjs';
+const { chromium } = await loadPlaywright();
+import { serve } from './serve.mjs';
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const DIST = path.join(ROOT, 'dist');
+const srv = await serve(0);
+const port = srv.address().port;
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
+await page.goto(`http://127.0.0.1:${port}/index.html?pdf=1`, { waitUntil: 'networkidle' });
+await page.evaluate(() => document.fonts.ready);
+await page.evaluate(async () => { await Promise.all([...document.images].map((i) => (i.complete ? 1 : new Promise((r) => { i.onload = i.onerror = r; })))); });
+const n = await page.evaluate(() => document.querySelectorAll('.sheet').length);
+const out = path.join(DIST, 'nomes-que-rolam-na-boca.pdf');
+await page.pdf({ path: out, width: '1080px', height: '1920px', printBackground: true, preferCSSPageSize: true, margin: { top: 0, right: 0, bottom: 0, left: 0 } });
+await browser.close(); srv.close();
+console.log(`PDF: ${out} (${(fs.statSync(out).size / 1048576).toFixed(1)} MB), ${n} telas`);

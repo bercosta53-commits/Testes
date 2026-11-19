@@ -1,0 +1,151 @@
+{
+  "capa": {
+    "titulo": "Nomes que rolam na boca",
+    "subtitulo": "Um estudo sobre os nomes mais sonoros, estranhos e marcantes do esporte",
+    "ano": "2026"
+  },
+  "abertura": {
+    "p1": [
+      "Este livro mede uma coisa que quase ninguém mede: o som do nome de quem joga. Gols, medalhas e recordes ficaram fora. A pergunta é outra. Quais nomes do esporte soam melhor, soam mais estranhos, ficam na cabeça?",
+      "Tudo começou com cinco nomes: Tore André Flo, Lomana LuaLua, Papa Bouba Diop, Ole Gunnar Solskjær e Zinedine Zidane. Quem ouve um deles uma vez nunca mais esquece. Ficou a dúvida simples de saber o que eles têm em comum."
+    ],
+    "p2": [
+      "A resposta virou um método e o método virou um ranking de 150 nomes, de {PAISES} países e {ESPORTES} esportes. A lista é uma opinião defendida com critério. Cada nota tem motivo, e você pode discordar de qualquer uma.",
+      "A contagem vai do 150º ao 1º. No caminho há pausas com fotografia, o Top 10 em meia página e uma página inteira para quem lidera. Role para baixo, use as setas do teclado ou volte ao sumário pelo botão no canto."
+    ]
+  },
+  "metodologia": {
+    "p1": [
+      "Cada nome recebe notas de 0 a 10 em oito critérios, reunidos em quatro camadas, mais um peso pequeno para a fama e um desconto para apelidos.",
+      "A escuta é a de um brasileiro lendo em voz alta. Ninguém pergunta quanto o atleta ganhou. Pergunta-se como o nome soa, o quanto estranha e se dá para dizer sem engasgar."
+    ],
+    "formula": "Nota = 0,30 x Sonoridade + 0,20 x Estranheza + 0,25 x Assinatura + 0,15 x Estrutura + 0,10 x Fama - Apelido",
+    "camadas": [
+      {
+        "nome": "Sonoridade",
+        "peso": "30%",
+        "criterios": "Fluidez (sílabas abertas), pronúncia (um brasileiro lê sem tropeçar) e musicalidade (variedade de vogais, assonância, final aberto)",
+        "exemplo": "Osaka e Saka fluem. Schweinsteiger pede fôlego."
+      },
+      {
+        "nome": "Estranheza",
+        "peso": "20%",
+        "criterios": "Raridade (quão incomum é o nome na própria cultura) e impacto (complexidade, jogo de palavras, contraste com o contexto)",
+        "exemplo": "Drinkwater e Capirossi pelo jogo de palavras. Kareem Abdul-Jabbar pelo contraste."
+      },
+      {
+        "nome": "Assinatura",
+        "peso": "25%",
+        "criterios": "Eco (repetição de som dentro do nome inteiro) e bloco (nome dito sempre inteiro)",
+        "exemplo": "Lua-Lua, Pa-pa Bou-ba, Gian-lu-ca Pa-gliu-ca."
+      },
+      {
+        "nome": "Estrutura",
+        "peso": "15%",
+        "criterios": "Cadência (acentos em intervalos regulares) e evocação (o nome aponta para um país ou cultura)",
+        "exemplo": "Zidane marca o passo. Solskjær chama a Noruega."
+      },
+      {
+        "nome": "Fama",
+        "peso": "10%",
+        "criterios": "De 1 (desconhecido) a 5 (ícone mundial)",
+        "exemplo": "O peso é pequeno de propósito, para o ranking não virar uma lista de lendas."
+      },
+      {
+        "nome": "Apelido",
+        "peso": "-0,33",
+        "criterios": "Desconto na nota final quando o nome é um nome de guerra",
+        "exemplo": "Vitinha, Djalminha, Gervinho."
+      }
+    ],
+    "p3": [
+      "As notas são julgamento. Ciência exata seria outra conversa. Três critérios (impacto, eco e bloco) entraram ao longo do estudo para dar conta de nomes que os critérios iniciais subestimavam, e há uma nota sobre isso na página final.",
+      "O ranking existe em duas versões. A sonora usa o total de 0 a 60, dividido por 6, e ignora impacto, eco, bloco e fama. A Assinatura, que é a deste livro, usa os pesos acima. A sonora premia quem soa bem, e a Assinatura premia também quem fica na cabeça."
+    ]
+  },
+  "grupos": {
+    "intro": "Os 166 nomes estudados foram separados por um agrupamento estatístico (k-means, em 7 grupos). As fronteiras são fracas: os nomes formam um contínuo, e os grupos são tendências. Um nome vizinho de outro grupo não ofende ninguém.",
+    "definicoes": {
+      "Cantados e fluidos": "Abertos, melódicos, quase sem consoante travada",
+      "Cantigas em bloco": "Compostos ou longos, com eco, ditos sempre inteiros",
+      "Fluidos de manual": "Limpos e rítmicos, mas sem eco nem estranheza",
+      "Curtos e abertos": "Enxutos, leves, de poucas sílabas",
+      "Longos e quase ilegíveis": "Muita consoante, grafia estranha, impacto máximo",
+      "Travados e secos": "Poucas sílabas, fechadas, de som áspero",
+      "Nome único e apelidos": "Uma palavra só, nome de guerra ou diminutivo"
+    },
+    "introducoes": {
+      "Cantados e fluidos": "Quase não há consoante travando a boca. O nome corre do começo ao fim, como Zidane e Lukaku, e dá vontade de repetir.",
+      "Cantigas em bloco": "São nomes que pedem para ser ditos inteiros. LuaLua e Papa Bouba Diop têm som repetido por dentro, e é isso que os faz parecer refrão.",
+      "Fluidos de manual": "Limpos e rítmicos, mas sem eco nem estranheza. Mbappé e Trulli correm bem na boca e passam sem fazer barulho. O nome funciona, e se esquece com a mesma facilidade.",
+      "Curtos e abertos": "Enxutos, leves, de poucas sílabas. Ali e Rossi cabem numa respiração só, o que ajuda quando o locutor precisa gritar a tempo.",
+      "Longos e quase ilegíveis": "Aqui a graça é o espanto. Antetokounmpo e Kvaratskhelia fazem o leitor parar, e o impacto vem da dificuldade.",
+      "Travados e secos": "Poucas sílabas, fechadas, de som áspero. Pogba e Rodman fecham a boca no meio do nome e soam como porta batida. A graça está na aspereza.",
+      "Nome único e apelidos": "Uma palavra só, nome de guerra ou diminutivo. Vitinha e Djalminha dispensam sobrenome, e por isso carregam o desconto de apelido na nota final."
+    },
+    "destaques": {
+      "Cantados e fluidos": [
+        "Zinedine Zidane",
+        "Romelu Lukaku"
+      ],
+      "Cantigas em bloco": [
+        "Lomana LuaLua",
+        "Papa Bouba Diop"
+      ],
+      "Fluidos de manual": [
+        "Kylian Mbappé",
+        "Jarno Trulli"
+      ],
+      "Curtos e abertos": [
+        "Muhammad Ali",
+        "Valentino Rossi"
+      ],
+      "Longos e quase ilegíveis": [
+        "Giannis Antetokounmpo",
+        "Khvicha Kvaratskhelia"
+      ],
+      "Travados e secos": [
+        "Paul Pogba",
+        "Dennis Rodman"
+      ],
+      "Nome único e apelidos": [
+        "Vitinha",
+        "Djalminha"
+      ]
+    }
+  },
+  "ranking": {
+    "abertura": "A contagem regressiva começa aqui. Do 150º ao 11º, dez nomes por tela. Quinze deles ganham uma pausa com fotografia, apresentação e o quadro completo de notas.",
+    "top10": "Agora o Top 10. Do 10º ao 2º, dois nomes por tela. O 1º ganha uma página inteira."
+  },
+  "eliminados": {
+    "intro": "Dezesseis nomes ficaram a um passo do corte, do 151º ao 166º. Cada um ganha uma linha sobre o som, e nenhuma sobre carreira.",
+    "linhas": {
+      "Djalminha": "Diminutivo de Djalma: o desconto de apelido pesou.",
+      "Fran Mérida": "Dois nomes curtos e um acento. Falta eco.",
+      "Yao Ming": "Duas sílabas num sopro só. Limpo, mas nada fica na cabeça.",
+      "Dennis Rodman": "Den-nis Rod-man fecha a boca duas vezes. Seco e travado.",
+      "Edgar Davids": "Reto, em dois blocos, sem som que sobre depois do fim.",
+      "Gervinho": "Um \"inho\" de infância que passou pelo desconto de apelido.",
+      "Jaap Stam": "Vogal dobrada e sobrenome de uma sílaba: acaba rápido.",
+      "Florian Wirtz": "O tz final fecha com um estalo, e o resto faz pouco.",
+      "Denilson": "Comum no Brasil, e por isso sem a raridade que o ranking premia.",
+      "Christoph Metzelder": "Comprido, com ph e tz no caminho: pesa sem render eco.",
+      "Ryan Giggs": "Giggs soa como gigue e mal ocupa uma sílaba.",
+      "Ian Thorpe": "Duas sílabas curtas e um th no meio: cadência certa, pouco impacto.",
+      "Larry Bird": "Bird é pássaro em inglês: todo mundo entende, ninguém estranha.",
+      "Romaric": "Nome único e curto, com o desconto de apelido na conta.",
+      "Arvid Lindblad": "Cadência escandinava regular e nenhum som que ecoe.",
+      "Dwight Yorke": "Dwight e Yorke se esbarram no meio, e o k fecha seco."
+    }
+  },
+  "final": {
+    "metodo": [
+      "O estudo começou com cinco nomes e critérios simples de sonoridade. Logo ficou claro que eles subestimavam justamente os nomes que o ouvido não esquece. Por isso impacto, eco e bloco entraram no caminho, e o ranking foi refeito com eles.",
+      "Os 166 nomes foram agrupados por k-means em sete grupos, e os 150 mais bem pontuados formam o ranking. As notas são julgamento de quem lê em voz alta em português do Brasil. Os dados de cada nome estão em tabela, e as posições do livro vêm dela sem retoque."
+    ],
+    "fontes": "Os fatos de carreira das fichas (clubes, títulos, datas, placares) foram conferidos em fontes públicas, listadas atleta por atleta no arquivo fontes.md que acompanha o livro. Tudo o que não tinha fonte ficou de fora.",
+    "agradecimentos": "A quem discutiu nomes em voz alta, discordou de uma nota e pediu para ouvir de novo. E a quem emprestou o ouvido para um Tsha-ba-la-la.",
+    "fotos": "As fotografias entram com crédito e licença na legenda. Os créditos completos estão listados abaixo."
+  }
+}
