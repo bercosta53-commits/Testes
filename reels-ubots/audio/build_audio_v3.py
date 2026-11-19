@@ -40,8 +40,7 @@ CUES = [
     (10.35, 'knock', -5),                    # "Não entendi": trava
     *[(t, 'tap', -11) for t in (10.75, 11.05, 11.35, 11.65)],   # Bancos, Cooperativas, Fintechs, Financeiras
     (12.0, 'swell', -15),                    # a luz entra com a Ubots (suave)
-    (12.6, 'pop', -8),                       # logo assenta
-    (13.55, 'slide', -10), (14.1, 'pop', -8), (14.95, 'pop', -8), (15.4, 'pop', -8),   # card do agente na cena da Ubots
+    (13.2, 'pop', -3), (13.95, 'pop', -1), (14.7, 'pop', -3),   # fluxo: cooperado, agente, time
     (16.0, 'whoosh', -12), (16.2, 'type', -17),                 # gerente digitando
     *[(t, 'whoosh', -20) for t in (17.55, 18.1, 18.65)],        # regras riscadas
     (T_CTX + 0.05, 'swell', -6),             # "contexto": a luz entra de novo

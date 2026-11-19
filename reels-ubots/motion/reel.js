@@ -580,26 +580,45 @@ function iris(t, lt, cx, cy, t0, dur, fn) {
   P = LIGHT;
 }
 function drawUbots(t, lt) {
+  // a Ubots como PEÇA DO PROCESSO, não como apresentação: o fluxo mostra onde o agente vive
+  // (cooperado -> agente de IA na plataforma -> time da cooperativa, com o contexto da conversa)
   const e = enter(lt);
-  waves(120, 150, 840, 14, 2, 38, 'rgba(249,194,60,0.55)', 6, t * 2);
-  withT(() => smallCaps('É AÍ QUE ENTRA', W / 2, 0), 0, 330, 1, 0, e);
-  const p = eBack(prog(t, 12.4, 12.9), 1.7);
-  const lw = 720, lh = lw * IMG.ubots.height / IMG.ubots.width;
-  withT(() => { ctx.drawImage(IMG.ubots, -lw / 2, -lh / 2, lw, lh); sparkle(lw / 2 + 34, -lh / 2 - 6, 30 * p, t, C.ink, true); }, W / 2, 500, 0.7 + 0.3 * p, 0, p * 2);
-  headline(t, 12.9, 17.0, 650, { size: 68, a: e });
-  // o agente em ação: card de conversa com a oferta chegando
-  const cp = eBack(prog(t, 13.5, 13.95), 1.3);
-  withT(() => {
-    chat(t, 90, 0, 900, 640, 'Agente de crédito', [
-      { side: 'in', at: 14.1, text: 'Oi! Você tem um crédito pré-aprovado. Quer ver como ele pode ajudar nos seus planos?', tag: true },
-      { side: 'out', at: 14.95, text: 'Quero ver!' },
-      { side: 'in', at: 15.4, text: 'Simulei uma opção pra você 👇' },
-    ]);
-  }, 0, 1010 + (1 - clamp(cp)) * 80, 1, 0, clamp(cp * 1.5));
-  // selos flutuando em volta do card
-  [['✦ Agente de IA', 220, 960, 14.2, -0.05], ['Segurança onde importa', 770, 1700, 15.2, 0.04]].forEach(([s2, x, y, at, r]) => {
-    const q = eBack(prog(t, at, at + 0.3), 2.2);
-    withT(() => pill(0, 0, s2, { size: 28, h: 58, bg: C.ink, fg: C.yellow }), x, y + Math.sin(t * 2 + x) * 6, q, r, q * 2);
+  headline(t, 12.0, 17.0, 520, { size: 74, a: e });
+  const cy = 1210, cw = 276, ch = 330, xs = [W / 2 - 336, W / 2, W / 2 + 336];
+  const at = [13.2, 13.95, 14.7];
+  const nodes = [
+    { title: 'Cooperado', sub: 'pelo WhatsApp', icon: 'chat' },
+    { title: 'Agente de IA', sub: 'roda na plataforma', icon: 'spark', logo: true },
+    { title: 'Time da cooperativa', sub: 'recebe o contexto', icon: 'person' },
+  ];
+  // conectores com mensagens viajando
+  [0, 1].forEach(k => {
+    const x1 = xs[k] + cw / 2 + 8, x2 = xs[k + 1] - cw / 2 - 8, q = eOut(prog(t, at[k + 1] - 0.25, at[k + 1] + 0.1));
+    if (q <= 0) return;
+    ctx.save(); ctx.globalAlpha *= q; ctx.strokeStyle = 'rgba(20,18,16,0.25)'; ctx.lineWidth = 4; ctx.setLineDash([2, 10]); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x1, cy); ctx.lineTo(x2, cy); ctx.stroke(); ctx.setLineDash([]);
+    const ph = ((t * 0.9 + k * 0.4) % 1); ctx.beginPath(); ctx.arc(lerp(x1, x2, ph), cy, 8, 0, Math.PI * 2); ctx.fillStyle = C.yellow; ctx.fill();
+    ctx.restore();
+  });
+  nodes.forEach((n, i) => {
+    const q = eBack(prog(t, at[i], at[i] + 0.35), 1.4);
+    const hot = i === 1 && t > 14.0 && t < 15.6;      // o agente acende quando a fala diz "agentes de IA"
+    withT(() => {
+      card(-cw / 2, -ch / 2, cw, ch, 34);
+      if (hot) { rr(-cw / 2, -ch / 2, cw, ch, 34); ctx.strokeStyle = C.yellow; ctx.lineWidth = 7; ctx.stroke(); }
+      ctx.beginPath(); ctx.arc(0, -ch / 2 + 78, 46, 0, Math.PI * 2); ctx.fillStyle = i === 1 ? C.yellow : '#F2EEE6'; ctx.fill();
+      ctx.fillStyle = C.ink; ctx.strokeStyle = C.ink; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      const iy = -ch / 2 + 78;
+      if (n.icon === 'spark') sparkle(0, iy, 28, 0, C.ink);
+      else if (n.icon === 'chat') { rr(-24, iy - 20, 48, 34, 10); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-10, iy + 14); ctx.lineTo(-14, iy + 26); ctx.lineTo(2, iy + 14); ctx.stroke(); }
+      else { ctx.beginPath(); ctx.arc(0, iy - 8, 11, 0, Math.PI * 2); ctx.stroke(); ctx.beginPath(); ctx.arc(0, iy + 30, 24, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke(); }
+      font(700, 30); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = C.ink;
+      const words = n.title.split(' ');
+      if (n.title.length > 14) { ctx.fillText(words.slice(0, 2).join(' '), 0, 18); ctx.fillText(words.slice(2).join(' '), 0, 54); }
+      else ctx.fillText(n.title, 0, 28);
+      text(n.sub, 0, n.title.length > 14 ? 100 : 74, { w: 600, size: 24, fam: 'Nunito', color: C.gray, align: 'center' });
+      if (n.logo) { const lw2 = 118, lh2 = lw2 * IMG.ubots.height / IMG.ubots.width; ctx.drawImage(IMG.ubots, -lw2 / 2, 104, lw2, lh2); }
+    }, xs[i], cy + (1 - clamp(q)) * 30, 1, 0, clamp(q * 1.6));
   });
 }
 function drawSalto(t, lt) {
