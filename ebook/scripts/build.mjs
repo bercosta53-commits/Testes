@@ -384,7 +384,7 @@ pages.find((p) => p.sec === 'sumario').html = sumHTML;
 const css = fontCSS + fs.readFileSync(P('src/style.css'), 'utf8').replace(/(-?\d*\.?\d+)u(?![a-z0-9])/g, 'calc(var(--u)*$1)');
 const js = fs.readFileSync(P('src/book.js'), 'utf8');
 const og = SITE_URL ? `${SITE_URL}/assets/og.png` : 'assets/og.png';
-const desc = `Um estudo sobre os nomes de esportistas mais sonoros, estranhos e marcantes da história: ${150} nomes, ${nPaises} países, ${nEsportes} esportes.`;
+const desc = `Os nomes mais sonoros e impactantes do esporte mundial: ${150} nomes, ${nPaises} países, ${nEsportes} esportes.`;
 let html = `<!doctype html>
 <html lang="pt-BR">
 <head>

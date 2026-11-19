@@ -18,7 +18,7 @@ export async function makeOg(dist, { nPaises, nEsportes }) {
   .s{position:absolute;left:70px;top:450px;font:700 38px/1.2 B;letter-spacing:.08em;text-transform:uppercase;color:#B9893A}
   .s2{position:absolute;left:70px;top:510px;font:700 32px/1.2 B;letter-spacing:.04em;color:rgba(255,255,255,.85)}
   </style><div class="g">150</div><div class="t">Nomes que <em>rolam</em><br>na boca</div><div class="r"></div>
-  <div class="s">${150} nomes · ${nPaises} países · ${nEsportes} esportes</div><div class="s2">Um estudo sobre os nomes mais sonoros do esporte</div>`);
+  <div class="s">${150} nomes · ${nPaises} países · ${nEsportes} esportes</div><div class="s2">Os nomes mais sonoros e impactantes do esporte mundial</div>`);
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(300);
   await p.screenshot({ path: path.join(dist, 'assets/og.png') });
