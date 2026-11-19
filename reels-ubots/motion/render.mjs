@@ -50,7 +50,7 @@ async function worker() {
     const f = queue.shift();
     const jpg = await page.evaluate(async (f) => {
       await window.REEL.renderFrame(f);
-      return document.getElementById('c').toDataURL('image/jpeg', 0.93);
+      return document.getElementById('c').toDataURL('image/jpeg', 0.97);
     }, f);
     fs.writeFileSync(path.join(FRAMES_DIR, `f${String(f).padStart(4, '0')}.jpg`), Buffer.from(jpg.split(',')[1], 'base64'));
     done++;
@@ -70,7 +70,11 @@ if (args['no-encode']) process.exit();
 const ff = [
   '-y', '-framerate', '30', '-start_number', String(FROM), '-i', path.join(FRAMES_DIR, 'f%04d.jpg'),
   ...(fs.existsSync(AUDIO) ? ['-i', AUDIO] : []),
-  '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-profile:v', 'high',
+  // JPEG (JFIF, BT.601, full range) -> BT.709 limited range, com as tags de cor corretas para Reels/Instagram
+  '-vf', 'scale=in_range=pc:in_color_matrix=bt601:out_range=tv:out_color_matrix=bt709:flags=accurate_rnd+full_chroma_int,format=yuv420p',
+  '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv',
+  '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-profile:v', 'high', '-level', '4.2',
+  '-g', '60', '-keyint_min', '30', '-bf', '3', '-maxrate', '12M', '-bufsize', '24M',
   ...(fs.existsSync(AUDIO) ? ['-c:a', 'aac', '-b:a', '256k', '-shortest'] : []),
   '-movflags', '+faststart', OUT,
 ];

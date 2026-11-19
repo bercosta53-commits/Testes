@@ -15,7 +15,7 @@ const C = {
 const LIGHT = { dark: false, text: C.ink, soft: C.soft, card: C.white, stroke: 'rgba(20,18,16,0.05)', shadow: 'rgba(70,55,25,0.13)',
   chatBody: C.chat, inB: C.white, outB: C.green, head: C.white, sub: C.gray, num: '#B4ADA4', struck: '#A39A90',
   pillBg: C.white, pillBorder: 'rgba(20,18,16,0.15)', rule: 'rgba(0,0,0,0.06)' };
-const DARK = { dark: true, text: '#F3EEE6', soft: '#4C4640', card: '#191512', stroke: 'rgba(255,255,255,0.07)', shadow: 'rgba(0,0,0,0.55)',
+const DARK = { dark: true, text: '#F3EEE6', soft: '#615950', card: '#191512', stroke: 'rgba(255,255,255,0.07)', shadow: 'rgba(0,0,0,0.55)',
   chatBody: '#110E0C', inB: '#27221E', outB: '#1D3A2A', head: '#1E1A17', sub: '#8C857D', num: '#6D655D', struck: '#6D655D',
   pillBg: '#1E1A17', pillBorder: 'rgba(255,255,255,0.16)', rule: 'rgba(255,255,255,0.07)' };
 let P = LIGHT;
@@ -85,6 +85,7 @@ async function preload() {
   };
   await Promise.all(Object.entries(list).map(async ([k, v]) => { IMG[k] = await loadImg(v); }));
   ENV = await (await fetch('assets/vo_env.json')).json();
+  try { buildTimeline(await (await fetch('assets/words_v4.json')).json()); } catch (e) { console.warn('sem tempos de palavras', e); }
   for (const f of ['800 40px Poppins', '700 40px Poppins', '600 40px Poppins', '700 40px Nunito', '600 40px Nunito', '400 40px Nunito'])
     await document.fonts.load(f);
   makeGrain(); makePaper();
@@ -144,7 +145,7 @@ function paper(t) {
   const d = Math.sin(t * 0.6) * 0.06;
   ctx.beginPath(); ctx.arc(W + 40, 1960, 300, Math.PI * 1.08 + d, Math.PI * 1.36 + d); ctx.stroke();
   ctx.beginPath(); ctx.arc(-60, 1980, 280, Math.PI * 1.62 - d, Math.PI * 1.86 - d); ctx.stroke();
-  ctx.beginPath(); ctx.arc(W + 30, 330, 210, Math.PI * 0.96 + d, Math.PI * 1.2 + d); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W + 50, 150, 190, Math.PI * 0.99 + d, Math.PI * 1.22 + d); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(40, 120 + d * 80); ctx.lineTo(120, 160); ctx.lineTo(100, 90); ctx.stroke();
   ctx.restore();
 }
@@ -246,36 +247,72 @@ const SEGS = [
   [44.10, 44.99, ['É *grátis.*']],
 ];
 const CHUNKS = [], WORDS = [];
-for (const [a, b, chunks] of SEGS) {
-  const list = chunks.map(c => (Array.isArray(c) ? c : [c, c]));
-  const weights = list.map(([d, s]) => s.replace(/[*~]/g, '').length + 4);
-  const tot = weights.reduce((x, y) => x + y, 0);
-  let acc = a;
-  list.forEach(([disp], i) => {
-    const d = ((b - a) * weights[i]) / tot;
-    CHUNKS.push({ t0: acc, t1: i === list.length - 1 ? b + 0.25 : acc + d, text: disp });
-    // palavras do trecho, com o tempo distribuído pelo comprimento
-    const toks = [];
-    let mode = null;
-    for (const raw of disp.split(' ')) {
-      let w = raw, m = mode;
-      if (w.startsWith('*')) { m = 'hl'; w = w.slice(1); } else if (w.startsWith('~')) { m = 'st'; w = w.slice(1); }
-      let end = false;
-      if (w.endsWith('*') || w.endsWith('~')) { w = w.slice(0, -1); end = true; }
-      else if (/[*~][.,…]$/.test(w)) { w = w.replace(/[*~]/, ''); end = true; }
-      toks.push({ w, m }); mode = end ? null : m;
+let T_CTX = 18.9;
+// Tempo de cada palavra: a locução final foi transcrita (Whisper) e cada início de frase foi ancorado
+// na energia real da voz (assets/words_v4.json). Palavras do roteiro que não existem na fala (ex.: o "a"
+// de "a Ubots") são interpoladas. Se o arquivo faltar, cai na distribuição proporcional pelo tamanho.
+const norm = w => w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+const ALIAS = { ta: 'esta', pra: 'para' };
+function buildTimeline(spoken) {
+  CHUNKS.length = 0; WORDS.length = 0;
+  const sw = (spoken || []).map(([a, b, w]) => ({ s: a, e: b, n: norm(w) }));
+  let ptr = 0;
+  for (const [a, b, chunks] of SEGS) {
+    const list = chunks.map(c => (Array.isArray(c) ? c : [c, c]));
+    const segToks = [];
+    list.forEach(([disp], ci) => {
+      let mode = null;
+      for (const raw of disp.split(' ')) {
+        let w = raw, m = mode;
+        if (w.startsWith('*')) { m = 'hl'; w = w.slice(1); } else if (w.startsWith('~')) { m = 'st'; w = w.slice(1); }
+        let end = false;
+        if (w.endsWith('*') || w.endsWith('~')) { w = w.slice(0, -1); end = true; }
+        else if (/[*~][.,…]$/.test(w)) { w = w.replace(/[*~]/, ''); end = true; }
+        segToks.push({ w, m, ci, t: null, e: null }); mode = end ? null : m;
+      }
+    });
+    // alinha com a fala real (sequencial, janela curta)
+    for (const tk of segToks) {
+      const n = ALIAS[norm(tk.w)] || norm(tk.w);
+      if (!n) continue;
+      for (let q = ptr; q < Math.min(sw.length, ptr + 5); q++) {
+        if (sw[q].n === n || (n.length > 3 && sw[q].n.startsWith(n.slice(0, 4)) && Math.abs(sw[q].s - (a - 0.5)) < 99)) {
+          if (sw[q].s >= a - 0.45 && sw[q].s <= b + 0.45) { tk.t = sw[q].s; tk.e = sw[q].e; ptr = q + 1; }
+          break;
+        }
+      }
     }
-    const tl = toks.reduce((s, x) => s + x.w.length + 1, 0);
-    let acc2 = acc;
-    toks.forEach(tk => { WORDS.push({ ...tk, t: acc2 }); acc2 += (d * (tk.w.length + 1)) / tl; });
-    acc += d;
-  });
+    // interpola os que não casaram (proporcional ao comprimento entre vizinhos já alinhados)
+    const known = segToks.map((t, i) => (t.t != null ? i : -1)).filter(i => i >= 0);
+    const L = t => t.w.length + 1;
+    for (let i = 0; i < segToks.length; i++) {
+      if (segToks[i].t != null) continue;
+      const prev = known.filter(k => k < i).pop(), next = known.find(k => k > i);
+      const t0 = prev != null ? segToks[prev].e || segToks[prev].t : a;
+      const t1 = next != null ? segToks[next].t : b;
+      const gap = [];
+      for (let k = (prev != null ? prev + 1 : 0); k < (next != null ? next : segToks.length); k++) gap.push(k);
+      const tot = gap.reduce((x, k) => x + L(segToks[k]), 0);
+      let acc = t0;
+      gap.forEach(k => { segToks[k].t = acc; acc += ((t1 - t0) * L(segToks[k])) / tot; });
+    }
+    // trechos de legenda
+    list.forEach(([disp], ci) => {
+      const mine = segToks.filter(t => t.ci === ci);
+      const t0 = mine[0].t - 0.03;
+      const lastEnd = (mine[mine.length - 1].e != null ? mine[mine.length - 1].e : mine[mine.length - 1].t + 0.4);
+      const nextT = ci < list.length - 1 ? segToks.find(t => t.ci === ci + 1).t - 0.03 : lastEnd + 0.28;
+      CHUNKS.push({ t0, t1: Math.min(nextT, lastEnd + 0.4) + (ci < list.length - 1 ? 0 : 0), text: disp });
+      mine.forEach(t => WORDS.push({ w: t.w, m: t.m, t: t.t }));
+    });
+  }
+  T_CTX = (WORDS.find(w => w.w.startsWith('contexto')) || { t: 18.9 }).t;
 }
+buildTimeline(null);
 
 // título revelado palavra a palavra: cinza → preto, marca-texto e risco no tempo da fala
-const T_CTX = (WORDS.find(w => w.w.startsWith('contexto')) || { t: 18.9 }).t;
 function headline(t, from, to, y, { size = 70, maxW = 930, a = 1, lh = 1.16 } = {}) {
-  const words = WORDS.filter(w => w.t >= from - 0.05 && w.t < to);
+  const words = WORDS.filter(w => w.t >= from - 0.15 && w.t < to);
   if (!words.length || a <= 0) return y;
   font(800, size);
   const sp = ctx.measureText(' ').width;
@@ -513,11 +550,17 @@ const SCENES = [
   // o robô travado em regra — "no seu banco… ou na sua cooperativa"
   { a: 8.4, b: 12.0, paper: true, dark: true, draw: (t, lt) => {
     const e = enter(lt);
-    headline(t, 9.4, 12.0, 330, { size: 66, a: e });
-    withT(() => chat(t, 90, 560, 900, 700, 'Agente de crédito', ROBOT), 0, (1 - e) * 50, 1, 0, e);
-    [['Bancos', 10.75], ['Cooperativas', 11.05], ['Fintechs', 11.35], ['Financeiras', 11.65]].forEach(([s, at], i) => {
-      const p = eBack(prog(t, at, at + 0.25), 2.4);
-      withT(() => pill(0, 0, s, { size: 32, h: 66, bg: P.pillBg, fg: P.text, border: P.pillBorder }), [245, 520, 750, 960][i] - 60, 1340, p, 0, p * 2);
+    headline(t, 9.2, 12.0, 360, { size: 66, a: e });
+    withT(() => chat(t, 90, 610, 900, 700, 'Agente de crédito', ROBOT), 0, (1 - e) * 50, 1, 0, e);
+    // selos do território: linha única, larguras medidas, centralizada
+    const tags = [['Bancos', 10.75], ['Cooperativas', 11.05], ['Fintechs', 11.35], ['Financeiras', 11.65]];
+    font(700, 30); const GAP = 18, PADX = 60;
+    const ws = tags.map(([s2]) => ctx.measureText(s2).width + PADX);
+    const total = ws.reduce((a, b) => a + b, 0) + GAP * (tags.length - 1);
+    let x0 = W / 2 - total / 2;
+    tags.forEach(([s2, at], i) => {
+      const p = eBack(prog(t, at, at + 0.25), 2.4), cx = x0 + ws[i] / 2; x0 += ws[i] + GAP;
+      withT(() => pill(0, 0, s2, { size: 30, h: 66, bg: P.pillBg, fg: P.text, border: P.pillBorder }), cx, 1390, p, 0, p * 2);
     });
   } },
   // entra a Ubots
@@ -552,14 +595,14 @@ function drawUbots(t, lt) {
     ]);
   }, 0, 1010 + (1 - clamp(cp)) * 80, 1, 0, clamp(cp * 1.5));
   // selos flutuando em volta do card
-  [['✦ Agente de IA', 190, 1010, 14.2, -0.06], ['Segurança onde importa', 790, 1690, 15.2, 0.05]].forEach(([s2, x, y, at, r]) => {
+  [['✦ Agente de IA', 220, 960, 14.2, -0.05], ['Segurança onde importa', 770, 1700, 15.2, 0.04]].forEach(([s2, x, y, at, r]) => {
     const q = eBack(prog(t, at, at + 0.3), 2.2);
     withT(() => pill(0, 0, s2, { size: 28, h: 58, bg: C.ink, fg: C.yellow }), x, y + Math.sin(t * 2 + x) * 6, q, r, q * 2);
   });
 }
 function drawSalto(t, lt) {
   const e = enter(lt);
-    headline(t, 17.3, 21.85, 330, { size: 62, a: e });
+    headline(t, 17.3, 21.7, 330, { size: 62, a: e });
   withT(() => {
     card(90, 560, 900, 720, 34);
     for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(140 + k * 26, 630, 7, 0, Math.PI * 2); ctx.fillStyle = P.dark ? '#3A332D' : '#D6D0C7'; ctx.fill(); }
@@ -643,7 +686,7 @@ const SCENES2 = [
     const shake = t > 34.75 && t < 35.0 ? (hash(Math.floor(t * 60)) - 0.5) * 18 * (1 - prog(t, 34.75, 35.0)) : 0;
     ctx.save(); ctx.translate(shake, 0);
     withT(() => text('mais de', W / 2, 0, { w: 600, size: 40, fam: 'Nunito', color: C.gray, align: 'center' }), 0, 640, 1, 0, e);
-    const n = Math.round(150 * eOut(prog(t, 32.6, 34.75)));
+    const n = Math.round(150 * eOut(prog(t, 32.4, 34.75)));
     const mp = eOut(prog(t, 34.6, 34.95));
     font(800, 172); const label = `R$ ${n} mil`, lw = ctx.measureText('R$ 150 mil').width;
     withT(() => {
