@@ -7,10 +7,9 @@ import {
   delayRender,
   interpolate,
   staticFile,
-  useCurrentFrame,
 } from "remotion";
-import { colors, TOTAL_FRAMES } from "./theme";
-import { seg, voices, voiceEnd, sfx } from "./data/timeline";
+import { colors } from "./theme";
+import { seg, voices, voiceEnd, sfx, wipes, TOTAL_FRAMES } from "./data/timeline";
 import { S1 } from "./segments/S1";
 import { S2 } from "./segments/S2";
 import { S3A, S3B } from "./segments/S3";
@@ -20,6 +19,7 @@ import { S6 } from "./segments/S6";
 import { S7 } from "./segments/S7";
 import { Selo } from "./components/Selo";
 import { Captions } from "./components/Captions";
+import { WaveWipe } from "./components/WaveWipe";
 import { SafeZoneGuide } from "./components/SafeZoneGuide";
 
 export type SonataProps = { showSafeZones: boolean };
@@ -44,88 +44,68 @@ const useFonts = () => {
   }, [handle]);
 };
 
-// Entrada suave de cada trecho: desliza 60 px e aparece em 8 frames
-const Enter: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const frame = useCurrentFrame();
-  const p = interpolate(frame, [0, 8], [0, 1], {
-    extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-  });
-  return (
-    <AbsoluteFill style={{ opacity: p, transform: `translateX(${(1 - p) * 60}px)` }}>
-      {children}
-    </AbsoluteFill>
-  );
-};
-
-const part = (
-  from: number,
-  dur: number,
-  node: React.ReactNode,
-  key: string,
-  enter = true,
-) => (
-  <Sequence key={key} from={from} durationInFrames={dur} name={key}>
-    {enter ? <Enter>{node}</Enter> : node}
+const part = (s: { from: number; dur: number }, node: React.ReactNode, key: string) => (
+  <Sequence key={key} from={s.from} durationInFrames={s.dur} name={key}>
+    {node}
   </Sequence>
 );
 
-// Ducking de 12 dB sob a voz: base 0.34, sob a voz 0.085 (-12 dB)
-const MUSIC_HIGH = 0.34;
-const MUSIC_LOW = MUSIC_HIGH * 0.251;
+// Trilha: sempre audível como cama (-12 dB sob a voz), abre na abertura de marca e fecha no fim.
+// Antes ela ficava -21 dB o tempo todo porque a voz cobre quase o vídeo inteiro.
+const MUSIC_BED = 0.3; // sob a voz
+const MUSIC_UP = 0.85; // abertura e respiros
 const musicVolume = (f: number) => {
   const duck = voices.reduce((m, v) => {
-    const k = interpolate(f, [v.start - 8, v.start, voiceEnd(v), voiceEnd(v) + 12], [1, 0, 0, 1], {
+    const k = interpolate(f, [v.start - 8, v.start, voiceEnd(v), voiceEnd(v) + 14], [1, 0, 0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
     return Math.min(m, k);
   }, 1);
-  const fade = interpolate(f, [0, 8, TOTAL_FRAMES - 24, TOTAL_FRAMES - 1], [0, 1, 1, 0], {
+  const fade = interpolate(f, [0, 6, TOTAL_FRAMES - 30, TOTAL_FRAMES - 1], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  return (MUSIC_LOW + (MUSIC_HIGH - MUSIC_LOW) * duck) * fade;
+  return (MUSIC_BED + (MUSIC_UP - MUSIC_BED) * duck) * fade;
 };
 
 export const SonataBF: React.FC<SonataProps> = ({ showSafeZones }) => {
   useFonts();
   return (
     <AbsoluteFill style={{ background: colors.cream }}>
-      {/* Imagem */}
-      {part(seg.s1.from, seg.s1.dur, <S1 />, "S1", false)}
-      {part(seg.s2.from, seg.s2.dur, <S2 />, "S2")}
-      {part(seg.s3a.from, seg.s3a.dur, <S3A />, "S3-beat1")}
-      {part(seg.s3b.from, seg.s3b.dur, <S3B />, "S3-beat2")}
-      {part(seg.s4.from, seg.s4.dur, <S4 />, "S4")}
-      {part(seg.s5.from, seg.s5.dur, <S5 />, "S5")}
-      {part(seg.s6.from, seg.s6.dur, <S6 />, "S6")}
-      {part(seg.s7.from, seg.s7.dur, <S7 />, "S7")}
+      {part(seg.s1, <S1 />, "S1")}
+      {part(seg.s2, <S2 />, "S2")}
+      {part(seg.s3a, <S3A />, "S3-beat1")}
+      {part(seg.s3b, <S3B />, "S3-beat2")}
+      {part(seg.s4, <S4 />, "S4")}
+      {part(seg.s5, <S5 />, "S5")}
+      {part(seg.s6, <S6 />, "S6")}
+      {part(seg.s7, <S7 />, "S7")}
 
-      {/* Sobreposições fixas */}
+      {/* Cortes: onda do KV, centro no frame do corte */}
+      {wipes.map((w) => (
+        <Sequence key={w} from={Math.max(0, w - 12)} durationInFrames={24} name={`onda-${w}`}>
+          <WaveWipe at={12} />
+        </Sequence>
+      ))}
+
       <Selo />
       <Captions />
       <SafeZoneGuide show={showSafeZones} />
 
-      {/* Áudio: trilha com ducking */}
       <Audio src={staticFile("assets/audio/trilha.mp3")} volume={musicVolume} />
 
-      {/* Voz (Juliana Moreira, ElevenLabs) */}
       {voices.map((v) => (
         <Sequence key={v.id} from={v.start} name={`voz-${v.id}`}>
           <Audio src={staticFile(v.file)} playbackRate={v.rate} volume={1} />
         </Sequence>
       ))}
 
-      {/* Efeitos sonoros */}
-      {sfx.map((s, i) => {
-        const dur = s.loopFrames ?? 60;
-        return (
-          <Sequence key={i} from={s.at} durationInFrames={dur} name={`sfx-${i}`}>
-            <Audio src={staticFile(s.file)} volume={s.vol} loop={!!s.loopFrames} />
-          </Sequence>
-        );
-      })}
+      {sfx.map((s, i) => (
+        <Sequence key={i} from={s.at} durationInFrames={45} name={`sfx-${i}`}>
+          <Audio src={staticFile(s.file)} volume={s.vol} />
+        </Sequence>
+      ))}
     </AbsoluteFill>
   );
 };

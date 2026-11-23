@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { bands, colors, fonts, safe } from "../theme";
+import { colors, fonts, grid, safe } from "../theme";
 import { captions } from "../data/timeline";
 
 // Quebra o texto destacando as palavras-chave
@@ -38,12 +38,12 @@ export const Captions: React.FC = () => {
           position: "absolute",
           left: safe.side,
           right: safe.side,
-          top: bands.captionTop,
-          height: bands.captionBottom - bands.captionTop,
+          bottom: 1920 - grid.captionBottom,
           display: "flex",
-          alignItems: "center",
+          alignItems: "flex-end",
           justifyContent: "center",
           opacity: a,
+          transform: `translateY(${(1 - a) * 12}px)`,
         }}
       >
         <div
@@ -52,11 +52,11 @@ export const Captions: React.FC = () => {
             color: colors.white,
             fontFamily: fonts.family,
             fontWeight: 600,
-            fontSize: 54,
+            fontSize: 48,
             lineHeight: 1.18,
             textAlign: "center",
-            padding: "20px 36px",
-            borderRadius: 32,
+            padding: "14px 32px",
+            borderRadius: 28,
           }}
         >
           <Highlighted text={c.text} hl={c.hl} />

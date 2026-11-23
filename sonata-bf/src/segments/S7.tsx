@@ -1,10 +1,10 @@
 import React from "react";
 import { AbsoluteFill, Img } from "remotion";
-import { MediaFill } from "../components/MediaFill";
+import { Backdrop } from "../components/Backdrop";
 import { WhatsAppButton } from "../components/WhatsAppButton";
 import { LegalFooter } from "../components/LegalFooter";
-import { CornerWaves, Rise, cardStyle } from "../components/ui";
-import { assets, placeholderNames } from "../data/assets";
+import { Rise, cardStyle } from "../components/ui";
+import { assets } from "../data/assets";
 import { offer, rodapeLegal } from "../data/offer";
 import { colors, fonts, safe } from "../theme";
 
@@ -21,35 +21,13 @@ const Logo: React.FC = () =>
 // End card: loja desfocada, logo, botão pulsando, estoque e endereço
 export const S7: React.FC = () => (
   <AbsoluteFill>
-    {assets.s7.img || assets.s7.video ? (
-      <>
-        <MediaFill
-          video={assets.s7.video}
-          image={assets.s7.img}
-          label={placeholderNames.s7}
-          hint="Foto real da loja e da equipe"
-          durationInFrames={150}
-          blur={18}
-          zoomTo={1.04}
-        />
-      </>
-    ) : (
-      // Sem foto da loja: fundo de marca (creme e ondas do KV), sem placeholder
-      <AbsoluteFill
-        style={{
-          background: `linear-gradient(180deg, ${colors.cream} 0%, #E4F3F1 100%)`,
-        }}
-      >
-        <CornerWaves color={colors.cyan} opacity={0.55} />
-      </AbsoluteFill>
-    )}
-    <AbsoluteFill style={{ background: "rgba(252,247,239,0.5)" }} />
+    <Backdrop image={assets.s7.img} duration={152} veil={0.5} />
     <div
       style={{
         position: "absolute",
         left: safe.side,
         right: safe.side,
-        top: 300,
+        top: 370,
         height: 920,
         ...cardStyle,
         padding: "34px 30px",
@@ -67,7 +45,7 @@ export const S7: React.FC = () => (
           style={{
             fontFamily: fonts.family,
             fontWeight: 800,
-            fontSize: 92,
+            fontSize: 90,
             lineHeight: 1.05,
             color: colors.petroleum,
             textAlign: "center",
@@ -91,10 +69,7 @@ export const S7: React.FC = () => (
         </div>
       </Rise>
       <Rise delay={64}>
-        <LegalFooter
-          lines={[`Endereço: ${offer.endereco}`, rodapeLegal]}
-          size={28}
-        />
+        <LegalFooter lines={[`Endereço: ${offer.endereco}`, rodapeLegal]} size={28} />
       </Rise>
     </div>
   </AbsoluteFill>

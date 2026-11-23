@@ -24,14 +24,15 @@ export const safe = {
   height: 1920,
 };
 
-// Faixas verticais usadas por todos os trechos
-export const bands = {
-  bodyTop: safe.top + 20, // 290
-  bodyBottom: 1240, // fim do corpo
-  seloTop: 1258, // selo fixo
-  seloHeight: 62,
-  captionTop: 1340, // legendas
-  captionBottom: safe.height - safe.bottom, // 1535
+// Grade vertical (1080x1920). Texto nunca fica sobre pessoas: a mídia vive numa janela,
+// o lettering vive abaixo dela e a legenda ancora no fim da zona segura.
+export const grid = {
+  seloTop: 282, // selo fixo, no topo da zona segura
+  seloH: 56,
+  top: 360, // início da janela de mídia / conteúdo
+  bottom: 1330, // fim do conteúdo
+  captionBottom: safe.height - safe.bottom - 5, // 1530
+  w: safe.width - safe.side * 2, // 950
 };
 
 // Tamanhos mínimos (seção 5.1)
@@ -45,4 +46,3 @@ export const sizes = {
 export const FPS = 30;
 export const WIDTH = 1080;
 export const HEIGHT = 1920;
-export const TOTAL_FRAMES = 1170;

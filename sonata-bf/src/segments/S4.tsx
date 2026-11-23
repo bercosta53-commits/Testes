@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
-import { MediaFill } from "../components/MediaFill";
+import { Backdrop } from "../components/Backdrop";
 import { DeviceArt } from "../components/DeviceArt";
 import { SoundWave } from "../components/SoundWave";
 import { BluetoothLink } from "../components/BluetoothLink";
@@ -74,21 +74,20 @@ const Stage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         alignItems: "center",
         justifyContent: "flex-start",
         opacity: a,
-        paddingTop: 370,
-      }}
+              }}
     >
       <div
         style={{
           position: "absolute",
           left: safe.side,
           right: safe.side,
-          top: 330,
-          height: 780,
+          top: 440,
+          height: 720,
           ...cardStyle,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "56px 30px",
+          padding: "44px 30px",
         }}
       >
         {children}
@@ -100,15 +99,7 @@ const Stage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 export const S4: React.FC = () => (
   <AbsoluteFill>
     {/* fundo: sala da cena de volta, desfocada e clareada */}
-    <MediaFill
-      image={assets.s3b.img}
-      video={null}
-      label="s3b-sala-sofa (fundo desfocado)"
-      durationInFrames={150}
-      blur={22}
-      tone="warm"
-    />
-    <AbsoluteFill style={{ background: "rgba(252,247,239,0.45)" }} />
+    <Backdrop image={assets.s3b.img} duration={150} />
     <Sequence from={0} durationInFrames={50} layout="none">
       <Stage><DemoRecarga /></Stage>
     </Sequence>
