@@ -1,12 +1,13 @@
 import React from "react";
 import { AbsoluteFill, Img, Sequence, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { Backdrop } from "../components/Backdrop";
-import { MediaWindow } from "../components/MediaWindow";
-import { PriceBadge, StrikePrice } from "../components/PriceBadge";
-import { Pop, Rise } from "../components/ui";
+import { MediaFill } from "../components/MediaFill";
+import { DiscountBadge, PriceBadge, StrikePrice } from "../components/PriceBadge";
+import { Selo } from "../components/Selo";
+import { Rise, cardStyle } from "../components/ui";
 import { assets, placeholderNames } from "../data/assets";
-import { S1_T0 } from "../data/timeline";
-import { colors, fonts, grid, safe } from "../theme";
+import { S1_T0, seg } from "../data/timeline";
+import { colors, fonts, safe } from "../theme";
 
 const T0 = S1_T0;
 
@@ -14,10 +15,7 @@ const T0 = S1_T0;
 const Intro: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const out = interpolate(frame, [T0 - 8, T0 + 2], [1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const out = interpolate(frame, [T0 - 8, T0 + 2], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const logo = spring({ frame: frame - 2, fps, config: { damping: 14, stiffness: 140, mass: 0.8 } });
   const bf = spring({ frame: frame - 10, fps, config: { damping: 16, stiffness: 120, mass: 0.9 } });
   const line = interpolate(frame, [12, 26], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -25,7 +23,7 @@ const Intro: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: "rgba(252,247,239,0.95)",
+        background: "rgba(252,247,239,0.97)",
         opacity: out,
         alignItems: "center",
         justifyContent: "center",
@@ -42,15 +40,7 @@ const Intro: React.FC = () => {
             </div>
           )}
         </div>
-        <div
-          style={{
-            height: 8,
-            width: 520 * line,
-            margin: "34px auto 30px",
-            borderRadius: 8,
-            background: colors.cyan,
-          }}
-        />
+        <div style={{ height: 8, width: 520 * line, margin: "34px auto 30px", borderRadius: 8, background: colors.cyan }} />
         <div
           style={{
             fontFamily: fonts.family,
@@ -70,66 +60,49 @@ const Intro: React.FC = () => {
   );
 };
 
-export const S1: React.FC = () => (
+// VÍDEO: a apresentadora em tela cheia. Sem lettering: a legenda carrega "Recarregável".
+export const S1A: React.FC = () => (
   <AbsoluteFill>
-    <Backdrop image={assets.s1.img} duration={186} />
-
-    {/* Janela: só a cabeça e os ombros da apresentadora, sem texto por cima */}
     <Sequence from={T0}>
-      <MediaWindow
+      <MediaFill
         video={assets.s1.video}
         image={assets.s1.img}
         label={placeholderNames.s1}
         hint="Apresentadora, 5 s, lip sync"
-        height={570}
-        focalY={18}
         durationInFrames={150}
-        zoomTo={1.06}
+        focalY={30}
+        zoomTo={1.07}
       />
     </Sequence>
+    <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(8,40,66,0) 58%, rgba(8,40,66,0.38) 100%)" }} />
+    <Intro />
+  </AbsoluteFill>
+);
 
-    {/* Selo de desconto no canto da janela, sobre a parede */}
-    <div style={{ position: "absolute", left: 700, top: 382 }}>
-      <Pop delay={T0 + 120} style={{ transform: "rotate(4deg)" }}>
-        <div
-          style={{
-            background: colors.cyan,
-            color: colors.ink,
-            fontFamily: fonts.family,
-            fontWeight: 700,
-            fontSize: 34,
-            lineHeight: 1.12,
-            padding: "12px 24px",
-            borderRadius: 28,
-            textAlign: "center",
-            boxShadow: "0 8px 24px rgba(11,58,91,0.25)",
-          }}
-        >
-          Mais de R$ 3 mil
-          <br />
-          de desconto
-        </div>
-      </Pop>
-    </div>
-
-    {/* Lettering abaixo da janela */}
+// CARTÃO: o preço, sozinho, no momento em que a voz o diz
+export const S1B: React.FC = () => (
+  <AbsoluteFill>
+    <Backdrop image={assets.s1.img} duration={seg.s1b.dur} />
     <div
       style={{
         position: "absolute",
         left: safe.side,
-        width: grid.w,
-        top: 952,
+        right: safe.side,
+        top: 590,
+        ...cardStyle,
+        padding: "30px 30px 34px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        gap: 10,
       }}
     >
-      <Rise delay={T0 + 4}>
+      <Rise delay={0}>
         <div
           style={{
             fontFamily: fonts.family,
             fontWeight: 800,
-            fontSize: 82,
+            fontSize: 72,
             letterSpacing: 1,
             color: colors.petroleum,
             lineHeight: 1.05,
@@ -139,12 +112,10 @@ export const S1: React.FC = () => (
           RECARREGÁVEL
         </div>
       </Rise>
-      <div style={{ marginTop: 6 }}>
-        <StrikePrice delay={T0 + 30} strikeAt={T0 + 44} size={54} />
-      </div>
-      <PriceBadge delay={T0 + 88} />
+      <StrikePrice delay={4} strikeAt={12} size={56} />
+      <PriceBadge delay={28} />
+      <DiscountBadge delay={50} size={42} />
     </div>
-
-    <Intro />
+    <Selo />
   </AbsoluteFill>
 );

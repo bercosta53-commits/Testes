@@ -1,77 +1,95 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
-import { Backdrop } from "../components/Backdrop";
-import { BenefitList } from "../components/BenefitList";
-import { MediaWindow } from "../components/MediaWindow";
-import { Rise } from "../components/ui";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { MediaFill } from "../components/MediaFill";
+import { Pop } from "../components/ui";
 import { assets, placeholderNames } from "../data/assets";
+import { seg } from "../data/timeline";
 import { colors, fonts } from "../theme";
 
-// Beat 1: mesa de domingo, a mãe de fora da conversa. Trecho 0 a 5 s do vídeo. Tom frio.
-// Janela grande: ninguém coberto, só a legenda abaixo.
+const scrim = (
+  <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(8,40,66,0) 55%, rgba(8,40,66,0.42) 100%)" }} />
+);
+
+// VÍDEO: mesa de domingo, a mãe de fora da conversa. Trecho 0 a 5 s. Tom frio. Só a legenda.
 export const S3A: React.FC = () => (
   <AbsoluteFill>
-    <Backdrop image={assets.s3a.img} duration={148} />
-    <MediaWindow
+    <MediaFill
       video={assets.s3a.video}
       image={assets.s3a.img}
       label={placeholderNames.s3a}
       hint="Usar o trecho de 0 a 5 s"
-      height={970}
-      focalY={35}
       startFromSec={0}
-      durationInFrames={148}
-      zoomTo={1.09}
+      durationInFrames={seg.s3a.dur}
+      focalY={35}
+      zoomTo={1.08}
       tone="cold"
     />
+    {scrim}
   </AbsoluteFill>
 );
 
-// Beat 2: no sofá, a mãe ri com o neto. Trecho 4 a 9 s. Tom quente.
-// Janela menor; os três benefícios entram um a um abaixo dela.
+// Frases pequenas, uma por vez, no lugar de uma lista
+const phrases = [
+  { text: "Com o aparelho, ela volta", from: 6, to: 62, accent: true },
+  { text: "Responder o neto", from: 65, to: 99 },
+  { text: "Atender o telefone", from: 100, to: 134 },
+  { text: "Entender a mesa inteira", from: 135, to: 172 },
+];
+
+const Phrase: React.FC = () => {
+  const frame = useCurrentFrame();
+  const p = phrases.find((x) => frame >= x.from && frame < x.to);
+  if (!p) return null;
+  const out = interpolate(frame, [p.to - 4, p.to], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 1300,
+        display: "flex",
+        justifyContent: "center",
+        opacity: out,
+      }}
+    >
+      <Pop key={p.text} delay={p.from}>
+        <div
+          style={{
+            background: p.accent ? colors.terracotta : "rgba(252,247,239,0.95)",
+            color: p.accent ? colors.white : colors.ink,
+            fontFamily: fonts.family,
+            fontWeight: 700,
+            fontSize: 44,
+            padding: "10px 34px",
+            borderRadius: 999,
+            border: `3px solid ${colors.white}`,
+            boxShadow: "0 10px 26px rgba(8,40,66,0.28)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {p.text}
+        </div>
+      </Pop>
+    </div>
+  );
+};
+
+// VÍDEO: no sofá, a mãe ri com o neto. Trecho 4 a 9 s. Tom quente. Uma frase pequena por vez.
 export const S3B: React.FC = () => (
   <AbsoluteFill>
-    <Backdrop image={assets.s3b.img} duration={148} />
-    <MediaWindow
+    <MediaFill
       video={assets.s3b.video}
       image={assets.s3b.img}
       label={placeholderNames.s3b}
       hint="Usar o trecho de 4 a 9 s"
-      height={650}
-      focalY={30}
       startFromSec={4}
-      durationInFrames={148}
-      zoomTo={1.07}
+      durationInFrames={seg.s3b.dur}
+      focalY={35}
+      zoomTo={1.06}
       tone="warm"
     />
-    <div style={{ position: "absolute", left: 0, right: 0, top: 986, display: "flex", justifyContent: "center" }}>
-      <Rise delay={6}>
-        <div
-          style={{
-            background: colors.terracotta,
-            color: colors.white,
-            fontFamily: fonts.family,
-            fontWeight: 700,
-            fontSize: 42,
-            padding: "8px 32px",
-            borderRadius: 999,
-            border: `3px solid ${colors.white}`,
-            boxShadow: "0 10px 26px rgba(8,40,66,0.25)",
-          }}
-        >
-          Com o aparelho, ela volta
-        </div>
-      </Rise>
-    </div>
-    <div style={{ position: "absolute", left: 65, width: 950, top: 1052 }}>
-      <BenefitList
-        size={46}
-        items={[
-          { text: "Responder o neto", delay: 24 },
-          { text: "Atender o telefone", delay: 60 },
-          { text: "Entender a mesa inteira", delay: 96 },
-        ]}
-      />
-    </div>
+    {scrim}
+    <Phrase />
   </AbsoluteFill>
 );

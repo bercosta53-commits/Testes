@@ -51,6 +51,7 @@ type Props = {
   zoomTo?: number;
   tone?: "cold" | "warm" | "none";
   blur?: number;
+  focalY?: number;
 };
 
 // Vídeo (descarta o áudio original), senão imagem, senão placeholder.
@@ -66,6 +67,7 @@ export const MediaFill: React.FC<Props> = ({
   zoomTo = 1.06,
   tone = "none",
   blur = 0,
+  focalY = 40,
 }) => {
   const frame = useCurrentFrame();
   const scale = interpolate(frame, [0, durationInFrames], [zoomFrom, zoomTo], {
@@ -83,6 +85,7 @@ export const MediaFill: React.FC<Props> = ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    objectPosition: `50% ${focalY}%`,
     transform: `scale(${scale})`,
     filter: `${filter}${blur ? ` blur(${blur}px)` : ""}`.trim(),
   };

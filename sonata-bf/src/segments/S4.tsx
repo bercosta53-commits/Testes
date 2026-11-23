@@ -1,4 +1,5 @@
 import React from "react";
+import { Selo } from "../components/Selo";
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { Backdrop } from "../components/Backdrop";
 import { DeviceArt } from "../components/DeviceArt";
@@ -62,9 +63,9 @@ const DemoConexao: React.FC = () => (
   </>
 );
 
-const Stage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Stage: React.FC<{ children: React.ReactNode; len: number }> = ({ children, len }) => {
   const frame = useCurrentFrame();
-  const a = interpolate(frame, [0, 5, 45, 50], [0, 1, 1, 0], {
+  const a = interpolate(frame, [0, 5, len - 5, len], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -100,14 +101,15 @@ export const S4: React.FC = () => (
   <AbsoluteFill>
     {/* fundo: sala da cena de volta, desfocada e clareada */}
     <Backdrop image={assets.s3b.img} duration={150} />
-    <Sequence from={0} durationInFrames={50} layout="none">
-      <Stage><DemoRecarga /></Stage>
+    <Sequence from={0} durationInFrames={40} layout="none">
+      <Stage len={40}><DemoRecarga /></Stage>
     </Sequence>
-    <Sequence from={50} durationInFrames={50} layout="none">
-      <Stage><DemoSom /></Stage>
+    <Sequence from={40} durationInFrames={58} layout="none">
+      <Stage len={58}><DemoSom /></Stage>
     </Sequence>
-    <Sequence from={100} durationInFrames={50} layout="none">
-      <Stage><DemoConexao /></Stage>
+    <Sequence from={98} durationInFrames={52} layout="none">
+      <Stage len={52}><DemoConexao /></Stage>
     </Sequence>
+    <Selo />
   </AbsoluteFill>
 );

@@ -1,4 +1,5 @@
 import React from "react";
+import { Selo } from "../components/Selo";
 import { AbsoluteFill, Img } from "remotion";
 import { Backdrop } from "../components/Backdrop";
 import { WhatsAppButton } from "../components/WhatsAppButton";
@@ -72,5 +73,6 @@ export const S7: React.FC = () => (
         <LegalFooter lines={[`Endereço: ${offer.endereco}`, rodapeLegal]} size={28} />
       </Rise>
     </div>
+    <Selo />
   </AbsoluteFill>
 );

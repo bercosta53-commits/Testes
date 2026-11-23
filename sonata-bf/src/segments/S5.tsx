@@ -1,4 +1,5 @@
 import React from "react";
+import { Selo } from "../components/Selo";
 import { AbsoluteFill, Img } from "remotion";
 import { Backdrop } from "../components/Backdrop";
 import { DiscountBadge, InstallmentHero, PriceBadge, StrikePrice } from "../components/PriceBadge";
@@ -19,7 +20,7 @@ export const S5: React.FC = () => (
         position: "absolute",
         left: safe.side,
         right: safe.side,
-        top: 348,
+        top: 366,
         textAlign: "center",
         fontFamily: fonts.family,
       }}
@@ -41,8 +42,8 @@ export const S5: React.FC = () => (
         position: "absolute",
         left: safe.side,
         right: safe.side,
-        top: 520,
-        height: 670,
+        top: 536,
+        height: 660,
         ...cardStyle,
         padding: "18px 30px 20px",
         display: "flex",
@@ -67,7 +68,7 @@ export const S5: React.FC = () => (
       </Rise>
     </div>
 
-    <div style={{ position: "absolute", left: 0, right: 0, top: 1208, display: "flex", justifyContent: "center" }}>
+    <div style={{ position: "absolute", left: 0, right: 0, top: 1214, display: "flex", justifyContent: "center" }}>
       <Pop delay={118}>
         <div
           style={{
@@ -86,10 +87,11 @@ export const S5: React.FC = () => (
       </Pop>
     </div>
 
-    <div style={{ position: "absolute", left: safe.side, right: safe.side, top: 1322 }}>
+    <div style={{ position: "absolute", left: safe.side, right: safe.side, top: 1328 }}>
       <Rise delay={126}>
         <LegalFooter lines={[rodapeLegal, `${offer.estoque}.`]} size={28} color={colors.ink} />
       </Rise>
     </div>
+    <Selo />
   </AbsoluteFill>
 );

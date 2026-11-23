@@ -9,15 +9,15 @@ import {
   staticFile,
 } from "remotion";
 import { colors } from "./theme";
-import { seg, voices, voiceEnd, sfx, wipes, TOTAL_FRAMES } from "./data/timeline";
-import { S1 } from "./segments/S1";
+import { seg, voices, voiceEnd, sfx, waves, dips, TOTAL_FRAMES } from "./data/timeline";
+import { S1A, S1B } from "./segments/S1";
 import { S2 } from "./segments/S2";
 import { S3A, S3B } from "./segments/S3";
 import { S4 } from "./segments/S4";
 import { S5 } from "./segments/S5";
 import { S6 } from "./segments/S6";
 import { S7 } from "./segments/S7";
-import { Selo } from "./components/Selo";
+import { Dip } from "./components/Dip";
 import { Captions } from "./components/Captions";
 import { WaveWipe } from "./components/WaveWipe";
 import { SafeZoneGuide } from "./components/SafeZoneGuide";
@@ -73,7 +73,8 @@ export const SonataBF: React.FC<SonataProps> = ({ showSafeZones }) => {
   useFonts();
   return (
     <AbsoluteFill style={{ background: colors.cream }}>
-      {part(seg.s1, <S1 />, "S1")}
+      {part(seg.s1a, <S1A />, "S1-apresentadora")}
+      {part(seg.s1b, <S1B />, "S1-preco")}
       {part(seg.s2, <S2 />, "S2")}
       {part(seg.s3a, <S3A />, "S3-beat1")}
       {part(seg.s3b, <S3B />, "S3-beat2")}
@@ -82,14 +83,18 @@ export const SonataBF: React.FC<SonataProps> = ({ showSafeZones }) => {
       {part(seg.s6, <S6 />, "S6")}
       {part(seg.s7, <S7 />, "S7")}
 
-      {/* Cortes: onda do KV, centro no frame do corte */}
-      {wipes.map((w) => (
+      {/* Cortes: onda do KV entre vídeo e cartão; mergulho suave entre momentos do mesmo tipo */}
+      {dips.map((d) => (
+        <Sequence key={`d${d}`} from={d - 6} durationInFrames={13} name={`mergulho-${d}`}>
+          <Dip at={6} />
+        </Sequence>
+      ))}
+      {waves.map((w) => (
         <Sequence key={w} from={Math.max(0, w - 12)} durationInFrames={24} name={`onda-${w}`}>
           <WaveWipe at={12} />
         </Sequence>
       ))}
 
-      <Selo />
       <Captions />
       <SafeZoneGuide show={showSafeZones} />
 

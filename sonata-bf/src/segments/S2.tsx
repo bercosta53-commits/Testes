@@ -1,4 +1,5 @@
 import React from "react";
+import { Selo } from "../components/Selo";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Backdrop } from "../components/Backdrop";
 import { DeviceArt } from "../components/DeviceArt";
@@ -63,6 +64,7 @@ export const S2: React.FC = () => {
       <FeatureCallout label="Receptor no canal" anchor={{ x: 636, y: 807 }} pill={{ x: 735, y: 690 }} delay={78} />
       <FeatureCallout label="Fio fino" anchor={{ x: 439, y: 808 }} pill={{ x: 330, y: 690 }} delay={102} />
       <FeatureCallout label="Recarregável" anchor={{ x: 540, y: 1098 }} pill={{ x: 540, y: 1290 }} delay={126} />
-    </AbsoluteFill>
+      <Selo />
+  </AbsoluteFill>
   );
 };

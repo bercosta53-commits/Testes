@@ -1,16 +1,18 @@
 import { offer } from "./offer";
 
-// Trechos em frames (30 fps). A duração total sai da soma dos trechos.
-// S1 inclui 1 s de abertura de marca (30 frames) antes de a voz começar.
+// Momentos em frames (30 fps). A duração total sai da soma.
+// Alterna VÍDEO (apresentadora e família, tela cheia, quase sem texto) com CARTÃO/MOTION (marca, preço, produto).
+//   vídeo:  s1a, s3a, s3b, s6      cartão/motion: s1b, s2, s4, s5, s7
 const D = {
-  s1: 186,
-  s2: 140,
-  s3a: 148,
-  s3b: 148,
-  s4: 150,
-  s5: 172,
-  s6: 90,
-  s7: 152,
+  s1a: 118, // abertura de marca (30) + apresentadora
+  s1b: 72, // cartão do preço
+  s2: 140, // produto e carregador
+  s3a: 124, // mesa: a mãe de fora da conversa
+  s3b: 172, // sofá: a mãe volta
+  s4: 150, // demos
+  s5: 172, // oferta
+  s6: 90, // apresentadora chama para o teste
+  s7: 152, // fechamento
 };
 
 let cursor = 0;
@@ -21,7 +23,8 @@ const mk = (dur: number) => {
 };
 
 export const seg = {
-  s1: mk(D.s1),
+  s1a: mk(D.s1a),
+  s1b: mk(D.s1b),
   s2: mk(D.s2),
   s3a: mk(D.s3a),
   s3b: mk(D.s3b),
@@ -32,7 +35,7 @@ export const seg = {
 };
 export const TOTAL_FRAMES = cursor;
 
-// Frame (local ao S1) em que a voz entra e o conteúdo aparece, depois da abertura
+// Frame (local ao primeiro momento) em que a voz entra, depois da abertura de marca
 export const S1_T0 = 30;
 
 // Voz (ElevenLabs, eleven_v4), uma tomada por fala. start é global.
@@ -45,7 +48,7 @@ export type Voice = {
 };
 
 export const voices: Voice[] = [
-  { id: "s1", file: "assets/audio/voz-s1.mp3", start: seg.s1.from + S1_T0, secs: 4.99, rate: 1 },
+  { id: "s1", file: "assets/audio/voz-s1.mp3", start: seg.s1a.from + S1_T0, secs: 4.99, rate: 1 },
   { id: "s2", file: "assets/audio/voz-s2.mp3", start: seg.s2.from + 4, secs: 4.28, rate: 1 },
   { id: "s3", file: "assets/audio/voz-s3.mp3", start: seg.s3a.from + 2, secs: 9.95, rate: 1.03 },
   { id: "s4", file: "assets/audio/voz-s4.mp3", start: seg.s4.from + 3, secs: 5.33, rate: 1.1 },
@@ -130,38 +133,36 @@ export const captions: Caption[] = captionDefs.flatMap((def) => {
   });
 });
 
-// Cortes com onda: o centro da onda cai no frame do corte
-export const wipes = [seg.s2, seg.s3a, seg.s3b, seg.s4, seg.s5, seg.s6, seg.s7].map(
-  (s) => s.from,
-);
+// Cortes. Onda do KV quando muda o tipo de momento (vídeo <-> cartão); mergulho suave nos demais.
+export const waves = [seg.s1b, seg.s3a, seg.s4, seg.s6, seg.s7].map((x) => x.from);
+export const dips = [seg.s2, seg.s3b, seg.s5].map((x) => x.from);
 
-// Efeitos sonoros: poucos, curtos, amarrados a um gesto visual.
-// Arquivos tratados (sem silêncio, com fade) em assets/audio/sfx/proc.
+// Momentos de vídeo: sem selo fixo, quase sem texto
+export const videoMoments = [seg.s1a, seg.s3a, seg.s3b, seg.s6];
+
+// Efeitos sonoros: poucos, curtos, amarrados a um gesto visual (arquivos tratados em sfx/proc)
 export type Sfx = { at: number; file: string; vol: number };
 const P = (f: string) => `assets/audio/sfx/proc/${f}.mp3`;
 
 export const sfx: Sfx[] = [
-  // Abertura: entrada do logo
-  { at: 10, file: P("whoosh"), vol: 0.4 },
-  // Cortes (começa 7 frames antes do centro da onda)
-  ...wipes.map((w) => ({ at: w - 7, file: P("whoosh"), vol: 0.32 })),
-  // S1: título, risco no preço antigo, preço novo
-  { at: seg.s1.from + S1_T0 + 6, file: P("pop"), vol: 0.35 },
-  { at: seg.s1.from + S1_T0 + 46, file: P("risco-caneta"), vol: 0.55 },
-  { at: seg.s1.from + S1_T0 + 88, file: P("ding-preco"), vol: 0.5 },
-  { at: seg.s1.from + S1_T0 + 120, file: P("pop"), vol: 0.3 },
+  { at: 10, file: P("whoosh"), vol: 0.4 }, // abertura: logo entra
+  ...waves.map((w) => ({ at: w - 7, file: P("whoosh"), vol: 0.3 })),
+  // S1b: preço antigo riscado, preço novo, desconto
+  { at: seg.s1b.from + 14, file: P("risco-caneta"), vol: 0.55 },
+  { at: seg.s1b.from + 30, file: P("ding-preco"), vol: 0.5 },
+  { at: seg.s1b.from + 52, file: P("pop"), vol: 0.3 },
   // S2: LED e etiquetas
   { at: seg.s2.from + 44, file: P("led-recarga"), vol: 0.45 },
-  { at: seg.s2.from + 80, file: P("pop"), vol: 0.28 },
-  { at: seg.s2.from + 104, file: P("pop"), vol: 0.28 },
-  { at: seg.s2.from + 128, file: P("pop"), vol: 0.28 },
-  // S3 beat 2: três benefícios
-  { at: seg.s3b.from + 26, file: P("pop"), vol: 0.3 },
-  { at: seg.s3b.from + 62, file: P("pop"), vol: 0.3 },
-  { at: seg.s3b.from + 98, file: P("pop"), vol: 0.3 },
+  { at: seg.s2.from + 80, file: P("pop"), vol: 0.26 },
+  { at: seg.s2.from + 104, file: P("pop"), vol: 0.26 },
+  { at: seg.s2.from + 128, file: P("pop"), vol: 0.26 },
+  // S3b: frases pequenas, uma por vez
+  { at: seg.s3b.from + 66, file: P("pop"), vol: 0.22 },
+  { at: seg.s3b.from + 101, file: P("pop"), vol: 0.22 },
+  { at: seg.s3b.from + 136, file: P("pop"), vol: 0.22 },
   // S4: recarga, som limpo, pareamento
   { at: seg.s4.from + 22, file: P("led-recarga"), vol: 0.45 },
-  { at: seg.s4.from + 62, file: P("som-limpo"), vol: 0.5 },
+  { at: seg.s4.from + 64, file: P("som-limpo"), vol: 0.5 },
   { at: seg.s4.from + 122, file: P("bluetooth"), vol: 0.5 },
   // S5: preço antigo riscado, novo, desconto, parcela
   { at: seg.s5.from + 14, file: P("risco-caneta"), vol: 0.55 },
