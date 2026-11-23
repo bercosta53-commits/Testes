@@ -4,6 +4,7 @@ import { DeviceArt } from "../components/DeviceArt";
 import { FeatureCallout } from "../components/FeatureCallout";
 import { CornerWaves, Rise } from "../components/ui";
 import { colors, fonts, safe } from "../theme";
+import { offer } from "../data/offer";
 
 // Posição da arte do aparelho (placeholder ou foto real)
 const ART = { left: 160, top: 700, width: 760 };
@@ -33,11 +34,23 @@ export const S2: React.FC = () => {
           position: "absolute",
           left: safe.side,
           right: safe.side,
-          top: 320,
+          top: 300,
           textAlign: "center",
           fontFamily: fonts.family,
         }}
       >
+        <Rise delay={0}>
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 44,
+              color: colors.terracotta,
+              marginBottom: 6,
+            }}
+          >
+            Aparelho {offer.modelo}
+          </div>
+        </Rise>
         <Rise delay={2}>
           <div
             style={{

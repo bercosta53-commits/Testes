@@ -29,7 +29,7 @@ export const offer = {
 
   // Marca e contato (pendentes)
   marca: "Sonata",
-  modelo: PENDING, // nome comercial do modelo
+  modelo: "RIC Recarregável", // tipo do aparelho (nome comercial do modelo segue sem confirmação)
   whatsapp: PENDING,
   endereco: PENDING,
   logo: "SONATA / aparelhos auditivos", // placeholder até chegar o logo
