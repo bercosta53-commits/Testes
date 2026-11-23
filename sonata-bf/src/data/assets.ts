@@ -21,7 +21,8 @@ export const assets = {
   s3a: { video: pick("video", "s3a-mesa-fora"), img: pick("img", "s3a-mesa-fora") },
   s3b: { video: pick("video", "s3b-sala-sofa"), img: pick("img", "s3b-sala-sofa") },
   s7: { video: pick("video", "s7-loja"), img: pick("img", "loja") },
-  logo: pickRe("img", /logo/i),
+  // prefere logo.svg/logo.png (versão azul para cartões claros); logo-verde fica de reserva
+  logo: pickRe("img", /\/logo\.(svg|png)$/i) ?? pickRe("img", /logo/i),
   // Foto real do par e do carregador (PNG com fundo transparente)
   device: pickRe(
     "img",

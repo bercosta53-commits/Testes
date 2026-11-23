@@ -17,5 +17,14 @@ export const presentAssets: string[] = [
   "assets/audio/voz-s4.mp3",
   "assets/audio/voz-s5.mp3",
   "assets/audio/voz-s6.mp3",
-  "assets/audio/voz-s7.mp3"
+  "assets/audio/voz-s7.mp3",
+  "assets/img/aparelho-par-carregador.png",
+  "assets/img/logo-verde.png",
+  "assets/img/logo.png",
+  "assets/img/s1-apresentadora.jpg",
+  "assets/img/s3a-mesa-fora.webp",
+  "assets/img/s3b-sala-sofa.jpg",
+  "assets/img/s6-apresentadora.jpg",
+  "assets/video/s3a-mesa-fora.mp4",
+  "assets/video/s3b-sala-sofa.mp4"
 ];

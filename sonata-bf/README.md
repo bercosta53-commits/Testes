@@ -26,11 +26,20 @@ Tudo em `public/assets/`. O `npm run assets` lista o que existe e a composição
 | `video/s3a-mesa-fora.mp4` | S3 beat 1, usa 0 a 5 s, tom frio |
 | `video/s3b-sala-sofa.mp4` | S3 beat 2, usa 4 a 9 s, tom quente |
 | `img/s3b-sala-sofa.png` | fundo desfocado de S4 e S5 |
-| `img/` com "aparelho", "par", "carregador" ou "estojo" no nome | S2 e S4 (PNG, fundo transparente) |
+| `img/aparelho-par-carregador.png` | S2 e S4. Veio com 500x436 e fundo branco; recortei e ampliei 2x. Peça uma foto em alta ao fornecedor |
 | `img/loja.jpg` (ou `video/s7-loja.mp4`) | S7 |
-| `img/logo.svg` | S7 (sem ele aparece "SONATA / aparelhos auditivos") |
+| `img/logo.png` (azul) e `logo-verde.png` | S7. Cores do logo: azul #143D66 e verde-água #03AEA9 |
 
 Vídeos do Gemini (720x1280): são cobertos para 1080x1920 e o áudio original é descartado.
+
+## Lip sync de S1 e S6 (falta rodar)
+
+No flow do ElevenLabs (`https://elevenlabs.io/app/flows/WfpRrENm9xojapeF1XF3`) já existem dois nós OmniHuman ligados às falas:
+"S1 lip sync" e "S6 lip sync". Falta soltar `s1-apresentadora.jpg` e `s6-apresentadora.jpg` na porta `image` de cada um e rodar.
+Baixe os MP4 como `public/assets/video/s1-apresentadora.mp4` e `s6-apresentadora.mp4`. Com o vídeo presente, o projeto o usa no lugar da imagem.
+Depois, em `src/data/timeline.ts`, ajuste a voz de S1 para `start: 0, rate: 1` e a de S6 para `start: 930, rate: 1`, porque o clipe já traz a fala sincronizada.
+
+As imagens e os vídeos não ficam no Git (repositório público). Veja `.gitignore`.
 
 ## Áudio (ElevenLabs, já gerado)
 

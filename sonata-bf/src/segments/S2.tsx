@@ -6,7 +6,7 @@ import { CornerWaves, Rise } from "../components/ui";
 import { colors, fonts, safe } from "../theme";
 
 // Posição da arte do aparelho (placeholder ou foto real)
-const ART = { left: 160, top: 600, width: 760 };
+const ART = { left: 160, top: 700, width: 760 };
 
 export const S2: React.FC = () => {
   const frame = useCurrentFrame();
@@ -16,7 +16,7 @@ export const S2: React.FC = () => {
   });
   const ledOn = frame >= 44;
   // zoom no receptor e no fio, depois volta
-  const zoom = interpolate(frame, [58, 82, 100, 122], [1, 1.45, 1.45, 1.1], {
+  const zoom = interpolate(frame, [58, 82, 100, 122], [1, 1.25, 1.25, 1.1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -42,7 +42,8 @@ export const S2: React.FC = () => {
           <div
             style={{
               fontWeight: 800,
-              fontSize: 100,
+              fontSize: 80,
+              whiteSpace: "nowrap",
               color: colors.petroleum,
               lineHeight: 1.05,
             }}
@@ -70,15 +71,15 @@ export const S2: React.FC = () => {
           left: ART.left,
           top: ART.top,
           transform: `scale(${zoom})`,
-          transformOrigin: "62% 42%",
+          transformOrigin: "50% 0%",
         }}
       >
         <DeviceArt lift={lift} ledOn={ledOn} width={ART.width} />
       </div>
 
-      <FeatureCallout label="Receptor no canal" anchor={{ x: 555, y: 853 }} pill={{ x: 700, y: 700 }} delay={78} />
-      <FeatureCallout label="Fio fino" anchor={{ x: 575, y: 793 }} pill={{ x: 330, y: 760 }} delay={102} />
-      <FeatureCallout label="Recarregável" anchor={{ x: 540, y: 1075 }} pill={{ x: 540, y: 1185 }} delay={126} />
+      <FeatureCallout label="Receptor no canal" anchor={{ x: 644, y: 784 }} pill={{ x: 720, y: 640 }} delay={78} />
+      <FeatureCallout label="Fio fino" anchor={{ x: 436, y: 788 }} pill={{ x: 340, y: 640 }} delay={102} />
+      <FeatureCallout label="Recarregável" anchor={{ x: 540, y: 1100 }} pill={{ x: 540, y: 1185 }} delay={126} />
     </AbsoluteFill>
   );
 };
