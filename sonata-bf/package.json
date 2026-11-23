@@ -32,7 +32,8 @@
     "check:offer": "node scripts/check-offer.mjs",
     "still": "npm run assets && remotion still SonataBF",
     "render:preview": "npm run assets && remotion render SonataBF out/sonata-preview.mp4 --crf=24",
-    "render:final": "npm run assets && npm run check:offer && remotion render SonataBF out/sonata-black-friday-9x16.mp4 --codec=h264 --crf=19 --audio-codec=aac --audio-bitrate=192k"
+    "render:final": "npm run assets && npm run check:offer && remotion render SonataBF out/sonata-black-friday-9x16.mp4 --codec=h264 --crf=19 --audio-codec=aac --audio-bitrate=192k",
+    "master": "ffmpeg -y -i out/sonata-black-friday-9x16.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/sonata-black-friday-9x16-master.mp4"
   },
   "allowScripts": {
     "esbuild": false

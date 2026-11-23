@@ -56,3 +56,7 @@ src/components/        PriceBadge, FeatureCallout, BenefitList, SoundWave, Bluet
                        WhatsAppButton, LegalFooter, SafeZoneGuide, Captions, Selo
 scripts/               scan-assets, check-offer
 ```
+
+## Loudness
+
+O render sai em cerca de -15,7 LUFS. Depois do `render:final`, rode `npm run master` para normalizar em -14 LUFS (pico -1,5 dBTP) sem recodificar o vídeo.
