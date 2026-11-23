@@ -27,7 +27,7 @@ export const S6: React.FC = () => (
         position: "absolute",
         left: safe.side,
         right: safe.side,
-        top: 700,
+        top: 800,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

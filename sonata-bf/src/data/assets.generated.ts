@@ -26,5 +26,6 @@ export const presentAssets: string[] = [
   "assets/img/s3b-sala-sofa.jpg",
   "assets/img/s6-apresentadora.jpg",
   "assets/video/s3a-mesa-fora.mp4",
-  "assets/video/s3b-sala-sofa.mp4"
+  "assets/video/s3b-sala-sofa.mp4",
+  "assets/video/s6-apresentadora.mp4"
 ];

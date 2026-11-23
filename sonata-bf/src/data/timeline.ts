@@ -29,7 +29,7 @@ export const voices: Voice[] = [
   { id: "s3", file: "assets/audio/voz-s3.mp3", start: 302, secs: 9.95, rate: 1.03 },
   { id: "s4", file: "assets/audio/voz-s4.mp3", start: 603, secs: 5.33, rate: 1.1 },
   { id: "s5", file: "assets/audio/voz-s5.mp3", start: 754, secs: 5.56, rate: 1 },
-  { id: "s6", file: "assets/audio/voz-s6.mp3", start: 931, secs: 3.0, rate: 1.04 },
+  { id: "s6", file: "assets/audio/voz-s6.mp3", start: 930, secs: 3.0, rate: 1 },
   { id: "s7", file: "assets/audio/voz-s7.mp3", start: 1023, secs: 4.75, rate: 1 },
 ];
 
