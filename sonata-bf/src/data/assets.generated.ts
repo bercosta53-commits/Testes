@@ -1,0 +1,21 @@
+// GERADO por scripts/scan-assets.mjs. Não editar.
+export const presentAssets: string[] = [
+  "assets/audio/sfx/ambiente-mesa.mp3",
+  "assets/audio/sfx/ambiente-sala-risada.mp3",
+  "assets/audio/sfx/bluetooth.mp3",
+  "assets/audio/sfx/clique.mp3",
+  "assets/audio/sfx/ding-preco.mp3",
+  "assets/audio/sfx/led-recarga.mp3",
+  "assets/audio/sfx/pop.mp3",
+  "assets/audio/sfx/risco-caneta.mp3",
+  "assets/audio/sfx/som-limpo.mp3",
+  "assets/audio/sfx/whoosh.mp3",
+  "assets/audio/trilha.mp3",
+  "assets/audio/voz-s1.mp3",
+  "assets/audio/voz-s2.mp3",
+  "assets/audio/voz-s3.mp3",
+  "assets/audio/voz-s4.mp3",
+  "assets/audio/voz-s5.mp3",
+  "assets/audio/voz-s6.mp3",
+  "assets/audio/voz-s7.mp3"
+];

@@ -1,0 +1,58 @@
+# Sonata Black Friday 2026 (Remotion)
+
+Reels e Stories, 9:16, 1080x1920, 30 fps, 39 s (1170 frames). Roteiro e direção na fonte da verdade
+`sonata-black-friday-geral-FINAL.md`.
+
+## Rodar
+
+```bash
+npm i
+npm run dev              # Studio (escaneia public/assets antes)
+npm run render:preview   # out/sonata-preview.mp4 (CRF 24, com placeholders)
+npm run check:offer      # falha enquanto houver [A CONFIRMAR]
+npm run render:final     # check:offer + MP4 H.264 CRF 19, AAC 192 kbps
+```
+
+Para conferir as zonas seguras no Studio, ligue a prop `showSafeZones`.
+
+## Onde colocar os arquivos
+
+Tudo em `public/assets/`. O `npm run assets` lista o que existe e a composição troca o placeholder pelo arquivo real.
+
+| Arquivo | Uso |
+|---|---|
+| `img/s1-apresentadora.png` ou `video/s1-apresentadora.mp4` | S1 (vídeo com lip sync, 4 a 5 s) |
+| `img/s6-apresentadora.png` ou `video/s6-apresentadora.mp4` | S6 |
+| `video/s3a-mesa-fora.mp4` | S3 beat 1, usa 0 a 5 s, tom frio |
+| `video/s3b-sala-sofa.mp4` | S3 beat 2, usa 4 a 9 s, tom quente |
+| `img/s3b-sala-sofa.png` | fundo desfocado de S4 e S5 |
+| `img/` com "aparelho", "par", "carregador" ou "estojo" no nome | S2 e S4 (PNG, fundo transparente) |
+| `img/loja.jpg` (ou `video/s7-loja.mp4`) | S7 |
+| `img/logo.svg` | S7 (sem ele aparece "SONATA / aparelhos auditivos") |
+
+Vídeos do Gemini (720x1280): são cobertos para 1080x1920 e o áudio original é descartado.
+
+## Áudio (ElevenLabs, já gerado)
+
+- Voz: Juliana Moreira (`dxIMMSJYSsbUSMhioLNb`), `eleven_v4`, uma tomada por fala, em `public/assets/audio/voz-s1..s7.mp3`.
+- Trilha `trilha.mp3` (40 s) e efeitos em `audio/sfx/`.
+- Flow no ElevenLabs: `WfpRrENm9xojapeF1XF3`.
+- S1 e S4 recebem aceleração leve (1,04x e 1,10x) para caber no trecho.
+- Ducking de 12 dB da trilha sob a voz em `src/SonataBF.tsx`.
+
+## Pendências com a Sonata (`src/data/offer.ts`)
+
+`modelo`, `whatsapp`, `endereco`, `juros` (cerca de 1,1% a.m.), `textoLegal`. Logo, paleta e tipografia oficiais.
+A veracidade do preço de referência (R$ 9.600) é responsabilidade da Sonata.
+
+## Estrutura
+
+```
+src/data/offer.ts      dados da oferta (única fonte dos números)
+src/data/timeline.ts   trechos, falas, legendas, efeitos
+src/theme.ts           cores do KV suavizado, zonas seguras, tamanhos mínimos
+src/segments/S1..S7    trechos
+src/components/        PriceBadge, FeatureCallout, BenefitList, SoundWave, BluetoothLink,
+                       WhatsAppButton, LegalFooter, SafeZoneGuide, Captions, Selo
+scripts/               scan-assets, check-offer
+```

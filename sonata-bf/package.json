@@ -1,0 +1,40 @@
+{
+  "name": "sonata-bf",
+  "version": "1.0.0",
+  "description": "My Remotion video",
+  "repository": {},
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "private": true,
+  "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "@remotion/cli": "4.0.546",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.546"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.546",
+    "@types/react": "19.3.0",
+    "@types/web": "0.0.166",
+    "eslint": "10.15.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "npm run assets && remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "assets": "node scripts/scan-assets.mjs",
+    "check:offer": "node scripts/check-offer.mjs",
+    "still": "npm run assets && remotion still SonataBF",
+    "render:preview": "npm run assets && remotion render SonataBF out/sonata-preview.mp4 --crf=24",
+    "render:final": "npm run assets && npm run check:offer && remotion render SonataBF out/sonata-black-friday-9x16.mp4 --codec=h264 --crf=19 --audio-codec=aac --audio-bitrate=192k"
+  },
+  "allowScripts": {
+    "esbuild": false
+  }
+}
