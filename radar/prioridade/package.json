@@ -1,0 +1,11 @@
+{
+  "name": "velora-radar-prioridade",
+  "private": true,
+  "type": "module",
+  "description": "Velora Radar · Prioridade de contas: visão integrada em quatro eixos (modelo experimental 1)",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "typecheck": "tsc -p tsconfig.json",
+    "serve": "python3 -m http.server 4173"
+  }
+}
